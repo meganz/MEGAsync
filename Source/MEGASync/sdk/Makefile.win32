@@ -1,0 +1,18 @@
+CXX=g++
+CFLAGS=-g -Wall -isystem ../cryptopp -isystem ../FreeImage/Dist -isystem ../db -isystem ..
+LIB=-lwinhttp -lws2_32 -L../cryptopp -lcryptopp -L../FreeImage/Dist -lfreeimage -L../readline -lreadline -L../termcap -ltermcap -L../db -ldb_cxx
+LDFLAGS=
+SOURCES=megawin32.cpp megacli.cpp megacrypto.cpp megaclient.cpp megabdb.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+PROGS=megaclient
+
+all: $(PROGS)
+
+megaclient: $(OBJECTS)
+	$(CXX) $(CFLAGS) $(LDFLAGS) $^ -o $@ $(LIB)
+
+.cpp.o:
+	$(CXX) -c $(CFLAGS) $< -o $@
+
+clean:
+	rm -f $(OBJECTS) $(PROGS) $(PROGS:=.o)

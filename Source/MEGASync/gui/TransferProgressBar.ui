@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TransferProgressBar</class>
+ <widget class="QWidget" name="TransferProgressBar">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>364</width>
+    <height>21</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#wProgress
+{
+	background-color: white;
+	border-radius: 4px;
+}
+
+#wBackground
+{
+	background-color: rgb(178, 178, 178);
+}</string>
+  </property>
+  <widget class="QLabel" name="lProgress">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>364</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Resources.qrc">:/images/BAD_transferProgress.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wProgress" native="true">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>6</y>
+     <width>60</width>
+     <height>8</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>8</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>8</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wBackground" native="true">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>6</y>
+     <width>355</width>
+     <height>10</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>355</width>
+     <height>10</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>355</width>
+     <height>10</height>
+    </size>
+   </property>
+  </widget>
+  <zorder>wBackground</zorder>
+  <zorder>wProgress</zorder>
+  <zorder>lProgress</zorder>
+ </widget>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
