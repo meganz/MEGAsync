@@ -16,7 +16,10 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
+#ifdef ENABLE_LOCALCACHE
 #include <sys/stat.h>
+
+#include <db_cxx.h>
 
 #include "mega.h"
 #include "megaclient.h"
@@ -32,15 +35,15 @@ BdbAccess::~BdbAccess()
 	if (env) env->close(0);
 }
 
-DbTable* BdbAccess::open(string* name)
+DbTable* BdbAccess::open(FileSystemAccess* fsaccess, string* name)
 {
 	if (env) env->close(0);
 
 	string dbdir = "megaclient_statecache_";
 	
 	dbdir.append(*name);
-	MegaClient::escapefilename(&dbdir);
-	mkdir(dbdir.c_str(),0700);
+	fsaccess->name2local(&dbdir);
+	fsaccess->mkdirlocal(&dbdir);
 
 	env = new DbEnv(0);
 	env->open(dbdir.c_str(),DB_CREATE|DB_REGISTER|DB_INIT_TXN|DB_INIT_MPOOL|DB_INIT_LOCK|DB_RECOVER,0);
@@ -82,37 +85,37 @@ void BdbTable::rewind()
 }
 
 // retrieve next record through cursor
-int BdbTable::next(uint32_t* index, string* data)
+bool BdbTable::next(uint32_t* index, string* data)
 {
-	if (!dbcursor) return 0;
+	if (!dbcursor) return false;
 
 	Dbt key, value;
 
-	if (dbcursor->get(&key,&value,DB_NEXT|DB_DIRTY_READ)) return 0;
+	if (dbcursor->get(&key,&value,DB_NEXT|DB_DIRTY_READ)) return false;
 
-	if (sizeof(*index) != key.get_size()) return 0;
+	if (sizeof(*index) != key.get_size()) return false;
 
 	*index = *(uint32_t*)key.get_data();
 
 	data->assign((char*)value.get_data(),value.get_size());
 
-	return 1;
+	return true;
 }
 
 // retrieve record by index
-int BdbTable::get(uint32_t index, string* data)
+bool BdbTable::get(uint32_t index, string* data)
 {
 	Dbt key((char*)&index,sizeof index), value;
 
-	if (db->get(dbtxn,&key,&value,DB_READ_UNCOMMITTED)) return 0;
+	if (db->get(dbtxn,&key,&value,DB_READ_UNCOMMITTED)) return false;
 
 	data->assign((char*)value.get_data(),value.get_size());
 
-	return 1;
+	return true;
 }
 
 // add/update record by index
-int BdbTable::put(uint32_t index, char* data, unsigned len)
+bool BdbTable::put(uint32_t index, char* data, unsigned len)
 {
 	if (dbcursor)
 	{
@@ -122,19 +125,19 @@ int BdbTable::put(uint32_t index, char* data, unsigned len)
 
 	Dbt key((char*)&index,sizeof index), value(data,len);
 
-	if (db->put(dbtxn,&key,&value,0)) return 0;
+	if (db->put(dbtxn,&key,&value,0)) return false;
 
-	return 1;
+	return true;
 }
 
 // delete record by index
-int BdbTable::del(uint32_t index)
+bool BdbTable::del(uint32_t index)
 {
 	Dbt key((char*)&index,sizeof index);
 
 	db->del(dbtxn,&key,0);
 
-	return 1;
+	return true;
 }
 
 // truncate table
@@ -176,3 +179,4 @@ void BdbTable::abort()
 		dbtxn = NULL;
 	}
 }
+#endif

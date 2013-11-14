@@ -16,33 +16,36 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#ifndef MEGABDB_H
-#define MEGABDB_H 1
+#ifndef MEGASQLITEDB_H
+#define MEGASQLITEDB_H 1
 
-class BdbAccess : public DbAccess
+#include <sqlite3.h>
+#include "megaclient.h"
+
+
+class SqliteDbAccess : public DbAccess
 {
-	DbEnv* env;
+	string dbpath;
+	sqlite3 *db;
 
 public:
-	DbTable* open(FileSystemAccess*, string*);
+	DbTable* open(string*);
 
-	BdbAccess();
-	~BdbAccess();
+	SqliteDbAccess(const char *path);
+	~SqliteDbAccess();
 };
 
-class BdbTable : public DbTable
+class SqliteDbTable : public DbTable
 {
-	Db* db;
-	DbTxn* dbtxn;
-	DbEnv* dbenv;
-	Dbc* dbcursor;
+	sqlite3 *db;
+	sqlite3_stmt *pStmt;
 
 public:
 	void rewind();
-	bool next(uint32_t*, string*);
-	bool get(uint32_t, string*);
-	bool put(uint32_t, char*, unsigned);
-	bool del(uint32_t);
+	int next(uint32_t*, string*);
+	int get(uint32_t, string*);
+	int put(uint32_t, char*, unsigned);
+	int del(uint32_t);
 	void truncate();
 	void begin();
 	void commit();
@@ -50,8 +53,8 @@ public:
 
 	uint32_t nextid;
 
-	BdbTable(DbEnv*);
-	~BdbTable();
+	SqliteDbTable(sqlite3 *db);
+	~SqliteDbTable();
 };
 
 #endif

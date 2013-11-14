@@ -1,5 +1,5 @@
 CXX=g++
-CFLAGS=-g -Wall -isystem /usr/include/cryptopp
+CFLAGS=-g -Wall -isystem /usr/include/cryptopp -DENABLE_LOCALCACHE
 LIB=-lcryptopp -lfreeimage -lreadline -ltermcap -lcurl -ldb_cxx
 LDFLAGS=
 SOURCES=megaposix.cpp megacli.cpp megaclient.cpp megacrypto.cpp megabdb.cpp

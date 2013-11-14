@@ -361,3 +361,13 @@ void Hash::get(string* out)
 	out->resize(hash.DigestSize());
 	hash.Final((byte*)out->data());
 }
+
+void HashCRC32::add(const byte* data, unsigned len)
+{
+	hash.Update(data,len);
+}
+
+void HashCRC32::get(byte* out)
+{
+	hash.Final(out);
+}

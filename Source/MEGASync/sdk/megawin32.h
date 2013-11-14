@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application for the Win32 environment
+MEGA SDK 2013-11-11 - sample application for the Win32 environment
 
 Using WinHTTP for HTTP I/O and native Win32 file access with UTF-8 <-> WCHAR conversion
 
@@ -22,16 +22,43 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MEGAWIN32_H
 #define MEGAWIN32_H
 
-class WinHttpIO : public HttpIO
+class WinWaiter : public Waiter
 {
-protected:
-	HINTERNET hSession;
-	int completion;
+	typedef ULONGLONG (WINAPI* PGTC)();
+	PGTC pGTC;
+	ULONGLONG tickhigh;
+	DWORD prevt;
 
 public:
+	enum { WAKEUP_HTTP, WAKEUP_CONSOLE };
 	HANDLE hWakeup[2];
-	CRITICAL_SECTION csHTTP;
+	PCRITICAL_SECTION pcsHTTP;
+	unsigned pendingfsevents;
 
+	dstime getdstime();
+
+	void init(dstime);
+	void waitfor(EventTrigger*);
+	int wait();
+	
+	WinWaiter();
+};
+
+class WinHttpIO : public HttpIO
+{
+	CRITICAL_SECTION csHTTP;
+	HANDLE hWakeupEvent;
+
+protected:
+	WinWaiter* waiter;
+	HINTERNET hSession;
+	bool completion;
+
+public:
+	static const unsigned HTTP_POST_CHUNK_SIZE = 16384;
+	
+	static VOID CALLBACK asynccallback(HINTERNET, DWORD_PTR, DWORD, LPVOID lpvStatusInformation, DWORD dwStatusInformationLength);
+	
 	void updatedstime();
 
 	void post(HttpReq*, const char* = 0, unsigned = 0);
@@ -39,18 +66,111 @@ public:
 
 	m_off_t postpos(void*);
 
-	int doio(void);
-	void waitio(uint32_t);
+	bool doio(void);
 
+	void addevents(Waiter*);
+
+	void entercs();
+	void leavecs();
+
+	void httpevent();
+	
 	WinHttpIO();
 	~WinHttpIO();
 };
 
 struct WinHttpContext
 {
-    HINTERNET hConnect;       // connection handle
-    HINTERNET hRequest;       // resource request handle
+    HINTERNET hRequest;
+    HINTERNET hConnect;
+
+	HttpReq* req;			// backlink to underlying HttpReq
+	WinHttpIO* httpio;		// backlink to application-wide WinHttpIO object
+
 	unsigned postpos;
+	unsigned postlen;
+	const char* postdata;
+};
+
+struct WinDirAccess : public DirAccess
+{
+	bool ffdvalid;
+	WIN32_FIND_DATAW ffd;
+	HANDLE hFind;
+	string globbase;
+
+public:
+	bool dopen(string*, FileAccess*, bool);
+	bool dnext(string*, nodetype* = NULL);
+
+	WinDirAccess();
+	virtual ~WinDirAccess();
+};
+
+class WinFileSystemAccess : public FileSystemAccess
+{
+public:
+	unsigned pendingevents;
+	bool notifyerr;
+
+	FileAccess* newfileaccess();
+	DirAccess* newdiraccess();
+
+	void tmpnamelocal(string*, string* = NULL);
+
+	void local2path(string*, string*);
+
+	void name2local(string*, const char* = NULL);
+	void local2name(string*);
+	bool localhidden(string*, string*);
+
+	bool renamelocal(string*, string*);
+	bool copylocal(string*, string*);
+	bool unlinklocal(string*);
+	bool rmdirlocal(string*);
+	bool mkdirlocal(string*);
+	bool setmtimelocal(string*, time_t);
+	bool chdirlocal(string*);
+
+	void addnotify(LocalNode*, string*);
+	void delnotify(LocalNode*);
+	bool notifynext(sync_list*, string*, LocalNode**);
+	bool notifyfailed();
+	
+	void addevents(Waiter*);
+
+	WinFileSystemAccess();
+	~WinFileSystemAccess();
+};
+
+typedef deque<string> string_deque;
+
+struct WinDirNotify
+{
+	WinFileSystemAccess* fsaccess;
+
+	HANDLE hDirectory;
+	
+	bool active;
+
+	string notifybuf[2];
+
+	string_deque notifyq;
+
+	string basepath;
+	LocalNode* localnode;
+	string fullpath;
+
+	DWORD dwBytes;
+	OVERLAPPED overlapped;
+
+	static VOID CALLBACK completion(DWORD, DWORD, LPOVERLAPPED);
+	
+	void process(DWORD wNumberOfBytesTransfered);
+	void readchanges();
+
+	WinDirNotify(WinFileSystemAccess*, LocalNode*, string*);
+	~WinDirNotify();
 };
 
 class WinFileAccess : public FileAccess
@@ -58,9 +178,13 @@ class WinFileAccess : public FileAccess
 	HANDLE hFile;
 
 public:
-	int fopen(const char*, int, int);
-	int fread(string*, unsigned, unsigned, m_off_t);
-	int fwrite(const byte*, unsigned, m_off_t);
+	HANDLE hFind;
+	WIN32_FIND_DATAW ffd;
+	
+	bool fopen(string*, bool, bool);
+	bool fread(string*, unsigned, unsigned, m_off_t);
+	bool frawread(byte*, unsigned, m_off_t);
+	bool fwrite(const byte*, unsigned, m_off_t);
 
 	WinFileAccess();
 	~WinFileAccess();

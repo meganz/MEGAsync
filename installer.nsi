@@ -194,6 +194,11 @@ Section "Principal" SEC01
   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
   ;IfErrors 0 VSRedist2010x86Installed
            inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)" "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe" "$INSTDIR\vcredist_x86.exe" /end
+           pop $0
+           StrCmp $0 "OK" dlok1
+           Abort
+           dlok1:
+
            ;File "vcredist_x86.exe"
            ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
            Delete "$INSTDIR\vcredist_x86.exe"
@@ -206,6 +211,10 @@ Section "Principal" SEC01
         ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1D8E6291-B0D5-35EC-8441-6616F567A0F7}" "Version"
         ;IfErrors 0 VSRedist2010x64Installed
                  inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
+                pop $0
+                StrCmp $0 "OK" dlok2
+                Abort
+                dlok2:
                  ;File "vcredist_x64.exe"
                  ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
                  Delete "$INSTDIR\vcredist_x64.exe"

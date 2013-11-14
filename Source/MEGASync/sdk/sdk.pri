@@ -14,13 +14,16 @@ CONFIG(release, debug|release) {
 SOURCES += sdk/megaapi.cpp \
     sdk/megacrypto.cpp \
     sdk/megaclient.cpp \
-    sdk/megabdb.cpp
+    sdk/megawin32.cpp \
+    sdk/megasqlitedb.cpp
 
 HEADERS  += sdk/megaapi.h \
     sdk/megacrypto.h \
     sdk/megaclient.h \
     sdk/megabdb.h \
-    sdk/mega.h
+    sdk/mega.h \
+    sdk/megawin32.h \
+    sdk/megasqlitedb.h
 
 LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 

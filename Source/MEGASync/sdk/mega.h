@@ -18,11 +18,8 @@
 #ifdef _WIN32
 #define atoll _atoi64
 #define snprintf _snprintf
-#define mkdir(x, y) _mkdir(x)
+#define mkdir _mkdir
 #include <windows.h>
-#include <shlwapi.h>
-#include <winhttp.h>
-#include <direct.h>
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 

@@ -16,6 +16,7 @@
 #include "utils/Preferences.h"
 #include "utils/HTTPServer.h"
 #include "utils/FileDownloader.h"
+#include "utils/WindowsUtils.h"
 #include "sdk/megaapi.h"
 
 class MegaApplication : public QApplication, public MegaListener

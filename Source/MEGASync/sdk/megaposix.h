@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application for the gcc/POSIX environment 
+MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment 
 
 Using cURL for HTTP I/O, GNU Readline for console I/O and FreeImage for thumbnail creation
 
@@ -24,6 +24,20 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MEGAPOSIX_H
 #define MEGAPOSIX_H
 
+struct PosixWaiter : public Waiter
+{
+	int maxfd;
+	fd_set rfds, wfds, efds;
+
+	dstime getdstime();
+
+	void init(dstime);
+	void waitfor(EventTrigger*);
+	int wait();
+
+	void bumpmaxfd(int);
+};
+
 class CurlHttpIO : public HttpIO
 {
 protected:
@@ -36,40 +50,87 @@ protected:
 	curl_slist* contenttypebinary;
 
 public:
-	void updatedstime();
-
 	void post(HttpReq*, const char* = 0, unsigned = 0);
 	void cancel(HttpReq*);
 
 	m_off_t postpos(void*);
 
-	int doio(void);
-	void waitio(uint32_t);
+	bool doio(void);
+
+	void addevents(Waiter*);
 
 	CurlHttpIO();
 	~CurlHttpIO();
 };
 
+struct PosixDirAccess : public DirAccess
+{
+	DIR* dp;
+	bool globbing;
+	glob_t globbuf;
+	unsigned globindex;
+
+	bool dopen(string*, FileAccess*, bool);
+	bool dnext(string*, nodetype* = NULL);
+
+	PosixDirAccess();
+	virtual ~PosixDirAccess();
+};
+
+class PosixFileSystemAccess : public FileSystemAccess
+{
+	int notifyfd;
+	bool notifyerr;
+	char notifybuf[sizeof(struct inotify_event)+NAME_MAX+1];
+	int notifypos, notifyleft;
+
+	typedef map<int,LocalNode*> wdlocalnode_map;
+	wdlocalnode_map wdnodes;
+	
+public:
+	FileAccess* newfileaccess();
+	DirAccess* newdiraccess();
+
+	void tmpnamelocal(string*, string* = NULL);
+
+	void local2path(string*, string*);
+
+	void name2local(string*, const char* = NULL);
+	void local2name(string*);
+	bool localhidden(string*, string*);
+
+	bool renamelocal(string*, string*);
+	bool copylocal(string*, string*);
+	bool unlinklocal(string*);
+	bool rmdirlocal(string*);
+	bool mkdirlocal(string*);
+	bool setmtimelocal(string*, time_t);
+	bool chdirlocal(string*);
+
+	void addnotify(LocalNode*, string*);
+	void delnotify(LocalNode*);
+	bool notifynext(sync_list*, string*, LocalNode**);
+	bool notifyfailed();
+	
+	void addevents(Waiter*);
+
+	PosixFileSystemAccess();
+	~PosixFileSystemAccess();
+};
+
 class PosixFileAccess : public FileAccess
 {
+public:
 	int fd;
 
-public:
-	int fopen(const char*, int, int);
-	int fread(string*, unsigned, unsigned, m_off_t);
-	int fwrite(const byte*, unsigned, m_off_t);
-
-	static int rename(const char*, const char*);
-	static int unlink(const char*);
+	bool fopen(string*, bool, bool);
+	bool fread(string*, unsigned, unsigned, m_off_t);
+	bool frawread(byte*, unsigned, m_off_t);
+	bool fwrite(const byte*, unsigned, m_off_t);
 
 	PosixFileAccess();
 	~PosixFileAccess();
 };
-
-// terminal handling
-static tcflag_t oldlflag;
-static cc_t oldvtime;
-static struct termios term;
 
 #endif
 #endif

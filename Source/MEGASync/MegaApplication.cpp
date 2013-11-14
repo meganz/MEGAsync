@@ -19,6 +19,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setApplicationName("MegaSync");
 
 #ifdef WIN32
+    WindowsUtils::initialize();
     WindowsUtils::startOnStartup(false);
 #endif
 

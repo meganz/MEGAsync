@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #include <osrng.h>
 #include <sha.h>
 #include <rsa.h> 
+#include <crc.h>
 #include <nbtheory.h>
 #include <algparam.h>
 
@@ -119,11 +120,20 @@ public:
 
 class Hash
 {
-    CryptoPP::SHA512 hash;
+	CryptoPP::SHA512 hash;
 
 public:
 	void add(const byte*, unsigned);
 	void get(string*);
+};
+
+class HashCRC32
+{
+	CryptoPP::CRC32 hash;
+
+public:
+	void add(const byte*, unsigned);
+	void get(byte*);
 };
 
 #endif

@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application, interactive GNU Readline CLI 
+MEGA SDK 2013-11-11 - sample application, interactive GNU Readline CLI 
 
 (using FreeImage for thumbnail creation)
 
@@ -20,9 +20,9 @@ DEALINGS IN THE SOFTWARE.
 
 extern MegaClient* client;
 
-extern int debug;
+extern bool debug;
 
-extern int redisplay;
+extern bool redisplay;
 
 extern void megacli();
 
@@ -30,24 +30,51 @@ extern void term_init();
 extern void term_restore();
 extern void term_echo(int);
 
-extern int rename_file(const char*, const char*);
-extern int unlink_file(const char*);
-extern int change_dir(const char*);
+//extern int globenqueue(const char*, const char*, handle, const char*);
 
-extern int globenqueue(const char*, const char*, handle, const char*);
+extern void read_pw_char(char*, int, int*, char**);
 
-struct AppFileGet : public FileGet
+typedef list<struct AppFile*> appfile_list;
+
+struct AppFile : public File
 {
-	void start();
+	// app-internal sequence number for queue management
+	int seqno;
 
-	 AppFileGet(handle h) : FileGet(h) { }
+	bool failed(error);
+//	void complete();
+	void progress();
+
+	appfile_list::iterator appxfer_it;
+
+	AppFile();
 };
 
-struct AppFilePut : public FilePut
+// application-managed GET and PUT queues (only pending and active files)
+extern appfile_list appxferq[2];
+
+struct AppFileGet : public AppFile
 {
 	void start();
+	void update();
+	void completed(Transfer*, LocalNode*);
 
-	AppFilePut(const char* fn, handle tn, const char* tu, const char* nn) : FilePut(fn,tn,tu,nn) { }
+//	void displayname(string*);
+
+	AppFileGet(Node*);
+	~AppFileGet();
+};
+
+struct AppFilePut : public AppFile
+{
+	void start();
+	void update();
+	void completed(Transfer*, LocalNode*);
+
+	void displayname(string*);
+	
+	AppFilePut(string*, handle, const char*);
+	~AppFilePut();
 };
 
 struct DemoApp : public MegaApp
@@ -103,18 +130,39 @@ struct DemoApp : public MegaApp
 	void openfilelink_result(Node*);
 
 	void topen_result(int, error);
-	void topen_result(int, string*, const char*, int);
+	void topen_result(int, const char*, int);
 
-	void transfer_update(int, m_off_t, m_off_t, dstime);
-	int transfer_error(int, int, int);
-	void transfer_failed(int, error);
-	void transfer_failed(int, string&, error);
-	void transfer_limit(int);
-	void transfer_complete(int, chunkmac_map*, const char*);
-	void transfer_complete(int, handle, const byte*, const byte*, SymmCipher*);
+	void transfer_added(Transfer*);
+	void transfer_removed(Transfer*);
+	void transfer_prepare(Transfer*);
+	void transfer_failed(Transfer*, error);
+	void transfer_update(Transfer*);
+	void transfer_limit(Transfer*);
+	void transfer_complete(Transfer*);
+
+	void syncupdate_state(Sync*, syncstate);
+	void syncupdate_local_folder_addition(Sync*, const char*);
+	void syncupdate_local_folder_deletion(Sync*, const char*);
+	void syncupdate_local_file_addition(Sync*, const char*);
+	void syncupdate_local_file_deletion(Sync*, const char*);
+	void syncupdate_get(Sync*, const char*);
+	void syncupdate_put(Sync*, const char*);
+	void syncupdate_local_mkdir(Sync*, const char*);
+	void syncupdate_local_unlink(Node*);
+	void syncupdate_local_rmdir(Node*);
+	void syncupdate_remote_unlink(Node*);
+	void syncupdate_remote_rmdir(Node*);
+	void syncupdate_remote_mkdir(Sync*, const char*);
+
 	void changepw_result(error);
 
 	void userattr_update(User*, int, const char*);
+
+	void enumeratequotaitems_result(handle, unsigned, unsigned, unsigned, unsigned, unsigned, const char*);
+	void enumeratequotaitems_result(error);
+	void additem_result(error);
+	void checkout_result(error);
+	void checkout_result(const char*);
 	
 	void reload(const char*);
 	void clearing();

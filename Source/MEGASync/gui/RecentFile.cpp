@@ -17,12 +17,12 @@ void RecentFile::setFileName(QString fileName)
 {
     this->fileName = fileName;
     ui->lFileName->setText(fileName);
-    if(fileName.endsWith(".pdf"))
-        ui->lFileType->setPixmap(QPixmap(":/images/sync_pdf.png"));
-    else if(fileName.endsWith(".zip"))
-        ui->lFileType->setPixmap(QPixmap(":/images/sync_compressed.png"));
-    else if(fileName.endsWith(".png"))
-        ui->lFileType->setPixmap(QPixmap(":/images/sync_image.png"));
+    QFileInfo f(fileName);
+    if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
+        ui->lFileType->setPixmap(WindowsUtils::extensionIcons[f.suffix().toLower()]);
+    else
+        ui->lFileType->setPixmap(QPixmap(":/images/sync_generic.png"));
+
     ui->lTime->setText(tr("%1 days ago"));
     ui->lTime->setText(tr("%1 months ago"));
 }

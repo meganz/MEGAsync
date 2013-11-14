@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application, interactive GNU Readline CLI
+MEGA SDK 2013-11-11 - sample application, interactive GNU Readline CLI
 
 (using FreeImage for thumbnail creation and Berkeley DB for state caching)
 
@@ -22,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 #define _LARGE_FILES
 #define _LARGEFILE64_SOURCE
 #define _GNU_SOURCE 1
-#define _FILE_OFFSET_BITS 64
+#define _OFFSET_BITS 64
 
 #define __DARWIN_C_LEVEL 199506L
 
@@ -47,10 +47,9 @@ DEALINGS IN THE SOFTWARE.
 
 MegaClient* client;
 
-int debug;
+bool debug;
 
-int redisplay = 1;
-
+// send rate limiter
 static int putbps;
 
 // login e-mail address
@@ -71,15 +70,14 @@ static byte signuppwchallenge[SymmCipher::KEYLENGTH], signupencryptedmasterkey[S
 // - must respect JPEG EXIF rotation tag
 // - must save at 85% quality
 // returns result as string
-static void createthumbnail(const char* filename, unsigned size, string* result)
+static void createthumbnail(string* filename, unsigned size, string* result)
 {
 	FIBITMAP* dib;
 	FIBITMAP* tdib;
 	FIMEMORY* hmem;
 	int w, h;
 
-	// FIXME: support Unicode filenames
-	FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(filename);
+	FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(filename->data());
 
 	if (fif == FIF_UNKNOWN) return;
 
@@ -88,18 +86,18 @@ static void createthumbnail(const char* filename, unsigned size, string* result)
 		// load JPEG (scale & EXIF-rotate)
 		FITAG *tag;
 
-		if (!(dib = FreeImage_Load(fif,filename,JPEG_EXIFROTATE | JPEG_FAST | (size << 16)))) return;
+		if (!(dib = FreeImage_Load(fif,filename->data(),JPEG_EXIFROTATE | JPEG_FAST | (size << 16)))) return;
 
-		if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGWidth", &tag)) w = atoi((char*)FreeImage_GetTagValue(tag));
+		if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGWidth",&tag)) w = atoi((char*)FreeImage_GetTagValue(tag));
 		else w = FreeImage_GetWidth(dib);
 
-		if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGHeight", &tag)) h = atoi((char*)FreeImage_GetTagValue(tag));
+		if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGHeight",&tag)) h = atoi((char*)FreeImage_GetTagValue(tag));
 		else h = FreeImage_GetHeight(dib);
 	}
 	else
 	{
 		// load all other image types - for RAW formats, rely on embedded preview
-		if (!(dib = FreeImage_Load(fif, filename, (fif == FIF_RAW) ? RAW_PREVIEW : 0))) return;
+		if (!(dib = FreeImage_Load(fif,filename->data(),(fif == FIF_RAW) ? RAW_PREVIEW : 0))) return;
 
 		w = FreeImage_GetWidth(dib);
 		h = FreeImage_GetHeight(dib);
@@ -204,206 +202,273 @@ const char* errorstring(error e)
 	}
 }
 
-// start queued upload, including thumbnail generation
-void AppFilePut::start()
+AppFile::AppFile()
 {
-	cout << "Sending " << filename << " (attempt #" << ++failcount << ")..." << endl;
-
-	td = client->topen(filename.c_str(),putbps);
-
-	if (td < 0)
-	{
-		bt.backoff(client->httpio->ds);
-		cout << filename << ": Send failed (" << errorstring((error)td) << "), retrying in " << bt.retryin(client->httpio->ds)*100 << " ms..." << endl;
-	}
-	else
-	{
-		string thumbnail;
-
-		// (thumbnail creation should be performed in subthreads to keep the app nonblocking)
-		// to guard against file overwrite race conditions, production applications
-		// should use the same file handle for uploading and creating the thumbnail
-		createthumbnail(filename.c_str(),120,&thumbnail);
-
-		if (thumbnail.size())
-		{
-			cout << "Image detected and thumbnail extracted, size " << thumbnail.size() << " bytes" << endl;
-
-			// (the upload handle will remain valid throughout the session - even
-			// after the upload completes -, to accomodate delayed completion of
-			// the thumbnail creation)
-			handle uh = client->uploadhandle(td);
-
-			// (store the file attribute data - it will be attached to the file
-			// immediately if the upload has already completed; otherwise, once
-			// the upload completes)
-			client->putfa(&client->ft[td].key,uh,THUMBNAIL120X120,(const byte*)thumbnail.data(),thumbnail.size());
-		}
-	}
+	static int nextseqno;
+	
+	seqno = ++nextseqno;
 }
 
-// start queued download
+// queued upload is starting - create thumbnail
+void AppFilePut::start()
+{
+	//cout << "Sending " << displayname() << " (attempt #" << transfer->failcount << ")..." << endl;
+}
+
+// queued upload is starting - create thumbnail
 void AppFileGet::start()
+{
+	//cout << "Fetching " << displayname() << " (attempt #" << transfer->failcount << ")..." << endl;
+}
+
+// returns true to effect a retry, false to effect a failure
+bool AppFile::failed(error e)
+{
+	return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 10;
+}
+
+void AppFileGet::completed(Transfer*, LocalNode*)
+{
+	delete this;
+}
+
+void AppFilePut::completed(Transfer* t, LocalNode*)
+{
+	File::completed(t,NULL);
+
+	delete this;
+}
+
+AppFileGet::~AppFileGet()
+{
+	appxferq[GET].erase(appxfer_it);
+}
+
+AppFilePut::~AppFilePut()
+{
+	appxferq[PUT].erase(appxfer_it);
+}
+
+/*void AppFileGet::displayname(string* dname)
 {
 	Node* n;
 
-	failcount++;
+	if ((n = client->nodebyhandle(h))) *dname = n->displayname();
+	else *dname = "DELETED/UNAVAILABLE";
+}*/
 
-	if ((n = client->nodebyhandle(nodehandle)))
+void AppFilePut::displayname(string* dname)
+{
+	*dname = localfilename;
+	transfer->client->fsaccess->local2name(dname);
+}
+
+// transfer progress
+void AppFile::progress()
+{
+}
+
+static void displaytransferdetails(Transfer* t, const char* action)
+{
+	string name;
+
+	for (file_list::iterator it = t->files.begin(); it != t->files.end(); it++)
 	{
-		cout << "Fetching " << n->displayname() << " (attempt #" << failcount << ")..." << endl;
+		if (it != t->files.begin()) cout << "/";
+		
+		(*it)->displayname(&name);
+		cout << name;
+	}
 
-		if (n->type == FILENODE)
+	cout << ": " << (t->type == GET ? "Incoming" : "Outgoing") << " file transfer " << action;
+}
+
+// new transfer was added
+void DemoApp::transfer_added(Transfer* t)
+{
+}
+
+// queued transfer was removed
+void DemoApp::transfer_removed(Transfer* t)
+{
+	displaytransferdetails(t,"removed\n");
+}
+
+void DemoApp::transfer_update(Transfer* t)
+{
+	// this is handled in the prompt logic
+}
+
+void DemoApp::transfer_failed(Transfer* t, error e)
+{
+	displaytransferdetails(t,"failed (");
+	cout << errorstring(e) << ")" << endl;
+}
+
+void DemoApp::transfer_limit(Transfer *t)
+{
+	displaytransferdetails(t,"bandwidth limit reached\n");
+}
+
+void DemoApp::transfer_complete(Transfer* t)
+{
+	displaytransferdetails(t,"completed, ");
+
+	cout << t->slot->progressreported*10/(1024*(client->waiter->ds-t->slot->starttime+1)) << " KB/s" << endl;
+}
+
+// transfer about to start - make final preparations (determine localfilename, create thumbnail for image upload)
+void DemoApp::transfer_prepare(Transfer* t)
+{
+	displaytransferdetails(t,"starting\n");
+
+	if (t->type == GET)
+	{
+		client->fsaccess->tmpnamelocal(&t->localfilename);
+	}
+	else
+	{
+		if (t->localfilename.size())
 		{
-			td = client->topen(n->nodehandle);
-
-			if (td < 0)
+			if (!t->uploadhandle)
 			{
-				cout << n->displayname() << ": Fetch failed (" << errorstring((error)td) << "), ";
-				n = NULL;
+				string thumbnail;
+
+				// (thumbnail creation should be performed in subthreads to keep the app nonblocking)
+				// to guard against file overwrite race conditions, production applications
+				// should use the same file handle for uploading and creating the thumbnail
+				createthumbnail(&t->localfilename,120,&thumbnail);
+
+				if (thumbnail.size())
+				{
+					cout << "Image detected and thumbnail extracted, size " << thumbnail.size() << " bytes" << endl;
+
+					// (store the file attribute data - it will be attached to the file
+					// immediately if the upload has already completed; otherwise, once
+					// the upload completes)
+					client->putfa(t,THUMBNAIL120X120,(const byte*)thumbnail.data(),thumbnail.size());
+				}
 			}
 		}
-		else
-		{
-			cout << "Internal error: Attempting to fetch non-file, ";
-			n = NULL;
-		}
 	}
-	else cout << "File unavailable or removed, ";
+}
 
-	if (!n)
+static void syncstat(Sync* sync)
+{
+	cout << "Local data in this sync: " << sync->localbytes << " byte(s) in " << sync->localnodes[FILENODE] << " files and " << sync->localnodes[FOLDERNODE] << " folders" << endl;
+}
+
+void DemoApp::syncupdate_state(Sync*, syncstate newstate)
+{
+	switch (newstate)
 	{
-		bt.backoff(client->httpio->ds);
-		cout << "retrying in " << bt.retryin(client->httpio->ds)*100 << " ms..." << endl;
+		case SYNC_ACTIVE:
+			cout << "Sync is now active" << endl;
+			break;
+
+		case SYNC_FAILED:
+			cout << "Sync failed." << endl;
+			
+		default:;
 	}
 }
 
-// topen() failed
-void DemoApp::topen_result(int td, error e)
+// sync update callbacks are for informational purposes only and must not change or delete the sync itself
+void DemoApp::syncupdate_local_folder_addition(Sync* sync, const char* path)
 {
-	cout << "TD " << td << ": Failed to open file (" << errorstring(e) << ")" << endl;
-
-	client->tclose(td);
+	cout << "Sync - local folder addition detected: " << path << endl;
+	syncstat(sync);
 }
 
-// topen() succeeded (download only)
-void DemoApp::topen_result(int td, string* filename, const char* fa, int pfa)
+void DemoApp::syncupdate_local_folder_deletion(Sync* sync, const char* path)
 {
-	cout << "TD " << td << ": File opened successfully, filename: " << *filename << endl;
-
-	if (fa && debug) cout << "File has attributes: " << fa << " / " << pfa << endl;
-
-	MegaClient::escapefilename(filename);
-
-	string tmpfilename = *filename;
-
-	tmpfilename.append(".tmp");
-	client->dlopen(td,tmpfilename.c_str());
+	cout << "Sync - local folder deletion detected: " << path << endl;
+	syncstat(sync);
 }
 
-void DemoApp::transfer_update(int td, m_off_t bytes, m_off_t size, dstime starttime)
+void DemoApp::syncupdate_local_file_addition(Sync* sync, const char* path)
 {
-	cout << "TD " << td << ": Update: " << bytes/1024 << " KB of " << size/1024 << " KB, " << bytes*10/(1024*(client->httpio->ds-starttime)+1) << " KB/s" << endl;
+	cout << "Sync - local file addition detected: " << path << endl;
+	syncstat(sync);
 }
 
-// returns value 0: continue transfer, 1: implicit tclose(), transfer abort
-int DemoApp::transfer_error(int td, int httpcode, int count)
+void DemoApp::syncupdate_local_file_deletion(Sync* sync, const char* path)
 {
-	cout << "TD " << td << ": Failed, HTTP error code " << httpcode << " (count " << count << ")" << endl;
-
-	return 0;
+	cout << "Sync - local file deletion detected: " << path << endl;
+	syncstat(sync);
 }
 
-// download failed: tclose() is implicitly invoked by the engine
-void DemoApp::transfer_failed(int td, string& filename, error e)
+void DemoApp::syncupdate_get(Sync*, const char* path)
 {
-	if (e) cout << "TD " << td << ": Download failed (" << errorstring(e) << ")" << endl;
-
-	filename.append(".tmp");
-	unlink_file(filename.c_str());
+	cout << "Sync - requesting file " << path << endl;
 }
 
-// upload failed: tclose() is implicitly invoked by the engine
-void DemoApp::transfer_failed(int td, error e)
+void DemoApp::syncupdate_put(Sync*, const char* path)
 {
-	if (e) cout << "TD " << td << ": Upload failed (" << errorstring(e) << ")" << endl;
+	cout << "Sync - sending file " << path << endl;
 }
 
-void DemoApp::transfer_limit(int td)
+void DemoApp::syncupdate_local_mkdir(Sync*, const char* path)
 {
-	cout << "TD " << td << ": Transfer limit reached, retrying later..." << endl;
+	cout << "Sync - creating local folder " << path << endl;
 }
 
-void DemoApp::transfer_complete(int td, chunkmac_map* macs, const char* fn)
+void DemoApp::syncupdate_local_unlink(Node* n)
 {
-	cout << "TD " << td << ": Download complete" << endl;
-
-	string tmpfilename = fn;
-	string filename = fn;
-
-	tmpfilename.append(".tmp");
-
-	client->tclose(td);
-
-	if (rename_file(tmpfilename.c_str(),filename.c_str())) cout << "TD " << td << ": Download complete: " << filename << endl;
-	else cout << "TD " << td << ": rename(" << tmpfilename << "," << filename << ") failed" << endl;
-
-	delete client->gettransfer((transfer_list*)&client->getq,td);
+	cout << "Sync - removing local file " << n->displayname() << endl;
 }
 
-void DemoApp::transfer_complete(int td, handle ulhandle, const byte* ultoken, const byte* filekey, SymmCipher* key)
+void DemoApp::syncupdate_local_rmdir(Node* n)
 {
-	cout << "TD " << td << ": Upload complete" << endl;
+	cout << "Sync - removing local folder " << n->displayname() << endl;
+}
 
-	FilePut* putf = (FilePut*)client->gettransfer((transfer_list*)&client->putq,td);
+void DemoApp::syncupdate_remote_unlink(Node* n)
+{
+	cout << "Sync - removing remote file " << n->displayname() << endl;
+}
 
-	if (putf)
-	{
-		if (!putf->targetuser.size() && !client->nodebyhandle(putf->target))
-		{
-			cout << "Upload target folder inaccessible, using /" << endl;
-			putf->target = client->rootnodes[0];
-		}
+void DemoApp::syncupdate_remote_rmdir(Node* n)
+{
+	cout << "Sync - removing deleted remote folder " << n->displayname() << endl;
+}
 
-		NewNode* newnode = new NewNode[1];
+void DemoApp::syncupdate_remote_mkdir(Sync*, const char* name)
+{
+	cout << "Sync - creating remote folder " << name << endl;
+}
 
-		// build new node
-		newnode->source = NEW_UPLOAD;
+AppFileGet::AppFileGet(Node* n)
+{
+	h = n->nodehandle;
+	*(SparseCRC*)this = n->crc;
+	name = n->displayname();
+	localfilename = name;
+	client->fsaccess->name2local(&localfilename);
+}
 
-		// upload handle required to retrieve/include pending file attributes
-		newnode->uploadhandle = ulhandle;
+AppFilePut::AppFilePut(string* clocalfilename, handle ch, const char* ctargetuser)
+{
+	// this assumes that the local OS uses an ASCII path separator, which should be true for most
+	string separator = client->fsaccess->localseparator;
 
-		// reference to uploaded file
-		memcpy(newnode->uploadtoken,ultoken,sizeof newnode->uploadtoken);
+	// full local path
+	localfilename = *clocalfilename;
 
-		// file's crypto key
-		newnode->nodekey.assign((char*)filekey,Node::FILENODEKEYLENGTH);
-		newnode->mtime = newnode->ctime = time(NULL);
-		newnode->type = FILENODE;
-		newnode->parenthandle = UNDEF;
+	// target parent node
+	h = ch;
+	
+	// target user
+	targetuser = ctargetuser;
 
-		AttrMap attrs;
-
-		MegaClient::unescapefilename(&putf->filename);
-
-		attrs.map['n'] = putf->newname.size() ? putf->newname : putf->filename;
-
-		attrs.getjson(&putf->filename);
-
-		client->makeattr(key,&newnode->attrstring,putf->filename.c_str());
-
-		if (putf->targetuser.size())
-		{
-			cout << "Attempting to drop file into user " << putf->targetuser << "'s inbox..." << endl;
-			client->putnodes(putf->targetuser.c_str(),newnode,1);
-		}
-		else client->putnodes(putf->target,newnode,1);
-
-		delete putf;
-	}
-	else cout << "(Canceled transfer, ignoring)" << endl;
-
-	client->tclose(td);
+	// erase path component
+	name = *clocalfilename;
+	client->fsaccess->local2name(&name);
+	client->fsaccess->local2name(&separator);
+cout << "name=" << name << endl;
+cout << "separator=" << separator << endl;
+cout << "index=" << name.find_last_of(*separator.c_str()) << endl;
+	name.erase(0,name.find_last_of(*separator.c_str())+1);
 }
 
 // user addition/update (users never get deleted)
@@ -435,9 +500,12 @@ void DemoApp::fetchnodes_result(error e)
 
 void DemoApp::putnodes_result(error e, targettype t, NewNode* nn)
 {
-	delete[] nn;
+	if (t == USER_HANDLE)
+	{
+		delete[] nn;
 
-	if (t == USER_HANDLE) if (!e) cout << "Success." << endl;
+		if (!e) cout << "Success." << endl;
+	}
 
 	if (e) cout << "Node addition failed (" << errorstring(e) << ")" << endl;
 }
@@ -499,8 +567,9 @@ void DemoApp::notify_retry(dstime dsdelta)
 	cout << "API request failed, retrying in " << dsdelta*100 << " ms - Use 'retry' to retry immediately..." << endl;
 }
 
-static void process_line(char *line);
-static string line;
+static void store_line(char*);
+static void process_line(char *);
+static char* line;
 
 static AccountDetails account;
 
@@ -769,6 +838,8 @@ static void dumptree(Node* n, int recurse, int depth = 0, const char* title = NU
 
 static void nodepath(handle h, string* path)
 {
+	path->clear();
+
 	if (h == client->rootnodes[0])
 	{
 		*path = "/";
@@ -819,24 +890,28 @@ static void nodepath(handle h, string* path)
 	}
 }
 
+appfile_list appxferq[2];
+
+static char dynamicprompt[128];
+
 static const char* prompts[] = { "MEGA> ", "Password:", "Old Password:", "New Password:", "Retype New Password:" };
 enum prompttype { COMMAND, LOGINPASSWORD, OLDPASSWORD, NEWPASSWORD, PASSWORDCONFIRM };
 static prompttype prompt = COMMAND;
 
-static const char* get_prompt(void)
-{
-	return prompts[prompt];
-}
+static char pw_buf[256];
+static int pw_buf_pos;
 
 static void setprompt(prompttype p)
 {
-	if (prompt != COMMAND) cout << endl;
-
 	prompt = p;
 
-	term_echo(p == COMMAND);
-
-	rl_callback_handler_install(get_prompt(),process_line);
+	if (p == COMMAND) term_echo(true);
+	else
+	{
+		pw_buf_pos = 0;
+		cout << prompts[p] << flush;
+		term_echo(false);
+	}
 }
 
 TreeProcCopy::TreeProcCopy()
@@ -889,9 +964,9 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 	else nc++;
 }
 
-int loadfile(const char* name, string* data)
+int loadfile(string* name, string* data)
 {
-	FileAccess* fa = client->app->newfile();
+	FileAccess* fa = client->fsaccess->newfileaccess();
 
 	if (fa->fopen(name,1,0))
 	{
@@ -907,17 +982,73 @@ int loadfile(const char* name, string* data)
 	return 0;
 }
 
+void xferq(direction d, int cancel)
+{
+	string name;
+
+	for (appfile_list::iterator it = appxferq[d].begin(); it != appxferq[d].end(); )
+	{
+		if (cancel < 0 || cancel == (*it)->seqno)
+		{
+			(*it)->displayname(&name);
+			
+			cout << (*it)->seqno << ": " << name;
+
+			if (d == PUT)
+			{
+				AppFilePut* f = (AppFilePut*)*it;
+
+				cout << " -> ";
+
+				if (f->targetuser.size()) cout << f->targetuser << ":";
+				else
+				{
+					string path;
+					nodepath(f->h,&path);
+					cout << path;
+				}
+			}
+
+			if ((*it)->transfer && (*it)->transfer->slot) cout << " [ACTIVE]";
+			cout << endl;
+
+			if (cancel >= 0)
+			{
+				cout << "Canceling..." << endl;
+
+				if ((*it)->transfer) client->stopxfer(*it);
+				delete *it++;
+			}
+			else it++;
+		}
+		else it++;
+	}
+}
+
 // password change-related state information
 static byte pwkey[SymmCipher::KEYLENGTH];
 static byte pwkeybuf[SymmCipher::KEYLENGTH];
 static byte newpwkey[SymmCipher::KEYLENGTH];
 
-void process_line(char* line)
+void store_line(char* l)
+{
+	if (!l)
+	{
+		term_restore();
+		exit(0);
+	}
+
+	if (*l && prompt == COMMAND) add_history(l);
+
+	line = l;
+}
+
+void process_line(char* l)
 {
 	switch (prompt)
 	{
 		case LOGINPASSWORD:
-			client->pw_key(line,pwkey);
+			client->pw_key(l,pwkey);
 
 			if (signupcode.size())
 			{
@@ -925,7 +1056,7 @@ void process_line(char* line)
 				SymmCipher pwcipher(pwkey);
 				pwcipher.ecb_decrypt(signuppwchallenge);
 
-				if (*(uint64_t*)(signuppwchallenge+4)) cout << endl << "Incorrect password, please try again.";
+				if (*(uint64_t*)(signuppwchallenge+4)) cout << endl << "Incorrect password, please try again." << endl;
 				else
 				{
 					// decrypt and set master key, then proceed with the confirmation
@@ -940,36 +1071,33 @@ void process_line(char* line)
 			else
 			{
 				client->login(login.c_str(),pwkey);
-				cout << endl << "Logging in...";
+				cout << endl << "Logging in..." << endl;
 			}
 
 			setprompt(COMMAND);
-			free(line);
 			return;
 
 		case OLDPASSWORD:
-			client->pw_key(line,pwkeybuf);
+			client->pw_key(l,pwkeybuf);
 
 			if (!memcmp(pwkeybuf,pwkey,sizeof pwkey)) setprompt(NEWPASSWORD);
 			else
 			{
-				cout << endl << "Bad password, please try again";
+				cout << endl << "Bad password, please try again" << endl;
 				setprompt(COMMAND);
 			}
-			free(line);
 			return;
 
 		case NEWPASSWORD:
-			client->pw_key(line,newpwkey);
+			client->pw_key(l,newpwkey);
 
 			setprompt(PASSWORDCONFIRM);
-			free(line);
 			return;
 
 		case PASSWORDCONFIRM:
-			client->pw_key(line,pwkeybuf);
+			client->pw_key(l,pwkeybuf);
 
-			if (memcmp(pwkeybuf,newpwkey,sizeof pwkey)) cout << endl << "Mismatch, please try again";
+			if (memcmp(pwkeybuf,newpwkey,sizeof pwkey)) cout << endl << "Mismatch, please try again" << endl;
 			else
 			{
 				error e;
@@ -980,7 +1108,7 @@ void process_line(char* line)
 					if ((e = client->changepw(pwkey,newpwkey)) == API_OK)
 					{
 						memcpy(pwkey,newpwkey,sizeof pwkey);
-						cout << endl << "Changing password...";
+						cout << endl << "Changing password..." << endl;
 					}
 					else cout << "You must be logged in to change your password." << endl;
 				}
@@ -988,19 +1116,14 @@ void process_line(char* line)
 
 			setprompt(COMMAND);
 			signupemail.clear();
-			free(line);
 			return;
 
 		case COMMAND:
-			if (!line || !strcmp(line,"q") || !strcmp(line,"quit") || !strcmp(line,"exit"))
-			{
-				term_restore();
-				exit(0);
-			}
+			if (!l || !strcmp(l,"q") || !strcmp(l,"quit") || !strcmp(l,"exit")) store_line(NULL);
 
 			vector<string> words;
 
-			char* ptr = line;
+			char* ptr = l;
 			char* wptr;
 
 			// split line into words with quoting and escaping
@@ -1039,10 +1162,6 @@ void process_line(char* line)
 				}
 			}
 
-			if (words.size()) add_history(line);
-
-			free(line);
-
 			if (!words.size()) return;
 
 			Node* n;
@@ -1068,6 +1187,7 @@ void process_line(char* line)
 				cout << "      rm path" << endl;
 				cout << "      mv srcpath dstpath" << endl;
 				cout << "      cp srcpath dstpath|dstemail:" << endl;
+				cout << "      sync localpath dstpath" << endl;
 				cout << "      import exportedfilelink#key" << endl;
 				cout << "      export path [del]" << endl;
 				cout << "      share [path [email [r|rw|full]]]" << endl;
@@ -1375,12 +1495,24 @@ void process_line(char* line)
 
 							if (n)
 							{
+								AppFile* f;
+
 								// queue specified file...
-								if (n->type == FILENODE) client->getq.push_back(new AppFileGet(n->nodehandle));
+								if (n->type == FILENODE)
+								{
+									f = new AppFileGet(n);
+									f->appxfer_it = appxferq[GET].insert(appxferq[GET].end(),f);
+									client->startxfer(GET,f);
+								}
 								else
 								{
 									// ...or all files in the specified folder (non-recursive)
-									for (node_list::iterator it = n->children.begin(); it != n->children.end(); it++) if ((*it)->type == FILENODE) client->getq.push_back(new AppFileGet((*it)->nodehandle));
+									for (node_list::iterator it = n->children.begin(); it != n->children.end(); it++) if ((*it)->type == FILENODE)
+									{
+										f = new AppFileGet(*it);
+										f->appxfer_it = appxferq[GET].insert(appxferq[GET].end(),f);
+										client->startxfer(GET,f);
+									}
 								}
 							}
 							else cout << words[1] << ": No such file or folder" << endl;
@@ -1393,9 +1525,13 @@ void process_line(char* line)
 					{
 						if (words.size() > 1)
 						{
+							AppFile* f;
 							handle target = cwd;
 							string targetuser;
 							string newname;
+							int total = 0;
+							string localname;
+							nodetype type;
 
 							if (words.size() > 2)
 							{
@@ -1410,9 +1546,27 @@ void process_line(char* line)
 								return;
 							}
 
-							int total = globenqueue(words[1].c_str(),newname.c_str(),target,targetuser.c_str());
+							client->fsaccess->name2local(&words[1],"");
 
-							cout << "Queued " << total << " file(s) for upload, " << client->putq.size() << " file(s) in queue" << endl;
+							DirAccess* da = client->fsaccess->newdiraccess();
+
+							if (da->dopen(&words[1],NULL,true))
+							{
+								while (da->dnext(&localname,&type))
+								{
+									if (type == FILENODE)
+									{
+										f = new AppFilePut(&localname,target,targetuser.c_str());
+										f->appxfer_it = appxferq[PUT].insert(appxferq[PUT].end(),f);
+										client->startxfer(PUT,f);
+										total++;
+									}
+								}
+							}
+
+							delete da;
+
+							cout << "Queued " << total << " file(s) for upload, " << appxferq[PUT].size() << " file(s) in queue" << endl;
 						}
 						else cout << "      put localpattern [dstpath|dstemail:]" << endl;
 
@@ -1432,7 +1586,10 @@ void process_line(char* line)
 					{
 						if (words.size() > 1)
 						{
-							if (!change_dir(words[1].c_str())) cout << words[1].c_str() << ": Failed (" << errno << ")" << endl;
+							string localname = words[1];
+
+							client->fsaccess->name2local(&localname);
+							if (!client->fsaccess->chdirlocal(&localname)) cout << words[1] << ": Failed" << endl;
 						}
 						else cout << "      lcd [localpath]" << endl;
 
@@ -1443,79 +1600,53 @@ void process_line(char* line)
 				case 4:
 					if (words[0] == "putq")
 					{
-						int s = 0, cancel;
-
-						if (words.size() > 1) cancel = atoi(words[1].c_str());
-						else cancel = -1;
-
-						for (put_list::iterator it = client->putq.begin(); it != client->putq.end(); s++)
-						{
-							if (cancel < 0 || s == cancel)
-							{
-								cout << s << ": " << (*it)->filename << " -> ";
-
-								if ((*it)->targetuser.size()) cout << (*it)->targetuser << ":";
-								else
-								{
-									string path;
-									nodepath((*it)->target,&path);
-									cout << path;
-								}
-
-								if ((*it)->td >= 0) cout << " [ACTIVE]";
-								cout << endl;
-
-								if (cancel >= 0)
-								{
-									cout << "Canceling..." << endl;
-
-									if ((*it)->td >= 0) client->tclose((*it)->td);
-
-									delete *it;
-									client->putq.erase(it++);
-								}
-								else it++;
-							}
-							else it++;
-						}
+						xferq(PUT,words.size() > 1 ? atoi(words[1].c_str()) : -1);
 						return;
 					}
 					else if (words[0] == "getq")
 					{
-						int s = 0, cancel;
-						Node* n;
-
-						if (words.size() > 1) cancel = atoi(words[1].c_str());
-						else cancel = -1;
-
-						for (get_list::iterator it = client->getq.begin(); it != client->getq.end(); s++)
+						xferq(GET,words.size() > 1 ? atoi(words[1].c_str()) : -1);
+						return;
+					}
+					else if (words[0] == "sync")
+					{
+						if (words.size() == 3)
 						{
-							if ((n = client->nodebyhandle((*it)->nodehandle)))
+							Node* n = nodebypath(words[2].c_str());
+
+							if (client->checkaccess(n,FULL))
 							{
-								if (cancel < 0 || s == cancel)
+								string localname = words[1];
+
+								client->fsaccess->name2local(&localname);
+
+								if (!n) cout << words[2] << ": Not found." << endl;
+								else if (n->type == FILENODE) cout << words[2] << ": Remote sync root must be folder." << endl;
+								else if (!client->addsync(&localname,n)) cout << words[1] << ": Local sync path not found." << endl;
+							}
+							else cout << words[2] << ": Syncing requires full access to path." << endl;
+						}
+						else if (words.size() == 1)
+						{
+							if (client->syncs.size())
+							{
+								int i = 0;
+								string remotepath, localpath;
+
+								for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
 								{
-									cout << s << ": " << n->displayname();
-									if ((*it)->td >= 0) cout << " [ACTIVE]";
-									cout << endl;
+									static const char* syncstatenames[] = { "Initial scan, please wait", "Active", "Failed" };
+								
+									nodepath((*it)->rooth,&remotepath);
+									client->fsaccess->local2path(&(*it)->rootpath,&localpath);
 
-									if (cancel >= 0)
-									{
-										cout << "Canceling..." << endl;
-
-										if ((*it)->td >= 0) client->tclose((*it)->td);
-
-										n = NULL;
-									}
+									cout << "#" << i++ << ": " << localpath << " to " << remotepath << " - " << syncstatenames[(*it)->state] << endl;
 								}
 							}
-
-							if (!n)
-							{
-								delete *it;
-								client->getq.erase(it++);
-							}
-							else it++;
+							else cout << "No syncs active at this time." << endl;
 						}
+						else cout << "      sync localpath dstpath" << endl;
+
 						return;
 					}
 					break;
@@ -1575,7 +1706,7 @@ void process_line(char* line)
 							handle uh;
 							byte pw[SymmCipher::KEYLENGTH];
 
-							if (Base64::atob(words[1].c_str(),(byte*)&uh,sizeof uh)-(byte*)&uh == sizeof uh && Base64::atob(words[1].c_str()+12,pw,sizeof pw)-pw == sizeof pw) client->resumeephemeral(uh,pw);
+							if (Base64::atob(words[1].c_str(),(byte*)&uh,sizeof uh) == sizeof uh && Base64::atob(words[1].c_str()+12,pw,sizeof pw) == sizeof pw) client->resumeephemeral(uh,pw);
 							else cout << "Malformed ephemeral session identifier." << endl;
 						}
 						else cout << "      begin [ephemeralhandle#ephemeralpw]" << endl;
@@ -1831,7 +1962,7 @@ void process_line(char* line)
 							{
 								string data;
 
-								if (loadfile(words[3].c_str(),&data)) client->putua(words[1].c_str(),(const byte*)data.data(),data.size(),priv);
+								if (loadfile(&words[3],&data)) client->putua(words[1].c_str(),(const byte*)data.data(),data.size(),priv);
 								else cout << "Cannot read " << words[3] << endl;
 
 								return;
@@ -1844,7 +1975,7 @@ void process_line(char* line)
 					}
 					else if (words[0] == "debug")
 					{
-						debug ^= 1;
+						debug = !debug;
 
 						cout << "Debug mode " << (debug ? "on" : "off") << endl;
 
@@ -1928,7 +2059,7 @@ void process_line(char* line)
 							unsigned len = (words[1].size()-(ptr-words[1].c_str()))*3/4+4;
 
 							byte* c = new byte[len];
-							len = Base64::atob(ptr,c,len)-c;
+							len = Base64::atob(ptr,c,len);
 							client->querysignuplink(c,len);		// we first just query the supplied signup link, then collect and verify the password, then confirm the account
 							delete[] c;
 						}
@@ -2252,6 +2383,31 @@ void DemoApp::nodes_updated(Node** n, int count)
 	if (ISUNDEF(cwd)) cwd = client->rootnodes[0];
 }
 
+void DemoApp::enumeratequotaitems_result(handle, unsigned, unsigned, unsigned, unsigned, unsigned, const char*)
+{
+	// FIXME: implement
+}
+
+void DemoApp::enumeratequotaitems_result(error)
+{
+	// FIXME: implement
+}
+
+void DemoApp::additem_result(error)
+{
+	// FIXME: implement
+}
+
+void DemoApp::checkout_result(error)
+{
+	// FIXME: implement
+}
+
+void DemoApp::checkout_result(const char*)
+{
+	// FIXME: implement
+}
+
 // display account details/history
 void DemoApp::account_details(AccountDetails* ad, int storage, int transfer, int pro, int purchases, int transactions, int sessions)
 {
@@ -2355,38 +2511,88 @@ void DemoApp::userattr_update(User* u, int priv, const char* n)
 // main loop
 void megacli()
 {
-	term_init();
-
-	setprompt(COMMAND);
-
     char *saved_line = NULL;
     int saved_point = 0;
 
+	term_init();
+
+	rl_save_prompt();
+
 	for (;;)
 	{
-		if (redisplay)
+		if (prompt == COMMAND)
 		{
-			saved_point = rl_point;
-			saved_line = rl_copy_text(0,rl_end);
-			rl_save_prompt();
-			rl_replace_line("",0);
-			rl_redisplay();
-		}
+			// display put/get transfer speed in the prompt
+			if (client->slots.size())
+			{
+				unsigned xferrate[2] = { 0 };
+				dstime ds = client->waiter->getdstime();
+				
+				for (transferslot_list::iterator it = client->slots.begin(); it != client->slots.end(); it++) xferrate[(*it)->transfer->type] += (*it)->progressreported*10/(1024*(ds-(*it)->starttime+1));
 
-		// pass the CPU to the engine (nonblocking)
-		client->exec();
+				strcpy(dynamicprompt,"MEGA");
 
-		if (redisplay)
-		{
-			rl_restore_prompt();
-			rl_replace_line(saved_line,0);
+				if (xferrate[GET] || xferrate[PUT])
+				{
+					strcpy(dynamicprompt+4," (");
+
+					if (xferrate[GET])
+					{
+						sprintf(dynamicprompt+6,"In: %u KB/s",xferrate[GET]);
+						if (xferrate[PUT]) strcat(dynamicprompt+9,"/");
+					}
+
+					if (xferrate[PUT]) sprintf(strchr(dynamicprompt,0),"Out: %u KB/s",xferrate[PUT]);
+
+					strcat(dynamicprompt+6,")");
+				}
+
+				strcat(dynamicprompt+4,"> ");
+			}
+			else *dynamicprompt = 0;
+
+			rl_callback_handler_install(*dynamicprompt ? dynamicprompt : prompts[COMMAND],store_line);
+
+			// display prompt
+			if (saved_line)
+			{
+				rl_replace_line(saved_line,0);
+				free(saved_line);
+			}
 			rl_point = saved_point;
 			rl_redisplay();
-			free(saved_line);
-			redisplay = 0;
 		}
 
-		// have the engine invoke HttpIO's waitio(), if so required
-		client->wait();
+		// user edits command, interrupted by engine events
+		for (;;)
+		{
+			int w = client->wait();
+
+			if (w & Waiter::HAVESTDIN)
+			{
+				if (prompt == COMMAND) rl_callback_read_char();
+				else read_pw_char(pw_buf,sizeof pw_buf,&pw_buf_pos,&line);
+			}
+
+			if (w & Waiter::NEEDEXEC || line) break;
+		}
+
+		saved_point = rl_point;
+		saved_line = rl_copy_text(0,rl_end);
+
+		// remove prompt
+		rl_save_prompt();
+		rl_replace_line("",0);
+		rl_redisplay();
+
+		if (line)
+		{
+			process_line(line);
+			free(line);
+			line = NULL;
+		}
+	
+		// pass the CPU to the engine (nonblocking)
+		client->exec();
 	}
 }

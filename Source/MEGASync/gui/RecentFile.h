@@ -2,6 +2,8 @@
 #define RECENTFILE_H
 
 #include <QWidget>
+#include <QFileInfo>
+#include "utils/WindowsUtils.h"
 
 namespace Ui {
 class RecentFile;

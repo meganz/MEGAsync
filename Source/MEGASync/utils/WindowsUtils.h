@@ -4,6 +4,8 @@
 #include <QApplication>
 #include <QString>
 #include <QFile>
+#include <QHash>
+#include <QPixmap>
 
 #define     WIN32_LEAN_AND_MEAN
 #define     _WIN32_WINNT    0x0501
@@ -109,6 +111,8 @@ private:
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc);
 
 public:
+    static QHash<QString, QPixmap> extensionIcons;
+    static void initialize();
     static boolean enableIcon(QString &executable);
     static void notifyNewFolder(QString &path);
     static void notifyFolderContentsChange(QString &path);
