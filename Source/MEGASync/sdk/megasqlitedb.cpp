@@ -20,8 +20,14 @@ DEALINGS IN THE SOFTWARE.
 
 SqliteDbAccess::SqliteDbAccess(const char *path)
 {
-	dbpath = string(path);
-	db = NULL;
+    dbpath = string(path);
+    db = NULL;
+}
+
+SqliteDbAccess::SqliteDbAccess()
+{
+    dbpath = "";
+    db = NULL;
 }
 
 SqliteDbAccess::~SqliteDbAccess()
@@ -29,7 +35,7 @@ SqliteDbAccess::~SqliteDbAccess()
 	if(db) sqlite3_close(db);
 }
 
-DbTable* SqliteDbAccess::open(string* name)
+DbTable* SqliteDbAccess::open(FileSystemAccess* fsaccess, string* name)
 {
 	if (db)
 	{
@@ -37,7 +43,8 @@ DbTable* SqliteDbAccess::open(string* name)
 		db = NULL;
 	}
 
-	string dbdir = dbpath + *name + ".db";
+    string dbdir = dbpath + "megaclient_statecache_" + *name + ".db";
+
 	int rc;
 	rc = sqlite3_open(dbdir.c_str(), &db);
 	if(rc) return NULL;
@@ -76,36 +83,36 @@ void SqliteDbTable::rewind()
 }
 
 // retrieve next record through cursor
-int SqliteDbTable::next(uint32_t* index, string* data)
+bool SqliteDbTable::next(uint32_t* index, string* data)
 {
-	if (!pStmt) return 0;
+	if (!pStmt) return false;
 
 	int rc = sqlite3_step(pStmt);
 	if(rc !=  SQLITE_ROW)
 	{
 		sqlite3_finalize(pStmt);
 		pStmt = NULL;
-		return 0;
+		return false;
 	}
 
 	*index = sqlite3_column_int(pStmt, 0);
 	data->assign((char*)sqlite3_column_blob(pStmt, 1), sqlite3_column_bytes(pStmt, 1));
-	return 1;
+	return true;
 }
 
 // retrieve record by index
-int SqliteDbTable::get(uint32_t index, string* data)
+bool SqliteDbTable::get(uint32_t index, string* data)
 {
 	sqlite3_stmt *stmt;
 	const char *sql = "SELECT CONTENT FROM statecache WHERE ID = ?;";
 	int rc = sqlite3_prepare(db, sql, -1, &stmt, NULL);
-	if( rc ) return 0;
+	if( rc ) return false;
 
 	rc = sqlite3_bind_int(stmt, 1, index);
-	if( rc ) return 0;
+	if( rc ) return false;
 
 	rc = sqlite3_step(stmt);
-	if(rc !=  SQLITE_ROW) return 0;
+	if(rc !=  SQLITE_ROW) return false;
 
 	data->assign((char*)sqlite3_column_blob(stmt, 0), sqlite3_column_bytes(stmt, 0));
 
@@ -114,34 +121,34 @@ int SqliteDbTable::get(uint32_t index, string* data)
 }
 
 // add/update record by index
-int SqliteDbTable::put(uint32_t index, char* data, unsigned len)
+bool SqliteDbTable::put(uint32_t index, char* data, unsigned len)
 {
 	sqlite3_stmt *stmt;
 	const char *sql = "INSERT OR REPLACE INTO statecache (ID, CONTENT) VALUES (?, ?);";
 	int rc = sqlite3_prepare(db, sql, -1, &stmt, NULL);
-	if( rc ) return 0;
+	if( rc ) return false;
 
 	rc = sqlite3_bind_int(stmt, 1, index);
-	if( rc ) return 0;
+	if( rc ) return false;
 
 	rc = sqlite3_bind_blob(stmt, 2, data, len, SQLITE_STATIC);
-	if( rc ) return 0;
+	if( rc ) return false;
 
 	rc = sqlite3_step(stmt);
-	if(rc !=  SQLITE_DONE) return 0;
+	if(rc !=  SQLITE_DONE) return false;
 
 	sqlite3_finalize(stmt);
-	return 1;
+	return true;
 }
 
 // delete record by index
-int SqliteDbTable::del(uint32_t index)
+bool SqliteDbTable::del(uint32_t index)
 {
 	string sql = "DELETE FROM statecache WHERE ID = ";
 	sql += index + ";";
 	int rc = sqlite3_exec(db, sql.c_str(), 0, 0, NULL);
-	if( rc ) return 0;
-	return 1;
+	if( rc ) return false;
+	return true;
 }
 
 // truncate table

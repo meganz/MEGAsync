@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment 
+MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment
 
 Using cURL for HTTP I/O, GNU Readline for console I/O and FreeImage for thumbnail creation
 
@@ -34,8 +34,11 @@ struct PosixWaiter : public Waiter
 	void init(dstime);
 	void waitfor(EventTrigger*);
 	int wait();
+    void notify();
 
 	void bumpmaxfd(int);
+
+	PosixWaiter();
 };
 
 class CurlHttpIO : public HttpIO
@@ -86,7 +89,7 @@ class PosixFileSystemAccess : public FileSystemAccess
 
 	typedef map<int,LocalNode*> wdlocalnode_map;
 	wdlocalnode_map wdnodes;
-	
+
 public:
 	FileAccess* newfileaccess();
 	DirAccess* newdiraccess();
@@ -111,7 +114,7 @@ public:
 	void delnotify(LocalNode*);
 	bool notifynext(sync_list*, string*, LocalNode**);
 	bool notifyfailed();
-	
+
 	void addevents(Waiter*);
 
 	PosixFileSystemAccess();

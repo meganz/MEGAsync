@@ -20,6 +20,7 @@
 #define snprintf _snprintf
 #define mkdir _mkdir
 #include <windows.h>
+#include <winhttp.h>
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 

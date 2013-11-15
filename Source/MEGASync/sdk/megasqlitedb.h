@@ -19,19 +19,20 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MEGASQLITEDB_H
 #define MEGASQLITEDB_H 1
 
-#include <sqlite3.h>
+#include "sqlite3.h"
 #include "megaclient.h"
 
 
 class SqliteDbAccess : public DbAccess
 {
-	string dbpath;
-	sqlite3 *db;
+    string dbpath;
+    sqlite3 *db;
 
 public:
-	DbTable* open(string*);
+    DbTable* open(FileSystemAccess* fsaccess, string* name);
 
-	SqliteDbAccess(const char *path);
+    SqliteDbAccess(const char *path);
+    SqliteDbAccess();
 	~SqliteDbAccess();
 };
 
@@ -42,10 +43,10 @@ class SqliteDbTable : public DbTable
 
 public:
 	void rewind();
-	int next(uint32_t*, string*);
-	int get(uint32_t, string*);
-	int put(uint32_t, char*, unsigned);
-	int del(uint32_t);
+	bool next(uint32_t*, string*);
+	bool get(uint32_t, string*);
+	bool put(uint32_t, char*, unsigned);
+	bool del(uint32_t);
 	void truncate();
 	void begin();
 	void commit();

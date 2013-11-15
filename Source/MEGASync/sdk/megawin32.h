@@ -30,7 +30,7 @@ class WinWaiter : public Waiter
 	DWORD prevt;
 
 public:
-	enum { WAKEUP_HTTP, WAKEUP_CONSOLE };
+    enum { WAKEUP_HTTP, WAKEUP_CUSTOM };
 	HANDLE hWakeup[2];
 	PCRITICAL_SECTION pcsHTTP;
 	unsigned pendingfsevents;
@@ -40,6 +40,7 @@ public:
 	void init(dstime);
 	void waitfor(EventTrigger*);
 	int wait();
+    void notify();
 	
 	WinWaiter();
 };

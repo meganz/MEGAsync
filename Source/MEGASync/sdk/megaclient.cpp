@@ -1044,7 +1044,7 @@ bool JSON::storeobject(string* s)
 	int openobject[2] = { 0 };
 	const char* ptr = pos;
 
-	while (*ptr > 0 && *ptr <= ' ') ptr++;
+    while (*ptr > 0 && *ptr <= ' ') { ptr++; pos++;}
 	
 	for (;;)
 	{
@@ -1830,7 +1830,7 @@ void MegaClient::exec()
 		dispatchmore(GET);
 
 		// handle active transfers
-		for (transferslot_list::iterator it = slots.begin(); it != slots.end(); ) (*it++)->doio(this);
+        for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); ) (*it++)->doio(this);
 	} while (httpio->doio() || (!pendingcs && reqs[r].cmdspending() && btcs.armed(waiter->ds)));
 
 	// process active syncs
@@ -2069,7 +2069,7 @@ bool MegaClient::dispatch(direction d)
 				// dispatch request for temporary source/target URL
 				reqs[r].add((ts->pendingcmd = (d == PUT) ? (Command*)new CommandPutFile(ts,putmbpscap) : (Command*)new CommandGetFile(ts,h,1)));
 
-				ts->slots_it = slots.insert(slots.begin(),ts);
+                ts->slots_it = tslots.insert(tslots.begin(),ts);
 
 				// notify the app about the starting transfer
 				for (file_list::iterator it = nextit->second->files.begin(); it != nextit->second->files.end(); it++) (*it)->start();
@@ -2170,7 +2170,7 @@ void MegaClient::disconnect()
 	if (pendingcs) pendingcs->disconnect();
 	if (pendingsc) pendingsc->disconnect();
 
-	for (transferslot_list::iterator it = slots.begin(); it != slots.end(); it++) (*it)->disconnect();
+    for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++) (*it)->disconnect();
 	for (putfa_list::iterator it = newfa.begin(); it != newfa.end(); it++) (*it)->disconnect();
 	for (fafc_map::iterator it = fafcs.begin(); it != fafcs.end(); it++) it->second->req.disconnect();
 }
@@ -2766,7 +2766,7 @@ void CommandPutFile::procresult()
 // has the limit of concurrent transfer slots been reached?
 bool MegaClient::slotavail()
 {
-	return slots.size() < MAXTRANSFERS;
+    return tslots.size() < MAXTRANSFERS;
 }
 
 // returns 1 if more transfers of the requested type can be dispatched (back-to-back overlap pipelining)
@@ -2781,7 +2781,7 @@ bool MegaClient::moretransfers(direction d)
 	if (!slotavail()) return false;
 	
 	// determine average speed and total amount of data remaining for the given direction
-	for (transferslot_list::iterator it = slots.begin(); it != slots.end(); it++)
+    for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++)
 	{
 		if ((*it)->transfer->type == d)
 		{
@@ -3741,9 +3741,9 @@ void CommandPutNodes::procresult()
 				// fall through
 			case EOO:
 				client->applykeys();
-				client->notifypurge();
 				if (syncing) client->putnodes_sync_result(e,nn);
 				else client->app->putnodes_result(e,type,nn);
+                client->notifypurge();
 				return;
 		}
 	}
@@ -3868,6 +3868,7 @@ bool Node::setparent(Node* p)
 	if (parent) parent->children.erase(child_it);
 
 	parent = p;
+    parenthandle = parent->nodehandle;
 
 	child_it = parent->children.insert(parent->children.end(),this);
 
@@ -6534,8 +6535,9 @@ void MegaClient::createephemeral()
 	key.setkey(pwbuf);
 	key.ecb_encrypt(keybuf);
 
-	reqs[r].add(new CommandCreateEphemeralSession(keybuf,pwbuf,sscbuf));
-
+    Command *c = new CommandCreateEphemeralSession(keybuf,pwbuf,sscbuf);
+    c->tag = reqtag;
+    reqs[r].add(c);
 }
 
 CommandCreateEphemeralSession::CommandCreateEphemeralSession(const byte* key, const byte* cpw, const byte* ssc)
@@ -6555,7 +6557,9 @@ void CommandCreateEphemeralSession::procresult()
 
 void MegaClient::resumeephemeral(handle uh, const byte* pw)
 {
-	reqs[r].add(new CommandResumeEphemeralSession(uh,pw));
+    Command *c = new CommandResumeEphemeralSession(uh,pw);
+    c->tag = reqtag;
+    reqs[r].add(c);
 }
 
 CommandResumeEphemeralSession::CommandResumeEphemeralSession(handle cuh, const byte* cpw)
@@ -6644,7 +6648,9 @@ void CommandSendSignupLink::procresult()
 // if query is 0, actually confirm account; just decode/query signup link details otherwise
 void MegaClient::querysignuplink(const byte* code, unsigned len)
 {
-	reqs[r].add(new CommandQuerySignupLink(code,len));
+    Command *c = new CommandQuerySignupLink(code,len);
+    c->tag = reqtag;
+    reqs[r].add(c);
 }
 
 CommandQuerySignupLink::CommandQuerySignupLink(const byte* code, unsigned len)
@@ -6683,7 +6689,9 @@ void CommandQuerySignupLink::procresult()
 
 void MegaClient::confirmsignuplink(const byte* code, unsigned len, uint64_t emailhash)
 {
-	reqs[r].add(new CommandConfirmSignupLink(code,len,emailhash));
+    Command *c = new CommandConfirmSignupLink(code,len,emailhash);
+    c->tag = reqtag;
+    reqs[r].add(c);
 }
 
 CommandConfirmSignupLink::CommandConfirmSignupLink(const byte* code, unsigned len, uint64_t emailhash)
@@ -6795,6 +6803,7 @@ void MegaClient::fetchnodes()
 	{
 		app->debug_log("Session loaded from local cache");
 
+        restag = reqtag;
 		app->fetchnodes_result(API_OK);
 		app->nodes_updated(NULL,nodes.size());
 
@@ -6924,7 +6933,7 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
 	
 	file = transfer->client->fsaccess->newfileaccess();
 
-	slots_it = transfer->client->slots.end();
+    slots_it = transfer->client->tslots.end();
 }
 
 // delete slot and associated resources, but keep transfer intact
@@ -6932,7 +6941,7 @@ TransferSlot::~TransferSlot()
 {
 	transfer->slot = NULL;
 
-	if (slots_it != transfer->client->slots.end()) transfer->client->slots.erase(slots_it);
+    if (slots_it != transfer->client->tslots.end()) transfer->client->tslots.erase(slots_it);
 
 	if (pendingcmd) pendingcmd->cancel();
 

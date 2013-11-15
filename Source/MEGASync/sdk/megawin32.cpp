@@ -31,7 +31,10 @@ DEALINGS IN THE SOFTWARE.
 
 #define USE_VARARGS
 #define PREFER_STDARG
+
+#ifdef BUILD_MEGACLI
 #include <readline/readline.h>
+#endif
 
 #include "mega.h"
 
@@ -42,8 +45,6 @@ DEALINGS IN THE SOFTWARE.
 
 WinWaiter::WinWaiter()
 {
-	DWORD dwMode;
-
 	pGTC = (PGTC)GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),"GetTickCount64");
 	
 	if (!pGTC)
@@ -54,11 +55,16 @@ WinWaiter::WinWaiter()
 	
 	if (!pGTC) cout << "Emulating GetTickCount64()" << endl;
 
-	hWakeup[WAKEUP_CONSOLE] = GetStdHandle(STD_INPUT_HANDLE);
+#ifdef BUILD_MEGACLI
+    DWORD dwMode;
+    hWakeup[WAKEUP_CUSTOM] = GetStdHandle(STD_INPUT_HANDLE);
 
-	GetConsoleMode(hWakeup[WAKEUP_CONSOLE],&dwMode);
-	SetConsoleMode(hWakeup[WAKEUP_CONSOLE],dwMode & ~(ENABLE_MOUSE_INPUT | ENABLE_WINDOW_INPUT));
-	FlushConsoleInputBuffer(hWakeup[WAKEUP_CONSOLE]);
+    GetConsoleMode(hWakeup[WAKEUP_CUSTOM],&dwMode);
+    SetConsoleMode(hWakeup[WAKEUP_CUSTOM],dwMode & ~(ENABLE_MOUSE_INPUT | ENABLE_WINDOW_INPUT));
+    FlushConsoleInputBuffer(hWakeup[WAKEUP_CUSTOM]);
+#else
+    hWakeup[WAKEUP_CUSTOM] = CreateEvent(NULL,FALSE,FALSE,NULL);
+#endif
 }
 
 void WinWaiter::init(dstime ds)
@@ -91,17 +97,26 @@ int WinWaiter::wait()
 	DWORD dwWaitResult = WaitForMultipleObjectsEx(sizeof hWakeup/sizeof *hWakeup,hWakeup,FALSE,maxds*100,TRUE);
 	if (pcsHTTP) EnterCriticalSection(pcsHTTP);
 
-	if (dwWaitResult == WAIT_OBJECT_0 || dwWaitResult == WAIT_TIMEOUT || dwWaitResult == WAIT_IO_COMPLETION) return NEEDEXEC;
+    if (dwWaitResult == WAIT_OBJECT_0 || dwWaitResult == WAIT_TIMEOUT || dwWaitResult == WAIT_IO_COMPLETION) return NEEDEXEC;
 
+#ifdef BUILD_MEGACLI
 	// FIXME: improve this gruesome nonblocking console read-simulating kludge
 	if (_kbhit()) return HAVESTDIN;
 	
 	// this assumes that the user isn't typing too fast
 	INPUT_RECORD ir[1024];
 	DWORD dwNum;
-	ReadConsoleInput(hWakeup[WAKEUP_CONSOLE],ir,1024,&dwNum);
+    ReadConsoleInput(hWakeup[WAKEUP_CUSTOM],ir,1024,&dwNum);
+#else
+    if (dwWaitResult == (WAIT_OBJECT_0+WAKEUP_CUSTOM)) return NEEDEXEC;
+#endif
 
-	return 0;
+    return 0;
+}
+
+void WinWaiter::notify()
+{
+    SetEvent(hWakeup[WAKEUP_CUSTOM]);
 }
 
 void WinHttpIO::httpevent()
@@ -934,6 +949,8 @@ WinDirAccess::~WinDirAccess()
 	if (hFind != INVALID_HANDLE_VALUE) FindClose(hFind);
 }
 
+#ifdef BUILD_MEGACLI
+
 void term_init()
 {
 	// set up terminal
@@ -981,3 +998,5 @@ int main()
 
 	megacli();
 }
+
+#endif

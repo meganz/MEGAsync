@@ -1979,7 +1979,7 @@ public:
 	transfer_map transfers[2];
 
 	// transfer slots
-	transferslot_list slots;
+    transferslot_list tslots;
 
 	// asymmetric to symmetric key rewriting
 	handle_vector nodekeyrewrite;

@@ -21,11 +21,13 @@ DEALINGS IN THE SOFTWARE.
 
 class BdbAccess : public DbAccess
 {
+    string dbpath;
 	DbEnv* env;
 
 public:
 	DbTable* open(FileSystemAccess*, string*);
 
+    BdbAccess(const char *path);
 	BdbAccess();
 	~BdbAccess();
 };

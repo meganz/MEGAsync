@@ -25,8 +25,15 @@ DEALINGS IN THE SOFTWARE.
 #include "megaclient.h"
 #include "megabdb.h"
 
+BdbAccess::BdbAccess(const char *path)
+{
+    dbpath = string(path);
+    env = NULL;
+}
+
 BdbAccess::BdbAccess()
 {
+    dbpath = "";
 	env = NULL;
 }
 
@@ -39,7 +46,7 @@ DbTable* BdbAccess::open(FileSystemAccess* fsaccess, string* name)
 {
 	if (env) env->close(0);
 
-	string dbdir = "megaclient_statecache_";
+    string dbdir = dbpath + "megaclient_statecache_";
 	
 	dbdir.append(*name);
 	fsaccess->name2local(&dbdir);

@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment 
+MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment
 
 Using cURL for HTTP I/O, GNU Readline for console I/O and FreeImage for thumbnail creation
 
@@ -80,6 +80,12 @@ ssize_t pwrite(int, const void *, size_t, off_t) __DARWIN_ALIAS_C(pwrite);
 #include "megacli.h"
 #include "megabdb.h"
 
+PosixWaiter::PosixWaiter()
+{
+    pipe(m_pipe);
+    fcntl(m_pipe[0], F_SETFL, O_NONBLOCK);
+}
+
 void PosixWaiter::init(dstime ds)
 {
 	maxds = ds;
@@ -118,9 +124,13 @@ int PosixWaiter::wait()
 
 	// application's own wakeup criteria:
 	// wake up upon user input
-	FD_SET(STDIN_FILENO,&rfds);
 
+#ifdef BUILD_MEGACLI
+    FD_SET(STDIN_FILENO,&rfds);
 	bumpmaxfd(STDIN_FILENO);
+#endif
+    FD_SET(m_pipe[0], &rfds);
+    bumpmaxfd(m_pipe[0]);
 
 	if (maxds+1)
 	{
@@ -134,12 +144,23 @@ int PosixWaiter::wait()
 
 	if (numfd <= 0) return NEEDEXEC;
 
-	// application's own event processing:
+    // application's own event processing:
+#ifdef BUILD_MEGACLI
 	// user interaction from stdin?
 	if (FD_ISSET(STDIN_FILENO,&rfds)) return (numfd == 1) ? HAVESTDIN : (HAVESTDIN | NEEDEXEC);
+#endif
+
+    uint8_t buf;
+    if (FD_ISSET(m_pipe[0],&rfds)) while (read(m_pipe[0], &buf, 1) == 1);
 
 	return NEEDEXEC;
 }
+
+void PosixWaiter::notify()
+{
+    write(m_pipe[1], "0", 1);
+}
+
 
 // HttpIO implementation using libcurl
 CurlHttpIO::CurlHttpIO()
@@ -171,7 +192,7 @@ void CurlHttpIO::addevents(Waiter* w)
 	PosixWaiter* pw = (PosixWaiter*)w;
 
 	curl_multi_fdset(curlm,&pw->rfds,&pw->wfds,&pw->efds,&t);
-	
+
 	pw->bumpmaxfd(t);
 }
 
@@ -369,7 +390,7 @@ void PosixFileSystemAccess::addevents(Waiter* w)
 	PosixWaiter* pw = (PosixWaiter*)w;
 
 	FD_SET(notifyfd,&pw->rfds);
-	
+
 	pw->bumpmaxfd(notifyfd);
 }
 
@@ -462,7 +483,7 @@ bool PosixFileSystemAccess::mkdirlocal(string* name)
 bool PosixFileSystemAccess::setmtimelocal(string* name, time_t mtime)
 {
 	struct utimbuf times = { mtime, mtime };
-	
+
 	return !utime(name->c_str(),&times);
 }
 
@@ -476,7 +497,7 @@ void PosixFileSystemAccess::addnotify(LocalNode* l, string* path)
 	int wd;
 
 	wd = inotify_add_watch(notifyfd,path->c_str(),IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO|IN_CLOSE_WRITE|IN_EXCL_UNLINK|IN_ONLYDIR);
-	
+
 	if (wd >= 0)
 	{
 		l->notifyhandle = (void*)(long)wd;
@@ -515,7 +536,7 @@ cout << "Notify Overflow" << endl;
 			notifyerr = true;
 			return false;
 		}
-		
+
 		if (in->mask & (IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO|IN_CLOSE_WRITE|IN_EXCL_UNLINK))
 		{
 			if ((in->mask & (IN_CREATE|IN_ISDIR)) != IN_CREATE)
@@ -536,9 +557,9 @@ cout << "Notify Overflow" << endl;
 			}
 			else cout << "File creation ignored" << endl;
 		}
-		else cout << "Unknown mask: " << in->mask << endl;			
+		else cout << "Unknown mask: " << in->mask << endl;
 	}
-	
+
 	return false;
 }
 
@@ -605,10 +626,10 @@ bool PosixDirAccess::dnext(string* name, nodetype* type)
 				}
 			}
 		}
-	
+
 		return false;
 	}
-	
+
 	dirent* d;
 
 	while ((d = readdir(dp)))
@@ -636,6 +657,8 @@ PosixDirAccess::~PosixDirAccess()
 	if (dp) closedir(dp);
 	if (globbing) globfree(&globbuf);
 }
+
+#ifdef BUILD_MEGACLI
 
 // terminal handling
 static tcflag_t oldlflag;
@@ -705,3 +728,5 @@ int main()
 
 	megacli();
 }
+
+#endif
