@@ -27,7 +27,6 @@ DEALINGS IN THE SOFTWARE.
 
 #define USE_VARARGS
 #define PREFER_STDARG
-#include "mega.h"
 #include "megaapi.h"
 
 //#include <android/log.h>

@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application, Berkeley DB access
+MEGA SDK 2013-11-17 - POSIX console/terminal control
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -16,44 +16,22 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#ifndef MEGABDB_H
-#define MEGABDB_H 1
+#ifndef CONSOLE_CLASS
+#define CONSOLE_CLASS PosixConsole
 
-class BdbAccess : public DbAccess
+#include <termios.h>
+
+struct PosixConsole : public Console
 {
-    string dbpath;
-	DbEnv* env;
+	tcflag_t oldlflag;
+	cc_t oldvtime;
+	struct termios term;
 
-public:
-	DbTable* open(FileSystemAccess*, string*);
+	void readpwchar(char*, int, int* pw_buf_pos, char**);
+	void setecho(bool);
 
-    BdbAccess(const char *path);
-	BdbAccess();
-	~BdbAccess();
-};
-
-class BdbTable : public DbTable
-{
-	Db* db;
-	DbTxn* dbtxn;
-	DbEnv* dbenv;
-	Dbc* dbcursor;
-
-public:
-	void rewind();
-	bool next(uint32_t*, string*);
-	bool get(uint32_t, string*);
-	bool put(uint32_t, char*, unsigned);
-	bool del(uint32_t);
-	void truncate();
-	void begin();
-	void commit();
-	void abort();
-
-	uint32_t nextid;
-
-	BdbTable(DbEnv*);
-	~BdbTable();
+	PosixConsole();
+	~PosixConsole();
 };
 
 #endif

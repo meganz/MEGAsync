@@ -28,8 +28,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <pthread.h>
 
-#include "mega.h"
-#include "megacrypto.h"
+#include "crypto/cryptopp.h"
 #include "megaclient.h"
 
 class MegaApi;

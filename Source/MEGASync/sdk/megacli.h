@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-11 - sample application, interactive GNU Readline CLI 
+MEGA SDK 2013-11-11 - sample application, interactive GNU Readline CLI
 
 (using FreeImage for thumbnail creation)
 
@@ -22,8 +22,6 @@ extern MegaClient* client;
 
 extern bool debug;
 
-extern bool redisplay;
-
 extern void megacli();
 
 extern void term_init();
@@ -42,7 +40,6 @@ struct AppFile : public File
 	int seqno;
 
 	bool failed(error);
-//	void complete();
 	void progress();
 
 	appfile_list::iterator appxfer_it;
@@ -59,8 +56,6 @@ struct AppFileGet : public AppFile
 	void update();
 	void completed(Transfer*, LocalNode*);
 
-//	void displayname(string*);
-
 	AppFileGet(Node*);
 	~AppFileGet();
 };
@@ -72,7 +67,7 @@ struct AppFilePut : public AppFile
 	void completed(Transfer*, LocalNode*);
 
 	void displayname(string*);
-	
+
 	AppFilePut(string*, handle, const char*);
 	~AppFilePut();
 };
@@ -120,7 +115,7 @@ struct DemoApp : public MegaApp
 	void getua_result(error);
 	void getua_result(byte*, unsigned);
 
-	void account_details(AccountDetails*, int, int, int, int, int, int);
+	void account_details(AccountDetails*, bool, bool, bool, bool, bool, bool);
 	void account_details(AccountDetails*, error);
 
 	void exportnode_result(error);
@@ -153,6 +148,7 @@ struct DemoApp : public MegaApp
 	void syncupdate_remote_unlink(Node*);
 	void syncupdate_remote_rmdir(Node*);
 	void syncupdate_remote_mkdir(Sync*, const char*);
+	void syncupdate_remote_copy(Sync*, const char*);
 
 	void changepw_result(error);
 
@@ -163,7 +159,7 @@ struct DemoApp : public MegaApp
 	void additem_result(error);
 	void checkout_result(error);
 	void checkout_result(const char*);
-	
+
 	void reload(const char*);
 	void clearing();
 

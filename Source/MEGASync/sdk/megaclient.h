@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-11 - Client Access Engine
+MEGA SDK 2013-11-16 - Client Access Engine
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -19,8 +19,51 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MEGACLIENT_H
 #define MEGACLIENT_H 1
 
-#include "mega.h"
-#include "megacrypto.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <errno.h>
+#include <assert.h>
+#include <memory.h>
+#include <time.h>
+
+#ifdef _WIN32
+
+#include <windows.h>
+#define atoll _atoi64
+#define snprintf _snprintf
+#define _CRT_SECURE_NO_WARNINGS
+
+#else
+
+#include <unistd.h>
+#include <arpa/inet.h>
+
+#ifndef __MACH__
+#include <endian.h>
+#endif
+
+#endif
+
+// FIXME: #define PRI*64 if missing
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
+
+typedef int64_t m_off_t;
+
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <sstream>
+#include <map>
+#include <set>
+#include <iterator>
+#include <queue>
+#include <list>
+
+using namespace std;
+
+#include "crypto/cryptopp.h"
 
 // monotonously increasing time in deciseconds
 typedef uint32_t dstime;
@@ -30,7 +73,7 @@ struct Waiter
 {
 	// current time
 	dstime ds;
-	
+
 	// wait ceiling
 	dstime maxds;
 
@@ -39,13 +82,13 @@ struct Waiter
 
 	// beging waiting cycle
 	virtual void init(dstime) = 0;
-	
+
 	// add wakeup events
 	void wakeupby(struct EventTrigger*);
-	
+
 	// wait for all added wakeup criteria (plus the host app's own), up to the specified number of deciseconds
 	virtual int wait() = 0;
-	
+
 	static const int NEEDEXEC = 1;
 	static const int HAVESTDIN = 2;
 };
@@ -132,10 +175,10 @@ struct DirAccess
 {
 	// open for scanning
 	virtual bool dopen(string*, FileAccess*, bool) = 0;
-	
+
 	// get next record
 	virtual bool dnext(string*, nodetype* = NULL) = 0;
-	
+
 	virtual ~DirAccess() { }
 };
 
@@ -148,7 +191,7 @@ struct FileSystemAccess : public EventTrigger
 {
 	// local path separator, e.g. "/"
 	string localseparator;
-	
+
 	// instantiate FileAccess object
 	virtual FileAccess* newfileaccess() = 0;
 
@@ -157,6 +200,9 @@ struct FileSystemAccess : public EventTrigger
 
 	// check if character is lowercase hex ASCII
 	bool islchex(char);
+
+	// convert MEGA path (UTF-8) to local format
+	virtual void path2local(string*, string*) = 0;
 
 	// convert local path to MEGA format (UTF-8)
 	virtual void local2path(string*, string*) = 0;
@@ -169,7 +215,7 @@ struct FileSystemAccess : public EventTrigger
 
 	// generate local temporary file name
 	virtual void tmpnamelocal(string*, string* = NULL) = 0;
-	
+
 	// check if local file/name is to be treated as hidden
 	virtual bool localhidden(string*, string*) = 0;
 
@@ -178,7 +224,10 @@ struct FileSystemAccess : public EventTrigger
 
 	// copy file, overwrite target
 	virtual bool copylocal(string*, string*) = 0;
-	
+
+	// move file or folder tree to OS-managed local rubbish bin
+	virtual bool rubbishlocal(string*) = 0;
+
 	// delete file
 	virtual bool unlinklocal(string*) = 0;
 
@@ -190,7 +239,7 @@ struct FileSystemAccess : public EventTrigger
 
 	// set mtime
 	virtual bool setmtimelocal(string*, time_t) = 0;
-	
+
 	// change working directory
 	virtual bool chdirlocal(string*) = 0;
 
@@ -259,31 +308,39 @@ struct DbAccess
 	virtual ~DbAccess() { }
 };
 
+struct Console
+{
+	virtual void readpwchar(char*, int, int* pw_buf_pos, char**) = 0;
+	virtual void setecho(bool) = 0;
+
+	virtual ~Console() { }
+};
+
 // error codes
 typedef enum {
 	API_OK = 0,
-	API_EINTERNAL = -1,		// internal error
-	API_EARGS = -2,			// bad arguments
-	API_EAGAIN = -3,		// request failed, retry with exponential backoff
-	API_ERATELIMIT = -4,	// too many requests, slow down
-	API_EFAILED = -5,		// request failed permanently
-	API_ETOOMANY = -6,		// too many requests for this resource
-	API_ERANGE = -7,		// resource access out of rage
-	API_EEXPIRED = -8,		// resource expired
-	API_ENOENT = -9,		// resource does not exist
-	API_ECIRCULAR = -10,	// circular linkage
-	API_EACCESS = -11,		// access denied
-	API_EEXIST = -12,		// resource already exists
-	API_EINCOMPLETE = -13,	// request incomplete
-	API_EKEY = -14,			// cryptographic error
-	API_ESID = -15,			// bad session ID
-	API_EBLOCKED = -16,		// resource administratively blocked
-	API_EOVERQUOTA = -17,	// quote exceeded
-	API_ETEMPUNAVAIL = -18,	// resource temporarily not available
-	API_ETOOMANYCONNECTIONS = -19, // too many connections on this resource
-	API_EWRITE = -20,		// file could not be written to
-	API_EREAD = -21,		// file could not be read from
-	API_EAPPKEY = -22		// invalid or missing application key
+	API_EINTERNAL = -1,				// internal error
+	API_EARGS = -2,					// bad arguments
+	API_EAGAIN = -3,				// request failed, retry with exponential backoff
+	API_ERATELIMIT = -4,			// too many requests, slow down
+	API_EFAILED = -5,				// request failed permanently
+	API_ETOOMANY = -6,				// too many requests for this resource
+	API_ERANGE = -7,				// resource access out of rage
+	API_EEXPIRED = -8,				// resource expired
+	API_ENOENT = -9,				// resource does not exist
+	API_ECIRCULAR = -10,			// circular linkage
+	API_EACCESS = -11,				// access denied
+	API_EEXIST = -12,				// resource already exists
+	API_EINCOMPLETE = -13,			// request incomplete
+	API_EKEY = -14,					// cryptographic error
+	API_ESID = -15,					// bad session ID
+	API_EBLOCKED = -16,				// resource administratively blocked
+	API_EOVERQUOTA = -17,			// quote exceeded
+	API_ETEMPUNAVAIL = -18,			// resource temporarily not available
+	API_ETOOMANYCONNECTIONS = -19,	// too many connections on this resource
+	API_EWRITE = -20,				// file could not be written to (or failed post-write integrity check)
+	API_EREAD = -21,				// file could not be read from (or changed unexpectedly during reading)
+	API_EAPPKEY = -22				// invalid or missing application key
 } error;
 
 // returned by loggedin()
@@ -528,7 +585,7 @@ struct JSON
 
 	int storebinary(byte*, int);
 	bool storebinary(string*);
-	
+
 	handle gethandle(int = 6);
 
 	bool enterarray();
@@ -836,7 +893,7 @@ typedef map<int,FileAttributeFetchChannel*> fafc_map;
 typedef enum { GET, PUT } direction;
 
 // sparse file fingerprint, including size & mtime
-struct SparseCRC
+struct FileFingerprint
 {
 	m_off_t size;
 	time_t mtime;
@@ -845,17 +902,26 @@ struct SparseCRC
 	// if true, represents actual file data
 	// if false, constructed from node ctime/key
 	bool isvalid;
-	
-	bool gencrc(FileAccess*);
-	void serializecrc(string*);
-	int unserializecrc(string*, m_off_t);
 
-	SparseCRC& operator=(SparseCRC&);
+	bool genfingerprint(FileAccess*);
+	void serializefingerprint(string*);
+	int unserializefingerprint(string*);
 
-	SparseCRC();
+	FileFingerprint& operator=(FileFingerprint&);
+
+	FileFingerprint();
 };
 
-bool operator==(SparseCRC&, SparseCRC&);
+// orders transfers by file fingerprints, ordered by size / mtime / sparse CRC
+struct FileFingerprintCmp
+{
+    bool operator() (const FileFingerprint* a, const FileFingerprint* b) const;
+};
+
+// maps FileFingerprints to node
+typedef multiset<FileFingerprint*, FileFingerprintCmp> fingerprint_set;
+
+bool operator==(FileFingerprint&, FileFingerprint&);
 
 struct NodeCore
 {
@@ -874,9 +940,8 @@ struct NodeCore
 	// full folder/file key, symmetrically or asymmetrically encrypted
 	string nodekey;
 
-	// creation and modification times
-	time_t ctime;
-	time_t mtime;
+	// new node's client-controlled timestamp (should be last modification)
+	time_t clienttimestamp;
 
 	// node attributes
 	string attrstring;
@@ -891,16 +956,18 @@ struct NewNode : public NodeCore
 
 	handle uploadhandle;
 	byte uploadtoken[UPLOADTOKENLEN];
-	
+
 	handle syncid;
 	LocalNode* localnode;
-	
+
 	NewNode() { syncid = UNDEF; }
 };
 
 // filesystem node
-struct Node : public NodeCore, Cachable
+struct Node : public NodeCore, Cachable, FileFingerprint
 {
+	MegaClient* client;
+
 	// node crypto keys
 	string keystring;
 
@@ -911,7 +978,7 @@ struct Node : public NodeCore, Cachable
 	static void copystring(string*, const char*);
 
 	// try to resolve node key string
-	bool applykey(MegaClient*);
+	bool applykey();
 
 	// decrypt attribute string and set fileattrs
 	void setattr();
@@ -924,15 +991,14 @@ struct Node : public NodeCore, Cachable
 
 	// node attributes
 	AttrMap attrs;
-	
+
 	// owner
 	handle owner;
 
+	// actual time this node was created
+	time_t ctime;
+
 	// FILENODE nodes only: size, fingerprint, nonce, meta MAC, attribute string
-	m_off_t size;
-
-	SparseCRC crc;
-
 	int64_t ctriv;
 	int64_t metamac;
 
@@ -959,8 +1025,8 @@ struct Node : public NodeCore, Cachable
 	bool removed;
 
 	void setkey(const byte* = NULL);
-	
-	void setcrc();
+
+	void setfingerprint();
 
 	void faspec(string*);
 
@@ -973,11 +1039,17 @@ struct Node : public NodeCore, Cachable
 	// own position in parent's children
 	node_list::iterator child_it;
 
+	// own position in fingerprint set (only valid for file nodes)
+	fingerprint_set::iterator fingerprint_it;
+
 	// related synced item or NULL
 	LocalNode* localnode;
-	
+
 	// active sync get
 	struct SyncFileGet* syncget;
+
+	// source tag
+	int tag;
 	
 	// check if node is below this node
 	bool isbelow(Node*) const;
@@ -985,7 +1057,7 @@ struct Node : public NodeCore, Cachable
 	bool serialize(string*);
 	static Node* unserialize(MegaClient*, string*, node_vector*);
 
-	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype, m_off_t, handle, const char*, time_t, time_t);
+	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype, m_off_t, handle, const char*, time_t);
 	~Node();
 };
 
@@ -1018,7 +1090,7 @@ struct TransferSlot
 
 	// file attributes mutable
 	int fileattrsmutable;
-	
+
 	// storage server access URL
 	string tempurl;
 
@@ -1038,27 +1110,21 @@ struct TransferSlot
 	// compute the meta MAC based on the chunk MACs
 	int64_t macsmac(chunkmac_map*);
 
-	// slots list position
+	// tslots list position
 	transferslot_list::iterator slots_it;
 
 	TransferSlot(Transfer*);
 	~TransferSlot();
 };
 
-// orders transfers by file fingerprints, ordered by size / mtime / sparse CRC
-struct SparseCRCCmp
-{
-    bool operator() (const SparseCRC* a, const SparseCRC* b) const;
-};
-
-// map a SparseCRC to the transfer for that SparseCRC
-typedef map<SparseCRC*,Transfer*,SparseCRCCmp> transfer_map;
-
 // list of files
 typedef list<struct File*> file_list;
 
+// map a FileFingerprint to the transfer for that FileFingerprint
+typedef map<FileFingerprint*,Transfer*,FileFingerprintCmp> transfer_map;
+
 // pending/active up/download ordered by file fingerprint (size - mtime - sparse CRC)
-struct Transfer : public SparseCRC
+struct Transfer : public FileFingerprint
 {
 	// PUT or GET
 	direction type;
@@ -1082,7 +1148,7 @@ struct Transfer : public SparseCRC
 
 	// CTR mode IV
 	int64_t ctriv;
-	
+
 	// meta MAC
 	int64_t metamac;
 
@@ -1096,10 +1162,10 @@ struct Transfer : public SparseCRC
 
 	// signal failure
 	void failed(error);
-	
+
 	// signal completion
 	void complete();
-	
+
 	// position in transfers[type]
 	transfer_map::iterator transfers_it;
 
@@ -1111,7 +1177,7 @@ struct Transfer : public SparseCRC
 };
 
 // file to be transferred
-struct File : public SparseCRC
+struct File : public FileFingerprint
 {
 	// set localfilename in attached transfer
 	virtual void prepare();
@@ -1124,7 +1190,7 @@ struct File : public SparseCRC
 
 	// transfer completion
 	virtual void completed(Transfer*, LocalNode*);
-	
+
 	// transfer failed
 	virtual bool failed(error);
 
@@ -1136,17 +1202,17 @@ struct File : public SparseCRC
 
 	// source/target node handle
 	handle h;
-	
+
 	// for remote file drops: uid or e-mail address of recipient
 	string targetuser;
-	
+
 	// transfer linkage
 	Transfer* transfer;
 	file_list::iterator file_it;
 
 	// local filename (must be set upon injection for uploads, can be set in start() for downloads)
 	string localfilename;
-	
+
 	File();
 	virtual ~File();
 };
@@ -1214,22 +1280,22 @@ public:
 class CommandCreateEphemeralSession : public Command
 {
 	byte pw[SymmCipher::KEYLENGTH];
-	
+
 public:
 	void procresult();
 
-	CommandCreateEphemeralSession(const byte*, const byte*, const byte*);
+	CommandCreateEphemeralSession(MegaClient*, const byte*, const byte*, const byte*);
 };
 
 class CommandResumeEphemeralSession : public Command
 {
 	byte pw[SymmCipher::KEYLENGTH];
 	handle uh;
-	
+
 public:
 	void procresult();
 
-	CommandResumeEphemeralSession(handle, const byte*);
+	CommandResumeEphemeralSession(MegaClient*, handle, const byte*);
 };
 
 class CommandSendSignupLink : public Command
@@ -1237,7 +1303,7 @@ class CommandSendSignupLink : public Command
 public:
 	void procresult();
 
-	CommandSendSignupLink(const char*, const char*, byte*);
+	CommandSendSignupLink(MegaClient*, const char*, const char*, byte*);
 };
 
 class CommandQuerySignupLink : public Command
@@ -1247,7 +1313,7 @@ class CommandQuerySignupLink : public Command
 public:
 	void procresult();
 
-	CommandQuerySignupLink(const byte*, unsigned);
+	CommandQuerySignupLink(MegaClient*, const byte*, unsigned);
 };
 
 class CommandConfirmSignupLink : public Command
@@ -1255,7 +1321,7 @@ class CommandConfirmSignupLink : public Command
 public:
 	void procresult();
 
-	CommandConfirmSignupLink(const byte*, unsigned, uint64_t);
+	CommandConfirmSignupLink(MegaClient*, const byte*, unsigned, uint64_t);
 };
 
 class CommandSetKeyPair : public Command
@@ -1263,7 +1329,7 @@ class CommandSetKeyPair : public Command
 public:
 	void procresult();
 
-	CommandSetKeyPair(const byte*, unsigned, const byte*, unsigned);
+	CommandSetKeyPair(MegaClient*, const byte*, unsigned, const byte*, unsigned);
 };
 
 // invite contact/set visibility
@@ -1272,14 +1338,14 @@ class CommandUserRequest : public Command
 public:
 	void procresult();
 
-	CommandUserRequest(const char*, visibility);	
+	CommandUserRequest(MegaClient*, const char*, visibility);
 };
 
 // set user attributes
 class CommandPutUA : public Command
 {
 public:
-	CommandPutUA(const char*, const byte*, unsigned);
+	CommandPutUA(MegaClient*, const char*, const byte*, unsigned);
 
 	void procresult();
 };
@@ -1289,8 +1355,8 @@ class CommandGetUA : public Command
 	int priv;
 
 public:
-	CommandGetUA(const char*, const char*, int);
-	
+	CommandGetUA(MegaClient*, const char*, const char*, int);
+
 	void procresult();
 };
 
@@ -1320,7 +1386,7 @@ public:
 class CommandKeyCR : public Command
 {
 public:
-	CommandKeyCR(MegaClient* client, node_vector*, node_vector*, const char*);
+	CommandKeyCR(MegaClient*, node_vector*, node_vector*, const char*);
 };
 
 class CommandMoveNode : public Command
@@ -1420,7 +1486,7 @@ class CommandSetShare : public Command
 	User* user;
 	accesslevel access;
 
-	int procuserresult(MegaClient*);
+	bool procuserresult(MegaClient*);
 
 public:
 	void procresult();
@@ -1474,7 +1540,7 @@ struct AccountDetails
 	m_off_t transfer_own_used, transfer_srv_used, transfer_max;
 	m_off_t transfer_own_reserved, transfer_srv_reserved;
 	double srv_ratio;
-	
+
 	// transfer history pertaining to requesting IP address
 	time_t transfer_hist_starttime;		// transfer history start timestamp
 	time_t transfer_hist_interval;		// timespan that a single transfer window record covers
@@ -1549,6 +1615,22 @@ public:
 	void procresult();
 
 	CommandGetPH(MegaClient*, handle, const byte*);
+};
+
+class CommandPurchaseAddItem : public Command
+{
+public:
+	void procresult();
+
+	CommandPurchaseAddItem(MegaClient*, int, handle, unsigned, char*, unsigned, char*, char*);
+};
+
+class CommandPurchaseCheckout : public Command
+{
+public:
+	void procresult();
+
+	CommandPurchaseCheckout(MegaClient*, int);
 };
 
 // cr element share/node map key generator
@@ -1641,16 +1723,16 @@ typedef map<const string*,Node*,StringCmp> remotenode_map;
 struct LocalNode : public File
 {
 	class Sync* sync;
-	
+
 	// parent linkage
 	LocalNode* parent;
-	
+
 	// children by name
 	localnode_map children;
 
 	// related cloud node, if any
 	Node* node;
-	
+
 	// original local fs name
 	string localname;
 
@@ -1659,7 +1741,7 @@ struct LocalNode : public File
 
 	// correspondin remote node
 	handle nodehandle;
-	
+
 	// global sync reference
 	handle syncid;
 
@@ -1679,6 +1761,7 @@ struct LocalNode : public File
 // FIXME: use forward_list instead
 typedef list<NewNode*> newnode_list;
 typedef list<handle> handle_list;
+
 typedef map<handle, NewNode*> handlenewnode_map;
 
 class MegaClient
@@ -1766,10 +1849,10 @@ public:
 
 	// start folder synchronization
 	bool addsync(string* localname, Node* n);
-	
+
 	// number of parallel connections per transfer (PUT/GET)
 	unsigned char connections[2];
-	
+
 	// generate & return next upload handle
 	handle uploadhandle(int);
 
@@ -1778,10 +1861,10 @@ public:
 
 	// send files/folders to user
 	void putnodes(const char*, NewNode*, int);
-	
+
 	// attach file attribute
 	void putfa(Transfer*, fatype, const byte*, unsigned);
-	
+
 	// queue file attribute retrieval
 	error getfa(Node*, fatype, int = 0);
 
@@ -1808,7 +1891,7 @@ public:
 
 	// shopping basket
 	handle_vector purchase_basket;
-	
+
 	// enumerate Pro account purchase options
 	void purchase_enumeratequotaitems();
 
@@ -1817,7 +1900,7 @@ public:
 
 	// add item to basket
 	void purchase_additem(int, handle, unsigned, char*, unsigned, char*, char*);
-	
+
 	// submit purchased products for payment
 	void purchase_checkout(int);
 
@@ -1868,18 +1951,18 @@ private:
 
 	// maximum number of concurrent transfers
 	static const unsigned MAXTRANSFERS = 8;
-	
+
 	// maximum outbound throughput (per target server)
 	int putmbpscap;
-	
+
 	// determine if more transfers fit in the pipeline
 	bool moretransfers(direction);
 
 	// time at which next deferred transfer retry kicks in
 	dstime nexttransferretry(direction d, dstime dsmin);
-	
+
 	// fetch state serialize from local cache
-	int fetchsc(DbTable*);
+	bool fetchsc(DbTable*);
 
 	// server-client command processing
 	void sc_updatenode();
@@ -1914,16 +1997,16 @@ public:
 
 	// event waiter
 	Waiter* waiter;
-	
+
 	// HTTP access
 	HttpIO* httpio;
 
 	// directory change notification
 	struct FileSystemAccess* fsaccess;
-	
+
 	// DB access
 	DbAccess* dbaccess;
-	
+
 	// state cache table for logged in user
 	DbTable* sctable;
 
@@ -1978,8 +2061,11 @@ public:
 	// transfer queues (PUT/GET)
 	transfer_map transfers[2];
 
-	// transfer slots
-    transferslot_list tslots;
+	// transfer tslots
+	transferslot_list tslots;
+	
+	// FileFingerprint to node mapping
+	fingerprint_set fingerprints;
 
 	// asymmetric to symmetric key rewriting
 	handle_vector nodekeyrewrite;
@@ -2012,7 +2098,7 @@ public:
 	void deltree(handle);
 
 	Node* nodebyhandle(handle);
-	Node* nodebycrc(SparseCRC*);
+	Node* nodebyfingerprint(FileFingerprint*);
 
 	// generate & return upload handle
 	handle getuploadhandle();
@@ -2022,13 +2108,13 @@ public:
 
 	// activity flag
 	bool syncactivity;
-	
+
 	// added to a synced folder
 	handle_set syncadded;
 
 	// deleted from a synced folder (split by FILENODE/FOLDERNODE)
 	handle_set syncdeleted[2];
-	
+
 	// overwritten in a sync'ed folder
 	syncidhandle_map syncoverwritten;
 
@@ -2052,10 +2138,10 @@ public:
 	void syncup(LocalNode* = NULL, Node* = NULL);
 
 	void syncupload(LocalNode*);
-	
+
 	// sync putnodes() completion
 	void putnodes_sync_result(error, NewNode*);
-	
+
 	// start downloading/copy missing files, create missing directories
 	void syncdown(Node*, LocalNode*, string*);
 
@@ -2087,19 +2173,19 @@ public:
 	void faf_failed(int);
 
 	// process object arrays by the API server
-	int readnodes(JSON*, int, handle* = NULL, NewNode* = NULL);
+	int readnodes(JSON*, int, handle* = NULL, NewNode* = NULL, int = 0);
 
 	void readok(JSON*);
-	void readokelement(JSON* j);
-	void readoutshares(JSON* j);
-	void readoutshareelement(JSON* j);
+	void readokelement(JSON*);
+	void readoutshares(JSON*);
+	void readoutshareelement(JSON*);
 
 	void readcr();
 	void readsr();
 
 	void procsnk(JSON*);
 	void procsuk(JSON*);
-	
+
 	void setkey(SymmCipher*, const char*);
 	bool decryptkey(const char*, byte*, int, SymmCipher*, int, handle);
 
@@ -2119,7 +2205,7 @@ public:
 
 	// session ID length (binary)
 	static const unsigned SIDLEN = 2*SymmCipher::KEYLENGTH+USERHANDLE*4/3+1;
-	
+
 	void proccr(JSON*);
 	void procsr(JSON*);
 
@@ -2188,7 +2274,7 @@ struct MegaApp
 	virtual void setkeypair_result(error) { }
 
 	// account credentials, properties and history
-	virtual void account_details(AccountDetails*, int, int, int, int, int, int) { }
+	virtual void account_details(AccountDetails*, bool, bool, bool, bool, bool, bool) { }
 	virtual void account_details(AccountDetails*, error) { }
 
 	// node attribute update failed (not invoked unless error != API_OK)
@@ -2235,7 +2321,7 @@ struct MegaApp
 	virtual void additem_result(error) { }
 	virtual void checkout_result(error) { }
 	virtual void checkout_result(const char*) { }
-	
+
 	// user invites/attributes
 	virtual void invite_result(error) { }
 	virtual void putua_result(error) { }
@@ -2273,6 +2359,7 @@ struct MegaApp
 	virtual void syncupdate_remote_unlink(Node*) { }
 	virtual void syncupdate_remote_rmdir(Node*) { }
 	virtual void syncupdate_remote_mkdir(Sync*, const char*) { }
+	virtual void syncupdate_remote_copy(Sync*, const char*) { }
 
 	// suggest reload due to possible race condition with other clients
 	virtual void reload(const char*) { }
@@ -2296,10 +2383,10 @@ class HashSignature
 public:
 	// add data
 	void add(const byte*, unsigned);
-	
+
 	// generate signature
 	unsigned get(AsymmCipher*, byte*, unsigned);
-	
+
 	// verify signature
 	int check(AsymmCipher*, const byte*, unsigned);
 
@@ -2324,16 +2411,16 @@ class Sync
 	SymmCipher tkey;
 	string tattrstring;
 	AttrMap tattrs;
-	
+
 public:
 	MegaClient* client;
-	
+
 	// remote root
 	handle rooth;
 
 	// full filesystem path this sync starts at
 	string rootpath;
-		
+
 	// in-memory representation of the local tree
 	LocalNode* rootlocal;
 
@@ -2357,7 +2444,7 @@ public:
 
 	// scan items in specified path and add as children of the specified LocalNode
 	void scan(string*, FileAccess*, LocalNode*, bool);
-	
+
 	Sync(MegaClient*, string*, Node*);
 	~Sync();
 };
@@ -2373,4 +2460,5 @@ struct SyncFileGet : public File
 	SyncFileGet(Node*, string*);
 	~SyncFileGet();
 };
+
 #endif

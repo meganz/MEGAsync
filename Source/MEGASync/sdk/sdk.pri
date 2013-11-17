@@ -12,18 +12,21 @@ CONFIG(release, debug|release) {
 }
 
 SOURCES += sdk/megaapi.cpp \
-    sdk/megacrypto.cpp \
+    sdk/crypto/cryptopp.cpp \
     sdk/megaclient.cpp \
-    sdk/megawin32.cpp \
-    sdk/megasqlitedb.cpp
+    sdk/win32/fs.cpp \
+    sdk/win32/net.cpp \
+    sdk/win32/megaapiwait.cpp \
+    sdk/db/sqlite.cpp \
+    sdk/sqlite3.c
 
 HEADERS  += sdk/megaapi.h \
-    sdk/megacrypto.h \
+    sdk/crypto/cryptopp.h \
     sdk/megaclient.h \
-    sdk/megabdb.h \
-    sdk/mega.h \
-    sdk/megawin32.h \
-    sdk/megasqlitedb.h
+    sdk/win32/fs.h \
+    sdk/win32/net.h \
+    sdk/win32/megaapiwait.h \
+    sdk/db/sqlite.h
 
 LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 
@@ -34,10 +37,11 @@ else {
     LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/static"
 }
 
-
+DEFINES += USE_SQLITE USE_CRYPTOPP
 LIBS += -lcryptopp -ldb_cxx -lpthread
 
 win32 {
+    INCLUDEPATH += $$PWD/3rdparty/include
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
     INCLUDEPATH += $$PWD/3rdparty/include/db
     INCLUDEPATH += $$PWD/3rdparty/include/pthread

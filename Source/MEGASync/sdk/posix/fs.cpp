@@ -1,10 +1,6 @@
 /*
 
-MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment
-
-Using cURL for HTTP I/O, GNU Readline for console I/O and FreeImage for thumbnail creation
-
-cURL *must* be configured with --enable-ares!
+MEGA SDK 2013-11-17 - POSIX filesystem/directory access/notification
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -32,10 +28,6 @@ DEALINGS IN THE SOFTWARE.
 #include <stdarg.h>
 #include <fcntl.h>
 
-#include <glob.h>
-#include <dirent.h>
-#include <sys/select.h>
-#include <sys/inotify.h>
 #include <sys/sendfile.h>
 #include <sys/un.h>
 #include <termios.h>
@@ -45,276 +37,14 @@ DEALINGS IN THE SOFTWARE.
 
 #include <curl/curl.h>
 
-#include <db_cxx.h>
-
-#define USE_VARARGS
-#define PREFER_STDARG
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#define __DARWIN_C_LEVEL 199506L
+#include "megaclient.h"
+#include "wait.h"
+#include "fs.h"
 
 #ifdef __MACH__
-#include <machine/endian.h>
-#include <strings.h>
-#include <sys/time.h>
-#define CLOCK_MONOTONIC 0
-int clock_gettime(int, struct timespec* t)
-{
-    struct timeval now;
-    int rv = gettimeofday(&now,NULL);
-    if (rv) return rv;
-    t->tv_sec  = now.tv_sec;
-    t->tv_nsec = now.tv_usec*1000;
-    return 0;
-}
 ssize_t pread(int, void *, size_t, off_t) __DARWIN_ALIAS_C(pread);
 ssize_t pwrite(int, const void *, size_t, off_t) __DARWIN_ALIAS_C(pwrite);
 #endif
-
-#include "mega.h"
-
-#include "megacrypto.h"
-#include "megaclient.h"
-#include "megaposix.h"
-#include "megacli.h"
-#include "megabdb.h"
-
-PosixWaiter::PosixWaiter()
-{
-    pipe(m_pipe);
-    fcntl(m_pipe[0], F_SETFL, O_NONBLOCK);
-}
-
-void PosixWaiter::init(dstime ds)
-{
-	maxds = ds;
-
-	maxfd = -1;
-
-	FD_ZERO(&rfds);
-	FD_ZERO(&wfds);
-	FD_ZERO(&efds);
-}
-
-// update monotonously increasing timestamp in deciseconds
-dstime PosixWaiter::getdstime()
-{
-	timespec ts;
-
-	clock_gettime(CLOCK_MONOTONIC,&ts);
-
-	return ds = ts.tv_sec*10+ts.tv_nsec/100000000;
-}
-
-// update maxfd for select()
-void PosixWaiter::bumpmaxfd(int fd)
-{
-	if (fd > maxfd) maxfd = fd;
-}
-
-// wait for supplied events (sockets, filesystem changes), plus timeout + application events
-// maxds specifies the maximum amount of time to wait in deciseconds (or ~0 if no timeout scheduled)
-// returns application-specific bitmask. bit 0 set indicates that exec() needs to be called.
-// this implementation returns the presence of pending stdin data in bit 1.
-int PosixWaiter::wait()
-{
-	timeval tv;
-	int numfd;
-
-	// application's own wakeup criteria:
-	// wake up upon user input
-
-#ifdef BUILD_MEGACLI
-    FD_SET(STDIN_FILENO,&rfds);
-	bumpmaxfd(STDIN_FILENO);
-#endif
-    FD_SET(m_pipe[0], &rfds);
-    bumpmaxfd(m_pipe[0]);
-
-	if (maxds+1)
-	{
-		dstime us = 1000000/10*maxds;
-
-		tv.tv_sec = us/1000000;
-		tv.tv_usec = us-tv.tv_sec*1000000;
-	}
-
-	numfd = select(maxfd+1,&rfds,&wfds,&efds,maxds+1 ? &tv : NULL);
-
-	if (numfd <= 0) return NEEDEXEC;
-
-    // application's own event processing:
-#ifdef BUILD_MEGACLI
-	// user interaction from stdin?
-	if (FD_ISSET(STDIN_FILENO,&rfds)) return (numfd == 1) ? HAVESTDIN : (HAVESTDIN | NEEDEXEC);
-#endif
-
-    uint8_t buf;
-    if (FD_ISSET(m_pipe[0],&rfds)) while (read(m_pipe[0], &buf, 1) == 1);
-
-	return NEEDEXEC;
-}
-
-void PosixWaiter::notify()
-{
-    write(m_pipe[1], "0", 1);
-}
-
-
-// HttpIO implementation using libcurl
-CurlHttpIO::CurlHttpIO()
-{
-	curl_global_init(CURL_GLOBAL_DEFAULT);
-
-	curlm = curl_multi_init();
-
-	curlsh = curl_share_init();
-	curl_share_setopt(curlsh,CURLSHOPT_SHARE,CURL_LOCK_DATA_DNS);
-	curl_share_setopt(curlsh,CURLSHOPT_SHARE,CURL_LOCK_DATA_SSL_SESSION);
-
-	contenttypejson = curl_slist_append(NULL,"Content-Type: application/json");
-	contenttypejson = curl_slist_append(contenttypejson, "Expect:");
-
-	contenttypebinary = curl_slist_append(NULL,"Content-Type: application/octet-stream");
-	contenttypebinary = curl_slist_append(contenttypebinary, "Expect:");
-}
-
-CurlHttpIO::~CurlHttpIO()
-{
-	curl_global_cleanup();
-}
-
-// wake up from cURL I/O
-void CurlHttpIO::addevents(Waiter* w)
-{
-	int t;
-	PosixWaiter* pw = (PosixWaiter*)w;
-
-	curl_multi_fdset(curlm,&pw->rfds,&pw->wfds,&pw->efds,&t);
-
-	pw->bumpmaxfd(t);
-}
-
-// POST request to URL
-void CurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
-{
-	if (debug)
-	{
-		cout << "POST target URL: " << req->posturl << endl;
-
-		if (req->binary) cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
-		else cout << "Sending: " << *req->out << endl;
-	}
-
-	CURL* curl;
-
-	req->in.clear();
-
-	if ((curl = curl_easy_init()))
-	{
-		curl_easy_setopt(curl,CURLOPT_URL,req->posturl.c_str());
-		curl_easy_setopt(curl,CURLOPT_POSTFIELDS,data ? data : req->out->data());
-		curl_easy_setopt(curl,CURLOPT_POSTFIELDSIZE,data ? len : req->out->size());
-		curl_easy_setopt(curl,CURLOPT_USERAGENT,"MEGA Client Access Engine/1.0");
-		curl_easy_setopt(curl,CURLOPT_HTTPHEADER,req->type == REQ_JSON ? contenttypejson : contenttypebinary);
-		curl_easy_setopt(curl,CURLOPT_SHARE,curlsh);
-		curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_data);
-		curl_easy_setopt(curl,CURLOPT_WRITEDATA,(void*)req);
-		curl_easy_setopt(curl,CURLOPT_PRIVATE,(void*)req);
-
-		curl_multi_add_handle(curlm,curl);
-
-		req->status = REQ_INFLIGHT;
-
-		req->httpiohandle = (void*)curl;
-	}
-	else req->status = REQ_FAILURE;
-}
-
-// cancel pending HTTP request
-void CurlHttpIO::cancel(HttpReq* req)
-{
-	if (req->httpiohandle)
-	{
-		curl_multi_remove_handle(curlm,(CURL*)req->httpiohandle);
-		curl_easy_cleanup((CURL*)req->httpiohandle);
-
-		req->httpstatus = 0;
-		req->status = REQ_FAILURE;
-		req->httpiohandle = NULL;
-	}
-}
-
-// real-time progress information on POST data
-m_off_t CurlHttpIO::postpos(void* handle)
-{
-	double bytes;
-
-	curl_easy_getinfo(handle,CURLINFO_SIZE_UPLOAD,&bytes);
-
-	return (m_off_t)bytes;
-}
-
-// process events
-bool CurlHttpIO::doio()
-{
-	bool done;
-
-	done = 0;
-
-	CURLMsg *msg;
-	int dummy;
-
-	curl_multi_perform(curlm,&dummy);
-
-	while ((msg = curl_multi_info_read(curlm,&dummy)))
-	{
-		HttpReq* req;
-
-		if (curl_easy_getinfo(msg->easy_handle,CURLINFO_PRIVATE,(char**)&req) == CURLE_OK && req)
-		{
-			req->httpio = NULL;
-
-			if (msg->msg == CURLMSG_DONE)
-			{
-				curl_easy_getinfo(msg->easy_handle,CURLINFO_RESPONSE_CODE,&req->httpstatus);
-
-				if (debug)
-				{
-					cout << "CURLMSG_DONE with HTTP status: " << req->httpstatus << endl;
-
-					if (req->binary) cout << "[received " << req->in.size() << " bytes of raw data]" << endl;
-					else cout << "Received: " << req->in.c_str() << endl;
-				}
-
-				req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
-				done = true;
-			}
-			else req->status = REQ_FAILURE;
-		}
-
-		curl_multi_remove_handle(curlm,msg->easy_handle);
-		curl_easy_cleanup(msg->easy_handle);
-	}
-
-	return done;
-}
-
-// callback for incoming HTTP payload
-size_t CurlHttpIO::write_data(void *ptr, size_t size, size_t nmemb, void *target)
-{
-	size *= nmemb;
-
-	((HttpReq*)target)->put(ptr,size);
-
-	return size;
-}
-
-FileAccess* DemoApp::newfile()
-{
-	return new PosixFileAccess();
-}
 
 PosixFileAccess::PosixFileAccess()
 {
@@ -400,6 +130,11 @@ void PosixFileSystemAccess::tmpnamelocal(string* filename, string* relatedpath)
 	*filename = tmpnam(NULL);
 }
 
+void PosixFileSystemAccess::path2local(string* local, string* path)
+{
+	*path = *local;
+}
+
 void PosixFileSystemAccess::local2path(string* local, string* path)
 {
 	*path = *local;
@@ -462,6 +197,12 @@ bool PosixFileSystemAccess::copylocal(string* oldname, string* newname)
 	}
 
 	return !t;
+}
+
+// FIXME: move file or subtree to rubbish bin
+bool PosixFileSystemAccess::rubbishlocal(string* name)
+{
+	return !rmdir(name->c_str());
 }
 
 bool PosixFileSystemAccess::unlinklocal(string* name)
@@ -541,9 +282,6 @@ cout << "Notify Overflow" << endl;
 		{
 			if ((in->mask & (IN_CREATE|IN_ISDIR)) != IN_CREATE)
 			{
-				if (*in->name) cout << "name=" << in->name << endl;
-				else cout << "name=EMPTY!" << endl;
-
 				it = wdnodes.find(in->wd);
 
 				if (it != wdnodes.end())
@@ -657,76 +395,3 @@ PosixDirAccess::~PosixDirAccess()
 	if (dp) closedir(dp);
 	if (globbing) globfree(&globbuf);
 }
-
-#ifdef BUILD_MEGACLI
-
-// terminal handling
-static tcflag_t oldlflag;
-static cc_t oldvtime;
-static struct termios term;
-
-void term_init()
-{
-	// set up the console
-    if (tcgetattr(STDIN_FILENO,&term) < 0)
-	{
-        perror("tcgetattr");
-        exit(1);
-    }
-
-    oldlflag = term.c_lflag;
-    oldvtime = term.c_cc[VTIME];
-    term.c_lflag &= ~ICANON;
-    term.c_cc[VTIME] = 1;
-
-    if (tcsetattr(STDIN_FILENO,TCSANOW,&term) < 0)
-	{
-        perror("tcsetattr");
-        exit(1);
-    }
-}
-
-void term_echo(int echo)
-{
-}
-
-void term_restore()
-{
-	term.c_lflag = oldlflag;
-	term.c_cc[VTIME] = oldvtime;
-
-	if (tcsetattr(STDIN_FILENO,TCSANOW,&term) < 0)
-	{
-		perror("tcsetattr");
-		exit(1);
-	}
-}
-
-// FIXME: UTF-8 compatibility
-void read_pw_char(char* pw_buf, int pw_buf_size, int* pw_buf_pos, char** line)
-{
-	char c;
-
-	if (read(STDIN_FILENO,&c,1) == 1)
-	{
-		if (c == 8 && *pw_buf_pos) (*pw_buf_pos)--;
-		else if (c == 13)
-		{
-			*line = (char*)malloc(*pw_buf_pos+1);
-			memcpy(*line,pw_buf,*pw_buf_pos);
-			(*line)[*pw_buf_pos] = 0;
-		}
-		else if (*pw_buf_pos < pw_buf_size) pw_buf[(*pw_buf_pos)++] = c;
-	}
-}
-
-int main()
-{
-	// instantiate app components: the callback processor (DemoApp),
-	// the cURL HTTP I/O engine (CurlHttpIO) and the MegaClient itself
-	client = new MegaClient(new DemoApp,new PosixWaiter,new CurlHttpIO,new PosixFileSystemAccess,new BdbAccess,"SDKSAMPLE");
-
-	megacli();
-}
-
-#endif

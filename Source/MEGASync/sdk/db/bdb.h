@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application, Berkeley DB access
+MEGA SDK 2013-11-16 - sample application, Berkeley DB access
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -16,30 +16,30 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#ifndef MEGASQLITEDB_H
-#define MEGASQLITEDB_H 1
+#ifdef USE_BDB
+#ifndef DBACCESS_CLASS
+#define DBACCESS_CLASS BdbAccess
 
-#include "sqlite3.h"
-#include "megaclient.h"
+#include <db_cxx.h>
 
-
-class SqliteDbAccess : public DbAccess
+class BdbAccess : public DbAccess
 {
-    string dbpath;
-    sqlite3 *db;
+	DbEnv* env;
+	string dbpathprefix;
 
 public:
-    DbTable* open(FileSystemAccess* fsaccess, string* name);
+	DbTable* open(FileSystemAccess*, string*);
 
-    SqliteDbAccess(const char *path);
-    SqliteDbAccess();
-	~SqliteDbAccess();
+	BdbAccess(string* = NULL);
+	~BdbAccess();
 };
 
-class SqliteDbTable : public DbTable
+class BdbTable : public DbTable
 {
-	sqlite3 *db;
-	sqlite3_stmt *pStmt;
+	Db* db;
+	DbTxn* dbtxn;
+	DbEnv* dbenv;
+	Dbc* dbcursor;
 
 public:
 	void rewind();
@@ -54,8 +54,9 @@ public:
 
 	uint32_t nextid;
 
-	SqliteDbTable(sqlite3 *db);
-	~SqliteDbTable();
+	BdbTable(DbEnv*);
+	~BdbTable();
 };
 
+#endif
 #endif

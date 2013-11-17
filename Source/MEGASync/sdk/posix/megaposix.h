@@ -1,10 +1,8 @@
 /*
 
-MEGA SDK 2013-11-11 - sample application for the gcc/POSIX environment
+MEGA SDK 2013-11-16 - sample application for the gcc/POSIX environment
 
-Using cURL for HTTP I/O, GNU Readline for console I/O and FreeImage for thumbnail creation
-
-cURL *must* be configured with --enable-ares!
+Using cURL for HTTP I/O - cURL *must* be configured with --enable-ares!
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -34,11 +32,8 @@ struct PosixWaiter : public Waiter
 	void init(dstime);
 	void waitfor(EventTrigger*);
 	int wait();
-    void notify();
 
 	void bumpmaxfd(int);
-
-	PosixWaiter();
 };
 
 class CurlHttpIO : public HttpIO
@@ -97,13 +92,16 @@ public:
 	void tmpnamelocal(string*, string* = NULL);
 
 	void local2path(string*, string*);
+	void path2local(string*, string*);
 
 	void name2local(string*, const char* = NULL);
 	void local2name(string*);
+
 	bool localhidden(string*, string*);
 
 	bool renamelocal(string*, string*);
 	bool copylocal(string*, string*);
+	bool rubbishlocal(string*);
 	bool unlinklocal(string*);
 	bool rmdirlocal(string*);
 	bool mkdirlocal(string*);

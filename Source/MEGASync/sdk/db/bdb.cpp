@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application, Berkeley DB access
+MEGA SDK 2013-11-16 - sample application, Berkeley DB access
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -17,23 +17,17 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #ifdef ENABLE_LOCALCACHE
-#include <sys/stat.h>
-
-#include <db_cxx.h>
 
 #include "mega.h"
 #include "megaclient.h"
 #include "megabdb.h"
 
-BdbAccess::BdbAccess(const char *path)
+// basepath is prepended to the name
+BdbAccess::BdbAccess(string* cdbpathprefix)
 {
-    dbpath = string(path);
-    env = NULL;
-}
-
-BdbAccess::BdbAccess()
-{
-    dbpath = "";
+	if (cdbpathprefix) dbpathprefix = *cdbpathprefix;
+	else dbpathprefix = "megaclient_statecache_";	// FIXME: Unicode support for default prefix?
+	
 	env = NULL;
 }
 
@@ -46,14 +40,18 @@ DbTable* BdbAccess::open(FileSystemAccess* fsaccess, string* name)
 {
 	if (env) env->close(0);
 
-    string dbdir = dbpath + "megaclient_statecache_";
-	
-	dbdir.append(*name);
-	fsaccess->name2local(&dbdir);
-	fsaccess->mkdirlocal(&dbdir);
+	string dbname = *name;
+	fsaccess->name2local(&dbname);
+	dbname.insert(0,dbpathprefix);
+	fsaccess->mkdirlocal(&dbname);
 
-	env = new DbEnv(0);
-	env->open(dbdir.c_str(),DB_CREATE|DB_REGISTER|DB_INIT_TXN|DB_INIT_MPOOL|DB_INIT_LOCK|DB_RECOVER,0);
+	env = new DbEnv(DB_CXX_NO_EXCEPTIONS);
+
+	env->set_lk_max_lockers(10000000);
+	env->set_lk_max_locks(10000000);
+	env->set_lk_max_objects(10000000);
+	
+	if (env->open(dbname.c_str(),DB_CREATE|DB_REGISTER|DB_INIT_TXN|DB_INIT_MPOOL|DB_INIT_LOCK|DB_RECOVER,0)) return NULL;
 
 	return new BdbTable(env);
 }

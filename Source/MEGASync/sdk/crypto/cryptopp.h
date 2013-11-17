@@ -16,10 +16,9 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#ifndef MEGACRYPTO_H
-#define MEGACRYPTO_H 1
-
-#include "mega.h"
+#ifdef USE_CRYPTOPP
+#ifndef CRYPTOCRYPTOPP_H
+#define CRYPTOCRYPTOPP_H 1
 
 #include <cryptlib.h>
 #include <modes.h>
@@ -27,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 #include <aes.h>
 #include <osrng.h>
 #include <sha.h>
-#include <rsa.h> 
+#include <rsa.h>
 #include <crc.h>
 #include <nbtheory.h>
 #include <algparam.h>
@@ -112,7 +111,7 @@ public:
 
 	unsigned rawencrypt(const byte* plain, int plainlen, byte* buf, int buflen);
 	unsigned rawdecrypt(const byte* c, int cl, byte* buf, int buflen);
-	
+
 	static void serializeintarray(Integer*, int, string*);
 	void serializekey(string*, int);
 	void genkeypair(Integer* privk, Integer* pubk, int size);
@@ -136,4 +135,5 @@ public:
 	void get(byte*);
 };
 
+#endif
 #endif
