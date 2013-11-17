@@ -15,7 +15,7 @@ FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TOR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 
- */
+*/
 
 #define _POSIX_SOURCE
 #define _LARGE_FILES
@@ -29,9 +29,6 @@ DEALINGS IN THE SOFTWARE.
 #define PREFER_STDARG
 #include "megaapi.h"
 
-//#include <android/log.h>
-//#define LOG(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "MEGA_JNI", __VA_ARGS__))
-
 #ifdef _WIN32
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
@@ -39,633 +36,7 @@ DEALINGS IN THE SOFTWARE.
 #define strncasecmp _strnicmp
 #endif
 
-#ifdef __MACH__
-#include <machine/endian.h>
-#include <strings.h>
-#include <sys/time.h>
-#define CLOCK_MONOTONIC 0
-int clock_gettime(int, struct timespec* t)
-{
-	struct timeval now;
-	int rv = gettimeofday(&now,NULL);
-	if (rv) return rv;
-	t->tv_sec  = now.tv_sec;
-	t->tv_nsec = now.tv_usec*1000;
-	return 0;
-}
-ssize_t pread(int, void *, size_t, off_t) __DARWIN_ALIAS_C(pread);
-ssize_t pwrite(int, const void *, size_t, off_t) __DARWIN_ALIAS_C(pwrite);
-#endif
-
-#ifndef _WIN32
-int MegaCurlHttpIO::ssl_verify_callback(X509_STORE_CTX *ctx, void *arg)
-{
-	//verify the certificate chain.
-	int ok = ((X509_verify_cert(ctx)==1) && ctx->cert);
-	if(!ok) return 0;
-
-	//get an EVP_PKEY object with the MEGA public key. 
-	EVP_PKEY* evp = X509_PUBKEY_get(X509_get_X509_PUBKEY(ctx->cert));
-	if(!evp) return 0;
-
-	//modulus of the MEGA public key
-	const unsigned char MEGAmodulus[] = 
-	{
-			0xB6, 0x61, 0xE7, 0xCF, 0x69, 0x2A, 0x84, 0x35, 0x05, 0xC3, 0x14, 0xBC, 0x95, 0xCF, 0x94, 0x33,
-			0x1C, 0x82, 0x67, 0x3B, 0x04, 0x35, 0x11, 0xA0, 0x8D, 0xC8, 0x9D, 0xBB, 0x9C, 0x79, 0x65, 0xE7,
-			0x10, 0xD9, 0x91, 0x80, 0xC7, 0x81, 0x0C, 0xF4, 0x95, 0xBB, 0xB3, 0x26, 0x9B, 0x97, 0xD2, 0x14,
-			0x0F, 0x0B, 0xCA, 0xF0, 0x5E, 0x45, 0x7B, 0x32, 0xC6, 0xA4, 0x7D, 0x7A, 0xFE, 0x11, 0xE7, 0xB2,
-			0x5E, 0x21, 0x55, 0x23, 0x22, 0x1A, 0xCA, 0x1A, 0xF9, 0x21, 0xE1, 0x4E, 0xB7, 0x82, 0x0D, 0xEB,
-			0x9D, 0xCB, 0x4E, 0x3D, 0x0B, 0xE4, 0xED, 0x4A, 0xEF, 0xE4, 0xAB, 0x0C, 0xEC, 0x09, 0x69, 0xFE,
-			0xAE, 0x43, 0xEC, 0x19, 0x04, 0x3D, 0x5B, 0x68, 0x0F, 0x67, 0xE8, 0x80, 0xFF, 0x9B, 0x03, 0xEA,
-			0x50, 0xAB, 0x16, 0xD7, 0xE0, 0x4C, 0xB4, 0x42, 0xEF, 0x31, 0xE2, 0x32, 0x9F, 0xE4, 0xD5, 0xF4,
-			0xD8, 0xFD, 0x82, 0xCC, 0xC4, 0x50, 0xD9, 0x4D, 0xB5, 0xFB, 0x6D, 0xA2, 0xF3, 0xAF, 0x37, 0x67,
-			0x7F, 0x96, 0x4C, 0x54, 0x3D, 0x9B, 0x1C, 0xBD, 0x5C, 0x31, 0x6D, 0x10, 0x43, 0xD8, 0x22, 0x21,
-			0x01, 0x87, 0x63, 0x22, 0x89, 0x17, 0xCA, 0x92, 0xCB, 0xCB, 0xEC, 0xE8, 0xC7, 0xFF, 0x58, 0xE8,
-			0x18, 0xC4, 0xCE, 0x1B, 0xE5, 0x4F, 0x20, 0xA8, 0xCF, 0xD3, 0xB9, 0x9D, 0x5A, 0x7A, 0x69, 0xF2,
-			0xCA, 0x48, 0xF8, 0x87, 0x95, 0x3A, 0x32, 0x70, 0xB3, 0x1A, 0xF0, 0xC4, 0x45, 0x70, 0x43, 0x58,
-			0x18, 0xDA, 0x85, 0x29, 0x1D, 0xAF, 0x83, 0xC2, 0x35, 0xA9, 0xC1, 0x73, 0x76, 0xB4, 0x47, 0x22,
-			0x2B, 0x42, 0x9F, 0x93, 0x72, 0x3F, 0x9D, 0x3D, 0xA1, 0x47, 0x3D, 0xB0, 0x46, 0x37, 0x1B, 0xFD,
-			0x0E, 0x28, 0x68, 0xA0, 0xF6, 0x1D, 0x62, 0xB2, 0xDC, 0x69, 0xC7, 0x9B, 0x09, 0x1E, 0xB5, 0x47
-	};
-
-	//exponent of the MEGA public key
-	const unsigned char MEGAexponent[] = {0x01, 0x00, 0x01};
-
-	//check the length of the modulus
-	int len = BN_num_bytes(evp->pkey.rsa->n);
-	if(len != sizeof(MEGAmodulus))
-	{
-		EVP_PKEY_free(evp);
-		return 0;
-	}
-
-	//convert the public modulus to a binary string	
-	unsigned char *buff = new unsigned char[len];
-	BN_bn2bin(evp->pkey.rsa->n, buff);
-
-	//check the public key
-	ok = (memcmp(buff, MEGAmodulus, (size_t)len) == 0);
-	delete buff;
-
-	//check the length of the exponent
-	len = BN_num_bytes(evp->pkey.rsa->e);
-	if(len != sizeof(MEGAexponent))
-	{
-		EVP_PKEY_free(evp);
-		return 0;
-	}
-
-	//convert the public exponent to a binary string	
-	buff = new unsigned char[len];
-	BN_bn2bin(evp->pkey.rsa->e, buff);
-
-	//check the public exponent
-	ok &= (memcmp(buff, MEGAexponent, (size_t)len) == 0);
-	delete buff;
-
-	EVP_PKEY_free(evp);
-	return ok;
-}
-
-CURLcode MegaCurlHttpIO::sslctx_function(CURL * curl, void * sslctx, void * parm)
-{	
-	X509_STORE * store;
-	X509 * cert=NULL;
-	BIO * bio;
-
-	//CA in the root of the MEGA certificate.
-	const char *MEGApemRoot =
-			"UTN DATACorp SGC Root CA\n"
-			"========================\n"
-			"-----BEGIN CERTIFICATE-----\n"
-			"MIIEXjCCA0agAwIBAgIQRL4Mi1AAIbQR0ypoBqmtaTANBgkqhkiG9w0BAQUFADCBkzELMAkGA1UE\n"
-			"BhMCVVMxCzAJBgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExha2UgQ2l0eTEeMBwGA1UEChMVVGhl\n"
-			"IFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8vd3d3LnVzZXJ0cnVzdC5jb20xGzAZ\n"
-			"BgNVBAMTElVUTiAtIERBVEFDb3JwIFNHQzAeFw05OTA2MjQxODU3MjFaFw0xOTA2MjQxOTA2MzBa\n"
-			"MIGTMQswCQYDVQQGEwJVUzELMAkGA1UECBMCVVQxFzAVBgNVBAcTDlNhbHQgTGFrZSBDaXR5MR4w\n"
-			"HAYDVQQKExVUaGUgVVNFUlRSVVNUIE5ldHdvcmsxITAfBgNVBAsTGGh0dHA6Ly93d3cudXNlcnRy\n"
-			"dXN0LmNvbTEbMBkGA1UEAxMSVVROIC0gREFUQUNvcnAgU0dDMIIBIjANBgkqhkiG9w0BAQEFAAOC\n"
-			"AQ8AMIIBCgKCAQEA3+5YEKIrblXEjr8uRgnn4AgPLit6E5Qbvfa2gI5lBZMAHryv4g+OGQ0SR+ys\n"
-			"raP6LnD43m77VkIVni5c7yPeIbkFdicZD0/Ww5y0vpQZY/KmEQrrU0icvvIpOxboGqBMpsn0GFlo\n"
-			"wHDyUwDAXlCCpVZvNvlK4ESGoE1O1kduSUrLZ9emxAW5jh70/P/N5zbgnAVssjMiFdC04MwXwLLA\n"
-			"9P4yPykqlXvY8qdOD1R8oQ2AswkDwf9c3V6aPryuvEeKaq5xyh+xKrhfQgUL7EYw0XILyulWbfXv\n"
-			"33i+Ybqypa4ETLyorGkVl73v67SMvzX41MPRKA5cOp9wGDMgd8SirwIDAQABo4GrMIGoMAsGA1Ud\n"
-			"DwQEAwIBxjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRTMtGzz3/64PGgXYVOktKeRR20TzA9\n"
-			"BgNVHR8ENjA0MDKgMKAuhixodHRwOi8vY3JsLnVzZXJ0cnVzdC5jb20vVVROLURBVEFDb3JwU0dD\n"
-			"LmNybDAqBgNVHSUEIzAhBggrBgEFBQcDAQYKKwYBBAGCNwoDAwYJYIZIAYb4QgQBMA0GCSqGSIb3\n"
-			"DQEBBQUAA4IBAQAnNZcAiosovcYzMB4p/OL31ZjUQLtgyr+rFywJNn9Q+kHcrpY6CiM+iVnJowft\n"
-			"Gzet/Hy+UUla3joKVAgWRcKZsYfNjGjgaQPpxE6YsjuMFrMOoAyYUJuTqXAJyCyjj98C5OBxOvG0\n"
-			"I3KgqgHf35g+FFCgMSa9KOlaMCZ1+XtgHI3zzVAmbQQnmt/VDUVHKWss5nbZqSl9Mt3JNjy9rjXx\n"
-			"EZ4du5A/EkdOjtd+D2JzHVImOBwYSf0wdJrE5SIv2MCN7ZF6TACPcn9d2t0bi0Vr591pl6jFVkwP\n"
-			"DPafepE39peC4N1xaf92P2BNPM/3mfnGV/TJVTl4uix5yaaIK/QI\n"
-			"-----END CERTIFICATE-----\n";
-
-	SSL_CTX *ctx = (SSL_CTX *)sslctx;
-
-	/* get a BIO */
-	bio=BIO_new_mem_buf((char *)MEGApemRoot, -1);
-
-	/* use it to read the PEM formatted certificate from memory into an X509
-	 * structure that SSL can use*/
-	PEM_read_bio_X509(bio, &cert, 0, NULL);
-	(void)BIO_set_close(bio, BIO_NOCLOSE);
-	BIO_free(bio);
-
-	if(cert == NULL) return CURLE_SSL_CACERT_BADFILE;
-
-	/* get a pointer to the X509 certificate store (which may be empty!) */
-	store=SSL_CTX_get_cert_store(ctx);
-	if (store == NULL) { X509_free(cert); return CURLE_SSL_CACERT_BADFILE; }
-
-	/* add the certificate to this store */
-	X509_STORE_add_cert(store, cert);
-	X509_free(cert);
-
-	/* set max depth for the certificate chain */
-	SSL_CTX_set_verify_depth(ctx, 3);
-
-	/* set a custom callback to check the certificate */
-	SSL_CTX_set_cert_verify_callback(ctx, MegaCurlHttpIO::ssl_verify_callback, NULL);
-
-	/* all set to go */
-	return CURLE_OK ;
-}
-#endif
-
-// HttpIO implementation using libcurl
-MegaCurlHttpIO::MegaCurlHttpIO()
-{
-#ifdef _WIN32
-    InitializeCriticalSection(&csHTTP);
-    EnterCriticalSection(&csHTTP);
-
-    // create the session handle using the default settings.
-    hSession = WinHttpOpen(L"MEGA Client Access Engine/1.0",WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,WINHTTP_NO_PROXY_NAME,WINHTTP_NO_PROXY_BYPASS,WINHTTP_FLAG_ASYNC);
-
-    hWakeup[0] = CreateEvent(NULL,FALSE,FALSE,NULL);
-    hWakeup[1] = CreateEvent(NULL,FALSE,FALSE,NULL);
-
-    completion = 0;
-#else
-	//Copy of CurlHttpIO constructor to avoid the inclusion of megaapp.h
-	//and be able to compile without readline
-	curl_global_init(CURL_GLOBAL_DEFAULT);
-
-	curlm = curl_multi_init();
-
-	curlsh = curl_share_init();
-	curl_share_setopt(curlsh,CURLSHOPT_SHARE,CURL_LOCK_DATA_DNS);
-	curl_share_setopt(curlsh,CURLSHOPT_SHARE,CURL_LOCK_DATA_SSL_SESSION);
-
-	contenttypejson = curl_slist_append(NULL,"Content-Type: application/json");
-	contenttypejson = curl_slist_append(contenttypejson, "Expect:");
-
-	contenttypebinary = curl_slist_append(NULL,"Content-Type: application/octet-stream");
-	contenttypebinary = curl_slist_append(contenttypebinary, "Expect:");
-	////////////////////////////////////////
-
-	//Pipe to be able to leave select() call
-	if (pipe(m_pipe) < 0)
-		cout << "Error creating pipe" << endl;
-
-	if (fcntl(m_pipe[0], F_SETFL, O_NONBLOCK) < 0)
-		cout << "fcntl error" << endl;
-#endif
-
-    debug = 0;
-}
-
-MegaCurlHttpIO::~MegaCurlHttpIO()
-{
-#ifdef _WIN32
-    WinHttpCloseHandle(hSession);
-    LeaveCriticalSection(&csHTTP);
-#else
-	curl_global_cleanup();
-#endif
-}
-
-// update monotonously increasing timestamp in deciseconds
-void MegaCurlHttpIO::updatedstime()
-{
-#ifdef _WIN32
-    ds = (dstime)(GetTickCount()/100);	// FIXME: Use GetTickCount64() instead
-#else
-	timespec ts;
-	clock_gettime(CLOCK_MONOTONIC,&ts);
-	ds = ts.tv_sec*10+ts.tv_nsec/100000000;
-#endif
-}
-
-#ifdef _WIN32
-// handle WinHTTP callbacks (which can be in a worker thread context)
-void CALLBACK MegaCurlHttpIO::AsyncCallback(HINTERNET hInternet, DWORD_PTR dwContext,  DWORD dwInternetStatus, LPVOID lpvStatusInformation, DWORD dwStatusInformationLength)
-{
-    HttpReq* req = (HttpReq*)dwContext;
-
-    EnterCriticalSection(&((MegaCurlHttpIO*)req->httpio)->csHTTP);
-
-    switch (dwInternetStatus)
-    {
-        case WINHTTP_CALLBACK_STATUS_DATA_AVAILABLE:
-            {
-                DWORD size =  *(DWORD*)lpvStatusInformation;
-
-                if (!size)
-                {
-                    if (((MegaCurlHttpIO*)req->httpio)->debug)
-                    {
-                        if (req->binary) cout << "[received " << req->bufpos << " bytes of raw data]" << endl;
-                        else cout << "Received: " << req->in.c_str() << endl;
-                    }
-
-                    req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
-
-                    SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-                }
-                else
-                {
-                    char* ptr = (char*)req->reserveput((unsigned*)&size);
-
-                    if (!WinHttpReadData(hInternet,ptr,size,NULL)) req->httpio->cancel(req);
-                }
-            }
-            SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-            break;
-
-        case WINHTTP_CALLBACK_STATUS_READ_COMPLETE:
-            if (dwStatusInformationLength)
-            {
-                req->completeput(dwStatusInformationLength);
-
-                if (!WinHttpQueryDataAvailable(((WinHttpContext*)req->httpiohandle)->hRequest,NULL))
-                {
-                    req->httpio->cancel(req);
-                    SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-                }
-            }
-            break;
-
-        case WINHTTP_CALLBACK_STATUS_HEADERS_AVAILABLE:
-            {
-                DWORD statusCode = 0;
-                DWORD statusCodeSize = sizeof(statusCode);
-
-                if (!WinHttpQueryHeaders(((WinHttpContext*)req->httpiohandle)->hRequest,WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,WINHTTP_HEADER_NAME_BY_INDEX,&statusCode,&statusCodeSize,WINHTTP_NO_HEADER_INDEX))
-                {
-                    req->httpio->cancel(req);
-                    SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-                }
-                else
-                {
-                    req->httpstatus = statusCode;
-
-                    if (!WinHttpQueryDataAvailable(((WinHttpContext*)req->httpiohandle)->hRequest,NULL))
-                    {
-                        req->httpio->cancel(req);
-                        SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-                    }
-                }
-            }
-            break;
-
-        case WINHTTP_CALLBACK_STATUS_SECURE_FAILURE:
-        case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
-            req->httpio->cancel(req);
-            SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-            break;
-
-        case WINHTTP_CALLBACK_STATUS_SENDREQUEST_COMPLETE:
-            if ((WinHttpContext*)req->httpiohandle && WinHttpReceiveResponse(((WinHttpContext*)req->httpiohandle)->hRequest,NULL) == FALSE)
-            {
-                req->httpio->cancel(req);
-                SetEvent(((MegaCurlHttpIO*)req->httpio)->hWakeup[0]);
-            }
-    }
-
-    LeaveCriticalSection(&((MegaCurlHttpIO*)req->httpio)->csHTTP);
-}
-#endif
-
-// POST request to URL
-void MegaCurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
-{
-#ifdef _WIN32
-    if (debug)
-    {
-        cout << "POST target URL: " << req->posturl << endl;
-
-        if (req->binary) cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
-        else cout << "Sending: " << *req->out << endl;
-    }
-
-    WinHttpContext* cpContext = new WinHttpContext;
-    WCHAR szHost[256];
-    URL_COMPONENTS urlComp;
-
-    req->httpiohandle = (void*)cpContext;
-
-    ZeroMemory(cpContext,sizeof(WinHttpContext));
-    ZeroMemory(&urlComp,sizeof urlComp);
-    urlComp.dwStructSize = sizeof urlComp;
-
-    urlComp.lpszHostName = szHost;
-    urlComp.dwHostNameLength = sizeof szHost/sizeof *szHost;
-    urlComp.dwUrlPathLength = (DWORD)-1;
-    urlComp.dwSchemeLength = (DWORD)-1;
-
-    // Crack the URL.
-    WCHAR szURL[1024];
-
-    if (MultiByteToWideChar(CP_UTF8,0,req->posturl.c_str(),-1,szURL,sizeof szURL/sizeof *szURL) && WinHttpCrackUrl(szURL,0,0,&urlComp))
-    {
-        if ((cpContext->hConnect = WinHttpConnect(hSession,szHost,urlComp.nPort,0)))
-        {
-            cpContext->hRequest = WinHttpOpenRequest(cpContext->hConnect,L"POST", urlComp.lpszUrlPath,NULL,WINHTTP_NO_REFERER,WINHTTP_DEFAULT_ACCEPT_TYPES,(urlComp.nScheme == INTERNET_SCHEME_HTTPS) ? WINHTTP_FLAG_SECURE : 0);
-
-            if (cpContext->hRequest)
-            {
-                WinHttpSetStatusCallback(cpContext->hRequest,AsyncCallback,WINHTTP_CALLBACK_FLAG_DATA_AVAILABLE | WINHTTP_CALLBACK_FLAG_READ_COMPLETE | WINHTTP_CALLBACK_FLAG_HEADERS_AVAILABLE | WINHTTP_CALLBACK_FLAG_REQUEST_ERROR | WINHTTP_CALLBACK_FLAG_SECURE_FAILURE | WINHTTP_CALLBACK_FLAG_SENDREQUEST_COMPLETE,0);
-
-                LPCWSTR pwszHeaders = REQ_JSON ? L"Content-Type: application/json" : L"Content-Type: application/octet-stream";
-
-                if (WinHttpSendRequest(cpContext->hRequest,pwszHeaders, wcslen(pwszHeaders),(LPVOID)(data ? data : req->out->data()), data ? len : req->out->size(), data ? len : req->out->size(),(DWORD_PTR)req))
-                {
-                   req->status = REQ_INFLIGHT;
-                   return;
-                }
-                else if (debug) cout << "WinHTTPSendRequest() failed" << endl;
-            }
-            else if (debug) cout << "WinHttpOpenRequest() failed" << endl;
-        }
-        else if (debug) cout << "WinHttpConnect() failed" << endl;
-    }
-    else if (debug) cout << "WinHttpCrackUrl(" << req->posturl << ") failed" << endl;
-
-    req->status = REQ_FAILURE;
-#else
-	CURL* curl;
-
-	req->in.clear();
-
-	if ((curl = curl_easy_init()))
-	{
-		if (debug)
-		{
-			cout << "POST target URL: " << req->posturl << endl;
-
-			if (req->binary) cout << "[sent " << req->out->size() << " bytes of raw data]" << endl;
-			else cout << "Sent: " << *req->out << endl;
-		}
-
-		curl_easy_setopt(curl,CURLOPT_URL,req->posturl.c_str());
-		curl_easy_setopt(curl,CURLOPT_POSTFIELDS,data ? data : req->out->c_str());
-		curl_easy_setopt(curl,CURLOPT_POSTFIELDSIZE,data ? len : req->out->size());
-		curl_easy_setopt(curl,CURLOPT_USERAGENT,"MEGA Client Access Engine/1.0");
-		curl_easy_setopt(curl,CURLOPT_HTTPHEADER,req->type == REQ_JSON ? contenttypejson : contenttypebinary);
-		curl_easy_setopt(curl,CURLOPT_SHARE,curlsh);
-		curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_data);
-		curl_easy_setopt(curl,CURLOPT_WRITEDATA,(void*)req);
-		curl_easy_setopt(curl,CURLOPT_PRIVATE,(void*)req);
-
-		//Verify SSL cert and host.
-		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
-		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
-
-		//Don't trust the default cacert bundle
-		curl_easy_setopt(curl,CURLOPT_CAINFO, NULL);
-		curl_easy_setopt(curl,CURLOPT_CAPATH, NULL);
-
-		//Callback to load the the root certificate of the MEGA server.
-		curl_easy_setopt(curl,CURLOPT_SSL_CTX_FUNCTION, MegaCurlHttpIO::sslctx_function);
-
-		curl_multi_add_handle(curlm,curl);
-
-		req->status = REQ_INFLIGHT;
-
-		req->httpiohandle = (void*)curl;
-	}
-	else req->status = REQ_FAILURE;
-#endif
-}
-
-// cancel request if pending
-void MegaCurlHttpIO::cancel(HttpReq* req)
-{
-#ifdef _WIN32
-    if (req->httpiohandle)
-    {
-        WinHttpContext* cpContext = (WinHttpContext*)req->httpiohandle;
-
-        if (cpContext->hRequest)
-        {
-            WinHttpSetStatusCallback(cpContext->hRequest,
-                    NULL,
-                    0,
-                    0);
-
-            WinHttpCloseHandle(cpContext->hRequest);
-        }
-
-        if (cpContext->hConnect) WinHttpCloseHandle(cpContext->hConnect);
-
-        req->httpstatus = 0;
-        req->status = REQ_FAILURE;
-
-        delete (WinHttpContext*)req->httpiohandle;
-        req->httpiohandle = NULL;
-    }
-#else
-	if (req->httpiohandle)
-	{
-		curl_multi_remove_handle(curlm,(CURL*)req->httpiohandle);
-		curl_easy_cleanup((CURL*)req->httpiohandle);
-
-		req->httpstatus = 0;
-		req->status = REQ_FAILURE;
-		req->httpiohandle = NULL;
-    }
-#endif
-}
-
-// real-time progress information on POST data
-m_off_t MegaCurlHttpIO::postpos(void* handle)
-{
-#ifdef _WIN32
-    return 0;
-#else
-	double bytes;
-	curl_easy_getinfo(handle,CURLINFO_SIZE_UPLOAD,&bytes);
-	return (m_off_t)bytes;
-#endif
-}
-
-// process events
-int MegaCurlHttpIO::doio()
-{
-#ifdef _WIN32
-    int done;
-    done = completion;
-    completion = 0;
-    return done;
-#else
-	CURLMsg *msg;
-	int dummy;
-	int done = 0;
-
-	curl_multi_perform(curlm,&dummy);
-
-	while ((msg = curl_multi_info_read(curlm,&dummy)))
-	{
-		HttpReq* req;
-
-		if (curl_easy_getinfo(msg->easy_handle,CURLINFO_PRIVATE,(char**)&req) == CURLE_OK && req)
-		{
-			req->httpio = NULL;
-
-			if (msg->msg == CURLMSG_DONE)
-			{
-				curl_easy_getinfo(msg->easy_handle,CURLINFO_RESPONSE_CODE,&req->httpstatus);
-				if (debug)
-				{
-					cout << "CURLMSG_DONE with HTTP status: " << req->httpstatus << endl;
-					if (req->binary) cout << "[received " << req->in.size() << " bytes of raw data]" << endl;
-					else cout << "Received: " << req->in.c_str() << endl;
-				}
-
-				req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
-				done = 1;
-			}
-			else req->status = REQ_FAILURE;
-		}
-
-		curl_multi_remove_handle(curlm,msg->easy_handle);
-		curl_easy_cleanup(msg->easy_handle);
-	}
-
-	return done;
-#endif
-}
-
-//Notify curl that has to wait for a new event
-void MegaCurlHttpIO::notify()
-{
-#ifdef _WIN32
-    SetEvent(hWakeup[1]);
-#else
-	//Force exit from select()
-	write(m_pipe[1], "0", 1);
-#endif
-}
-
-void MegaCurlHttpIO::waitio(dstime maxds)
-{
-#ifdef _WIN32
-    LeaveCriticalSection(&csHTTP);
-    WaitForMultipleObjects(sizeof hWakeup/sizeof *hWakeup,hWakeup,FALSE,maxds*100);
-    EnterCriticalSection(&csHTTP);
-#else
-	int maxfd;
-	fd_set rfds, wfds, efds;
-	timeval tv;
-
-	FD_ZERO(&rfds);
-	FD_ZERO(&wfds);
-	FD_ZERO(&efds);
-
-	curl_multi_fdset(curlm,&rfds,&wfds,&efds,&maxfd);
-
-	//Pipe added to rfds to be able to leave select() when needed
-	FD_SET(m_pipe[0], &rfds);
-	if (maxfd < m_pipe[0]) maxfd = m_pipe[0];
-
-	long curltimeout;
-	curl_multi_timeout(curlm, &curltimeout);
-	if(curltimeout!=-1) maxds = (maxds<(unsigned long)(curltimeout/100)) ? maxds : (curltimeout/100) + 1;
-
-	if (maxds+1)
-	{
-		dstime us = 1000000/10*maxds;
-
-		tv.tv_sec = us/1000000;
-		tv.tv_usec = us-tv.tv_sec*1000000;
-	}
-
-	select(maxfd+1,&rfds,&wfds,&efds,maxds+1 ? &tv : NULL);
-
-	//Empty pipe
-	uint8_t buf;
-	while (read(m_pipe[0], &buf, 1) == 1);
-#endif
-}
-
-#ifndef _WIN32
-// callback for incoming HTTP payload
-size_t MegaCurlHttpIO::write_data(void *ptr, size_t size, size_t nmemb, void *target)
-{
-	size *= nmemb;
-
-	((HttpReq*)target)->put(ptr,size);
-
-	return size;
-}
-#endif
-
-void MegaCurlHttpIO::setDebug(bool debug)
-{
-	this->debug = debug;
-}
-
-bool MegaCurlHttpIO::getDebug()
-{
-	return this->debug;
-}
-
-CFileAccess::CFileAccess()
-{
-	fd = NULL;
-}
-
-CFileAccess::~CFileAccess()
-{
-	if (fd != NULL) fclose(fd);
-}
-
-int CFileAccess::fread(string* dst, unsigned len, unsigned pad, m_off_t pos)
-{	
-	dst->resize(len+pad);
-	fseek(fd, pos, SEEK_SET);
-	if (::fread((char*)dst->data(), 1, len, fd) == len)
-	{
-		memset((char*)dst->data()+len,0,pad);
-		return 1;
-	}
-
-	return 0;
-}
-
-int CFileAccess::fwrite(const byte* data, unsigned len, m_off_t pos)
-{
-	fseek(fd, pos, SEEK_SET);
-	if(::fwrite(data, 1, len, fd) == len) return 1;
-
-	return 0;
-}
-
-int CFileAccess::fopen(const char* f, int read, int write)
-{
-	const char *mode = write ? (read ? "r+b" : "wb") : "rb";
-	fd = ::fopen(f, mode);
-	if(fd != NULL)
-	{
-		fseek(fd, 0L, SEEK_END);
-		size = ftell(fd);
-		return 1;
-	}
-
-	return 0;
-}
+bool debug = false;
 
 MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 { 
@@ -1160,31 +531,7 @@ void *MegaApi::threadEntryPoint(void *param)
 	return 0;
 }
 
-MegaApi::MegaApi()
-{
-    pthread_mutex_init(&listenerMutex, NULL);
-	pthread_mutex_init(&transferListenerMutex, NULL);
-	pthread_mutex_init(&requestListenerMutex, NULL);
-	pthread_mutex_init(&globalListenerMutex, NULL);
-
-	pthread_mutexattr_t attr;
-	pthread_mutexattr_init(&attr);
-	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-	pthread_mutex_init(&fileSystemMutex, &attr);
-
-	curl = new MegaCurlHttpIO();
-	client = new MegaClient(this, curl, NULL, "FhMgXbqb");
-	maxRetries = 3;
-	loginRequest = NULL;
-	updatingSID = 0;
-	updateSIDtime = -10000000;
-
-	//Start blocking thread
-	threadExit = 0;
-	pthread_create(&thread, NULL, threadEntryPoint, this);
-}
-
-MegaApi::MegaApi(MegaListener *listener)
+MegaApi::MegaApi(MegaListener *listener, string *basePath)
 {
 	pthread_mutex_init(&listenerMutex, NULL);
 	pthread_mutex_init(&transferListenerMutex, NULL);
@@ -1197,8 +544,12 @@ MegaApi::MegaApi(MegaListener *listener)
 	pthread_mutex_init(&fileSystemMutex, &attr);
 
 	addListener(listener);
-	curl = new MegaCurlHttpIO();
-	client = new MegaClient(this, curl, NULL, "FhMgXbqb");
+    httpio = new MegaHttpIO();
+    waiter = new MegaWaiter();
+    fsAccess = new MegaFileSystemAccess();
+    dbAccess = new MegaDbAccess(basePath);
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb");
+
 	maxRetries = 3;
 	loginRequest = NULL;
 	updatingSID = 0;
@@ -1212,10 +563,13 @@ MegaApi::MegaApi(MegaListener *listener)
 MegaApi::~MegaApi()
 {
 	threadExit = 1;
-	curl->notify();
+    waiter->notify();
 	pthread_join(thread, NULL);
-	delete curl;
 	delete client;
+    delete httpio;
+    delete waiter;
+    delete dbAccess;
+    delete fsAccess;
 	if(loginRequest) delete loginRequest;
 }
 
@@ -1304,7 +658,7 @@ void MegaApi::retryPendingConnections()
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_RETRY_PENDING_CONNECTIONS);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::fastLogin(const char* email, const char *stringHash, const char *base64pwkey, MegaRequestListener *listener)
@@ -1314,7 +668,7 @@ void MegaApi::fastLogin(const char* email, const char *stringHash, const char *b
 	request->setPassword(stringHash);
 	request->setPrivateKey(base64pwkey);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 
@@ -1324,7 +678,7 @@ void MegaApi::login(const char *login, const char *password, MegaRequestListener
 	request->setEmail(login);
 	request->setPassword(password);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::createAccount(const char* email, const char* password, const char* name, MegaRequestListener *listener)
@@ -1334,7 +688,7 @@ void MegaApi::createAccount(const char* email, const char* password, const char*
 	request->setPassword(password);
 	request->setName(name);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::fastCreateAccount(const char* email, const char *base64pwkey, const char* name, MegaRequestListener *listener)
@@ -1344,7 +698,7 @@ void MegaApi::fastCreateAccount(const char* email, const char *base64pwkey, cons
 	request->setPassword(base64pwkey);
 	request->setName(name);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::querySignupLink(const char* link, MegaRequestListener *listener)
@@ -1352,7 +706,7 @@ void MegaApi::querySignupLink(const char* link, MegaRequestListener *listener)
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_QUERY_SIGNUP_LINK, listener);
 	request->setLink(link);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::confirmAccount(const char* link, const char *password, MegaRequestListener *listener)
@@ -1361,7 +715,7 @@ void MegaApi::confirmAccount(const char* link, const char *password, MegaRequest
 	request->setLink(link);
 	request->setPassword(password);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::fastConfirmAccount(const char* link, const char *base64pwkey, MegaRequestListener *listener)
@@ -1370,7 +724,7 @@ void MegaApi::fastConfirmAccount(const char* link, const char *base64pwkey, Mega
 	request->setLink(link);
 	request->setPassword(base64pwkey);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::loop()
@@ -1394,7 +748,7 @@ void MegaApi::createFolder(const char *name, Node *parent, MegaRequestListener *
 	if(parent) request->setParentHandle(parent->nodehandle);
 	request->setName(name);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::moveNode(Node *node, Node *newParent, MegaRequestListener *listener)
@@ -1403,7 +757,7 @@ void MegaApi::moveNode(Node *node, Node *newParent, MegaRequestListener *listene
 	if(node) request->setNodeHandle(node->nodehandle);
 	if(newParent) request->setParentHandle(newParent->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::copyNode(Node* node, Node* target, MegaRequestListener *listener)
@@ -1412,7 +766,7 @@ void MegaApi::copyNode(Node* node, Node* target, MegaRequestListener *listener)
 	if(node) request->setNodeHandle(node->nodehandle);
 	if(target) request->setParentHandle(target->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::renameNode(Node *node, const char *newName, MegaRequestListener *listener)
@@ -1421,7 +775,7 @@ void MegaApi::renameNode(Node *node, const char *newName, MegaRequestListener *l
 	if(node) request->setNodeHandle(node->nodehandle);
 	request->setName(newName);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::remove(Node* node, MegaRequestListener *listener)
@@ -1429,7 +783,7 @@ void MegaApi::remove(Node* node, MegaRequestListener *listener)
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_REMOVE, listener);
 	if(node) request->setNodeHandle(node->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::share(Node* node, User* user, const char *access, MegaRequestListener *listener)
@@ -1444,7 +798,7 @@ void MegaApi::share(Node* node, const char* email, const char *access, MegaReque
 	request->setEmail(email);
 	request->setAccess(access);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::folderAccess(const char* megaFolderLink, MegaRequestListener *listener)
@@ -1452,7 +806,7 @@ void MegaApi::folderAccess(const char* megaFolderLink, MegaRequestListener *list
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_FOLDER_ACCESS, listener);
 	request->setLink(megaFolderLink);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::importFileLink(const char* megaFileLink, Node *parent, MegaRequestListener *listener)
@@ -1461,7 +815,7 @@ void MegaApi::importFileLink(const char* megaFileLink, Node *parent, MegaRequest
 	if(parent) request->setParentHandle(parent->nodehandle);
 	request->setLink(megaFileLink);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::importPublicNode(Node *publicNode, Node* parent, MegaRequestListener *listener)
@@ -1487,7 +841,7 @@ void MegaApi::importPublicNode(Node *publicNode, Node* parent, MegaRequestListen
 
 	if(parent)	request->setParentHandle(parent->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::getPublicNode(const char* megaFileLink, MegaRequestListener *listener)
@@ -1495,7 +849,7 @@ void MegaApi::getPublicNode(const char* megaFileLink, MegaRequestListener *liste
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_GET_PUBLIC_NODE, listener);
 	request->setLink(megaFileLink);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::exportNode(Node *node, MegaRequestListener *listener)
@@ -1503,14 +857,14 @@ void MegaApi::exportNode(Node *node, MegaRequestListener *listener)
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_EXPORT, listener);
 	if(node) request->setNodeHandle(node->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::fetchNodes(MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_FETCH_NODES, listener);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::getAccountDetails(MegaRequestListener *listener)
@@ -1531,7 +885,7 @@ void MegaApi::getAccountDetails(int storage, int transfer, int pro, int transact
 	request->setNumDetails(numDetails);
 
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::changePassword(const char *oldPassword, const char *newPassword, MegaRequestListener *listener)
@@ -1540,14 +894,14 @@ void MegaApi::changePassword(const char *oldPassword, const char *newPassword, M
 	request->setPassword(oldPassword);
 	request->setNewPassword(newPassword);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::logout(MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_LOGOUT, listener);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::getNodeAttribute(Node* node, int type, char *dstFilePath, MegaRequestListener *listener)
@@ -1557,7 +911,7 @@ void MegaApi::getNodeAttribute(Node* node, int type, char *dstFilePath, MegaRequ
 	request->setAttrType(type);
 	if(node) request->setNodeHandle(node->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::setNodeAttribute(Node* node, int type, char *srcFilePath, MegaRequestListener *listener)
@@ -1567,7 +921,7 @@ void MegaApi::setNodeAttribute(Node* node, int type, char *srcFilePath, MegaRequ
 	request->setAttrType(type);
 	if(node) request->setNodeHandle(node->nodehandle);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::addContact(const char* email, MegaRequestListener* listener)
@@ -1575,7 +929,7 @@ void MegaApi::addContact(const char* email, MegaRequestListener* listener)
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_ADD_CONTACT, listener);
 	request->setEmail(email);
 	requestQueue.push(request);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
@@ -1589,7 +943,7 @@ void MegaApi::startUpload(const char* localPath, Node* parent, int connections, 
 	if(fileName) transfer->setFileName(fileName);
 
 	transferQueue.push(transfer);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::startUpload(const char* localPath, Node* parent, MegaTransferListener *listener)
@@ -1615,7 +969,7 @@ void MegaApi::startDownload(handle nodehandle, const char* target, int connectio
 	transfer->setMaxRetries(maxRetries);
 
 	transferQueue.push(transfer);
-	curl->notify();
+    waiter->notify();
 }
 
 void MegaApi::startDownload(Node* node, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener)
@@ -1644,7 +998,7 @@ void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, cons
 
 void MegaApi::cancelTransfer(MegaTransfer *transfer)
 {
-	if(!transfer) return;
+    /*if(!transfer) return;
 
 	int td = transfer->getSlot();
 	client->tclose(td);
@@ -1652,7 +1006,7 @@ void MegaApi::cancelTransfer(MegaTransfer *transfer)
 	tmpfilename.append(".tmp");
 	unlink(tmpfilename.c_str());
 	transferMap[transfer->getTag()] = NULL;
-	delete transfer;
+    delete transfer;*/
 }
 
 Node *MegaApi::getRootNode()
@@ -1883,28 +1237,23 @@ vector<Node *> &SearchTreeProcessor::getResults()
 	return results;
 }
 
-FileAccess* MegaApi::newfile()
-{
-	return new CFileAccess();
-}
-
 // topen() failed
 void MegaApi::topen_result(int td, error e)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	transfer->setTime(client->httpio->ds);
 	MegaError megaError(e);
 	if (e) cout << "TD " << td << ": Failed to open file (" << megaError.getErrorString() << ")" << endl;
 	client->tclose(td);
-	fireOnTransferFinish(this, transfer, megaError);
+    fireOnTransferFinish(this, transfer, megaError);*/
 }
 
 // topen() succeeded (download only)
 void MegaApi::topen_result(int td, string* filename, const char* fa, int pfa)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	transfer->setTime(client->httpio->ds);
@@ -1925,12 +1274,12 @@ void MegaApi::topen_result(int td, string* filename, const char* fa, int pfa)
 	tmpfilename.append(".tmp");
 
 	client->dlopen(td,tmpfilename.c_str());
-	fireOnTransferUpdate(this, transfer);
+    fireOnTransferUpdate(this, transfer);*/
 }
 
 void MegaApi::transfer_update(int td, m_off_t bytes, m_off_t size, dstime starttime)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	//cout << "TD " << td << ": Update: " << bytes/1024 << " KB of " << size/1024 << " KB, " << bytes*10/(1024*(dstime()-starttime)+1) << " KB/s" << endl;
@@ -1944,12 +1293,12 @@ void MegaApi::transfer_update(int td, m_off_t bytes, m_off_t size, dstime startt
 	{
 		transfer->setTime(client->httpio->ds);
 		fireOnTransferUpdate(this, transfer);
-	}
+    }*/
 }
 
 int MegaApi::transfer_error(int td, int httpcode, int count)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return 1;
 
 	cout << "TD " << td << ": Failed, HTTP error code " << httpcode << " (count " << count << ")" << endl;
@@ -1966,12 +1315,13 @@ int MegaApi::transfer_error(int td, int httpcode, int count)
 	{
 		fireOnTransferFinish(this, transfer, MegaError(httpcode));
 		return 1; //Abort
-	}
+    }*/
+    return 1;
 }
 
 void MegaApi::transfer_failed(int td, string& filename, error e)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	MegaError megaError(e);
@@ -1980,35 +1330,35 @@ void MegaApi::transfer_failed(int td, string& filename, error e)
 	if(e) cout << "TD " << td << ": Download failed (" << megaError.getErrorString() << ")" << endl;
 	filename.append(".tmp");
 	unlink(filename.c_str());
-	fireOnTransferFinish(this, transfer, megaError);
+    fireOnTransferFinish(this, transfer, megaError);*/
 }
 
 void MegaApi::transfer_failed(int td, error e)
 {
-	MegaError megaError(e);
+    /*MegaError megaError(e);
 	MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	transfer->setTime(client->httpio->ds);
 
 	cout << "TD " << td << ": Upload failed (" << megaError.getErrorString() << ")" << endl;
-	fireOnTransferFinish(this, transfer, megaError);
+    fireOnTransferFinish(this, transfer, megaError);*/
 }
 
 void MegaApi::transfer_limit(int td)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	transfer->setTime(client->httpio->ds);
 
 	cout << "TD " << td << ": Transfer limit reached." << endl;
-	fireOnTransferFinish(this, transfer, MegaError(API_EOVERQUOTA));
+    fireOnTransferFinish(this, transfer, MegaError(API_EOVERQUOTA));*/
 }
 
 void MegaApi::transfer_complete(int td, chunkmac_map* macs, const char* fn)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	transfer->setTime(client->httpio->ds);
@@ -2020,12 +1370,12 @@ void MegaApi::transfer_complete(int td, chunkmac_map* macs, const char* fn)
 	client->tclose(td);
 
 	if (!::rename(tmpfilename.c_str(),filename.c_str())) fireOnTransferFinish(this, transfer, MegaError(API_OK));
-	else fireOnTransferFinish(this, transfer, MegaError(API_EACCESS));
+    else fireOnTransferFinish(this, transfer, MegaError(API_EACCESS));*/
 }
 
 void MegaApi::transfer_complete(int td, handle ulhandle, const byte* ultoken, const byte* filekey, SymmCipher* key)
 {
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
+    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
 	transfer->setTime(client->httpio->ds);
@@ -2078,7 +1428,7 @@ void MegaApi::transfer_complete(int td, handle ulhandle, const byte* ultoken, co
 	requestMap[client->nextreqtag()]=request;
 
 	//TODO: Send files to users
-	client->putnodes(uploadtarget,newnode,1);
+    client->putnodes(uploadtarget,newnode,1);*/
 }
 
 // user addition/update (users never get deleted)
@@ -2131,8 +1481,6 @@ void MegaApi::unlink_result(handle h, error e)
 void MegaApi::fetchnodes_result(error e)
 {
 	MegaError megaError(e);
-    if(e) cout << "File/folder retrieval failed (" << megaError.getErrorString() << ") Auth: " << getAuthString() << endl;
-
 	MegaRequest *request = requestMap[client->restag];
 	if(!request) return;
 
@@ -2164,7 +1512,7 @@ void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
 	handle h = UNDEF;
 	Node *n = NULL;
 	if(client->nodenotify.size()) n = client->nodenotify.back();
-	if(n) n->applykey(client);
+    if(n) n->applykey();
 
 	if(request->getType() == MegaRequest::TYPE_UPLOAD)
 	{
@@ -2225,8 +1573,9 @@ void MegaApi::fa_complete(Node* n, fatype type, const char* data, uint32_t len)
 
 	if(request->getType() != MegaRequest::TYPE_GET_ATTR_FILE) cout << "INCORRECT REQUEST OBJECT (fa_complete)";
 
-	FileAccess *f = this->newfile();
-	f->fopen(request->getFile(), 0, 1);
+    FileAccess *f = client->fsaccess->newfileaccess();
+    string filePath(request->getFile());
+    f->fopen(&filePath, false, true);
 	f->fwrite((const byte*)data, len, 0);
 	delete f;
 	fireOnRequestFinish(this, request, MegaError(API_OK));
@@ -2732,6 +2081,8 @@ void MegaApi::setkeypair_result(error e)
 
 void MegaApi::addListener(MegaListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&listenerMutex);
 	listeners.insert(listener);
 	pthread_mutex_unlock(&listenerMutex);
@@ -2739,6 +2090,8 @@ void MegaApi::addListener(MegaListener* listener)
 
 void MegaApi::addRequestListener(MegaRequestListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&requestListenerMutex);
 	requestListeners.insert(listener);
 	pthread_mutex_unlock(&requestListenerMutex);
@@ -2746,6 +2099,8 @@ void MegaApi::addRequestListener(MegaRequestListener* listener)
 
 void MegaApi::addTransferListener(MegaTransferListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&transferListenerMutex);
 	transferListeners.insert(listener);
 	pthread_mutex_unlock(&transferListenerMutex);
@@ -2753,6 +2108,8 @@ void MegaApi::addTransferListener(MegaTransferListener* listener)
 
 void MegaApi::addGlobalListener(MegaGlobalListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&globalListenerMutex);
 	globalListeners.insert(listener);	
 	pthread_mutex_unlock(&globalListenerMutex);
@@ -2760,6 +2117,8 @@ void MegaApi::addGlobalListener(MegaGlobalListener* listener)
 
 void MegaApi::removeListener(MegaListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&listenerMutex);
 	listeners.erase(listener);	
 	pthread_mutex_unlock(&listenerMutex);
@@ -2767,6 +2126,8 @@ void MegaApi::removeListener(MegaListener* listener)
 
 void MegaApi::removeRequestListener(MegaRequestListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&requestListenerMutex);
 	requestListeners.erase(listener);
 	pthread_mutex_unlock(&requestListenerMutex);
@@ -2774,6 +2135,8 @@ void MegaApi::removeRequestListener(MegaRequestListener* listener)
 
 void MegaApi::removeTransferListener(MegaTransferListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&transferListenerMutex);
 	transferListeners.erase(listener);	
 	pthread_mutex_unlock(&transferListenerMutex);
@@ -2781,6 +2144,8 @@ void MegaApi::removeTransferListener(MegaTransferListener* listener)
 
 void MegaApi::removeGlobalListener(MegaGlobalListener* listener)
 {
+    if(!listener) return;
+
 	pthread_mutex_lock(&globalListenerMutex);
 	globalListeners.erase(listener);	
 	pthread_mutex_unlock(&globalListenerMutex);
@@ -3387,8 +2752,8 @@ Node* MegaApi::getNodeByHandle(handle handle)
 	return result;
 }
 
-void MegaApi::setDebug(bool debug) { curl->setDebug(debug); }
-bool MegaApi::getDebug() { return curl->getDebug(); }
+void MegaApi::setDebug(bool debug) { /*curl->setDebug(debug);*/ }
+bool MegaApi::getDebug() { return false; }//curl->getDebug(); }
 
 StringList *MegaApi::getRootNodeNames() { return rootNodeNames; }
 StringList *MegaApi::getRootNodePaths() { return rootNodePaths; }
@@ -3415,17 +2780,17 @@ void MegaApi::sendPendingTransfers()
 		{
 			case MegaTransfer::TYPE_UPLOAD:
 			{
-				const char* localPath = transfer->getPath();
+                /*const char* localPath = transfer->getPath();
 				if(!localPath) { e = API_EARGS; break; }
 
 				int td = client->topen(localPath);
 				if(td < 0) { e = (error)td; break; }
-				transfer->setSlot(td);
+                transfer->setSlot(td);*/
 				break;
 			}
 			case MegaTransfer::TYPE_DOWNLOAD:
 			{
-				handle nodehandle = transfer->getNodeHandle();
+                /*handle nodehandle = transfer->getNodeHandle();
 				const char* base64key = transfer->getBase64Key();
 
 				if(!transfer->getPath() && !transfer->getParentPath()) { e = API_EARGS; break; }
@@ -3442,7 +2807,7 @@ void MegaApi::sendPendingTransfers()
 					td = client->topen(nodehandle, NULL);
 				}
 				if(td < 0) { e = (error)td; break; }
-				transfer->setSlot(td);
+                transfer->setSlot(td);*/
 				break;
 			}
 		}
@@ -3499,8 +2864,8 @@ void MegaApi::sendPendingRequests()
 			newnode->source = NEW_NODE;
 			newnode->type = FOLDERNODE;
 			newnode->nodehandle = 0;
-			newnode->mtime = newnode->ctime = time(NULL);
 			newnode->parenthandle = UNDEF;
+            newnode->clienttimestamp = time(NULL);
 
 			// generate fresh random key for this folder node
 			PrnGen::genblock(buf,Node::FOLDERNODEKEYLENGTH);
@@ -3728,7 +3093,7 @@ void MegaApi::sendPendingRequests()
 		}
 		case MegaRequest::TYPE_SET_ATTR_FILE:
 		{
-			const char* srcFilePath = request->getFile();
+            /*const char* srcFilePath = request->getFile();
 			int type = request->getAttrType();
 			Node *node = client->nodebyhandle(request->getNodeHandle());
 
@@ -3740,7 +3105,7 @@ void MegaApi::sendPendingRequests()
 			f->fread(&thumbnail, f->size, 0, 0);
 			delete f;
 
-			client->putfa(&(node->key),node->nodehandle,type,(const byte*)thumbnail.data(),thumbnail.size());
+            client->putfa(&(node->key),node->nodehandle,type,(const byte*)thumbnail.data(),thumbnail.size());*/
 			break;
 		}
 		case MegaRequest::TYPE_RETRY_PENDING_CONNECTIONS:
@@ -3785,7 +3150,7 @@ void MegaApi::sendPendingRequests()
 
 			unsigned len = (strlen(link)-(ptr-link))*3/4+4;
 			byte *c = new byte[len];
-			len = Base64::atob(ptr,c,len)-c;
+            len = Base64::atob(ptr,c,len);
 			client->querysignuplink(c,len);
 			delete[] c;
 			break;
@@ -3847,8 +3212,7 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 		t->type = n->type;
 		t->nodehandle = n->nodehandle;
 		t->parenthandle = n->parenthandle;
-		t->mtime = n->mtime;
-		t->ctime = n->ctime;
+        t->clienttimestamp = n->clienttimestamp;
 
 		// copy key (if file) or generate new key (if folder)
 		if (n->type == FILENODE) t->nodekey = n->nodekey;

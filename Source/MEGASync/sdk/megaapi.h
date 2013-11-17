@@ -31,91 +31,35 @@ DEALINGS IN THE SOFTWARE.
 #include "crypto/cryptopp.h"
 #include "megaclient.h"
 
-class MegaApi;
+#define USE_SQLITE
+#include "db/sqlite.h"
 
-class MegaCurlHttpIO : public HttpIO
-{
-public:
-	MegaCurlHttpIO();
+#ifdef WIN32
 
-	// update time
-	virtual void updatedstime();
-	
-	// post request to target URL
-	virtual void post(class HttpReq*, const char* = NULL, unsigned = 0);
+#include "win32/net.h"
+#include "win32/fs.h"
+#include "win32/megaapiwait.h"
 
-	// cancel request
-	virtual void cancel(HttpReq*);
+class MegaHttpIO : public WinHttpIO {};
+class MegaFileSystemAccess : public WinFileSystemAccess {};
+class MegaWaiter : public MegaApiWinWaiter {};
 
-	// real-time progress information
-	virtual m_off_t postpos(void*);
-
-	// execute I/O operations
-	// (all callbacks emerge from this function)
-	virtual int doio(void);
-
-	// wait for socket and application events (UI, timers...)
-	virtual void waitio(uint32_t);
-
-	virtual ~MegaCurlHttpIO();
-	
-	void notify();
-	
-	void setDebug(bool debug);
-	bool getDebug();
-    int debug;
-
-#ifdef _WIN32
-    static void CALLBACK MegaCurlHttpIO::AsyncCallback(HINTERNET hInternet, DWORD_PTR dwContext,  DWORD dwInternetStatus, LPVOID lpvStatusInformation, DWORD dwStatusInformationLength);
-
-    HANDLE hWakeup[2];
-    CRITICAL_SECTION csHTTP;
-#endif
-
-protected:
-
-#ifdef _WIN32
-    HINTERNET hSession;
-    int completion;
 #else
-    CURLM* curlm;
-	CURLSH* curlsh;
 
-	static size_t write_data(void *, size_t, size_t, void *);
+#include "posix/net.h"
+#include "posix/fs.h"
+#include "posix/wait.h"
 
-	curl_slist* contenttypejson;
-	curl_slist* contenttypebinary;
+class MegaHttpIO : public PosixHttpIO {};
+class MegaFileAccess : public PosixFileAccess {};
+class MegaWaiter : public PosixWaiter {};
 
-	int m_pipe[2];
-	
-	static CURLcode sslctx_function(CURL * curl, void * sslctx, void * parm);
-	static int ssl_verify_callback(X509_STORE_CTX *ctx, void *arg);
 #endif
 
-};
-
-#ifdef _WIN32
-struct WinHttpContext
+class MegaDbAccess : public SqliteDbAccess
 {
-    HINTERNET hConnect;       // connection handle
-    HINTERNET hRequest;       // resource request handle
-    unsigned postpos;
-};
-#endif
-
-//FileAccess implementation using standard C calls (fopen, fread, ...).
-//I have renamed the name of the functions to be able to use the standard functions without name clashing
-class CFileAccess : public FileAccess
-{
-	FILE *fd;
-
 public:
-	int fopen(const char*, int, int);
-	int fread(string*, unsigned, unsigned, m_off_t);
-	int fwrite(const byte*, unsigned, m_off_t);
-
-	CFileAccess();
-	~CFileAccess();
+    MegaDbAccess(string *basePath = NULL) : SqliteDbAccess(basePath){}
 };
 
 //Wrapping for arrays, to ease the use of SWIG
@@ -189,6 +133,7 @@ typedef ArrayWrapper<Share*> ShareList;
 class MegaRequestListener;
 class MegaTransferListener;
 class MegaTransfer;
+class MegaApi;
 
 //Encapsulates the information about a request instead of return it as individual parameters in the callbacks.
 //This allow extending the information adding more getters without breaking client's code.
@@ -584,8 +529,7 @@ public:
 	static bool nodeComparatorAlphabeticalDESC  (Node *i, Node *j);	
 	static bool userComparatorDefaultASC (User *i, User *j);
 
-	MegaApi();
-	MegaApi(MegaListener *listener);
+    MegaApi(MegaListener *listener = NULL, string *basePath = NULL);
 	virtual ~MegaApi();
 
 	//Multiple listener management.
@@ -685,8 +629,6 @@ public:
 	//General porpuse
 	static char* strdup(const char* buffer);
 
-	const char* getAuthString() { return client->auth.c_str(); }
-
 	//Do not use
 	static void *threadEntryPoint(void *param);
 
@@ -708,7 +650,10 @@ protected:
 
 	pthread_t thread;
 	MegaClient *client;
-	MegaCurlHttpIO *curl;
+    MegaHttpIO *httpio;
+    MegaWaiter *waiter;
+    MegaFileSystemAccess *fsAccess;
+    MegaDbAccess *dbAccess;
 
 	RequestQueue requestQueue;
 	TransferQueue transferQueue;
@@ -737,7 +682,6 @@ protected:
 	int maxRetries;
 
 	//MegaApp functions
-	virtual FileAccess* newfile();
 	virtual void request_error(error);
 	virtual void login_result(error);
 	virtual void account_details(AccountDetails*, int, int, int, int, int, int);

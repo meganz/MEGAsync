@@ -16,10 +16,10 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#ifndef WAIT_CLASS
-#define WAIT_CLASS WinWaiter
+#ifndef MEGA_API_WAIT_CLASS
+#define MEGA_API_WAIT_CLASS MegaApiWinWaiter
 
-class WinWaiter : public Waiter
+class MegaApiWinWaiter : public Waiter
 {
 	typedef ULONGLONG (WINAPI* PGTC)();
 	PGTC pGTC;
@@ -27,7 +27,7 @@ class WinWaiter : public Waiter
 	DWORD prevt;
 
 public:
-	enum { WAKEUP_HTTP, WAKEUP_CONSOLE };
+    enum { WAKEUP_HTTP, WAKEUP_CUSTOM };
 	HANDLE hWakeup[2];
 	PCRITICAL_SECTION pcsHTTP;
 	unsigned pendingfsevents;
@@ -37,8 +37,9 @@ public:
 	void init(dstime);
 	void waitfor(EventTrigger*);
 	int wait();
+    void notify();
 
-	WinWaiter();
+    MegaApiWinWaiter();
 };
 
 #endif
