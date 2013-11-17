@@ -30,14 +30,17 @@ DEALINGS IN THE SOFTWARE.
 #include <crc.h>
 #include <nbtheory.h>
 #include <algparam.h>
+#include <inttypes.h>
 
-using namespace CryptoPP;
+typedef int64_t m_off_t;
+
+
 
 // generic pseudo-random number generator
 class PrnGen
 {
 public:
-	static AutoSeededRandomPool rng;
+    static CryptoPP::AutoSeededRandomPool rng;
 
 	static void genblock(byte*, int);
 	static uint32_t genuint32(uint64_t);
@@ -46,17 +49,17 @@ public:
 // symmetric cryptography: AES-128
 class SymmCipher
 {
-	ECB_Mode<AES>::Encryption aesecb_e;
-	ECB_Mode<AES>::Decryption aesecb_d;
+    CryptoPP::ECB_Mode<CryptoPP::AES>::Encryption aesecb_e;
+    CryptoPP::ECB_Mode<CryptoPP::AES>::Decryption aesecb_d;
 
-	CBC_Mode<AES>::Encryption aescbc_e;
-	CBC_Mode<AES>::Decryption aescbc_d;
+    CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption aescbc_e;
+    CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption aescbc_d;
 
 public:
-	static byte zeroiv[AES::BLOCKSIZE];
+    static byte zeroiv[CryptoPP::AES::BLOCKSIZE];
 
-	static const int BLOCKSIZE = AES::BLOCKSIZE;
-	static const int KEYLENGTH = AES::BLOCKSIZE;
+    static const int BLOCKSIZE = CryptoPP::AES::BLOCKSIZE;
+    static const int KEYLENGTH = CryptoPP::AES::BLOCKSIZE;
 
 	byte key[KEYLENGTH];
 
@@ -89,7 +92,7 @@ public:
 // asymmetric cryptography: RSA
 class AsymmCipher
 {
-	int decodeintarray(Integer*, int, const byte*, int);
+    int decodeintarray(CryptoPP::Integer*, int, const byte*, int);
 
 public:
 	enum { PRIV_P, PRIV_Q, PRIV_D, PRIV_U };
@@ -98,7 +101,7 @@ public:
 	static const int PRIVKEY = 4;
 	static const int PUBKEY = 2;
 
-	Integer key[PRIVKEY];
+    CryptoPP::Integer key[PRIVKEY];
 
 	static const int MAXKEYLENGTH = 1026;	// in bytes, allows for RSA keys up to 8192 bits
 
@@ -112,9 +115,9 @@ public:
 	unsigned rawencrypt(const byte* plain, int plainlen, byte* buf, int buflen);
 	unsigned rawdecrypt(const byte* c, int cl, byte* buf, int buflen);
 
-	static void serializeintarray(Integer*, int, string*);
-	void serializekey(string*, int);
-	void genkeypair(Integer* privk, Integer* pubk, int size);
+    static void serializeintarray(CryptoPP::Integer*, int, std::string*);
+    void serializekey(std::string*, int);
+    void genkeypair(CryptoPP::Integer* privk, CryptoPP::Integer* pubk, int size);
 };
 
 class Hash
@@ -123,7 +126,7 @@ class Hash
 
 public:
 	void add(const byte*, unsigned);
-	void get(string*);
+    void get(std::string*);
 };
 
 class HashCRC32
