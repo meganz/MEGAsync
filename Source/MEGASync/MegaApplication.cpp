@@ -23,7 +23,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     WindowsUtils::startOnStartup(false);
 #endif
 
-    megaApi = new MegaApi(this);
+    megaApi = new MegaApi(this,
+         &(QCoreApplication::applicationDirPath()+"/").toStdString());
 
     createActions();
     createTrayIcon();

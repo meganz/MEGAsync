@@ -21,12 +21,10 @@ DEALINGS IN THE SOFTWARE.
 
 #include "../megaclient.h"
 
-#include "wait.h"
+#include "megaapiwait.h"
 
-WinWaiter::WinWaiter()
+MegaApiWinWaiter::MegaApiWinWaiter()
 {
-	DWORD dwMode;
-
 	pGTC = (PGTC)GetProcAddress(GetModuleHandle(TEXT("kernel32.dll")),"GetTickCount64");
 
 	if (!pGTC)
@@ -37,20 +35,16 @@ WinWaiter::WinWaiter()
 
 	if (!pGTC) cout << "Emulating GetTickCount64()" << endl;
 
-	hWakeup[WAKEUP_CONSOLE] = GetStdHandle(STD_INPUT_HANDLE);
-
-	GetConsoleMode(hWakeup[WAKEUP_CONSOLE],&dwMode);
-	SetConsoleMode(hWakeup[WAKEUP_CONSOLE],dwMode & ~(ENABLE_MOUSE_INPUT | ENABLE_WINDOW_INPUT));
-	FlushConsoleInputBuffer(hWakeup[WAKEUP_CONSOLE]);
+    hWakeup[WAKEUP_CUSTOM] = CreateEvent(NULL,FALSE,FALSE,NULL);
 }
 
-void WinWaiter::init(dstime ds)
+void MegaApiWinWaiter::init(dstime ds)
 {
 	maxds = ds;
 }
 
 // update monotonously increasing timestamp in deciseconds
-dstime WinWaiter::getdstime()
+dstime MegaApiWinWaiter::getdstime()
 {
 	if (pGTC) return ds = pGTC()/100;
 	else
@@ -67,22 +61,17 @@ dstime WinWaiter::getdstime()
 
 // wait for events (socket, I/O completion, timeout + application events)
 // ds specifies the maximum amount of time to wait in deciseconds (or ~0 if no timeout scheduled)
-int WinWaiter::wait()
+int MegaApiWinWaiter::wait()
 {
 	// only allow interaction of asynccallback() with the main process while waiting (because WinHTTP is threaded)
 	if (pcsHTTP) LeaveCriticalSection(pcsHTTP);
-	DWORD dwWaitResult = WaitForMultipleObjectsEx(sizeof hWakeup/sizeof *hWakeup,hWakeup,FALSE,maxds*100,TRUE);
+    WaitForMultipleObjectsEx(sizeof hWakeup/sizeof *hWakeup,hWakeup,FALSE,maxds*100,TRUE);
 	if (pcsHTTP) EnterCriticalSection(pcsHTTP);
 
-	if (dwWaitResult == WAIT_OBJECT_0 || dwWaitResult == WAIT_TIMEOUT || dwWaitResult == WAIT_IO_COMPLETION) return NEEDEXEC;
+    return NEEDEXEC;
+}
 
-	// FIXME: improve this gruesome nonblocking console read-simulating kludge
-	if (_kbhit()) return HAVESTDIN;
-
-	// this assumes that the user isn't typing too fast
-	INPUT_RECORD ir[1024];
-	DWORD dwNum;
-	ReadConsoleInput(hWakeup[WAKEUP_CONSOLE],ir,1024,&dwNum);
-
-	return 0;
+void MegaApiWinWaiter::notify()
+{
+    SetEvent(hWakeup[WAKEUP_CUSTOM]);
 }
