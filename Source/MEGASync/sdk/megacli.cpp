@@ -1,8 +1,8 @@
 /*
 
-MEGA SDK 2013-11-11 - sample application, interactive GNU Readline CLI
+MEGA SDK 2013-11-17 - sample application, interactive GNU Readline CLI
 
-(using FreeImage for thumbnail creation and Berkeley DB for state caching)
+(using FreeImage for thumbnail creation)
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -18,19 +18,19 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#define _POSIX_SOURCE
-#define _LARGE_FILES
-#define _LARGEFILE64_SOURCE
-#define _GNU_SOURCE 1
-#define _OFFSET_BITS 64
+#include "megaclient.h"
 
-#define __DARWIN_C_LEVEL 199506L
+#include "crypto/cryptopp.h"
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
+#include "db/bdb.h"
+#include "db/sqlite.h"
+
+#include "fs.h"
+#include "wait.h"
+#include "net.h"
+#include "console.h"
+
+#include "megacli.h"
 
 #define USE_VARARGS
 #define PREFER_STDARG
@@ -38,12 +38,6 @@ DEALINGS IN THE SOFTWARE.
 #include <readline/history.h>
 
 #include <FreeImage.h>
-
-#include "mega.h"
-
-#include "megacrypto.h"
-#include "megaclient.h"
-#include "megacli.h"
 
 MegaClient* client;
 
@@ -64,12 +58,25 @@ static string signupcode;
 // signup password challenge and encrypted master key
 static byte signuppwchallenge[SymmCipher::KEYLENGTH], signupencryptedmasterkey[SymmCipher::KEYLENGTH];
 
+// local console
+Console* console;
+
 // attempt to create a size*size JPEG thumbnail using FreeImage
 // thumbnail specs:
 // - largest square crop at the center (landscape) or at 1/6 of the height above center (portrait)
 // - must respect JPEG EXIF rotation tag
 // - must save at 85% quality
 // returns result as string
+#ifdef _WIN32
+#define FreeImage_GetFileTypeX FreeImage_GetFileTypeU
+#define FreeImage_LoadX FreeImage_LoadU
+typedef const wchar_t freeimage_filename_char_t;
+#else
+#define FreeImage_GetFileTypeX FreeImage_GetFileType
+#define FreeImage_LoadX FreeImage_Load
+typedef const char freeimage_filename_char_t;
+#endif
+
 static void createthumbnail(string* filename, unsigned size, string* result)
 {
 	FIBITMAP* dib;
@@ -77,7 +84,7 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 	FIMEMORY* hmem;
 	int w, h;
 
-	FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(filename->data());
+	FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeX((freeimage_filename_char_t*)filename->data());
 
 	if (fif == FIF_UNKNOWN) return;
 
@@ -86,7 +93,7 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 		// load JPEG (scale & EXIF-rotate)
 		FITAG *tag;
 
-		if (!(dib = FreeImage_Load(fif,filename->data(),JPEG_EXIFROTATE | JPEG_FAST | (size << 16)))) return;
+		if (!(dib = FreeImage_LoadX(fif,(freeimage_filename_char_t*)filename->data(),JPEG_EXIFROTATE | JPEG_FAST | (size << 16)))) return;
 
 		if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGWidth",&tag)) w = atoi((char*)FreeImage_GetTagValue(tag));
 		else w = FreeImage_GetWidth(dib);
@@ -97,7 +104,7 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 	else
 	{
 		// load all other image types - for RAW formats, rely on embedded preview
-		if (!(dib = FreeImage_Load(fif,filename->data(),(fif == FIF_RAW) ? RAW_PREVIEW : 0))) return;
+		if (!(dib = FreeImage_LoadX(fif,(freeimage_filename_char_t*)filename->data(),(fif == FIF_RAW) ? RAW_PREVIEW : 0))) return;
 
 		w = FreeImage_GetWidth(dib);
 		h = FreeImage_GetHeight(dib);
@@ -205,7 +212,7 @@ const char* errorstring(error e)
 AppFile::AppFile()
 {
 	static int nextseqno;
-	
+
 	seqno = ++nextseqno;
 }
 
@@ -249,14 +256,6 @@ AppFilePut::~AppFilePut()
 	appxferq[PUT].erase(appxfer_it);
 }
 
-/*void AppFileGet::displayname(string* dname)
-{
-	Node* n;
-
-	if ((n = client->nodebyhandle(h))) *dname = n->displayname();
-	else *dname = "DELETED/UNAVAILABLE";
-}*/
-
 void AppFilePut::displayname(string* dname)
 {
 	*dname = localfilename;
@@ -275,7 +274,7 @@ static void displaytransferdetails(Transfer* t, const char* action)
 	for (file_list::iterator it = t->files.begin(); it != t->files.end(); it++)
 	{
 		if (it != t->files.begin()) cout << "/";
-		
+
 		(*it)->displayname(&name);
 		cout << name;
 	}
@@ -355,7 +354,7 @@ void DemoApp::transfer_prepare(Transfer* t)
 
 static void syncstat(Sync* sync)
 {
-	cout << "Local data in this sync: " << sync->localbytes << " byte(s) in " << sync->localnodes[FILENODE] << " files and " << sync->localnodes[FOLDERNODE] << " folders" << endl;
+	cout << ", local data in this sync: " << sync->localbytes << " byte(s) in " << sync->localnodes[FILENODE] << " files and " << sync->localnodes[FOLDERNODE] << " folders" << endl;
 }
 
 void DemoApp::syncupdate_state(Sync*, syncstate newstate)
@@ -368,7 +367,7 @@ void DemoApp::syncupdate_state(Sync*, syncstate newstate)
 
 		case SYNC_FAILED:
 			cout << "Sync failed." << endl;
-			
+
 		default:;
 	}
 }
@@ -376,25 +375,25 @@ void DemoApp::syncupdate_state(Sync*, syncstate newstate)
 // sync update callbacks are for informational purposes only and must not change or delete the sync itself
 void DemoApp::syncupdate_local_folder_addition(Sync* sync, const char* path)
 {
-	cout << "Sync - local folder addition detected: " << path << endl;
+	cout << "Sync - local folder addition detected: " << path;
 	syncstat(sync);
 }
 
 void DemoApp::syncupdate_local_folder_deletion(Sync* sync, const char* path)
 {
-	cout << "Sync - local folder deletion detected: " << path << endl;
+	cout << "Sync - local folder deletion detected: " << path;
 	syncstat(sync);
 }
 
 void DemoApp::syncupdate_local_file_addition(Sync* sync, const char* path)
 {
-	cout << "Sync - local file addition detected: " << path << endl;
+	cout << "Sync - local file addition detected: " << path;
 	syncstat(sync);
 }
 
 void DemoApp::syncupdate_local_file_deletion(Sync* sync, const char* path)
 {
-	cout << "Sync - local file deletion detected: " << path << endl;
+	cout << "Sync - local file deletion detected: " << path;
 	syncstat(sync);
 }
 
@@ -438,10 +437,15 @@ void DemoApp::syncupdate_remote_mkdir(Sync*, const char* name)
 	cout << "Sync - creating remote folder " << name << endl;
 }
 
+void DemoApp::syncupdate_remote_copy(Sync*, const char* name)
+{
+	cout << "Sync - creating remote file " << name << " by copying existing remote file" << endl;
+}
+
 AppFileGet::AppFileGet(Node* n)
 {
 	h = n->nodehandle;
-	*(SparseCRC*)this = n->crc;
+	*(FileFingerprint*)this = *n;
 	name = n->displayname();
 	localfilename = name;
 	client->fsaccess->name2local(&localfilename);
@@ -457,7 +461,7 @@ AppFilePut::AppFilePut(string* clocalfilename, handle ch, const char* ctargetuse
 
 	// target parent node
 	h = ch;
-	
+
 	// target user
 	targetuser = ctargetuser;
 
@@ -465,9 +469,7 @@ AppFilePut::AppFilePut(string* clocalfilename, handle ch, const char* ctargetuse
 	name = *clocalfilename;
 	client->fsaccess->local2name(&name);
 	client->fsaccess->local2name(&separator);
-cout << "name=" << name << endl;
-cout << "separator=" << separator << endl;
-cout << "index=" << name.find_last_of(*separator.c_str()) << endl;
+
 	name.erase(0,name.find_last_of(*separator.c_str())+1);
 }
 
@@ -905,12 +907,12 @@ static void setprompt(prompttype p)
 {
 	prompt = p;
 
-	if (p == COMMAND) term_echo(true);
+	if (p == COMMAND) console->setecho(true);
 	else
 	{
 		pw_buf_pos = 0;
 		cout << prompts[p] << flush;
-		term_echo(false);
+		console->setecho(false);
 	}
 }
 
@@ -944,8 +946,7 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 		t->type = n->type;
 		t->nodehandle = n->nodehandle;
 		t->parenthandle = n->parent->nodehandle;
-		t->mtime = n->mtime;
-		t->ctime = n->ctime;
+		t->clienttimestamp = n->clienttimestamp;
 
 		// copy key (if file) or generate new key (if folder)
 		if (n->type == FILENODE) t->nodekey = n->nodekey;
@@ -991,7 +992,7 @@ void xferq(direction d, int cancel)
 		if (cancel < 0 || cancel == (*it)->seqno)
 		{
 			(*it)->displayname(&name);
-			
+
 			cout << (*it)->seqno << ": " << name;
 
 			if (d == PUT)
@@ -1030,11 +1031,11 @@ static byte pwkey[SymmCipher::KEYLENGTH];
 static byte pwkeybuf[SymmCipher::KEYLENGTH];
 static byte newpwkey[SymmCipher::KEYLENGTH];
 
-void store_line(char* l)
+static void store_line(char* l)
 {
 	if (!l)
 	{
-		term_restore();
+		delete console;
 		exit(0);
 	}
 
@@ -1043,7 +1044,7 @@ void store_line(char* l)
 	line = l;
 }
 
-void process_line(char* l)
+static void process_line(char* l)
 {
 	switch (prompt)
 	{
@@ -1531,6 +1532,7 @@ void process_line(char* l)
 							string newname;
 							int total = 0;
 							string localname;
+							string name;
 							nodetype type;
 
 							if (words.size() > 2)
@@ -1554,6 +1556,9 @@ void process_line(char* l)
 							{
 								while (da->dnext(&localname,&type))
 								{
+									client->fsaccess->local2path(&localname,&name);
+									cout << "Queueing " << name << "..." << endl;
+
 									if (type == FILENODE)
 									{
 										f = new AppFilePut(&localname,target,targetuser.c_str());
@@ -1586,10 +1591,10 @@ void process_line(char* l)
 					{
 						if (words.size() > 1)
 						{
-							string localname = words[1];
+							string localpath;
 
-							client->fsaccess->name2local(&localname);
-							if (!client->fsaccess->chdirlocal(&localname)) cout << words[1] << ": Failed" << endl;
+							client->fsaccess->path2local(&words[1],&localpath);
+							if (!client->fsaccess->chdirlocal(&localpath)) cout << words[1] << ": Failed" << endl;
 						}
 						else cout << "      lcd [localpath]" << endl;
 
@@ -1636,7 +1641,7 @@ void process_line(char* l)
 								for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
 								{
 									static const char* syncstatenames[] = { "Initial scan, please wait", "Active", "Failed" };
-								
+
 									nodepath((*it)->rooth,&remotepath);
 									client->fsaccess->local2path(&(*it)->rootpath,&localpath);
 
@@ -1827,7 +1832,7 @@ void process_line(char* l)
 									newnode->source = NEW_NODE;
 									newnode->type = FOLDERNODE;
 									newnode->nodehandle = 0;
-									newnode->mtime = newnode->ctime = time(NULL);
+									newnode->clienttimestamp = time(NULL);
 									newnode->parenthandle = UNDEF;
 
 									// generate fresh random key for this folder node
@@ -1960,9 +1965,11 @@ void process_line(char* l)
 							}
 							else if (words[2] == "load" && (words.size() == 4 || priv))
 							{
-								string data;
+								string data, localpath;
 
-								if (loadfile(&words[3],&data)) client->putua(words[1].c_str(),(const byte*)data.data(),data.size(),priv);
+								client->fsaccess->path2local(&words[3],&localpath);
+
+								if (loadfile(&localpath,&data)) client->putua(words[1].c_str(),(const byte*)data.data(),data.size(),priv);
 								else cout << "Cannot read " << words[3] << endl;
 
 								return;
@@ -2095,9 +2102,17 @@ void process_line(char* l)
 					}
 					else if (words[0] == "whoami")
 					{
-						cout << "Retrieving account status..." << endl;
+						if (client->loggedin() == NOTLOGGEDIN) cout << "Not logged in." << endl;
+						else
+						{
+							User* u;
 
-						client->getaccountdetails(&account,1,1,1,1,1,1);
+							if ((u = client->finduser(client->me))) cout << "Account e-mail: " << u->email << endl;
+
+							cout << "Retrieving account status..." << endl;
+
+							client->getaccountdetails(&account,true,true,true,true,true,true);
+						}
 
 						return;
 					}
@@ -2183,7 +2198,7 @@ void DemoApp::request_error(error e)
 
 	cout << "FATAL: Request failed (" << errorstring(e) << "), exiting" << endl;
 
-	term_restore();
+	delete console;
 	exit(0);
 }
 
@@ -2409,12 +2424,9 @@ void DemoApp::checkout_result(const char*)
 }
 
 // display account details/history
-void DemoApp::account_details(AccountDetails* ad, int storage, int transfer, int pro, int purchases, int transactions, int sessions)
+void DemoApp::account_details(AccountDetails* ad, bool storage, bool transfer, bool pro, bool purchases, bool transactions, bool sessions)
 {
 	char timebuf[32], timebuf2[32];
-	User* u;
-
-	if ((u = client->finduser(client->me))) cout << "Account e-mail: " << u->email << endl;
 
 	if (storage)
 	{
@@ -2514,8 +2526,6 @@ void megacli()
     char *saved_line = NULL;
     int saved_point = 0;
 
-	term_init();
-
 	rl_save_prompt();
 
 	for (;;)
@@ -2523,12 +2533,12 @@ void megacli()
 		if (prompt == COMMAND)
 		{
 			// display put/get transfer speed in the prompt
-			if (client->slots.size())
+			if (client->tslots.size())
 			{
 				unsigned xferrate[2] = { 0 };
 				dstime ds = client->waiter->getdstime();
-				
-				for (transferslot_list::iterator it = client->slots.begin(); it != client->slots.end(); it++) xferrate[(*it)->transfer->type] += (*it)->progressreported*10/(1024*(ds-(*it)->starttime+1));
+
+				for (transferslot_list::iterator it = client->tslots.begin(); it != client->tslots.end(); it++) xferrate[(*it)->transfer->type] += (*it)->progressreported*10/(1024*(ds-(*it)->starttime+1));
 
 				strcpy(dynamicprompt,"MEGA");
 
@@ -2571,7 +2581,7 @@ void megacli()
 			if (w & Waiter::HAVESTDIN)
 			{
 				if (prompt == COMMAND) rl_callback_read_char();
-				else read_pw_char(pw_buf,sizeof pw_buf,&pw_buf_pos,&line);
+				else console->readpwchar(pw_buf,sizeof pw_buf,&pw_buf_pos,&line);
 			}
 
 			if (w & Waiter::NEEDEXEC || line) break;
@@ -2591,8 +2601,19 @@ void megacli()
 			free(line);
 			line = NULL;
 		}
-	
+
 		// pass the CPU to the engine (nonblocking)
 		client->exec();
 	}
+}
+
+int main()
+{
+	// instantiate app components: the callback processor (DemoApp),
+	// the HTTP I/O engine (WinHttpIO) and the MegaClient itself
+	client = new MegaClient(new DemoApp,new WAIT_CLASS,new HTTPIO_CLASS,new FSACCESS_CLASS,new DBACCESS_CLASS,"SDKSAMPLE");
+
+	console = new CONSOLE_CLASS;
+	megacli();
+	delete console;
 }

@@ -1,14 +1,14 @@
 CXX=g++
-CFLAGS=-g -Wall -isystem /usr/include/cryptopp -DENABLE_LOCALCACHE
-LIB=-lcryptopp -lfreeimage -lreadline -ltermcap -lcurl -ldb_cxx
+CFLAGS=-DUSE_SQLITE -DUSE_CRYPTOPP -g -Wall -I. -Iposix -isystem /usr/include/cryptopp
+LIB=-lcryptopp -lfreeimage -lreadline -ltermcap -lcurl -lsqlite3
 LDFLAGS=
-SOURCES=megaposix.cpp megacli.cpp megaclient.cpp megacrypto.cpp megabdb.cpp
+SOURCES=megacli.cpp megaclient.cpp crypto/cryptopp.cpp posix/fs.cpp posix/console.cpp posix/net.cpp posix/wait.cpp db/sqlite.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-PROGS=megaclient
+PROGS=megacli
 
 all: $(PROGS)
 
-megaclient: $(OBJECTS)
+megacli: $(OBJECTS)
 	$(CXX) $(CFLAGS) $(LDFLAGS) $^ -o $@ $(LIB)
 
 .cpp.o:
