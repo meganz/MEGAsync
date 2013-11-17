@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 #include <windows.h>
 #include <shellapi.h>
 
-#include "megaclient.h"
+#include "../megaclient.h"
 #include "wait.h"
 #include "fs.h"
 
