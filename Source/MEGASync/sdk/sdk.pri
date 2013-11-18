@@ -41,6 +41,7 @@ DEFINES += USE_SQLITE USE_CRYPTOPP
 LIBS += -lcryptopp -ldb_cxx -lpthread
 
 win32 {
+    INCLUDEPATH += $$PWD
     INCLUDEPATH += $$PWD/3rdparty/include
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
     INCLUDEPATH += $$PWD/3rdparty/include/db

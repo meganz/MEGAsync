@@ -141,7 +141,7 @@ typedef vector<struct Node*> node_vector;
 // MAIL - mail message
 typedef enum { TYPE_UNKNOWN = -1, FILENODE = 0, FOLDERNODE, ROOTNODE, INCOMINGNODE, RUBBISHNODE, MAILNODE } nodetype;
 
-typedef enum { SYNC_INITIALSCAN, SYNC_ACTIVE, SYNC_FAILED } syncstate;
+typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate;
 
 // generic host file access interface
 struct FileAccess
@@ -777,7 +777,7 @@ typedef uint16_t fatype;
 #define THUMBNAIL120X120 0
 
 // maps handle-index pairs to file attribute handle
-typedef map<pair<handle,fatype>,handle> fa_map;
+typedef map<pair<handle,fatype>,pair<handle,int> > fa_map;
 
 // list of new file attributes to write
 // file attribute put
@@ -1399,6 +1399,16 @@ public:
 	CommandMoveNode(MegaClient*, Node*, Node*);
 };
 
+class CommandMoveSyncDebris : public Command
+{
+	handle h;
+
+public:
+	void procresult();
+
+	CommandMoveSyncDebris(MegaClient*, handle, Node*);
+};
+
 class CommandSingleKeyCR : public Command
 {
 public:
@@ -1456,18 +1466,18 @@ public:
 	CommandAttachFA(handle, fatype, handle, int);
 };
 
+typedef enum { PUTNODES_APP, PUTNODES_SYNC, PUTNODES_SYNCDEBRIS } putsource;
+
 class CommandPutNodes : public Command
 {
-	handle* ulhandles;
 	NewNode* nn;
 	targettype type;
-	bool syncing;
+	putsource source;
 
 public:
 	void procresult();
 
-	CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, bool = false);
-	~CommandPutNodes();
+	CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, putsource = PUTNODES_APP);
 };
 
 class CommandSetAttr : public Command
@@ -1762,7 +1772,9 @@ struct LocalNode : public File
 typedef list<NewNode*> newnode_list;
 typedef list<handle> handle_list;
 
-typedef map<handle, NewNode*> handlenewnode_map;
+typedef map<handle,NewNode*> handlenewnode_map;
+
+typedef map<handle,char> handlecount_map;
 
 class MegaClient
 {
@@ -1847,6 +1859,9 @@ public:
 	bool startxfer(direction d, File* f);
 	void stopxfer(File* f);
 
+	// active syncs
+	sync_list syncs;
+
 	// start folder synchronization
 	bool addsync(string* localname, Node* n);
 
@@ -1889,6 +1904,9 @@ public:
 	// abort session and free all state information
 	void logout();
 
+	// maximum outbound throughput (per target server)
+	int putmbpscap;
+
 	// shopping basket
 	handle_vector purchase_basket;
 
@@ -1918,6 +1936,9 @@ private:
 	// root URL for API requestrs
 	static const char* const APIURL;
 
+	// sync debris folder in rubbish
+	static const char* const SYNCDEBRISFOLDERNAME;
+	
 	// notify URL for new server-client commands
 	string scnotifyurl;
 
@@ -1951,9 +1972,6 @@ private:
 
 	// maximum number of concurrent transfers
 	static const unsigned MAXTRANSFERS = 8;
-
-	// maximum outbound throughput (per target server)
-	int putmbpscap;
 
 	// determine if more transfers fit in the pipeline
 	bool moretransfers(direction);
@@ -2103,8 +2121,14 @@ public:
 	// generate & return upload handle
 	handle getuploadhandle();
 
-	// active syncs
-	sync_list syncs;
+	// nodes being moved to //bin/SyncDebris with move failcount
+	handlecount_map newsyncdebris;
+
+	// we are adding the //bin/SyncDebris/yyyy-mm-dd subfolder(s)
+	bool syncdebrisadding;
+	
+	// number of newsyncdebris nodes being moved at the moment
+	int movedebrisinflight;
 
 	// activity flag
 	bool syncactivity;
@@ -2128,6 +2152,9 @@ public:
 	handle nextsyncid();
 	handle currsyncid;
 
+	// SyncDebris folder addition result
+	void putnodes_syncdebris_result(error,NewNode*);
+	
 	// sync id to handle mapping
 	syncidhandle_map syncidhandles;
 
@@ -2137,6 +2164,7 @@ public:
 	// create missing folders, copy/start uploading missing files
 	void syncup(LocalNode* = NULL, Node* = NULL);
 
+	// trigger syncing of local file
 	void syncupload(LocalNode*);
 
 	// sync putnodes() completion
@@ -2145,8 +2173,10 @@ public:
 	// start downloading/copy missing files, create missing directories
 	void syncdown(Node*, LocalNode*, string*);
 
-	void movetorubbish(Node*);
+	// move node to //bin/SyncDebris/yyyy-mm-dd/
+	void movetosyncdebris(Node*);
 
+	// determine if all transfer slots are full
 	bool slotavail();
 
 	// dispatch as many queued transfers as possible
@@ -2173,7 +2203,7 @@ public:
 	void faf_failed(int);
 
 	// process object arrays by the API server
-	int readnodes(JSON*, int, handle* = NULL, NewNode* = NULL, int = 0);
+	int readnodes(JSON*, int, putsource = PUTNODES_APP, NewNode* = NULL, int = 0);
 
 	void readok(JSON*);
 	void readokelement(JSON*);
@@ -2196,6 +2226,8 @@ public:
 	// API warnings
 	void warn(const char*);
 	bool warnlevel();
+
+	Node* childnodebyname(Node*, const char*);
 
 	// purge account state and abort server-client connection
 	void purgenodesusersabortsc();
@@ -2411,7 +2443,7 @@ class Sync
 	SymmCipher tkey;
 	string tattrstring;
 	AttrMap tattrs;
-
+	
 public:
 	MegaClient* client;
 
@@ -2445,6 +2477,8 @@ public:
 	// scan items in specified path and add as children of the specified LocalNode
 	void scan(string*, FileAccess*, LocalNode*, bool);
 
+	sync_list::iterator sync_it;
+	
 	Sync(MegaClient*, string*, Node*);
 	~Sync();
 };

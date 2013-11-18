@@ -27,6 +27,9 @@ DEALINGS IN THE SOFTWARE.
 // root URL for API access
 const char* const MegaClient::APIURL = "https://g.api.mega.co.nz/";
 
+// //bin/SyncDebris/yyyy-mm-dd folder name
+const char* const MegaClient::SYNCDEBRISFOLDERNAME = "SyncDebris";
+
 // exported link marker
 const char* const MegaClient::EXPORTEDLINK = "EXP";
 
@@ -505,8 +508,8 @@ void Node::setfingerprint()
 			memcpy(crc,nodekey.data(),sizeof crc);
 			mtime = 0;
 		}
-		
-		client->fingerprints.insert((FileFingerprint*)this);
+
+		fingerprint_it = client->fingerprints.insert((FileFingerprint*)this);
 	}
 }
 
@@ -1498,6 +1501,14 @@ bool MegaClient::warnlevel()
 	return warned ? (warned = 0) | 1 : 0;
 }
 
+// returns the first matching child node by UTF-8 name (does not resolve name clashes)
+Node* MegaClient::childnodebyname(Node* p, const char* name)
+{
+	for (node_list::iterator it = p->children.begin(); it != p->children.end(); it++) if (!strcmp(name,(*it)->displayname())) return *it;
+
+	return NULL;
+}
+
 void MegaClient::init()
 {
 	for (int i = sizeof rootnodes/sizeof *rootnodes; i--; ) rootnodes[i] = UNDEF;
@@ -1512,6 +1523,10 @@ void MegaClient::init()
 	me = UNDEF;
 
 	syncadding = 0;
+	movedebrisinflight = 0;
+	syncdebrisadding = false;
+	
+	putmbpscap = 0;
 }
 
 MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k)
@@ -1601,12 +1616,7 @@ void MegaClient::exec()
 
 						// are we updating a live node? issue command directly. otherwise, queue for processing upon upload completion.
 						if ((n = nodebyhandle(h)) || (n = nodebyhandle(fa->th))) reqs[r].add(new CommandAttachFA(n->nodehandle,fa->type,fah,fa->tag));
-						else
-						{
-							pendingfa[pair<handle,fatype>(fa->th,fa->type)] = fah;
-							restag = fa->tag;
-							app->putfa_result(fa->th,fa->type,API_OK);
-						}
+						else pendingfa[pair<handle,fatype>(fa->th,fa->type)] = pair<handle,int>(fah,fa->tag);
 
 						delete fa;
 						newfa.erase(curfa);
@@ -1862,7 +1872,7 @@ void MegaClient::exec()
 	} while (httpio->doio() || (!pendingcs && reqs[r].cmdspending() && btcs.armed(waiter->ds)));
 
 	// process active syncs
-	if (syncs.size())
+	if (syncs.size() || syncactivity)
 	{
 		syncactivity = false;
 
@@ -1929,6 +1939,7 @@ int MegaClient::wait()
 
 	// sync directory scans in progress? don't wait.
 	if (syncactivity) nds = ds;
+
 	else
 	{
 		// next retry of a failed transfer
@@ -2704,7 +2715,7 @@ void MegaClient::pendingattrstring(handle h, string* fa)
 	for (fa_map::iterator it = pendingfa.lower_bound(pair<handle,fatype>(h,0)); it != pendingfa.end() && it->first.first == h; )
 	{
 		sprintf(buf,"/%u*",(unsigned)it->first.second);
-		Base64::btoa((byte*)&it->second,sizeof(it->second),strchr(buf+3,0));
+		Base64::btoa((byte*)&it->second.first,sizeof(it->second.first),strchr(buf+3,0));
 		pendingfa.erase(it++);
 		fa->append(buf+!fa->size());
 	}
@@ -3648,14 +3659,14 @@ void MegaClient::putnodes(handle h, NewNode* newnodes, int numnodes)
 }
 
 // (the result is not processed directly - we rely on the server-client response)
-CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* userhandle, NewNode* newnodes, int numnodes, int ctag, bool csyncing)
+CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* userhandle, NewNode* newnodes, int numnodes, int ctag, putsource csource)
 {
 	byte key[Node::FILENODEKEYLENGTH];
 	int i;
 
 	nn = newnodes;
 	type = userhandle ? USER_HANDLE : NODE_HANDLE;
-	syncing = csyncing;
+	source = csource;
 
 	cmd("p");
 	notself(client);
@@ -3665,12 +3676,8 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* user
 
 	beginarray("n");
 
-	ulhandles = new handle[numnodes];
-
 	for (i = 0; i < numnodes; i++)
 	{
-		ulhandles[i] = nn[i].uploadhandle;
-
 		beginobject();
 
 		switch (nn[i].source)
@@ -3744,11 +3751,6 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* user
 	tag = ctag;
 }
 
-CommandPutNodes::~CommandPutNodes()
-{
-	delete[] ulhandles;
-}
-
 // add new nodes and handle->node handle mapping
 void CommandPutNodes::procresult()
 {
@@ -3758,8 +3760,9 @@ void CommandPutNodes::procresult()
 	{
 		e = (error)client->json.getint();
 
-		if (syncing) return client->putnodes_sync_result(e,nn);
-		else return client->app->putnodes_result(e,type,nn);
+		if (source == PUTNODES_SYNC) return client->putnodes_sync_result(e,nn);
+		else if (source == PUTNODES_APP) return client->app->putnodes_result(e,type,nn);
+		else return client->putnodes_syncdebris_result(e,nn);
 	}
 
 	e = API_EINTERNAL;
@@ -3769,7 +3772,7 @@ void CommandPutNodes::procresult()
 		switch (client->json.getnameid())
 		{
 			case 'f':
-				if (client->readnodes(&client->json,1,ulhandles,syncing ? nn : NULL,tag)) e = API_OK;
+				if (client->readnodes(&client->json,1,source,nn,tag)) e = API_OK;
 				break;
 
 			default:
@@ -3778,8 +3781,9 @@ void CommandPutNodes::procresult()
 				// fall through
 			case EOO:
 				client->applykeys();
-				if (syncing) client->putnodes_sync_result(e,nn);
-				else client->app->putnodes_result(e,type,nn);
+				if (source == PUTNODES_SYNC) client->putnodes_sync_result(e,nn);
+				else if (source == PUTNODES_APP) client->app->putnodes_result(e,type,nn);
+				else client->putnodes_syncdebris_result(e,nn);
 				client->notifypurge();
 				return;
 		}
@@ -3916,14 +3920,15 @@ CommandMoveNode::CommandMoveNode(MegaClient* client, Node* n, Node* t)
 	cmd("m");
 	notself(client);
 
-	arg("n",(byte*)&n->nodehandle,MegaClient::NODEHANDLE);
+	h = n->nodehandle;
+
+	arg("n",(byte*)&h,MegaClient::NODEHANDLE);
 	arg("t",(byte*)&t->nodehandle,MegaClient::NODEHANDLE);
 
 	TreeProcShareKeys tpsk;
 	client->proctree(n,&tpsk);
 	tpsk.get(this);
 
-	h = n->nodehandle;
 	tag = client->reqtag;
 }
 
@@ -4117,7 +4122,7 @@ uint64_t MegaClient::stringhash64(string* s, SymmCipher* c)
 }
 
 // read and add/verify node array
-int MegaClient::readnodes(JSON* j, int notify, handle* ulhandles, NewNode* syncnn, int tag)
+int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, int tag)
 {
 	if (!j->enterarray()) return 0;
 
@@ -4134,7 +4139,7 @@ int MegaClient::readnodes(JSON* j, int notify, handle* ulhandles, NewNode* syncn
 		const char* k = NULL;
 		const char* fa = NULL;
 		const char *sk = NULL;
-		accesslevel r = ACCESS_UNKNOWN;
+		accesslevel rl = ACCESS_UNKNOWN;
 		m_off_t s = ~(m_off_t)0;
 		time_t ts = 0;
 		nameid name;
@@ -4181,7 +4186,7 @@ int MegaClient::readnodes(JSON* j, int notify, handle* ulhandles, NewNode* syncn
 
 					// inbound share attributes
 				case 'r':	// share access level
-					r = (accesslevel)j->getint();
+					rl = (accesslevel)j->getint();
 					break;
 
 				case MAKENAMEID2('s','k'):	// share key
@@ -4247,7 +4252,7 @@ int MegaClient::readnodes(JSON* j, int notify, handle* ulhandles, NewNode* syncn
 				if (!ISUNDEF(su))
 				{
 					if (t != FOLDERNODE) warn("Invalid share node type");
-					if (r == ACCESS_UNKNOWN) warn("Missing access level");
+					if (rl == ACCESS_UNKNOWN) warn("Missing access level");
 					if (!sk) warn("Missing share key for inbound share");
 
 					if (warnlevel()) su = UNDEF;
@@ -4265,25 +4270,36 @@ int MegaClient::readnodes(JSON* j, int notify, handle* ulhandles, NewNode* syncn
 				Node::copystring(&n->attrstring,a);
 				Node::copystring(&n->keystring,k);
 
-				if (!ISUNDEF(su)) newshares.push_back(new NewShare(h,0,su,r,ts,buf));
+				if (!ISUNDEF(su)) newshares.push_back(new NewShare(h,0,su,rl,ts,buf));
 
-				if (syncnn)
+				if (source == PUTNODES_SYNC)
 				{
-					// map upload handle to node handle for pending file attributes
-					if (ulhandles && ulhandles[i]) uhnh.insert(pair<handle,handle>(ulhandles[i],h));
-
 					// FIXME: add purging of orphaned syncidhandles
-					if (syncnn)
+					if ((t == FOLDERNODE || t == FILENODE) && !syncdeleted[t].count(nn[i].syncid))
 					{
-						if ((t == FOLDERNODE || t == FILENODE) && !syncdeleted[t].count(syncnn[i].syncid))
-						{
-							syncidhandles[syncnn[i].localnode->syncid] = h;
-							syncnn[i].localnode->node = n;
-							n->localnode = syncnn[i].localnode;
-						}
+						syncidhandles[nn[i].localnode->syncid] = h;
+						nn[i].localnode->node = n;
+						n->localnode = nn[i].localnode;
 					}
-					i++;
 				}
+
+				// map upload handle to node handle for pending file attributes
+				if (nn && nn[i].source == NEW_UPLOAD)
+				{
+					handle uh = nn[i].uploadhandle;
+
+					// do we have pending file attributes for this upload? set them.
+					for (fa_map::iterator it = pendingfa.lower_bound(pair<handle,fatype>(uh,0)); it != pendingfa.end() && it->first.first == uh; )
+					{
+						reqs[r].add(new CommandAttachFA(h,it->first.second,it->second.first,it->second.second));
+						pendingfa.erase(it++);
+					}
+					
+					// FIXME: only do this for in-flight FA writes
+					uhnh.insert(pair<handle,handle>(uh,h));
+				}
+
+				i++;
 			}
 
 			if (notify) notifynode(n);
@@ -6745,8 +6761,8 @@ void MegaClient::setkeypair()
 
 	asymkey.genkeypair(asymkey.key,pubk,2048);
 
-	AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
-	AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
+    AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
+    AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
 
 	// add random padding and ECB-encrypt with master key
 	unsigned t = privks.size();
@@ -6860,8 +6876,10 @@ void MegaClient::purgenodesusersabortsc()
 {
 	app->clearing();
 
-	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++) delete *it;
+	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); ) delete *(it++);
 	syncs.clear();
+
+	newsyncdebris.clear();
 
 	syncadded.clear();
 	syncdeleted[GET].clear();
@@ -6883,7 +6901,8 @@ void MegaClient::purgenodesusersabortsc()
 
 	if (pendingsc) pendingsc->disconnect();
 
-	for (int i = sizeof rootnodes/sizeof *rootnodes; i--; ) rootnodes[i] = UNDEF;
+	init();
+	//for (int i = sizeof rootnodes/sizeof *rootnodes; i--; ) rootnodes[i] = UNDEF;
 }
 
 // purge and rebuild node/user tree
@@ -7213,11 +7232,7 @@ void Transfer::complete()
 	else
 	{
 		// files must not change during a PUT transfer
-		if (genfingerprint(slot->file))
-		{
-cout << "File changed during upload." << endl;
-			return failed(API_EREAD);
-		}
+		if (genfingerprint(slot->file)) return failed(API_EREAD);
 	}
 
 	client->app->transfer_complete(this);
@@ -7596,14 +7611,12 @@ bool MegaClient::addsync(string* localpath, Node* n)
 {
 	Sync* sync = new Sync(this,localpath,n);
 
-    sync->addscan(NULL, localpath ,NULL,true);
+	sync->addscan(NULL,localpath,NULL,true);
 	sync->rootlocal = sync->procscanstack();
 
 	// local path not present - fail
 	if (!sync->rootlocal)
 	{
-        cout << "No rootlocal" << endl;
-
 		delete sync;
 		return false;
 	}
@@ -7613,7 +7626,7 @@ bool MegaClient::addsync(string* localpath, Node* n)
 	sync->rootlocal->node = n;
 	n->localnode = sync->rootlocal;
 
-	syncs.push_back(sync);
+	sync->sync_it = syncs.insert(syncs.end(),sync);
 
 	syncactivity = true;
 
@@ -7637,8 +7650,12 @@ Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode)
 
 Sync::~Sync()
 {
-	client->syncactivity = true;
+	state = SYNC_CANCELED;
+
 	delete rootlocal;
+	client->syncs.erase(sync_it);
+
+	client->syncactivity = true;
 }
 
 void Sync::changestate(syncstate newstate)
@@ -7667,11 +7684,14 @@ LocalNode::LocalNode(Sync* csync, string* cname, string* clocalname, nodetype ct
 
 LocalNode::~LocalNode()
 {
-	// eliminate queued filesystem events for direct children
-	for (deque<ScanItem>::iterator it = sync->scanstack.begin(); it != sync->scanstack.end(); it++) if ((*it).parent == this) (*it).deleted = true;
+	if (sync->state >= SYNC_INITIALSCAN)
+	{
+		// eliminate queued filesystem events for direct children
+		for (deque<ScanItem>::iterator it = sync->scanstack.begin(); it != sync->scanstack.end(); it++) if ((*it).parent == this) (*it).deleted = true;
 
-	// record deletion
-	sync->client->syncdeleted[type].insert(syncid);
+		// record deletion
+		sync->client->syncdeleted[type].insert(syncid);
+	}
 
 	if (type == FOLDERNODE) sync->client->fsaccess->delnotify(this);
 
@@ -7762,7 +7782,6 @@ LocalNode* Sync::procscanstack()
 	// if localpath was not specified, construct based on parents & base sync path
 	if (!localpath->size())
 	{
-        cout << "localpath not specified" << endl;
 		LocalNode* p = parent;
 
 		while (p)
@@ -7771,8 +7790,6 @@ LocalNode* Sync::procscanstack()
 			if ((p = p->parent)) localpath->insert(0,client->fsaccess->localseparator);
 		}
 	}
-
-    if(localpath->size()) wprintf(L"WWWWWW: %s\n", localpath->data());
 
 	LocalNode* l;
 
@@ -7787,17 +7804,9 @@ LocalNode* Sync::procscanstack()
 		localnode_map::iterator it = parent->children.find(localname);
 
 		if (it != parent->children.end()) l = it->second;
-        else
-        {
-            cout << "error 1" << endl;
-            l = NULL;
-        }
+		else l = NULL;
 	}
-    else
-    {
-        cout << "error 2" << endl;
-        l = NULL;
-    }
+	else l = NULL;
 
 	if (l)
 	{
@@ -7810,13 +7819,11 @@ LocalNode* Sync::procscanstack()
 
 	if (fa->fopen(localpath,1,0))
 	{
-        cout << "ABIERTO!" << endl;
 		if (l && l->type != fa->type)
 		{
 			cout << "Type change for " << *localpath << endl;
 
 			delete l;
-            cout << "error 3" << endl;
 			l = NULL;
 
 			client->fsaccess->local2path(localpath,&tmpname);
@@ -7862,14 +7869,9 @@ LocalNode* Sync::procscanstack()
 		client->fsaccess->local2path(localpath,&tmpname);
 		client->app->syncupdate_local_folder_deletion(this,tmpname.c_str());
 
-        cout << "error 4" << endl;
 		delete l;
 		l = NULL;
 	}
-    else
-    {
-        cout << "no se pudo abrir" << endl;
-    }
 
 	if (l)
 	{
@@ -8267,7 +8269,7 @@ void MegaClient::syncupdate()
 		{
 			syncadding++;
 
-			reqs[r].add(new CommandPutNodes(this,synccreate[start]->nodehandle,NULL,nn,nnp-nn,0,true));
+			reqs[r].add(new CommandPutNodes(this,synccreate[start]->nodehandle,NULL,nn,nnp-nn,0,PUTNODES_SYNC));
 			syncactivity = true;
 		}
 	}
@@ -8286,7 +8288,7 @@ void MegaClient::syncupdate()
 			{
 				app->syncupdate_remote_unlink(n);
 
-				movetorubbish(n);
+				movetosyncdebris(n);
 			}
 
 			syncidhandles.erase(sit);
@@ -8333,7 +8335,7 @@ void MegaClient::putnodes_sync_result(error e, NewNode* nn)
 			if (syncidhandles.count(it->first))
 			{
 				cout << "Overwritten: " << nodebyhandle(it->second)->displayname() << endl;
-				if ((n = nodebyhandle(it->second))) movetorubbish(n);
+				if ((n = nodebyhandle(it->second))) movetosyncdebris(n);
 			}
 		}
 
@@ -8419,15 +8421,114 @@ Node* MegaClient::nodebyfingerprint(FileFingerprint* fingerprint)
 	return NULL;
 }
 
-// FIXME: create sync subfolder in //bin to hold the sync rubbish
-void MegaClient::movetorubbish(Node* n)
+CommandMoveSyncDebris::CommandMoveSyncDebris(MegaClient* client, handle ch, Node* t)
 {
-	Node* rn;
+	h = ch;
 
-	if ((rn = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
+	cmd("m");
+
+	arg("n",(byte*)&h,MegaClient::NODEHANDLE);
+	arg("t",(byte*)&t->nodehandle,MegaClient::NODEHANDLE);
+
+	client->movedebrisinflight++;
+}
+
+void CommandMoveSyncDebris::procresult()
+{
+	bool ok;
+	handlecount_map::iterator it;
+
+	if (client->json.isnumeric()) ok = (error)client->json.getint() == API_OK;
+	else
 	{
-		if (rename(n,rn) != API_OK) app->debug_log("Sync: Error moving node to rubbish bin");
+		client->json.storeobject();
+		ok = false;
 	}
+
+	if ((it = client->newsyncdebris.find(h)) != client->newsyncdebris.end())
+	{
+		if (it->second == 3) ok = true;	// give up
+		else it->second++;
+		
+		if (ok) client->newsyncdebris.erase(it);
+	}
+
+	if (!--client->movedebrisinflight) client->movetosyncdebris(NULL);
+}
+
+// FIXME: create sync subfolder in //bin to hold the sync rubbish
+void MegaClient::movetosyncdebris(Node* n)
+{
+	if (n) newsyncdebris[n->nodehandle] = 0;
+
+	if ((!n || !syncdebrisadding) && newsyncdebris.size())
+	{
+		Node* p;
+
+		if ((p = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
+		{
+			// check if we have today's sync debris subfolder in rubbish bin
+			handle h;
+			time_t t = time(NULL);
+			struct tm* ptm = gmtime(&t);
+			char buf[32];
+
+			sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
+
+			if ((p = childnodebyname(p,SYNCDEBRISFOLDERNAME)))
+			{
+				h = p->nodehandle;
+
+				if ((p = childnodebyname(p,buf)))
+				{
+					for (handlecount_map::iterator it = newsyncdebris.begin(); it != newsyncdebris.end(); it++) reqs[r].add(new CommandMoveSyncDebris(this,it->first,p));
+					return;
+				}
+			}
+			else h = UNDEF;
+
+			// create missing component(s) of the debris folder of the day
+			NewNode* nn;
+			SymmCipher tkey;
+			string tattrstring;
+			AttrMap tattrs;
+			int i = h == UNDEF ? 2 : 1;
+
+			nn = new NewNode[i]+i;
+
+			while (i--)
+			{
+				nn--;
+
+				nn->source = NEW_NODE;
+				nn->type = FOLDERNODE;
+				nn->nodehandle = i;
+				nn->parenthandle = i ? 0 : UNDEF;
+
+				nn->clienttimestamp = t;
+				nn->nodekey.resize(Node::FOLDERNODEKEYLENGTH);
+				PrnGen::genblock((byte*)nn->nodekey.data(),Node::FOLDERNODEKEYLENGTH);
+
+				// set new name, encrypt and attach attributes
+				tattrs.map['n'] = (i || h != UNDEF) ? buf : SYNCDEBRISFOLDERNAME;
+				tattrs.getjson(&tattrstring);
+				tkey.setkey((const byte*)nn->nodekey.data(),FOLDERNODE);
+				makeattr(&tkey,&nn->attrstring,tattrstring.c_str());
+			}
+
+			reqs[r].add(new CommandPutNodes(this,h == UNDEF ? rootnodes[RUBBISHNODE-ROOTNODE] : h,NULL,nn,h == UNDEF ? 2 : 1,0,PUTNODES_SYNCDEBRIS));
+			syncdebrisadding = true;
+		}
+	}
+}
+
+void MegaClient::putnodes_syncdebris_result(error e, NewNode* nn)
+{
+	delete[] nn;
+
+	syncdebrisadding = false;
+	
+	if (e == API_OK) movetosyncdebris(NULL);
 }
 
 bool FileFingerprintCmp::operator() (const FileFingerprint* a, const FileFingerprint* b) const
@@ -8501,7 +8602,7 @@ cout << "Upload target folder inaccessible, using /" << endl;
 			}
 
 			if (l) t->client->syncadding++;
-			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,0,!!l));
+			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,0,l ? PUTNODES_SYNC : PUTNODES_APP));
 		}
 	}
 }
