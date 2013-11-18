@@ -16,7 +16,7 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#include "../megaclient.h"
+#include "megaclient.h"
 
 #include "sqlite.h"
 

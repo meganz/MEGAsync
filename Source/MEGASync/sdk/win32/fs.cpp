@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 #include <windows.h>
 #include <shellapi.h>
 
-#include "../megaclient.h"
+#include "megaclient.h"
 #include "wait.h"
 #include "fs.h"
 
@@ -113,8 +113,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
-        cout << "INVALID HANDLE" << endl;
-        wprintf(L"IIIII: %s\n", (LPCWSTR)name->data());
 		return 0;
 	}
 
@@ -166,8 +164,6 @@ void WinFileSystemAccess::tmpnamelocal(string* filename, string* relatedpath)
 
 void WinFileSystemAccess::path2local(string* path, string* local)
 {
-    //return;
-
 	local->resize((path->size()+1)*sizeof(wchar_t));
 
 	local->resize(sizeof(wchar_t)*(MultiByteToWideChar(CP_UTF8,0,path->c_str(),-1,(wchar_t*)local->data(),local->size()/sizeof(wchar_t)+1)-1));
@@ -175,11 +171,9 @@ void WinFileSystemAccess::path2local(string* path, string* local)
 
 void WinFileSystemAccess::local2path(string* local, string* path)
 {
-    //return;
-
 	path->resize((local->size()+1)*4/sizeof(wchar_t));
 
-    path->resize(WideCharToMultiByte(CP_UTF8,0,(wchar_t*)local->data(),-1,(char*)path->data(),path->size()+1,NULL,NULL));
+	path->resize(WideCharToMultiByte(CP_UTF8,0,(wchar_t*)local->data(),local->size()/sizeof(wchar_t),(char*)path->data(),path->size()+1,NULL,NULL));
 }
 
 // use UTF-8 filenames directly, but escape forbidden characters
@@ -190,14 +184,14 @@ void WinFileSystemAccess::name2local(string* filename, const char* badchars)
 	if (!badchars) badchars = "\\/:?\"<>|*\1\2\3\4\5\6\7\10\11\12\13\14\15\16\17\20\21\22\23\24\25\26\27\30\31\32\33\34\35\36\37";
 
 	// replace all occurrences of a badchar with %xx
-    for (int i = filename->size(); i--; )
+	for (int i = filename->size(); i--; )
 	{
 		if ((unsigned char)(*filename)[i] < ' ' || strchr(badchars,(*filename)[i]))
 		{
 			sprintf(buf,"%%%02x",(unsigned char)(*filename)[i]);
 			filename->replace(i,1,buf);
 		}
-    }
+	}
 
 	string t = *filename;
 
@@ -212,14 +206,12 @@ void WinFileSystemAccess::name2local(string* filename, const char* badchars)
 // by replacing occurrences of %xx (x being a lowercase hex digit) with the encoded character
 void WinFileSystemAccess::local2name(string* filename)
 {
-    //return;
-
 	char c;
 	string t = *filename;
 
 	filename->resize((t.size()+1)*4/sizeof(wchar_t));
 
-    filename->resize(WideCharToMultiByte(CP_UTF8,0,(wchar_t*)t.data(),-1,(char*)filename->data(),filename->size()+1,NULL,NULL));
+	filename->resize(WideCharToMultiByte(CP_UTF8,0,(wchar_t*)t.data(),t.size()/sizeof(wchar_t),(char*)filename->data(),filename->size()+1,NULL,NULL));
 
 	for (int i = filename->size()-2; i-- > 0; )
 	{

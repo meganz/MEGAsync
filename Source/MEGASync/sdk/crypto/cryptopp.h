@@ -34,8 +34,6 @@ DEALINGS IN THE SOFTWARE.
 
 typedef int64_t m_off_t;
 
-
-
 // generic pseudo-random number generator
 class PrnGen
 {

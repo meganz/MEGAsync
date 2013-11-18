@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 #ifndef HTTPIO_CLASS
 #define HTTPIO_CLASS WinHttpIO
 
-#include "../megaclient.h"
+#include "megaclient.h"
 
 #include "wait.h"
 

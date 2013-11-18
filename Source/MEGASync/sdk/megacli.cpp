@@ -43,9 +43,6 @@ MegaClient* client;
 
 bool debug;
 
-// send rate limiter
-static int putbps;
-
 // login e-mail address
 static string login;
 
@@ -354,7 +351,7 @@ void DemoApp::transfer_prepare(Transfer* t)
 
 static void syncstat(Sync* sync)
 {
-	cout << ", local data in this sync: " << sync->localbytes << " byte(s) in " << sync->localnodes[FILENODE] << " files and " << sync->localnodes[FOLDERNODE] << " folders" << endl;
+	cout << ", local data in this sync: " << sync->localbytes << " byte(s) in " << sync->localnodes[FILENODE] << " file(s) and " << sync->localnodes[FOLDERNODE] << " folder(s)" << endl;
 }
 
 void DemoApp::syncupdate_state(Sync*, syncstate newstate)
@@ -605,14 +602,6 @@ static void listtrees()
 	}
 }
 
-// returns the first matching child node by name (does not resolve ambiguities)
-static Node* childnodebyname(Node* p, const char* name)
-{
-	for (node_list::iterator it = p->children.begin(); it != p->children.end(); it++) if (!strcmp(name,(*it)->displayname())) return *it;
-
-	return NULL;
-}
-
 // returns node pointer determined by path relative to cwd
 // Path naming conventions:
 // path is relative to cwd
@@ -754,7 +743,7 @@ static Node* nodebypath(const char* ptr, string* user = NULL, string* namepart =
 				// locate child node (explicit ambiguity resolution: not implemented)
 				if (c[l].size())
 				{
-					nn = childnodebyname(n,c[l].c_str());
+					nn = client->childnodebyname(n,c[l].c_str());
 
 					if (!nn)
 					{
@@ -1031,6 +1020,7 @@ static byte pwkey[SymmCipher::KEYLENGTH];
 static byte pwkeybuf[SymmCipher::KEYLENGTH];
 static byte newpwkey[SymmCipher::KEYLENGTH];
 
+// readline callback - exit if EOF, add to history unless password
 static void store_line(char* l)
 {
 	if (!l)
@@ -1044,6 +1034,7 @@ static void store_line(char* l)
 	line = l;
 }
 
+// execute command
 static void process_line(char* l)
 {
 	switch (prompt)
@@ -1188,7 +1179,7 @@ static void process_line(char* l)
 				cout << "      rm path" << endl;
 				cout << "      mv srcpath dstpath" << endl;
 				cout << "      cp srcpath dstpath|dstemail:" << endl;
-				cout << "      sync localpath dstpath" << endl;
+				cout << "      sync [localpath dstpath|cancelslot]" << endl;
 				cout << "      import exportedfilelink#key" << endl;
 				cout << "      export path [del]" << endl;
 				cout << "      share [path [email [r|rw|full]]]" << endl;
@@ -1631,6 +1622,20 @@ static void process_line(char* l)
 							}
 							else cout << words[2] << ": Syncing requires full access to path." << endl;
 						}
+						else if (words.size() == 2)
+						{
+							int i = 0, cancel = atoi(words[1].c_str());
+							
+							for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
+							{
+								if (i++ == cancel)
+								{
+									delete *it;
+									cout << "Sync " << cancel << " deactivated and removed." << endl;
+									break;
+								}
+							}
+						}
 						else if (words.size() == 1)
 						{
 							if (client->syncs.size())
@@ -1645,12 +1650,12 @@ static void process_line(char* l)
 									nodepath((*it)->rooth,&remotepath);
 									client->fsaccess->local2path(&(*it)->rootpath,&localpath);
 
-									cout << "#" << i++ << ": " << localpath << " to " << remotepath << " - " << syncstatenames[(*it)->state] << endl;
+									cout << i++ << ": " << localpath << " to " << remotepath << " - " << syncstatenames[(*it)->state] << ", " << (*it)->localbytes << " byte(s) in " << (*it)->localnodes[FILENODE] << " file(s) and " << (*it)->localnodes[FOLDERNODE] << " folder(s)" << endl;
 								}
 							}
 							else cout << "No syncs active at this time." << endl;
 						}
-						else cout << "      sync localpath dstpath" << endl;
+						else cout << "      sync [localpath dstpath|cancelslot]" << endl;
 
 						return;
 					}
@@ -2017,13 +2022,13 @@ static void process_line(char* l)
 					{
 						if (words.size() > 1)
 						{
-							if (words[1] == "auto") putbps = -1;
-							else if (words[1] == "none") putbps = 0;
+							if (words[1] == "auto") client->putmbpscap = -1;
+							else if (words[1] == "none") client->putmbpscap = 0;
 							else
 							{
 								int t = atoi(words[1].c_str());
 
-								if (t > 0) putbps = t;
+								if (t > 0) client->putmbpscap = t;
 								else
 								{
 									cout << "      putbps [limit|auto|none]" << endl;
@@ -2034,9 +2039,9 @@ static void process_line(char* l)
 
 						cout << "Upload speed limit set to ";
 
-						if (putbps < 0) cout << "AUTO (approx. 90% of your available bandwidth)" << endl;
-						else if (!putbps) cout << "NONE" << endl;
-						else cout << putbps << " bytes/second" << endl;
+						if (client->putmbpscap < 0) cout << "AUTO (approx. 90% of your available bandwidth)" << endl;
+						else if (!client->putmbpscap) cout << "NONE" << endl;
+						else cout << client->putmbpscap << " bytes/second" << endl;
 
 						return;
 					}
@@ -2573,7 +2578,7 @@ void megacli()
 			rl_redisplay();
 		}
 
-		// user edits command, interrupted by engine events
+		// command editing loop - exits when a line is submitted or the engine requires the CPU
 		for (;;)
 		{
 			int w = client->wait();
@@ -2587,6 +2592,7 @@ void megacli()
 			if (w & Waiter::NEEDEXEC || line) break;
 		}
 
+		// save line
 		saved_point = rl_point;
 		saved_line = rl_copy_text(0,rl_end);
 
@@ -2597,6 +2603,7 @@ void megacli()
 
 		if (line)
 		{
+			// execute user command
 			process_line(line);
 			free(line);
 			line = NULL;
@@ -2612,8 +2619,7 @@ int main()
 	// instantiate app components: the callback processor (DemoApp),
 	// the HTTP I/O engine (WinHttpIO) and the MegaClient itself
 	client = new MegaClient(new DemoApp,new WAIT_CLASS,new HTTPIO_CLASS,new FSACCESS_CLASS,new DBACCESS_CLASS,"SDKSAMPLE");
-
 	console = new CONSOLE_CLASS;
+
 	megacli();
-	delete console;
 }
