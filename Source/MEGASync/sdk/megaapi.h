@@ -62,6 +62,76 @@ public:
     MegaDbAccess(string *basePath = NULL) : SqliteDbAccess(basePath){}
 };
 
+struct MegaFile : public File
+{
+    // app-internal sequence number for queue management
+    int seqno;
+    static int nextseqno;
+
+    bool failed(error e)
+    {
+        return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 10;
+    }
+
+    MegaFile()
+    {
+        seqno = ++nextseqno;
+    }
+};
+
+struct MegaFileGet : public MegaFile
+{
+    void completed(Transfer*, LocalNode*)
+    {
+        delete this;
+    }
+
+    MegaFileGet(MegaClient *client, Node* n)
+    {
+        h = n->nodehandle;
+        *(FileFingerprint*)this = *n;
+        name = n->displayname();
+        localfilename = name;
+        client->fsaccess->name2local(&localfilename);
+    }
+
+    ~MegaFileGet() {}
+};
+
+struct MegaFilePut : public MegaFile
+{
+    void completed(Transfer* t, LocalNode*)
+    {
+        File::completed(t,NULL);
+        delete this;
+    }
+
+    MegaFilePut(MegaClient *client, string* clocalfilename, handle ch, const char* ctargetuser)
+    {
+        // this assumes that the local OS uses an ASCII path separator, which should be true for most
+        string separator = client->fsaccess->localseparator;
+
+        // full local path
+        localfilename = *clocalfilename;
+
+        // target parent node
+        h = ch;
+
+        // target user
+        targetuser = ctargetuser;
+
+        // erase path component
+        name = *clocalfilename;
+        client->fsaccess->local2name(&name);
+        client->fsaccess->local2name(&separator);
+
+        name.erase(0,name.find_last_of(*separator.c_str())+1);
+    }
+
+    ~MegaFilePut() {}
+};
+
+
 //Wrapping for arrays, to ease the use of SWIG
 template <class T>
 class ArrayWrapper
@@ -142,7 +212,7 @@ class MegaRequest
 	public:
 		enum {TYPE_LOGIN, TYPE_MKDIR, TYPE_MOVE, TYPE_COPY, TYPE_RENAME, TYPE_REMOVE, TYPE_SHARE, 
 		    TYPE_FOLDER_ACCESS, TYPE_IMPORT_LINK, TYPE_IMPORT_NODE, TYPE_EXPORT, TYPE_FETCH_NODES, TYPE_ACCOUNT_DETAILS, TYPE_CHANGE_PW, TYPE_UPLOAD, TYPE_LOGOUT, TYPE_FAST_LOGIN, TYPE_GET_PUBLIC_NODE, TYPE_GET_ATTR_FILE,
-		    TYPE_SET_ATTR_FILE, TYPE_RETRY_PENDING_CONNECTIONS, TYPE_ADD_CONTACT, TYPE_CREATE_ACCOUNT, TYPE_FAST_CREATE_ACCOUNT, TYPE_CONFIRM_ACCOUNT, TYPE_FAST_CONFIRM_ACCOUNT, TYPE_QUERY_SIGNUP_LINK};
+            TYPE_SET_ATTR_FILE, TYPE_RETRY_PENDING_CONNECTIONS, TYPE_ADD_CONTACT, TYPE_CREATE_ACCOUNT, TYPE_FAST_CREATE_ACCOUNT, TYPE_CONFIRM_ACCOUNT, TYPE_FAST_CONFIRM_ACCOUNT, TYPE_QUERY_SIGNUP_LINK, TYPE_SYNC};
 
 		MegaRequest(int type, MegaRequestListener *listener = NULL);
 		MegaRequest(MegaTransfer *transfer);
@@ -331,7 +401,7 @@ class MegaError
 	
 		MegaError(int errorCode);
 		MegaError(const MegaError &megaError);
-		virtual ~MegaError(){};
+        virtual ~MegaError(){}
 		MegaError* copy();
 		int getErrorCode() const;
 		const char* getErrorString() const;
@@ -389,6 +459,7 @@ class MegaTransferListener
 {
 	public:
 	//Transfer callbacks
+    virtual void onTransferStart(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);
 	virtual void onTransferUpdate(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e);
@@ -597,6 +668,8 @@ public:
 
 	void cancelTransfer(MegaTransfer *transfer);
 	
+    void syncFolder(const char *localFolder, Node *megaFolder);
+
 	//Filesystem
 	NodeList* getChildren(Node* parent, int order=1);
 	Node* getChildNode(Node *parent, const char* name);
@@ -681,53 +754,111 @@ protected:
 	
 	int maxRetries;
 
-	//MegaApp functions
-	virtual void request_error(error);
+    // a request-level error occurred
+    virtual void request_error(error);
+
+    // login result
 	virtual void login_result(error);
-	virtual void account_details(AccountDetails*, int, int, int, int, int, int);
+
+    // ephemeral session creation/resumption result
+    virtual void ephemeral_result(error);
+    virtual void ephemeral_result(handle, const byte*);
+
+    // account creation
+    virtual void sendsignuplink_result(error);
+    virtual void querysignuplink_result(error);
+    virtual void querysignuplink_result(handle, const char*, const char*, const byte*, const byte*, const byte*, size_t);
+    virtual void confirmsignuplink_result(error);
+    virtual void setkeypair_result(error);
+
+    // account credentials, properties and history
+    virtual void account_details(AccountDetails*,  bool, bool, bool, bool, bool, bool);
 	virtual void account_details(AccountDetails*, error);
-	virtual void setattr_result(handle, error);
+
+	virtual void setattr_result(handle, error);    
 	virtual void rename_result(handle, error);
 	virtual void unlink_result(handle, error);
 	virtual void nodes_updated(Node**, int);
 	virtual void users_updated(User**, int);
+
+    // password change result
+    virtual void changepw_result(error);
+
+    // user attribute update notification
+    virtual void userattr_update(User*, int, const char*);
+
+
 	virtual void fetchnodes_result(error);
 	virtual void putnodes_result(error, targettype, NewNode*);
+
+    // share update result
 	virtual void share_result(error);
 	virtual void share_result(int, error);
+
+    // file attribute fetch result
 	virtual void fa_complete(Node*, fatype, const char*, uint32_t);
 	virtual int fa_failed(handle, fatype, int);
+
+    // file attribute modification result
 	virtual void putfa_result(handle, fatype, error);
+
+    // purchase transactions
+    virtual void enumeratequotaitems_result(handle, unsigned, unsigned, unsigned, unsigned, unsigned, const char*) { }
+    virtual void enumeratequotaitems_result(error) { }
+    virtual void additem_result(error) { }
+    virtual void checkout_result(error) { }
+    virtual void checkout_result(const char*) { }
+
+    // user invites/attributes
+    virtual void invite_result(error);
+    virtual void putua_result(error);
+    virtual void getua_result(error);
+    virtual void getua_result(byte*, unsigned);
+
+    // file node export result
 	virtual void exportnode_result(error);
 	virtual void exportnode_result(handle, handle);
+
+    // exported link access result
 	virtual void openfilelink_result(error);
 	virtual void openfilelink_result(Node*);
-	virtual void topen_result(int, error);
-	virtual void topen_result(int, string*, const char*, int);
-	virtual void transfer_update(int, m_off_t, m_off_t, dstime);
-	virtual int transfer_error(int, int, int);
-	virtual void transfer_failed(int, error);
-	virtual void transfer_failed(int, string&, error);
-	virtual void transfer_limit(int);
-	virtual void transfer_complete(int, chunkmac_map*, const char*);
-	virtual void transfer_complete(int, handle, const byte*, const byte*, SymmCipher*);
-	virtual void changepw_result(error);
+
+    // global transfer queue updates (separate signaling towards the queued objects)
+    virtual void transfer_added(Transfer*);
+    virtual void transfer_removed(Transfer*);
+    virtual void transfer_prepare(Transfer*);
+    virtual void transfer_failed(Transfer*, error);
+    virtual void transfer_update(Transfer*);
+    virtual void transfer_limit(Transfer*);
+    virtual void transfer_complete(Transfer*);
+
+    // sync updates
+    virtual void syncupdate_state(Sync*, syncstate);
+    virtual void syncupdate_local_folder_addition(Sync*, const char*);
+    virtual void syncupdate_local_folder_deletion(Sync*, const char*);
+    virtual void syncupdate_local_file_addition(Sync*, const char*);
+    virtual void syncupdate_local_file_deletion(Sync*, const char*);
+    virtual void syncupdate_get(Sync*, const char*);
+    virtual void syncupdate_put(Sync*, const char*);
+    virtual void syncupdate_local_mkdir(Sync*, const char*);
+    virtual void syncupdate_local_unlink(Node*);
+    virtual void syncupdate_local_rmdir(Node*);
+    virtual void syncupdate_remote_unlink(Node*);
+    virtual void syncupdate_remote_rmdir(Node*);
+    virtual void syncupdate_remote_mkdir(Sync*, const char*);
+    virtual void syncupdate_remote_copy(Sync*, const char*);
+
+    // suggest reload due to possible race condition with other clients
 	virtual void reload(const char*);
+
+    // wipe all users, nodes and shares
 	virtual void clearing();
+
+    // failed request retry notification
 	virtual void notify_retry(dstime);
+
+    // generic debug logging
 	virtual void debug_log(const char*);
-	virtual void invite_result(error);
-	virtual void putua_result(error);
-	virtual void getua_result(error);
-	virtual void getua_result(byte*, unsigned);
-	virtual void userattr_update(User*, int, const char*);
-	virtual void ephemeral_result(error);
-	virtual void ephemeral_result(handle, const byte*);
-	virtual void sendsignuplink_result(error);
-	virtual void querysignuplink_result(error);
-	virtual void querysignuplink_result(handle, const char*, const char*, const byte*, const byte*, const byte*, size_t);
-	virtual void confirmsignuplink_result(error);
-	virtual void setkeypair_result(error);
 	//////////
 	
 	void sendPendingRequests();

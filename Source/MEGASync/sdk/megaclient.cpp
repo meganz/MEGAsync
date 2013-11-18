@@ -7596,12 +7596,14 @@ bool MegaClient::addsync(string* localpath, Node* n)
 {
 	Sync* sync = new Sync(this,localpath,n);
 
-	sync->addscan(NULL,localpath,NULL,true);
+    sync->addscan(NULL, localpath ,NULL,true);
 	sync->rootlocal = sync->procscanstack();
 
 	// local path not present - fail
 	if (!sync->rootlocal)
 	{
+        cout << "No rootlocal" << endl;
+
 		delete sync;
 		return false;
 	}
@@ -7760,6 +7762,7 @@ LocalNode* Sync::procscanstack()
 	// if localpath was not specified, construct based on parents & base sync path
 	if (!localpath->size())
 	{
+        cout << "localpath not specified" << endl;
 		LocalNode* p = parent;
 
 		while (p)
@@ -7768,6 +7771,8 @@ LocalNode* Sync::procscanstack()
 			if ((p = p->parent)) localpath->insert(0,client->fsaccess->localseparator);
 		}
 	}
+
+    if(localpath->size()) wprintf(L"WWWWWW: %s\n", localpath->data());
 
 	LocalNode* l;
 
@@ -7782,9 +7787,17 @@ LocalNode* Sync::procscanstack()
 		localnode_map::iterator it = parent->children.find(localname);
 
 		if (it != parent->children.end()) l = it->second;
-		else l = NULL;
+        else
+        {
+            cout << "error 1" << endl;
+            l = NULL;
+        }
 	}
-	else l = NULL;
+    else
+    {
+        cout << "error 2" << endl;
+        l = NULL;
+    }
 
 	if (l)
 	{
@@ -7797,11 +7810,13 @@ LocalNode* Sync::procscanstack()
 
 	if (fa->fopen(localpath,1,0))
 	{
+        cout << "ABIERTO!" << endl;
 		if (l && l->type != fa->type)
 		{
 			cout << "Type change for " << *localpath << endl;
 
 			delete l;
+            cout << "error 3" << endl;
 			l = NULL;
 
 			client->fsaccess->local2path(localpath,&tmpname);
@@ -7847,9 +7862,14 @@ LocalNode* Sync::procscanstack()
 		client->fsaccess->local2path(localpath,&tmpname);
 		client->app->syncupdate_local_folder_deletion(this,tmpname.c_str());
 
+        cout << "error 4" << endl;
 		delete l;
 		l = NULL;
 	}
+    else
+    {
+        cout << "no se pudo abrir" << endl;
+    }
 
 	if (l)
 	{
