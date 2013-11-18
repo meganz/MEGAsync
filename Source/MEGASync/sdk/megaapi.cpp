@@ -28,6 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define USE_VARARGS
 #define PREFER_STDARG
 #include "megaapi.h"
+#include <QString>
 
 #ifdef _WIN32
 #define snprintf _snprintf
@@ -37,6 +38,7 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 bool debug = false;
+int MegaFile::nextseqno = 0;
 
 MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 { 
@@ -255,6 +257,7 @@ const char *MegaRequest::getRequestString() const
 		case TYPE_GET_ATTR_FILE: return "getattrfile";
         case TYPE_SET_ATTR_FILE: return "setattrfile";
         case TYPE_CREATE_ACCOUNT: return "createaccount";
+        case TYPE_SYNC: return "sync";
 	}
 	return "unknown";
 }
@@ -482,6 +485,8 @@ void MegaRequestListener::onRequestTemporaryError(MegaApi *api, MegaRequest *req
 MegaRequestListener::~MegaRequestListener() {}
 
 //Transfer callbacks
+void MegaTransferListener::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+{ cout << "onTransferStart.   Node:  " << transfer->getFileName() << endl; }
 void MegaTransferListener::onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e)
 { cout << "onTransferFinish.   Node:  " << transfer->getFileName() << "    Error: " << e->getErrorString() << endl; }
 void MegaTransferListener::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
@@ -1009,6 +1014,15 @@ void MegaApi::cancelTransfer(MegaTransfer *transfer)
     delete transfer;*/
 }
 
+void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
+{
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_SYNC);
+    if(megaFolder) request->setNodeHandle(megaFolder->nodehandle);
+    request->setFile(localFolder);
+    requestQueue.push(request);
+    waiter->notify();
+}
+
 Node *MegaApi::getRootNode()
 {
 	pthread_mutex_lock(&fileSystemMutex);
@@ -1237,22 +1251,9 @@ vector<Node *> &SearchTreeProcessor::getResults()
 	return results;
 }
 
-// topen() failed
-void MegaApi::topen_result(int td, error e)
-{
-    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
-	if(!transfer) return;
-
-	transfer->setTime(client->httpio->ds);
-	MegaError megaError(e);
-	if (e) cout << "TD " << td << ": Failed to open file (" << megaError.getErrorString() << ")" << endl;
-	client->tclose(td);
-    fireOnTransferFinish(this, transfer, megaError);*/
-}
-
 // topen() succeeded (download only)
-void MegaApi::topen_result(int td, string* filename, const char* fa, int pfa)
-{
+//void MegaApi::topen_result(int td, string* filename, const char* fa, int pfa)
+//{
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
@@ -1275,10 +1276,14 @@ void MegaApi::topen_result(int td, string* filename, const char* fa, int pfa)
 
 	client->dlopen(td,tmpfilename.c_str());
     fireOnTransferUpdate(this, transfer);*/
-}
+//}
 
-void MegaApi::transfer_update(int td, m_off_t bytes, m_off_t size, dstime starttime)
+
+
+void MegaApi::transfer_update(Transfer *tr)
 {
+    cout << "transfer_update" << endl;
+
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
@@ -1296,8 +1301,8 @@ void MegaApi::transfer_update(int td, m_off_t bytes, m_off_t size, dstime startt
     }*/
 }
 
-int MegaApi::transfer_error(int td, int httpcode, int count)
-{
+//int MegaApi::transfer_error(int td, int httpcode, int count)
+//{
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return 1;
 
@@ -1316,11 +1321,14 @@ int MegaApi::transfer_error(int td, int httpcode, int count)
 		fireOnTransferFinish(this, transfer, MegaError(httpcode));
 		return 1; //Abort
     }*/
-    return 1;
-}
+//    return 1;
 
-void MegaApi::transfer_failed(int td, string& filename, error e)
+//}
+
+void MegaApi::transfer_failed(Transfer*, error)
 {
+    cout << "transfer_failed" << endl;
+
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
@@ -1333,8 +1341,8 @@ void MegaApi::transfer_failed(int td, string& filename, error e)
     fireOnTransferFinish(this, transfer, megaError);*/
 }
 
-void MegaApi::transfer_failed(int td, error e)
-{
+//void MegaApi::transfer_failed(int td, error e)
+//{
     /*MegaError megaError(e);
 	MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
@@ -1343,10 +1351,12 @@ void MegaApi::transfer_failed(int td, error e)
 
 	cout << "TD " << td << ": Upload failed (" << megaError.getErrorString() << ")" << endl;
     fireOnTransferFinish(this, transfer, megaError);*/
-}
+//}
 
-void MegaApi::transfer_limit(int td)
+void MegaApi::transfer_limit(Transfer* tr)
 {
+    cout << "transfer_limit" << endl;
+
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
@@ -1356,8 +1366,8 @@ void MegaApi::transfer_limit(int td)
     fireOnTransferFinish(this, transfer, MegaError(API_EOVERQUOTA));*/
 }
 
-void MegaApi::transfer_complete(int td, chunkmac_map* macs, const char* fn)
-{
+//void MegaApi::transfer_complete(int td, chunkmac_map* macs, const char* fn)
+//{
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
@@ -1371,10 +1381,12 @@ void MegaApi::transfer_complete(int td, chunkmac_map* macs, const char* fn)
 
 	if (!::rename(tmpfilename.c_str(),filename.c_str())) fireOnTransferFinish(this, transfer, MegaError(API_OK));
     else fireOnTransferFinish(this, transfer, MegaError(API_EACCESS));*/
-}
+//}
 
-void MegaApi::transfer_complete(int td, handle ulhandle, const byte* ultoken, const byte* filekey, SymmCipher* key)
+void MegaApi::transfer_complete(Transfer* tr)
 {
+    cout << "transfer_complete" << endl;
+
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
 
@@ -1429,6 +1441,76 @@ void MegaApi::transfer_complete(int td, handle ulhandle, const byte* ultoken, co
 
 	//TODO: Send files to users
     client->putnodes(uploadtarget,newnode,1);*/
+}
+
+void MegaApi::syncupdate_state(Sync *, syncstate)
+{
+    cout << "syncupdate_state" << endl;
+}
+
+void MegaApi::syncupdate_local_folder_addition(Sync *, const char *)
+{
+    cout << "syncupdate_local_folder_addition" << endl;
+}
+
+void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *)
+{
+    cout << "syncupdate_local_folder_deletion" << endl;
+}
+
+void MegaApi::syncupdate_local_file_addition(Sync *, const char *)
+{
+    cout << "syncupdate_local_file_addition" << endl;
+}
+
+void MegaApi::syncupdate_local_file_deletion(Sync *, const char *)
+{
+    cout << "syncupdate_local_file_deletion" << endl;
+}
+
+void MegaApi::syncupdate_get(Sync *, const char *)
+{
+    cout << "syncupdate_get" << endl;
+}
+
+void MegaApi::syncupdate_put(Sync *, const char *)
+{
+    cout << "syncupdate_put" << endl;
+}
+
+void MegaApi::syncupdate_local_mkdir(Sync *, const char *)
+{
+    cout << "syncupdate_local_mkdir" << endl;
+}
+
+void MegaApi::syncupdate_local_unlink(Node *)
+{
+    cout << "syncupdate_local_unlink" << endl;
+}
+
+void MegaApi::syncupdate_local_rmdir(Node *)
+{
+    cout << "syncupdate_local_rmdir" << endl;
+}
+
+void MegaApi::syncupdate_remote_unlink(Node *)
+{
+    cout << "syncupdate_remote_unlink" << endl;
+}
+
+void MegaApi::syncupdate_remote_rmdir(Node *)
+{
+    cout << "syncupdate_remote_rmdir" << endl;
+}
+
+void MegaApi::syncupdate_remote_mkdir(Sync *, const char *)
+{
+    cout << "syncupdate_remote_mkdir" << endl;
+}
+
+void MegaApi::syncupdate_remote_copy(Sync *, const char *)
+{
+    cout << "syncupdate_remote_copy" << endl;
 }
 
 // user addition/update (users never get deleted)
@@ -1815,7 +1897,23 @@ void MegaApi::openfilelink_result(Node* n)
 			request->setPublicNode(n);
 			fireOnRequestFinish(this, request, MegaError(MegaError::API_OK));
 		}
-	}
+    }
+}
+
+void MegaApi::transfer_added(Transfer *)
+{
+    cout << "transfer_added" << endl;
+}
+
+void MegaApi::transfer_removed(Transfer *)
+{
+    cout << "transfer_added" << endl;
+}
+
+void MegaApi::transfer_prepare(Transfer *)
+{
+    cout << "transfer_added" << endl;
+
 }
 
 // reload needed
@@ -1866,7 +1964,7 @@ void MegaApi::nodes_updated(Node** n, int count)
 }
 
 // display account details/history
-void MegaApi::account_details(AccountDetails* ad, int storage, int transfer, int pro, int purchases, int transactions, int sessions)
+void MegaApi::account_details(AccountDetails* ad, bool storage, bool transfer, bool pro, bool purchases, bool transactions, bool sessions)
 {
 	MegaRequest *request = requestMap[client->restag];
 	if(!request) return;
@@ -2771,7 +2869,7 @@ void MegaApi::sendPendingTransfers()
 	int nextTag;
 	while((transfer = transferQueue.pop()))
 	{
-		nextTag = client->nextreqtag();
+        nextTag = MegaFile::nextseqno;
 		transferMap[nextTag]=transfer;
 		transfer->setTag(nextTag);
 		e = API_OK;
@@ -2780,34 +2878,21 @@ void MegaApi::sendPendingTransfers()
 		{
 			case MegaTransfer::TYPE_UPLOAD:
 			{
-                /*const char* localPath = transfer->getPath();
+                const char* localPath = transfer->getPath();
 				if(!localPath) { e = API_EARGS; break; }
 
-				int td = client->topen(localPath);
-				if(td < 0) { e = (error)td; break; }
-                transfer->setSlot(td);*/
+                MegaFilePut *f = new MegaFilePut(client, &string(localPath), transfer->getParentHandle(), "");
+                client->startxfer(PUT,f);
 				break;
 			}
 			case MegaTransfer::TYPE_DOWNLOAD:
 			{
-                /*handle nodehandle = transfer->getNodeHandle();
-				const char* base64key = transfer->getBase64Key();
+                handle nodehandle = transfer->getNodeHandle();
+                Node *node = client->nodebyhandle(nodehandle);
+                if(!node) { e = API_EARGS; break; }
 
-				if(!transfer->getPath() && !transfer->getParentPath()) { e = API_EARGS; break; }
-
-				int td;
-				if(base64key)
-				{
-					byte key[Node::FILENODEKEYLENGTH];
-					Base64::atob(base64key,key,sizeof key);
-					td = client->topen(nodehandle, (const byte*)key);
-				}
-				else
-				{
-					td = client->topen(nodehandle, NULL);
-				}
-				if(td < 0) { e = (error)td; break; }
-                transfer->setSlot(td);*/
+                MegaFileGet *f = new MegaFileGet(client, node);
+                client->startxfer(GET,f);
 				break;
 			}
 		}
@@ -3155,6 +3240,28 @@ void MegaApi::sendPendingRequests()
 			delete[] c;
 			break;
 		}
+        case MegaRequest::TYPE_SYNC:
+        {
+            const char *localPath = request->getFile();
+            Node *node = client->nodebyhandle(request->getNodeHandle());
+            if(!node || (node->type==FILENODE) || !localPath)
+            {
+                cout << "Invalid arguments starting sync" << endl;
+                e = API_EARGS;
+                break;
+            }
+
+            string utf8name(localPath);
+            string localname;
+            client->fsaccess->path2local(&utf8name, &localname);
+            cout << "Go to addSync" << endl;
+            if (!client->addsync(&localname, node))
+            {
+                cout << "Local path not found: " << localPath << endl;
+                e = API_EARGS;
+            }
+            break;
+        }
 		}
 
 		if(e)
