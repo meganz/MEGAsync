@@ -290,11 +290,14 @@ class MegaRequest
 class MegaTransfer
 {
 	public:
-		enum {TYPE_UPLOAD, TYPE_DOWNLOAD};
+        enum {TYPE_DOWNLOAD, TYPE_UPLOAD};
 		
 		MegaTransfer(int type, MegaTransferListener *listener = NULL);
+        MegaTransfer(const MegaTransfer &transfer);
 		~MegaTransfer();
 		
+        MegaTransfer *copy();
+
 		int getSlot() const;
 		int getType() const;
 		const char * getTransferString() const;
@@ -319,6 +322,7 @@ class MegaTransfer
 		long long getTime() const;
 		const char* getBase64Key() const;
 		int getTag() const;
+        Transfer *getTransfer() const;
 		
 		void setStartTime(long long startTime);
 		void setTransferredBytes(long long transferredBytes);
@@ -338,6 +342,7 @@ class MegaTransfer
 		void setSlot(int id);
 		void setBase64Key(const char* base64Key);
 		void setTag(int tag);
+        void setTransfer(Transfer *transfer);
 		
 	protected:
 		int slot;
@@ -361,6 +366,8 @@ class MegaTransfer
 		int retry;
 		int maxRetries;
 		
+        Transfer *transfer;
+
 		MegaTransferListener *listener;
 		
 		//Might be useful for streaming
@@ -432,7 +439,7 @@ class SearchTreeProcessor : public TreeProcessor
     public:
 	SearchTreeProcessor(const char *search);
 	virtual int processNode(Node* node);
-	virtual ~SearchTreeProcessor() {};
+    virtual ~SearchTreeProcessor() {}
 	vector<Node *> &getResults();
     
     protected:
@@ -490,6 +497,13 @@ class MegaListener
 	virtual void onUsersUpdate(MegaApi* api, UserList *users);
 	virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
 	virtual void onReloadNeeded(MegaApi* api);
+
+    virtual void onSyncStateChanged(Sync*, syncstate) {}
+    //virtual void syncupdate_local_file_addition(Sync*, const char*);
+    virtual void onSyncGet(Sync*, const char*) {}
+    virtual void onSyncPut(Sync*, const char*) {}
+    virtual void onSyncRemoteCopy(Sync*, const char*) {}
+
 	virtual ~MegaListener();
 };
 
@@ -731,7 +745,7 @@ protected:
 	RequestQueue requestQueue;
 	TransferQueue transferQueue;
 	map<int, MegaRequest *> requestMap;
-	map<int, MegaTransfer *> transferMap;
+    map<Transfer*, MegaTransfer *> transferMap;
 
 	set<MegaRequestListener *> requestListeners;
 	set<MegaTransferListener *> transferListeners;
@@ -827,7 +841,7 @@ protected:
     virtual void transfer_added(Transfer*);
     virtual void transfer_removed(Transfer*);
     virtual void transfer_prepare(Transfer*);
-    virtual void transfer_failed(Transfer*, error);
+    virtual void transfer_failed(Transfer*, error error);
     virtual void transfer_update(Transfer*);
     virtual void transfer_limit(Transfer*);
     virtual void transfer_complete(Transfer*);

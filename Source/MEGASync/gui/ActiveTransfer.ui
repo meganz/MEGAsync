@@ -65,13 +65,13 @@ padding-left: 1px;
        <widget class="QLabel" name="lFileName">
         <property name="minimumSize">
          <size>
-          <width>250</width>
+          <width>295</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>250</width>
+          <width>295</width>
           <height>16777215</height>
          </size>
         </property>
@@ -125,13 +125,13 @@ padding-left: 1px;
        <widget class="QLabel" name="lPercentage">
         <property name="minimumSize">
          <size>
-          <width>32</width>
+          <width>48</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>32</width>
+          <width>48</width>
           <height>16777215</height>
          </size>
         </property>

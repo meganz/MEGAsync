@@ -25,6 +25,7 @@ class MegaApplication : public QApplication, public MegaListener
 
 public:
     explicit MegaApplication(int &argc, char **argv);
+    virtual bool event(QEvent *event);
 
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
@@ -35,6 +36,11 @@ public:
     virtual void onUsersUpdate(MegaApi* api, UserList *users);
     virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
     virtual void onReloadNeeded(MegaApi* api);
+
+    virtual void onSyncStateChanged(Sync*, syncstate);
+    virtual void onSyncRemoteCopy(Sync*, const char*);
+    virtual void onSyncGet(Sync*, const char*);
+    virtual void onSyncPut(Sync*, const char*);
 
     MegaApi *getMegaApi() { return megaApi; }
     Preferences *getPreferences() { return preferences; }
@@ -74,6 +80,12 @@ protected:
     QLocalServer *localServer;
     HTTPServer *httpServer;
     FileDownloader *downloader;
+
+    MegaTransfer *transfer;
+    m_off_t storageMax, storageUsed;
+    int queuedUploads, queuedDownloads;
+    MegaError *error;
+    syncstate syncState;
 
 private slots:
 };

@@ -263,7 +263,7 @@ color: rgb(102, 102, 102);
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="pUpdating">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
@@ -452,7 +452,7 @@ color: rgb(102, 102, 102);
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_4">
+    <layout class="QVBoxLayout" name="recentLayout">
      <property name="leftMargin">
       <number>0</number>
      </property>

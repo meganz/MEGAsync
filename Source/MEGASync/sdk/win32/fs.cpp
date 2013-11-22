@@ -20,7 +20,7 @@ DEALINGS IN THE SOFTWARE.
 #include <shellapi.h>
 
 #include "megaclient.h"
-#include "wait.h"
+#include "megaapiwait.h"
 #include "fs.h"
 
 WinFileAccess::WinFileAccess()
@@ -113,6 +113,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
+        wprintf(L"fopen failed. File: %s\n", (LPCWSTR)name->data());
 		return 0;
 	}
 
@@ -148,7 +149,8 @@ WinFileSystemAccess::~WinFileSystemAccess()
 void WinFileSystemAccess::addevents(Waiter* w)
 {
 	// overlapped completion wakes up WaitForMultipleObjectsEx()
-	((WinWaiter*)w)->pendingfsevents = pendingevents;
+    ((MegaApiWinWaiter*)w)->pendingfsevents = pendingevents;
+    if(pendingevents) ((MegaApiWinWaiter*)w)->notify();
 }
 
 // generate unique local filename in the same fs as relatedpath
@@ -164,6 +166,7 @@ void WinFileSystemAccess::tmpnamelocal(string* filename, string* relatedpath)
 
 void WinFileSystemAccess::path2local(string* path, string* local)
 {
+    cout << "Path: " << path << endl;
 	local->resize((path->size()+1)*sizeof(wchar_t));
 
 	local->resize(sizeof(wchar_t)*(MultiByteToWideChar(CP_UTF8,0,path->c_str(),-1,(wchar_t*)local->data(),local->size()/sizeof(wchar_t)+1)-1));
@@ -174,11 +177,15 @@ void WinFileSystemAccess::local2path(string* local, string* path)
 	path->resize((local->size()+1)*4/sizeof(wchar_t));
 
 	path->resize(WideCharToMultiByte(CP_UTF8,0,(wchar_t*)local->data(),local->size()/sizeof(wchar_t),(char*)path->data(),path->size()+1,NULL,NULL));
+
+    cout << "Path: " << path->c_str() << endl;
 }
 
 // use UTF-8 filenames directly, but escape forbidden characters
 void WinFileSystemAccess::name2local(string* filename, const char* badchars)
 {
+    cout << "filename: " << filename->c_str() << endl;
+
 	char buf[4];
 
 	if (!badchars) badchars = "\\/:?\"<>|*\1\2\3\4\5\6\7\10\11\12\13\14\15\16\17\20\21\22\23\24\25\26\27\30\31\32\33\34\35\36\37";
@@ -342,6 +349,7 @@ bool WinFileSystemAccess::chdirlocal(string* name)
 
 VOID CALLBACK WinDirNotify::completion(DWORD dwErrorCode, DWORD dwBytes, LPOVERLAPPED lpOverlapped)
 {
+    cout << "CALLBACK" << endl;
 	if (dwErrorCode != ERROR_OPERATION_ABORTED && dwBytes) ((WinDirNotify*)lpOverlapped->hEvent)->process(dwBytes);
 }
 
@@ -394,7 +402,8 @@ cout << "Notify completion routine with " << dwBytes << endl;
 // request change notifications on the subtree under hDirectory
 void WinDirNotify::readchanges()
 {
-	if (!ReadDirectoryChangesW(hDirectory,(LPVOID)notifybuf[active].data(),notifybuf[active].size(),TRUE,FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_CREATION,&dwBytes,&overlapped,completion))
+    cout << "READCHANGES" << endl;
+    if (!ReadDirectoryChangesW(hDirectory,(LPVOID)notifybuf[active].data(),notifybuf[active].size(),TRUE,FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_CREATION,&dwBytes,&overlapped,completion))
 	{
 		if (GetLastError() == ERROR_NOTIFY_ENUM_DIR) fsaccess->notifyerr = true;
 		cout << "ReadDirectoryChangesW() failed: " << GetLastError() << endl;
@@ -416,6 +425,8 @@ WinDirNotify::WinDirNotify(WinFileSystemAccess* cfsaccess, LocalNode* clocalnode
 	notifybuf[0].resize(65536);
 	notifybuf[1].resize(65536);
 
+    basepath.append("",1);
+    wprintf(L"WINDIRNOTIFY: %s\n", basepath.data());
 	if ((hDirectory = CreateFileW((LPCWSTR)basepath.data(),FILE_LIST_DIRECTORY,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL)) != INVALID_HANDLE_VALUE) readchanges();
 }
 
