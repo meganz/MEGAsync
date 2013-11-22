@@ -25,8 +25,7 @@ HEADERS  += sdk/megaapi.h \
     sdk/megaclient.h \
     sdk/win32/fs.h \
     sdk/win32/net.h \
-    sdk/win32/megaapiwait.h \
-    sdk/db/sqlite.h
+    sdk/win32/megaapiwait.h
 
 LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 

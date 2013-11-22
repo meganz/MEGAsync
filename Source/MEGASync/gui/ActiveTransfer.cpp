@@ -7,7 +7,11 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
 {
     ui->setupUi(this);
     fileName = "";
-    percentage = 0;
+    percentage = 100;
+    ui->lType->setPixmap(QPixmap());
+    ui->lPercentage->setText(QString());
+    ui->pProgress->hide();
+    ui->lType->hide();
 }
 
 ActiveTransfer::~ActiveTransfer()
@@ -26,7 +30,9 @@ void ActiveTransfer::setPercentage(int percentage)
     if(percentage > 100) percentage = 100;
     this->percentage = percentage;
     ui->pProgress->setProgress(percentage);
-    ui->lPercentage->setText(QString::number(percentage));
+    ui->lPercentage->setText(QString::number(percentage) + "%");
+    ui->pProgress->show();
+    ui->lType->show();
 }
 
 int ActiveTransfer::getPercentage()

@@ -5,6 +5,8 @@
 #include <QTimer>
 
 #include "InfoDialog.h"
+#include "ActiveTransfer.h"
+#include "RecentFile.h"
 #include "ui_InfoDialog.h"
 
 #include "MegaApplication.h"
@@ -21,7 +23,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     QRect screenGeometry = QApplication::desktop()->availableGeometry();
     this->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
 
-    ui->wRecent1->setFileName("filename_compressed.zip");
+    /*ui->wRecent1->setFileName("filename_compressed.zip");
     ui->wRecent2->setFileName("filename_document.pdf");
     ui->wRecent3->setFileName("filename_image.png");
 
@@ -31,9 +33,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setFileName("Illustrator_file.ai");
     ui->wTransfer2->setPercentage(50);
     ui->wTransfer2->setType(1);
-
+*/
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+
+    ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+    ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
+    ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
 }
 
 InfoDialog::~InfoDialog()
@@ -43,12 +49,12 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::startAnimation()
 {
-    ui->sActiveTransfers->setCurrentIndex(1);
-    ui->wTransfer1->setPercentage(5);
-    ui->wTransfer2->setPercentage(23);
-    ui->pUsage->setProgress(20);
-    timer->start(100);
-    app->showSyncingIcon();
+    //ui->sActiveTransfers->setCurrentIndex(1);
+    //ui->wTransfer1->setPercentage(5);
+    //ui->wTransfer2->setPercentage(23);
+    //ui->pUsage->setProgress(20);
+    timer->start(3000);
+    //app->showSyncingIcon();
 }
 
 void InfoDialog::setUsage(int totalGB, int percentage)
@@ -64,9 +70,55 @@ void InfoDialog::setUsage(int totalGB, int percentage)
     ui->lTotalUsed->setText(usage);
 }
 
+void InfoDialog::setTransfer(int type, QString &fileName, long long completedSize, long long totalSize)
+{
+    ActiveTransfer *transfer;
+    if(type == MegaTransfer::TYPE_DOWNLOAD)
+       transfer = ui->wTransfer1;
+    else
+       transfer = ui->wTransfer2;
+
+    transfer->setFileName(fileName);
+    int percentage = 100*(double)completedSize/totalSize;
+    transfer->setPercentage(percentage);
+
+    if(totalSize == completedSize)
+        addRecentFile(fileName);
+
+    ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
+}
+
+void InfoDialog::addRecentFile(QString &fileName)
+{
+    QLayoutItem *item = ui->recentLayout->itemAt(2);
+    RecentFile * recentFile = ((RecentFile *)item->widget());
+    ui->recentLayout->insertWidget(0, recentFile);
+    recentFile->setFileName(fileName);
+    updateRecentFiles();
+}
+
+void InfoDialog::setQueuedTransfers(int queuedDownloads, int queuedUploads)
+{
+    ui->lQueued->setText(tr("%1 Queued").arg(QString::number(queuedUploads+queuedDownloads)));
+
+    if(ui->wTransfer1->getPercentage()!=100) queuedDownloads++;
+    ui->bDownloads->setText(QString::number(queuedDownloads));
+
+    if(ui->wTransfer2->getPercentage()!=100) queuedUploads++;
+    ui->bUploads->setText(QString::number(queuedUploads));
+
+    if(!queuedDownloads && !queuedUploads)
+        this->startAnimation();
+}
+
+void InfoDialog::updateDialog()
+{
+    updateRecentFiles();
+}
+
 void InfoDialog::timerUpdate()
 {
-    int value1 = ui->wTransfer1->getPercentage();
+    /*int value1 = ui->wTransfer1->getPercentage();
     if(value1<100) ui->wTransfer1->setPercentage(value1+2);
 
     int value2 = ui->wTransfer2->getPercentage();
@@ -80,7 +132,11 @@ void InfoDialog::timerUpdate()
         ui->sActiveTransfers->setCurrentIndex(0);
         timer->stop();
         app->showSyncedIcon();
-    }
+    }*/
+
+    if((ui->wTransfer1->getPercentage()==100) && ui->wTransfer2->getPercentage()==100)
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+    timer->stop();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -98,5 +154,15 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-    ui->sActiveTransfers->setCurrentIndex(!ui->sActiveTransfers->currentIndex());
+    QString filePath = app->getPreferences()->getLocalFolder(0);
+    QStringList args;
+    args << QDir::toNativeSeparators(filePath);
+    QProcess::startDetached("explorer", args);
+}
+
+void InfoDialog::updateRecentFiles()
+{
+    ui->wRecent1->updateTime();
+    ui->wRecent2->updateTime();
+    ui->wRecent3->updateTime();
 }

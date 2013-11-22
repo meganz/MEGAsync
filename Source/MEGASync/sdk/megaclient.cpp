@@ -7189,6 +7189,7 @@ void Transfer::complete()
 			if (isvalid && !(fingerprint == *(FileFingerprint*)this))
 			{
 				client->fsaccess->unlinklocal(&localfilename);
+                cout << "isvalid: " << isvalid << endl;
 				return failed(API_EWRITE);
 			}
 		}
@@ -7475,15 +7476,31 @@ int HashSignature::check(AsymmCipher* pubk, const byte* sig, unsigned len)
 bool operator==(FileFingerprint& lhs, FileFingerprint& rhs)
 {
 	// size differs - cannot be equal
-	if (lhs.size != rhs.size) return false;
-
+    if (lhs.size != rhs.size)
+    {
+        cout << "Tamaño distinto: " << lhs.size << " != " << rhs.size << endl;
+        return false;
+    }
 	// mtime differs - cannot be equal
-	if (lhs.mtime != rhs.mtime) return false;
+    if (lhs.mtime != rhs.mtime)
+    {
+        cout << "Fecha distinta: " << lhs.mtime << " != " << rhs.mtime << endl;
+        return false;
+    }
 
 	// FileFingerprints not fully available - give it the benefit of the doubt
-	if (!lhs.isvalid || !rhs.isvalid) return true;
-
-	return !memcmp(lhs.crc,rhs.crc,sizeof lhs.crc);
+    if (!lhs.isvalid || !rhs.isvalid)
+    {
+        cout << "Archivo no valido" << endl;
+        return true;
+    }
+    if(!memcmp(lhs.crc,rhs.crc,sizeof lhs.crc))
+    {
+        cout << "CRC igual" << endl;
+        return true;
+    }
+    cout << "CRC distinto" << endl;
+    return false;
 }
 
 FileFingerprint::FileFingerprint()
@@ -7988,7 +8005,7 @@ cout << "n->mtime=" << rit->second->mtime << " n->mtime=" << rit->second->mtime 
 				}
 				else if (*lit->second == *(FileFingerprint*)rit->second)
 				{
-					cout << "Both files are identical - not syncing B" << endl;
+                    cout << "Both files are identical - not syncing " << localname << endl;
 					nchildren.erase(rit);
 				}
 				else cout << "Overwriting older local file." << endl;

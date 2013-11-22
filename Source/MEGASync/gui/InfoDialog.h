@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QTimer>
+#include <QProcess>
+
 #include "SettingsDialog.h"
 
 namespace Ui {
@@ -20,6 +22,10 @@ public:
 
     void startAnimation();
     void setUsage(int totalGB, int percentage);
+    void setTransfer(int type, QString &fileName, long long completedSize, long long totalSize);
+    void addRecentFile(QString &fileName);
+    void setQueuedTransfers(int queuedDownloads, int queuedUploads);
+    void updateDialog();
 
 public slots:
    void timerUpdate();
@@ -35,6 +41,8 @@ private:
     Ui::InfoDialog *ui;
 
 protected:
+    void updateRecentFiles();
+
     SettingsDialog *settingsDialog;
     QTimer *timer;
     MegaApplication *app;

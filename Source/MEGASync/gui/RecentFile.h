@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QFileInfo>
+#include <QDateTime>
 #include "utils/WindowsUtils.h"
 
 namespace Ui {
@@ -17,11 +18,14 @@ public:
     explicit RecentFile(QWidget *parent = 0);
     ~RecentFile();
     void setFileName(QString fileName);
+    void updateTime();
+
 private:
     Ui::RecentFile *ui;
 
 protected:
     QString fileName;
+    QDateTime dateTime;
 };
 
 #endif // RECENTFILE_H
