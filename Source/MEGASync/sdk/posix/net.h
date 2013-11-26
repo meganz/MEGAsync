@@ -1,8 +1,6 @@
 /*
 
-MEGA SDK 2013-11-17 - POSIX network access layer (using cURL)
-
-(cURL *must* be configured with --enable-ares!)
+MEGA SDK POSIX network access layer (using cURL)
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 

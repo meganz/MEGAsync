@@ -59,6 +59,7 @@ public slots:
     void pauseSync();
     void resumeSync();
     void updateDowloaded();
+	void showLinkPopup();
 
 protected:
     void createActions();

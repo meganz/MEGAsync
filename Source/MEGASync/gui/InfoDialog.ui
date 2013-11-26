@@ -364,7 +364,7 @@ color: rgb(102, 102, 102);
             </property>
             <property name="icon">
              <iconset resource="Resources.qrc">
-              <normaloff>:/images/BAD_upload.png</normaloff>:/images/BAD_upload.png</iconset>
+              <normaloff>:/images/tray_upload_ico.png</normaloff>:/images/tray_upload_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>

@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-17 - POSIX filesystem/directory access/notification
+MEGA SDK POSIX filesystem/directory access/notification
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 

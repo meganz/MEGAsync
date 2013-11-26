@@ -1,5 +1,6 @@
 #include "RecentFile.h"
 #include "ui_RecentFile.h"
+#include "MegaApplication.h"
 
 RecentFile::RecentFile(QWidget *parent) :
     QWidget(parent),
@@ -59,4 +60,9 @@ void RecentFile::updateTime()
         ui->lTime->setText(tr("%1 months ago").arg(secs/292000));
     else
         ui->lTime->setText(tr("%1 years ago").arg(secs/31536000));
+}
+
+void RecentFile::on_pArrow_clicked()
+{
+	((MegaApplication*)qApp)->showLinkPopup();
 }

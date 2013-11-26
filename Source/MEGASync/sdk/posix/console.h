@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-17 - POSIX console/terminal control
+MEGA SDK POSIX console/terminal control
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 

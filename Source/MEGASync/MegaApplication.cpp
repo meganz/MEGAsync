@@ -20,7 +20,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 #ifdef WIN32
     WindowsUtils::initialize();
-    WindowsUtils::startOnStartup(false);
+	//WindowsUtils::startOnStartup(false);
 #endif
 
 
@@ -169,7 +169,12 @@ void MegaApplication::updateDowloaded()
 {
     //cout << "Downloaded" << endl;
     //QString s(downloader->downloadedData());
-    //cout << s.toStdString() << endl;
+	//cout << s.toStdString() << endl;
+}
+
+void MegaApplication::showLinkPopup()
+{
+	trayIcon->showMessage(tr("MegaSync"), tr("The link has been copied to the clipboard"));
 }
 
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
@@ -178,7 +183,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     {
         infoDialog->updateDialog();
         infoDialog->show();
-        //infoDialog->startAnimation();
+		infoDialog->startAnimation();
     }
 }
 
@@ -265,7 +270,6 @@ bool MegaApplication::event(QEvent *event)
 
     if(storageMax)
     {
-        cout << "Setting usage" << endl;
         infoDialog->setUsage(storageMax/(1024*1024*1024),
                              100 * (double)storageUsed/storageMax);
     }

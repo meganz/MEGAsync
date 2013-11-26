@@ -45,7 +45,7 @@ void ActiveTransfer::setType(int type)
     this->type = type;
     if(type)
     {
-        ui->lType->setPixmap(QPixmap(":/images/BAD_upload.png"));
+		ui->lType->setPixmap(QPixmap(":/images/tray_upload_ico.png"));
         ui->lPercentage->setStyleSheet("color: rgb(119, 186, 216);");
     }
     else

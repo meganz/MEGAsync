@@ -26,6 +26,8 @@ private:
 protected:
     QString fileName;
     QDateTime dateTime;
+private slots:
+	void on_pArrow_clicked();
 };
 
 #endif // RECENTFILE_H

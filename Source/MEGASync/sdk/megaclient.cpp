@@ -1,8 +1,11 @@
 /*
 
-MEGA SDK 2013-11-16 - Client Access Engine
+MEGA SDK - Client Access Engine Core Logic
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: mo
+Bugfixing: js, mr
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -19,7 +22,7 @@ DEALINGS IN THE SOFTWARE.
 #include "megaclient.h"
 
 // FIXME: recreate filename after sync transfer completes to shortcut in-transfer rename handling
-// FIXME: generate CR element for file imports
+// FIXME: generate cr element for file imports
 // FIXME: support invite links (including responding to sharekey requests)
 // FIXME: Sync: recognize folder renames and use setattr() instead of potentially huge delete/putnodes sequence
 // FIXME: instead of copying nodes, move if the source is in the rubbish to prevent unnecessary node creation
@@ -197,12 +200,12 @@ Cachable::Cachable()
 	notified = 0;
 }
 
-Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t, m_off_t s, handle u, const char* fa, time_t ts)
+Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t, m_off_t s, handle u, const char* fa, time_t ts, time_t tm)
 {
 	client = cclient;
 
 	tag = 0;
-	
+
 	nodehandle = h;
 	parenthandle = ph;
 
@@ -218,7 +221,8 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t
 
 	copystring(&fileattrstring,fa);
 
-	clienttimestamp = ts;
+	clienttimestamp = tm;
+	ctime = ts;
 
 	inshare = NULL;
 	sharekey = NULL;
@@ -304,7 +308,6 @@ Node* Node::unserialize(MegaClient* client, string* d, node_vector* dp)
 	memcpy((char*)&u,ptr,MegaClient::USERHANDLE);
 	ptr += MegaClient::USERHANDLE;
 
-	// FIXME: remove
 	tm = *(time_t*)ptr;
 	ptr += sizeof tm;
 
@@ -346,7 +349,7 @@ Node* Node::unserialize(MegaClient* client, string* d, node_vector* dp)
 	}
 	else skey = NULL;
 
-	n = new Node(client,dp,h,ph,t,s,u,fa,ts);
+	n = new Node(client,dp,h,ph,t,s,u,fa,ts,tm);
 
 	if (k) n->setkey(k);
 
@@ -368,7 +371,7 @@ Node* Node::unserialize(MegaClient* client, string* d, node_vector* dp)
 bool Node::serialize(string* d)
 {
 	// do not update state if undecrypted nodes are present
-	if (attrstring.size()) return 0;
+	if (attrstring.size()) return false;
 
 	switch (type)
 	{
@@ -398,10 +401,9 @@ bool Node::serialize(string* d)
 
 	d->append((char*)&owner,MegaClient::USERHANDLE);
 	
-	// FIXME: remove (duplicated in attrs['c'] if needed)
-	d->append((char*)&mtime,sizeof(mtime));
-	
 	d->append((char*)&clienttimestamp,sizeof(clienttimestamp));
+	d->append((char*)&ctime,sizeof(ctime));
+
 	d->append(nodekey);
 
 	if (type == FILENODE)
@@ -721,7 +723,7 @@ NewShare::NewShare(handle ch, int coutgoing, handle cpeer, accesslevel caccess, 
 }
 
 // apply queued new shares
-void MegaClient::mergenewshares(int notify)
+void MegaClient::mergenewshares(bool notify)
 {
 	newshare_list::iterator it;
 
@@ -735,14 +737,14 @@ void MegaClient::mergenewshares(int notify)
 			if (!n->sharekey && s->have_key)
 			{
 				// setting an outbound sharekey requires node authentication unless coming from a trusted source (the local cache)
-				int auth = 1;
+				bool auth = true;
 
 				if (s->outgoing > 0)
 				{
-					if (!checkaccess(n,OWNER))
+					if (!checkaccess(n,OWNERPRELOGIN))
 					{
 						app->debug_log("Attempt to create dislocated outbound share foiled");
-						auth = 0;
+						auth = false;
 					}
 					else
 					{
@@ -753,7 +755,7 @@ void MegaClient::mergenewshares(int notify)
 						if (memcmp(buf,s->auth,sizeof buf))
 						{
 							app->debug_log("Attempt to create forged outbound share foiled");
-							auth = 0;
+							auth = false;
 						}
 					}
 				}
@@ -791,7 +793,7 @@ void MegaClient::mergenewshares(int notify)
 					if (s->outgoing)
 					{
 						// perform mandatory verification of outgoing shares: only on own nodes and signed unless read from cache
-						if (checkaccess(n,OWNER))
+						if (checkaccess(n,OWNERPRELOGIN))
 						{
 							Share** sharep = &n->outshares[s->peer];
 
@@ -806,7 +808,7 @@ void MegaClient::mergenewshares(int notify)
 					{
 						if (s->peer)
 						{
-							if (!checkaccess(n,OWNER))
+							if (!checkaccess(n,OWNERPRELOGIN))
 							{
 								// modification of existing share or new share
 								if (n->inshare) n->inshare->update(s->access,s->ts);
@@ -1584,7 +1586,7 @@ MegaClient::~MegaClient()
 	delete dbaccess;
 }
 
-// nonblocking state machine
+// nonblocking state machine executing all operations currently in progress
 void MegaClient::exec()
 {
 	waiter->getdstime();
@@ -1805,6 +1807,7 @@ void MegaClient::exec()
 						case REQ_SUCCESS:
 							if (*pendingsc->in.c_str() == '{')
 							{
+								// FIXME: reload in case of bad JSON
 								jsonsc.begin(pendingsc->in.c_str());
 								procsc();
 
@@ -1863,7 +1866,7 @@ void MegaClient::exec()
 			break;
 		}
 
-		// fill transfer pipelines
+		// fill transfer slots from the queue
 		dispatchmore(PUT);
 		dispatchmore(GET);
 
@@ -2164,7 +2167,7 @@ File::File()
 
 File::~File()
 {
-	// if transfer running, stop
+	// if transfer currently running, stop
 	if (transfer) transfer->client->stopxfer(this);
 }
 
@@ -2203,7 +2206,7 @@ dstime MegaClient::nexttransferretry(direction d, dstime dsmin)
 	return dsmin;
 }
 
-// disconnect everything
+// disconnect all HTTP connections (slows down operations, but is semantically neutral)
 void MegaClient::disconnect()
 {
 	if (pendingcs) pendingcs->disconnect();
@@ -2214,7 +2217,6 @@ void MegaClient::disconnect()
 	for (fafc_map::iterator it = fafcs.begin(); it != fafcs.end(); it++) it->second->req.disconnect();
 }
 
-// FIXME: free syncs
 void MegaClient::logout()
 {
 	int i;
@@ -2355,6 +2357,7 @@ void MegaClient::procsc()
 // update the user's local state cache
 // (note that if immediate-completion commands have been issued in the meantime, the state of the affected nodes
 // may be ahead of the recorded scsn - their consistency will be checked by subsequent server-client commands.)
+// initsc() is called after all initial decryption has been performed, so we are tolerant towards incomplete/faulty nodes.
 void MegaClient::initsc()
 {
 	if (sctable)
@@ -2363,7 +2366,7 @@ void MegaClient::initsc()
 
 		sctable->truncate();
 
-		int complete;
+		bool complete;
 
 		// 1. write current scsn
 		handle tscsn;
@@ -2373,13 +2376,13 @@ void MegaClient::initsc()
 		if (complete)
 		{
 			// 2. write all users
-			for (user_map::iterator it = users.begin(); it != users.end(); it++) if ((complete = sctable->put(CACHEDUSER,&it->second,&key)) <= 0) break;
+			for (user_map::iterator it = users.begin(); it != users.end(); it++) if (!(complete = sctable->put(CACHEDUSER,&it->second,&key))) break;
 		}
 
-		if (complete > 0)
+		if (complete)
 		{
 			// 3. write new or modified nodes, purge deleted nodes
-			for (node_map::iterator it = nodes.begin(); it != nodes.end(); it++) if ((complete = sctable->put(CACHEDNODE,it->second,&key)) <= 0) break;
+			for (node_map::iterator it = nodes.begin(); it != nodes.end(); it++) if (!(complete = sctable->put(CACHEDNODE,it->second,&key))) break;
 		}
 
 		finalizesc(complete);
@@ -2399,7 +2402,7 @@ void MegaClient::updatesc()
 
 		sctable->begin();
 
-		int complete;
+		bool complete;
 
 		// 1. update associated scsn
 		handle tscsn;
@@ -2409,10 +2412,10 @@ void MegaClient::updatesc()
 		if (complete)
 		{
 			// 2. write new or update modified users
-			for (user_vector::iterator it = usernotify.begin(); it != usernotify.end(); it++) if ((complete = sctable->put(CACHEDUSER,*it,&key)) <= 0) break;
+			for (user_vector::iterator it = usernotify.begin(); it != usernotify.end(); it++) if (!(complete = sctable->put(CACHEDUSER,*it,&key))) break;
 		}
 
-		if (complete > 0)
+		if (complete)
 		{
 			// 3. write new or modified nodes, purge deleted nodes
 			for (node_vector::iterator it = nodenotify.begin(); it != nodenotify.end(); it++)
@@ -2421,7 +2424,7 @@ void MegaClient::updatesc()
 				{
 					if (!(complete = sctable->del((*it)->dbid))) break;
 				}
-				else if ((complete = sctable->put(CACHEDNODE,*it,&key)) <= 0) break;
+				else if (!(complete = sctable->put(CACHEDNODE,*it,&key))) break;
 			}
 		}
 
@@ -2429,21 +2432,19 @@ void MegaClient::updatesc()
 	}
 }
 
-void MegaClient::finalizesc(int complete)
+// commit or purge local state cache
+void MegaClient::finalizesc(bool complete)
 {
-	if (complete > 0) sctable->commit();
+	if (complete) sctable->commit();
 	else
 	{
 		sctable->abort();
+		sctable->truncate();
 
-		if (!complete)
-		{
-			app->debug_log("Cache update DB write error - closing");
+		app->debug_log("Cache update DB write error - disabling caching");
 
-			delete sctable;
-			sctable = NULL;
-		}
-		else app->debug_log("Cache update deferred");
+		delete sctable;
+		sctable = NULL;
 	}
 }
 
@@ -2743,7 +2744,7 @@ void CommandAttachFA::procresult()
 }
 
 // attach file attribute to a file
-// to avoid unnecessary roundtrips to the attribute servers, also store locally
+// FIXME: to avoid unnecessary roundtrips to the attribute servers, also store locally
 void MegaClient::putfa(Transfer* transfer, fatype t, const byte* data, unsigned len)
 {
 	// build encrypted file attribute data block
@@ -2816,7 +2817,7 @@ bool MegaClient::slotavail()
 }
 
 // returns 1 if more transfers of the requested type can be dispatched (back-to-back overlap pipelining)
-// FIXME: support overlapped partial reads
+// FIXME: support overlapped partial reads (and support partial reads in the first place)
 bool MegaClient::moretransfers(direction d)
 {
 	m_off_t c = 0, r = 0;
@@ -2976,8 +2977,7 @@ void MegaClient::sc_updatenode()
 	handle h = UNDEF;
 	handle u = 0;
 	const char* a = NULL;
-	const char* k = NULL;
-	time_t ts = 0;
+	time_t ts = -1, tm = -1;
 
 	for (;;)
 	{
@@ -2995,16 +2995,12 @@ void MegaClient::sc_updatenode()
 				a = jsonsc.getvalue();
 				break;
 
-			case 'k':
-				k = jsonsc.getvalue();
-				break;
-
-			case MAKENAMEID2('c','r'):
-				proccr(&jsonsc);
-				break;
-
 			case MAKENAMEID2('t','s'):
 				ts = jsonsc.getint();
+				break;
+
+			case MAKENAMEID3('t','m','d'):
+				tm = ts+jsonsc.getint();
 				break;
 
 			case EOO:
@@ -3016,8 +3012,8 @@ void MegaClient::sc_updatenode()
 					{
 						if (u) n->owner = u;
 						if (a) Node::copystring(&n->attrstring,a);
-						if (k) Node::copystring(&n->keystring,k);
-						if (ts+1) n->clienttimestamp = ts;
+						if (tm+1) n->clienttimestamp = tm;
+						if (ts+1) n->ctime = ts;
 
 						n->applykey();
 
@@ -3338,7 +3334,7 @@ void MegaClient::sc_userattr()
 // scan notified nodes for
 // - name differences with an existing LocalNode
 // - appearance of new folders
-// - (re)appearance of new files
+// - (re)appearance of files
 // - deletions
 // purge removed nodes after notification
 void MegaClient::notifypurge(void)
@@ -3399,7 +3395,7 @@ void MegaClient::notifypurge(void)
 			}
 
 			// add new local files and folders
-			// FIXME: call for topmost nodes only to eliminate double-scanning overhead
+			// FIXME: call for topmost nodes only to eliminate scanning overhead
 			for (i = 0; i < t; i++)
 			{
 				Node* n = nodenotify[i];
@@ -3442,11 +3438,11 @@ void MegaClient::notifypurge(void)
 										app->syncupdate_local_unlink(n);
 										fsaccess->rubbishlocal(&localpath);
 									}
-									else cout << "Fingerprint mismatch, not deleting" << endl;
+									// FIXME: else log "not deleting because of fingerprint mismatch"
 								}
-								else cout << "size off by " << (fa->size-n->size) << " bytes, not deleting" << endl;
+								// FIXME: else log "not deleting because of size mismatch"
 							}
-							else cout << "mtime off by " << (fa->mtime-n->mtime) << " seconds, not deleting" << endl;
+							// FIXME: else log "not deleting because of mtime mismatch"
 						}
 
 						delete fa;
@@ -3579,7 +3575,7 @@ void MegaClient::handleauth(handle h, byte* auth)
 	key.ecb_encrypt(auth);
 }
 
-// make attribute string, including magic prefix
+// make attribute string; add magic number prefix
 void MegaClient::makeattr(SymmCipher* key, string* attrstring, const char* json, int l)
 {
 	if (l < 0) l = strlen(json);
@@ -3702,7 +3698,7 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* user
 		if (!ISUNDEF(nn[i].parenthandle)) arg("p",(byte*)&nn[i].parenthandle,MegaClient::NODEHANDLE);
 
 		arg("t",nn[i].type);
-		arg("a",(byte*)nn[i].attrstring.c_str(),nn[i].attrstring.size());
+		arg("a",(byte*)nn[i].attrstring.data(),nn[i].attrstring.size());
 
 		if (nn[i].nodekey.size() <= sizeof key)
 		{
@@ -3790,7 +3786,7 @@ void CommandPutNodes::procresult()
 	}
 }
 
-// drop nodes into a user's inbox (has to have RSA keypair)
+// drop nodes into a user's inbox (must have RSA keypair)
 void MegaClient::putnodes(const char* user, NewNode* newnodes, int numnodes)
 {
 	User* u;
@@ -3832,8 +3828,8 @@ void PubKeyActionPutNodes::proc(MegaClient* client, User* u)
 // returns 1 if node has accesslevel a or better, 0 otherwise
 int MegaClient::checkaccess(Node* n, accesslevel a)
 {
-	// folder link access is always read-only
-	if (!loggedin()) return a == RDONLY;
+	// folder link access is always read-only - ignore login status during initial tree fetch
+	if (a < OWNERPRELOGIN && !loggedin()) return a == RDONLY;
 
 	// trace back to root node (always full access) or share node
 	while (n)
@@ -3942,7 +3938,7 @@ void CommandMoveNode::procresult()
 	}
 }
 
-// remove node tree
+// delete node tree
 error MegaClient::unlink(Node* n)
 {
 	if (!checkaccess(n,FULL)) return API_EACCESS;
@@ -4141,7 +4137,7 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 		const char *sk = NULL;
 		accesslevel rl = ACCESS_UNKNOWN;
 		m_off_t s = ~(m_off_t)0;
-		time_t ts = 0;
+		time_t ts = -1, tmd = 0, sts = -1;
 		nameid name;
 
 		while ((name = j->getnameid()) != EOO)
@@ -4176,8 +4172,12 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 					s = j->getint();
 					break;
 
-				case MAKENAMEID2('t','s'):	// created
+				case MAKENAMEID2('t','s'):	// actual creation timestamp
 					ts = j->getint();
+					break;
+
+				case MAKENAMEID3('t','m','d'):	// user-controlled last modified time
+					tmd = j->getint();
 					break;
 
 				case MAKENAMEID2('f','a'):	// file attributes
@@ -4196,7 +4196,11 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 				case MAKENAMEID2('s','u'):	// sharing user
 					su = j->gethandle(USERHANDLE);
 					break;
-
+					
+				case MAKENAMEID3('s','t','s'): 	// share timestamp
+					sts = j->getint();
+					break;
+					
 				default:
 					if (!j->storeobject()) return 0;
 			}
@@ -4263,7 +4267,11 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 
 				Node::copystring(&fas,fa);
 
-				n = new Node(this,&dp,h,ph,t,s,u,fas.c_str(),ts);
+				// fallback timestamps
+				if (!(ts+1)) ts = time(NULL);
+				if (!(sts+1)) sts = ts;
+				
+				n = new Node(this,&dp,h,ph,t,s,u,fas.c_str(),ts,ts+tmd);
 
 				n->tag = tag;
 
@@ -5387,7 +5395,7 @@ public:
 	CommandEnumerateQuotaItems(MegaClient*);
 };
 
-// enumerate Pro account purchase options
+// enumerate Pro account purchase options (not fully implemented)
 void MegaClient::purchase_enumeratequotaitems()
 {
 	reqs[r].add(new CommandEnumerateQuotaItems(this));
@@ -5440,7 +5448,7 @@ void CommandEnumerateQuotaItems::procresult()
 	client->app->enumeratequotaitems_result(API_OK);
 }
 
-// begin a new purchase
+// begin a new purchase (not fully implemented)
 void MegaClient::purchase_begin()
 {
 	purchase_basket.clear();
@@ -6457,9 +6465,8 @@ void CommandGetPH::procresult()
 	if (client->json.isnumeric()) return client->app->openfilelink_result((error)client->json.getint());
 
 	m_off_t s = -1;
-	time_t ts = 0;
-	const char* a = NULL;
-	const char* fa = NULL;
+	time_t ts = 0, tm = 0;
+	string a, fa;
 
 	for (;;)
 	{
@@ -6470,28 +6477,27 @@ void CommandGetPH::procresult()
 				break;
 
 			case MAKENAMEID2('a','t'):
-				a = client->json.getvalue();
+				client->json.storeobject(&a);
 				break;
 
 			case MAKENAMEID2('f','a'):
-				fa = client->json.getvalue();
+				client->json.storeobject(&fa);
 				break;
 
 			case MAKENAMEID2('t','s'):
 				ts = client->json.getint();
 				break;
 
+			case MAKENAMEID3('t','m','d'):
+				tm = ts+client->json.getint();
+				break;
+
 			case EOO:
 				// we want at least the attributes
-				if (a && s >= 0)
+				if (s >= 0)
 				{
-					Node* n = new Node(NULL,NULL,ph,UNDEF,FILENODE,s,0,fa,ts);
-
-					Node::copystring(&n->attrstring,a);
-
-					n->setkey(key);
-
-					return client->app->openfilelink_result(n);
+					a.resize(Base64::atob(a.c_str(),(byte*)a.data(),a.size()));
+					client->app->openfilelink_result(ph,key,s,&a,fa.c_str(),ts,tm);
 				}
 				else client->app->openfilelink_result(API_EINTERNAL);
 				return;
@@ -6755,14 +6761,14 @@ void CommandConfirmSignupLink::procresult()
 // generate and configure encrypted private key, plaintext public key
 void MegaClient::setkeypair()
 {
-    CryptoPP::Integer pubk[AsymmCipher::PUBKEY];
+	CryptoPP::Integer pubk[AsymmCipher::PUBKEY];
 
 	string privks, pubks;
 
 	asymkey.genkeypair(asymkey.key,pubk,2048);
 
-    AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
-    AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
+	AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
+	AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
 
 	// add random padding and ECB-encrypt with master key
 	unsigned t = privks.size();
@@ -6893,6 +6899,8 @@ void MegaClient::purgenodesusersabortsc()
 	for (newshare_list::iterator it = newshares.begin(); it != newshares.end(); it++) delete *it;
 	newshares.clear();
 
+	nodenotify.clear();
+	usernotify.clear();
 	users.clear();
 	uhindex.clear();
 	umindex.clear();
@@ -7164,7 +7172,7 @@ void TransferSlot::doio(MegaClient* client)
 	}
 }
 
-// transfer completed: notify app and related files, then delete the transfer and notify the files
+// transfer completion: copy received file locally, set timestamp(s), verify fingerprint, notify app, notify files
 void Transfer::complete()
 {
 	if (type == GET)
@@ -7189,7 +7197,6 @@ void Transfer::complete()
 			if (isvalid && !(fingerprint == *(FileFingerprint*)this))
 			{
 				client->fsaccess->unlinklocal(&localfilename);
-                cout << "isvalid: " << isvalid << endl;
 				return failed(API_EWRITE);
 			}
 		}
@@ -7476,31 +7483,15 @@ int HashSignature::check(AsymmCipher* pubk, const byte* sig, unsigned len)
 bool operator==(FileFingerprint& lhs, FileFingerprint& rhs)
 {
 	// size differs - cannot be equal
-    if (lhs.size != rhs.size)
-    {
-        cout << "Tamaño distinto: " << lhs.size << " != " << rhs.size << endl;
-        return false;
-    }
+	if (lhs.size != rhs.size) return false;
+
 	// mtime differs - cannot be equal
-    if (lhs.mtime != rhs.mtime)
-    {
-        cout << "Fecha distinta: " << lhs.mtime << " != " << rhs.mtime << endl;
-        return false;
-    }
+	if (lhs.mtime != rhs.mtime) return false;
 
 	// FileFingerprints not fully available - give it the benefit of the doubt
-    if (!lhs.isvalid || !rhs.isvalid)
-    {
-        cout << "Archivo no valido" << endl;
-        return true;
-    }
-    if(!memcmp(lhs.crc,rhs.crc,sizeof lhs.crc))
-    {
-        cout << "CRC igual" << endl;
-        return true;
-    }
-    cout << "CRC distinto" << endl;
-    return false;
+	if (!lhs.isvalid || !rhs.isvalid) return true;
+
+	return !memcmp(lhs.crc,rhs.crc,sizeof lhs.crc);
 }
 
 FileFingerprint::FileFingerprint()
@@ -7586,7 +7577,8 @@ bool FileFingerprint::genfingerprint(FileAccess* fa)
 	if (!isvalid)
 	{
 		isvalid = true;
-		changed = true;
+		//changed = true;
+		changed = false;
 	}
 
 	return changed;
@@ -7838,8 +7830,7 @@ LocalNode* Sync::procscanstack()
 	{
 		if (l && l->type != fa->type)
 		{
-			cout << "Type change for " << *localpath << endl;
-
+			// type change (a directory replaced a file of the same name or vice versa)
 			delete l;
 			l = NULL;
 
@@ -7868,7 +7859,7 @@ LocalNode* Sync::procscanstack()
 				recurse = fulltree;
 			}
 
-			changed = true;
+			//changed = true;
 		}
 
 		// detect file changes or recurse into new subfolders
@@ -7991,7 +7982,7 @@ void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
 			// local: file, remote: file - overwrite if newer
 			if (lit->second->type != rit->second->type)
 			{
-cout << "Found a folder clashing with a file of the same name " << lit->second->name << ", ignoring" << endl;
+				// folder/file clash: do nothing (rather than attempting to second-guess the user)
 				nchildren.erase(rit);
 			}
 			else if (lit->second->type == FILENODE)
@@ -7999,20 +7990,18 @@ cout << "Found a folder clashing with a file of the same name " << lit->second->
 				// file on both sides - do not overwrite if local version older or identical
 				if (lit->second->mtime > rit->second->mtime)
 				{
-cout << "Local file is newer by " << (lit->second->mtime - rit->second->mtime) << " - not overwriting" << endl;
-cout << "n->mtime=" << rit->second->mtime << " n->mtime=" << rit->second->mtime << " n->ctmie=" << rit->second->ctime << endl;
+					// local version is older
 					nchildren.erase(rit);
 				}
 				else if (*lit->second == *(FileFingerprint*)rit->second)
 				{
-                    cout << "Both files are identical - not syncing " << localname << endl;
+					// both files are identical
 					nchildren.erase(rit);
 				}
-				else cout << "Overwriting older local file." << endl;
 			}
 			else
 			{
-				cout << "Identical directories - recursing" << endl;
+				// recurse into directories of equal name
 				size_t t = localpath->size();
 
 				localpath->append(fsaccess->localseparator);
@@ -8142,7 +8131,7 @@ void MegaClient::syncup(LocalNode* l, Node* n)
 					// local: file, remote: file - overwrite if newer
 					if (lit->second->type != rit->second->type)
 					{
-cout << "Found a folder clashing with a file of the same name " << lit->second->name << ", ignoring" << endl;
+						// folder/file clash - do nothing rather than attempting to second-guess the user
 						continue;
 					}
 
@@ -8154,13 +8143,13 @@ cout << "Found a folder clashing with a file of the same name " << lit->second->
 							// check if file is likely to be identical
 							if (lit->second->mtime < rit->second->mtime)
 							{
-cout << "Remote file is newer - not overwriting" << endl;
+								// do not overwrite more recent remote file
 								continue;
 							}
 
 							if (rit->second->isvalid ? (*lit->second == *(FileFingerprint*)rit->second) : (lit->second->mtime == rit->second->mtime))
 							{
-cout << "Both files are probably identical - not syncing A" << endl;
+								// files have the same size and the same mtime (or the same fingerprint, if available): no action needed
 								syncidhandles[lit->second->syncid] = rit->second->nodehandle;
 								lit->second->node = rit->second;
 								rit->second->localnode = lit->second;
@@ -8168,18 +8157,13 @@ cout << "Both files are probably identical - not syncing A" << endl;
 							}
 						}
 
-cout << "Overwriting older or different file:" << endl;
-cout << "lit->second.size=" << lit->second->size << " rit->second->size=" << rit->second->size << endl;
-cout << "lit->second.mtime=" << lit->second->mtime << " rit->second->mtime=" << rit->second->mtime << endl;
-
 						// overwriting a remote file - queue deletion of existing file
 						syncoverwritten[lit->second->syncid] = rit->second->nodehandle;
 						syncactivity = true;
 					}
 					else
 					{
-cout << "Identical directories (" << lit->second->name << " " << rit->second->displayname() << ") - recursing syncid=" << lit->second->syncid << endl;
-
+						// recurse into directories of equal name
 						syncidhandles[lit->second->syncid] = rit->second->nodehandle;
 						rit->second->localnode = lit->second;
 						lit->second->node = rit->second;
@@ -8189,9 +8173,7 @@ cout << "Identical directories (" << lit->second->name << " " << rit->second->di
 					}
 				}
 
-if (lit->second->type == FILENODE) cout << "Uploading new file: " << lit->second->name << ", parent id=" << l->syncid << endl;
-else cout << "Creating new folder " << lit->second->name << " (" << lit->second << ") in " << (n ? n->displayname() : "DEEP") << ", id=" << lit->second->syncid << ", parent=" << l->syncid << endl;
-
+				// create folder or send file
 				// if we have a remote parent, store as the basis for the subsequent putnodes()
 				if (n) lit->second->nodehandle = n->nodehandle;	// parent is an existing node
 
@@ -8311,7 +8293,6 @@ void MegaClient::syncupdate()
 			syncidhandles.erase(sit);
 			syncactivity = true;
 		}
-		else cout << "Unable to find syncidhandle " << *it << " for file deletion" << endl;
 	}
 
 	syncdeleted[FILENODE].clear();
@@ -8331,7 +8312,6 @@ void MegaClient::syncupdate()
 			syncidhandles.erase(sit);
 			syncactivity = true;
 		}
-		else cout << "Unable to find syncidhandle " << *it << " for deletion" << endl;
 	}
 
 	syncdeleted[FOLDERNODE].clear();
@@ -8347,14 +8327,7 @@ void MegaClient::putnodes_sync_result(error e, NewNode* nn)
 		syncidhandle_map::iterator sit;
 
 		// overwrites: overwritten node gets moved to rubbish bin
-		for (syncidhandle_map::iterator it = syncoverwritten.begin(); it != syncoverwritten.end(); it++)
-		{
-			if (syncidhandles.count(it->first))
-			{
-				cout << "Overwritten: " << nodebyhandle(it->second)->displayname() << endl;
-				if ((n = nodebyhandle(it->second))) movetosyncdebris(n);
-			}
-		}
+		for (syncidhandle_map::iterator it = syncoverwritten.begin(); it != syncoverwritten.end(); it++) if (syncidhandles.count(it->first)) if ((n = nodebyhandle(it->second))) movetosyncdebris(n);
 
 		syncoverwritten.clear();
 	}
@@ -8412,7 +8385,6 @@ bool MegaClient::startxfer(direction d, File* f)
 // remove file from transfer subsystem
 void MegaClient::stopxfer(File* f)
 {
-cout << "STOPXFER of file " << f->name << endl;
 	if (f->transfer)
 	{
 		f->transfer->files.erase(f->file_it);
@@ -8559,7 +8531,6 @@ bool FileFingerprintCmp::operator() (const FileFingerprint* a, const FileFingerp
 
 void File::start()
 {
-cout << "File transfer starting..." << endl;
 }
 
 void File::progress()
@@ -8605,18 +8576,15 @@ void File::completed(Transfer* t, LocalNode* l)
 
 		if (targetuser.size())
 		{
-			cout << "Attempting to drop file into user " << targetuser << "'s inbox..." << endl;
+			// drop file into targetuser's inbox
 			t->client->putnodes(targetuser.c_str(),newnode,1);
 		}
 		else
 		{
 			handle th = h;
 
-			if (!t->client->nodebyhandle(th))
-			{
-cout << "Upload target folder inaccessible, using /" << endl;
-				th = t->client->rootnodes[0];
-			}
+			// inaccessible target folder - use / instead
+			if (!t->client->nodebyhandle(th)) th = t->client->rootnodes[0];
 
 			if (l) t->client->syncadding++;
 			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,0,l ? PUTNODES_SYNC : PUTNODES_APP));
@@ -8633,22 +8601,12 @@ void LocalNode::completed(Transfer* t, LocalNode*)
 			// if parent node exists, complete directly - otherwise, complete to rubbish bin for later retrieval
 			syncidhandle_map::iterator it = t->client->syncidhandles.find(parent->syncid);
 
-			if (it != t->client->syncidhandles.end())
-			{
-cout << "Parent node already exists - synchronous completion" << endl;
-				h = it->second;
-			}
-			else
-			{
-cout << "Parent node is still being created - completing to rubbish for later retrieval" << endl;
-				h = t->client->rootnodes[RUBBISHNODE-ROOTNODE];
-			}
+			if (it != t->client->syncidhandles.end()) h = it->second;	// existing parent: synchronous completioh
+			else h = t->client->rootnodes[RUBBISHNODE-ROOTNODE];		// parent is still being created: complete into //bin (FIXME: complete into //bin/SyncDebris/yyyy-mm-dd instead)
 
 			File::completed(t,this);
 		}
-else cout << "Upload of deleted file completed, ignoring" << endl;
 	}
-else cout << "INTERNAL ERROR: Parentless sync upload completion attempt foiled" << endl;
 }
 
 // do not retry crypto errors or administrative takedowns; retry other types of failuresup to 16 times

@@ -1,8 +1,10 @@
 /*
 
-MEGA SDK 2013-10-03 - reference implementation using Crypto++
+MEGA SDK crypto layer using Crypto++
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: mo
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -20,11 +22,11 @@ DEALINGS IN THE SOFTWARE.
 
 #include "cryptopp.h"
 
-using namespace CryptoPP;
-
 #ifndef htobe64
 #define htobe64(x) (((uint64_t) htonl((uint32_t) ((x) >> 32))) | (((uint64_t) htonl((uint32_t) x)) << 32))
 #endif
+
+using namespace CryptoPP;
 
 AutoSeededRandomPool PrnGen::rng;
 

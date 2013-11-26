@@ -66,7 +66,6 @@
         <file>images/Pro III.ico</file>
         <file>images/SyncApp_1.ico</file>
         <file>images/BAD_transferProgress.png</file>
-        <file>images/BAD_upload.png</file>
         <file>images/BAD_usageProgress.png</file>
         <file>images/logo.png</file>
         <file>images/background.png</file>
@@ -120,7 +119,6 @@
         <file>images/sync_web_lang.png</file>
         <file>images/sync_word.png</file>
         <file>images/sync_web_data.png</file>
-        <file>images/BAD_upload.png</file>
         <file>images/BAD_transferProgress.png</file>
         <file>images/BAD_usageProgress.png</file>
         <file>images/tray_web_ico.png</file>
@@ -146,5 +144,6 @@
         <file>images/folder.ico</file>
         <file>images/tray_pause.ico</file>
         <file>images/tray_sync.ico</file>
+        <file>images/tray_upload_ico.png</file>
     </qresource>
 </RCC>

@@ -27,6 +27,9 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 #include <pthread.h>
+#include <inttypes.h>
+typedef int64_t m_off_t;
+using namespace std;
 
 #include "crypto/cryptopp.h"
 #include "megaclient.h"

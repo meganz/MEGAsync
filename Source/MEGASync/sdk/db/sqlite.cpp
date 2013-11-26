@@ -1,8 +1,10 @@
 /*
 
-MEGA SDK 2013-11-16 - sample application, Berkeley DB access
+MEGA SDK SQLite DB access layer
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: js
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -47,9 +49,7 @@ DbTable* SqliteDbAccess::open(FileSystemAccess* fsaccess, string* name)
 
 	if (rc) return NULL;
 
-	const char *sql = "CREATE TABLE IF NOT EXISTS statecache ("  \
-					"id INTEGER PRIMARY KEY ASC NOT NULL, " \
-					"content BLOB NOT NULL)";
+	const char *sql = "CREATE TABLE IF NOT EXISTS statecache ( id INTEGER PRIMARY KEY ASC NOT NULL, content BLOB NOT NULL)";
 
 	rc = sqlite3_exec(db,sql,NULL,NULL,NULL);
 
@@ -74,7 +74,7 @@ SqliteDbTable::~SqliteDbTable()
 void SqliteDbTable::rewind()
 {
 	if (pStmt) sqlite3_reset(pStmt);
-	else sqlite3_prepare(db, "SELECT id, content FROM statecache",-1,&pStmt,NULL);
+	else sqlite3_prepare(db,"SELECT id, content FROM statecache",-1,&pStmt,NULL);
 }
 
 // retrieve next record through cursor
@@ -84,7 +84,7 @@ bool SqliteDbTable::next(uint32_t* index, string* data)
 
 	int rc = sqlite3_step(pStmt);
 
-	if(rc !=  SQLITE_ROW)
+	if (rc != SQLITE_ROW)
 	{
 		sqlite3_finalize(pStmt);
 		pStmt = NULL;

@@ -122,7 +122,7 @@ struct DemoApp : public MegaApp
 	void exportnode_result(handle, handle);
 
 	void openfilelink_result(error);
-	void openfilelink_result(Node*);
+	void openfilelink_result(handle, const byte*, m_off_t, string*, const char*, time_t, time_t);
 
 	void topen_result(int, error);
 	void topen_result(int, const char*, int);
