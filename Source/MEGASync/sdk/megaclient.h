@@ -1047,6 +1047,9 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 
 	// active sync get
 	struct SyncFileGet* syncget;
+	
+	// active removal to SyncDebris
+	bool syncdeleted;
 
 	// source tag
 	int tag;
@@ -1200,6 +1203,9 @@ struct File : public FileFingerprint
 	// normalized name (UTF-8 with unescaped special chars)
 	string name;
 
+	// local filename (must be set upon injection for uploads, can be set in start() for downloads)
+	string localname;
+
 	// source/target node handle
 	handle h;
 
@@ -1209,9 +1215,6 @@ struct File : public FileFingerprint
 	// transfer linkage
 	Transfer* transfer;
 	file_list::iterator file_it;
-
-	// local filename (must be set upon injection for uploads, can be set in start() for downloads)
-	string localfilename;
 
 	File();
 	virtual ~File();
@@ -1743,14 +1746,15 @@ struct LocalNode : public File
 	// related cloud node, if any
 	Node* node;
 
-	// original local fs name
-	string localname;
+	// original local fs name (or path for Sync's root node member)
+//	string localname;
 
 	// FILENODE or FOLDERNODE
 	nodetype type;
 
-	// correspondin remote node
-	handle nodehandle;
+	// corresponding remote node
+//	handle nodehandle;
+	handle scanseqno;
 
 	// global sync reference
 	handle syncid;
@@ -1764,7 +1768,10 @@ struct LocalNode : public File
 	void prepare();
 	void completed(Transfer*, LocalNode*);
 
-	LocalNode(Sync*, string*, string*, nodetype, LocalNode*, handle);
+	void setnode(Node*);
+	
+	void init(Sync*, string*, nodetype, LocalNode*, string*);
+
 	~LocalNode();
 };
 
@@ -1863,7 +1870,7 @@ public:
 	sync_list syncs;
 
 	// start folder synchronization
-	bool addsync(string* localname, Node* n);
+//	bool addsync(string* localname, Node* n);
 
 	// number of parallel connections per transfer (PUT/GET)
 	unsigned char connections[2];
@@ -2133,6 +2140,10 @@ public:
 	// activity flag
 	bool syncactivity;
 
+	// rescan timer if fs notification unavailable or broken
+	bool syncscanfailed;
+	BackoffTimer syncscanbt;
+
 	// added to a synced folder
 	handle_set syncadded;
 
@@ -2162,7 +2173,7 @@ public:
 	void syncupdate();
 
 	// create missing folders, copy/start uploading missing files
-	void syncup(LocalNode* = NULL, Node* = NULL);
+	void syncup(LocalNode* = NULL/*, Node* = NULL*/);
 
 	// trigger syncing of local file
 	void syncupload(LocalNode*);
@@ -2171,7 +2182,7 @@ public:
 	void putnodes_sync_result(error, NewNode*);
 
 	// start downloading/copy missing files, create missing directories
-	void syncdown(Node*, LocalNode*, string*);
+	void syncdown(LocalNode*, string* = NULL);
 
 	// move node to //bin/SyncDebris/yyyy-mm-dd/
 	void movetosyncdebris(Node*);
@@ -2431,6 +2442,7 @@ struct ScanItem
 	string localpath;
 	string localname;
 	LocalNode* parent;
+	LocalNode* localnode;
 	bool fulltree;
 	bool deleted;
 };
@@ -2448,13 +2460,14 @@ public:
 	MegaClient* client;
 
 	// remote root
-	handle rooth;
+//	handle rooth;
 
 	// full filesystem path this sync starts at
-	string rootpath;
+	//string rootpath;
 
 	// in-memory representation of the local tree
-	LocalNode* rootlocal;
+	LocalNode localroot;
+	//LocalNode* rootlocal;
 
 	// queued ScanItems
 	deque<ScanItem> scanstack;
@@ -2466,13 +2479,16 @@ public:
 	void changestate(syncstate);
 
 	// process one scanstack item
-	LocalNode* procscanstack();
+	void procscanstack();
 
 	m_off_t localbytes;
 	unsigned localnodes[2];
 
 	// add or update LocalNode item, scan newly added folders
-	void addscan(string*, string*, LocalNode*, bool);
+	void queuescan(string*, string*, LocalNode*, LocalNode*, bool);
+
+	// examine filesystem item and queue it for scanning
+	LocalNode* queuefsrecord(string*, string*, LocalNode*, bool);
 
 	// scan items in specified path and add as children of the specified LocalNode
 	void scan(string*, FileAccess*, LocalNode*, bool);

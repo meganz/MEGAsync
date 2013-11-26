@@ -204,6 +204,8 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t
 {
 	client = cclient;
 
+	syncdeleted = false;
+
 	tag = 0;
 
 	nodehandle = h;
@@ -504,11 +506,11 @@ void Node::setfingerprint()
 
 		if (it != attrs.map.end()) unserializefingerprint(&it->second);
 
-		// if we lack a valid FileFingerprint for this file, use file's key and size instead
+		// if we lack a valid FileFingerprint for this file, use file's key, size and client timestamp instead
 		if (!isvalid)
 		{
 			memcpy(crc,nodekey.data(),sizeof crc);
-			mtime = 0;
+			mtime = clienttimestamp;
 		}
 
 		fingerprint_it = client->fingerprints.insert((FileFingerprint*)this);
@@ -1447,9 +1449,8 @@ void MegaClient::setsid(const byte* sid, unsigned len)
 	auth = "&sid=";
 
 	int t = auth.size();
-	auth.resize(t+len*2);
-
-	Base64::btoa(sid,len,(char*)(auth.c_str()+t));
+	auth.resize(t+len*4/3+4);
+	auth.resize(t+Base64::btoa(sid,len,(char*)(auth.c_str()+t)));
 }
 
 // configure for exported folder links access
@@ -1527,6 +1528,7 @@ void MegaClient::init()
 	syncadding = 0;
 	movedebrisinflight = 0;
 	syncdebrisadding = false;
+	syncscanfailed = false;
 	
 	putmbpscap = 0;
 }
@@ -1874,38 +1876,43 @@ void MegaClient::exec()
 		for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); ) (*it++)->doio(this);
 	} while (httpio->doio() || (!pendingcs && reqs[r].cmdspending() && btcs.armed(waiter->ds)));
 
+	if (syncscanfailed && syncscanbt.armed(waiter->ds)) syncscanfailed = false;
+
 	// process active syncs
 	if (syncs.size() || syncactivity)
 	{
 		syncactivity = false;
 
-		sync_list::iterator it;
 		bool syncscanning = false;
+		sync_list::iterator it;
 
 		// process pending scanstacks
 		for (it = syncs.begin(); it != syncs.end(); )
 		{
+			// make sure that the remote synced folder still exists
+			if (!(*it)->localroot.node) (*it)->changestate(SYNC_FAILED);
+
 			if ((*it)->state == SYNC_FAILED) it++;
 			else
 			{
+				// process items from the scanstack until depleted
+				if ((*it)->scanstack.size()) (*it)->procscanstack();
+			
 				if ((*it)->scanstack.size())
 				{
-					(*it)->procscanstack();
-					if ((*it++)->scanstack.size()) syncscanning = true;
+					syncscanning = true;
+					it++;
 				}
-				else if ((*it)->state == SYNC_INITIALSCAN)
+				else
 				{
-					// initial scan of this synced folder is now complete
-					Node* n;
-
-					if ((n = nodebyhandle((*it)->rooth)))
+					if ((*it)->state == SYNC_INITIALSCAN)
 					{
-						syncdown(n,(*it)->rootlocal,&(*it)->rootpath);
+						// initial scan of this synced folder is now complete
+						syncdown(&(*it)->localroot,&(*it)->localroot.localname);
 						(*it++)->changestate(SYNC_ACTIVE);
 					}
-					else (*it++)->changestate(SYNC_FAILED);
+					else it++;
 				}
-				else it++;
 			}
 		}
 
@@ -1913,17 +1920,30 @@ void MegaClient::exec()
 		if (!syncscanning && !syncadding)
 		{
 			string localname;
-			Node* n;
-			LocalNode* ln;
+			LocalNode* l;
 
 			// check for filesystem changes
-			while (fsaccess->notifynext(&syncs,&localname,&ln)) ln->sync->addscan(NULL,&localname,ln,false);
+			while (fsaccess->notifynext(&syncs,&localname,&l)) l->sync->queuefsrecord(NULL,&localname,l,false);
+						
+			// rescan full trees in case fs notification is currently unreliable or unavailable
+			if (fsaccess->notifyfailed())
+			{
+				unsigned totalnodes = 0;
 
-			// rescan full tree in case an overflow occurred
-			if (fsaccess->notifyfailed()) for (it = syncs.begin(); it != syncs.end(); it++) (*it)->scan(&(*it)->rootpath,NULL,NULL,true);
+				for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE)
+				{
+					(*it)->queuescan(NULL,NULL,NULL,NULL,true);
+					totalnodes += (*it)->localnodes[FILENODE]+(*it)->localnodes[FOLDERNODE];
+				}
+				
+				// rescan periodically (interval depends on total tree size)
+				syncscanfailed = true;
+				syncscanbt.backoff(waiter->ds,10+totalnodes/128);
+			}
+			else syncscanfailed = false;
 
-			// FIXME: only syncup for subtrees that were updated
-			for (it = syncs.begin(); it != syncs.end(); it++) if ((n = nodebyhandle((*it)->rooth))) syncup((*it)->rootlocal,n);
+			// FIXME: only syncup for subtrees that were actually updated (to reduce CPU load)
+			for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE) syncup(&(*it)->localroot);
 
 			syncupdate();
 		}
@@ -1942,7 +1962,6 @@ int MegaClient::wait()
 
 	// sync directory scans in progress? don't wait.
 	if (syncactivity) nds = ds;
-
 	else
 	{
 		// next retry of a failed transfer
@@ -1960,6 +1979,9 @@ int MegaClient::wait()
 
 		// retry failed file attribute gets
 		for (fafc_map::iterator it = fafcs.begin(); it != fafcs.end(); it++) if (it->second->req.status != REQ_INFLIGHT) it->second->bt.update(ds,&nds);
+		
+		// sync rescan
+		if (syncscanfailed) syncscanbt.update(ds,&nds);
 	}
 
 	if (nds)
@@ -2065,10 +2087,10 @@ bool MegaClient::dispatch(direction d)
 				}
 			}
 
-			// set localfilename
+			// set localname
 			for (file_list::iterator it = nextit->second->files.begin(); !nextit->second->localfilename.size() && it != nextit->second->files.end(); it++) (*it)->prepare();
 
-			// app-side transfer preparations (populate localfilename, create thumbnail...)
+			// app-side transfer preparations (populate localname, create thumbnail...)
 			app->transfer_prepare(nextit->second);
 		}
 
@@ -2173,7 +2195,7 @@ File::~File()
 
 void File::prepare()
 {
-	transfer->localfilename = localfilename;
+	transfer->localfilename = localname;
 }
 
 // generate upload handle for this upload
@@ -2976,6 +2998,7 @@ void MegaClient::sc_updatenode()
 {
 	handle h = UNDEF;
 	handle u = 0;
+//	const char* k = NULL;
 	const char* a = NULL;
 	time_t ts = -1, tm = -1;
 
@@ -2990,6 +3013,10 @@ void MegaClient::sc_updatenode()
 			case 'u':
 				u = jsonsc.gethandle(USERHANDLE);
 				break;
+
+//			case 'k':
+//				k = jsonsc.getvalue();
+//				break;
 
 			case MAKENAMEID2('a','t'):
 				a = jsonsc.getvalue();
@@ -3012,10 +3039,12 @@ void MegaClient::sc_updatenode()
 					{
 						if (u) n->owner = u;
 						if (a) Node::copystring(&n->attrstring,a);
+//						if (k) Node::copystring(&n->keystring,k);
 						if (tm+1) n->clienttimestamp = tm;
 						if (ts+1) n->ctime = ts;
 
 						n->applykey();
+						n->setattr();
 
 						notifynode(n);
 					}
@@ -3362,7 +3391,7 @@ void MegaClient::notifypurge(void)
 
 				if (!n->removed && n->localnode && !n->attrstring.size() && (ait = n->attrs.map.find('n')) != n->attrs.map.end())
 				{
-					// FIXME: handle moves into and out of the synced subtree (and between synced subtrees)
+					// FIXME: handle moves into and out of the synced subtree (and between distinct synced subtrees)
 					is_rename = ait->second != n->localnode->name;
 					is_move = n->parent && n->localnode->parent && n->parent->localnode && n->localnode->parent != n->parent->localnode;
 
@@ -3405,7 +3434,7 @@ void MegaClient::notifypurge(void)
 					if (n->parent && n->parent->localnode)
 					{
 						n->parent->localnode->getlocalpath(this,&localpath);
-						syncdown(n->parent,n->parent->localnode,&localpath);
+						syncdown(n->parent->localnode,&localpath);
 					}
 				}
 			}
@@ -3435,8 +3464,9 @@ void MegaClient::notifypurge(void)
 										fa = NULL;
 
 										// make sure that the file we are deleting is actually the one we want to delete
-										app->syncupdate_local_unlink(n);
+										app->syncupdate_remote_unlink(n);
 										fsaccess->rubbishlocal(&localpath);
+										syncactivity = true;
 									}
 									// FIXME: else log "not deleting because of fingerprint mismatch"
 								}
@@ -3449,8 +3479,9 @@ void MegaClient::notifypurge(void)
 					}
 					else
 					{
-						app->syncupdate_local_rmdir(n);
+						app->syncupdate_remote_rmdir(n);
 						fsaccess->rmdirlocal(&localpath);
+						syncactivity = true;
 					}
 				}
 			}
@@ -4285,9 +4316,10 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 					// FIXME: add purging of orphaned syncidhandles
 					if ((t == FOLDERNODE || t == FILENODE) && !syncdeleted[t].count(nn[i].syncid))
 					{
-						syncidhandles[nn[i].localnode->syncid] = h;
-						nn[i].localnode->node = n;
-						n->localnode = nn[i].localnode;
+						nn[i].localnode->setnode(n);
+//						syncidhandles[nn[i].localnode->syncid] = h;
+//						nn[i].localnode->node = n;
+//						n->localnode = nn[i].localnode;
 					}
 				}
 
@@ -7210,7 +7242,7 @@ void Transfer::complete()
 				{
 					*(FileFingerprint*)n = fingerprint;
 
-					serializefingerprint(&n->attrs.map['c']);
+					n->serializefingerprint(&n->attrs.map['c']);
 					client->setattr(n);
 				}
 			}
@@ -7222,9 +7254,9 @@ void Transfer::complete()
 		// rename file to one of its final target locations
 		for (file_list::iterator it = files.begin(); it != files.end(); it++)
 		{
-			if (client->fsaccess->renamelocal(&localfilename,&(*it)->localfilename))
+			if (client->fsaccess->renamelocal(&localfilename,&(*it)->localname))
 			{
-				renamedto = &(*it)->localfilename;
+				renamedto = &(*it)->localname;
 				break;
 			}
 		}
@@ -7232,7 +7264,7 @@ void Transfer::complete()
 		// copy to the other remaining target locations
 		for (file_list::iterator it = files.begin(); it != files.end(); it++)
 		{
-			if (renamedto != &(*it)->localfilename) client->fsaccess->copylocal(renamedto ? renamedto : &localfilename,&(*it)->localfilename);
+			if (renamedto != &(*it)->localname) client->fsaccess->copylocal(renamedto ? renamedto : &localfilename,&(*it)->localname);
 		}
 
 		if (!renamedto) client->fsaccess->unlinklocal(&localfilename);
@@ -7577,8 +7609,7 @@ bool FileFingerprint::genfingerprint(FileAccess* fa)
 	if (!isvalid)
 	{
 		isvalid = true;
-		//changed = true;
-		changed = false;
+		changed = true;
 	}
 
 	return changed;
@@ -7616,52 +7647,30 @@ int FileFingerprint::unserializefingerprint(string* d)
 	return 1;
 }
 
-bool MegaClient::addsync(string* localpath, Node* n)
-{
-	Sync* sync = new Sync(this,localpath,n);
-
-	sync->addscan(NULL,localpath,NULL,true);
-	sync->rootlocal = sync->procscanstack();
-
-	// local path not present - fail
-	if (!sync->rootlocal)
-	{
-		delete sync;
-		return false;
-	}
-
-	// set up sync root linkage
-	syncidhandles[sync->rootlocal->syncid] = n->nodehandle;
-	sync->rootlocal->node = n;
-	n->localnode = sync->rootlocal;
-
-	sync->sync_it = syncs.insert(syncs.end(),sync);
-
-	syncactivity = true;
-
-	return true;
-}
-
 // a new sync reads the full local tree and issues all commands required to equalize both sides
 Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode)
 {
 	client = cclient;
-	rootpath = *crootpath;
-
-	rooth = remotenode->nodehandle;
-
+	
 	localbytes = 0;
-	localnodes[0] = 0;
-	localnodes[1] = 0;
+	localnodes[FILENODE] = 0;
+	localnodes[FOLDERNODE] = 0;
 
 	state = SYNC_INITIALSCAN;
+	localroot.init(this,crootpath,FOLDERNODE,NULL,crootpath);
+	localroot.setnode(remotenode);
+	
+	queuescan(NULL,NULL,NULL,NULL,true);
+	procscanstack();
+	
+	sync_it = client->syncs.insert(client->syncs.end(),this);
 }
 
 Sync::~Sync()
 {
+	// prevent mass deletion while rootlocal destructor runs
 	state = SYNC_CANCELED;
 
-	delete rootlocal;
 	client->syncs.erase(sync_it);
 
 	client->syncactivity = true;
@@ -7677,18 +7686,38 @@ void Sync::changestate(syncstate newstate)
 	}
 }
 
-LocalNode::LocalNode(Sync* csync, string* cname, string* clocalname, nodetype ctype, LocalNode* cparent, handle csyncid)
+// initialize fresh LocalNode object - must be called exactly once
+void LocalNode::init(Sync* csync, string* clocalname, nodetype ctype, LocalNode* cparent, string* clocalpath)
 {
 	sync = csync;
-	name = *cname;
-	if (clocalname) localname = *clocalname;
-	type = ctype;
 	parent = cparent;
-	syncid = csyncid;
-	nodehandle = UNDEF;
 	node = NULL;
+	type = ctype;
+	syncid = sync->client->nextsyncid();
+	
+	localname = *clocalname;	
 
-	if (parent) parent->children[&localname] = this;
+	if (parent)
+	{
+		// we don't construct a UTF-8 name for the root path
+		name = *clocalname;
+		sync->client->fsaccess->local2name(&name);
+
+		parent->children[&localname] = this;
+	}
+
+	// enable folder notification
+	if (type == FOLDERNODE) sync->client->fsaccess->addnotify(this,clocalpath);
+
+	sync->client->syncactivity = true;
+}
+
+void LocalNode::setnode(Node* cnode)
+{
+	node = cnode;
+	node->localnode = this;
+
+	sync->client->syncidhandles[syncid] = node->nodehandle;
 }
 
 LocalNode::~LocalNode()
@@ -7708,7 +7737,11 @@ LocalNode::~LocalNode()
 
 	for (localnode_map::iterator it = children.begin(); it != children.end(); ) delete it++->second;
 
-	if (node) node->localnode = NULL;
+	if (node)
+	{
+		node->syncdeleted = true;
+		node->localnode = NULL;
+	}
 }
 
 void LocalNode::getlocalpath(MegaClient* client, string* path)
@@ -7732,66 +7765,93 @@ void LocalNode::prepare()
 // scan rootpath, add or update child nodes, call recursively for folder nodes
 void Sync::scan(string* localpath, FileAccess* fa, LocalNode* parent, bool fulltree)
 {
-	DirAccess* da = client->fsaccess->newdiraccess();
+	DirAccess* da;
 	string localname;
+	static handle scanseqno;
+	localnode_map::iterator it;
+	LocalNode* l;
 
-	// add all items in folder localpath
-	if (da->dopen(localpath,fa,false)) while (da->dnext(&localname))
-	{
-		// check if this record is to be ignored
-		if (!client->fsaccess->localhidden(localpath,&localname)) addscan(localpath,&localname,parent,fulltree);
-	}
+	scanseqno++;
+	
+	da = client->fsaccess->newdiraccess();
+
+	// scan the dir, mark all items with a unique identifier
+	if (da->dopen(localpath,fa,false)) while (da->dnext(&localname)) if ((l = queuefsrecord(localpath,&localname,parent,fulltree))) l->scanseqno = scanseqno;
+
+	// delete items that disappeared
+	for (it = parent->children.begin(); it != parent->children.end(); it++) if (scanseqno != it->second->scanseqno) delete it->second;
 
 	delete da;
 }
 
-void Sync::addscan(string* localpath, string* localname, LocalNode* parent, bool fulltree)
+LocalNode* Sync::queuefsrecord(string* localpath, string* localname, LocalNode* parent, bool fulltree)
 {
-	client->syncactivity = true;
+	localnode_map::iterator it;
+	LocalNode* l;
+	
+	// check if this record is to be ignored
+	if (!client->fsaccess->localhidden(localpath,localname))
+	{
+		l = (it = parent->children.find(localname)) != parent->children.end() ? it->second : NULL;
+		queuescan(localpath,localname,l,parent,fulltree);
+
+		return l;
+	}
+	
+	return NULL;
+}
+
+void Sync::queuescan(string* localpath, string* localname, LocalNode* localnode, LocalNode* parent, bool fulltree)
+{
+//	client->syncactivity = true;
 
 	// FIXME: efficient copy-free push_back?
 	scanstack.resize(scanstack.size()+1);
 
 	ScanItem* si = &scanstack.back();
 
+	// FIXME: don't create mass copies of localpath
 	if (localpath) si->localpath = *localpath;
 	if (localname) si->localname = *localname;
+	si->localnode = localnode;
 	si->parent = parent;
 	si->fulltree = fulltree;
 	si->deleted = false;
+	
+	client->syncactivity = true;
 }
 
 // add or refresh local filesystem item from scan stack, add items to scan stack
 // must be called with a scanstack.siz() > 0
-LocalNode* Sync::procscanstack()
+void Sync::procscanstack()
 {
+	client->syncactivity = true;
+
 	ScanItem* si = &*scanstack.begin();
 
 	// ignore deleted ScanItems
 	if (si->deleted)
 	{
 		scanstack.pop_front();
-		return NULL;
+		return;
 	}
-
-	client->syncactivity = true;
-
-	LocalNode* parent = si->parent;
 
 	string* localpath = &si->localpath;
 	string* localname = &si->localname;
+
 	bool fulltree = si->fulltree;
 
 	FileAccess* fa;
-	bool recurse = false;
 	bool changed = false;
 
 	string tmpname;
 
+	LocalNode* l;
+
 	// if localpath was not specified, construct based on parents & base sync path
 	if (!localpath->size())
 	{
-		LocalNode* p = parent;
+		LocalNode* p = si->parent ? si->parent : &localroot;
 
 		while (p)
 		{
@@ -7800,19 +7860,20 @@ LocalNode* Sync::procscanstack()
 		}
 	}
 
-	LocalNode* l;
-
-	if (localpath->size()) localpath->append(client->fsaccess->localseparator);
-
-	localpath->append(*localname);
+	if (localname->size())
+	{
+		localpath->append(client->fsaccess->localseparator);
+		localpath->append(*localname);
+	}
 
 	// check if a child by the same name already exists
-	if (parent)
+	// (skip this check for localroot)
+	if (si->parent)
 	{
 		// have we seen this item before?
-		localnode_map::iterator it = parent->children.find(localname);
+		localnode_map::iterator it = si->parent->children.find(localname);
 
-		if (it != parent->children.end()) l = it->second;
+		if (it != si->parent->children.end()) l = it->second;
 		else l = NULL;
 	}
 	else l = NULL;
@@ -7828,44 +7889,30 @@ LocalNode* Sync::procscanstack()
 
 	if (fa->fopen(localpath,1,0))
 	{
-		if (l && l->type != fa->type)
+		if (si->parent)
 		{
-			// type change (a directory replaced a file of the same name or vice versa)
-			delete l;
-			l = NULL;
-
-			client->fsaccess->local2path(localpath,&tmpname);
-			client->app->syncupdate_local_folder_deletion(this,tmpname.c_str());
-		}
-
-		// new node
-		if (!l)
-		{
-			string name;
-
-			if (localname)
+			if (l && l->type != fa->type)
 			{
-				name = *localname;
-				client->fsaccess->local2name(&name);
+				// type change (a directory replaced a file of the same name or vice versa)
+				delete l;
+				l = NULL;
 			}
 
-			// this is a new node: add
-			l = new LocalNode(this,&name,localname,fa->type,parent,client->nextsyncid());
-
-			// enable folder notification
-			if (fa->type == FOLDERNODE)
+			// new node
+			if (!l)
 			{
-				client->fsaccess->addnotify(l,localpath);
-				recurse = fulltree;
-			}
+				// this is a new node: add
+				l = new LocalNode;
+				l->init(this,localname,fa->type,si->parent,localpath);
 
-			//changed = true;
+				changed = true;
+			}
 		}
 
 		// detect file changes or recurse into new subfolders
 		if (fa->type == FOLDERNODE)
 		{
-			if (recurse) scan(localpath,fa,l,fulltree);
+			if (fulltree) scan(localpath,fa,si->parent ? l : &localroot,fulltree);
 		}
 		else if (l->genfingerprint(fa)) changed = true;
 
@@ -7875,7 +7922,10 @@ LocalNode* Sync::procscanstack()
 	{
 		// file gone
 		client->fsaccess->local2path(localpath,&tmpname);
-		client->app->syncupdate_local_folder_deletion(this,tmpname.c_str());
+		if (l->type == FOLDERNODE) client->app->syncupdate_local_folder_deletion(this,tmpname.c_str());
+		else client->app->syncupdate_local_file_deletion(this,tmpname.c_str());
+
+		client->syncactivity = true;
 
 		delete l;
 		l = NULL;
@@ -7883,23 +7933,25 @@ LocalNode* Sync::procscanstack()
 
 	if (l)
 	{
-		if (changed) client->fsaccess->local2path(localpath,&tmpname);
+		if (changed)
+		{
+			client->syncactivity = true;
+			client->fsaccess->local2path(localpath,&tmpname);
+		}
 
 		localnodes[l->type]++;
 
 		if (l->type == FILENODE)
 		{
 			if (changed) client->app->syncupdate_local_file_addition(this,tmpname.c_str());
-			localbytes += l->size;
+			localbytes += l->size;			
 		}
-		else if (changed) client->app->syncupdate_local_folder_addition(this,tmpname.c_str());
+		else if (changed) client->app->syncupdate_local_folder_addition(this,tmpname.c_str());		
 	}
 
 	delete fa;
 
 	scanstack.pop_front();
-
-	return l;
 }
 
 // syncids are usable to indicate putnodes()-local parent linkage
@@ -7912,12 +7964,12 @@ handle MegaClient::nextsyncid()
 	return currsyncid;
 }
 
-SyncFileGet::SyncFileGet(Node* cn, string* clocalfilename)
+SyncFileGet::SyncFileGet(Node* cn, string* clocalname)
 {
 	n = cn;
 	h = n->nodehandle;
 	*(FileFingerprint*)this = *n;
-	localfilename = *clocalfilename;
+	localname = *clocalname;
 
 	n->syncget = this;
 }
@@ -7939,7 +7991,7 @@ void SyncFileGet::completed(Transfer* t, LocalNode* n)
 // recursively traverse tree of remote Nodes and match with LocalNode tree
 // create missing local folders
 // add locally missing files to the GET queue
-void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
+void MegaClient::syncdown(LocalNode* l, string* localpath)
 {
 	remotenode_map nchildren;
 	remotenode_map::iterator rit;
@@ -7954,10 +8006,10 @@ void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
 	string tmpname;
 
 	// build child hash - nameclash resolution: use newest version
-	for (node_list::iterator it = n->children.begin(); it != n->children.end(); it++)
+	for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 	{
 		// node must be decrypted and name defined to be considered
-		if (!(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
+		if (!(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
 		{
 			// map name to node (overwrite only if newer)
 			npp = &nchildren[&ait->second];
@@ -8007,10 +8059,9 @@ void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
 				localpath->append(fsaccess->localseparator);
 				localpath->append(lit->second->localname);
 
-				rit->second->localnode = lit->second;
-				lit->second->node = rit->second;
+				lit->second->setnode(rit->second);
 
-				syncdown(rit->second,lit->second,localpath);
+				syncdown(lit->second,localpath);
 
 				localpath->resize(t);
 
@@ -8034,7 +8085,7 @@ void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
 			if (rit->second->type == FILENODE)
 			{
 				// start fetching this node, unless fetch is already in progress
-				// FIXME: to cover renames that occur during the download, reconstruct localfilename in complete()
+				// FIXME: to cover renames that occur during the download, reconstruct localname in complete()
 				if (!rit->second->syncget)
 				{
 					fsaccess->local2path(localpath,&tmpname);
@@ -8056,15 +8107,11 @@ void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
 					LocalNode* ll;
 
 					// create local folder and start notifications
-					ll = new LocalNode(l->sync,&ait->second,&localname,FOLDERNODE,l,nextsyncid());
+					ll = new LocalNode;
+					ll->init(l->sync,&ait->second,FOLDERNODE,l,localpath);
+					ll->setnode(rit->second);
 
-					syncdown(rit->second,ll,localpath);
-
-					fsaccess->addnotify(ll,localpath);
-
-					syncidhandles[ll->syncid] = rit->second->nodehandle;
-					rit->second->localnode = ll;
-					ll->node = rit->second;
+					syncdown(ll,localpath);
 
 					syncactivity = true;
 				}
@@ -8080,7 +8127,7 @@ void MegaClient::syncdown(Node* n, LocalNode* l, string* localpath)
 // mark additional nodes to to rubbished (those overwritten) by accumulating their nodehandles in rubbish.
 // nodes to be added are stored in synccreate. - with nodehandle set to parent if attached to an existing node
 // l and n are assumed to be folders and existing on both sides or scheduled for creation
-void MegaClient::syncup(LocalNode* l, Node* n)
+void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 {
 	remotenode_map nchildren;
 	remotenode_map::iterator rit;
@@ -8094,10 +8141,11 @@ void MegaClient::syncup(LocalNode* l, Node* n)
 
 	string tmpname;
 
-	if (n)
+//	if (n)
+	if (l->node)
 	{
-		// build child hash - nameclash resolution: use newest version
-		for (node_list::iterator it = n->children.begin(); it != n->children.end(); it++)
+		// corresponding remote node present: build child hash - nameclash resolution: use newest version
+		for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 		{
 			// node must be decrypted and name defined to be considered
 			if (!(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
@@ -8150,9 +8198,7 @@ void MegaClient::syncup(LocalNode* l, Node* n)
 							if (rit->second->isvalid ? (*lit->second == *(FileFingerprint*)rit->second) : (lit->second->mtime == rit->second->mtime))
 							{
 								// files have the same size and the same mtime (or the same fingerprint, if available): no action needed
-								syncidhandles[lit->second->syncid] = rit->second->nodehandle;
-								lit->second->node = rit->second;
-								rit->second->localnode = lit->second;
+								lit->second->setnode(rit->second);
 								continue;
 							}
 						}
@@ -8164,24 +8210,19 @@ void MegaClient::syncup(LocalNode* l, Node* n)
 					else
 					{
 						// recurse into directories of equal name
-						syncidhandles[lit->second->syncid] = rit->second->nodehandle;
-						rit->second->localnode = lit->second;
-						lit->second->node = rit->second;
+						lit->second->setnode(rit->second);
 
-						syncup(lit->second,rit->second);
+						syncup(lit->second/*,rit->second*/);
 						continue;
 					}
 				}
 
-				// create folder or send file
-				// if we have a remote parent, store as the basis for the subsequent putnodes()
-				if (n) lit->second->nodehandle = n->nodehandle;	// parent is an existing node
-
+				// create remote folder or send file
 				synccreate.push_back(lit->second);
 				syncactivity = true;
 			}
 
-			if (lit->second->type == FOLDERNODE) syncup(lit->second,rit == nchildren.end() ? NULL : rit->second);
+			if (lit->second->type == FOLDERNODE) syncup(lit->second/*,rit == nchildren.end() ? NULL : rit->second*/);
 		}
 	}
 }
@@ -8207,7 +8248,7 @@ void MegaClient::syncupdate()
 	for (start = 0; start < synccreate.size(); start = end)
 	{
 		// determine length of distinct subtree beneath existing node
-		for (end = start; end < synccreate.size(); end++) if (end > start && !ISUNDEF(synccreate[end]->nodehandle)) break;
+		for (end = start; end < synccreate.size(); end++) if (end > start && synccreate[end]->parent->node) break;
 
 		// add nodes that can be created immediately: folders & existing files; start uploads of new files
 		nn = nnp = new NewNode[end-start];
@@ -8268,7 +8309,7 @@ void MegaClient::syncupdate()
 		{
 			syncadding++;
 
-			reqs[r].add(new CommandPutNodes(this,synccreate[start]->nodehandle,NULL,nn,nnp-nn,0,PUTNODES_SYNC));
+			reqs[r].add(new CommandPutNodes(this,synccreate[start]->parent->node->nodehandle,NULL,nn,nnp-nn,0,PUTNODES_SYNC));
 			syncactivity = true;
 		}
 	}
@@ -8354,7 +8395,7 @@ bool MegaClient::startxfer(direction d, File* f)
 			{
 				// missing FileFingerprint for local file - generate
 				FileAccess* fa = fsaccess->newfileaccess();
-				if (fa->fopen(&f->localfilename,d == PUT,d == GET)) f->genfingerprint(fa);
+				if (fa->fopen(&f->localname,d == PUT,d == GET)) f->genfingerprint(fa);
 				delete fa;
 			}
 
@@ -8476,7 +8517,7 @@ void MegaClient::movetosyncdebris(Node* n)
 			}
 			else h = UNDEF;
 
-			// create missing component(s) of the debris folder of the day
+			// create missing component(s) of the sync debris folder of the day
 			NewNode* nn;
 			SymmCipher tkey;
 			string tattrstring;

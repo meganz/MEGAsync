@@ -3344,12 +3344,8 @@ void MegaApi::sendPendingRequests()
             string utf8name(localPath);
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
-            cout << "Go to addSync" << endl;
-            if (!client->addsync(&localname, node))
-            {
-                cout << "Local path not found: " << localPath << endl;
-                e = API_EARGS;
-            }
+			cout << "Go to addSync" << endl;
+			new Sync(client,&localname,node);
             break;
         }
 		}

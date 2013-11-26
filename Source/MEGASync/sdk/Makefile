@@ -1,5 +1,5 @@
 CXX=g++
-CFLAGS=-DUSE_SQLITE -DUSE_CRYPTOPP -g -Wall -I. -Iposix -isystem /usr/include/cryptopp
+CFLAGS=-DUSE_SQLITE -DUSE_CRYPTOPP -DUSE_INOTIFY -DUSE_FDOPENDIR -g -Wall -I. -Iposix -isystem /usr/include/cryptopp
 LIB=-lcryptopp -lfreeimage -lreadline -ltermcap -lcurl -lsqlite3
 LDFLAGS=
 SOURCES=megacli.cpp megaclient.cpp crypto/cryptopp.cpp posix/fs.cpp posix/console.cpp posix/net.cpp posix/wait.cpp db/sqlite.cpp

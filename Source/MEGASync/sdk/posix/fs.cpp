@@ -18,22 +18,28 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
+// FIXME: add other directory change notification providers (currently supported: Linux inotify)
+
 #define _POSIX_SOURCE
 #define _LARGE_FILES
 #define _LARGEFILE64_SOURCE
 #define _GNU_SOURCE 1
 #define _FILE_OFFSET_BITS 64
+#define _DARWIN_C_SOURCE
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <fcntl.h>
 
-#include <sys/sendfile.h>
 #include <sys/un.h>
 #include <termios.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <utime.h>
+
+#ifndef USE_FDOPENDIR
+#include <sys/dirent.h>
+#endif
 
 #include <curl/curl.h>
 
@@ -49,6 +55,9 @@ ssize_t pwrite(int, const void *, size_t, off_t) __DARWIN_ALIAS_C(pwrite);
 PosixFileAccess::PosixFileAccess()
 {
 	fd = -1;
+#ifndef USE_FDOPENDIR
+	dp = NULL;
+#endif
 }
 
 PosixFileAccess::~PosixFileAccess()
@@ -81,6 +90,10 @@ bool PosixFileAccess::fwrite(const byte* data, unsigned len, m_off_t pos)
 
 bool PosixFileAccess::fopen(string* f, bool read, bool write)
 {
+#ifndef USE_FDOPENDIR
+	if (dp = opendir(f->c_str())) return true;
+#endif
+	
 	if ((fd = open(f->c_str(),write ? (read ? O_RDWR : O_WRONLY|O_CREAT|O_TRUNC) : O_RDONLY,0600)) >= 0)
 	{
 		struct stat statbuf;
@@ -104,24 +117,30 @@ PosixFileSystemAccess::PosixFileSystemAccess()
 {
 	localseparator = "/";
 
+#ifdef USE_INOTIFY
 	notifyfd = inotify_init1(IN_NONBLOCK);
 	notifyerr = false;
 	notifyleft = 0;
+#endif
 }
 
 PosixFileSystemAccess::~PosixFileSystemAccess()
 {
+#ifdef USE_INOTIFY
 	if (notifyfd >= 0) close(notifyfd);
+#endif
 }
 
 // wake up from filesystem updates
 void PosixFileSystemAccess::addevents(Waiter* w)
 {
+#ifdef USE_INOTIFY
 	PosixWaiter* pw = (PosixWaiter*)w;
 
 	FD_SET(notifyfd,&pw->rfds);
 
 	pw->bumpmaxfd(notifyfd);
+#endif
 }
 
 // generate unique local filename in the same fs as relatedpath
@@ -184,12 +203,24 @@ bool PosixFileSystemAccess::copylocal(string* oldname, string* newname)
 	int sfd, tfd;
 	ssize_t t = -1;
 
+#ifdef USE_INOTIFY
+#include <sys/sendfile.h>
+
 	// Linux-specific - kernel 2.6.33+ required
 	if ((sfd = open(oldname->c_str(),O_RDONLY|O_DIRECT)) >= 0)
 	{
-		if ((tfd = open(newname->c_str(),O_WRONLY|O_CREAT|O_TRUNC|O_DIRECT,0644)) >= 0)
+		if ((tfd = open(newname->c_str(),O_WRONLY|O_CREAT|O_TRUNC|O_DIRECT,0600)) >= 0)
 		{
 			while ((t = sendfile(tfd,sfd,NULL,1024*1024*1024)) > 0);
+#else
+	char buf[16384];
+
+	if ((sfd = open(oldname->c_str(),O_RDONLY)) >= 0)
+	{
+		if ((tfd = open(newname->c_str(),O_WRONLY|O_CREAT|O_TRUNC,0600)) >= 0)
+		{
+			while (((t = read(sfd,buf,sizeof buf)) > 0) && write(tfd,buf,t) == t);
+#endif
 			close(tfd);
 		}
 
@@ -235,6 +266,7 @@ bool PosixFileSystemAccess::chdirlocal(string* name)
 
 void PosixFileSystemAccess::addnotify(LocalNode* l, string* path)
 {
+#ifdef USE_INOTIFY
 	int wd;
 
 	wd = inotify_add_watch(notifyfd,path->c_str(),IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO|IN_CLOSE_WRITE|IN_EXCL_UNLINK|IN_ONLYDIR);
@@ -244,16 +276,20 @@ void PosixFileSystemAccess::addnotify(LocalNode* l, string* path)
 		l->notifyhandle = (void*)(long)wd;
 		wdnodes[wd] = l;
 	}
+#endif
 }
 
 void PosixFileSystemAccess::delnotify(LocalNode* l)
 {
+#ifdef USE_INOTIFY
 	if (wdnodes.erase((int)(long)l->notifyhandle)) inotify_rm_watch(notifyfd,(int)(long)l->notifyhandle);
+#endif
 }
 
 // return next notified local name and corresponding parent node
 bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode** localnodep)
 {
+#ifdef USE_INOTIFY
 	inotify_event* in;
 	wdlocalnode_map::iterator it;
 
@@ -271,12 +307,7 @@ bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode*
 		notifypos = in->name-notifybuf+in->len;
 		notifyleft -= notifypos;
 
-		if (in->mask & (IN_Q_OVERFLOW | IN_UNMOUNT))
-		{
-cout << "Notify Overflow" << endl;
-			notifyerr = true;
-			return false;
-		}
+		if (in->mask & (IN_Q_OVERFLOW | IN_UNMOUNT)) break;
 
 		if (in->mask & (IN_CREATE|IN_DELETE|IN_MOVED_FROM|IN_MOVED_TO|IN_CLOSE_WRITE|IN_EXCL_UNLINK))
 		{
@@ -298,6 +329,9 @@ cout << "Notify Overflow" << endl;
 		else cout << "Unknown mask: " << in->mask << endl;
 	}
 
+	cout << "Notify Overflow" << endl;
+#endif
+	notifyerr = true;
 	return false;
 }
 
@@ -337,8 +371,13 @@ bool PosixDirAccess::dopen(string* path, FileAccess* f, bool doglob)
 
 	if (f)
 	{
+#ifdef USE_FDOPENDIR
 		dp = fdopendir(((PosixFileAccess*)f)->fd);
 		((PosixFileAccess*)f)->fd = -1;
+#else
+		dp = ((PosixFileAccess*)f)->dp;
+		((PosixFileAccess*)f)->dp = NULL;
+#endif
 	}
 	else dp = opendir(path->c_str());
 

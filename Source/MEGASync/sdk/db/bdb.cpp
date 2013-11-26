@@ -20,11 +20,8 @@ DEALINGS IN THE SOFTWARE.
 
 // FIXME: close in a way that does not require logfile merging upon the next open()
 
-#ifdef ENABLE_LOCALCACHE
-
-#include "mega.h"
 #include "megaclient.h"
-#include "megabdb.h"
+#include "bdb.h"
 
 // basepath is prepended to the name
 BdbAccess::BdbAccess(string* cdbpathprefix)
@@ -188,4 +185,3 @@ void BdbTable::abort()
 		dbtxn = NULL;
 	}
 }
-#endif
