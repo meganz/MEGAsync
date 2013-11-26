@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-10-03 - sample application, Berkeley DB access
+MEGA SDK SQLite DB access layer
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 

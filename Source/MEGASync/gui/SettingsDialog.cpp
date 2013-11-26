@@ -146,7 +146,7 @@ void SettingsDialog::on_rNoProxy_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString upgradeUrl("https://mega.co.nz/#upgrade");
+	QString upgradeUrl("https://mega.co.nz/#pro");
     QDesktopServices::openUrl(QUrl(upgradeUrl));
 }
 
@@ -239,7 +239,7 @@ void SettingsDialog::saveSettings()
     preferences->setStartOnStartup(ui->cStartOnStartup->isChecked());
 
     #ifdef WIN32
-        WindowsUtils::startOnStartup(ui->cStartOnStartup->isChecked());
+		//WindowsUtils::startOnStartup(ui->cStartOnStartup->isChecked());
     #endif
 
     //Syncs

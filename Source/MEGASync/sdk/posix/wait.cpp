@@ -1,8 +1,10 @@
 /*
 
-MEGA SDK 2013-11-17 - POSIX event/timeout handling
+MEGA SDK POSIX event/timeout handling
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: mo
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -22,6 +24,8 @@ DEALINGS IN THE SOFTWARE.
 #define __DARWIN_C_LEVEL 199506L
 
 #ifdef __MACH__
+
+// FIXME: revisit OS X support
 #include <machine/endian.h>
 #include <strings.h>
 #include <sys/time.h>
@@ -35,6 +39,7 @@ int clock_gettime(int, struct timespec* t)
     t->tv_nsec = now.tv_usec*1000;
     return 0;
 }
+
 #endif
 
 #include "megaclient.h"

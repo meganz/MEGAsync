@@ -2328,31 +2328,27 @@ void DemoApp::openfilelink_result(error e)
 	if (e) cout << "Failed to open link: " << errorstring(e) << endl;
 }
 
-// the requested link was opened successfully
-// (it is the application's responsibility to delete n!)
-void DemoApp::openfilelink_result(Node* n)
+// the requested link was opened successfully - import to cwd
+void DemoApp::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, time_t ts, time_t tm)
 {
-	cout << "Importing " << n->displayname() << "..." << endl;
-
-	if (client->loggedin())
+	Node* n;
+	
+	if (client->loggedin() && (n = client->nodebyhandle(cwd)))
 	{
 		NewNode* newnode = new NewNode[1];
-		string attrstring;
 
-		// copy core properties
-		*(NodeCore*)newnode = *(NodeCore*)n;
-
-		// generate encrypted attribute string
-		n->attrs.getjson(&attrstring);
-		client->makeattr(&n->key,&newnode->attrstring,attrstring.c_str());
-
-		delete n;
-
+		// set up new node as folder node
 		newnode->source = NEW_PUBLIC;
+		newnode->type = FILENODE;
+		newnode->nodehandle = ph;
+		newnode->clienttimestamp = tm;
 		newnode->parenthandle = UNDEF;
 
-		// add node
-		client->putnodes(cwd,newnode,1);
+		newnode->nodekey.assign((char*)key,Node::FILENODEKEYLENGTH);
+
+		newnode->attrstring = *a;
+		
+		client->putnodes(n->nodehandle,newnode,1);
 	}
 	else cout << "Need to be logged in to import file links." << endl;
 }

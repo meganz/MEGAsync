@@ -1,8 +1,10 @@
 /*
 
-MEGA SDK 2013-11-16 - sample application, Berkeley DB access
+MEGA SDK Berkeley DB access layer
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: mo
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -15,6 +17,8 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 DEALINGS IN THE SOFTWARE.
 
 */
+
+// FIXME: close in a way that does not require logfile merging upon the next open()
 
 #ifdef ENABLE_LOCALCACHE
 

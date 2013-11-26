@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-16 - Client Access Engine
+MEGA SDK - Client Access Engine Core Logic
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
@@ -438,7 +438,7 @@ typedef enum { NEW_NODE, NEW_PUBLIC, NEW_UPLOAD } newnodesource;
 // RDWR - cannot rename or delete
 // FULL - all operations that do not require ownership permitted
 // OWNER - node is in caller's ROOT, INCOMING or RUBBISH trees
-typedef enum { ACCESS_UNKNOWN = -1, RDONLY = 0, RDWR, FULL, OWNER } accesslevel;
+typedef enum { ACCESS_UNKNOWN = -1, RDONLY = 0, RDWR, FULL, OWNER, OWNERPRELOGIN } accesslevel;
 
 // HttpReq states
 typedef enum { REQ_READY, REQ_PREPARED, REQ_INFLIGHT, REQ_SUCCESS, REQ_FAILURE, REQ_DONE } reqstatus;
@@ -995,7 +995,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 	// owner
 	handle owner;
 
-	// actual time this node was created
+	// actual time this node was created (cannot be set by user)
 	time_t ctime;
 
 	// FILENODE nodes only: size, fingerprint, nonce, meta MAC, attribute string
@@ -1057,7 +1057,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 	bool serialize(string*);
 	static Node* unserialize(MegaClient*, string*, node_vector*);
 
-	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype, m_off_t, handle, const char*, time_t);
+	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype, m_off_t, handle, const char*, time_t, time_t);
 	~Node();
 };
 
@@ -2037,7 +2037,7 @@ public:
 	// initialize/update state cache referenced sctable
 	void initsc();
 	void updatesc();
-	void finalizesc(int);
+	void finalizesc(bool);
 
 	// MegaClient-Server response JSON
 	JSON json;
@@ -2074,7 +2074,7 @@ public:
 	void pendingattrstring(handle, string*);
 
 	// merge newly received share into nodes
-	void mergenewshares(int);
+	void mergenewshares(bool);
 
 	// transfer queues (PUT/GET)
 	transfer_map transfers[2];
@@ -2366,7 +2366,7 @@ struct MegaApp
 
 	// exported link access result
 	virtual void openfilelink_result(error) { }
-	virtual void openfilelink_result(Node*) { }
+	virtual void openfilelink_result(handle, const byte*, m_off_t, string*, const char*, time_t, time_t) { }
 
 	// global transfer queue updates (separate signaling towards the queued objects)
 	virtual void transfer_added(Transfer*) { }

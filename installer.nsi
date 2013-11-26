@@ -150,7 +150,7 @@ FunctionEnd
 
 Function RunMegaSync
   Exec "$INSTDIR\MEGASync.exe"
-  Sleep 3000
+  Sleep 2000
 FunctionEnd
 
 Function RunExplorer
@@ -192,7 +192,7 @@ Section "Principal" SEC01
   ;VC++ 2010 SP1 x86
   ClearErrors
   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
-  ;IfErrors 0 VSRedist2010x86Installed
+  IfErrors 0 VSRedist2010x86Installed
            inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)" "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe" "$INSTDIR\vcredist_x86.exe" /end
            pop $0
            StrCmp $0 "OK" dlok1
@@ -202,14 +202,14 @@ Section "Principal" SEC01
            ;File "vcredist_x86.exe"
            ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
            Delete "$INSTDIR\vcredist_x86.exe"
-  ;VSRedist2010x86Installed:
+  VSRedist2010x86Installed:
   
   ${If} ${RunningX64}
         ;VC++ 2010 SP1 x64
         SetRegView 64
         ClearErrors
         ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1D8E6291-B0D5-35EC-8441-6616F567A0F7}" "Version"
-        ;IfErrors 0 VSRedist2010x64Installed
+        IfErrors 0 VSRedist2010x64Installed
                  inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
                 pop $0
                 StrCmp $0 "OK" dlok2
@@ -218,15 +218,15 @@ Section "Principal" SEC01
                  ;File "vcredist_x64.exe"
                  ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
                  Delete "$INSTDIR\vcredist_x64.exe"
-        ;VSRedist2010x64Installed:
+        VSRedist2010x64Installed:
   ${EndIf}
   
   ;x86_32 files
-  File "${SRCDIR_MEGASYNC_X32}\pthreadVCE2.dll"
+  File "${SRCDIR_MEGASYNC_X32}\pthreadVC2.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtCore4.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtGui4.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtNetwork4.dll"
-  File /oname=ShellExtX32.dll "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll"
+  ;File /oname=ShellExtX32.dll "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll"
   
   ;!define LIBRARY_COM
   ;!define LIBRARY_SHELL_EXTENSION
@@ -234,7 +234,7 @@ Section "Principal" SEC01
   ;!undef LIBRARY_COM
   ;!undef LIBRARY_SHELL_EXTENSION
 
-  ${If} ${RunningX64}
+  /*${If} ${RunningX64}
         ;x86_64 shell extension files
         SetOutPath "$INSTDIR\x64"
         File "${SRCDIR_MEGASHELLEXT_X64}\QtCore4.dll"
@@ -248,7 +248,7 @@ Section "Principal" SEC01
         ;!undef LIBRARY_X64
         ;!undef LIBRARY_COM
         ;!undef LIBRARY_SHELL_EXTENSION
-  ${EndIf}
+  ${EndIf}*/
 
   SetOutPath "$INSTDIR"
   SetOverwrite on
@@ -256,7 +256,7 @@ Section "Principal" SEC01
   File "${SRCDIR_MEGASYNC_X32}\MEGASync.exe"
   
   ; Register shell extension 1 (x86_32)
-  SetRegView 32
+  /*SetRegView 32
   ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe "$INSTDIR\ShellExtX32.dll"'
   WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1" "" "{05B38830-F4E9-4329-978B-1DD28605D202}"
   WriteRegStr HKCR "CLSID\{05B38830-F4E9-4329-978B-1DD28605D202}\InprocServer32" "ThreadingModel" "Apartment"
@@ -280,7 +280,7 @@ Section "Principal" SEC01
         WriteRegStr HKCR "CLSID\{056D528D-CE28-4194-9BA3-BA2E9197FF8C}\InprocServer32" "ThreadingModel" "Apartment"
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{056D528D-CE28-4194-9BA3-BA2E9197FF8C}" "###MegaShellExtension2"
         SetRegView 32
-  ${EndIf}
+  ${EndIf}*/
   
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
   ${UAC.CallFunctionAsUser} RunExplorer
@@ -302,7 +302,7 @@ SectionEnd
 Section -AdditionalIcons
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   WriteIniStr "$INSTDIR\MEGA Web.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Web.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Web.lnk" "$INSTDIR\MEGA Web.url"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
@@ -325,10 +325,30 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function un.onInit
+UAC::RunElevated
+  ${Switch} $0
+  ${Case} 0
+    ${IfThen} $1 = 1 ${|} Quit ${|} ;User process. The installer has finished. Quit.
+    ${IfThen} $3 <> 0 ${|} ${Break} ${|} ;Admin process, continue the installation
+    ${If} $1 = 3 ;RunAs completed successfully, but with a non-admin user
+      ;MessageBox mb_YesNo|mb_IconExclamation|mb_TopMost|mb_SetForeground "This requires admin privileges, try again" /SD IDNO IDYES uac_tryagain IDNO 0
+      Quit
+    ${EndIf}
+  ${Case} 1223
+    ;MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This requires admin privileges, aborting!"
+    Quit
+  ${Default}
+    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This installer requires Administrator privileges. Error $0"
+    Quit
+  ${EndSwitch}
+
 !insertmacro MUI_UNGETLANGUAGE
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "¿Está completamente seguro que desea desinstalar $(^Name) junto con todos sus componentes?" IDYES +2
-  Abort
+;  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "¿Está completamente seguro que desea desinstalar $(^Name) junto con todos sus componentes?" IDYES +2
+;  Abort
 FunctionEnd
+
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
 
 Section Uninstall
   ExecDos::exec /DETAILED "taskkill /f /IM MEGASync.exe"
@@ -338,19 +358,20 @@ Section Uninstall
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
-  Delete "$INSTDIR\pthreadVCE2.dll"
-  Delete "$INSTDIR\ShellExtX32.dll"
+  Delete "$INSTDIR\pthreadVC2.dll"
+  ;Delete "$INSTDIR\ShellExtX32.dll"
   
+  /*
   ${If} ${RunningX64}
     Delete "$INSTDIR\x64\ShellExtX64.dll"
     Delete "$INSTDIR\x64\QtCore4.dll"
     Delete "$INSTDIR\x64\QtGui4.dll"
     Delete "$INSTDIR\x64\QtNetwork4.dll"
-  ${EndIf}
+  ${EndIf}*/
 
   Delete "$INSTDIR\MEGASync.exe"
 
-  ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
+  /*ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
 
   ${If} ${RunningX64}
     ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe /u "$INSTDIR\x64\ShellExtX64.dll"'
@@ -365,10 +386,12 @@ Section Uninstall
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1"
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension2"
     SetRegView 32
-  ${EndIf}
+  ${EndIf}*/
+  
   
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
-  Delete "$SMPROGRAMS\$ICONS_GROUP\Website.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Web.lnk"
+  Delete "$INSTDIR\MEGA Web.url"
   Delete "$DESKTOP\MegaSync.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MegaSync.lnk"
 

@@ -1,10 +1,12 @@
 /*
 
-MEGA SDK 2013-11-17 - POSIX network access layer (using cURL)
+MEGA SDK POSIX network access layer (using cURL)
 
-(cURL *must* be configured with --enable-ares!)
+(cURL *must* be configured with --enable-ares)
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: mo
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -17,8 +19,6 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 DEALINGS IN THE SOFTWARE.
 
 */
-
-// FIXME: removal of last inotify continuously triggers select()
 
 #include "net.h"
 

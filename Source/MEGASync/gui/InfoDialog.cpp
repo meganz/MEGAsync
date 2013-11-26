@@ -23,7 +23,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     QRect screenGeometry = QApplication::desktop()->availableGeometry();
     this->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
 
-    /*ui->wRecent1->setFileName("filename_compressed.zip");
+	/***************************/
+	ui->wRecent1->setFileName("filename_compressed.zip");
     ui->wRecent2->setFileName("filename_document.pdf");
     ui->wRecent3->setFileName("filename_image.png");
 
@@ -33,11 +34,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setFileName("Illustrator_file.ai");
     ui->wTransfer2->setPercentage(50);
     ui->wTransfer2->setType(1);
-*/
+	/******************************/
+
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
 
-    ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+	//ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
 }
@@ -49,12 +52,14 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::startAnimation()
 {
-    //ui->sActiveTransfers->setCurrentIndex(1);
-    //ui->wTransfer1->setPercentage(5);
-    //ui->wTransfer2->setPercentage(23);
-    //ui->pUsage->setProgress(20);
-    timer->start(3000);
-    //app->showSyncingIcon();
+	ui->sActiveTransfers->setCurrentIndex(1);
+	ui->wTransfer1->setPercentage(5);
+	ui->wTransfer2->setPercentage(23);
+	ui->pUsage->setProgress(20);
+	app->showSyncingIcon();
+
+	//timer->start(3000);
+	timer->start(100);
 }
 
 void InfoDialog::setUsage(int totalGB, int percentage)
@@ -118,7 +123,7 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::timerUpdate()
 {
-    /*int value1 = ui->wTransfer1->getPercentage();
+	int value1 = ui->wTransfer1->getPercentage();
     if(value1<100) ui->wTransfer1->setPercentage(value1+2);
 
     int value2 = ui->wTransfer2->getPercentage();
@@ -132,11 +137,13 @@ void InfoDialog::timerUpdate()
         ui->sActiveTransfers->setCurrentIndex(0);
         timer->stop();
         app->showSyncedIcon();
-    }*/
+	}
 
-    if((ui->wTransfer1->getPercentage()==100) && ui->wTransfer2->getPercentage()==100)
+	/******/
+	/*if((ui->wTransfer1->getPercentage()==100) && ui->wTransfer2->getPercentage()==100)
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-    timer->stop();
+	timer->stop();*/
+	/******/
 }
 
 void InfoDialog::on_bSettings_clicked()

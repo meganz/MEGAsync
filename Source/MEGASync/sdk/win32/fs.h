@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-17 - Win32 filesystem/directory access/notification (UNICODE)
+MEGA SDK Win32 filesystem/directory access/notification (UNICODE)
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 

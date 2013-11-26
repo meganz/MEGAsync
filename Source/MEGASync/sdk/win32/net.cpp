@@ -1,8 +1,10 @@
 /*
 
-MEGA SDK 2013-11-17 - Win32 network access layer (using WinHTTP)
+MEGA SDK Win32 network access layer (using WinHTTP)
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
+
+Author: mo
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.

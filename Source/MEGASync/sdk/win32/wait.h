@@ -1,6 +1,6 @@
 /*
 
-MEGA SDK 2013-11-17 - Win32 event/timeout handling
+MEGA SDK Win32 event/timeout handling
 
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
