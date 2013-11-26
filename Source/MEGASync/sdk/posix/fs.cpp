@@ -19,13 +19,15 @@ DEALINGS IN THE SOFTWARE.
 */
 
 // FIXME: add other directory change notification providers (currently supported: Linux inotify)
+#ifdef __MACH__
+#include <sys/dirent.h>
+#endif
 
 #define _POSIX_SOURCE
 #define _LARGE_FILES
 #define _LARGEFILE64_SOURCE
 #define _GNU_SOURCE 1
 #define _FILE_OFFSET_BITS 64
-#define _DARWIN_C_SOURCE
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -37,20 +39,17 @@ DEALINGS IN THE SOFTWARE.
 #include <sys/time.h>
 #include <utime.h>
 
-#ifndef USE_FDOPENDIR
-#include <sys/dirent.h>
-#endif
-
 #include <curl/curl.h>
 
 #include "megaclient.h"
 #include "wait.h"
 #include "fs.h"
 
-#ifdef __MACH__
+/*#ifdef __MACH__
+#define _DARWIN_C_SOURCE
 ssize_t pread(int, void *, size_t, off_t) __DARWIN_ALIAS_C(pread);
 ssize_t pwrite(int, const void *, size_t, off_t) __DARWIN_ALIAS_C(pwrite);
-#endif
+#endif*/
 
 PosixFileAccess::PosixFileAccess()
 {
@@ -91,9 +90,13 @@ bool PosixFileAccess::fwrite(const byte* data, unsigned len, m_off_t pos)
 bool PosixFileAccess::fopen(string* f, bool read, bool write)
 {
 #ifndef USE_FDOPENDIR
-	if (dp = opendir(f->c_str())) return true;
+	if ((dp = opendir(f->c_str())))
+	{
+		type = FOLDERNODE;
+		return true;
+	}
 #endif
-	
+
 	if ((fd = open(f->c_str(),write ? (read ? O_RDWR : O_WRONLY|O_CREAT|O_TRUNC) : O_RDONLY,0600)) >= 0)
 	{
 		struct stat statbuf;
