@@ -1,17 +1,20 @@
 #include "MEGAShellExt.h"
 
+#define SYNCED_ICON_ID		0
+#define NOT_SYNCED_ICON_ID	1
+
 ShellOverlayBinder1::ShellOverlayBinder1(QObject *parent) : QObject(parent) {}
 
 QAxAggregated *ShellOverlayBinder1::createAggregate()
 {
-    return new MEGAShellExt(0, this);
+	return new MEGAShellExt(SYNCED_ICON_ID, this);
 }
 
 ShellOverlayBinder2::ShellOverlayBinder2(QObject *parent) : QObject(parent) {}
 
 QAxAggregated *ShellOverlayBinder2::createAggregate()
 {
-    return new MEGAShellExt(1, this);
+	return new MEGAShellExt(NOT_SYNCED_ICON_ID, this);
 }
 
 //Global mutex

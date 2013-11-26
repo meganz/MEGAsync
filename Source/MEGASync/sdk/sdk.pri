@@ -37,7 +37,7 @@ else {
 }
 
 DEFINES += USE_SQLITE USE_CRYPTOPP
-LIBS += -lcryptopp -ldb_cxx -lpthread
+LIBS += -lcryptopp -lpthread -lFreeImage
 
 win32 {
     INCLUDEPATH += $$PWD

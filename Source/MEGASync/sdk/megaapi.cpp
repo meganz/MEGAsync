@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 #define USE_VARARGS
 #define PREFER_STDARG
 #include "megaapi.h"
-#include <QString>
+#include <FreeImage.h>
 
 #ifdef _WIN32
 #define snprintf _snprintf
@@ -38,6 +38,99 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 bool debug = false;
+
+// attempt to create a size*size JPEG thumbnail using FreeImage
+// thumbnail specs:
+// - largest square crop at the center (landscape) or at 1/6 of the height above center (portrait)
+// - must respect JPEG EXIF rotation tag
+// - must save at 85% quality
+// returns result as string
+#ifdef _WIN32
+#define FreeImage_GetFileTypeX FreeImage_GetFileTypeU
+#define FreeImage_LoadX FreeImage_LoadU
+typedef const wchar_t freeimage_filename_char_t;
+#else
+#define FreeImage_GetFileTypeX FreeImage_GetFileType
+#define FreeImage_LoadX FreeImage_Load
+typedef const char freeimage_filename_char_t;
+#endif
+
+static void createthumbnail(string* filename, unsigned size, string* result)
+{
+		FIBITMAP* dib;
+		FIBITMAP* tdib;
+		FIMEMORY* hmem;
+		int w, h;
+
+		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeX((freeimage_filename_char_t*)filename->data());
+
+		if (fif == FIF_UNKNOWN) return;
+
+		if (fif == FIF_JPEG)
+		{
+				// load JPEG (scale & EXIF-rotate)
+				FITAG *tag;
+
+				if (!(dib = FreeImage_LoadX(fif,(freeimage_filename_char_t*)filename->data(),JPEG_EXIFROTATE | JPEG_FAST | (size << 16)))) return;
+
+				if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGWidth",&tag)) w = atoi((char*)FreeImage_GetTagValue(tag));
+				else w = FreeImage_GetWidth(dib);
+
+				if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGHeight",&tag)) h = atoi((char*)FreeImage_GetTagValue(tag));
+				else h = FreeImage_GetHeight(dib);
+		}
+		else
+		{
+				// load all other image types - for RAW formats, rely on embedded preview
+				if (!(dib = FreeImage_LoadX(fif,(freeimage_filename_char_t*)filename->data(),(fif == FIF_RAW) ? RAW_PREVIEW : 0))) return;
+
+				w = FreeImage_GetWidth(dib);
+				h = FreeImage_GetHeight(dib);
+		}
+
+		if (w < h)
+		{
+				h = h*size/w;
+				w = size;
+		}
+		else
+		{
+				w = w*size/h;
+				h = size;
+		}
+
+		if ((tdib = FreeImage_Rescale(dib,w,h,FILTER_BILINEAR)))
+		{
+				FreeImage_Unload(dib);
+
+				dib = tdib;
+
+				if ((tdib = FreeImage_Copy(dib,(w-size)/2,(h-size)/3,size+(w-size)/2,size+(h-size)/3)))
+				{
+						FreeImage_Unload(dib);
+
+						dib = tdib;
+
+						if ((hmem = FreeImage_OpenMemory()))
+						{
+								if (FreeImage_SaveToMemory(FIF_JPEG,dib,hmem,JPEG_BASELINE | JPEG_OPTIMIZE | 85))
+								{
+										BYTE* tdata;
+										DWORD tlen;
+
+										FreeImage_AcquireMemory(hmem,&tdata,&tlen);
+										result->assign((char*)tdata,tlen);
+								}
+
+								FreeImage_CloseMemory(hmem);
+						}
+				}
+		}
+
+		FreeImage_Unload(dib);
+}
+
+
 int MegaFile::nextseqno = 0;
 
 MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
@@ -991,7 +1084,7 @@ void MegaApi::addContact(const char* email, MegaRequestListener* listener)
     waiter->notify();
 }
 
-void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
+/*void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD, listener);
 	transfer->setPath(localPath);
@@ -1057,7 +1150,7 @@ void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, cons
 
 void MegaApi::cancelTransfer(MegaTransfer *transfer)
 {
-    /*if(!transfer) return;
+	if(!transfer) return;
 
 	int td = transfer->getSlot();
 	client->tclose(td);
@@ -1065,8 +1158,8 @@ void MegaApi::cancelTransfer(MegaTransfer *transfer)
 	tmpfilename.append(".tmp");
 	unlink(tmpfilename.c_str());
 	transferMap[transfer->getTag()] = NULL;
-    delete transfer;*/
-}
+	delete transfer;
+}*/
 
 void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
 {
@@ -1351,6 +1444,36 @@ void MegaApi::transfer_prepare(Transfer *t)
 	fsAccess->local2path(&(t->localfilename), &path);
 	transfer->setPath(path.c_str());
 	cout << "transfer_prepare: " << transfer->getFileName() << endl;
+
+	if (t->type == GET)
+	{
+		client->fsaccess->tmpnamelocal(&t->localfilename);
+	}
+	else
+	{
+		if (t->localfilename.size())
+		{
+				if (!t->uploadhandle)
+				{
+						string thumbnail;
+
+						// (thumbnail creation should be performed in subthreads to keep the app nonblocking)
+						// to guard against file overwrite race conditions, production applications
+						// should use the same file handle for uploading and creating the thumbnail
+						createthumbnail(&t->localfilename,120,&thumbnail);
+
+						if (thumbnail.size())
+						{
+								cout << "Image detected and thumbnail extracted, size " << thumbnail.size() << " bytes" << endl;
+
+								// (store the file attribute data - it will be attached to the file
+								// immediately if the upload has already completed; otherwise, once
+								// the upload completes)
+								client->putfa(t,THUMBNAIL120X120,(const byte*)thumbnail.data(),thumbnail.size());
+						}
+				}
+		}
+	}
 }
 
 void MegaApi::transfer_update(Transfer *tr)
@@ -2966,7 +3089,7 @@ void MegaApi::sendPendingTransfers()
 
 		switch(transfer->getType())
 		{
-			case MegaTransfer::TYPE_UPLOAD:
+			/*case MegaTransfer::TYPE_UPLOAD:
 			{
                 const char* localPath = transfer->getPath();
 				if(!localPath) { e = API_EARGS; break; }
@@ -2984,7 +3107,7 @@ void MegaApi::sendPendingTransfers()
                 MegaFileGet *f = new MegaFileGet(client, node);
                 client->startxfer(GET,f);
 				break;
-			}
+			}*/
 		}
 
 		if(e)

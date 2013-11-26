@@ -22,6 +22,11 @@
 
 #wBackground
 {
+	margin-top: 1px;
+	margin-bottom: 3px;
+	margin-right: 1px;
+	margin-left: 0px;
+	border-radius: 5px;
 	background-color: rgb(178, 178, 178);
 }</string>
   </property>
@@ -38,7 +43,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Resources.qrc">:/images/BAD_transferProgress.png</pixmap>
+    <pixmap resource="Resources.qrc">:/images/transferProgress.png</pixmap>
    </property>
   </widget>
   <widget class="QWidget" name="wProgress" native="true">

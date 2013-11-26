@@ -18,13 +18,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setOrganizationDomain("mega.co.nz");
     setApplicationName("MegaSync");
 
-#ifdef WIN32
-    WindowsUtils::initialize();
-	//WindowsUtils::startOnStartup(false);
-#endif
-
-
-
     createActions();
     createTrayIcon();
     infoDialog = new InfoDialog(this);
@@ -33,13 +26,18 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     localServer = NULL;
     httpServer = NULL;
     transfer = NULL;
-    storageMax = NULL;
+	storageMax = 0;
     error = NULL;
     queuedDownloads = 0;
     queuedUploads = 0;
     preferences = new Preferences();
     megaApi = new MegaApi(this,
          &(QCoreApplication::applicationDirPath()+"/").toStdString());
+
+#ifdef WIN32
+	WindowsUtils::initialize();
+	WindowsUtils::startOnStartup(preferences->startOnStartup());
+#endif
 
     //downloader = new FileDownloader(QUrl("http://www.google.es"));
     //connect(downloader, SIGNAL(downloaded()), this, SLOT(updateDowloaded()));
