@@ -24,8 +24,8 @@ DEALINGS IN THE SOFTWARE.
 // FIXME: recreate filename after sync transfer completes to shortcut in-transfer rename handling
 // FIXME: generate cr element for file imports
 // FIXME: support invite links (including responding to sharekey requests)
-// FIXME: Sync: recognize folder renames and use setattr() instead of potentially huge delete/putnodes sequence
-// FIXME: instead of copying nodes, move if the source is in the rubbish to prevent unnecessary node creation
+// FIXME: Sync: recognize folder renames and use setattr() instead of potentially huge delete/putnodes sequences
+// FIXME: instead of copying nodes, move if the source is in the rubbish to reduce node creaton load on the servers
 
 // root URL for API access
 const char* const MegaClient::APIURL = "https://g.api.mega.co.nz/";
@@ -252,6 +252,7 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t
 
 Node::~Node()
 {
+	// remove node's fingerprint from hash
 	if (type == FILENODE && fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
 
 	// delete outshares, including pointers from users for this node
@@ -266,8 +267,10 @@ Node::~Node()
 	delete inshare;
 	delete sharekey;
 
+	// sync: remove reference from local filesystem node
 	if (localnode) localnode->node = NULL;
 
+	// in case this node is currently being transferred for syncing: abort transfer
 	delete syncget;
 }
 
@@ -548,11 +551,7 @@ bool MegaClient::decryptkey(const char* sk, byte* tk, int tl, SymmCipher* sc, in
 	const char* ptr = sk;
 
 	// measure key length
-	while (*ptr)
-	{
-		if (*ptr == '"' || *ptr == '/') break;
-		ptr++;
-	}
+	while (*ptr && *ptr != '"' && *ptr != '/') ptr++;
 
 	sl = ptr-sk;
 
@@ -657,6 +656,7 @@ bool Node::applykey()
 	return true;
 }
 
+// update node key and decrypt attributes
 void Node::setkey(const byte* newkey)
 {
 	if (newkey) nodekey.assign((char*)newkey,(type == FILENODE) ? FILENODEKEYLENGTH+0 : FOLDERNODEKEYLENGTH+0);
@@ -693,14 +693,13 @@ bool Share::unserialize(MegaClient* client, int direction, handle h, const byte*
 	return true;
 }
 
-// modify share
 void Share::update(accesslevel a, time_t t)
 {
 	access = a;
 	ts = t;
 }
 
-// coutgoing: < 0 - don't authenticate, > 0 - authenticate
+// coutgoing: < 0 - don't authenticate, > 0 - authenticate using handle auth
 NewShare::NewShare(handle ch, int coutgoing, handle cpeer, accesslevel caccess, time_t cts, const byte* ckey, const byte* cauth)
 {
 	h = ch;
@@ -1555,10 +1554,10 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 
 	int i;
 
-	// initialize random client application instance ID
+	// initialize random client application instance ID (for detecting own actions in server-client stream)
 	for (i = sizeof sessionid; i--; ) sessionid[i] = 'a'+PrnGen::genuint32(26);
 
-	// initialize random API request sequence ID
+	// initialize random API request sequence ID (to guard against replaying older requests)
 	for (i = sizeof reqid; i--; ) reqid[i] = 'a'+PrnGen::genuint32(26);
 
 	warned = 0;
@@ -1572,7 +1571,6 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 	nextuh = 0;
 
 	currsyncid = 0;
-
 	syncactivity = false;
 
 	snprintf(appkey,sizeof appkey,"&ak=%s",k);
@@ -1696,7 +1694,7 @@ void MegaClient::exec()
 			else it++;
 		}
 
-		// API client-server requests
+		// handle API client-server requests
 		for (;;)
 		{
 			// do we have an API request outstanding?
@@ -1780,7 +1778,7 @@ void MegaClient::exec()
 			break;
 		}
 
-		// API server-client requests
+		// handle API server-client requests
 		for (;;)
 		{
 			if (pendingsc)
@@ -1881,10 +1879,10 @@ void MegaClient::exec()
 	// process active syncs
 	if (syncs.size() || syncactivity)
 	{
-		syncactivity = false;
-
 		bool syncscanning = false;
 		sync_list::iterator it;
+
+		syncactivity = false;
 
 		// process pending scanstacks
 		for (it = syncs.begin(); it != syncs.end(); )
@@ -1907,7 +1905,7 @@ void MegaClient::exec()
 				{
 					if ((*it)->state == SYNC_INITIALSCAN)
 					{
-						// initial scan of this synced folder is now complete
+						// initial scan of this synced folder is now complete - activate syncing
 						syncdown(&(*it)->localroot,&(*it)->localroot.localname);
 						(*it++)->changestate(SYNC_ACTIVE);
 					}
@@ -1923,7 +1921,11 @@ void MegaClient::exec()
 			LocalNode* l;
 
 			// check for filesystem changes
-			while (fsaccess->notifynext(&syncs,&localname,&l)) l->sync->queuefsrecord(NULL,&localname,l,false);
+			while (fsaccess->notifynext(&syncs,&localname,&l))
+			{
+				l->sync->queuefsrecord(NULL,&localname,l,false);
+				syncactivity = true;
+			}
 						
 			// rescan full trees in case fs notification is currently unreliable or unavailable
 			if (fsaccess->notifyfailed())
@@ -1942,7 +1944,7 @@ void MegaClient::exec()
 			}
 			else syncscanfailed = false;
 
-			// FIXME: only syncup for subtrees that were actually updated (to reduce CPU load)
+			// FIXME: only syncup for subtrees that were actually updated to reduce CPU load
 			for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE) syncup(&(*it)->localroot);
 
 			syncupdate();
@@ -2272,8 +2274,7 @@ void MegaClient::logout()
 
 	// erase master key & session ID
 	key.setkey(SymmCipher::zeroiv);
-
-	for (i = auth.size(); i--; ) ((char*)auth.c_str())[i] = 0;
+	memset((char*)auth.c_str(),0,auth.size());
 	auth.clear();
 
 	init();
@@ -2384,11 +2385,10 @@ void MegaClient::initsc()
 {
 	if (sctable)
 	{
-		sctable->begin();
-
-		sctable->truncate();
-
 		bool complete;
+
+		sctable->begin();
+		sctable->truncate();
 
 		// 1. write current scsn
 		handle tscsn;
@@ -2998,7 +2998,6 @@ void MegaClient::sc_updatenode()
 {
 	handle h = UNDEF;
 	handle u = 0;
-//	const char* k = NULL;
 	const char* a = NULL;
 	time_t ts = -1, tm = -1;
 
@@ -3013,10 +3012,6 @@ void MegaClient::sc_updatenode()
 			case 'u':
 				u = jsonsc.gethandle(USERHANDLE);
 				break;
-
-//			case 'k':
-//				k = jsonsc.getvalue();
-//				break;
 
 			case MAKENAMEID2('a','t'):
 				a = jsonsc.getvalue();
@@ -3039,7 +3034,6 @@ void MegaClient::sc_updatenode()
 					{
 						if (u) n->owner = u;
 						if (a) Node::copystring(&n->attrstring,a);
-//						if (k) Node::copystring(&n->keystring,k);
 						if (tm+1) n->clienttimestamp = tm;
 						if (ts+1) n->ctime = ts;
 
@@ -3253,7 +3247,7 @@ void MegaClient::sc_keys()
 			case 'h':
 				h = jsonsc.gethandle();
 
-				// we only distribute node keys for our own outgoing shares
+				// security feature: we only distribute node keys for our own outgoing shares
 				if (!ISUNDEF(h = jsonsc.gethandle()) && (n = nodebyhandle(h)) && n->sharekey && !n->inshare) kshares.push_back(n);
 				break;
 
@@ -3661,10 +3655,6 @@ CommandSetAttr::CommandSetAttr(MegaClient* client, Node* n)
 	arg("n",(byte*)&n->nodehandle,MegaClient::NODEHANDLE);
 	arg("at",(byte*)at.c_str(),at.size());
 
-	byte key[Node::FILENODEKEYLENGTH];
-	client->key.ecb_encrypt((byte*)n->nodekey.data(),key,n->nodekey.size());
-	arg("k",key,n->nodekey.size());
-
 	h = n->nodehandle;
 	tag = client->reqtag;
 }
@@ -3877,16 +3867,16 @@ int MegaClient::checkaccess(Node* n, accesslevel a)
 // returns API_OK if a move operation is permitted, API_EACCESS or API_ECIRCULAR otherwise
 error MegaClient::checkmove(Node* fn, Node* tn)
 {
-	// condition 1: cannot move top-level node, must have full access to fn's parent
+	// condition #1: cannot move top-level node, must have full access to fn's parent
 	if (!fn->parent || !checkaccess(fn->parent,FULL)) return API_EACCESS;
 
-	// condition 2: target must be folder
+	// condition #2: target must be folder
 	if (tn->type == FILENODE) return API_EACCESS;
 
-	// condition 3: must have write access to target
+	// condition #3: must have write access to target
 	if (!checkaccess(tn,RDWR)) return API_EACCESS;
 
-	// condition 4: tn must not be below fn (would create circular linkage)
+	// condition #4: tn must not be below fn (would create circular linkage)
 	for (;;)
 	{
 		if (tn == fn) return API_ECIRCULAR;
@@ -3894,7 +3884,7 @@ error MegaClient::checkmove(Node* fn, Node* tn)
 		tn = tn->parent;
 	}
 
-	// condition 5: fn and tn must be in the same tree (same ultimate parent node or shared by the same user)
+	// condition #5: fn and tn must be in the same tree (same ultimate parent node or shared by the same user)
 	for (;;)
 	{
 		if (fn->inshare || !fn->parent) break;
@@ -3928,7 +3918,7 @@ error MegaClient::rename(Node* n, Node* p)
 	return API_OK;
 }
 
-// returns 1 if new parent differs, 0 otherwise
+// returns whether node was moved
 bool Node::setparent(Node* p)
 {
 	if (p == parent) return false;
@@ -4314,13 +4304,7 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 				if (source == PUTNODES_SYNC)
 				{
 					// FIXME: add purging of orphaned syncidhandles
-					if ((t == FOLDERNODE || t == FILENODE) && !syncdeleted[t].count(nn[i].syncid))
-					{
-						nn[i].localnode->setnode(n);
-//						syncidhandles[nn[i].localnode->syncid] = h;
-//						nn[i].localnode->node = n;
-//						n->localnode = nn[i].localnode;
-					}
+					if ((t == FOLDERNODE || t == FILENODE) && !syncdeleted[t].count(nn[i].syncid)) nn[i].localnode->setnode(n);
 				}
 
 				// map upload handle to node handle for pending file attributes
@@ -4346,7 +4330,7 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 		}
 	}
 
-	// any child nodes arrived before their parents?
+	// any child nodes that arrived before their parents?
 	for (i = dp.size(); i--; ) if ((n = nodebyhandle(dp[i]->parenthandle))) dp[i]->setparent(n);
 
 	return j->leavearray();
@@ -4665,7 +4649,7 @@ void Command::appendraw(const char* s, int len)
 	json.append(s,len);
 }
 
-// open anonymous array
+// begin array
 void Command::beginarray()
 {
 	addcomma();
@@ -4673,7 +4657,7 @@ void Command::beginarray()
 	openobject();
 }
 
-// open named array
+// begin array member
 void Command::beginarray(const char* name)
 {
 	addcomma();
@@ -4690,14 +4674,14 @@ void Command::endarray()
 	closeobject();
 }
 
-// open anonymous object
+// begin JSON object
 void Command::beginobject()
 {
 	addcomma();
 	json.append("{");
 }
 
-// close anonymous object
+// end JSON object
 void Command::endobject()
 {
 	json.append("}");
@@ -5067,20 +5051,12 @@ void PubKeyActionSendShareKey::proc(MegaClient* client, User* u)
 // sharekey distribution request - walk array consisting of node/user handles and submit public key requests
 void MegaClient::procsr(JSON* j)
 {
+	User* u;
 	handle sh, uh;
 
 	if (!j->enterarray()) return;
 
-	for (;;)
-	{
-		if (!ISUNDEF(sh = j->gethandle()) && !ISUNDEF(uh = j->gethandle()))
-		{
-			User* u;
-
-			if (nodebyhandle(sh) && (u = finduser(uh))) queuepubkeyreq(u,new PubKeyActionSendShareKey(sh));
-		}
-		else break;
-	}
+	while (!ISUNDEF(sh = j->gethandle()) && !ISUNDEF(uh = j->gethandle())) if (nodebyhandle(sh) && (u = finduser(uh))) queuepubkeyreq(u,new PubKeyActionSendShareKey(sh));
 
 	j->leavearray();
 }
@@ -5185,6 +5161,7 @@ void ShareNodeKeys::get(Command* c)
 		for (unsigned i = 0; i < items.size(); i++) c->element((const byte*)items[i].c_str(),items[i].size());
 		c->endarray();
 
+		// emit linkage/keys
 		c->beginarray();
 		c->appendraw(keys.c_str()+1,keys.size()-1);
 		c->endarray();
@@ -5691,6 +5668,7 @@ void MegaClient::notifyuser(User* u)
 CommandNodeKeyUpdate::CommandNodeKeyUpdate(MegaClient* client, handle_vector* v)
 {
 	byte nodekey[Node::FILENODEKEYLENGTH];
+
 	cmd("k");
 	beginarray("nk");
 
@@ -7779,7 +7757,11 @@ void Sync::scan(string* localpath, FileAccess* fa, LocalNode* parent, bool fullt
 	if (da->dopen(localpath,fa,false)) while (da->dnext(&localname)) if ((l = queuefsrecord(localpath,&localname,parent,fulltree))) l->scanseqno = scanseqno;
 
 	// delete items that disappeared
-	for (it = parent->children.begin(); it != parent->children.end(); it++) if (scanseqno != it->second->scanseqno) delete it->second;
+	for (it = parent->children.begin(); it != parent->children.end(); )
+	{
+		if (scanseqno != it->second->scanseqno) delete (it++)->second;
+		else it++;
+	}
 
 	delete da;
 }
@@ -7803,8 +7785,6 @@ LocalNode* Sync::queuefsrecord(string* localpath, string* localname, LocalNode* 
 
 void Sync::queuescan(string* localpath, string* localname, LocalNode* localnode, LocalNode* parent, bool fulltree)
 {
-//	client->syncactivity = true;
-
 	// FIXME: efficient copy-free push_back?
 	scanstack.resize(scanstack.size()+1);
 
@@ -7817,16 +7797,12 @@ void Sync::queuescan(string* localpath, string* localname, LocalNode* localnode,
 	si->parent = parent;
 	si->fulltree = fulltree;
 	si->deleted = false;
-	
-	client->syncactivity = true;
 }
 
 // add or refresh local filesystem item from scan stack, add items to scan stack
 // must be called with a scanstack.siz() > 0
 void Sync::procscanstack()
 {
-	client->syncactivity = true;
-
 	ScanItem* si = &*scanstack.begin();
 
 	// ignore deleted ScanItems
@@ -7914,7 +7890,11 @@ void Sync::procscanstack()
 		{
 			if (fulltree) scan(localpath,fa,si->parent ? l : &localroot,fulltree);
 		}
-		else if (l->genfingerprint(fa)) changed = true;
+		else
+		{
+			if (!l) changestate(SYNC_FAILED);	// root node cannot be a file
+			else if (l->genfingerprint(fa)) changed = true;
+		}
 
 		if (changed) client->syncadded.insert(l->syncid);
 	}
@@ -7952,6 +7932,8 @@ void Sync::procscanstack()
 	delete fa;
 
 	scanstack.pop_front();
+	
+	if (scanstack.size()) client->syncactivity = true;
 }
 
 // syncids are usable to indicate putnodes()-local parent linkage
@@ -8127,7 +8109,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath)
 // mark additional nodes to to rubbished (those overwritten) by accumulating their nodehandles in rubbish.
 // nodes to be added are stored in synccreate. - with nodehandle set to parent if attached to an existing node
 // l and n are assumed to be folders and existing on both sides or scheduled for creation
-void MegaClient::syncup(LocalNode* l/*, Node* n*/)
+void MegaClient::syncup(LocalNode* l)
 {
 	remotenode_map nchildren;
 	remotenode_map::iterator rit;
@@ -8141,7 +8123,6 @@ void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 
 	string tmpname;
 
-//	if (n)
 	if (l->node)
 	{
 		// corresponding remote node present: build child hash - nameclash resolution: use newest version
@@ -8169,8 +8150,6 @@ void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 			// local node must be new and not deleted to be considered
 			if (syncadded.count(lit->second->syncid))
 			{
-				cout << "CORRESPONDING CHILD" << endl;
-
 				// do we have a corresponding remote child?
 				if (rit != nchildren.end())
 				{
@@ -8214,7 +8193,7 @@ void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 						// recurse into directories of equal name
 						lit->second->setnode(rit->second);
 
-						syncup(lit->second/*,rit->second*/);
+						syncup(lit->second);
 						continue;
 					}
 				}
@@ -8223,12 +8202,8 @@ void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 				synccreate.push_back(lit->second);
 				syncactivity = true;
 			}
-			else
-			{
-				cout << "NO CORRESPONDING CHILD" << endl;
-			}
 
-			if (lit->second->type == FOLDERNODE) syncup(lit->second/*,rit == nchildren.end() ? NULL : rit->second*/);
+			if (lit->second->type == FOLDERNODE) syncup(lit->second);
 		}
 	}
 }
