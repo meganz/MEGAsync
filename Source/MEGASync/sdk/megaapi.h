@@ -672,7 +672,7 @@ public:
 	void addContact(const char* email, MegaRequestListener* listener=NULL);
 	
 	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
-	void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
+	/*void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
 	void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener);
 	void startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener);
 	
@@ -684,7 +684,8 @@ public:
 	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener);
 
 	void cancelTransfer(MegaTransfer *transfer);
-	
+	*/
+
     void syncFolder(const char *localFolder, Node *megaFolder);
 
 	//Filesystem

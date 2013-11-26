@@ -492,7 +492,11 @@ bool WinFileSystemAccess::localhidden(string*, string* filename)
 {
 	wchar_t c = *(wchar_t*)filename->data();
 
-	return c == '.' || c == '~';
+	if(c == '.' || c == '~') return 1;
+	DWORD attributes = GetFileAttributesW((wchar_t*)filename->data());
+	if(attributes == INVALID_FILE_ATTRIBUTES) return 1;
+	if(attributes &= FILE_ATTRIBUTE_HIDDEN) return 1;
+	return 0;
 }
 
 FileAccess* WinFileSystemAccess::newfileaccess()

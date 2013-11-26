@@ -8169,6 +8169,8 @@ void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 			// local node must be new and not deleted to be considered
 			if (syncadded.count(lit->second->syncid))
 			{
+				cout << "CORRESPONDING CHILD" << endl;
+
 				// do we have a corresponding remote child?
 				if (rit != nchildren.end())
 				{
@@ -8220,6 +8222,10 @@ void MegaClient::syncup(LocalNode* l/*, Node* n*/)
 				// create remote folder or send file
 				synccreate.push_back(lit->second);
 				syncactivity = true;
+			}
+			else
+			{
+				cout << "NO CORRESPONDING CHILD" << endl;
 			}
 
 			if (lit->second->type == FOLDERNODE) syncup(lit->second/*,rit == nchildren.end() ? NULL : rit->second*/);

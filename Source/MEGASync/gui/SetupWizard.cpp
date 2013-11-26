@@ -100,12 +100,13 @@ bool SetupWizard::event(QEvent *event)
                ui->bCancel->setText(tr("Finish"));
                ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
                ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
-               ui->sPages->setCurrentWidget(ui->pWelcome);
+			   ui->sPages->setCurrentWidget(ui->pWelcome);
            }
            else
            {
                QMessageBox::warning(this, tr("Error"), error->getErrorString(), QMessageBox::Ok);
            }
+		   break;
         }
         case MegaRequest::TYPE_FETCH_NODES:
         {
@@ -248,8 +249,8 @@ void SetupWizard::on_bNext_clicked()
                 ui->bCancel->setFocus();
                 ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
                 ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
-                ui->sPages->setCurrentWidget(ui->pWelcome);
-            }
+				ui->sPages->setCurrentWidget(ui->pWelcome);
+			}
         }
     }
     else if(w == ui->pAdvanced)
