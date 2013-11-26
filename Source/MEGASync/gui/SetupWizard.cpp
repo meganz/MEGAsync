@@ -317,7 +317,7 @@ void SetupWizard::on_bCancel_clicked()
         preferences->addSyncedFolder(ui->lFinalLocalFolder->text(), ui->lFinalMegaFolder->text(), selectedMegaFolderHandle);
         preferences->setSetupWizardCompleted(true);
         this->close();
-		//megaApi->syncFolder(ui->lFinalLocalFolder->text().toUtf8().constData(), megaApi->getNodeByHandle(selectedMegaFolderHandle));
+		megaApi->syncFolder(ui->lFinalLocalFolder->text().toUtf8().constData(), megaApi->getNodeByHandle(selectedMegaFolderHandle));
         return;
     }
 

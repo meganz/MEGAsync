@@ -255,7 +255,7 @@ AppFilePut::~AppFilePut()
 
 void AppFilePut::displayname(string* dname)
 {
-	*dname = localfilename;
+	*dname = localname;
 	transfer->client->fsaccess->local2name(dname);
 }
 
@@ -444,17 +444,17 @@ AppFileGet::AppFileGet(Node* n)
 	h = n->nodehandle;
 	*(FileFingerprint*)this = *n;
 	name = n->displayname();
-	localfilename = name;
-	client->fsaccess->name2local(&localfilename);
+	localname = name;
+	client->fsaccess->name2local(&localname);
 }
 
-AppFilePut::AppFilePut(string* clocalfilename, handle ch, const char* ctargetuser)
+AppFilePut::AppFilePut(string* clocalname, handle ch, const char* ctargetuser)
 {
 	// this assumes that the local OS uses an ASCII path separator, which should be true for most
 	string separator = client->fsaccess->localseparator;
 
 	// full local path
-	localfilename = *clocalfilename;
+	localname = *clocalname;
 
 	// target parent node
 	h = ch;
@@ -463,7 +463,7 @@ AppFilePut::AppFilePut(string* clocalfilename, handle ch, const char* ctargetuse
 	targetuser = ctargetuser;
 
 	// erase path component
-	name = *clocalfilename;
+	name = *clocalname;
 	client->fsaccess->local2name(&name);
 	client->fsaccess->local2name(&separator);
 
@@ -1612,13 +1612,13 @@ static void process_line(char* l)
 
 							if (client->checkaccess(n,FULL))
 							{
-								string localname = words[1];
+								string localname;
 
-								client->fsaccess->name2local(&localname);
+								client->fsaccess->path2local(&words[1],&localname);
 
 								if (!n) cout << words[2] << ": Not found." << endl;
 								else if (n->type == FILENODE) cout << words[2] << ": Remote sync root must be folder." << endl;
-								else if (!client->addsync(&localname,n)) cout << words[1] << ": Local sync path not found." << endl;
+								else new Sync(client,&localname,n);
 							}
 							else cout << words[2] << ": Syncing requires full access to path." << endl;
 						}
@@ -1647,10 +1647,13 @@ static void process_line(char* l)
 								{
 									static const char* syncstatenames[] = { "Initial scan, please wait", "Active", "Failed" };
 
-									nodepath((*it)->rooth,&remotepath);
-									client->fsaccess->local2path(&(*it)->rootpath,&localpath);
+									if ((*it)->localroot.node)
+									{
+										nodepath((*it)->localroot.node->nodehandle,&remotepath);
+										client->fsaccess->local2path(&(*it)->localroot.localname,&localpath);
 
-									cout << i++ << ": " << localpath << " to " << remotepath << " - " << syncstatenames[(*it)->state] << ", " << (*it)->localbytes << " byte(s) in " << (*it)->localnodes[FILENODE] << " file(s) and " << (*it)->localnodes[FOLDERNODE] << " folder(s)" << endl;
+										cout << i++ << ": " << localpath << " to " << remotepath << " - " << syncstatenames[(*it)->state] << ", " << (*it)->localbytes << " byte(s) in " << (*it)->localnodes[FILENODE] << " file(s) and " << (*it)->localnodes[FOLDERNODE] << " folder(s)" << endl;
+									}
 								}
 							}
 							else cout << "No syncs active at this time." << endl;
@@ -2614,7 +2617,13 @@ int main()
 {
 	// instantiate app components: the callback processor (DemoApp),
 	// the HTTP I/O engine (WinHttpIO) and the MegaClient itself
-	client = new MegaClient(new DemoApp,new WAIT_CLASS,new HTTPIO_CLASS,new FSACCESS_CLASS,new DBACCESS_CLASS,"SDKSAMPLE");
+	client = new MegaClient(new DemoApp,new WAIT_CLASS,new HTTPIO_CLASS,new FSACCESS_CLASS,
+#ifdef DBACCESS_CLASS
+	new DBACCESS_CLASS,
+#else
+	NULL,
+#endif
+	"SDKSAMPLE");
 	console = new CONSOLE_CLASS;
 
 	megacli();

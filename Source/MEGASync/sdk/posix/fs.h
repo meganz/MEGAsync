@@ -21,7 +21,11 @@ DEALINGS IN THE SOFTWARE.
 
 #include <glob.h>
 #include <dirent.h>
+
+#ifdef USE_INOTIFY
 #include <sys/inotify.h>
+#include <sys/sendfile.h>
+#endif
 
 struct PosixDirAccess : public DirAccess
 {
@@ -39,13 +43,16 @@ struct PosixDirAccess : public DirAccess
 
 class PosixFileSystemAccess : public FileSystemAccess
 {
+#ifdef USE_INOTIFY
 	int notifyfd;
-	bool notifyerr;
 	char notifybuf[sizeof(struct inotify_event)+NAME_MAX+1];
 	int notifypos, notifyleft;
 
 	typedef map<int,LocalNode*> wdlocalnode_map;
 	wdlocalnode_map wdnodes;
+#endif
+
+	bool notifyerr;
 
 public:
 	FileAccess* newfileaccess();
@@ -85,6 +92,10 @@ class PosixFileAccess : public FileAccess
 {
 public:
 	int fd;
+
+#ifndef USE_FDOPENDIR
+	DIR* dp;
+#endif
 
 	bool fopen(string*, bool, bool);
 	bool fread(string*, unsigned, unsigned, m_off_t);

@@ -19,7 +19,6 @@ DEALINGS IN THE SOFTWARE.
 */
 
 #include <sys/select.h>
-#include <sys/inotify.h>
 
 #define __DARWIN_C_LEVEL 199506L
 

@@ -94,8 +94,8 @@ struct MegaFileGet : public MegaFile
         h = n->nodehandle;
         *(FileFingerprint*)this = *n;
         name = n->displayname();
-        localfilename = name;
-        client->fsaccess->name2local(&localfilename);
+		localname = name;
+		client->fsaccess->name2local(&localname);
     }
 
     ~MegaFileGet() {}
@@ -109,13 +109,13 @@ struct MegaFilePut : public MegaFile
         delete this;
     }
 
-    MegaFilePut(MegaClient *client, string* clocalfilename, handle ch, const char* ctargetuser)
+	MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser)
     {
         // this assumes that the local OS uses an ASCII path separator, which should be true for most
         string separator = client->fsaccess->localseparator;
 
         // full local path
-        localfilename = *clocalfilename;
+		localname = *clocalname;
 
         // target parent node
         h = ch;
@@ -124,7 +124,7 @@ struct MegaFilePut : public MegaFile
         targetuser = ctargetuser;
 
         // erase path component
-        name = *clocalfilename;
+		name = *clocalname;
         client->fsaccess->local2name(&name);
         client->fsaccess->local2name(&separator);
 

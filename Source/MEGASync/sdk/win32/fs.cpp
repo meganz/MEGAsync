@@ -5,6 +5,7 @@ MEGA SDK Win32 filesystem/directory access/notification (UNICODE)
 (c) 2013 by Mega Limited, Wellsford, New Zealand
 
 Author: mo
+Fixes: js
 
 Applications using the MEGA API must present a valid application key
 and comply with the the rules set forth in the Terms of Service.
@@ -102,8 +103,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		name->append((char*)L"\\*",5);
-		cout << "Testing if it's a folder" << endl;
-		wprintf(L"%s\n", name->data());
 
 		hFind = FindFirstFileW((LPCWSTR)name->data(),&ffd);
 		name->resize(name->size()-5);
@@ -117,10 +116,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
-		cout << "FOPEN FAILED!!" << endl;
-		name->append("",1);
-		wprintf(L"%s\n", name->data());
-		name->resize(name->size()-1);
 		return 0;
 	}
 
@@ -138,7 +133,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
 	type = FILENODE;
 
-	cout << "FOPEN OK!!" << endl;
 	return 1;
 }
 
@@ -351,14 +345,11 @@ bool WinFileSystemAccess::chdirlocal(string* name)
 
 VOID CALLBACK WinDirNotify::completion(DWORD dwErrorCode, DWORD dwBytes, LPOVERLAPPED lpOverlapped)
 {
-	cout << "CALLBACK" << endl;
 	if (dwErrorCode != ERROR_OPERATION_ABORTED && dwBytes) ((WinDirNotify*)lpOverlapped->hEvent)->process(dwBytes);
 }
 
 void WinDirNotify::process(DWORD dwBytes)
 {
-cout << "Notify completion routine with " << dwBytes << endl;
-
 	assert(dwBytes >= offsetof(FILE_NOTIFY_INFORMATION,FileName)+sizeof(wchar_t));
 
 	char* ptr = (char*)notifybuf[active].data();
@@ -372,26 +363,7 @@ cout << "Notify completion routine with " << dwBytes << endl;
 	{
 		FILE_NOTIFY_INFORMATION* fni = (FILE_NOTIFY_INFORMATION*)ptr;
 
-		// FIXME: perform GetLongPathName() here - the 8.3 short name plague still plagues Windows, apparently
-#if 0
-		fullpath.assign((char*)fni->FileName,fni->FileNameLength);
-
-		if (*(wchar_t*)(fullpath.data()+fni->FileNameLength-sizeof(wchar_t)) != *(wchar_t*)fsaccess->localseparator.data()) fullpath.insert(0,fsaccess->localseparator);
-		fullpath.insert(0,basepath);
-
-		LPCWSTR wszFilename = PathFindFileNameW((LPCWSTR)fullpath.data());
-		int len = wcslen(wszFilename);
-
-		// The maximum length of an 8.3 filename is twelve, including the dot.
-		if (len <= 12 && wcschr(wszFilename, '~'))
-		{
-			// Convert to the long filename form. Unfortunately, this
-			// does not work for deletions, so it's an imperfect fix.
-			wchar_t wbuf[MAX_PATH];
-			if (GetLongPathName((LPCWSTR)fullpath.data(),wbuf,_countof(wbuf)) > 0) fullpath.assign(wbuf,wcslen(wbuf)*sizeof(wchar_t));
-		}
-#endif
-
+		// FIXME: perform GetLongPathName() here - the 8.3 short name issue still plagues Windows, apparently
 		// FIXME: prevent unnecessary copying
 		notifyq.insert(notifyq.end(),string((char*)fni->FileName,fni->FileNameLength));
 
@@ -404,7 +376,7 @@ cout << "Notify completion routine with " << dwBytes << endl;
 // request change notifications on the subtree under hDirectory
 void WinDirNotify::readchanges()
 {
-	if (!ReadDirectoryChangesW(hDirectory,(LPVOID)notifybuf[active].data(),notifybuf[active].size(),TRUE,FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_CREATION,&dwBytes,&overlapped,completion))
+	if (!ReadDirectoryChangesW(hDirectory,(LPVOID)notifybuf[active].data(),notifybuf[active].size(),TRUE,FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_CREATION,&dwBytes,&overlapped,completion))
 	{
 		if (GetLastError() == ERROR_NOTIFY_ENUM_DIR) fsaccess->notifyerr = true;
 		cout << "ReadDirectoryChangesW() failed: " << GetLastError() << endl;
@@ -427,7 +399,6 @@ WinDirNotify::WinDirNotify(WinFileSystemAccess* cfsaccess, LocalNode* clocalnode
 	notifybuf[1].resize(65536);
 
 	basepath.append("",1);
-	wprintf(L"WWWW: %s\n", basepath.data());
 	if ((hDirectory = CreateFileW((LPCWSTR)basepath.data(),FILE_LIST_DIRECTORY,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL)) != INVALID_HANDLE_VALUE) readchanges();
 }
 
@@ -451,15 +422,15 @@ void WinFileSystemAccess::delnotify(LocalNode* l)
 bool WinFileSystemAccess::notifynext(sync_list* syncs, string* localname, LocalNode** localnodep)
 {
 	WinDirNotify* dn;
-	LocalNode* ln;
-	string name;
+	LocalNode* l;
 	localnode_map::iterator lit;
+	string name;
 
 	pendingevents = 0;
 
 	for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++)
 	{
-		if ((*it)->rootlocal && (ln = (LocalNode*)(*it)->rootlocal) && (dn = (WinDirNotify*)(*it)->rootlocal->notifyhandle))
+		if ((*it)->state == SYNC_ACTIVE && (dn = (WinDirNotify*)(*it)->localroot.notifyhandle))
 		{
 			if (dn->notifyq.size())
 			{
@@ -467,7 +438,8 @@ bool WinFileSystemAccess::notifynext(sync_list* syncs, string* localname, LocalN
 				dn->notifyq[0].append("",1);
 
 				wchar_t* wbase = (wchar_t*)dn->notifyq[0].data();
-				wprintf(L"Notified file: %s\n", wbase);
+
+				l = &(*it)->localroot;
 
 				// walk path components
 				while (*wbase)
@@ -480,9 +452,9 @@ bool WinFileSystemAccess::notifynext(sync_list* syncs, string* localname, LocalN
 					{
 						name.assign((char*)wbase,(wptr-wbase)*sizeof(wchar_t));
 
-						if ((lit = ln->children.find(&name)) != ln->children.end())
+						if ((lit = l->children.find(&name)) != l->children.end())
 						{
-							ln = lit->second;
+							l = lit->second;
 							wbase = wptr+1;
 						}
 						else
@@ -495,7 +467,7 @@ bool WinFileSystemAccess::notifynext(sync_list* syncs, string* localname, LocalN
 					else
 					{
 						localname->assign((char*)wbase,(wptr-wbase)*sizeof(wchar_t));
-						*localnodep = ln;
+						*localnodep = l;
 
 						dn->notifyq.pop_front();
 
