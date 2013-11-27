@@ -47,6 +47,7 @@ public:
 
     void showSyncedIcon();
     void showSyncingIcon();
+	void reloadSyncs();
     void unlink();
 
 signals:
@@ -59,13 +60,15 @@ public slots:
     void pauseSync();
     void resumeSync();
     void updateDowloaded();
-	void showLinkPopup();
+	void copyFileLink(handle fileHandle);
 
 protected:
     void createActions();
     void createTrayIcon();
     bool showTrayIconAlwaysNEW();
     void init();
+	void startSyncs();
+	void stopSyncs();
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayMenu;
@@ -87,7 +90,9 @@ protected:
     int queuedUploads, queuedDownloads;
     MegaError *error;
     syncstate syncState;
-	boolean invalidCredentials;
+	bool invalidCredentials;
+	bool updateInfo;
+	QString linkForClipboard;
 
 private slots:
 };

@@ -16,33 +16,33 @@ RecentFile::~RecentFile()
     delete ui;
 }
 
-void RecentFile::setFileName(QString fileName)
+void RecentFile::setFile(QString fileName, long long fileHandle)
 {
     this->fileName = fileName;
-    ui->lFileName->setText(fileName);
-    if(!fileName.length())
-    {
-        ui->lFileType->setPixmap(QPixmap());
-        ui->lTime->setText(QString());
-        ui->pArrow->hide();
-        return;
-    }
-
-    QFileInfo f(fileName);
-    if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
-        ui->lFileType->setPixmap(WindowsUtils::extensionIcons[f.suffix().toLower()]);
-    else
-        ui->lFileType->setPixmap(QPixmap(":/images/sync_generic.png"));
-
-    dateTime = QDateTime::currentDateTime();
-    ui->lTime->setText(tr("just now"));
-    ui->pArrow->show();
+	this->fileHandle = fileHandle;
+	this->dateTime = QDateTime::currentDateTime();
 }
 
-void RecentFile::updateTime()
+void RecentFile::updateWidget()
 {
-    if(!fileName.size())
-        return;
+	if(!fileName.length())
+	{
+		ui->lFileType->setPixmap(QPixmap());
+		ui->lTime->setText(QString());
+		ui->pArrow->hide();
+		return;
+	}
+
+	if(fileName.compare(ui->lFileName->text()))
+	{
+		ui->lFileName->setText(fileName);
+		QFileInfo f(fileName);
+		if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
+			ui->lFileType->setPixmap(WindowsUtils::extensionIcons[f.suffix().toLower()]);
+		else
+			ui->lFileType->setPixmap(QPixmap(":/images/sync_generic.png"));
+		ui->pArrow->show();
+	}
 
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = dateTime.secsTo(now);
@@ -64,5 +64,5 @@ void RecentFile::updateTime()
 
 void RecentFile::on_pArrow_clicked()
 {
-	((MegaApplication*)qApp)->showLinkPopup();
+	((MegaApplication*)qApp)->copyFileLink(fileHandle);
 }

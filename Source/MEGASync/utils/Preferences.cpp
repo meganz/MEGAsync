@@ -307,6 +307,7 @@ void Preferences::clearAll()
 {
 	removeAllFolders();
     settings->clear();
+	settings->sync();
 }
 
 void Preferences::readFolders()

@@ -17,7 +17,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
-    settingsDialog = NULL;
     this->app = app;
 
     QRect screenGeometry = QApplication::desktop()->availableGeometry();
@@ -89,19 +88,15 @@ void InfoDialog::setTransfer(int type, QString &fileName, long long completedSiz
     int percentage = 100*(double)completedSize/totalSize;
     transfer->setPercentage(percentage);
 
-    if(totalSize == completedSize)
-        addRecentFile(fileName);
-
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
-void InfoDialog::addRecentFile(QString &fileName)
+void InfoDialog::addRecentFile(QString &fileName, long long fileHandle)
 {
     QLayoutItem *item = ui->recentLayout->itemAt(2);
     RecentFile * recentFile = ((RecentFile *)item->widget());
     ui->recentLayout->insertWidget(0, recentFile);
-    recentFile->setFileName(fileName);
-    updateRecentFiles();
+	recentFile->setFile(fileName, fileHandle);
 }
 
 void InfoDialog::setQueuedTransfers(int queuedDownloads, int queuedUploads)
@@ -151,9 +146,8 @@ void InfoDialog::timerUpdate()
 
 void InfoDialog::on_bSettings_clicked()
 {
-    if(settingsDialog) delete settingsDialog;
-    settingsDialog = new SettingsDialog(app);
-    settingsDialog->show();
+	app->openSettings();
+	this->hide();
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()
@@ -167,12 +161,12 @@ void InfoDialog::on_bSyncFolder_clicked()
     QString filePath = app->getPreferences()->getLocalFolder(0);
     QStringList args;
     args << QDir::toNativeSeparators(filePath);
-    QProcess::startDetached("explorer", args);
+	QProcess::startDetached("explorer", args);
 }
 
 void InfoDialog::updateRecentFiles()
 {
-    ui->wRecent1->updateTime();
-    ui->wRecent2->updateTime();
-    ui->wRecent3->updateTime();
+	ui->wRecent1->updateWidget();
+	ui->wRecent2->updateWidget();
+	ui->wRecent3->updateWidget();
 }
