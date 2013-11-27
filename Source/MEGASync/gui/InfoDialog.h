@@ -23,7 +23,7 @@ public:
     void startAnimation();
     void setUsage(int totalGB, int percentage);
     void setTransfer(int type, QString &fileName, long long completedSize, long long totalSize);
-    void addRecentFile(QString &fileName);
+	void addRecentFile(QString &fileName, long long fileHandle);
     void setQueuedTransfers(int queuedDownloads, int queuedUploads);
     void updateDialog();
 
@@ -43,7 +43,6 @@ private:
 protected:
     void updateRecentFiles();
 
-    SettingsDialog *settingsDialog;
     QTimer *timer;
     MegaApplication *app;
 };

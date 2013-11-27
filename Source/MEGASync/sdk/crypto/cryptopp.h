@@ -110,8 +110,8 @@ public:
 	unsigned rawencrypt(const byte* plain, int plainlen, byte* buf, int buflen);
 	unsigned rawdecrypt(const byte* c, int cl, byte* buf, int buflen);
 
-	static void serializeintarray(CryptoPP::Integer*, int, string*);
-	void serializekey(string*, int);
+	static void serializeintarray(CryptoPP::Integer*, int, std::string*);
+	void serializekey(std::string*, int);
 	void genkeypair(CryptoPP::Integer* privk, CryptoPP::Integer* pubk, int size);
 };
 
@@ -121,7 +121,7 @@ class Hash
 
 public:
 	void add(const byte*, unsigned);
-	void get(string*);
+	void get(std::string*);
 };
 
 class HashCRC32

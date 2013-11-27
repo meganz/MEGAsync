@@ -17,14 +17,15 @@ class RecentFile : public QWidget
 public:
     explicit RecentFile(QWidget *parent = 0);
     ~RecentFile();
-    void setFileName(QString fileName);
-    void updateTime();
+	void setFile(QString fileName, long long fileHandle);
+	void updateWidget();
 
 private:
     Ui::RecentFile *ui;
 
 protected:
     QString fileName;
+	long long fileHandle;
     QDateTime dateTime;
 private slots:
 	void on_pArrow_clicked();

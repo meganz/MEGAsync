@@ -1202,6 +1202,11 @@ Node* MegaApi::getMailNode()
 	return result;
 }
 
+sync_list *MegaApi::getActiveSyncs()
+{
+	return &(client->syncs);
+}
+
 
 bool MegaApi::userComparatorDefaultASC (User *i, User *j)
 {
@@ -1490,36 +1495,15 @@ void MegaApi::transfer_update(Transfer *tr)
 		if(transfer->getTransferredBytes() != tr->slot->progresscompleted)
 		{
 			transfer->setTransferredBytes(tr->slot->progresscompleted);
-			cout << "TD " << transfer->getFileName() << ": Update: " << transfer->getTransferredBytes()/1024 << " KB of "
+			string th;
+			if (tr->type == GET) th = "TD ";
+			else th = "TU ";
+			cout << th << transfer->getFileName() << ": Update: " << transfer->getTransferredBytes()/1024 << " KB of "
 				 << transfer->getTotalBytes()/1024 << " KB, " << transfer->getTransferredBytes()*10/(1024*(waiter->getdstime()-transfer->getStartTime())+1) << " KB/s" << endl;
 			fireOnTransferUpdate(this, transfer);
 		}
 	}
 }
-
-//int MegaApi::transfer_error(int td, int httpcode, int count)
-//{
-    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
-	if(!transfer) return 1;
-
-	cout << "TD " << td << ": Failed, HTTP error code " << httpcode << " (count " << count << ")" << endl;
-
-	transfer->setNumRetry(count);
-	transfer->setTime(client->httpio->ds);
-
-	if(count<transfer->getMaxRetries())
-	{
-		fireOnTransferTemporaryError(this, transfer, MegaError(httpcode));
-		return 0; //Retry
-	}	
-	else
-	{
-		fireOnTransferFinish(this, transfer, MegaError(httpcode));
-		return 1; //Abort
-    }*/
-//    return 1;
-
-//}
 
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
@@ -1536,18 +1520,6 @@ void MegaApi::transfer_failed(Transfer* tr, error e)
 	//unlink(filename.c_str());
 }
 
-//void MegaApi::transfer_failed(int td, error e)
-//{
-    /*MegaError megaError(e);
-	MegaTransfer* transfer = transferMap[client->ft[td].tag];
-	if(!transfer) return;
-
-	transfer->setTime(client->httpio->ds);
-
-	cout << "TD " << td << ": Upload failed (" << megaError.getErrorString() << ")" << endl;
-    fireOnTransferFinish(this, transfer, megaError);*/
-//}
-
 void MegaApi::transfer_limit(Transfer* tr)
 {
     cout << "transfer_limit" << endl;
@@ -1560,23 +1532,6 @@ void MegaApi::transfer_limit(Transfer* tr)
 	cout << "TD " << td << ": Transfer limit reached." << endl;
     fireOnTransferFinish(this, transfer, MegaError(API_EOVERQUOTA));*/
 }
-
-//void MegaApi::transfer_complete(int td, chunkmac_map* macs, const char* fn)
-//{
-    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
-	if(!transfer) return;
-
-	transfer->setTime(client->httpio->ds);
-
-	string filename = transfer->getPath();
-	string tmpfilename = transfer->getPath();
-	tmpfilename.append(".tmp");
-
-	client->tclose(td);
-
-	if (!::rename(tmpfilename.c_str(),filename.c_str())) fireOnTransferFinish(this, transfer, MegaError(API_OK));
-    else fireOnTransferFinish(this, transfer, MegaError(API_EACCESS));*/
-//}
 
 void MegaApi::transfer_complete(Transfer* tr)
 {

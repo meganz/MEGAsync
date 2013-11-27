@@ -20,7 +20,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = app->getPreferences();
-
+	syncsChanged = false;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -239,14 +239,29 @@ void SettingsDialog::saveSettings()
     preferences->setStartOnStartup(ui->cStartOnStartup->isChecked());
 
     #ifdef WIN32
-		//WindowsUtils::startOnStartup(ui->cStartOnStartup->isChecked());
+		WindowsUtils::startOnStartup(ui->cStartOnStartup->isChecked());
     #endif
 
     //Syncs
-    //preferences->removeAllFolders();
-    //int numFolders = ui->tSyncs->rowCount();
-    //for(int i=0; i<numFolders)
+	if(syncsChanged)
+	{
+		preferences->removeAllFolders();
 
+		for(int i=0; i<ui->tSyncs->rowCount(); i++)
+		{
+			QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
+			QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
+			Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+			cout << "adding sync: " << localFolderPath.toUtf8().constData() << " - " <<
+					megaFolderPath.toUtf8().constData() << endl;
+			preferences->addSyncedFolder(localFolderPath.toUtf8().constData(),
+										 megaFolderPath.toUtf8().constData(),
+										 node->nodehandle);
+		}
+
+		app->reloadSyncs();
+		syncsChanged = false;
+	}
 
     //Bandwidth
     if(ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length()==0) preferences->setUploadLimitKB(-1);
@@ -279,8 +294,13 @@ void SettingsDialog::on_bDelete_clicked()
     int index = selected.first().topRow();
     cout << "Selected index: " << index << endl;
 
-    preferences->removeSyncedFolder(index);
-    loadSyncSettings();
+	ui->tSyncs->removeRow(index);
+
+	syncsChanged = true;
+	stateChanged();
+
+	//preferences->removeSyncedFolder(index);
+	//loadSyncSettings();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -307,20 +327,40 @@ void SettingsDialog::on_bAdd_clicked()
 {
     BindFolderDialog *dialog = new BindFolderDialog(this);
     int result = dialog->exec();
-
     if(result != QDialog::Accepted)
         return;
 
-   QString localFolder = dialog->getLocalFolder();
+   QString localFolderPath = dialog->getLocalFolder();
    long long handle = dialog->getMegaFolder();
    Node *node = megaApi->getNodeByHandle(handle);
-
-   if(!localFolder.length() || !node)
+   if(!localFolderPath.length() || !node)
        return;
 
-   preferences->addSyncedFolder(localFolder, megaApi->getNodePath(node), handle);
-   megaApi->syncFolder(localFolder.toUtf8().constData(), node);
-   loadSyncSettings();
+   /*for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+   {
+	   QString s = preferences->getLocalFolder(i);
+	   if(!s.compare(localFolderPath))
+	   {
+		   cout << "Local folder already synced" << endl;
+		   return;
+	   }
+   }*/
+
+   QTableWidgetItem *localFolder = new QTableWidgetItem();
+   localFolder->setText("  " + localFolderPath + "  ");
+   QTableWidgetItem *megaFolder = new QTableWidgetItem();
+   megaFolder->setText("  " +  QString(megaApi->getNodePath(node)) + "  ");
+   int pos = ui->tSyncs->rowCount();
+   ui->tSyncs->setRowCount(pos+1);
+   ui->tSyncs->setItem(pos, 0, localFolder);
+   ui->tSyncs->setItem(pos, 1, megaFolder);
+
+   syncsChanged = true;
+   stateChanged();
+
+   //preferences->addSyncedFolder(localFolderPath, megaApi->getNodePath(node), handle);
+   //megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+   //loadSyncSettings();
 }
 
 void SettingsDialog::on_bApply_clicked()

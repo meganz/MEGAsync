@@ -1,4 +1,5 @@
 #include "MegaApplication.h"
+#include <QClipboard>
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 	storageMax = 0;
     error = NULL;
 	invalidCredentials = false;
+	updateInfo = false;
     queuedDownloads = 0;
     queuedUploads = 0;
     preferences = new Preferences();
@@ -84,6 +86,34 @@ void MegaApplication::init()
 
     if(httpServer) delete httpServer;
 	httpServer = new HTTPServer(2973, NULL);
+}
+
+void MegaApplication::startSyncs()
+{
+	if(megaApi->getActiveSyncs()->size() != 0) stopSyncs();
+	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+	{
+		cout << "Sync " << i << " added." << endl;
+		megaApi->syncFolder(preferences->getLocalFolder(i).toUtf8().constData(),
+					megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i)));
+	}
+}
+
+void MegaApplication::stopSyncs()
+{
+	int i = 0;
+	sync_list *syncs = megaApi->getActiveSyncs();
+	for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
+	{
+		delete *it;
+		cout << "Sync " << i << " removed." << endl;
+	}
+}
+
+void MegaApplication::reloadSyncs()
+{
+	stopSyncs();
+	startSyncs();
 }
 
 void MegaApplication::unlink()
@@ -145,13 +175,15 @@ void MegaApplication::onDataReady()
 
 void MegaApplication::pauseSync()
 {
+	stopSyncs();
     trayIcon->setIcon(QIcon(":/images/tray_pause.ico"));
-    trayMenu->removeAction(pauseAction);
+	trayMenu->removeAction(pauseAction);
     trayMenu->insertAction(settingsAction, resumeAction);
 }
 
 void MegaApplication::resumeSync()
 {
+	startSyncs();
     trayIcon->setIcon(QIcon(":/images/SyncApp_1.ico"));
     trayMenu->removeAction(resumeAction);
     trayMenu->insertAction(settingsAction, pauseAction);
@@ -164,26 +196,40 @@ void MegaApplication::updateDowloaded()
 	//cout << s.toStdString() << endl;
 }
 
-void MegaApplication::showLinkPopup()
+void MegaApplication::copyFileLink(handle fileHandle)
 {
-	trayIcon->showMessage(tr("MegaSync"), tr("The link has been copied to the clipboard"));
+	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
 }
 
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
+		if(infoDialog->isVisible())
+		{
+			infoDialog->hide();
+			return;
+		}
         infoDialog->updateDialog();
         infoDialog->show();
-		infoDialog->startAnimation();
+		//infoDialog->startAnimation();
     }
 }
 
 void MegaApplication::openSettings()
 {
-    if(settingsDialog) delete settingsDialog;
+	if(settingsDialog)
+	{
+		if(settingsDialog->isVisible())
+		{
+			settingsDialog->activateWindow();
+			return;
+		}
+		settingsDialog->show();
+		return;
+	}
     settingsDialog = new SettingsDialog(this);
-    settingsDialog->show();
+	settingsDialog->show();
 }
 
 void MegaApplication::createActions()
@@ -219,21 +265,26 @@ void MegaApplication::onRequestStart(MegaApi* api, MegaRequest *request)
 void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e)
 {
     switch (request->getType()) {
+	case MegaRequest::TYPE_EXPORT:
+	{
+		if(e->getErrorCode() == MegaError::API_OK)
+		{
+			linkForClipboard = QString(request->getLink());
+			QApplication::postEvent(this, new QEvent(QEvent::User));
+		}
+		break;
+	}
 	case MegaRequest::TYPE_LOGIN:
 	{
-		cout << "Login RESULT" <<  endl;
-
 		if(preferences->isSetupWizardCompleted())
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
-				cout << "Login OK" <<  endl;
 				megaApi->fetchNodes();
 				megaApi->getAccountDetails();
 			}
 			else
 			{
-				cout << "Login FAILED" <<  endl;
 				invalidCredentials = true;
 				QApplication::postEvent(this, new QEvent(QEvent::User));
 			}
@@ -246,18 +297,10 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
-				for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-				{
-					megaApi->syncFolder(preferences->getLocalFolder(i).toUtf8().constData(),
-								megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i)));
-				}
+				startSyncs();
+				return;
 			}
-			else
-			{
-				cout << "Login FAILED" <<  endl;
-				invalidCredentials = true;
-				QApplication::postEvent(this, new QEvent(QEvent::User));
-			}
+			cout << "Error fetching nodes" << endl;
 		}
 
 		break;
@@ -267,7 +310,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		if(e->getErrorCode() != MegaError::API_OK)
 			break;
 
-        cout << "Details start" << endl;
         AccountDetails *details = request->getAccountDetails();
         preferences->setAccountType(details->pro_level);
         preferences->setTotalStorage(details->storage_max);
@@ -276,7 +318,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         storageMax = details->storage_max;
         storageUsed = details->storage_used;
         QApplication::postEvent(this, new QEvent(QEvent::User));
-        cout << "Details end" << endl;
         break;
     }
     default:
@@ -299,7 +340,7 @@ bool MegaApplication::event(QEvent *event)
 
         infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
                             transfer->getTransferredBytes(), transfer->getTotalBytes());
-        delete transfer;
+		delete transfer;
         transfer = NULL;
     }
 
@@ -326,6 +367,20 @@ bool MegaApplication::event(QEvent *event)
 	{
 		unlink();
 		invalidCredentials = false;
+	}
+
+	if(updateInfo)
+	{
+		updateInfo = false;
+		infoDialog->updateDialog();
+	}
+
+	if(linkForClipboard.length())
+	{
+		QClipboard *clipboard = QApplication::clipboard();
+		clipboard->setText(linkForClipboard);
+		trayIcon->showMessage(tr("MegaSync"), tr("The link has been copied to the clipboard"));
+		linkForClipboard.clear();
 	}
 
     return true;
@@ -363,7 +418,15 @@ void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
 
 void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
+	if(!nodes) return;
 
+	for(int i=0; i<nodes->size(); i++)
+	{
+		Node *node = nodes->get(i);
+		if(!node->removed && !node->tag) infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle);
+	}
+	updateInfo = true;
+	QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
 void MegaApplication::onReloadNeeded(MegaApi* api)

@@ -26,10 +26,8 @@ DEALINGS IN THE SOFTWARE.
 #include <fcntl.h>
 #endif
 
-#include <pthread.h>
 #include <inttypes.h>
 typedef int64_t m_off_t;
-using namespace std;
 
 #include "crypto/cryptopp.h"
 #include "megaclient.h"
@@ -42,6 +40,10 @@ using namespace std;
 #include "win32/net.h"
 #include "win32/fs.h"
 #include "win32/megaapiwait.h"
+
+#include <pthread.h>
+
+using namespace std;
 
 class MegaHttpIO : public WinHttpIO {};
 class MegaFileSystemAccess : public WinFileSystemAccess {};
@@ -710,6 +712,7 @@ public:
 	Node* getInboxNode();
 	Node* getRubbishNode();
 	Node* getMailNode();
+	sync_list *getActiveSyncs();
 	StringList *getRootNodeNames();
 	StringList *getRootNodePaths();
 

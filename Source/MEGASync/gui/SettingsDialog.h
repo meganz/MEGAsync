@@ -65,6 +65,7 @@ private:
     MegaApplication *app;
     Preferences *preferences;
     MegaApi *megaApi;
+	bool syncsChanged;
 
     void loadSyncSettings();
     void loadSettings();
