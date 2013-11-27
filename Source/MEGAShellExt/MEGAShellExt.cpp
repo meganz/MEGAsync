@@ -24,7 +24,6 @@ MEGAShellExt::MEGAShellExt(int id, QObject *parent) : QObject(parent)
 {
     this->id = id;
     clientSocket = new QLocalSocket(this);
-    clientSocket->connectToServer("MegaLocalServer");
 }
 
 long MEGAShellExt::queryInterface(const QUuid &iid, void **iface)

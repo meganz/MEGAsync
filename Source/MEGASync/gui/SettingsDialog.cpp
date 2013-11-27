@@ -319,7 +319,7 @@ void SettingsDialog::on_bAdd_clicked()
        return;
 
    preferences->addSyncedFolder(localFolder, megaApi->getNodePath(node), handle);
-
+   megaApi->syncFolder(localFolder.toUtf8().constData(), node);
    loadSyncSettings();
 }
 

@@ -87,6 +87,7 @@ protected:
     int queuedUploads, queuedDownloads;
     MegaError *error;
     syncstate syncState;
+	boolean invalidCredentials;
 
 private slots:
 };

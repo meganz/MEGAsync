@@ -28,6 +28,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transfer = NULL;
 	storageMax = 0;
     error = NULL;
+	invalidCredentials = false;
     queuedDownloads = 0;
     queuedUploads = 0;
     preferences = new Preferences();
@@ -53,6 +54,11 @@ void MegaApplication::init()
         if(!preferences->isSetupWizardCompleted())
             ::exit(0);
     }
+	else
+	{
+		megaApi->login(preferences->email().toUtf8().constData(),
+					   preferences->password().toUtf8().constData());
+	}
 
     trayIcon->show();
     trayIcon->showMessage(tr("MegaSync"), tr("MEGA Sync is running"));
@@ -68,37 +74,25 @@ void MegaApplication::init()
     }
 #endif
 
-    QString s(tr("MEGA Sync is paused"));
+	//QString s(tr("MEGA Sync is paused"));
 
-    if(localServer)
-    {
-        localServer->close();
-        delete localServer;
-    }
+	if(localServer) delete localServer;
     localServer = new QLocalServer();
     connect(localServer, SIGNAL(newConnection()), this, SLOT(onNewLocalConnection()));
     localServer->listen("MegaLocalServer");
     cout << "Server socket started" << endl;
 
-    if(httpServer)
-    {
-        httpServer->close();
-        delete httpServer;
-    }
-    httpServer = new HTTPServer(12346, NULL);
+    if(httpServer) delete httpServer;
+	httpServer = new HTTPServer(2973, NULL);
 }
 
 void MegaApplication::unlink()
 {
     preferences->clearAll();
-    localServer->close();
     delete localServer;
     localServer = NULL;
-
-    httpServer->close();
     delete httpServer;
     httpServer = NULL;
-
     trayIcon->hide();
     init();
 }
@@ -224,12 +218,55 @@ void MegaApplication::onRequestStart(MegaApi* api, MegaRequest *request)
 
 void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e)
 {
-    if(e->getErrorCode() != MegaError::API_OK)
-        return;
-
     switch (request->getType()) {
+	case MegaRequest::TYPE_LOGIN:
+	{
+		cout << "Login RESULT" <<  endl;
+
+		if(preferences->isSetupWizardCompleted())
+		{
+			if(e->getErrorCode() == MegaError::API_OK)
+			{
+				cout << "Login OK" <<  endl;
+				megaApi->fetchNodes();
+				megaApi->getAccountDetails();
+			}
+			else
+			{
+				cout << "Login FAILED" <<  endl;
+				invalidCredentials = true;
+				QApplication::postEvent(this, new QEvent(QEvent::User));
+			}
+		}
+		break;
+	}
+	case MegaRequest::TYPE_FETCH_NODES:
+	{
+		if(preferences->isSetupWizardCompleted())
+		{
+			if(e->getErrorCode() == MegaError::API_OK)
+			{
+				for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+				{
+					megaApi->syncFolder(preferences->getLocalFolder(i).toUtf8().constData(),
+								megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i)));
+				}
+			}
+			else
+			{
+				cout << "Login FAILED" <<  endl;
+				invalidCredentials = true;
+				QApplication::postEvent(this, new QEvent(QEvent::User));
+			}
+		}
+
+		break;
+	}
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
+		if(e->getErrorCode() != MegaError::API_OK)
+			break;
+
         cout << "Details start" << endl;
         AccountDetails *details = request->getAccountDetails();
         preferences->setAccountType(details->pro_level);
@@ -284,6 +321,12 @@ bool MegaApplication::event(QEvent *event)
         this->showSyncingIcon();
     else
         this->showSyncedIcon();
+
+	if(invalidCredentials)
+	{
+		unlink();
+		invalidCredentials = false;
+	}
 
     return true;
 }
