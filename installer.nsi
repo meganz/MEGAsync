@@ -223,32 +223,20 @@ Section "Principal" SEC01
   
   ;x86_32 files
   File "${SRCDIR_MEGASYNC_X32}\pthreadVC2.dll"
+  File "${SRCDIR_MEGASYNC_X32}\FreeImage.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtCore4.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtGui4.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtNetwork4.dll"
   ;File /oname=ShellExtX32.dll "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll"
-  
-  ;!define LIBRARY_COM
-  ;!define LIBRARY_SHELL_EXTENSION
-  ;!insertmacro InstallLib REGDLLTLB $ALREADY_INSTALLED NOREBOOT_NOTPROTECTED "C:\Users\Javi\Documents\QT\build-MEGASyncShellExtension-Desktop-Release\release\megasyncshellextension.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-  ;!undef LIBRARY_COM
-  ;!undef LIBRARY_SHELL_EXTENSION
 
-  /*${If} ${RunningX64}
+  ${If} ${RunningX64}
         ;x86_64 shell extension files
         SetOutPath "$INSTDIR\x64"
         File "${SRCDIR_MEGASHELLEXT_X64}\QtCore4.dll"
         File "${SRCDIR_MEGASHELLEXT_X64}\QtGui4.dll"
         File "${SRCDIR_MEGASHELLEXT_X64}\QtNetwork4.dll"
-        File /oname=ShellExtX64.dll "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll"
-        ;!define LIBRARY_X64
-        ;!define LIBRARY_COM
-        ;!define LIBRARY_SHELL_EXTENSION
-        ;!insertmacro InstallLib REGDLLTLB $ALREADY_INSTALLED NOREBOOT_NOTPROTECTED "C:\Users\Javi\Documents\QT\build-MEGASyncShellExtension-Desktop_4_8_3_VS2010_x64-Release\release\megasyncshellextension.dll" "$INSTDIR\x64\ShellExtX64.dll" "$INSTDIR\x64"
-        ;!undef LIBRARY_X64
-        ;!undef LIBRARY_COM
-        ;!undef LIBRARY_SHELL_EXTENSION
-  ${EndIf}*/
+        ;File /oname=ShellExtX64.dll "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll"
+  ${EndIf}
 
   SetOutPath "$INSTDIR"
   SetOverwrite on
@@ -256,8 +244,14 @@ Section "Principal" SEC01
   File "${SRCDIR_MEGASYNC_X32}\MEGASync.exe"
   
   ; Register shell extension 1 (x86_32)
-  /*SetRegView 32
-  ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe "$INSTDIR\ShellExtX32.dll"'
+  SetRegView 32
+  ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe "$INSTDIR\ShellExtX32.dll"'
+  !define LIBRARY_COM
+  !define LIBRARY_SHELL_EXTENSION
+  !insertmacro InstallLib REGDLL $ALREADY_INSTALLED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+  !undef LIBRARY_COM
+  !undef LIBRARY_SHELL_EXTENSION
+  
   WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1" "" "{05B38830-F4E9-4329-978B-1DD28605D202}"
   WriteRegStr HKCR "CLSID\{05B38830-F4E9-4329-978B-1DD28605D202}\InprocServer32" "ThreadingModel" "Apartment"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{05B38830-F4E9-4329-978B-1DD28605D202}" "###MegaShellExtension1"
@@ -269,8 +263,17 @@ Section "Principal" SEC01
 
   ${If} ${RunningX64}
         ; Register shell extension 1 (x86_64)
+        ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe "$INSTDIR\x64\ShellExtX64.dll"'
+
+        !define LIBRARY_X64
+        !define LIBRARY_COM
+        !define LIBRARY_SHELL_EXTENSION
+        !insertmacro InstallLib REGDLL $ALREADY_INSTALLED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll" "$INSTDIR\x64\ShellExtX64.dll" "$INSTDIR\x64"
+        !undef LIBRARY_X64
+        !undef LIBRARY_COM
+        !undef LIBRARY_SHELL_EXTENSION
+        
         SetRegView 64
-        ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe "$INSTDIR\x64\ShellExtX64.dll"'
         WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1" "" "{05B38830-F4E9-4329-978B-1DD28605D202}"
         WriteRegStr HKCR "CLSID\{05B38830-F4E9-4329-978B-1DD28605D202}\InprocServer32" "ThreadingModel" "Apartment"
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{05B38830-F4E9-4329-978B-1DD28605D202}" "###MegaShellExtension1"
@@ -280,7 +283,7 @@ Section "Principal" SEC01
         WriteRegStr HKCR "CLSID\{056D528D-CE28-4194-9BA3-BA2E9197FF8C}\InprocServer32" "ThreadingModel" "Apartment"
         WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{056D528D-CE28-4194-9BA3-BA2E9197FF8C}" "###MegaShellExtension2"
         SetRegView 32
-  ${EndIf}*/
+  ${EndIf}
   
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
   ${UAC.CallFunctionAsUser} RunExplorer
@@ -359,19 +362,20 @@ Section Uninstall
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
   Delete "$INSTDIR\pthreadVC2.dll"
-  ;Delete "$INSTDIR\ShellExtX32.dll"
+  Delete "$INSTDIR\FreeImage.dll"
+  Delete "$INSTDIR\ShellExtX32.dll"
   
-  /*
+
   ${If} ${RunningX64}
     Delete "$INSTDIR\x64\ShellExtX64.dll"
     Delete "$INSTDIR\x64\QtCore4.dll"
     Delete "$INSTDIR\x64\QtGui4.dll"
     Delete "$INSTDIR\x64\QtNetwork4.dll"
-  ${EndIf}*/
+  ${EndIf}
 
   Delete "$INSTDIR\MEGASync.exe"
 
-  /*ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
+  ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
 
   ${If} ${RunningX64}
     ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe /u "$INSTDIR\x64\ShellExtX64.dll"'
@@ -386,7 +390,7 @@ Section Uninstall
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1"
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension2"
     SetRegView 32
-  ${EndIf}*/
+  ${EndIf}
   
   
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"

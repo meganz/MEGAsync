@@ -142,7 +142,10 @@ void InfoDialog::timerUpdate()
 	}*/
 
 	if((ui->wTransfer1->getPercentage()==100) && ui->wTransfer2->getPercentage()==100)
-        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+	{
+		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+		app->showSyncedIcon();
+	}
 	timer->stop();
 }
 

@@ -700,7 +700,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
     dbAccess = new MegaDbAccess(basePath);
-	client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
+	client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb");
 
 	maxRetries = 3;
 	loginRequest = NULL;
@@ -1453,25 +1453,26 @@ void MegaApi::transfer_prepare(Transfer *t)
 	{
 		if (t->localfilename.size())
 		{
-				if (!t->uploadhandle)
+			if (!t->uploadhandle)
+			{
+				string thumbnail;
+
+				// (thumbnail creation should be performed in subthreads to keep the app nonblocking)
+				// to guard against file overwrite race conditions, production applications
+				// should use the same file handle for uploading and creating the thumbnail
+				t->localfilename.append("",1);
+				createthumbnail(&t->localfilename,120,&thumbnail);
+				t->localfilename.resize(t->localfilename.size()-1);
+				if (thumbnail.size())
 				{
-						string thumbnail;
+						cout << "Image detected and thumbnail extracted, size " << thumbnail.size() << " bytes" << endl;
 
-						// (thumbnail creation should be performed in subthreads to keep the app nonblocking)
-						// to guard against file overwrite race conditions, production applications
-						// should use the same file handle for uploading and creating the thumbnail
-						createthumbnail(&t->localfilename,120,&thumbnail);
-
-						if (thumbnail.size())
-						{
-								cout << "Image detected and thumbnail extracted, size " << thumbnail.size() << " bytes" << endl;
-
-								// (store the file attribute data - it will be attached to the file
-								// immediately if the upload has already completed; otherwise, once
-								// the upload completes)
-								client->putfa(t,THUMBNAIL120X120,(const byte*)thumbnail.data(),thumbnail.size());
-						}
+						// (store the file attribute data - it will be attached to the file
+						// immediately if the upload has already completed; otherwise, once
+						// the upload completes)
+						client->putfa(t,THUMBNAIL120X120,(const byte*)thumbnail.data(),thumbnail.size());
 				}
+			}
 		}
 	}
 }

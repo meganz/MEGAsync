@@ -63,6 +63,9 @@ bool SetupWizard::event(QEvent *event)
         {
             if(error->getErrorCode() == MegaError::API_OK)
             {
+				preferences->setEmail(ui->eLoginEmail->text().toLower().trimmed());
+				preferences->setPassword(ui->eLoginPassword->text());
+
                 ui->lProgress->setText(tr("Fetching file list..."));
                 megaApi->fetchNodes(this);
                 megaApi->getAccountDetails();

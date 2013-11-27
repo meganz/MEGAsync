@@ -44,7 +44,7 @@ Preferences::Preferences()
     qRegisterMetaType<QList<long long> >("QListLongLong");
     qRegisterMetaTypeStreamOperators<QList<long long> >("QListLongLong");
 
-    clearAll();
+	//clearAll();
 
     readFolders();
 }
@@ -305,6 +305,7 @@ void Preferences::removeAllFolders()
 
 void Preferences::clearAll()
 {
+	removeAllFolders();
     settings->clear();
 }
 

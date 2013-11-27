@@ -488,14 +488,30 @@ bool WinFileSystemAccess::notifyfailed()
 }
 
 // returns true for files that are not supposed to be synced
-bool WinFileSystemAccess::localhidden(string*, string* filename)
+bool WinFileSystemAccess::localhidden(string* path, string* filename)
 {
 	wchar_t c = *(wchar_t*)filename->data();
 
+	filename->append("", 1);
+	int comparation = wcscmp(L"Thumbs.db", (wchar_t*)filename->data());
+	filename->resize(filename->size()-1);
+
 	if(c == '.' || c == '~') return 1;
-	DWORD attributes = GetFileAttributesW((wchar_t*)filename->data());
-	if(attributes == INVALID_FILE_ATTRIBUTES) return 1;
-	if(attributes &= FILE_ATTRIBUTE_HIDDEN) return 1;
+	if(!comparation) return 1;
+
+	//Check hidden files
+	/*
+	if(path)
+	{
+		string fullpath = *path;
+		fullpath.append(localseparator);
+		fullpath.append(*filename);
+		fullpath.append("",1);
+		DWORD attributes = GetFileAttributesW((wchar_t*)fullpath.data());
+		if(attributes == INVALID_FILE_ATTRIBUTES) return 1;
+		if(attributes &= FILE_ATTRIBUTE_HIDDEN) return 1;
+	}
+	*/
 	return 0;
 }
 
