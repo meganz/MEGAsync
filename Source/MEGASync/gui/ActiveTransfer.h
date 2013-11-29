@@ -19,6 +19,7 @@ public:
     void setPercentage(int percentage);
     int getPercentage();
     void setType(int type);
+	void hideTransfer();
 
 private:
     Ui::ActiveTransfer *ui;

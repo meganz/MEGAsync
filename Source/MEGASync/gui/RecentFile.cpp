@@ -40,7 +40,7 @@ void RecentFile::updateWidget()
 		if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
 			ui->lFileType->setPixmap(WindowsUtils::extensionIcons[f.suffix().toLower()]);
 		else
-			ui->lFileType->setPixmap(QPixmap(":/images/sync_generic.png"));
+			ui->lFileType->setPixmap(QPixmap("://images/sync_generic.png"));
 		ui->pArrow->show();
 	}
 

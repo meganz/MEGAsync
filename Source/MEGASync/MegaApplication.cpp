@@ -66,7 +66,7 @@ void MegaApplication::init()
     trayIcon->showMessage(tr("MegaSync"), tr("MEGA Sync is running"));
 
 #ifdef WIN32
-    if(!preferences->isTrayIconEnabled())
+	//if(!preferences->isTrayIconEnabled())
     {
         preferences->setTrayIconEnabled(true);
         if(!WindowsUtils::enableIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
@@ -140,8 +140,8 @@ void MegaApplication::onNewLocalConnection()
 
 void MegaApplication::onDataReady()
 {
-    static int i=0;
-    i++;
+	//static int i=0;
+	//i++;
 
     QLocalSocket * clientConnection = (QLocalSocket *)QObject::sender();
     if (clientConnection->bytesAvailable() < (int)sizeof(quint16))
@@ -152,10 +152,10 @@ void MegaApplication::onDataReady()
     QString path;
     stream >> path;
 
-    string s = path.toAscii().constData();
-    cout << "Local message received: " << s << endl;
+	//string s = path.toAscii().constData();
+	//cout << "Local message received: " << s << endl;
 
-    int numFolders = preferences->getNumSyncedFolders();
+	/*int numFolders = preferences->getNumSyncedFolders();
     for(int i=0; i<numFolders; i++)
     {
         QString localFolder = preferences->getLocalFolder(i);
@@ -168,7 +168,46 @@ void MegaApplication::onDataReady()
             clientConnection->flush();
             return;
         }
-    }
+	}*/
+
+	sync_list * syncs = megaApi->getActiveSyncs();
+	int i=0;
+	for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
+	{
+		if(preferences->getNumSyncedFolders()<=i) break;
+		QString basePath = preferences->getLocalFolder(i);
+		if(path.startsWith(basePath))
+		{
+			if(!path.compare(basePath))
+			{
+				cout << "Base path found" << endl;
+				stream << QString("0");
+				clientConnection->flush();
+				return;
+			}
+			QString relativePath = path.mid(basePath.length()+1);
+			wchar_t windowsPath[512];
+			int len = relativePath.toWCharArray(windowsPath);
+			string str;
+			str.append((char *)windowsPath, len*sizeof(wchar_t));
+			wprintf(L"Checking: %s\n", str.data());
+			pathstate_t state = (*it)->pathstate(&str);
+			switch(state)
+			{
+				case PATHSTATE_SYNCED:
+					stream << QString("0");
+					break;
+				case PATHSTATE_NOTFOUND:
+					cout << "STATE NOT FOUND FOR FILE: " << relativePath.toStdString() << endl;
+				default:
+					stream << QString("1");
+					break;
+			}
+			clientConnection->flush();
+			return;
+		}
+	}
+
     stream << QString("2");
     clientConnection->flush();
 }
@@ -176,7 +215,7 @@ void MegaApplication::onDataReady()
 void MegaApplication::pauseSync()
 {
 	stopSyncs();
-    trayIcon->setIcon(QIcon(":/images/tray_pause.ico"));
+	trayIcon->setIcon(QIcon("://images/tray_pause.ico"));
 	trayMenu->removeAction(pauseAction);
     trayMenu->insertAction(settingsAction, resumeAction);
 }
@@ -184,7 +223,7 @@ void MegaApplication::pauseSync()
 void MegaApplication::resumeSync()
 {
 	startSyncs();
-    trayIcon->setIcon(QIcon(":/images/SyncApp_1.ico"));
+	trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
     trayMenu->removeAction(resumeAction);
     trayMenu->insertAction(settingsAction, pauseAction);
 }
@@ -251,7 +290,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
-    trayIcon = new QSystemTrayIcon(QIcon(":/images/SyncApp_1.ico"));
+	trayIcon = new QSystemTrayIcon(QIcon("://images/SyncApp_1.ico"));
     trayIcon->setContextMenu(trayMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -332,14 +371,15 @@ bool MegaApplication::event(QEvent *event)
 
     if(transfer)
     {
-        if(transfer->getTransferredBytes() == transfer->getTotalBytes())
-        {
-            if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) queuedDownloads--;
-            else queuedUploads --;
-        }
-
+		if((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) &&
+				(transfer->getTransferredBytes() == transfer->getTotalBytes()))
+		{
+			infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
+			cout << "Download finished" << endl;
+		}
         infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
                             transfer->getTransferredBytes(), transfer->getTotalBytes());
+		updateInfo = true;
 		delete transfer;
         transfer = NULL;
     }
@@ -395,6 +435,7 @@ void MegaApplication::onTransferFinish(MegaApi* api, MegaTransfer *transfer, Meg
 {
     this->transfer = transfer->copy();
     this->error = e->copy();
+	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD) queuedDownloads--;
     QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
@@ -423,7 +464,13 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
-		if(!node->removed && !node->tag) infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle);
+		if(node->type==FILENODE && !node->removed && node->tag && !node->syncdeleted)
+		{
+			cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " <<
+					node->tag << endl;
+			infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle);
+			queuedUploads--;
+		}
 	}
 	updateInfo = true;
 	QApplication::postEvent(this, new QEvent(QEvent::User));
@@ -431,7 +478,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
 {
-
+	stopSyncs();
+	megaApi->fetchNodes();
 }
 
 void MegaApplication::onSyncStateChanged(Sync *, syncstate state)
@@ -443,6 +491,7 @@ void MegaApplication::onSyncStateChanged(Sync *, syncstate state)
 
 void MegaApplication::onSyncRemoteCopy(Sync *, const char *name)
 {
+	cout << "Added upload - remote copy" << endl;
     queuedUploads++;
     transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD);
     transfer->setTotalBytes(1000);
@@ -453,26 +502,28 @@ void MegaApplication::onSyncRemoteCopy(Sync *, const char *name)
 
 void MegaApplication::onSyncGet(Sync *, const char *)
 {
+	cout << "Added download - sync get" << endl;
     queuedDownloads++;
     QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
 void MegaApplication::onSyncPut(Sync *, const char *)
 {
+	cout << "Added upload - sync put" << endl;
     queuedUploads++;
     QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
 void MegaApplication::showSyncedIcon()
 {
-    trayIcon->setIcon(QIcon(":/images/SyncApp_1.ico"));
+	trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
     trayMenu->removeAction(resumeAction);
     trayMenu->insertAction(settingsAction, pauseAction);
 }
 
 void MegaApplication::showSyncingIcon()
 {
-    trayIcon->setIcon(QIcon(":/images/tray_sync.ico"));
+	trayIcon->setIcon(QIcon("://images/tray_sync.ico"));
     trayMenu->removeAction(resumeAction);
     trayMenu->insertAction(settingsAction, pauseAction);
 }

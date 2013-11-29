@@ -151,7 +151,7 @@ color: rgb(102, 102, 102);
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/images/tray_mega_logo.png</pixmap>
+         <pixmap resource="Resources.qrc">://images/tray_mega_logo.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -177,7 +177,7 @@ color: rgb(102, 102, 102);
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
+          <normaloff>://images/tray_preferences_ico.png</normaloff>://images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -236,7 +236,7 @@ color: rgb(102, 102, 102);
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/images/tray_updated_large_ico.png</pixmap>
+          <pixmap resource="Resources.qrc">://images/tray_updated_large_ico.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -325,7 +325,7 @@ color: rgb(102, 102, 102);
             </property>
             <property name="icon">
              <iconset resource="Resources.qrc">
-              <normaloff>:/images/tray_queued_ico.png</normaloff>:/images/tray_queued_ico.png</iconset>
+              <normaloff>://images/tray_queued_ico.png</normaloff>://images/tray_queued_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -364,7 +364,7 @@ color: rgb(102, 102, 102);
             </property>
             <property name="icon">
              <iconset resource="Resources.qrc">
-              <normaloff>:/images/tray_upload_ico.png</normaloff>:/images/tray_upload_ico.png</iconset>
+              <normaloff>://images/tray_upload_ico.png</normaloff>://images/tray_upload_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -402,7 +402,7 @@ color: rgb(102, 102, 102);
             </property>
             <property name="icon">
              <iconset resource="Resources.qrc">
-              <normaloff>:/images/tray_download_ico.png</normaloff>:/images/tray_download_ico.png</iconset>
+              <normaloff>://images/tray_download_ico.png</normaloff>://images/tray_download_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -651,7 +651,7 @@ color: rgb(102, 102, 102);
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/tray_folder_ico.png</normaloff>:/images/tray_folder_ico.png</iconset>
+          <normaloff>://images/tray_folder_ico.png</normaloff>://images/tray_folder_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -701,7 +701,7 @@ color: rgb(102, 102, 102);
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
+          <normaloff>://images/tray_web_ico.png</normaloff>://images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>

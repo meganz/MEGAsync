@@ -22,13 +22,13 @@ QMutex *mutex = new QMutex();
 
 MEGAShellExt::MEGAShellExt(int id, QObject *parent) : QObject(parent)
 {
-    this->id = id;
-    clientSocket = new QLocalSocket(this);
+	this->id = id;
+	clientSocket = new QLocalSocket(this);
 }
 
 long MEGAShellExt::queryInterface(const QUuid &iid, void **iface)
 {
-    *iface = 0;
+	*iface = 0;
     if (iid == IID_IShellIconOverlayIdentifier)
         *iface = (IShellIconOverlayIdentifier *)this;
     else
@@ -73,7 +73,7 @@ STDMETHODIMP MEGAShellExt::IsMemberOf(LPCWSTR pwszPath, DWORD dwAttrib)
 
     if(!clientSocket->isWritable())
     {
-        if(!clientSocket->waitForConnected())
+		if(!clientSocket->waitForConnected())
         {
             mutex->unlock();
             return S_FALSE;
@@ -94,7 +94,7 @@ STDMETHODIMP MEGAShellExt::IsMemberOf(LPCWSTR pwszPath, DWORD dwAttrib)
     mutex->unlock();
 
     if(message.toInt()==id)
-        return S_OK;
+		return S_OK;
 
     return S_FALSE;
 }

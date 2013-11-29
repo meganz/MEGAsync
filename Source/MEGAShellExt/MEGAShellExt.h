@@ -76,8 +76,8 @@ public:
     STDMETHOD(IsMemberOf)(LPCWSTR pwszPath,DWORD dwAttrib);
 
 protected:
-    QLocalSocket *clientSocket;
-    int id;
+	QLocalSocket *clientSocket;
+	int id;
 };
 
 #endif // MEGASHELLEXT_H

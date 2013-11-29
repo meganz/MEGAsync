@@ -34,11 +34,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setPercentage(50);
 	ui->wTransfer2->setType(1);*/
 	/******************************/
-
-
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
-
 	ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
@@ -51,16 +46,7 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::startAnimation()
 {
-	/*
-	ui->sActiveTransfers->setCurrentIndex(1);
-	ui->wTransfer1->setPercentage(5);
-	ui->wTransfer2->setPercentage(23);
-	ui->pUsage->setProgress(20);
-	app->showSyncingIcon();
-	timer->start(100);
-	*/
-
-	timer->start(3000);
+	QTimer::singleShot(3000, this, SLOT(timerUpdate()));
 }
 
 void InfoDialog::setUsage(int totalGB, int percentage)
@@ -101,15 +87,26 @@ void InfoDialog::addRecentFile(QString &fileName, long long fileHandle)
 
 void InfoDialog::setQueuedTransfers(int queuedDownloads, int queuedUploads)
 {
+	cout << "TD: " << queuedDownloads << "   TU: " << queuedUploads << endl;
+	int activeDownloads=0;
+	int activeUploads=0;
+	if(queuedDownloads)
+	{
+		queuedDownloads--;
+		activeDownloads++;
+	}
+	if(queuedUploads)
+	{
+		queuedUploads--;
+		activeUploads++;
+	}
+
     ui->lQueued->setText(tr("%1 Queued").arg(QString::number(queuedUploads+queuedDownloads)));
 
-    if(ui->wTransfer1->getPercentage()!=100) queuedDownloads++;
-    ui->bDownloads->setText(QString::number(queuedDownloads));
+	ui->bDownloads->setText(QString::number(activeDownloads));
+	ui->bUploads->setText(QString::number(activeUploads));
 
-    if(ui->wTransfer2->getPercentage()!=100) queuedUploads++;
-    ui->bUploads->setText(QString::number(queuedUploads));
-
-    if(!queuedDownloads && !queuedUploads)
+	if(!activeDownloads && !activeUploads)
         this->startAnimation();
 }
 
@@ -120,28 +117,21 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::timerUpdate()
 {
-	/*int value1 = ui->wTransfer1->getPercentage();
-    if(value1<100) ui->wTransfer1->setPercentage(value1+2);
+	if(ui->wTransfer1->getPercentage()==100)
+	{
+		ui->wTransfer1->hideTransfer();
+	}
 
-    int value2 = ui->wTransfer2->getPercentage();
-    if(value2<100) ui->wTransfer2->setPercentage(value2+1);
-
-    int value3 = (value1+value2)/2;
-    setUsage(50, value3);
-
-    if(value1 == 100 && value2 == 100)
-    {
-        ui->sActiveTransfers->setCurrentIndex(0);
-        timer->stop();
-        app->showSyncedIcon();
-	}*/
+	if(ui->wTransfer2->getPercentage()==100)
+	{
+		ui->wTransfer2->hideTransfer();
+	}
 
 	if((ui->wTransfer1->getPercentage()==100) && ui->wTransfer2->getPercentage()==100)
 	{
 		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 		app->showSyncedIcon();
 	}
-	timer->stop();
 }
 
 void InfoDialog::on_bSettings_clicked()

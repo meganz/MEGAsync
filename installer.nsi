@@ -11,6 +11,7 @@ RequestExecutionLevel user
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
+!define CSIDL_STARTUP '0x7' ;Startup path
 
 !define SRCDIR_MEGASYNC_X32 "Release_x32\MEGASync\release"
 !define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
@@ -56,6 +57,7 @@ var ALREADY_INSTALLED
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
+!insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 
 ; Language files
@@ -193,6 +195,12 @@ Section "Principal" SEC01
   ClearErrors
   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
   IfErrors 0 VSRedist2010x86Installed
+           ${Do}
+               Pop $0
+               IfErrors cslbl1
+           ${Loop}
+           cslbl1:
+           ClearErrors
            inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)" "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe" "$INSTDIR\vcredist_x86.exe" /end
            pop $0
            StrCmp $0 "OK" dlok1
@@ -210,13 +218,19 @@ Section "Principal" SEC01
         ClearErrors
         ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1D8E6291-B0D5-35EC-8441-6616F567A0F7}" "Version"
         IfErrors 0 VSRedist2010x64Installed
-                 inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
+                ${Do}
+                    Pop $0
+                    IfErrors cslbl2
+                ${Loop}
+                cslbl2:
+                ClearErrors
+                inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
                 pop $0
                 StrCmp $0 "OK" dlok2
                 Abort
                 dlok2:
                  ;File "vcredist_x64.exe"
-                 ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
+                 ExecWait '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /q'
                  Delete "$INSTDIR\vcredist_x64.exe"
         VSRedist2010x64Installed:
   ${EndIf}
@@ -229,6 +243,9 @@ Section "Principal" SEC01
   File "${SRCDIR_MEGASYNC_X32}\QtNetwork4.dll"
   ;File /oname=ShellExtX32.dll "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll"
 
+  SetOutPath "$INSTDIR\imageformats"
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
+  
   ${If} ${RunningX64}
         ;x86_64 shell extension files
         SetOutPath "$INSTDIR\x64"
@@ -350,9 +367,6 @@ UAC::RunElevated
 ;  Abort
 FunctionEnd
 
-!insertmacro MUI_UNPAGE_CONFIRM
-!insertmacro MUI_UNPAGE_INSTFILES
-
 Section Uninstall
   ExecDos::exec /DETAILED "taskkill /f /IM MEGASync.exe"
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
@@ -364,7 +378,7 @@ Section Uninstall
   Delete "$INSTDIR\pthreadVC2.dll"
   Delete "$INSTDIR\FreeImage.dll"
   Delete "$INSTDIR\ShellExtX32.dll"
-  
+  Delete "$INSTDIR\imageformats\qico4.dll"
 
   ${If} ${RunningX64}
     Delete "$INSTDIR\x64\ShellExtX64.dll"
@@ -398,6 +412,9 @@ Section Uninstall
   Delete "$INSTDIR\MEGA Web.url"
   Delete "$DESKTOP\MegaSync.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MegaSync.lnk"
+
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
+  Delete "$1\MegaSync.lnk"
 
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\x64"
