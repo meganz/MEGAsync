@@ -1746,14 +1746,10 @@ struct LocalNode : public File
 	// related cloud node, if any
 	Node* node;
 
-	// original local fs name (or path for Sync's root node member)
-//	string localname;
-
 	// FILENODE or FOLDERNODE
 	nodetype type;
 
-	// corresponding remote node
-//	handle nodehandle;
+	// detection of deleted filesystem records
 	handle scanseqno;
 
 	// global sync reference
@@ -1868,9 +1864,6 @@ public:
 
 	// active syncs
 	sync_list syncs;
-
-	// start folder synchronization
-//	bool addsync(string* localname, Node* n);
 
 	// number of parallel connections per transfer (PUT/GET)
 	unsigned char connections[2];
@@ -2175,9 +2168,6 @@ public:
 	// create missing folders, copy/start uploading missing files
 	void syncup(LocalNode* = NULL/*, Node* = NULL*/);
 
-	// trigger syncing of local file
-	void syncupload(LocalNode*);
-
 	// sync putnodes() completion
 	void putnodes_sync_result(error, NewNode*);
 
@@ -2447,27 +2437,15 @@ struct ScanItem
 	bool deleted;
 };
 
+typedef enum { PATHSTATE_NOTFOUND, PATHSTATE_SYNCED, PATHSTATE_SYNCING, PATHSTATE_PENDING } pathstate_t;
+
 class Sync
 {
-	// reference to pending/running uploads
-	handle syncid;
-
-	SymmCipher tkey;
-	string tattrstring;
-	AttrMap tattrs;
-	
 public:
 	MegaClient* client;
 
-	// remote root
-//	handle rooth;
-
-	// full filesystem path this sync starts at
-	//string rootpath;
-
-	// in-memory representation of the local tree
+	// root of local filesystem tree, holding the sync's root folder
 	LocalNode localroot;
-	//LocalNode* rootlocal;
 
 	// queued ScanItems
 	deque<ScanItem> scanstack;
@@ -2493,9 +2471,16 @@ public:
 	// scan items in specified path and add as children of the specified LocalNode
 	void scan(string*, FileAccess*, LocalNode*, bool);
 
-	sync_list::iterator sync_it;
+	// determine status of a given path
+	pathstate_t pathstate(string*);
 	
-	Sync(MegaClient*, string*, Node*);
+	// own position in session sync list
+	sync_list::iterator sync_it;
+
+	// notified nodes originating from this sync bear this tag
+	int tag;
+	
+	Sync(MegaClient*, string*, Node*, int = 0);
 	~Sync();
 };
 

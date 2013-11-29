@@ -43,7 +43,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Resources.qrc">:/images/transferProgress.png</pixmap>
+    <pixmap resource="Resources.qrc">://images/transferProgress.png</pixmap>
    </property>
   </widget>
   <widget class="QWidget" name="wProgress" native="true">

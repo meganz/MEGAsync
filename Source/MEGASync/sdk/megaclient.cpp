@@ -7626,9 +7626,10 @@ int FileFingerprint::unserializefingerprint(string* d)
 }
 
 // a new sync reads the full local tree and issues all commands required to equalize both sides
-Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode)
+Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode, int ctag)
 {
 	client = cclient;
+	tag = ctag;
 	
 	localbytes = 0;
 	localnodes[FILENODE] = 0;
@@ -7662,6 +7663,41 @@ void Sync::changestate(syncstate newstate)
 
 		state = newstate;
 	}
+}
+
+// walk path and return state of the sync
+// path must not start with a separator and be relative to the sync root
+pathstate_t Sync::pathstate(string* localpath)
+{
+	const char* ptr = localpath->data();
+	const char* end = localpath->data()+localpath->size();
+	const char* nptr = ptr;
+	LocalNode* l = &localroot;
+	size_t separatorlen = client->fsaccess->localseparator.size();
+	localnode_map::iterator it;
+	string t;
+	
+	for (;;)
+	{
+		if (nptr == end || !memcmp(nptr,client->fsaccess->localseparator.data(),separatorlen))
+		{
+			t.assign(ptr,nptr-ptr);
+			
+			if ((it = l->children.find(&t)) == l->children.end()) return PATHSTATE_NOTFOUND;
+
+			l = it->second;
+			
+			if (nptr == end) break;
+			
+			ptr = nptr+separatorlen;
+			nptr = ptr;
+		}
+		else nptr += separatorlen;
+	}
+
+	if (l->node) return PATHSTATE_SYNCED;
+	if (l->transfer && l->transfer->slot) return PATHSTATE_SYNCING;
+	return PATHSTATE_PENDING;
 }
 
 // initialize fresh LocalNode object - must be called exactly once
@@ -8192,7 +8228,6 @@ void MegaClient::syncup(LocalNode* l)
 					{
 						// recurse into directories of equal name
 						lit->second->setnode(rit->second);
-
 						syncup(lit->second);
 						continue;
 					}
@@ -8290,7 +8325,7 @@ void MegaClient::syncupdate()
 		{
 			syncadding++;
 
-			reqs[r].add(new CommandPutNodes(this,synccreate[start]->parent->node->nodehandle,NULL,nn,nnp-nn,0,PUTNODES_SYNC));
+			reqs[r].add(new CommandPutNodes(this,synccreate[start]->parent->node->nodehandle,NULL,nn,nnp-nn,synccreate[start]->sync->tag,PUTNODES_SYNC));
 			syncactivity = true;
 		}
 	}
@@ -8356,12 +8391,6 @@ void MegaClient::putnodes_sync_result(error e, NewNode* nn)
 
 	syncadding--;
 	syncactivity = true;
-}
-
-// request upload of the file identified by the supplied fingerprint
-void MegaClient::syncupload(LocalNode* l)
-{
-	startxfer(PUT,l);
 }
 
 // inject file into transfer subsystem
@@ -8609,7 +8638,7 @@ void File::completed(Transfer* t, LocalNode* l)
 			if (!t->client->nodebyhandle(th)) th = t->client->rootnodes[0];
 
 			if (l) t->client->syncadding++;
-			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,0,l ? PUTNODES_SYNC : PUTNODES_APP));
+			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,l ? l->sync->tag : 0,l ? PUTNODES_SYNC : PUTNODES_APP));
 		}
 	}
 }

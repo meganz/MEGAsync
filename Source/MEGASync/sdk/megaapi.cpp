@@ -1453,6 +1453,7 @@ void MegaApi::transfer_prepare(Transfer *t)
 	if (t->type == GET)
 	{
 		client->fsaccess->tmpnamelocal(&t->localfilename);
+		transfer->setNodeHandle(t->files.front()->h);
 	}
 	else
 	{
@@ -3424,7 +3425,7 @@ void MegaApi::sendPendingRequests()
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
 			cout << "Go to addSync" << endl;
-			new Sync(client,&localname,node);
+			new Sync(client,&localname,node, -1);
             break;
         }
 		}

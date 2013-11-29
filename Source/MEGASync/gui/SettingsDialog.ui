@@ -107,7 +107,7 @@ margin-top: 6px;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/images/preferences_mega_logo.png</pixmap>
+        <pixmap resource="Resources.qrc">://images/preferences_mega_logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -133,7 +133,7 @@ margin-top: 6px;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/images/help_ico.png</pixmap>
+        <pixmap resource="Resources.qrc">://images/help_ico.png</pixmap>
        </property>
       </widget>
      </item>
@@ -217,7 +217,7 @@ margin-top: 6px;
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/general_32.png</normaloff>:/images/general_32.png</iconset>
+          <normaloff>://images/general_32.png</normaloff>://images/general_32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -255,7 +255,7 @@ margin-top: 6px;
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/account_32.png</normaloff>:/images/account_32.png</iconset>
+          <normaloff>://images/account_32.png</normaloff>://images/account_32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -290,7 +290,7 @@ margin-top: 6px;
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/syncs_32.png</normaloff>:/images/syncs_32.png</iconset>
+          <normaloff>://images/syncs_32.png</normaloff>://images/syncs_32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -325,7 +325,7 @@ margin-top: 6px;
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/bandwidth_32.png</normaloff>:/images/bandwidth_32.png</iconset>
+          <normaloff>://images/bandwidth_32.png</normaloff>://images/bandwidth_32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -360,7 +360,7 @@ margin-top: 6px;
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
+          <normaloff>://images/proxies_32.png</normaloff>://images/proxies_32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -502,7 +502,7 @@ margin-top: 6px;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="Resources.qrc">:/images/Free.ico</pixmap>
+             <pixmap resource="Resources.qrc">://images/Free.ico</pixmap>
             </property>
             <property name="scaledContents">
              <bool>false</bool>

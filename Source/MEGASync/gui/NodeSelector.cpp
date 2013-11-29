@@ -7,7 +7,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, QWidget *parent) :
 {
     ui->setupUi(this);
     this->megaApi = megaApi;
-    folderIcon =  QIcon(":/images/folder.ico");
+    folderIcon =  QIcon("://images/folder.ico");
     selectedFolder = UNDEF;
     selectedItem = NULL;
 }
