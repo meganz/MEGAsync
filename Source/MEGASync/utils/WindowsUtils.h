@@ -1,11 +1,14 @@
 #ifndef WINDOWSUTILS_H
 #define WINDOWSUTILS_H
 
+#include "utils/win32/PipeDispatcher.h"
+
 #include <QApplication>
 #include <QString>
 #include <QFile>
 #include <QHash>
 #include <QPixmap>
+#include <QThread>
 
 #define     WIN32_LEAN_AND_MEAN
 #define     _WIN32_WINNT    0x0501
@@ -123,5 +126,6 @@ public:
     static void notifyAttributeChange(QString &path);
     static bool startOnStartup(bool value);
 };
+
 
 #endif // WINDOWSUTILS_H

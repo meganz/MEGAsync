@@ -1,4 +1,5 @@
 #include "WindowsUtils.h"
+#include "utils/win32/PipeDispatcher.h"
 
 TrayNotificationReceiver::TrayNotificationReceiver(ITrayNotify *m_ITrayNotify, QString &executable)
 {
@@ -382,3 +383,5 @@ bool WindowsUtils::startOnStartup(bool value)
 WindowsUtils::WindowsUtils()
 {
 }
+
+

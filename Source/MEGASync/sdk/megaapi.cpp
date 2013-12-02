@@ -700,7 +700,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
     dbAccess = new MegaDbAccess(basePath);
-	client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb");
+	client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
 
 	maxRetries = 3;
 	loginRequest = NULL;
