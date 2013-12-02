@@ -3,15 +3,16 @@
 RequestExecutionLevel user
 
 ; HM NIS Edit Wizard helper defines
-!define PRODUCT_NAME "MegaSync"
+!define PRODUCT_NAME "MEGAsync"
 !define PRODUCT_VERSION "1.0"
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.co.nz"
-!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGASync.exe"
+!define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 !define CSIDL_STARTUP '0x7' ;Startup path
+!define CSIDL_LOCALAPPDATA '0x1C' ;Local Application Data path
 
 !define SRCDIR_MEGASYNC_X32 "Release_x32\MEGASync\release"
 !define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
@@ -34,7 +35,7 @@ RequestExecutionLevel user
 
 ; Settings
 !define MUI_STARTMENUPAGE_NODISABLE
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "MegaSync"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "MEGAsync"
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${PRODUCT_STARTMENU_REGVAL}"
@@ -47,7 +48,6 @@ RequestExecutionLevel user
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 
 var ICONS_GROUP
-var ALREADY_INSTALLED
 
 ; Installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -139,8 +139,8 @@ var ALREADY_INSTALLED
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "MegaSyncSetup.exe"
-InstallDir "$PROGRAMFILES\MegaSync"
+OutFile "MEGAsyncSetup.exe"
+InstallDir "$PROGRAMFILES\MEGAsync"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
@@ -151,7 +151,7 @@ Function RunFunction
 FunctionEnd
 
 Function RunMegaSync
-  Exec "$INSTDIR\MEGASync.exe"
+  Exec "$INSTDIR\MEGAsync.exe"
   Sleep 2000
 FunctionEnd
 
@@ -181,12 +181,12 @@ Function .onInit
 FunctionEnd
 
 Section "Principal" SEC01
+
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
+  StrCpy $INSTDIR "$1\MEGAsync"
+  
   ;SetRebootFlag true
   SetOverwrite try
-  
-  IfFileExists "$INSTDIR\MEGASync.exe" 0 new_installation
-    StrCpy $ALREADY_INSTALLED 1
-  new_installation:
 
   ;VC++2010 Redistributable x32
   SetOutPath "$INSTDIR"
@@ -230,9 +230,14 @@ Section "Principal" SEC01
                 Abort
                 dlok2:
                  ;File "vcredist_x64.exe"
+                 md5dll::GetMD5File "${NSISDIR}\vcredist_x64.exe"
+                 Pop $0
+                 
+                 
                  ExecWait '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /q'
                  Delete "$INSTDIR\vcredist_x64.exe"
         VSRedist2010x64Installed:
+        SetRegView 32
   ${EndIf}
   
   ;x86_32 files
@@ -246,65 +251,50 @@ Section "Principal" SEC01
   SetOutPath "$INSTDIR\imageformats"
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
   
-  ${If} ${RunningX64}
-        ;x86_64 shell extension files
-        SetOutPath "$INSTDIR\x64"
-        File "${SRCDIR_MEGASHELLEXT_X64}\QtCore4.dll"
-        File "${SRCDIR_MEGASHELLEXT_X64}\QtGui4.dll"
-        File "${SRCDIR_MEGASHELLEXT_X64}\QtNetwork4.dll"
-        ;File /oname=ShellExtX64.dll "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll"
-  ${EndIf}
-
   SetOutPath "$INSTDIR"
   SetOverwrite on
   AllowSkipFiles off
   File "${SRCDIR_MEGASYNC_X32}\MEGASync.exe"
   
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+
+  IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
+        GetTempFileName $0
+        Delete $0
+        Rename "$INSTDIR\ShellExtX32.dll" $0
+        Delete /REBOOTOK $0
+  new_installation_x32:
+  
   ; Register shell extension 1 (x86_32)
-  SetRegView 32
   ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe "$INSTDIR\ShellExtX32.dll"'
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
-  !insertmacro InstallLib REGDLL $ALREADY_INSTALLED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+  !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
-  
-  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1" "" "{05B38830-F4E9-4329-978B-1DD28605D202}"
-  WriteRegStr HKCR "CLSID\{05B38830-F4E9-4329-978B-1DD28605D202}\InprocServer32" "ThreadingModel" "Apartment"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{05B38830-F4E9-4329-978B-1DD28605D202}" "###MegaShellExtension1"
-
-  ; Register shell extension 2 (x86_32)
-  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension2" "" "{056D528D-CE28-4194-9BA3-BA2E9197FF8C}"
-  WriteRegStr HKCR "CLSID\{056D528D-CE28-4194-9BA3-BA2E9197FF8C}\InprocServer32" "ThreadingModel" "Apartment"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{056D528D-CE28-4194-9BA3-BA2E9197FF8C}" "###MegaShellExtension2"
 
   ${If} ${RunningX64}
+        IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
+                GetTempFileName $0
+                Delete $0
+                Rename "$INSTDIR\ShellExtX64.dll" $0
+                Delete /REBOOTOK $0
+        new_installation_x64:
+  
         ; Register shell extension 1 (x86_64)
         ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe "$INSTDIR\x64\ShellExtX64.dll"'
-
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL $ALREADY_INSTALLED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll" "$INSTDIR\x64\ShellExtX64.dll" "$INSTDIR\x64"
+        !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
-        
-        SetRegView 64
-        WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1" "" "{05B38830-F4E9-4329-978B-1DD28605D202}"
-        WriteRegStr HKCR "CLSID\{05B38830-F4E9-4329-978B-1DD28605D202}\InprocServer32" "ThreadingModel" "Apartment"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{05B38830-F4E9-4329-978B-1DD28605D202}" "###MegaShellExtension1"
-
-        ; Register shell extension 2 (x86_64)
-        WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension2" "" "{056D528D-CE28-4194-9BA3-BA2E9197FF8C}"
-        WriteRegStr HKCR "CLSID\{056D528D-CE28-4194-9BA3-BA2E9197FF8C}\InprocServer32" "ThreadingModel" "Apartment"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved" "{056D528D-CE28-4194-9BA3-BA2E9197FF8C}" "###MegaShellExtension2"
-        SetRegView 32
   ${EndIf}
   
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
   ${UAC.CallFunctionAsUser} RunExplorer
    
+  SetRebootFlag false
  ;ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
  ;${DisableX64FSRedirection}
  ;ExecWait "taskkill /f /IM explorer.exe"
@@ -314,25 +304,25 @@ Section "Principal" SEC01
   ; Shortcuts
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MegaSync.lnk" "$INSTDIR\MEGASync.exe"
-  CreateShortCut "$DESKTOP\MegaSync.lnk" "$INSTDIR\MEGASync.exe"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
+  CreateShortCut "$DESKTOP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
 Section -AdditionalIcons
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-  WriteIniStr "$INSTDIR\MEGA Web.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Web.lnk" "$INSTDIR\MEGA Web.url"
+  WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
-  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\MEGASync.exe"
+  WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\MEGAsync.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\MEGASync.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\MEGAsync.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
@@ -377,50 +367,56 @@ Section Uninstall
   Delete "$INSTDIR\QtCore4.dll"
   Delete "$INSTDIR\pthreadVC2.dll"
   Delete "$INSTDIR\FreeImage.dll"
-  Delete "$INSTDIR\ShellExtX32.dll"
   Delete "$INSTDIR\imageformats\qico4.dll"
+  Delete "$INSTDIR\MEGAsync.exe"
 
-  ${If} ${RunningX64}
-    Delete "$INSTDIR\x64\ShellExtX64.dll"
-    Delete "$INSTDIR\x64\QtCore4.dll"
-    Delete "$INSTDIR\x64\QtGui4.dll"
-    Delete "$INSTDIR\x64\QtNetwork4.dll"
-  ${EndIf}
-
-  Delete "$INSTDIR\MEGASync.exe"
-
-  ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
-
-  ${If} ${RunningX64}
-    ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe /u "$INSTDIR\x64\ShellExtX64.dll"'
-  ${EndIf}
+  ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
+  ;${If} ${RunningX64}
+  ;  ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe /u "$INSTDIR\ShellExtX64.dll"'
+  ;${EndIf}
   
-  SetRegView 32
-  DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1"
-  DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension2"
-
-  ${If} ${RunningX64}
-    SetRegView 64
-    DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension1"
-    DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellIconOverlayIdentifiers\###MegaShellExtension2"
-    SetRegView 32
-  ${EndIf}
+  !define LIBRARY_COM
+  !define LIBRARY_SHELL_EXTENSION
+  !insertmacro UnInstallLib REGDLL NOTSHARED NOREMOVE "$INSTDIR\ShellExtX32.dll"
+  !undef LIBRARY_COM
+  !undef LIBRARY_SHELL_EXTENSION
   
+  GetTempFileName $0
+  Delete $0
+  Rename "$INSTDIR\ShellExtX32.dll" $0
+  Delete /REBOOTOK $0
+  
+  ${If} ${RunningX64}
+        !define LIBRARY_X64
+        !define LIBRARY_COM
+        !define LIBRARY_SHELL_EXTENSION
+        !insertmacro UnInstallLib REGDLL NOTSHARED NOREMOVE "$INSTDIR\ShellExtX64.dll"
+        !undef LIBRARY_X64
+        !undef LIBRARY_COM
+        !undef LIBRARY_SHELL_EXTENSION
+
+        GetTempFileName $0
+        Delete $0
+        Rename "$INSTDIR\ShellExtX64.dll" $0
+        Delete /REBOOTOK $0
+  ${EndIf}
   
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
-  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Web.lnk"
-  Delete "$INSTDIR\MEGA Web.url"
-  Delete "$DESKTOP\MegaSync.lnk"
-  Delete "$SMPROGRAMS\$ICONS_GROUP\MegaSync.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk"
+  Delete "$INSTDIR\MEGA Website.url"
+  Delete "$DESKTOP\MEGAsync.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk"
 
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
-  Delete "$1\MegaSync.lnk"
+  Delete "$1\MEGAsync.lnk"
 
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
-  RMDir "$INSTDIR\x64"
+  RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   SetAutoClose true
+
+  SetRebootFlag false
 SectionEnd

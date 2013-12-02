@@ -4,22 +4,42 @@
 #
 #-------------------------------------------------
 
-CONFIG += dll qaxserver qt
-QT += network
+CONFIG -= qt
 
 TARGET = MEGAShellExt
 TEMPLATE = lib
 
-DEFINES += MEGASHELLEXT_LIBRARY
+LIBS += -luser32 -lole32 -loleaut32 -lgdi32 -luuid -lAdvapi32 -lShell32
 
-SOURCES += MEGAShellExt.cpp dllmain.cpp
-HEADERS += MEGAShellExt.h
-
-LIBS += -luser32 -lole32 -loleaut32 -lgdi32 -luuid
-
-DEF_FILE = qaxserver.def
-RC_FILE = qaxserver.rc
+DEF_FILE = GlobalExportFunctions.def
+RC_FILE = MEGAShellExt.rc
 
 OTHER_FILES += \
-    qaxserver.rc \
-    qaxserver.def
+    MEGAShellExt.rc \
+    GlobalExportFunctions.def
+
+HEADERS += \
+    ShellExtSyncing.h \
+    ShellExtSynced.h \
+    ShellExt.h \
+    resource.h \
+    RegUtils.h \
+    ContextMenuExt.h \
+    ClassFactoryShellExtSyncing.h \
+    ClassFactoryShellExtSynced.h \
+    ClassFactoryShellExtPending.h \
+    ClassFactoryContextMenuExt.h \
+    ClassFactory.h
+
+SOURCES += \
+    ShellExtSyncing.cpp \
+    ShellExtSynced.cpp \
+    ShellExt.cpp \
+    RegUtils.cpp \
+    dllmain.cpp \
+    ContextMenuExt.cpp \
+    ClassFactoryShellExtSyncing.cpp \
+    ClassFactoryShellExtSynced.cpp \
+    ClassFactoryShellExtPending.cpp \
+    ClassFactoryContextMenuExt.cpp \
+    ClassFactory.cpp

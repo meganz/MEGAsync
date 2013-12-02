@@ -42,6 +42,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 	WindowsUtils::startOnStartup(preferences->startOnStartup());
 #endif
 
+	ShellDispatcher *shellDispatcher = new ShellDispatcher();
+	shellDispatcher->start();
+
     //downloader = new FileDownloader(QUrl("http://www.google.es"));
     //connect(downloader, SIGNAL(downloaded()), this, SLOT(updateDowloaded()));
     init();
