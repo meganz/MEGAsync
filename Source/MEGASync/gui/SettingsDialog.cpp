@@ -44,7 +44,7 @@ void SettingsDialog::on_bGeneral_clicked()
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
-    ui->bProxies->setChecked(false);
+	//ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pGeneral);
 }
 
@@ -54,7 +54,7 @@ void SettingsDialog::on_bAccount_clicked()
     ui->bAccount->setChecked(true);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
-    ui->bProxies->setChecked(false);
+	//ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAccount);
 }
 
@@ -64,7 +64,7 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
-    ui->bProxies->setChecked(false);
+	//ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible( true );
 }
@@ -75,7 +75,7 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
-    ui->bProxies->setChecked(false);
+	//ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pBandwidth);
 }
 
@@ -85,7 +85,7 @@ void SettingsDialog::on_bProxies_clicked()
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
-    ui->bProxies->setChecked(true);
+	//ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
 }
 
@@ -147,7 +147,13 @@ void SettingsDialog::on_rNoProxy_clicked()
 void SettingsDialog::on_bUpgrade_clicked()
 {
 	QString upgradeUrl("https://mega.co.nz/#pro");
-    QDesktopServices::openUrl(QUrl(upgradeUrl));
+	QDesktopServices::openUrl(QUrl(upgradeUrl));
+}
+
+void SettingsDialog::on_bUpgradeBandwidth_clicked()
+{
+	QString upgradeUrl("https://mega.co.nz/#pro");
+	QDesktopServices::openUrl(QUrl(upgradeUrl));
 }
 
 void SettingsDialog::on_rNoLimit_clicked()
@@ -183,11 +189,19 @@ void SettingsDialog::loadSettings()
 
     //Account
     ui->lEmail->setText(preferences->email());
-    int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
-    ui->pStorage->setValue(percentage);
-    ui->lStorage->setText(QString::number(preferences->usedStorage()/(1024*1024*1024)) + " GB (" +
-          QString::number(percentage) + "%) of " +
-          QString::number(preferences->totalStorage()/(1024*1024*1024)) + " GB");
+	if(preferences->totalStorage()==0)
+	{
+		ui->pStorage->setValue(0);
+		ui->lStorage->setText(tr("Data temporarily unavailable"));
+	}
+	else
+	{
+		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
+		ui->pStorage->setValue(percentage);
+		ui->lStorage->setText(QString::number(preferences->usedStorage()/(1024*1024*1024)) + " GB (" +
+			  QString::number(percentage) + "%) of " +
+			  QString::number(preferences->totalStorage()/(1024*1024*1024)) + " GB used");
+	}
     switch(preferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
@@ -215,6 +229,20 @@ void SettingsDialog::loadSettings()
     ui->rLimit->setChecked(preferences->uploadLimitKB()>=0);
     ui->rNoLimit->setChecked(preferences->uploadLimitKB()<0);
     ui->eLimit->setText((preferences->uploadLimitKB()<=0)? "0" : QString::number(preferences->uploadLimitKB()));
+
+	if(preferences->totalBandwidth() == 0)
+	{
+		ui->pUsedBandwidth->setValue(0);
+		ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+	}
+	else
+	{
+		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
+		ui->pUsedBandwidth->setValue(bandwidthPercentage);
+		ui->lBandwidth->setText(QString::number(preferences->usedBandwidth()/(1024*1024*1024)) + " GB (" +
+		  QString::number(bandwidthPercentage) + "%) of " +
+		  QString::number(preferences->totalBandwidth()/(1024*1024*1024)) + " GB used");
+	}
 
     //Proxies
     ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);

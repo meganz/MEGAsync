@@ -183,7 +183,7 @@ MegaRequest::MegaRequest(MegaTransfer *transfer)
 	this->attrType = 0;
 }
 
-MegaRequest::MegaRequest(const MegaRequest &request)
+MegaRequest::MegaRequest(MegaRequest &request)
 {
 	this->link = NULL;
 	this->name = NULL;
@@ -216,7 +216,7 @@ MegaRequest::MegaRequest(const MegaRequest &request)
 	this->transfer = NULL; //request.getTransfer();
 	this->listener = NULL; //request.getListener();
 	this->accountDetails = NULL; //request.getAccountDetails();
-	this->publicNode = NULL;
+	this->publicNode = request.getPublicNode();
 }
 
 
@@ -706,6 +706,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
 	loginRequest = NULL;
 	updatingSID = 0;
 	updateSIDtime = -10000000;
+	currentTransfer = NULL;
 
 	//Start blocking thread
 	threadExit = 0;
@@ -985,7 +986,10 @@ void MegaApi::importPublicNode(Node *publicNode, Node* parent, MegaRequestListen
 		// generate encrypted attribute string
 		publicNode->attrs.getjson(&attrstring);
 		client->makeattr(&publicNode->key,&newnode->attrstring,attrstring.c_str());
+		newnode->nodehandle = publicNode->nodehandle;
+		newnode->clienttimestamp = publicNode->ctime;
 		newnode->source = NEW_PUBLIC;
+		newnode->type = FILENODE;
 		newnode->parenthandle = UNDEF;
 
 		request->setPublicNode((Node *)newnode);
@@ -1028,12 +1032,12 @@ void MegaApi::getAccountDetails(int storage, int transfer, int pro, int transact
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_ACCOUNT_DETAILS, listener);
 	int numDetails = 0;
-	if(storage) numDetails += 0x01;
-	if(transfer) numDetails += 0x02;
-	if(pro) numDetails += 0x04;
-	if(transactions) numDetails += 0x08;
-	if(purchases) numDetails += 0x10;
-	if(sessions) numDetails += 0x20;
+	if(storage) numDetails |= 0x01;
+	if(transfer) numDetails |= 0x02;
+	if(pro) numDetails |= 0x04;
+	if(transactions) numDetails |= 0x08;
+	if(purchases) numDetails |= 0x10;
+	if(sessions) numDetails |= 0x20;
 	request->setNumDetails(numDetails);
 
 	requestQueue.push(request);
@@ -1103,7 +1107,7 @@ void MegaApi::startUpload(const char* localPath, Node* parent, MegaTransferListe
 
 void MegaApi::startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener)
 { return startUpload(localPath, parent, 1, 0, fileName, listener); }
-
+*/
 
 void MegaApi::startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener)
 {
@@ -1148,6 +1152,7 @@ void MegaApi::startPublicDownload(Node* node, const char* localFolder, MegaTrans
 void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
 { startDownload(nodehandle, localFolder, 1, 0, 0, base64key, listener); }
 
+/*
 void MegaApi::cancelTransfer(MegaTransfer *transfer)
 {
 	if(!transfer) return;
@@ -1432,7 +1437,9 @@ vector<Node *> &SearchTreeProcessor::getResults()
 
 void MegaApi::transfer_added(Transfer *t)
 {
-	MegaTransfer *transfer = new MegaTransfer(t->type);
+	MegaTransfer *transfer = currentTransfer;
+	if(!transfer) transfer = new MegaTransfer(t->type);
+	currentTransfer = NULL;
 	transferMap[t]=transfer;
 	cout << "transfer_added" << endl;
 }
@@ -1546,7 +1553,10 @@ void MegaApi::transfer_complete(Transfer* tr)
 	}
 
 	transfer->setTransferredBytes(transfer->getTotalBytes());
-	cout << "transfer_complete: " << transfer->getFileName() << endl;
+
+	string tmpPath;
+	fsAccess->local2path(&tr->localfilename, &tmpPath);
+	cout << "transfer_complete: TMP: " << tmpPath << "   FINAL: " << transfer->getFileName() << endl;
 	fireOnTransferFinish(this, transfer, MegaError(API_OK));
 
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
@@ -2040,7 +2050,7 @@ void MegaApi::openfilelink_result(error result)
 
 // the requested link was opened successfully
 // (it is the application's responsibility to delete n!)
-void MegaApi::openfilelink_result(Node* n)
+void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, time_t ts, time_t tm)
 {
 	//cout << "Importing " << n->displayname() << "..." << endl;
 	MegaRequest *request = requestMap[client->restag];
@@ -2057,29 +2067,47 @@ void MegaApi::openfilelink_result(Node* n)
 	else
 	{
 		if(request->getType() == MegaRequest::TYPE_IMPORT_LINK)
-		{
-			NewNode *newnode = new NewNode[1];
-			string attrstring;
+		{			
+			NewNode* newnode = new NewNode[1];
 
-			// copy core properties
-			*(NodeCore*)newnode = *(NodeCore*)n;
-
-			// generate encrypted attribute string
-			n->attrs.getjson(&attrstring);
-			client->makeattr(&n->key,&newnode->attrstring,attrstring.c_str());
-
-			delete n;
-
+			// set up new node as folder node
 			newnode->source = NEW_PUBLIC;
+			newnode->type = FILENODE;
+			newnode->nodehandle = ph;
+			newnode->clienttimestamp = tm;
 			newnode->parenthandle = UNDEF;
 
-			// add node		
+			newnode->nodekey.assign((char*)key,Node::FILENODEKEYLENGTH);
+
+			cout << "ATTRIBUTES: " << *a << endl;
+			//newnode->attrstring = *a;
+
+			unsigned len = a->size()*3/4+4;
+			newnode->attrstring.resize(len);
+			len = Base64::atob(a->data(),(byte *)newnode->attrstring.data(),len);
+			newnode->attrstring.resize(len);
+
+			//newnode->attrstring.assign(a->c_str(), a->length());
+
+			// add node
 			requestMap.erase(client->restag);
 			requestMap[client->nextreqtag()]=request;
+
+			cout << "Putting in node: " << this->getNodePath(this->getNodeByHandle(request->getParentHandle())) << endl;
 			client->putnodes(request->getParentHandle(),newnode,1);
 		}
 		else
 		{
+			Node *n = new Node(NULL, NULL, ph, UNDEF, FILENODE, size,
+					NULL, NULL, ts, tm);
+			n->attrstring.resize(a->size());
+			n->attrstring.assign(a->c_str(), a->length());
+			n->setkey(key);
+			n->parent = NULL;
+			n->inshare = NULL;
+			n->sharekey = NULL;
+			cout << "NODE: " <<  n->displayname() << endl;
+
 			request->setPublicNode(n);
 			fireOnRequestFinish(this, request, MegaError(MegaError::API_OK));
 		}
@@ -3040,19 +3068,18 @@ void MegaApi::sendPendingTransfers()
 	while((transfer = transferQueue.pop()))
 	{
         nextTag = MegaFile::nextseqno;
-		//transferMap[nextTag]=transfer;
 		transfer->setTag(nextTag);
 		e = API_OK;
 
 		switch(transfer->getType())
 		{
-			/*case MegaTransfer::TYPE_UPLOAD:
+			case MegaTransfer::TYPE_UPLOAD:
 			{
                 const char* localPath = transfer->getPath();
 				if(!localPath) { e = API_EARGS; break; }
-
+				currentTransfer=transfer;
                 MegaFilePut *f = new MegaFilePut(client, &string(localPath), transfer->getParentHandle(), "");
-                client->startxfer(PUT,f);
+				client->startxfer(PUT,f);
 				break;
 			}
 			case MegaTransfer::TYPE_DOWNLOAD:
@@ -3060,11 +3087,11 @@ void MegaApi::sendPendingTransfers()
                 handle nodehandle = transfer->getNodeHandle();
                 Node *node = client->nodebyhandle(nodehandle);
                 if(!node) { e = API_EARGS; break; }
-
+				currentTransfer=transfer;
                 MegaFileGet *f = new MegaFileGet(client, node);
                 client->startxfer(GET,f);
 				break;
-			}*/
+			}
 		}
 
 		if(e)

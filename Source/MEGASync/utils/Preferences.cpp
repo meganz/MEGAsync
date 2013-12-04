@@ -6,6 +6,8 @@ const QString Preferences::emailKey                 = "email";
 const QString Preferences::passwordKey              = "password";
 const QString Preferences::totalStorageKey          = "totalStorage";
 const QString Preferences::usedStorageKey           = "usedStorage";
+const QString Preferences::totalBandwidthKey		= "totalBandwidth";
+const QString Preferences::usedBandwidthKey			= "usedBandwidth";
 const QString Preferences::accountTypeKey           = "accountType";
 const QString Preferences::setupWizardCompletedKey  = "setupWizardCompleted";
 const QString Preferences::showNotificationsKey     = "showNotifications";
@@ -23,6 +25,9 @@ const QString Preferences::proxyPasswordKey         = "proxyPassword";
 const QString Preferences::localFoldersKey          = "localFolders";
 const QString Preferences::megaFoldersKey           = "megaFolders";
 const QString Preferences::megaFolderHandlesKey     = "megaFolderHandles";
+const QString Preferences::downloadFolderKey		= "downloadFolder";
+const QString Preferences::uploadFolderKey			= "uploadFolder";
+const QString Preferences::importFolderKey			= "importFolder";
 
 const bool Preferences::defaultSetupWizardCompleted = false;
 const bool Preferences::defaultShowNotifications    = true;
@@ -101,7 +106,29 @@ long long Preferences::usedStorage()
 void Preferences::setUsedStorage(long long value)
 {
     settings->setValue(usedStorageKey, value);
-    settings->sync();
+	settings->sync();
+}
+
+long long Preferences::totalBandwidth()
+{
+	return settings->value(totalBandwidthKey).toLongLong();
+}
+
+void Preferences::setTotalBandwidth(long long value)
+{
+	settings->setValue(totalBandwidthKey, value);
+	settings->sync();
+}
+
+long long Preferences::usedBandwidth()
+{
+	return settings->value(usedBandwidthKey).toLongLong();
+}
+
+void Preferences::setUsedBandwidth(long long value)
+{
+	settings->setValue(usedBandwidthKey, value);
+	settings->sync();
 }
 
 int Preferences::accountType()
@@ -255,7 +282,37 @@ QString Preferences::getProxyPassword()
 void Preferences::setProxyPassword(const QString &value)
 {
     settings->setValue(proxyPasswordKey, value);
-    settings->sync();
+	settings->sync();
+}
+
+QString Preferences::downloadFolder()
+{
+	return settings->value(downloadFolderKey).toString();
+}
+
+void Preferences::setDownloadFolder(QString value)
+{
+
+}
+
+QString Preferences::uploadFolder()
+{
+	return settings->value(uploadFolderKey).toString();
+}
+
+void Preferences::setUploadFolder(QString value)
+{
+
+}
+
+QString Preferences::importFolder()
+{
+	return settings->value(importFolderKey).toString();
+}
+
+void Preferences::setImportFolder(QString value)
+{
+
 }
 
 int Preferences::getNumSyncedFolders()

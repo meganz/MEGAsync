@@ -37,6 +37,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
+	ui->bDownloads->setToolTip("<body bgcolor=\"black\"><font color=\"green\">Downloads</font>"
+							   "<font color=\"white\"> 1 of 20 files at 908 KB/s</font><br />"
+							   "<font color=\"red\">Total Remaining:</font>"
+							   "<font color=\"white\"> 512.34 MB</font></body>");
 }
 
 InfoDialog::~InfoDialog()
@@ -101,7 +105,7 @@ void InfoDialog::setQueuedTransfers(int queuedDownloads, int queuedUploads)
 		activeUploads++;
 	}
 
-    ui->lQueued->setText(tr("%1 Queued").arg(QString::number(queuedUploads+queuedDownloads)));
+	//ui->lQueued->setText(tr("%1 Queued").arg(QString::number(queuedUploads+queuedDownloads)));
 
 	ui->bDownloads->setText(QString::number(activeDownloads));
 	ui->bUploads->setText(QString::number(activeUploads));

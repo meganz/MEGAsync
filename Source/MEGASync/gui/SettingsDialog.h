@@ -46,6 +46,7 @@ private slots:
     void on_rNoProxy_clicked();
 
     void on_bUpgrade_clicked();
+	void on_bUpgradeBandwidth_clicked();
 
     void on_rNoLimit_clicked();
 

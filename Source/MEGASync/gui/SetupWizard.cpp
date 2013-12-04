@@ -217,11 +217,10 @@ void SetupWizard::on_bNext_clicked()
     {
 
     #if QT_VERSION < 0x050000
-        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MegaSync");
+		QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync");
     #else
-
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation)[0] + "/MegaSync");
-        #endif
+		QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation)[0] + "/MEGAsync");
+	#endif
 
         defaultFolder.mkpath(".");
         QString defaultFolderPath = defaultFolder.absolutePath();
@@ -231,7 +230,7 @@ void SetupWizard::on_bNext_clicked()
     #endif
 
          ui->eLocalFolder->setText(defaultFolderPath);
-        ui->eMegaFolder->setText("/MegaSync");
+		ui->eMegaFolder->setText("/MEGAsync");
         if(ui->rAdvancedSetup->isChecked())
         {
             ui->sPages->setCurrentWidget(ui->pAdvanced);
@@ -241,7 +240,7 @@ void SetupWizard::on_bNext_clicked()
             Node *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
             if(!node || (node->type==FILENODE))
             {
-                megaApi->createFolder("MegaSync", megaApi->getRootNode(), this);
+				megaApi->createFolder("MEGAsync", megaApi->getRootNode(), this);
             }
             else
             {

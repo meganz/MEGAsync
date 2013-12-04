@@ -38,9 +38,9 @@ void RecentFile::updateWidget()
 		ui->lFileName->setText(fileName);
 		QFileInfo f(fileName);
 		if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
-			ui->lFileType->setPixmap(WindowsUtils::extensionIcons[f.suffix().toLower()]);
+			ui->lFileType->setPixmap(QPixmap(QString(WindowsUtils::extensionIcons[f.suffix().toLower()]).insert(0, "://images/drag_")));
 		else
-			ui->lFileType->setPixmap(QPixmap("://images/sync_generic.png"));
+			ui->lFileType->setPixmap(QPixmap("://images/drag_generic.png"));
 		ui->pArrow->show();
 	}
 

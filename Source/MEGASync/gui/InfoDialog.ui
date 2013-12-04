@@ -26,7 +26,9 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#InfoDialog
+   <string notr="true">QToolTip { color: #fff; background-color: black; border: none; }
+
+#InfoDialog
 {
 background: white;
 border: 1px solid rgb(100, 100, 100);
@@ -90,6 +92,16 @@ padding: 0px;
 color: rgb(102, 102, 102);
 }
 
+#lDownloads
+{
+color: rgb(102, 102, 102);
+}
+
+#lUploads
+{
+color: rgb(102, 102, 102);
+}
+
 #bUploads
 {
 color: rgb(102, 102, 102);
@@ -134,7 +146,7 @@ color: rgb(102, 102, 102);
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
-       <number>30</number>
+       <number>20</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -151,10 +163,42 @@ color: rgb(102, 102, 102);
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Resources.qrc">://images/tray_mega_logo.png</pixmap>
+         <pixmap>://images/tray_mega_logo.png</pixmap>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -176,7 +220,7 @@ color: rgb(102, 102, 102);
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/tray_preferences_ico.png</normaloff>://images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -236,7 +280,7 @@ color: rgb(102, 102, 102);
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">://images/tray_updated_large_ico.png</pixmap>
+          <pixmap>://images/tray_updated_large_ico.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -305,27 +349,36 @@ color: rgb(102, 102, 102);
        </item>
        <item>
         <widget class="QWidget" name="widget_6" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0,1">
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="bDownloads">
             <property name="minimumSize">
              <size>
-              <width>30</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>30</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;font color=&quot;green&quot;&gt;Downloads&lt;/font&gt;&lt;font color=&quot;white&quot;&gt; 1 of 20 files at 908 KB/s&lt;/font&gt;&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Total Remaining:&lt;/font&gt;&lt;font color=&quot;white&quot;&gt; 512.34 MB&lt;/font&gt;</string>
             </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="Resources.qrc">
-              <normaloff>://images/tray_queued_ico.png</normaloff>://images/tray_queued_ico.png</iconset>
+             <iconset>
+              <normaloff>://images/tray_download_ico.png</normaloff>://images/tray_download_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -339,7 +392,7 @@ color: rgb(102, 102, 102);
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lQueued">
+           <widget class="QLabel" name="lDownloads">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -347,7 +400,7 @@ color: rgb(102, 102, 102);
              </font>
             </property>
             <property name="text">
-             <string>%1 Queued</string>
+             <string>1 of 20 (908 KB/s)</string>
             </property>
            </widget>
           </item>
@@ -363,7 +416,7 @@ color: rgb(102, 102, 102);
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="Resources.qrc">
+             <iconset>
               <normaloff>://images/tray_upload_ico.png</normaloff>://images/tray_upload_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -378,19 +431,7 @@ color: rgb(102, 102, 102);
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="bDownloads">
-            <property name="minimumSize">
-             <size>
-              <width>90</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>90</width>
-              <height>16777215</height>
-             </size>
-            </property>
+           <widget class="QLabel" name="lUploads">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -398,20 +439,7 @@ color: rgb(102, 102, 102);
              </font>
             </property>
             <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="Resources.qrc">
-              <normaloff>://images/tray_download_ico.png</normaloff>://images/tray_download_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
+             <string>2 of 34 (620 KB/s)</string>
             </property>
            </widget>
           </item>
@@ -570,7 +598,7 @@ color: rgb(102, 102, 102);
             </font>
            </property>
            <property name="text">
-            <string>Usage: %1 GB</string>
+            <string>Usage: Data temporarily unavailable</string>
            </property>
           </widget>
          </item>
@@ -584,7 +612,7 @@ color: rgb(102, 102, 102);
             </font>
            </property>
            <property name="text">
-            <string>%1% of %2 GB</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -650,7 +678,7 @@ color: rgb(102, 102, 102);
          <string>MEGA sync folder</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/tray_folder_ico.png</normaloff>://images/tray_folder_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -697,10 +725,10 @@ color: rgb(102, 102, 102);
          </font>
         </property>
         <property name="text">
-         <string>www.mega.co.nz</string>
+         <string>MEGA Website</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/tray_web_ico.png</normaloff>://images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">

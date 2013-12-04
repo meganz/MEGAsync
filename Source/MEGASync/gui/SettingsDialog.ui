@@ -32,7 +32,12 @@
    <string>Settings - MEGASync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wTabHeader QToolButton
+   <string notr="true">#lHeader
+{
+background-color: white;
+}
+
+#wTabHeader QToolButton
 {
 width: 70px;
 height: 60px;
@@ -107,7 +112,7 @@ margin-top: 6px;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">://images/preferences_mega_logo.png</pixmap>
+        <pixmap>://images/preferences_mega_logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -133,7 +138,7 @@ margin-top: 6px;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">://images/help_ico.png</pixmap>
+        <pixmap>://images/help_ico.png</pixmap>
        </property>
       </widget>
      </item>
@@ -199,13 +204,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bGeneral">
         <property name="minimumSize">
          <size>
-          <width>85</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>85</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
@@ -216,7 +221,7 @@ margin-top: 6px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/general_32.png</normaloff>://images/general_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -240,13 +245,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
-          <width>86</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>86</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
@@ -254,7 +259,7 @@ margin-top: 6px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/account_32.png</normaloff>://images/account_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -275,13 +280,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bSyncs">
         <property name="minimumSize">
          <size>
-          <width>86</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>86</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
@@ -289,7 +294,7 @@ margin-top: 6px;
          <string>Syncs</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/syncs_32.png</normaloff>://images/syncs_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -310,13 +315,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bBandwidth">
         <property name="minimumSize">
          <size>
-          <width>86</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>86</width>
+          <width>107</width>
           <height>60</height>
          </size>
         </property>
@@ -324,7 +329,7 @@ margin-top: 6px;
          <string>Bandwidth</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>://images/bandwidth_32.png</normaloff>://images/bandwidth_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -335,44 +340,6 @@ margin-top: 6px;
         </property>
         <property name="checkable">
          <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bProxies">
-        <property name="minimumSize">
-         <size>
-          <width>85</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>85</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Proxies</string>
-        </property>
-        <property name="icon">
-         <iconset resource="Resources.qrc">
-          <normaloff>://images/proxies_32.png</normaloff>://images/proxies_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
         </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -502,7 +469,7 @@ margin-top: 6px;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="Resources.qrc">://images/Free.ico</pixmap>
+             <pixmap>://images/Free.ico</pixmap>
             </property>
             <property name="scaledContents">
              <bool>false</bool>
@@ -701,6 +668,9 @@ margin-top: 6px;
           </item>
           <item>
            <widget class="QTableWidget" name="tSyncs">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -727,6 +697,9 @@ margin-top: 6px;
             </property>
             <property name="wordWrap">
              <bool>false</bool>
+            </property>
+            <property name="cornerButtonEnabled">
+             <bool>true</bool>
             </property>
             <attribute name="horizontalHeaderVisible">
              <bool>false</bool>
@@ -882,6 +855,69 @@ margin-top: 6px;
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Bandwidth quota</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QProgressBar" name="pUsedBandwidth">
+            <property name="value">
+             <number>24</number>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="lBandwidth">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bUpgradeBandwidth">
+              <property name="text">
+               <string>Upgrade</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1117,9 +1153,7 @@ margin-top: 6px;
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>cShowNotifications</sender>
