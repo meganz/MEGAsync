@@ -11,23 +11,82 @@ CONFIG(release, debug|release) {
     CONFIG += release
 }
 
-SOURCES += sdk/megaapi.cpp \
-    sdk/crypto/cryptopp.cpp \
-    sdk/megaclient.cpp \
-    sdk/win32/fs.cpp \
-    sdk/win32/net.cpp \
-    sdk/win32/megaapiwait.cpp \
-    sdk/db/sqlite.cpp \
-    sdk/sqlite3.c \
-    sdk/qt/QTMegaRequestListener.cpp
+SOURCES += $$PWD/src/attrmap.cpp \
+    $$PWD/src/backofftimer.cpp \
+    $$PWD/src/base64.cpp \
+    $$PWD/src/command.cpp \
+    $$PWD/src/commands.cpp \
+    $$PWD/src/db.cpp \
+    $$PWD/src/file.cpp \
+    $$PWD/src/fileattributefetch.cpp \
+    $$PWD/src/filefingerprint.cpp \
+    $$PWD/src/filesystem.cpp \
+    $$PWD/src/http.cpp \
+    $$PWD/src/json.cpp \
+    $$PWD/src/megaclient.cpp \
+    $$PWD/src/node.cpp \
+    $$PWD/src/pubkeyaction.cpp \
+    $$PWD/src/request.cpp \
+    $$PWD/src/serialize64.cpp \
+    $$PWD/src/share.cpp \
+    $$PWD/src/sharenodekeys.cpp \
+    $$PWD/src/sync.cpp \
+    $$PWD/src/transfer.cpp \
+    $$PWD/src/transferslot.cpp \
+    $$PWD/src/treeproc.cpp \
+    $$PWD/src/user.cpp \
+    $$PWD/src/utils.cpp \
+    $$PWD/src/waiter.cpp  \
+    $$PWD/src/crypto/cryptopp.cpp  \
+    $$PWD/src/db/sqlite.cpp  \
+    $$PWD/src/win32/net.cpp  \
+    $$PWD/src/win32/fs.cpp  \
+    $$PWD/src/win32/wait.cpp  \
+    $$PWD/win32/megaapiwait.cpp  \
+    $$PWD/megaapi.cpp \
+    $$PWD/sqlite3.c \
+    $$PWD/qt/QTMegaRequestListener.cpp
 
-HEADERS  += sdk/megaapi.h \
-    sdk/crypto/cryptopp.h \
-    sdk/megaclient.h \
-    sdk/win32/fs.h \
-    sdk/win32/net.h \
-    sdk/win32/megaapiwait.h \
-    sdk/qt/QTMegaRequestListener.h
+HEADERS  += $$PWD/include/mega.h \
+	    $$PWD/include/mega/account.h \
+	    $$PWD/include/mega/attrmap.h \
+	    $$PWD/include/mega/backofftimer.h \
+	    $$PWD/include/mega/base64.h \
+	    $$PWD/include/mega/command.h \
+	    $$PWD/include/mega/commands.h \
+	    $$PWD/include/mega/console.h \
+	    $$PWD/include/mega/db.h \
+	    $$PWD/include/mega/file.h \
+	    $$PWD/include/mega/fileattributefetch.h \
+	    $$PWD/include/mega/filefingerprint.h \
+	    $$PWD/include/mega/filesystem.h \
+	    $$PWD/include/mega/http.h \
+	    $$PWD/include/mega/json.h \
+	    $$PWD/include/mega/megaapp.h \
+	    $$PWD/include/mega/megaclient.h \
+	    $$PWD/include/mega/node.h \
+	    $$PWD/include/mega/pubkeyaction.h \
+	    $$PWD/include/mega/request.h \
+	    $$PWD/include/mega/serialize64.h \
+	    $$PWD/include/mega/share.h \
+	    $$PWD/include/mega/sharenodekeys.h \
+	    $$PWD/include/mega/sync.h \
+	    $$PWD/include/mega/transfer.h \
+	    $$PWD/include/mega/transferslot.h \
+	    $$PWD/include/mega/treeproc.h \
+	    $$PWD/include/mega/types.h \
+	    $$PWD/include/mega/user.h \
+	    $$PWD/include/mega/utils.h \
+	    $$PWD/include/mega/waiter.h \
+	    $$PWD/include/mega/crypto/cryptopp.h  \
+	    $$PWD/include/mega/db/sqlite.h  \
+	    $$PWD/include/mega/win32/meganet.h  \
+	    $$PWD/include/mega/win32/megasys.h  \
+	    $$PWD/include/mega/win32/megafs.h  \
+	    $$PWD/include/mega/win32/megawait.h  \
+	    $$PWD/win32/megaapiwait.h  \
+	    $$PWD/megaapi.h \
+	    $$PWD/qt/QTMegaRequestListener.h
 
 LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 
@@ -40,9 +99,11 @@ else {
 
 DEFINES += USE_SQLITE USE_CRYPTOPP
 LIBS += -lcryptopp -lpthread -lFreeImage
+INCLUDEPATH += $$PWD/include
 
 win32 {
     INCLUDEPATH += $$PWD
+    INCLUDEPATH += $$PWD/include/mega/win32
     INCLUDEPATH += $$PWD/3rdparty/include
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
     INCLUDEPATH += $$PWD/3rdparty/include/db

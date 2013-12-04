@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
 #define strncasecmp _strnicmp
 #endif
 
-bool debug = false;
+bool mega::debug = false;
 
 // attempt to create a size*size JPEG thumbnail using FreeImage
 // thumbnail specs:

@@ -19,6 +19,8 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MEGA_API_WAIT_CLASS
 #define MEGA_API_WAIT_CLASS MegaApiWinWaiter
 
+namespace mega {
+
 class MegaApiWinWaiter : public Waiter
 {
 	typedef ULONGLONG (WINAPI* PGTC)();
@@ -41,5 +43,7 @@ public:
 
     MegaApiWinWaiter();
 };
+
+}
 
 #endif

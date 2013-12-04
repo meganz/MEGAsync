@@ -29,21 +29,23 @@ DEALINGS IN THE SOFTWARE.
 #include <inttypes.h>
 typedef int64_t m_off_t;
 
-#include "crypto/cryptopp.h"
-#include "megaclient.h"
+#include "mega/crypto/cryptopp.h"
+#include "mega/megaclient.h"
 
 #define USE_SQLITE
-#include "db/sqlite.h"
+#include "mega/db/sqlite.h"
 
 #ifdef WIN32
 
-#include "win32/net.h"
-#include "win32/fs.h"
+#include "mega/win32/meganet.h"
+#include "mega/win32/megafs.h"
 #include "win32/megaapiwait.h"
+#include "mega.h"
 
 #include <pthread.h>
 
 using namespace std;
+using namespace mega;
 
 class MegaHttpIO : public WinHttpIO {};
 class MegaFileSystemAccess : public WinFileSystemAccess {};
@@ -887,6 +889,7 @@ protected:
 	void sendPendingTransfers();
 	char *stringToArray(string &buffer);
 };
+
 
 #endif //MEGAAPI_H
 

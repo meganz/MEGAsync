@@ -1,0 +1,71 @@
+# library
+lib_LTLIBRARIES = src/libmega.la
+
+# CXX flags
+if WIN32
+src_libmega_la_CXXFLAGS = -D_WIN32=1 -DUSE_SQLITE -DUSE_CRYPTOPP  ${CRYPTO_CXXFLAGS}
+else
+src_libmega_la_CXXFLAGS = -DUSE_SQLITE -DUSE_CRYPTOPP ${LIBCURL_FLAGS} ${CRYPTO_CXXFLAGS}
+endif
+
+
+# Libs
+if WIN32
+src_libmega_la_LIBADD =  ${CRYPTO_LIBS} -lcrypto++
+
+else
+src_libmega_la_LIBADD =  ${LIBCURL_LIBS} ${CRYPTO_LIBS} -lcrypto++
+endif
+
+
+
+src_libmega_la_LDFLAGS = -version-info ${VERSION_INFO}
+
+
+
+# common sources
+src_libmega_la_SOURCES = src/megaclient.cpp
+src_libmega_la_SOURCES += src/attrmap.cpp
+src_libmega_la_SOURCES += src/backofftimer.cpp
+src_libmega_la_SOURCES += src/base64.cpp
+src_libmega_la_SOURCES += src/command.cpp
+src_libmega_la_SOURCES += src/commands.cpp
+src_libmega_la_SOURCES += src/db.cpp
+src_libmega_la_SOURCES += src/fileattributefetch.cpp
+src_libmega_la_SOURCES += src/file.cpp
+src_libmega_la_SOURCES += src/filefingerprint.cpp
+src_libmega_la_SOURCES += src/filesystem.cpp
+src_libmega_la_SOURCES += src/http.cpp
+src_libmega_la_SOURCES += src/json.cpp
+src_libmega_la_SOURCES += src/node.cpp
+src_libmega_la_SOURCES += src/pubkeyaction.cpp
+src_libmega_la_SOURCES += src/request.cpp
+src_libmega_la_SOURCES += src/serialize64.cpp
+src_libmega_la_SOURCES += src/share.cpp
+src_libmega_la_SOURCES += src/sharenodekeys.cpp
+src_libmega_la_SOURCES += src/sync.cpp
+src_libmega_la_SOURCES += src/transfer.cpp
+src_libmega_la_SOURCES += src/transferslot.cpp
+src_libmega_la_SOURCES += src/treeproc.cpp
+src_libmega_la_SOURCES += src/user.cpp
+src_libmega_la_SOURCES += src/utils.cpp
+src_libmega_la_SOURCES += src/waiter.cpp
+src_libmega_la_SOURCES += src/crypto/cryptopp.cpp
+src_libmega_la_SOURCES += src/db/sqlite.cpp
+
+# win32 sources
+if WIN32
+src_libmega_la_SOURCES+= src/win32/fs.cpp
+src_libmega_la_SOURCES+= src/win32/console.cpp
+src_libmega_la_SOURCES+= src/win32/net.cpp
+src_libmega_la_SOURCES+= src/win32/wait.cpp
+
+# posix sources
+else
+src_libmega_la_SOURCES += src/posix/fs.cpp
+src_libmega_la_SOURCES += src/posix/console.cpp
+src_libmega_la_SOURCES += src/posix/net.cpp
+src_libmega_la_SOURCES += src/posix/wait.cpp
+
+endif
+

@@ -16,12 +16,12 @@ DEALINGS IN THE SOFTWARE.
 
 */
 
-#include <windows.h>
+#include "mega.h"
+#include "megaapiwait.h"
+
 #include <conio.h>
 
-#include "../megaclient.h"
-
-#include "megaapiwait.h"
+namespace mega {
 
 MegaApiWinWaiter::MegaApiWinWaiter()
 {
@@ -74,4 +74,6 @@ int MegaApiWinWaiter::wait()
 void MegaApiWinWaiter::notify()
 {
     SetEvent(hWakeup[WAKEUP_CUSTOM]);
+}
+
 }
