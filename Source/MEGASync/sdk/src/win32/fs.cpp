@@ -511,7 +511,27 @@ bool WinFileSystemAccess::localhidden(string*, string* filename)
 	// FIXME: also check GetFileAttributes() for FILE_ATTRIBUTE_HIDDEN?
 	wchar_t c = *(wchar_t*)filename->data();
 
-	return c == '.' || c == '~';
+	filename->append("", 1);
+	int comparation = wcscmp(L"Thumbs.db", (wchar_t*)filename->data());
+	filename->resize(filename->size()-1);
+
+	if(c == '.' || c == '~') return 1;
+	if(!comparation) return 1;
+
+	//Check hidden files
+	/*
+	if(path)
+	{
+		string fullpath = *path;
+		fullpath.append(localseparator);
+		fullpath.append(*filename);
+		fullpath.append("",1);
+		DWORD attributes = GetFileAttributesW((wchar_t*)fullpath.data());
+		if(attributes == INVALID_FILE_ATTRIBUTES) return 1;
+		if(attributes &= FILE_ATTRIBUTE_HIDDEN) return 1;
+	}
+	*/
+	return 0;
 }
 
 FileAccess* WinFileSystemAccess::newfileaccess()

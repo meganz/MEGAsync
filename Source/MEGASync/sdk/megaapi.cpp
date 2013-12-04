@@ -2079,13 +2079,12 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 
 			newnode->nodekey.assign((char*)key,Node::FILENODEKEYLENGTH);
 
-			cout << "ATTRIBUTES: " << *a << endl;
-			//newnode->attrstring = *a;
+			newnode->attrstring = *a;
 
-			unsigned len = a->size()*3/4+4;
-			newnode->attrstring.resize(len);
-			len = Base64::atob(a->data(),(byte *)newnode->attrstring.data(),len);
-			newnode->attrstring.resize(len);
+			//unsigned len = a->size()*3/4+4;
+			//newnode->attrstring.resize(len);
+			//len = Base64::atob(a->data(),(byte *)newnode->attrstring.data(),len);
+			//newnode->attrstring.resize(len);
 
 			//newnode->attrstring.assign(a->c_str(), a->length());
 
@@ -2100,13 +2099,13 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 		{
 			Node *n = new Node(NULL, NULL, ph, UNDEF, FILENODE, size,
 					NULL, NULL, ts, tm);
-			n->attrstring.resize(a->size());
-			n->attrstring.assign(a->c_str(), a->length());
+
+			n->attrstring.resize(a->length()*4/3+4);
+			n->attrstring.resize(Base64::btoa((const byte *)a->data(),a->length(), (char *)n->attrstring.data()));
 			n->setkey(key);
 			n->parent = NULL;
 			n->inshare = NULL;
 			n->sharekey = NULL;
-			cout << "NODE: " <<  n->displayname() << endl;
 
 			request->setPublicNode(n);
 			fireOnRequestFinish(this, request, MegaError(MegaError::API_OK));
