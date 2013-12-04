@@ -206,80 +206,77 @@ HRESULT WindowsUtils::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCW
     return hres;
 }
 
-QHash<QString, QPixmap> WindowsUtils::extensionIcons;
+QHash<QString, QString> WindowsUtils::extensionIcons;
 void WindowsUtils::initialize()
 {
-	extensionIcons["dxf"] = QPixmap("://images/sync_cad.png");
-
-
     extensionIcons["3ds"] = extensionIcons["3dm"]  = extensionIcons["max"] =
-							extensionIcons["obj"]  = QPixmap("://images/sync_3D.png");
+							extensionIcons["obj"]  = "3D.png";
 
-	extensionIcons["aep"] = extensionIcons["aet"]  = QPixmap("://images/sync_Aftereffects.png");
+	extensionIcons["aep"] = extensionIcons["aet"]  = "aftereffects.png";
 
     extensionIcons["mp3"] = extensionIcons["wav"]  = extensionIcons["3ga"]  =
                             extensionIcons["aif"]  = extensionIcons["aiff"] =
                             extensionIcons["flac"] = extensionIcons["iff"]  =
-							extensionIcons["m4a"]  = extensionIcons["wma"]  =  QPixmap("://images/sync_audio.png");
+							extensionIcons["m4a"]  = extensionIcons["wma"]  =  "audio.png";
 
-	extensionIcons["dxf"] = extensionIcons["dwg"] =  QPixmap("://images/sync_cad.png");
+	extensionIcons["dxf"] = extensionIcons["dwg"] =  "cad.png";
 
 
     extensionIcons["zip"] = extensionIcons["rar"] = extensionIcons["tgz"]  =
                             extensionIcons["gz"]  = extensionIcons["bz2"]  =
                             extensionIcons["tbz"] = extensionIcons["tar"]  =
-							extensionIcons["7z"]  = extensionIcons["sitx"] =  QPixmap("://images/sync_compressed.png");
+							extensionIcons["7z"]  = extensionIcons["sitx"] =  "compressed.png";
 
     extensionIcons["sql"] = extensionIcons["accdb"] = extensionIcons["db"]  =
                             extensionIcons["dbf"]  = extensionIcons["mdb"]  =
-							extensionIcons["pdb"] = QPixmap("://images/sync_database.png");
+							extensionIcons["pdb"] = "database.png";
 
-	extensionIcons["dwt"] = QPixmap("://images/sync_Dreamweaver.png");
+	extensionIcons["dwt"] = "dreamweaver.png";
 
     extensionIcons["xls"] = extensionIcons["xlsx"] = extensionIcons["xlt"]  =
-							extensionIcons["xltm"]  = QPixmap("://images/sync_excel.png");
+							extensionIcons["xltm"]  = "excel.png";
 
     extensionIcons["exe"] = extensionIcons["com"] = extensionIcons["bin"]  =
                             extensionIcons["apk"]  = extensionIcons["app"]  =
                              extensionIcons["msi"]  = extensionIcons["cmd"]  =
-							extensionIcons["gadget"] = QPixmap("://images/sync_executable.png");
+							extensionIcons["gadget"] = "executable.png";
 
+	extensionIcons["as"] = extensionIcons["ascs"] =
+			   extensionIcons["asc"]  = "fla_lang.png";
+	extensionIcons["fla"] = "flash.png";
+	extensionIcons["flv"] = "flash_video.png";
 
-	extensionIcons["fla"] = QPixmap("://images/sync_fla_lang.png");
     extensionIcons["fnt"] = extensionIcons["otf"] = extensionIcons["ttf"]  =
-							extensionIcons["fon"]  = QPixmap("://images/sync_font.png");
+							extensionIcons["fon"]  = "font.png";
 
-    extensionIcons["gpx"] = extensionIcons["kml"] = extensionIcons["kmz"]  =
-							QPixmap("://images/sync_GIS.png");
+	extensionIcons["gpx"] = extensionIcons["kml"] = extensionIcons["kmz"]  = "gis.png";
 
 
     extensionIcons["gif"] = extensionIcons["tiff"]  = extensionIcons["tif"]  =
                             extensionIcons["bmp"]  = extensionIcons["png"] =
-							extensionIcons["tga"]  = QPixmap("://images/sync_graphic.png");
+							extensionIcons["tga"]  = "graphic.png";
 
     extensionIcons["html"] = extensionIcons["htm"]  = extensionIcons["dhtml"]  =
-							extensionIcons["xhtml"]  = QPixmap("://images/sync_html.png");
+							extensionIcons["xhtml"]  = "html.png";
 
-	extensionIcons["ai"] = extensionIcons["ait"] = QPixmap("://images/sync_Illustrator.png");
-	extensionIcons["jpg"] = extensionIcons["jpeg"] = QPixmap("://images/sync_image.png");
-	extensionIcons["indd"] = QPixmap("://images/sync_indesign.png");
+	extensionIcons["ai"] = extensionIcons["ait"] = "illustrator.png";
+	extensionIcons["jpg"] = extensionIcons["jpeg"] = "image.png";
+	extensionIcons["indd"] = "indesign.png";
 
-    extensionIcons["jar"] = extensionIcons["java"]  = extensionIcons["class"]  =
-							QPixmap("://images/sync_java.png");
+	extensionIcons["jar"] = extensionIcons["java"]  = extensionIcons["class"]  = "java.png";
 
-	extensionIcons["mid"] = extensionIcons["midi"] = QPixmap("://images/sync_midi.png");
-	extensionIcons["pdf"] = QPixmap("://images/sync_pdf.png");
+	extensionIcons["mid"] = extensionIcons["midi"] = "midi.png";
+	extensionIcons["pdf"] = "pdf.png";
     extensionIcons["abr"] = extensionIcons["psb"]  = extensionIcons["psd"]  =
-							QPixmap("://images/sync_photoshop.png");
+							"photoshop.png";
 
     extensionIcons["pls"] = extensionIcons["m3u"]  = extensionIcons["asx"]  =
-							QPixmap("://images/sync_playlist.png");
+							"playlist.png";
+	extensionIcons["pcast"] = "podcast.png";
 
-	extensionIcons["pcast"] = QPixmap("://images/sync_podcast.png");
-    extensionIcons["pps"] = extensionIcons["ppt"]  = extensionIcons["pptx"]  =
-							QPixmap("://images/sync_powerpoint.png");
+	extensionIcons["pps"] = extensionIcons["ppt"]  = extensionIcons["pptx"] = "powerpoint.png";
 
-	extensionIcons["prproj"] = extensionIcons["ppj"]  = QPixmap("://images/sync_Premiere.png");
+	extensionIcons["prproj"] = extensionIcons["ppj"]  = "premiere.png";
 
     extensionIcons["3fr"] = extensionIcons["arw"]  = extensionIcons["bay"]  =
                             extensionIcons["cr2"]  = extensionIcons["dcr"] =
@@ -288,33 +285,33 @@ void WindowsUtils::initialize()
                             extensionIcons["nef"] = extensionIcons["pef"]  =
                             extensionIcons["rw2"] = extensionIcons["srf"]  =
                             extensionIcons["orf"] = extensionIcons["rwl"]  =
-							QPixmap("://images/sync_raw.png");
+							"raw.png";
 
     extensionIcons["rm"] = extensionIcons["ra"]  = extensionIcons["ram"]  =
-							QPixmap("://images/sync_real_audio.png");
+							"real_audio.png";
 
     extensionIcons["sh"] = extensionIcons["c"]  = extensionIcons["cc"]  =
                             extensionIcons["cpp"]  = extensionIcons["cxx"] =
                             extensionIcons["h"] = extensionIcons["hpp"]  =
-							extensionIcons["dll"] = QPixmap("://images/sync_scource_code.png");
+							extensionIcons["dll"] = "source_code.png";
 
     extensionIcons["ods"]  = extensionIcons["ots"]  =
                             extensionIcons["gsheet"]  = extensionIcons["nb"] =
                             extensionIcons["xlr"] = extensionIcons["numbers"]  =
-							QPixmap("://images/sync_spreadsheet.png");
+							"spreadsheet.png";
 
-	extensionIcons["swf"] = QPixmap("://images/sync_swf.png");
-	extensionIcons["torrent"] = QPixmap("://images/sync_torrent.png");
+	extensionIcons["swf"] = "swf.png";
+	extensionIcons["torrent"] = "torrent.png";
 
     extensionIcons["txt"] = extensionIcons["rtf"]  = extensionIcons["ans"]  =
                             extensionIcons["ascii"]  = extensionIcons["log"] =
                             extensionIcons["odt"] = extensionIcons["wpd"]  =
-							QPixmap("://images/sync_text.png");
+							"text.png";
 
-	extensionIcons["vcf"] = QPixmap("://images/sync_vcard.png");
+	extensionIcons["vcf"] = "vcard.png";
     extensionIcons["svgz"]  = extensionIcons["svg"]  =
                             extensionIcons["cdr"]  = extensionIcons["eps"] =
-							QPixmap("://images/sync_vector.png");
+							"vector.png";
 
 
      extensionIcons["mkv"]  = extensionIcons["webm"]  =
@@ -323,24 +320,26 @@ void WindowsUtils::initialize()
                             extensionIcons["mpeg"] = extensionIcons["mov"]  =
                             extensionIcons["3g2"] = extensionIcons["3gp"]  =
                             extensionIcons["asf"] = extensionIcons["wmv"]  =
-							QPixmap("://images/sync_video.png");
+							"video.png";
 
-	 extensionIcons["flv"] = QPixmap("://images/sync_flash_video.png");
-	 extensionIcons["srt"] = QPixmap("://images/sync_video_subtitles.png");
+
+	 extensionIcons["srt"] = "video_subtitles.png";
+	 extensionIcons["vob"] = "video_vob.png";
 
      extensionIcons["html"]  = extensionIcons["xml"] = extensionIcons["shtml"]  =
                             extensionIcons["dhtml"] = extensionIcons["js"] =
-							extensionIcons["css"]  = QPixmap("://images/sync_web_data.png");
+							extensionIcons["css"]  = "web_data.png";
 
      extensionIcons["php"]  = extensionIcons["php3"]  =
                             extensionIcons["php4"]  = extensionIcons["php5"] =
                             extensionIcons["phtml"] = extensionIcons["inc"]  =
                             extensionIcons["asp"] = extensionIcons["pl"]  =
                             extensionIcons["cgi"] = extensionIcons["py"]  =
-							QPixmap("://images/sync_web_lang.png");
+							"web_lang.png";
+
 
      extensionIcons["doc"]  = extensionIcons["docx"] = extensionIcons["dotx"]  =
-							extensionIcons["wps"] = QPixmap("://images/sync_word.png");
+							extensionIcons["wps"] = "word.png";
 }
 
 bool WindowsUtils::startOnStartup(bool value)

@@ -1,4 +1,7 @@
 #include "MegaApplication.h"
+#include "gui/PasteMegaLinksDialog.h"
+#include "gui/ImportMegaLinksDialog.h"
+
 #include <QClipboard>
 
 int main(int argc, char *argv[])
@@ -55,7 +58,7 @@ void MegaApplication::init()
     if(!preferences->isSetupWizardCompleted())
     {
         setupWizard = new SetupWizard(this);
-        setupWizard->exec();
+		setupWizard->exec();
         if(!preferences->isSetupWizardCompleted())
             ::exit(0);
     }
@@ -228,7 +231,28 @@ void MegaApplication::resumeSync()
 	startSyncs();
 	trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
     trayMenu->removeAction(resumeAction);
-    trayMenu->insertAction(settingsAction, pauseAction);
+	trayMenu->insertAction(settingsAction, pauseAction);
+}
+
+void MegaApplication::importLinks()
+{
+	PasteMegaLinksDialog dialog;
+	dialog.exec();
+	if(dialog.result()!=QDialog::Accepted) return;
+	QStringList linkList = dialog.getLinks();
+	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
+	ImportMegaLinksDialog importDialog(megaApi, linkProcessor);
+	importDialog.exec();
+	if(importDialog.result()!=QDialog::Accepted) return;
+	if(importDialog.shouldImport())
+	{
+		linkProcessor->importLinks(importDialog.getImportPath());
+	}
+
+	if(importDialog.shouldDownload())
+	{
+		linkProcessor->downloadLinks(importDialog.getDownloadPath());
+	}
 }
 
 void MegaApplication::updateDowloaded()
@@ -284,12 +308,15 @@ void MegaApplication::createActions()
     connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
     resumeAction = new QAction(tr("Resume synchronization"), this);
     connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
+	importLinksAction = new QAction(tr("Import links"), this);
+	connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 }
 
 void MegaApplication::createTrayIcon()
 {
     trayMenu = new QMenu();
     trayMenu->addAction(pauseAction);
+	trayMenu->addAction(importLinksAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
@@ -356,6 +383,11 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         preferences->setAccountType(details->pro_level);
         preferences->setTotalStorage(details->storage_max);
         preferences->setUsedStorage(details->storage_used);
+
+		cout << "DETAILS:" << endl;
+		cout << "details->transfer_max " << details->transfer_max << endl;
+		preferences->setTotalBandwidth(details->transfer_max);
+		preferences->setUsedBandwidth(details->transfer_own_used);
 
         storageMax = details->storage_max;
         storageUsed = details->storage_used;
@@ -520,14 +552,14 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 void MegaApplication::showSyncedIcon()
 {
 	trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
-    trayMenu->removeAction(resumeAction);
-    trayMenu->insertAction(settingsAction, pauseAction);
+	trayMenu->removeAction(resumeAction);
+	trayMenu->insertAction(importLinksAction, pauseAction);
 }
 
 void MegaApplication::showSyncingIcon()
 {
 	trayIcon->setIcon(QIcon("://images/tray_sync.ico"));
     trayMenu->removeAction(resumeAction);
-    trayMenu->insertAction(settingsAction, pauseAction);
+	trayMenu->insertAction(importLinksAction, pauseAction);
 }
 

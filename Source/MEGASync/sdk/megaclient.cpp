@@ -489,7 +489,7 @@ void Node::setattr()
 
 		while ((name = json.getnameid()) != EOO && json.storeobject((t = &attrs.map[name]))) JSON::unescape(t);
 
-		setfingerprint();
+		if(client) setfingerprint();
 
 		delete[] buf;
 

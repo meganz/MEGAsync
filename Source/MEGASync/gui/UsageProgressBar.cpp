@@ -6,6 +6,7 @@ UsageProgressBar::UsageProgressBar(QWidget *parent) :
     ui(new Ui::UsageProgressBar)
 {
     ui->setupUi(this);
+	ui->wProgress->resize(0, ui->wProgress->height());
 }
 
 UsageProgressBar::~UsageProgressBar()
@@ -17,7 +18,7 @@ void UsageProgressBar::setProgress(int value)
 {
     if(value>100) value = 100;
     this->progress = value;
-    ui->wProgress->resize(value*3.6, ui->wProgress->width());
+	ui->wProgress->resize(value*3.6, ui->wProgress->height());
     if(value<80)
         ui->wProgress->setStyleSheet("background-color: green;");
     else

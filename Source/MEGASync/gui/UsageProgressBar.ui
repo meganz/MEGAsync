@@ -26,7 +26,7 @@
     <rect>
      <x>0</x>
      <y>4</y>
-     <width>60</width>
+     <width>50</width>
      <height>12</height>
     </rect>
    </property>
@@ -56,12 +56,10 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Resources.qrc">://images/usageProgress.png</pixmap>
+    <pixmap>://images/usageProgress.png</pixmap>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

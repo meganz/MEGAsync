@@ -96,7 +96,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">://images/logo.png</pixmap>
+          <pixmap>://images/logo.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -110,7 +110,7 @@
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>190</number>
+           <number>140</number>
           </property>
           <property name="topMargin">
            <number>55</number>
@@ -167,7 +167,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">://images/app_128.png</pixmap>
+          <pixmap>://images/app_128.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -323,7 +323,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">://images/app_128.png</pixmap>
+          <pixmap>://images/app_128.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
@@ -526,7 +526,7 @@
           <string>Typical</string>
          </property>
          <property name="icon">
-          <iconset resource="Resources.qrc">
+          <iconset>
            <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
          </property>
          <property name="iconSize">
@@ -553,7 +553,7 @@
           <string>Advanced</string>
          </property>
          <property name="icon">
-          <iconset resource="Resources.qrc">
+          <iconset>
            <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
          </property>
          <property name="iconSize">
@@ -765,7 +765,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="Resources.qrc">://images/app_128.png</pixmap>
+          <pixmap>://images/app_128.png</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -924,8 +924,6 @@
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

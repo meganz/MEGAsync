@@ -18,14 +18,16 @@ SOURCES += sdk/megaapi.cpp \
     sdk/win32/net.cpp \
     sdk/win32/megaapiwait.cpp \
     sdk/db/sqlite.cpp \
-    sdk/sqlite3.c
+    sdk/sqlite3.c \
+    sdk/qt/QTMegaRequestListener.cpp
 
 HEADERS  += sdk/megaapi.h \
     sdk/crypto/cryptopp.h \
     sdk/megaclient.h \
     sdk/win32/fs.h \
     sdk/win32/net.h \
-    sdk/win32/megaapiwait.h
+    sdk/win32/megaapiwait.h \
+    sdk/qt/QTMegaRequestListener.h
 
 LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 

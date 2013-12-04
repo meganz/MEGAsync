@@ -59,6 +59,7 @@ public slots:
     void onDataReady();
     void pauseSync();
     void resumeSync();
+	void importLinks();
     void updateDowloaded();
 	void copyFileLink(handle fileHandle);
 
@@ -76,6 +77,7 @@ protected:
     QAction *settingsAction;
     QAction *pauseAction;
     QAction *resumeAction;
+	QAction *importLinksAction;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
@@ -93,8 +95,6 @@ protected:
 	bool invalidCredentials;
 	bool updateInfo;
 	QString linkForClipboard;
-
-private slots:
 };
 
 #endif // MEGAAPPLICATION_H

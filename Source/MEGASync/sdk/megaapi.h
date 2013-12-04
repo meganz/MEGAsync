@@ -221,7 +221,7 @@ class MegaRequest
 
 		MegaRequest(int type, MegaRequestListener *listener = NULL);
 		MegaRequest(MegaTransfer *transfer);
-		MegaRequest(const MegaRequest &request);
+		MegaRequest(MegaRequest &request);
 		virtual ~MegaRequest();
 
 		MegaRequest *copy();		
@@ -677,7 +677,7 @@ public:
 	/*void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
 	void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener);
 	void startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener);
-	
+	*/
 	void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
 	void startDownload(Node* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
 	void startDownload(Node* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
@@ -685,8 +685,8 @@ public:
 	void startPublicDownload(Node* node, const char* localFolder, MegaTransferListener *listener);
 	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener);
 
-	void cancelTransfer(MegaTransfer *transfer);
-	*/
+//	void cancelTransfer(MegaTransfer *transfer);
+
 
     void syncFolder(const char *localFolder, Node *megaFolder);
 
@@ -766,6 +766,7 @@ protected:
 	pthread_mutex_t fileSystemMutex;
 
 	MegaRequest *loginRequest;
+	MegaTransfer *currentTransfer;
 	int updatingSID;
 	long long updateSIDtime;
 	int threadExit;
@@ -842,7 +843,7 @@ protected:
 
     // exported link access result
 	virtual void openfilelink_result(error);
-	virtual void openfilelink_result(Node*);
+	virtual void openfilelink_result(handle, const byte*, m_off_t, string*, const char*, time_t, time_t);
 
     // global transfer queue updates (separate signaling towards the queued objects)
     virtual void transfer_added(Transfer*);

@@ -114,7 +114,7 @@ private:
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc);
 
 public:
-    static QHash<QString, QPixmap> extensionIcons;
+	static QHash<QString, QString> extensionIcons;
     static void initialize();
     static boolean enableIcon(QString &executable);
     static void notifyNewFolder(QString &path);

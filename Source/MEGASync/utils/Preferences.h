@@ -26,9 +26,12 @@ public:
     void setTotalStorage(long long value);
     long long usedStorage();
     void setUsedStorage(long long value);
+	long long totalBandwidth();
+	void setTotalBandwidth(long long value);
+	long long usedBandwidth();
+	void setUsedBandwidth(long long value);
     int accountType();
     void setAccountType(int value);
-
     bool isSetupWizardCompleted();
     void setSetupWizardCompleted(bool value);
     bool showNotifications();
@@ -55,6 +58,13 @@ public:
     void setProxyUsername(const QString &value);
     QString getProxyPassword();
     void setProxyPassword(const QString &value);
+
+	QString downloadFolder();
+	void setDownloadFolder(QString value);
+	QString uploadFolder();
+	void setUploadFolder(QString value);
+	QString importFolder();
+	void setImportFolder(QString value);
 
     int getNumSyncedFolders();
     QString getLocalFolder(int num);
@@ -99,6 +109,8 @@ protected:
     static const QString passwordKey;
     static const QString totalStorageKey;
     static const QString usedStorageKey;
+	static const QString totalBandwidthKey;
+	static const QString usedBandwidthKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
@@ -116,6 +128,9 @@ protected:
     static const QString localFoldersKey;
     static const QString megaFoldersKey;
     static const QString megaFolderHandlesKey;
+	static const QString downloadFolderKey;
+	static const QString uploadFolderKey;
+	static const QString importFolderKey;
 
     static const bool defaultSetupWizardCompleted;
     static const bool defaultShowNotifications;
@@ -128,7 +143,7 @@ protected:
     static const int defaultProxyPort;
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
-    static const QString defaultProxyPassword;
+    static const QString defaultProxyPassword;	
 };
 
 #endif // PREFERENCES_H
