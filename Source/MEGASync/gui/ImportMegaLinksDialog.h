@@ -10,7 +10,7 @@ namespace Ui {
 class ImportMegaLinksDialog;
 }
 
-class ImportMegaLinksDialog : public QDialog, public MegaRequestListener
+class ImportMegaLinksDialog : public QDialog
 {
 	Q_OBJECT
 

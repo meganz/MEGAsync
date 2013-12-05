@@ -9,7 +9,7 @@ class QTMegaRequestListener : public QObject, public MegaRequestListener
 	Q_OBJECT
 
 public:
-	explicit QTMegaRequestListener();
+	QTMegaRequestListener(MegaRequestListener *listener = NULL);
 
 	//Request callbacks
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
@@ -25,6 +25,9 @@ public slots:
 	virtual void QTonRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void QTonRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 	virtual void QTonRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
+
+protected:
+	MegaRequestListener *listener;
 };
 
 #endif // QTMEGAREQUESTLISTENER_H

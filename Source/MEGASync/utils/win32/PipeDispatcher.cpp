@@ -315,7 +315,7 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
 
 VOID GetAnswerToRequest(LPPIPEINST pipe)
 {
-   wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
+   //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
    wchar_t c = pipe->chRequest[0];
    if((c != L'P') || (lstrlen(pipe->chRequest)<3))
@@ -338,34 +338,42 @@ VOID GetAnswerToRequest(LPPIPEINST pipe)
    for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
    {
 	   if(preferences->getNumSyncedFolders()<=i) break;
+	   //cout << "Synced folder number " << i << endl;
+
 	   QString basePath = preferences->getLocalFolder(i);
 	   if(basePath.length()>=MAX_PATH) continue;
+	   //cout << "BasePath: " << basePath.toStdString() << endl;
 
-	   basePath.toWCharArray(wBasePath);
-	   if(!wcsncmp(path, wBasePath, lstrlen(wBasePath)))
+	   int len = basePath.toWCharArray(wBasePath);
+	   wBasePath[len]=L'\0';
+	   //wprintf(L"A: %s\nB: %s\n%d\n", wBasePath, path, len);
+	   if(!wcsnicmp(path, wBasePath, len))
 	   {
-		   if(!wcscmp(path, wBasePath))
+		   if(!wcsicmp(path, wBasePath))
 		   {
-			   cout << "Base path found" << endl;
+			   //cout << "Base path found" << endl;
 			   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("0") );
 			   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 			   return;
 		   }
+		   //cout << "NO ROOT" << endl;
+		   if(path[len]!='\\') continue;
+		   //cout << "Inside the base path" << endl;
 
 		   wchar_t *relativePath = path+basePath.length()+1;
-		   wprintf(L"Checking: %s\n", relativePath);
+		   //wprintf(L"Checking: %s\n", relativePath);
 		   pathstate_t state = (*it)->pathstate(&string((const char*)relativePath,
 				lstrlen(relativePath)*sizeof(wchar_t)));
 		   switch(state)
 		   {
 			   case PATHSTATE_SYNCED:
-				   cout << "File synced"<< endl;
+				   //cout << "File synced"<< endl;
 				   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("0") );
 				   break;
 			   case PATHSTATE_NOTFOUND:
-				   cout << "STATE NOT FOUND" << endl;
+				   //cout << "STATE NOT FOUND" << endl;
 			   default:
-				   cout << "File not synced"<< endl;
+				   //cout << "File not synced"<< endl;
 				   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("1") );
 				   break;
 		   }
@@ -374,7 +382,7 @@ VOID GetAnswerToRequest(LPPIPEINST pipe)
 	   }
    }
 
-   cout << "File out of a synced folder" << endl;
+   //cout << "File out of a synced folder" << endl;
    StringCchCopy( pipe->chReply, BUFSIZE, TEXT("9") );
    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 }

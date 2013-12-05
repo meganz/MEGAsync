@@ -53,16 +53,16 @@ void InfoDialog::startAnimation()
 	QTimer::singleShot(3000, this, SLOT(timerUpdate()));
 }
 
-void InfoDialog::setUsage(int totalGB, int percentage)
+void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 {
-    double usedGB = totalGB * percentage / 100.0;
-    ui->pUsage->setProgress(percentage);
-    QString used(QString::number(percentage));
-    used += "% of " + QString::number(totalGB) + " GB";
-    ui->lPercentageUsed->setText(used);
+	int percentage = (100 * usedBytes) / totalBytes;
+	ui->pUsage->setProgress(percentage);
+	QString used(QString::number(percentage));
+	used += "% of " + WindowsUtils::getSizeString(totalBytes);
+	ui->lPercentageUsed->setText(used);
 
     QString usage("Usage: ");
-    usage += QString::number(usedGB) + " GB";
+	usage += WindowsUtils::getSizeString(usedBytes);
     ui->lTotalUsed->setText(usage);
 }
 
@@ -92,25 +92,12 @@ void InfoDialog::addRecentFile(QString &fileName, long long fileHandle)
 void InfoDialog::setQueuedTransfers(int queuedDownloads, int queuedUploads)
 {
 	cout << "TD: " << queuedDownloads << "   TU: " << queuedUploads << endl;
-	int activeDownloads=0;
-	int activeUploads=0;
-	if(queuedDownloads)
-	{
-		queuedDownloads--;
-		activeDownloads++;
-	}
-	if(queuedUploads)
-	{
-		queuedUploads--;
-		activeUploads++;
-	}
-
 	//ui->lQueued->setText(tr("%1 Queued").arg(QString::number(queuedUploads+queuedDownloads)));
 
-	ui->bDownloads->setText(QString::number(activeDownloads));
-	ui->bUploads->setText(QString::number(activeUploads));
+	ui->bDownloads->setText(QString::number(queuedDownloads));
+	ui->bUploads->setText(QString::number(queuedUploads));
 
-	if(!activeDownloads && !activeUploads)
+	if(!queuedDownloads && !queuedUploads)
         this->startAnimation();
 }
 

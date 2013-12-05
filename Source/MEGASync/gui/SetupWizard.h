@@ -10,6 +10,7 @@
 #include "NodeSelector.h"
 #include "Preferences.h"
 #include "sdk/megaapi.h"
+#include "sdk/qt/QTMegaRequestListener.h"
 
 namespace Ui {
 class SetupWizard;
@@ -24,10 +25,10 @@ public:
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
     ~SetupWizard();
 
-    virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
-    virtual bool event(QEvent *event);
+	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 
 private slots:
+
     void on_bNext_clicked();
 
     void on_bBack_clicked();
@@ -43,9 +44,8 @@ private:
     MegaApplication *app;
     MegaApi *megaApi;
     Preferences *preferences;
-    MegaRequest *request;
-    MegaError *error;
     long long selectedMegaFolderHandle;
+	QTMegaRequestListener *delegateListener;
 };
 
 #endif // SETUPWIZARD_H

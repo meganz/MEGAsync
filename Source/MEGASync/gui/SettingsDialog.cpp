@@ -198,9 +198,9 @@ void SettingsDialog::loadSettings()
 	{
 		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
 		ui->pStorage->setValue(percentage);
-		ui->lStorage->setText(QString::number(preferences->usedStorage()/(1024*1024*1024)) + " GB (" +
+		ui->lStorage->setText(WindowsUtils::getSizeString(preferences->usedStorage()) + " (" +
 			  QString::number(percentage) + "%) of " +
-			  QString::number(preferences->totalStorage()/(1024*1024*1024)) + " GB used");
+			  WindowsUtils::getSizeString(preferences->totalStorage()) + " used");
 	}
     switch(preferences->accountType())
     {
@@ -239,9 +239,9 @@ void SettingsDialog::loadSettings()
 	{
 		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
 		ui->pUsedBandwidth->setValue(bandwidthPercentage);
-		ui->lBandwidth->setText(QString::number(preferences->usedBandwidth()/(1024*1024*1024)) + " GB (" +
-		  QString::number(bandwidthPercentage) + "%) of " +
-		  QString::number(preferences->totalBandwidth()/(1024*1024*1024)) + " GB used");
+		ui->lBandwidth->setText(WindowsUtils::getSizeString(preferences->usedBandwidth()) + " (" +
+			QString::number(bandwidthPercentage) + "%) of " +
+			WindowsUtils::getSizeString(preferences->totalBandwidth()) + " used");
 	}
 
     //Proxies

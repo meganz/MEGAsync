@@ -45,7 +45,9 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/win32/megaapiwait.cpp  \
     $$PWD/megaapi.cpp \
     $$PWD/sqlite3.c \
-    $$PWD/qt/QTMegaRequestListener.cpp
+    $$PWD/qt/QTMegaRequestListener.cpp \
+    sdk/qt/QTMegaTransferListener.cpp \
+    sdk/qt/QTMegaListener.cpp
 
 HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/account.h \
@@ -86,7 +88,9 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/win32/megawait.h  \
 	    $$PWD/win32/megaapiwait.h  \
 	    $$PWD/megaapi.h \
-	    $$PWD/qt/QTMegaRequestListener.h
+	    $$PWD/qt/QTMegaRequestListener.h \
+    sdk/qt/QTMegaTransferListener.h \
+    sdk/qt/QTMegaListener.h
 
 LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 

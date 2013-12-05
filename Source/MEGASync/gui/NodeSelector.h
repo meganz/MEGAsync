@@ -7,6 +7,7 @@
 #include <QDir>
 
 #include "sdk/megaapi.h"
+#include "sdk/qt/QTMegaRequestListener.h"
 
 namespace Ui {
 class NodeSelector;
@@ -19,12 +20,8 @@ class NodeSelector : public QDialog, public MegaRequestListener
 public:
     explicit NodeSelector(MegaApi *megaApi, QWidget *parent = 0);
     ~NodeSelector();
-
     void nodesReady();
     long long getSelectedFolderHandle();
-    virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
-
-    virtual bool event(QEvent *event);
 
 private:
     Ui::NodeSelector *ui;
@@ -32,12 +29,13 @@ private:
     QIcon folderIcon;
     unsigned long long selectedFolder;
     QTreeWidgetItem *selectedItem;
-    MegaRequest *request;
-    MegaError *error;
 
 protected:
     void addChildren(QTreeWidgetItem *parentItem, Node *parentNode);
+	QTMegaRequestListener *delegateListener;
 
+public slots:
+	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 
 private slots:
     void on_tMegaFolders_itemSelectionChanged();
