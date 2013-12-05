@@ -247,7 +247,8 @@ class MegaRequest
 		int getNextRetryDelay() const;
 		Node *getPublicNode();
 		int getAttrType() const;
-		
+		void *getParameter() const;
+
 		void setNodeHandle(handle nodeHandle);
 		void setLink(const char* link);
 		void setParentHandle(handle parentHandle);
@@ -264,7 +265,8 @@ class MegaRequest
 		void setNumDetails(int numDetails);
 		void setFile(const char* file);
 		void setAttrType(int type);
-		
+		void setParameter(void *parameter);
+
 		MegaRequestListener *getListener() const;
 		MegaTransfer * getTransfer() const;
 		AccountDetails * getAccountDetails() const;
@@ -290,6 +292,7 @@ class MegaRequest
 		AccountDetails *accountDetails;
 		int numDetails;
 		Node* publicNode;
+		void* parameter;
 		int numRetry;
 		int nextRetryDelay;
 };
@@ -498,6 +501,7 @@ class MegaListener
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 	virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
+	virtual void onTransferStart(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);
 	virtual void onTransferUpdate(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e);
@@ -505,11 +509,10 @@ class MegaListener
 	virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
 	virtual void onReloadNeeded(MegaApi* api);
 
-    virtual void onSyncStateChanged(Sync*, syncstate) {}
-    //virtual void syncupdate_local_file_addition(Sync*, const char*);
-    virtual void onSyncGet(Sync*, const char*) {}
-    virtual void onSyncPut(Sync*, const char*) {}
-    virtual void onSyncRemoteCopy(Sync*, const char*) {}
+	//virtual void onSyncStateChanged(Sync*, syncstate) {}
+	//virtual void onSyncGet(Sync*, const char*) {}
+	//virtual void onSyncPut(Sync*, const char*) {}
+	//virtual void onSyncRemoteCopy(Sync*, const char*) {}
 
 	virtual ~MegaListener();
 };
@@ -737,6 +740,7 @@ protected:
 	void fireOnRequestStart(MegaApi* api, MegaRequest *request);	
 	void fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError e);
 	void fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError e);
+	void fireOnTransferStart(MegaApi* api, MegaTransfer *transfer);
 	void fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError e);
 	void fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer);
 	void fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError e);	

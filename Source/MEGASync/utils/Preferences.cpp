@@ -56,7 +56,7 @@ Preferences::Preferences()
 
 bool Preferences::isTrayIconEnabled()
 {
-    return settings->value(trayIconEnabledKey).toBool();
+	return settings->value(trayIconEnabledKey, true).toBool();
 }
 
 void Preferences::setTrayIconEnabled(bool value)

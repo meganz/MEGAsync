@@ -64,7 +64,6 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 		}
 		currentIndex++;
 		cout << "Index updated" << endl;
-		QTMegaRequestListener::QTonRequestFinish(api, request, e);
 		emit onLinkInfoAvailable(currentIndex-1);
 		if(currentIndex==linkList.size())
 			emit onLinkInfoRequestFinish();

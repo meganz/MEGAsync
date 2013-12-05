@@ -21,32 +21,27 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setOrganizationName("Mega Limited");
     setOrganizationDomain("mega.co.nz");
     setApplicationName("MegaSync");
+	QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     createActions();
     createTrayIcon();
+
+	delegateListener = new QTMegaListener(this);
     infoDialog = new InfoDialog(this);
     setupWizard = NULL;
     settingsDialog = NULL;
     localServer = NULL;
     httpServer = NULL;
-    transfer = NULL;
-	storageMax = 0;
-    error = NULL;
-	invalidCredentials = false;
-	updateInfo = false;
-    queuedDownloads = 0;
+	queuedDownloads = 0;
     queuedUploads = 0;
     preferences = new Preferences();
-    megaApi = new MegaApi(this,
+	megaApi = new MegaApi(delegateListener,
          &(QCoreApplication::applicationDirPath()+"/").toStdString());
 
 #ifdef WIN32
 	WindowsUtils::initialize();
 	WindowsUtils::startOnStartup(preferences->startOnStartup());
 #endif
-
-	ShellDispatcher *shellDispatcher = new ShellDispatcher();
-	shellDispatcher->start();
 
     //downloader = new FileDownloader(QUrl("http://www.google.es"));
     //connect(downloader, SIGNAL(downloaded()), this, SLOT(updateDowloaded()));
@@ -68,11 +63,13 @@ void MegaApplication::init()
 					   preferences->password().toUtf8().constData());
 	}
 
+	ShellDispatcher *shellDispatcher = new ShellDispatcher();
+	shellDispatcher->start();
     trayIcon->show();
     trayIcon->showMessage(tr("MegaSync"), tr("MEGA Sync is running"));
 
 #ifdef WIN32
-	//if(!preferences->isTrayIconEnabled())
+	if(preferences->isTrayIconEnabled())
     {
         preferences->setTrayIconEnabled(true);
         if(!WindowsUtils::enableIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
@@ -338,8 +335,11 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 	{
 		if(e->getErrorCode() == MegaError::API_OK)
 		{
-			linkForClipboard = QString(request->getLink());
-			QApplication::postEvent(this, new QEvent(QEvent::User));
+			QString linkForClipboard(request->getLink());
+			QClipboard *clipboard = QApplication::clipboard();
+			clipboard->setText(linkForClipboard);
+			trayIcon->showMessage(tr("MegaSync"), tr("The link has been copied to the clipboard"));
+			linkForClipboard.clear();
 		}
 		break;
 	}
@@ -354,8 +354,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 			}
 			else
 			{
-				invalidCredentials = true;
-				QApplication::postEvent(this, new QEvent(QEvent::User));
+				unlink();
 			}
 		}
 		break;
@@ -383,15 +382,9 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         preferences->setAccountType(details->pro_level);
         preferences->setTotalStorage(details->storage_max);
         preferences->setUsedStorage(details->storage_used);
-
-		cout << "DETAILS:" << endl;
-		cout << "details->transfer_max " << details->transfer_max << endl;
 		preferences->setTotalBandwidth(details->transfer_max);
 		preferences->setUsedBandwidth(details->transfer_own_used);
-
-        storageMax = details->storage_max;
-        storageUsed = details->storage_used;
-        QApplication::postEvent(this, new QEvent(QEvent::User));
+		infoDialog->setUsage(details->storage_max, details->storage_used);
         break;
     }
     default:
@@ -399,92 +392,57 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
 }
 
-bool MegaApplication::event(QEvent *event)
+void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    if((event->type() != QEvent::User))
-        return QApplication::event(event);
+	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) queuedDownloads++;
 
-    if(transfer)
-    {
-		if((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) &&
-				(transfer->getTransferredBytes() == transfer->getTotalBytes()))
-		{
-			infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
-			cout << "Download finished" << endl;
-		}
-        infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
-                            transfer->getTransferredBytes(), transfer->getTotalBytes());
-		updateInfo = true;
-		delete transfer;
-        transfer = NULL;
-    }
-
-    if(storageMax)
-    {
-        infoDialog->setUsage(storageMax/(1024*1024*1024),
-                             100 * (double)storageUsed/storageMax);
-    }
-
-    if(error)
-    {
-        delete error;
-        error = NULL;
-    }
-
-    infoDialog->setQueuedTransfers(queuedDownloads, queuedUploads);
-
-    if(queuedDownloads || queuedUploads)
-        this->showSyncingIcon();
-    else
-        this->showSyncedIcon();
-
-	if(invalidCredentials)
-	{
-		unlink();
-		invalidCredentials = false;
-	}
-
-	if(updateInfo)
-	{
-		updateInfo = false;
-		infoDialog->updateDialog();
-	}
-
-	if(linkForClipboard.length())
-	{
-		QClipboard *clipboard = QApplication::clipboard();
-		clipboard->setText(linkForClipboard);
-		trayIcon->showMessage(tr("MegaSync"), tr("The link has been copied to the clipboard"));
-		linkForClipboard.clear();
-	}
-
-    return true;
+	else queuedUploads++;
+	infoDialog->setQueuedTransfers(queuedDownloads, queuedUploads);
+	if(queuedDownloads || queuedUploads) this->showSyncingIcon();
+	else this->showSyncedIcon();
 }
 
-void MegaApplication::onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e)
+void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 {
 
 }
 
-void MegaApplication::onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e)
-{
-    this->transfer = transfer->copy();
-    this->error = e->copy();
+void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
+{	
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD) queuedDownloads--;
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	else queuedUploads--;
+
+	infoDialog->setQueuedTransfers(queuedDownloads, queuedUploads);
+	if(queuedDownloads || queuedUploads) this->showSyncingIcon();
+	else this->showSyncedIcon();
+
+	if((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) &&
+			(transfer->getTransferredBytes() == transfer->getTotalBytes()))
+	{
+		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
+		cout << "Download finished" << endl;
+	}
+	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
+						transfer->getTransferredBytes(), transfer->getTotalBytes());
+	infoDialog->updateDialog();
 }
 
-void MegaApplication::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    this->transfer = transfer->copy();
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	if((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) &&
+			(transfer->getTransferredBytes() == transfer->getTotalBytes()))
+	{
+		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
+		cout << "Download finished" << endl;
+	}
+	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
+						transfer->getTransferredBytes(), transfer->getTotalBytes());
+	infoDialog->updateDialog();
 }
 
-void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
+void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
-    this->transfer = transfer->copy();
-    this->error = e->copy();
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	trayIcon->showMessage(transfer->getFileName(), tr("Temporarily error in transfer: ") + e->getErrorString());
 }
 
 void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
@@ -504,11 +462,9 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 			cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " <<
 					node->tag << endl;
 			infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle);
-			queuedUploads--;
 		}
 	}
-	updateInfo = true;
-	QApplication::postEvent(this, new QEvent(QEvent::User));
+	infoDialog->updateDialog();
 }
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
@@ -517,37 +473,36 @@ void MegaApplication::onReloadNeeded(MegaApi* api)
 	megaApi->fetchNodes();
 }
 
+/*
 void MegaApplication::onSyncStateChanged(Sync *, syncstate state)
 {
-    syncState = state;
-    cout << "New STATE: " << state << endl;
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	//syncState = state;
+	//cout << "New STATE: " << state << endl;
+	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
 void MegaApplication::onSyncRemoteCopy(Sync *, const char *name)
 {
-	cout << "Added upload - remote copy" << endl;
-    queuedUploads++;
-    transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD);
-    transfer->setTotalBytes(1000);
-    transfer->setTransferredBytes(1000);
-    transfer->setPath(name);
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	//cout << "Added upload - remote copy" << endl;
+	//transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD);
+	//transfer->setTotalBytes(1000);
+	//transfer->setTransferredBytes(1000);
+	//transfer->setPath(name);
+	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
 void MegaApplication::onSyncGet(Sync *, const char *)
 {
-	cout << "Added download - sync get" << endl;
-    queuedDownloads++;
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	//cout << "Added download - sync get" << endl;
+	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 
 void MegaApplication::onSyncPut(Sync *, const char *)
 {
-	cout << "Added upload - sync put" << endl;
-    queuedUploads++;
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	//cout << "Added upload - sync put" << endl;
+	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
+*/
 
 void MegaApplication::showSyncedIcon()
 {

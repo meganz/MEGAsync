@@ -383,4 +383,26 @@ WindowsUtils::WindowsUtils()
 {
 }
 
+QString WindowsUtils::getSizeString(unsigned long long bytes)
+{
+	unsigned long long KB = 1024;
+	unsigned long long MB = 1024 * KB;
+	unsigned long long GB = 1024 * MB;
+	unsigned long long TB = 1024 * GB;
+
+	if(bytes > TB)
+		return QString::number( ((int)((100 * bytes) / TB))/100.0) + " TB";
+
+	if(bytes > GB)
+		return QString::number( ((int)((100 * bytes) / GB))/100.0) + " GB";
+
+	if(bytes > MB)
+		return QString::number( ((int)((100 * bytes) / MB))/100.0) + " MB";
+
+	if(bytes > KB)
+		return QString::number( ((int)((100 * bytes) / KB))/100.0) + " KB";
+
+	return QString::number(bytes) + " KB";
+}
+
 

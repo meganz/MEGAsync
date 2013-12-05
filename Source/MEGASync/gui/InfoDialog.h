@@ -21,7 +21,7 @@ public:
     ~InfoDialog();
 
     void startAnimation();
-    void setUsage(int totalGB, int percentage);
+	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
     void setTransfer(int type, QString &fileName, long long completedSize, long long totalSize);
 	void addRecentFile(QString &fileName, long long fileHandle);
     void setQueuedTransfers(int queuedDownloads, int queuedUploads);

@@ -10,10 +10,12 @@ NodeSelector::NodeSelector(MegaApi *megaApi, QWidget *parent) :
     folderIcon =  QIcon("://images/folder.ico");
     selectedFolder = UNDEF;
     selectedItem = NULL;
+	delegateListener = new QTMegaRequestListener(this);
 }
 
 NodeSelector::~NodeSelector()
 {
+	delete delegateListener;
     delete ui;
 }
 
@@ -36,34 +38,22 @@ long long NodeSelector::getSelectedFolderHandle()
     return selectedFolder;
 }
 
-
-bool NodeSelector::event(QEvent *event)
-{
-    if(event->type() != QEvent::User)
-        return QDialog::event(event);
-
-    if(error->getErrorCode() == MegaError::API_OK)
-    {
-        Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
-        QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText(0, node->displayname());
-        item->setIcon(0, folderIcon);
-        item->setData(0, Qt::UserRole, (qulonglong)node->nodehandle);
-        selectedItem->addChild(item);
-        selectedItem->sortChildren(0,  Qt::AscendingOrder);
-        ui->tMegaFolders->setCurrentItem(item);
-        ui->tMegaFolders->update();
-    }
-    ui->tMegaFolders->setEnabled(true);
-    delete request;
-    delete error;
-}
-void NodeSelector::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     cout << "Request finished!" << endl;
-    this->request = request->copy();
-    this->error = e->copy();
-    QApplication::postEvent(this, new QEvent(QEvent::User));
+	if(e->getErrorCode() == MegaError::API_OK)
+	{
+		Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
+		QTreeWidgetItem *item = new QTreeWidgetItem();
+		item->setText(0, node->displayname());
+		item->setIcon(0, folderIcon);
+		item->setData(0, Qt::UserRole, (qulonglong)node->nodehandle);
+		selectedItem->addChild(item);
+		selectedItem->sortChildren(0,  Qt::AscendingOrder);
+		ui->tMegaFolders->setCurrentItem(item);
+		ui->tMegaFolders->update();
+	}
+	ui->tMegaFolders->setEnabled(true);
 }
 
 void NodeSelector::addChildren(QTreeWidgetItem *parentItem, Node *parentNode)
@@ -107,7 +97,7 @@ void NodeSelector::on_bNewFolder_clicked()
         if(!node || (node->type==FILENODE))
         {
             ui->tMegaFolders->setEnabled(false);
-            megaApi->createFolder(text.toUtf8().constData(), parent, this);
+			megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
         }
         else
         {

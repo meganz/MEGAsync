@@ -110,10 +110,10 @@ class WindowsUtils
 
 private:
     WindowsUtils();
-
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc);
 
 public:
+	static QString getSizeString(unsigned long long bytes);
 	static QHash<QString, QString> extensionIcons;
     static void initialize();
     static boolean enableIcon(QString &executable);
