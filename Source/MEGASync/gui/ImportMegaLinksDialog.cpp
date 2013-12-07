@@ -7,7 +7,7 @@
 #include <QDir>
 #include <QFileDialog>
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, LinkProcessor *processor, QWidget *parent) :
+ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::ImportMegaLinksDialog)
 {
@@ -19,7 +19,8 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, LinkProcessor *pr
 
 	for(int i=0; i<linkProcessor->size(); i++)
 	{
-		ImportListWidgetItem *customItem = new ImportListWidgetItem(linkProcessor->getLink(i), ui->linkList);
+		ImportListWidgetItem *customItem = new ImportListWidgetItem(linkProcessor->getLink(i), i, ui->linkList);
+		connect(customItem, SIGNAL(stateChanged(int,int)), this, SLOT(onLinkStateChanged(int, int)));
 		QListWidgetItem *item = new QListWidgetItem(ui->linkList);
 		ui->linkList->addItem(item);
 		item->setSizeHint(customItem->size());
@@ -40,18 +41,27 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, LinkProcessor *pr
 	ui->linkList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	this->setMaximumHeight(this->minimumHeight());
 
-	#if QT_VERSION < 0x050000
-		QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync Downloads");
-	#else
-		QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation)[0] + "/MEGAsync Downloads");
-	#endif
-	defaultFolder.mkpath(".");
-	QString defaultFolderPath = defaultFolder.absolutePath();
-#ifdef WIN32
-   defaultFolderPath = defaultFolderPath.replace("/","\\");
-#endif
+	QString defaultFolderPath;
+	QFileInfo test(preferences->downloadFolder());
+	if(!test.isDir())
+	{
+		#if QT_VERSION < 0x050000
+			QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync Downloads");
+		#else
+			QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation)[0] + "/MEGAsync Downloads");
+		#endif
+		defaultFolder.mkpath(".");
+		defaultFolderPath = defaultFolder.absolutePath();
+		#ifdef WIN32
+			defaultFolderPath = defaultFolderPath.replace("/","\\");
+		#endif
+	}
+	else defaultFolderPath = preferences->downloadFolder();
 	ui->eLocalFolder->setText(defaultFolderPath);
-	ui->eMegaFolder->setText("/MEGAsync Imports");
+
+	Node *testNode = megaApi->getNodeByHandle(preferences->importFolder());
+	if(testNode) ui->eMegaFolder->setText(megaApi->getNodePath(testNode));
+	else ui->eMegaFolder->setText("/MEGAsync Imports");
 
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
 	connect(linkProcessor, SIGNAL(onLinkInfoRequestFinish()), this, SLOT(onLinkInfoRequestFinish()));
@@ -93,6 +103,7 @@ void ImportMegaLinksDialog::on_cDownload_clicked()
 		ui->bOk->setEnabled(false);
 
 	ui->bLocalFolder->setEnabled(ui->cDownload->isChecked());
+	ui->eLocalFolder->setEnabled(ui->cDownload->isChecked());
 }
 
 void ImportMegaLinksDialog::on_cImport_clicked()
@@ -103,6 +114,7 @@ void ImportMegaLinksDialog::on_cImport_clicked()
 		ui->bOk->setEnabled(false);
 
 	ui->bMegaFolder->setEnabled(ui->cImport->isChecked());
+	ui->eMegaFolder->setEnabled(ui->cImport->isChecked());
 }
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
@@ -137,9 +149,9 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 	{
 		QString name = QString::fromUtf8(node->displayname());
 		if(!name.compare("NO_KEY") || !name.compare("CRYPTO_ERROR"))
-			item->setData("Decryption error", ImportListWidgetItem::WARNING);
+			item->setData("Decryption error", ImportListWidgetItem::WARNING, node->size);
 		else
-			item->setData(name, ImportListWidgetItem::CORRECT);
+			item->setData(name, ImportListWidgetItem::CORRECT, node->size);
 	}
 	else
 	{
@@ -164,4 +176,9 @@ void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 	finished = true;
 	if(ui->cDownload->isChecked() || ui->cImport->isChecked())
 		ui->bOk->setEnabled(true);
+}
+
+void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
+{
+	linkProcessor->setSelected(id, state);
 }

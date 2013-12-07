@@ -333,7 +333,10 @@ class MegaTransfer
 		const char* getBase64Key() const;
 		int getTag() const;
         Transfer *getTransfer() const;
-		
+		long long getSpeed() const;
+		long long getDeltaSize() const;
+		long long getUpdateTime() const;
+
 		void setStartTime(long long startTime);
 		void setTransferredBytes(long long transferredBytes);
 		void setTotalBytes(long long totalBytes);
@@ -353,15 +356,21 @@ class MegaTransfer
 		void setBase64Key(const char* base64Key);
 		void setTag(int tag);
         void setTransfer(Transfer *transfer);
-		
+		void setSpeed(long long speed);
+		void setDeltaSize(long long deltaSize);
+		void setUpdateTime(long long updateTime);
+
 	protected:
 		int slot;
 		int type;
 		int tag;
 		long long startTime;
+		long long updateTime;
 		long long time;
 		long long transferredBytes;
 		long long totalBytes;
+		long long speed;
+		long long deltaSize;
 		handle nodeHandle;
 		handle parentHandle;
 		const char* path;
@@ -679,10 +688,10 @@ public:
 	void addContact(const char* email, MegaRequestListener* listener=NULL);
 	
 	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
-	/*void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
+	void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
 	void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener);
 	void startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener);
-	*/
+
 	void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
 	void startDownload(Node* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
 	void startDownload(Node* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
@@ -727,6 +736,7 @@ public:
 	
 	//General porpuse
 	static char* strdup(const char* buffer);
+	static Node* copyNode(Node *node);
 
 	//Do not use
 	static void *threadEntryPoint(void *param);

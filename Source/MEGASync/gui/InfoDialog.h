@@ -24,8 +24,12 @@ public:
 	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
     void setTransfer(int type, QString &fileName, long long completedSize, long long totalSize);
 	void addRecentFile(QString &fileName, long long fileHandle);
-    void setQueuedTransfers(int queuedDownloads, int queuedUploads);
-    void updateDialog();
+	void setTransferCount(int totalDownloads, int totalUploads, int remainingDownloads, int remainingUploads);
+	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
+	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
+	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
+
+	void updateDialog();
 
 public slots:
    void timerUpdate();
@@ -39,9 +43,20 @@ private slots:
 
 private:
     Ui::InfoDialog *ui;
+	long long downloadSpeed;
+	long long uploadSpeed;
+	int currentUpload;
+	int currentDownload;
+	int totalUploads;
+	int totalDownloads;
+	long long totalDownloadedSize, totalUploadedSize;
+	long long totalDownloadSize, totalUploadSize;
+	int remainingUploads, remainingDownloads;
 
 protected:
-    void updateRecentFiles();
+	bool eventFilter(QObject *obj, QEvent *ev);
+	void showPopup(QPoint globalpos, bool download);
+	void updateRecentFiles();
 
     QTimer *timer;
     MegaApplication *app;

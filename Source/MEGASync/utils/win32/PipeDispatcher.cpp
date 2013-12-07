@@ -5,7 +5,6 @@ HANDLE hEvents[INSTANCES];
 
 VOID DisconnectAndReconnect(DWORD i);
 BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
-VOID GetAnswerToRequest(LPPIPEINST pipe);
 
 using namespace std;
 
@@ -313,16 +312,22 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
-VOID GetAnswerToRequest(LPPIPEINST pipe)
+VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 {
-   //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
+   wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
    wchar_t c = pipe->chRequest[0];
-   if((c != L'P') || (lstrlen(pipe->chRequest)<3))
+   if(((c != L'P') && (c != L'F')) || (lstrlen(pipe->chRequest)<3))
    {
-	   cout << "Invalid request" << endl;
+	   cout << "ContextMenu Start/Stop" << endl;
 	   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("9") );
 	   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
+	   if(!uploadQueue.isEmpty())
+	   {
+		   cout << "Emit signal" << endl;
+		   emit newUploadQueue(uploadQueue);
+		   uploadQueue.clear();
+	   }
 	   return;
    }
 
@@ -330,6 +335,17 @@ VOID GetAnswerToRequest(LPPIPEINST pipe)
    MegaApplication *app = (MegaApplication *)qApp;
    MegaApi *megaApi = app->getMegaApi();
    Preferences *preferences = app->getPreferences();
+
+   if(c == L'F')
+   {
+	   QFileInfo file(QString::fromWCharArray(path));
+	   if(file.exists())
+	   {
+		   cout << "Adding file to queue" << endl;
+		   uploadQueue.enqueue(file.absoluteFilePath());
+	   }
+	   return;
+   }
 
    sync_list * syncs = megaApi->getActiveSyncs();
    int i=0;
@@ -386,5 +402,7 @@ VOID GetAnswerToRequest(LPPIPEINST pipe)
    StringCchCopy( pipe->chReply, BUFSIZE, TEXT("9") );
    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 }
+
+
 
 

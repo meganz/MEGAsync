@@ -18,10 +18,13 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+	QApplication::setStyleSheet("QToolTip { color: #fff; background-color: #151412; border: none; }");
     setOrganizationName("Mega Limited");
     setOrganizationDomain("mega.co.nz");
-    setApplicationName("MegaSync");
+	setApplicationName("MEGAsync");
 	QDir::setCurrent(QCoreApplication::applicationDirPath());
+	qRegisterMetaType<QQueue<QString> >("QQueueQString");
+	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     createActions();
     createTrayIcon();
@@ -30,10 +33,16 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoDialog = new InfoDialog(this);
     setupWizard = NULL;
     settingsDialog = NULL;
+	uploadFolderSelector = NULL;
     localServer = NULL;
     httpServer = NULL;
 	queuedDownloads = 0;
     queuedUploads = 0;
+	totalUploads = totalDownloads = 0;
+	totalDownloadSize = totalUploadSize = 0;
+	totalDownloadedSize = totalUploadedSize = 0;
+
+	uploadSpeed = downloadSpeed = 0;
     preferences = new Preferences();
 	megaApi = new MegaApi(delegateListener,
          &(QCoreApplication::applicationDirPath()+"/").toStdString());
@@ -64,9 +73,10 @@ void MegaApplication::init()
 	}
 
 	ShellDispatcher *shellDispatcher = new ShellDispatcher();
+	connect(shellDispatcher, SIGNAL(newUploadQueue(QQueue<QString>)), this, SLOT(uploadFiles(QQueue<QString>)));
 	shellDispatcher->start();
     trayIcon->show();
-    trayIcon->showMessage(tr("MegaSync"), tr("MEGA Sync is running"));
+	trayIcon->showMessage(tr("MEGAsync"), tr("MEGAsync is running"));
 
 #ifdef WIN32
 	if(preferences->isTrayIconEnabled())
@@ -110,6 +120,26 @@ void MegaApplication::stopSyncs()
 	{
 		delete *it;
 		cout << "Sync " << i << " removed." << endl;
+	}
+}
+
+void MegaApplication::processUploadQueue(handle nodeHandle)
+{
+	cout << "processUploadQueue " <<  uploadQueue.size() << endl;
+	Node *node = megaApi->getNodeByHandle(nodeHandle);
+	if(!node || node->type==FILENODE)
+	{
+		uploadQueue.clear();
+		trayIcon->showMessage(tr("MEGAsync"), tr("Error: Invalid destination folder. The upload has been cancelled"));
+		return;
+	}
+
+	while(!uploadQueue.isEmpty())
+	{
+		QString filePath = uploadQueue.dequeue();
+		filePath.replace('/', '\\');
+		cout << "Starting upload for " << filePath.toStdString() << endl;
+		megaApi->startUpload(filePath.toUtf8().constData(), node);
 	}
 }
 
@@ -238,18 +268,22 @@ void MegaApplication::importLinks()
 	if(dialog.result()!=QDialog::Accepted) return;
 	QStringList linkList = dialog.getLinks();
 	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
-	ImportMegaLinksDialog importDialog(megaApi, linkProcessor);
+	ImportMegaLinksDialog importDialog(megaApi, preferences, linkProcessor);
 	importDialog.exec();
 	if(importDialog.result()!=QDialog::Accepted) return;
-	if(importDialog.shouldImport())
-	{
-		linkProcessor->importLinks(importDialog.getImportPath());
-	}
 
 	if(importDialog.shouldDownload())
 	{
+		preferences->setDownloadFolder(importDialog.getDownloadPath());
 		linkProcessor->downloadLinks(importDialog.getDownloadPath());
 	}
+
+	if(importDialog.shouldImport())
+	{
+		connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
+		linkProcessor->importLinks(importDialog.getImportPath());
+	}
+	else delete linkProcessor;
 }
 
 void MegaApplication::updateDowloaded()
@@ -264,6 +298,45 @@ void MegaApplication::copyFileLink(handle fileHandle)
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
 }
 
+void MegaApplication::uploadFiles(QQueue<QString> newUploadQueue)
+{
+	uploadQueue.append(newUploadQueue);
+
+	if(uploadFolderSelector) return;
+	Node *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+	if(node)
+	{
+		processUploadQueue(node->nodehandle);
+		return;
+	}
+
+	uploadFolderSelector = new UploadToMegaDialog(megaApi);
+	QTimer::singleShot(1000, this, SLOT(showUploadDialog()));
+	return;
+}
+
+void MegaApplication::showUploadDialog()
+{
+	uploadFolderSelector->exec();
+	if(uploadFolderSelector->result()==QDialog::Accepted)
+	{
+		handle nodeHandle = uploadFolderSelector->getSelectedHandle();
+		processUploadQueue(nodeHandle);
+		if(uploadFolderSelector->isDefaultFolder())
+			preferences->setUploadFolder(nodeHandle);
+	}
+	else uploadQueue.clear();
+
+	delete uploadFolderSelector;
+	uploadFolderSelector = NULL;
+}
+
+void MegaApplication::onLinkImportFinished()
+{
+	LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
+	preferences->setImportFolder(linkProcessor->getImportParentFolder());
+}
+
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
@@ -274,7 +347,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 			return;
 		}
         infoDialog->updateDialog();
-        infoDialog->show();
+		infoDialog->show();
+
 		//infoDialog->startAnimation();
     }
 }
@@ -394,12 +468,24 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) queuedDownloads++;
+	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+	{
+		downloadSpeed = 0;
+		queuedDownloads++;
+		totalDownloads++;
+		totalDownloadSize += transfer->getTotalBytes();
+	}
+	else
+	{
+		uploadSpeed = 0;
+		queuedUploads++;
+		totalUploads++;
+		totalUploadSize += transfer->getTotalBytes();
+	}
 
-	else queuedUploads++;
-	infoDialog->setQueuedTransfers(queuedDownloads, queuedUploads);
-	if(queuedDownloads || queuedUploads) this->showSyncingIcon();
-	else this->showSyncedIcon();
+	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
+	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+	this->showSyncingIcon();
 }
 
 void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
@@ -409,22 +495,39 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, M
 
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {	
-	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD) queuedDownloads--;
-	else queuedUploads--;
-
-	infoDialog->setQueuedTransfers(queuedDownloads, queuedUploads);
-	if(queuedDownloads || queuedUploads) this->showSyncingIcon();
-	else this->showSyncedIcon();
-
-	if((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) &&
-			(transfer->getTransferredBytes() == transfer->getTotalBytes()))
+	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
+		queuedDownloads--;
+		totalDownloadedSize += transfer->getDeltaSize();
+		downloadSpeed = transfer->getSpeed();
 		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
-		cout << "Download finished" << endl;
 	}
-	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
-						transfer->getTransferredBytes(), transfer->getTotalBytes());
+	else
+	{
+		queuedUploads--;
+		totalUploadedSize += transfer->getDeltaSize();
+		uploadSpeed = transfer->getSpeed();
+	}
+
+	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
+	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName())
+							,transfer->getTransferredBytes(), transfer->getTotalBytes());
 	infoDialog->updateDialog();
+
+	if(queuedDownloads || queuedUploads)
+	{
+		this->showSyncingIcon();
+	}
+	else
+	{
+		totalUploads = totalDownloads = 0;
+		totalUploadSize = totalDownloadSize = 0;
+		totalUploadedSize = totalDownloadedSize = 0;
+		uploadSpeed = downloadSpeed = 0;
+		this->showSyncedIcon();
+	}
 }
 
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
@@ -437,6 +540,21 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 	}
 	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
 						transfer->getTransferredBytes(), transfer->getTotalBytes());
+
+	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+	{
+		downloadSpeed = transfer->getSpeed();
+		totalDownloadedSize += transfer->getDeltaSize();
+	}
+	else
+	{
+		uploadSpeed = transfer->getSpeed();
+		totalUploadedSize += transfer->getDeltaSize();
+	}
+
+	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+
 	infoDialog->updateDialog();
 }
 
@@ -453,11 +571,10 @@ void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
 void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
 	if(!nodes) return;
-
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
-		if(node->type==FILENODE && !node->removed && node->tag && !node->syncdeleted)
+		if(node->type==FILENODE && !node->removed /*&& node->tag*/ && !node->syncdeleted)
 		{
 			cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " <<
 					node->tag << endl;

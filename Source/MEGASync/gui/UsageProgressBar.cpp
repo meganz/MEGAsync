@@ -20,7 +20,7 @@ void UsageProgressBar::setProgress(int value)
     this->progress = value;
 	ui->wProgress->resize(value*3.6, ui->wProgress->height());
     if(value<80)
-        ui->wProgress->setStyleSheet("background-color: green;");
+		ui->wProgress->setStyleSheet("background-color: #78B241;");
     else
         ui->wProgress->setStyleSheet("background-color: red;");
 }

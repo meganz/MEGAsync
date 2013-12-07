@@ -129,5 +129,9 @@
         <file>images/import_error_ico.png</file>
         <file>images/import_ok_icon.png</file>
         <file>images/import_warning_ico.png</file>
+        <file>images/tray_pause_ico.png</file>
+        <file>images/tray_paused_large_ico.png</file>
+        <file>images/tray_play_ico.png</file>
+        <file>images/tray_tooltip_clock_ico.png</file>
     </qresource>
 </RCC>

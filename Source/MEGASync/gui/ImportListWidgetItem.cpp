@@ -4,11 +4,12 @@
 
 #include <QFileInfo>
 
-ImportListWidgetItem::ImportListWidgetItem(QString link, QWidget *parent) :
+ImportListWidgetItem::ImportListWidgetItem(QString link, int id, QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::ImportListWidgetItem)
 {
 	ui->setupUi(this);
+	this->id = id;
 	node = NULL;
 	this->link = link;
 	status = LOADING;
@@ -26,15 +27,18 @@ void ImportListWidgetItem::setNode(Node *node)
 	this->node = node;
 }
 
-void ImportListWidgetItem::setData(QString fileName, linkstatus status)
+void ImportListWidgetItem::setData(QString fileName, linkstatus status, long long size)
 {
 	this->fileName = fileName;
 	this->status = status;
+	this->fileSize = size;
 }
 
 void ImportListWidgetItem::updateGui()
 {
-	ui->lName->setText(fileName);
+	if(fileSize) ui->lName->setText(fileName + " (" + WindowsUtils::getSizeString(fileSize) + ")");
+	else ui->lName->setText(fileName);
+
 	QFileInfo f(fileName);
 
 	if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
@@ -71,4 +75,9 @@ bool ImportListWidgetItem::isSelected()
 QString ImportListWidgetItem::getLink()
 {
 	return link;
+}
+
+void ImportListWidgetItem::on_cSelected_stateChanged(int state)
+{
+	emit stateChanged(id, state);
 }

@@ -292,27 +292,30 @@ QString Preferences::downloadFolder()
 
 void Preferences::setDownloadFolder(QString value)
 {
-
+	settings->setValue(downloadFolderKey, value);
+	settings->sync();
 }
 
-QString Preferences::uploadFolder()
+long long Preferences::uploadFolder()
 {
-	return settings->value(uploadFolderKey).toString();
+	return settings->value(uploadFolderKey).toLongLong();
 }
 
-void Preferences::setUploadFolder(QString value)
+void Preferences::setUploadFolder(long long value)
 {
-
+	settings->setValue(uploadFolderKey, value);
+	settings->sync();
 }
 
-QString Preferences::importFolder()
+long long Preferences::importFolder()
 {
-	return settings->value(importFolderKey).toString();
+	return settings->value(importFolderKey).toLongLong();
 }
 
-void Preferences::setImportFolder(QString value)
+void Preferences::setImportFolder(long long value)
 {
-
+	settings->setValue(importFolderKey, value);
+	settings->sync();
 }
 
 int Preferences::getNumSyncedFolders()

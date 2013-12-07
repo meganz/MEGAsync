@@ -5,6 +5,7 @@
 #include <QStringList>
 #include "sdk/megaapi.h"
 #include "utils/LinkProcessor.h"
+#include "utils/Preferences.h"
 
 namespace Ui {
 class ImportMegaLinksDialog;
@@ -15,7 +16,7 @@ class ImportMegaLinksDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ImportMegaLinksDialog(MegaApi *megaApi, LinkProcessor *linkProcessor, QWidget *parent = 0);
+	explicit ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *linkProcessor, QWidget *parent = 0);
 	~ImportMegaLinksDialog();
 
 	bool shouldImport();
@@ -32,6 +33,7 @@ private slots:
 public slots:
 	void onLinkInfoAvailable(int id);
 	void onLinkInfoRequestFinish();
+	void onLinkStateChanged(int id, int state);
 
 private:
 	Ui::ImportMegaLinksDialog *ui;

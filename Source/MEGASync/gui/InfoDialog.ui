@@ -189,7 +189,7 @@ color: rgb(102, 102, 102);
         </property>
         <property name="icon">
          <iconset resource="Resources.qrc">
-          <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
+          <normaloff>:/images/tray_pause_ico.png</normaloff>:/images/tray_pause_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -206,14 +206,14 @@ color: rgb(102, 102, 102);
        <widget class="QPushButton" name="bSettings">
         <property name="minimumSize">
          <size>
-          <width>40</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>40</width>
-          <height>16777215</height>
+          <height>40</height>
          </size>
         </property>
         <property name="text">
@@ -369,9 +369,6 @@ color: rgb(102, 102, 102);
               <weight>75</weight>
               <bold>true</bold>
              </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;font color=&quot;green&quot;&gt;Downloads&lt;/font&gt;&lt;font color=&quot;white&quot;&gt; 1 of 20 files at 908 KB/s&lt;/font&gt;&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Total Remaining:&lt;/font&gt;&lt;font color=&quot;white&quot;&gt; 512.34 MB&lt;/font&gt;</string>
             </property>
             <property name="text">
              <string/>
@@ -675,7 +672,7 @@ color: rgb(102, 102, 102);
          </font>
         </property>
         <property name="text">
-         <string>MEGA sync folder</string>
+         <string>Syncs</string>
         </property>
         <property name="icon">
          <iconset>

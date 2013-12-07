@@ -61,10 +61,10 @@ public:
 
 	QString downloadFolder();
 	void setDownloadFolder(QString value);
-	QString uploadFolder();
-	void setUploadFolder(QString value);
-	QString importFolder();
-	void setImportFolder(QString value);
+	long long uploadFolder();
+	void setUploadFolder(long long value);
+	long long importFolder();
+	void setImportFolder(long long value);
 
     int getNumSyncedFolders();
     QString getLocalFolder(int num);
