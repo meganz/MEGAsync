@@ -44,7 +44,13 @@ class ShellDispatcher : public QThread
  protected:
 	void run ();
 	int dispatchPipe();
+	VOID GetAnswerToRequest(LPPIPEINST pipe);
+	QQueue<QString> uploadQueue;
 	boolean stop;
+
+ signals:
+	void newUploadQueue(QQueue<QString> uploadQueue);
+
  };
 
 #endif

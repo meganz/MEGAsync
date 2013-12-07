@@ -9,16 +9,20 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QDataStream>
+#include <QQueue>
 
 #include "gui/InfoDialog.h"
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
+#include "gui/UploadToMegaDialog.h"
 #include "utils/Preferences.h"
 #include "utils/HTTPServer.h"
 #include "utils/FileDownloader.h"
 #include "utils/WindowsUtils.h"
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
+
+Q_DECLARE_METATYPE(QQueue<QString>)
 
 class MegaApplication : public QApplication, public MegaListener
 {
@@ -65,6 +69,9 @@ public slots:
 	void importLinks();
     void updateDowloaded();
 	void copyFileLink(handle fileHandle);
+	void uploadFiles(QQueue<QString> newUploadQueue);
+	void showUploadDialog();
+	void onLinkImportFinished();
 
 protected:
     void createActions();
@@ -73,6 +80,7 @@ protected:
     void init();
 	void startSyncs();
 	void stopSyncs();
+	void processUploadQueue(handle nodeHandle);
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayMenu;
@@ -90,8 +98,13 @@ protected:
     QLocalServer *localServer;
     HTTPServer *httpServer;
     FileDownloader *downloader;
-
+	UploadToMegaDialog *uploadFolderSelector;
+	QQueue<QString> uploadQueue;
     int queuedUploads, queuedDownloads;
+	int totalUploads, totalDownloads;
+	long long totalDownloadSize, totalUploadSize;
+	long long totalDownloadedSize, totalUploadedSize;
+	long long uploadSpeed, downloadSpeed;
     syncstate syncState;
 	QTMegaListener *delegateListener;
 };

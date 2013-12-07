@@ -19,8 +19,6 @@ OTHER_FILES += \
     GlobalExportFunctions.def
 
 HEADERS += \
-    ShellExtSyncing.h \
-    ShellExtSynced.h \
     ShellExt.h \
     resource.h \
     RegUtils.h \
@@ -32,8 +30,6 @@ HEADERS += \
     ClassFactory.h
 
 SOURCES += \
-    ShellExtSyncing.cpp \
-    ShellExtSynced.cpp \
     ShellExt.cpp \
     RegUtils.cpp \
     dllmain.cpp \

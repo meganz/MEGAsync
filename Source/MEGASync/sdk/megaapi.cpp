@@ -236,7 +236,7 @@ MegaRequest::MegaRequest(MegaRequest &request)
 		this->accountDetails->transfer_reserved = temp->transfer_reserved;
 		this->accountDetails->transfer_limit = temp->transfer_limit;
 	}
-	this->publicNode = request.getPublicNode();
+	this->publicNode = MegaApi::copyNode(request.getPublicNode());
 }
 
 
@@ -280,14 +280,7 @@ int MegaRequest::getNextRetryDelay() const { return nextRetryDelay; }
 AccountDetails* MegaRequest::getAccountDetails() const { return accountDetails; }
 int MegaRequest::getNumDetails() const { return numDetails; }
 void MegaRequest::setNumDetails(int numDetails) { this->numDetails = numDetails; }
-
-Node* MegaRequest::getPublicNode() 
-{ 
-	Node* temp = publicNode;
-	publicNode = NULL;
-	return temp;
-}
-
+Node* MegaRequest::getPublicNode() { return publicNode;}
 void MegaRequest::setPublicNode(Node *node) { this->publicNode = node; }
 void MegaRequest::setNodeHandle(handle nodeHandle) { this->nodeHandle = nodeHandle; }
 void MegaRequest::setParentHandle(handle parentHandle) { this->parentHandle = parentHandle; }
@@ -411,6 +404,9 @@ MegaTransfer::MegaTransfer(int type, MegaTransferListener *listener)
 	this->fileName = NULL;
 	this->base64Key = NULL;
 	this->transfer = NULL;
+	this->speed = 0;
+	this->deltaSize = 0;
+	this->updateTime = 0;
 }
 
 MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
@@ -456,6 +452,9 @@ MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
 	this->setTotalBytes(transfer.getTotalBytes());
 	this->setFileName(transfer.getFileName());
 	this->setBase64Key(transfer.getBase64Key());
+	this->setSpeed(transfer.getSpeed());
+	this->setDeltaSize(transfer.getDeltaSize());
+	this->setUpdateTime(transfer.getUpdateTime());
 }
 
 MegaTransfer* MegaTransfer::copy()
@@ -466,6 +465,9 @@ MegaTransfer* MegaTransfer::copy()
 int MegaTransfer::getSlot() const { return slot; }
 int MegaTransfer::getTag() const { return tag; }
 Transfer* MegaTransfer::getTransfer() const { return transfer; }
+long long MegaTransfer::getSpeed() const { return speed; }
+long long MegaTransfer::getDeltaSize() const { return deltaSize; }
+long long MegaTransfer::getUpdateTime() const { return updateTime; }
 int MegaTransfer::getType() const { return type; }
 long long MegaTransfer::getStartTime() const { return startTime; }
 long long MegaTransfer::getTransferredBytes() const {return transferredBytes; }
@@ -487,6 +489,9 @@ const char* MegaTransfer::getBase64Key() const { return base64Key; }
 void MegaTransfer::setSlot(int slot) { this->slot = slot; }
 void MegaTransfer::setTag(int tag) { this->tag = tag; }
 void MegaTransfer::setTransfer(Transfer *transfer) { this->transfer = transfer; }
+void MegaTransfer::setSpeed(long long speed) { this->speed = speed; }
+void MegaTransfer::setDeltaSize(long long deltaSize){ this->deltaSize = deltaSize; }
+void MegaTransfer::setUpdateTime(long long updateTime) { this->updateTime = updateTime; }
 void MegaTransfer::setStartTime(long long startTime) { this->startTime = startTime; }
 void MegaTransfer::setTransferredBytes(long long transferredBytes) { this->transferredBytes = transferredBytes; }
 void MegaTransfer::setTotalBytes(long long totalBytes) { this->totalBytes = totalBytes; }
@@ -1118,7 +1123,7 @@ void MegaApi::addContact(const char* email, MegaRequestListener* listener)
     waiter->notify();
 }
 
-/*void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
+void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD, listener);
 	transfer->setPath(localPath);
@@ -1137,7 +1142,7 @@ void MegaApi::startUpload(const char* localPath, Node* parent, MegaTransferListe
 
 void MegaApi::startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener)
 { return startUpload(localPath, parent, 1, 0, fileName, listener); }
-*/
+
 
 void MegaApi::startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener)
 {
@@ -1288,7 +1293,10 @@ NodeList* MegaApi::getInShares(User *user)
 		if ((n = client->nodebyhandle(*sit)))
 			vNodes.push_back(n);
 	}
-	NodeList *nodeList = new NodeList(&(vNodes[0]), vNodes.size(), 1);
+	NodeList *nodeList;
+	if(vNodes.size()) nodeList = new NodeList(vNodes.data(), vNodes.size(), 1);
+	else nodeList = new NodeList(NULL, 0, 0);
+
 	pthread_mutex_unlock(&fileSystemMutex);
 	return nodeList;
 }
@@ -1414,7 +1422,11 @@ NodeList* MegaApi::search(Node* node, const char* searchString, bool recursive)
 	SearchTreeProcessor searchProcessor(searchString);
 	processTree(node, &searchProcessor, recursive);
 	vector<Node *>& vNodes = searchProcessor.getResults();
-	NodeList *nodeList = new NodeList(&(vNodes[0]), vNodes.size(), 1);
+
+	NodeList *nodeList;
+	if(vNodes.size()) nodeList = new NodeList(vNodes.data(), vNodes.size(), 1);
+	else nodeList = new NodeList(NULL, 0, 0);
+
 	pthread_mutex_unlock(&fileSystemMutex);
 
 	return nodeList;
@@ -1471,7 +1483,9 @@ void MegaApi::transfer_added(Transfer *t)
 	if(!transfer) transfer = new MegaTransfer(t->type);
 	currentTransfer = NULL;
 	transferMap[t]=transfer;
-	cout << "transfer_added" << endl;
+	transfer->setTotalBytes(t->size);
+
+	cout << "transfer_added: " <<t->size << endl;
 	fireOnTransferStart(this, transfer);
 }
 
@@ -1486,6 +1500,8 @@ void MegaApi::transfer_prepare(Transfer *t)
 	string path;
 	fsAccess->local2path(&(t->localfilename), &path);
 	transfer->setPath(path.c_str());
+	transfer->setTotalBytes(t->size);
+
 	cout << "transfer_prepare: " << transfer->getFileName() << endl;
 
 	if (t->type == GET)
@@ -1526,14 +1542,18 @@ void MegaApi::transfer_update(Transfer *tr)
 	MegaTransfer* transfer = transferMap[tr];
 	if(!transfer) return;
 
-	transfer->setTotalBytes(tr->size);
 	if(tr->slot)
-	{
-		transfer->setStartTime(tr->slot->starttime);
+	{		
 		transfer->setTime(tr->slot->lastdata);
+
 		if(transfer->getTransferredBytes() != tr->slot->progresscompleted)
 		{
+			transfer->setStartTime(tr->slot->starttime);
+			transfer->setDeltaSize(tr->slot->progresscompleted - transfer->getTransferredBytes());
 			transfer->setTransferredBytes(tr->slot->progresscompleted);
+			transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
+			transfer->setUpdateTime(waiter->getdstime());
+
 			string th;
 			if (tr->type == GET) th = "TD ";
 			else th = "TU ";
@@ -1580,10 +1600,11 @@ void MegaApi::transfer_complete(Transfer* tr)
 	if(tr->slot)
 	{
 		transfer->setStartTime(tr->slot->starttime);
+		transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
 		transfer->setTime(tr->slot->lastdata);
+		transfer->setDeltaSize(tr->slot->progresscompleted - transfer->getTransferredBytes());
+		transfer->setTransferredBytes(tr->slot->progresscompleted);
 	}
-
-	transfer->setTransferredBytes(transfer->getTotalBytes());
 
 	string tmpPath;
 	fsAccess->local2path(&tr->localfilename, &tmpPath);
@@ -2813,7 +2834,9 @@ NodeList *MegaApi::getChildren(Node* parent, int order)
 		}
 	}
 	pthread_mutex_unlock(&fileSystemMutex);
-	return new NodeList(&(childrenNodes[0]), childrenNodes.size(), 1);
+
+	if(childrenNodes.size()) return new NodeList(childrenNodes.data(), childrenNodes.size(), 1);
+	else return new NodeList(NULL, 0, 0);
 }
 
 
@@ -3130,9 +3153,13 @@ void MegaApi::sendPendingTransfers()
 			case MegaTransfer::TYPE_UPLOAD:
 			{
                 const char* localPath = transfer->getPath();
+				cout << "Checking local path" << endl;
 				if(!localPath) { e = API_EARGS; break; }
 				currentTransfer=transfer;
-                MegaFilePut *f = new MegaFilePut(client, &string(localPath), transfer->getParentHandle(), "");
+				string wLocalPath;
+				client->fsaccess->path2local(&string(localPath), &wLocalPath);
+				MegaFilePut *f = new MegaFilePut(client, &wLocalPath, transfer->getParentHandle(), "");
+				cout << "Calling startxfer" << endl;
 				client->startxfer(PUT,f);
 				break;
 			}
@@ -3534,6 +3561,20 @@ char* MegaApi::strdup(const char* buffer)
 	char *newbuffer = new char[tam];
 	memcpy(newbuffer, buffer, tam);
 	return newbuffer;
+}
+
+Node *MegaApi::copyNode(Node* node)
+{
+	if(!node) return NULL;
+	Node *copy = new Node(NULL, NULL, node->nodehandle, UNDEF, FILENODE, node->size,
+			NULL, NULL, node->ctime, node->clienttimestamp);
+	copy->attrs = node->attrs;
+	copy->nodekey.assign(node->nodekey.data(), node->nodekey.size());
+	copy->key.setkey((const byte *)node->nodekey.data(), node->type);
+	copy->parent = NULL;
+	copy->inshare = NULL;
+	copy->sharekey = NULL;
+	return copy;
 }
 
 TreeProcCopy::TreeProcCopy()

@@ -69,23 +69,21 @@ ContextMenuExt::~ContextMenuExt(void)
 }
 
 
-void ContextMenuExt::OnVerbDisplayFileName(HWND hWnd)
+void ContextMenuExt::OnVerbDisplayFileName(HWND)
 {
-    wchar_t lpszWrite[300];
-    if (SUCCEEDED(StringCchPrintf(lpszWrite, ARRAYSIZE(lpszWrite), 
-        L"L:%s", this->m_szSelectedFile)))
-    {
-		DWORD cbRead; 
-		LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe"); 
-		CallNamedPipe( 
-			lpszPipename,							// pipe name 
-			lpszWrite,								// message to server 
-			(lstrlen(lpszWrite)+1)*sizeof(TCHAR),	// message length 
-			NULL,									// buffer to receive reply 
-			0,										// size of read buffer 
-			&cbRead,								// number of bytes read 
+	for(unsigned int i=0; i<m_szSelectedFiles.size(); i++)
+	{
+		DWORD cbRead;
+		LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
+		CallNamedPipe(
+			lpszPipename,														// pipe name
+			(char *)m_szSelectedFiles[i].data(),								// message to server
+			(lstrlen((LPCWSTR)m_szSelectedFiles[i].c_str())+1)*sizeof(TCHAR),			// message length
+			NULL,																// buffer to receive reply
+			0,																	// size of read buffer
+			&cbRead,								// number of bytes read
 			NMPWAIT_NOWAIT);						// waits
-    }
+	}
 }
 
 
@@ -128,7 +126,7 @@ IFACEMETHODIMP_(ULONG) ContextMenuExt::Release()
 
 // Initialize the context menu handler.
 IFACEMETHODIMP ContextMenuExt::Initialize(
-    LPCITEMIDLIST pidlFolder, LPDATAOBJECT pDataObj, HKEY hKeyProgID)
+	LPCITEMIDLIST , LPDATAOBJECT pDataObj, HKEY )
 {
     if (NULL == pDataObj)
     {
@@ -143,24 +141,45 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
     // The pDataObj pointer contains the objects being acted upon. In this 
     // example, we get an HDROP handle for enumerating the selected files and 
     // folders.
+	m_szSelectedFiles.clear();
     if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
     {
         // Get an HDROP handle.
         HDROP hDrop = static_cast<HDROP>(GlobalLock(stm.hGlobal));
         if (hDrop != NULL)
         {
-            // Determine how many files are involved in this operation. This 
-            // code sample displays the custom context menu item when only 
-            // one file is selected. 
             UINT nFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
-            if (nFiles == 1)
+			if (nFiles != 0)
             {
-                // Get the path of the file.
-                if (0 != DragQueryFile(hDrop, 0, m_szSelectedFile, 
-                    ARRAYSIZE(m_szSelectedFile)))
-                {
-                    hr = S_OK;
-                }
+				LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
+				DWORD cbRead = 0;
+				TCHAR chReadBuf[2];
+				TCHAR  lpszWrite[]=L"9";
+				BOOL fSuccess = CallNamedPipe(
+				   lpszPipename,							// pipe name
+				   lpszWrite,								// message to server
+				   sizeof(lpszWrite),						// message length
+				   chReadBuf,								// buffer to receive reply
+				   sizeof(chReadBuf),						// size of read buffer
+				   &cbRead,									// number of bytes read
+				   NMPWAIT_NOWAIT);
+
+				if (fSuccess && cbRead!=0)
+				{
+					hr = S_OK;
+					for(unsigned int i=0; i<nFiles; i++)
+					{
+						int characters = DragQueryFile(hDrop, i, NULL, 0);
+						if(characters)
+						{
+							int prefixLenght = 2*sizeof(wchar_t);
+							std::string buffer((const char *)L"F:", prefixLenght);
+							buffer.resize((characters+1)*sizeof(wchar_t)+prefixLenght);
+							int ok = DragQueryFile(hDrop, i, (LPWSTR)(buffer.data()+prefixLenght), (UINT)(characters+1));
+							if(ok) m_szSelectedFiles.push_back(buffer);
+						}
+					}
+				}
             }
 
             GlobalUnlock(stm.hGlobal);
@@ -189,7 +208,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 //            first menu item that is to be added.
 //
 IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
-    HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags)
+	HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT , UINT uFlags)
 {
     // If uFlags include CMF_DEFAULTONLY then we should not do anything.
     if (CMF_DEFAULTONLY & uFlags)
@@ -320,6 +339,19 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
         }
     }
 
+	LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
+	DWORD cbRead = 0;
+	TCHAR chReadBuf[2];
+	TCHAR  lpszWrite[]=L"9";
+	CallNamedPipe(
+	   lpszPipename,							// pipe name
+	   lpszWrite,								// message to server
+	   sizeof(lpszWrite),						// message length
+	   chReadBuf,								// buffer to receive reply
+	   sizeof(chReadBuf),						// size of read buffer
+	   &cbRead,									// number of bytes read
+	   NMPWAIT_NOWAIT);
+
     return S_OK;
 }
 
@@ -338,7 +370,7 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 //            since Windows 2000.
 //
 IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand, 
-    UINT uFlags, UINT *pwReserved, LPSTR pszName, UINT cchMax)
+	UINT uFlags, UINT *, LPSTR pszName, UINT cchMax)
 {
     HRESULT hr = E_INVALIDARG;
 

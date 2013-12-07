@@ -12,16 +12,19 @@ class LinkProcessor: public QTMegaRequestListener
 
 public:
 	LinkProcessor(MegaApi *megaApi, QStringList linkList);
+	virtual ~LinkProcessor();
+
 	QStringList getLinkList();
 	QString getLink(int id);
 	bool isSelected(int id);
-	bool getError(int id);
+	int getError(int id);
 	Node *getNode(int id);
 	int size();
 
 	void requestLinkInfo();
-	void importLinks(QString megaPath);
+	void importLinks(QString nodePath);
 	void importLinks(Node *node);
+	handle getImportParentFolder();
 
 	void downloadLinks(QString localPath);
 	void setSelected(int linkId, bool selected);
@@ -39,6 +42,7 @@ protected:
 	int remainingNodes;
 	int importSuccess;
 	int importFailed;
+	handle importParentFolder;
 
 signals:
 	void onLinkInfoAvailable(int i);

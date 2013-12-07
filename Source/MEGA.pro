@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync MEGAShellExt
+SUBDIRS += MEGAShellExt MEGASync
 
 
 
