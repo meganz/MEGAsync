@@ -60,7 +60,7 @@
       <item>
        <widget class="QCheckBox" name="cDownload">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>Download to my computer</string>
@@ -70,7 +70,7 @@
       <item>
        <widget class="QWidget" name="widget_2" native="true">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="leftMargin">

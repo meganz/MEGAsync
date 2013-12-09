@@ -212,10 +212,10 @@ bool PosixFileSystemAccess::copylocal(string* oldname, string* newname)
 	return !t;
 }
 
-// FIXME: move file or subtree to rubbish bin
+// FIXME: add platform support for recycle bins
 bool PosixFileSystemAccess::rubbishlocal(string* name)
 {
-	return !rmdir(name->c_str());
+	return false;
 }
 
 bool PosixFileSystemAccess::unlinklocal(string* name)
@@ -223,7 +223,6 @@ bool PosixFileSystemAccess::unlinklocal(string* name)
 	return !unlink(name->c_str());
 }
 
-// FIXME: *** must delete subtree recursively ***
 bool PosixFileSystemAccess::rmdirlocal(string* name)
 {
 	return !rmdir(name->c_str());
@@ -231,7 +230,11 @@ bool PosixFileSystemAccess::rmdirlocal(string* name)
 
 bool PosixFileSystemAccess::mkdirlocal(string* name)
 {
-	return !mkdir(name->c_str(),0700);
+	bool r = !mkdir(name->c_str(),0700);
+	
+	if (!r) target_exists = errno == EEXIST;
+	
+	return r;
 }
 
 bool PosixFileSystemAccess::setmtimelocal(string* name, time_t mtime)
@@ -269,7 +272,7 @@ void PosixFileSystemAccess::delnotify(LocalNode* l)
 }
 
 // return next notified local name and corresponding parent node
-bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode** localnodep)
+bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode** localnodep, bool* fulltreep)
 {
 #ifdef USE_INOTIFY
 	inotify_event* in;
@@ -302,6 +305,9 @@ bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode*
 					*localname = in->name;
 					*localnodep = it->second;
 
+					// FIXME: check if inotify requires this to be set to true (e.g. for local folder renames)
+					if (fulltreep) *fulltreep = false;
+
 					return true;
 				}
 				else cout << "Unknown wd handle" << endl;
@@ -321,12 +327,6 @@ bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode*
 bool PosixFileSystemAccess::notifyfailed()
 {
 	return notifyerr ? (notifyerr = false) || true : false;
-}
-
-bool PosixFileSystemAccess::localhidden(string*, string* filename)
-{
-	char c = *filename->c_str();
-	return c == '.' || c == '~';
 }
 
 FileAccess* PosixFileSystemAccess::newfileaccess()

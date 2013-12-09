@@ -1,5 +1,5 @@
 /**
- * @file mega/posix/fs.h
+ * @file mega/posix/megafs.h
  * @brief POSIX filesystem/directory access/notification
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
@@ -44,7 +44,6 @@ class PosixFileSystemAccess : public FileSystemAccess
 {
 #ifdef USE_INOTIFY
 	int notifyfd;
-	bool notifyerr;
 	char notifybuf[sizeof(struct inotify_event)+NAME_MAX+1];
 	int notifypos, notifyleft;
 
@@ -66,8 +65,6 @@ public:
 	void name2local(string*, const char* = NULL);
 	void local2name(string*);
 
-	bool localhidden(string*, string*);
-
 	bool renamelocal(string*, string*);
 	bool copylocal(string*, string*);
 	bool rubbishlocal(string*);
@@ -79,7 +76,7 @@ public:
 
 	void addnotify(LocalNode*, string*);
 	void delnotify(LocalNode*);
-	bool notifynext(sync_list*, string*, LocalNode**);
+	bool notifynext(sync_list*, string*, LocalNode**, bool* = NULL);
 	bool notifyfailed();
 
 	void addevents(Waiter*);

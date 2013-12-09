@@ -1,5 +1,5 @@
 /**
- * @file mega/posix/console.h
+ * @file mega/posix/megaconsole.h
  * @brief POSIX console/terminal control
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand

@@ -286,22 +286,24 @@ public:
 
 class CommandGetFile : public Command
 {
-	TransferSlot* ts;
+	TransferSlot* tslot;
+	handle ph;
+	byte filekey[FILENODEKEYLENGTH];
 
 public:
 	void procresult();
 
-	CommandGetFile(TransferSlot* ts, handle, int);
+	CommandGetFile(TransferSlot*, byte*, handle, bool);
 };
 
 class CommandPutFile : public Command
 {
-	TransferSlot* ts;
+	TransferSlot* tslot;
 
 public:
 	void procresult();
 
-	CommandPutFile(TransferSlot* ts, int);
+	CommandPutFile(TransferSlot*, int);
 };
 
 class CommandAttachFA : public Command
@@ -405,12 +407,13 @@ public:
 class CommandGetPH : public Command
 {
 	handle ph;
-	byte key[Node::FILENODEKEYLENGTH];
+	byte key[FILENODEKEYLENGTH];
+	int op;
 
 public:
 	void procresult();
 
-	CommandGetPH(MegaClient*, handle, const byte*);
+	CommandGetPH(MegaClient*, handle, const byte*, int);
 };
 
 class CommandPurchaseAddItem : public Command

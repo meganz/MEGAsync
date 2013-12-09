@@ -21,8 +21,8 @@
 
 // FIXME: close in a way that does not require logfile merging upon the next open()
 
-#include "megaclient.h"
-#include "bdb.h"
+#include "mega/megaclient.h"
+#include "mega/db/bdb.h"
 
 namespace mega {
 

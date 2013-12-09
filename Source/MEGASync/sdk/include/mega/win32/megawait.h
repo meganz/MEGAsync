@@ -1,5 +1,5 @@
 /**
- * @file mega/win32/wait.h
+ * @file mega/win32/megawait.h
  * @brief Win32 event/timeout handling
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand

@@ -37,6 +37,7 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/user.cpp \
     $$PWD/src/utils.cpp \
     $$PWD/src/waiter.cpp  \
+    $$PWD/src/synclocalops.cpp  \
     $$PWD/src/crypto/cryptopp.cpp  \
     $$PWD/src/db/sqlite.cpp  \
     $$PWD/src/win32/net.cpp  \
@@ -80,6 +81,7 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/user.h \
 	    $$PWD/include/mega/utils.h \
 	    $$PWD/include/mega/waiter.h \
+	    $$PWD/include/mega/synclocalops.cpp  \
 	    $$PWD/include/mega/crypto/cryptopp.h  \
 	    $$PWD/include/mega/db/sqlite.h  \
 	    $$PWD/include/mega/win32/meganet.h  \

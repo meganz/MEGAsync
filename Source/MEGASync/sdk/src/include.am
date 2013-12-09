@@ -3,23 +3,22 @@ lib_LTLIBRARIES = src/libmega.la
 
 # CXX flags
 if WIN32
-src_libmega_la_CXXFLAGS = -D_WIN32=1 -DUSE_SQLITE -DUSE_CRYPTOPP  ${CRYPTO_CXXFLAGS}
+src_libmega_la_CXXFLAGS = -D_WIN32=1 $(CRYPTO_CXXFLAGS) $(DB_CPPFLAGS)
 else
-src_libmega_la_CXXFLAGS = -DUSE_SQLITE -DUSE_CRYPTOPP ${LIBCURL_FLAGS} ${CRYPTO_CXXFLAGS}
+src_libmega_la_CXXFLAGS = $(LIBCURL_FLAGS) $(CRYPTO_CXXFLAGS) $(DB_CPPFLAGS)
 endif
-
 
 # Libs
 if WIN32
-src_libmega_la_LIBADD =  ${CRYPTO_LIBS} -lcrypto++
+src_libmega_la_LIBADD =  $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS)
 
 else
-src_libmega_la_LIBADD =  ${LIBCURL_LIBS} ${CRYPTO_LIBS} -lcrypto++
+src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS)
 endif
 
 
 
-src_libmega_la_LDFLAGS = -version-info ${VERSION_INFO}
+src_libmega_la_LDFLAGS = -version-info $(VERSION_INFO)
 
 
 
@@ -44,6 +43,7 @@ src_libmega_la_SOURCES += src/serialize64.cpp
 src_libmega_la_SOURCES += src/share.cpp
 src_libmega_la_SOURCES += src/sharenodekeys.cpp
 src_libmega_la_SOURCES += src/sync.cpp
+src_libmega_la_SOURCES += src/synclocalops.cpp
 src_libmega_la_SOURCES += src/transfer.cpp
 src_libmega_la_SOURCES += src/transferslot.cpp
 src_libmega_la_SOURCES += src/treeproc.cpp

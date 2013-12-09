@@ -82,7 +82,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		{
 		   if(error->getErrorCode() == MegaError::API_OK)
 		   {
-			   Node *node = megaApi->getNodeByPath("/MegaSync");
+			   Node *node = megaApi->getNodeByPath("/MEGAsync");
 			   if(!node)
 			   {
 				   QMessageBox::warning(this, tr("Error"), tr("Mega folder doesn't exist"), QMessageBox::Ok);
@@ -215,9 +215,7 @@ void SetupWizard::on_bNext_clicked()
         defaultFolder.mkpath(".");
         QString defaultFolderPath = defaultFolder.absolutePath();
 
-    #ifdef WIN32
-       defaultFolderPath = defaultFolderPath.replace("/","\\");
-    #endif
+	   defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
 
 		ui->eLocalFolder->setText(defaultFolderPath);
 		ui->eMegaFolder->setText("/MEGAsync");
@@ -262,7 +260,7 @@ void SetupWizard::on_bNext_clicked()
         Node *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
         if(!node)
         {
-			megaApi->createFolder("MegaSync", megaApi->getRootNode(), delegateListener);
+			megaApi->createFolder("MEGAsync", megaApi->getRootNode(), delegateListener);
         }
         else
         {

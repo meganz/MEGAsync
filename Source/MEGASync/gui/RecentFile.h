@@ -17,7 +17,7 @@ class RecentFile : public QWidget
 public:
     explicit RecentFile(QWidget *parent = 0);
     ~RecentFile();
-	void setFile(QString fileName, long long fileHandle);
+	void setFile(QString fileName, long long fileHandle, QString localPath);
 	void updateWidget();
 
 private:
@@ -27,8 +27,14 @@ protected:
     QString fileName;
 	long long fileHandle;
     QDateTime dateTime;
+	QString localPath;
+
 private slots:
 	void on_pArrow_clicked();
+	void on_lFileType_customContextMenuRequested(const QPoint &pos);
+	void on_wText_customContextMenuRequested(const QPoint &pos);
+	void showInFolder();
+	void openFile();
 };
 
 #endif // RECENTFILE_H

@@ -48,11 +48,6 @@ void BackoffTimer::backoff(dstime ds, dstime newdelta)
 	delta = newdelta;
 }
 
-void BackoffTimer::freeze()
-{
-	delta = next = ~(dstime)0;
-}
-
 bool BackoffTimer::armed(dstime ds) const
 {
 	return !next || ds >= next;

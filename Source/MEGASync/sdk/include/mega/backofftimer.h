@@ -54,9 +54,6 @@ public:
 	// current backoff delta
 	dstime backoff();
 
-	// put on hold indefinitely
-	void freeze();
-
 	// time of next trigger or 0 if no trigger since last backoff
 	dstime nextset() const;
 

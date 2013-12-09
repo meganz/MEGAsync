@@ -65,7 +65,7 @@ int MegaApiWinWaiter::wait()
 {
 	// only allow interaction of asynccallback() with the main process while waiting (because WinHTTP is threaded)
 	if (pcsHTTP) LeaveCriticalSection(pcsHTTP);
-    WaitForMultipleObjectsEx(sizeof hWakeup/sizeof *hWakeup,hWakeup,FALSE,maxds*100,TRUE);
+	WaitForMultipleObjectsEx(sizeof hWakeup/sizeof *hWakeup,hWakeup,FALSE,maxds*100,TRUE);
 	if (pcsHTTP) EnterCriticalSection(pcsHTTP);
 
     return NEEDEXEC;

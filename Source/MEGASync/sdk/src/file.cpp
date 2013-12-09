@@ -31,6 +31,7 @@ namespace mega {
 File::File()
 {
 	transfer = NULL;
+	hprivate = true;
 }
 
 File::~File()
@@ -68,7 +69,7 @@ void File::completed(Transfer* t, LocalNode* l)
 		memcpy(newnode->uploadtoken,t->slot->ultoken,sizeof newnode->uploadtoken);
 
 		// file's crypto key
-		newnode->nodekey.assign((char*)t->filekey,Node::FILENODEKEYLENGTH);
+		newnode->nodekey.assign((char*)t->filekey,FILENODEKEYLENGTH);
 		newnode->clienttimestamp = t->mtime;
 		newnode->type = FILENODE;
 		newnode->parenthandle = UNDEF;
@@ -102,7 +103,7 @@ void File::completed(Transfer* t, LocalNode* l)
 			if (!t->client->nodebyhandle(th)) th = t->client->rootnodes[0];
 
 			if (l) t->client->syncadding++;
-			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,l ? l->sync->tag : 0,l ? PUTNODES_SYNC : PUTNODES_APP));
+			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,l ? l->sync->tag : t->tag,l ? PUTNODES_SYNC : PUTNODES_APP));
 		}
 	}
 }

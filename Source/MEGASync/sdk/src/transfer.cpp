@@ -47,7 +47,7 @@ Transfer::~Transfer()
 // transfer attempt failed, notify all related files, collect request on whether to abort the transfer, kill transfer if unanimous
 void Transfer::failed(error e)
 {
-	bool defer;
+	bool defer = false;
 
 	bt.backoff(client->waiter->ds);
 	client->app->transfer_failed(this,e);
@@ -94,7 +94,7 @@ void Transfer::complete()
 		// set FileFingerprint on source node(s) if missing
 		for (file_list::iterator it = files.begin(); it != files.end(); it++)
 		{
-			if ((n = client->nodebyhandle((*it)->h)))
+			if ((*it)->hprivate && (n = client->nodebyhandle((*it)->h)))
 			{
 				if (!n->isvalid)
 				{

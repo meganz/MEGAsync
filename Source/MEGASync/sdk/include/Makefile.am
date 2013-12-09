@@ -26,6 +26,7 @@ nobase_libmegainclude_HEADERS = \
 	mega/share.h \
 	mega/sharenodekeys.h \
 	mega/sync.h \
+	mega/synclocalops.h \
 	mega/transfer.h \
 	mega/transferslot.h \
 	mega/treeproc.h \
@@ -35,10 +36,22 @@ nobase_libmegainclude_HEADERS = \
 	mega/waiter.h \
     mega/crypto/cryptopp.h \
     mega/db/sqlite.h \
-    mega/db/bdb.h \
-    mega/posix/fs.h \
-    mega/posix/net.h \
-    mega/posix/wait.h \
-    mega/posix/console.h
+    mega/db/bdb.h
+
+if WIN32
+nobase_libmegainclude_HEADERS += \
+	mega/win32/megasys.h \
+    mega/win32/megafs.h \
+    mega/win32/meganet.h \
+    mega/win32/megawait.h \
+    mega/win32/megaconsole.h
+else
+nobase_libmegainclude_HEADERS += \
+	mega/posix/megasys.h \
+    mega/posix/megafs.h \
+    mega/posix/meganet.h \
+    mega/posix/megawait.h \
+    mega/posix/megaconsole.h
+endif
 
 #noinst_HEADERS = config.h

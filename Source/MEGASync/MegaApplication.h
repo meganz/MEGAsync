@@ -107,6 +107,7 @@ protected:
 	long long uploadSpeed, downloadSpeed;
     syncstate syncState;
 	QTMegaListener *delegateListener;
+	QMap<int, QString> uploadLocalPaths;
 };
 
 #endif // MEGAAPPLICATION_H

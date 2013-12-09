@@ -25,8 +25,8 @@ RequestExecutionLevel user
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "C:\Users\Javi\Documents\QT\MEGASync\SyncApp_1.ico"
-!define MUI_UNICON "C:\Users\Javi\Documents\QT\MEGASync\SyncApp_1.ico"
+!define MUI_ICON "Source\MEGASync\SyncApp_1.ico"
+!define MUI_UNICON "Source\MEGASync\SyncApp_1.ico"
 
 ; Language Selection Dialog Settings
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
@@ -42,16 +42,14 @@ RequestExecutionLevel user
 !define MUI_FINISHPAGE_RUN ;"$INSTDIR\MEGASync.exe"
 !define MUI_FINISHPAGE_RUN_FUNCTION RunFunction
 
-!define MUI_WELCOMEFINISHPAGE_BITMAP "C:\Users\Javi\Desktop\imagenes\elements\installer\left_banner.bmp"
-
-;ShowInstDetails show
-!define MUI_FINISHPAGE_NOAUTOCLOSE
+!define MUI_WELCOMEFINISHPAGE_BITMAP "installer\left_banner.bmp"
+;!define MUI_FINISHPAGE_NOAUTOCLOSE
 
 var ICONS_GROUP
 
 ; Installer pages
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "C:\Users\Javi\Documents\QT\MEGASync\terms.txt"
+!insertmacro MUI_PAGE_LICENSE "installer\terms.txt"
 !insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -142,8 +140,8 @@ Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "MEGAsyncSetup.exe"
 InstallDir "$PROGRAMFILES\MEGAsync"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
-ShowInstDetails show
-ShowUnInstDetails show
+ShowInstDetails nevershow
+ShowUnInstDetails nevershow
 
 Function RunFunction
   ;Exec '"$WINDIR\explorer.exe" "$INSTDIR\MEGASync.exe"'
@@ -207,6 +205,14 @@ Section "Principal" SEC01
            Abort
            dlok1:
 
+           md5dll::GetMD5File "$INSTDIR\vcredist_x86.exe"
+           Pop $0
+           ;DetailPrint "md5: [$0]"
+           StrCmp $0 "cede02d7af62449a2c38c49abecc0cd3" md5x32ok
+                  MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Corrupt download, aborting!"
+                  Abort
+           md5x32ok:
+           
            ;File "vcredist_x86.exe"
            ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
            Delete "$INSTDIR\vcredist_x86.exe"
@@ -229,9 +235,14 @@ Section "Principal" SEC01
                 StrCmp $0 "OK" dlok2
                 Abort
                 dlok2:
-                 ;File "vcredist_x64.exe"
-                 md5dll::GetMD5File "${NSISDIR}\vcredist_x64.exe"
-                 Pop $0
+                 
+                md5dll::GetMD5File "$INSTDIR\vcredist_x64.exe"
+                Pop $0
+                ;DetailPrint "md5: [$0]"
+                StrCmp $0 "cbe0b05c11d5d523c2af997d737c137b" md5x64ok
+                       MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Corrupt download, aborting!"
+                       Abort
+                md5x64ok:
                  
                  
                  ExecWait '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /q'
@@ -239,6 +250,8 @@ Section "Principal" SEC01
         VSRedist2010x64Installed:
         SetRegView 32
   ${EndIf}
+
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
   
   ;x86_32 files
   File "${SRCDIR_MEGASYNC_X32}\pthreadVC2.dll"

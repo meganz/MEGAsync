@@ -16,10 +16,11 @@ RecentFile::~RecentFile()
     delete ui;
 }
 
-void RecentFile::setFile(QString fileName, long long fileHandle)
+void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath)
 {
     this->fileName = fileName;
 	this->fileHandle = fileHandle;
+	this->localPath = localPath;
 	this->dateTime = QDateTime::currentDateTime();
 }
 
@@ -65,4 +66,30 @@ void RecentFile::updateWidget()
 void RecentFile::on_pArrow_clicked()
 {
 	((MegaApplication*)qApp)->copyFileLink(fileHandle);
+}
+
+void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
+{
+	QMenu menu;
+	menu.addAction(tr("Open"), this, SLOT(openFile()));
+	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+	menu.exec(this->mapToGlobal(pos));
+}
+
+void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
+{
+	QMenu menu;
+	menu.addAction(tr("Open"), this, SLOT(openFile()));
+	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+	menu.exec(this->mapToGlobal(pos));
+}
+
+void RecentFile::showInFolder()
+{
+	WindowsUtils::showInFolder(localPath);
+}
+
+void RecentFile::openFile()
+{
+	QDesktopServices::openUrl(QUrl::fromLocalFile(localPath));
 }

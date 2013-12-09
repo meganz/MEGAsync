@@ -157,76 +157,93 @@ void CommandAttachFA::procresult()
 }
 
 // request upload target URL
-CommandPutFile::CommandPutFile(TransferSlot* cts, int ms)
+CommandPutFile::CommandPutFile(TransferSlot* ctslot, int ms)
 {
-	ts = cts;
+	tslot = ctslot;
 
 	cmd("u");
-	arg("s",ts->file->size);
+	arg("s",tslot->file->size);
 	arg("ms",ms);
 }
 
 // set up file transfer with returned target URL
 void CommandPutFile::procresult()
 {
-	ts->pendingcmd = NULL;
+	tslot->pendingcmd = NULL;
 	if (canceled) return;
 
-	if (client->json.isnumeric()) return ts->transfer->failed((error)client->json.getint());
+	if (client->json.isnumeric()) return tslot->transfer->failed((error)client->json.getint());
 
 	for (;;)
 	{
 		switch (client->json.getnameid())
 		{
 			case 'p':
-				client->json.storeobject(&ts->tempurl);
+				client->json.storeobject(&tslot->tempurl);
 				break;
 
 			case EOO:
-				if (ts->tempurl.size())
+				if (tslot->tempurl.size())
 				{
-					ts->starttime = ts->lastdata = client->waiter->ds;
-					return ts->progress();
+					tslot->starttime = tslot->lastdata = client->waiter->ds;
+					return tslot->progress();
 				}
-				else return ts->transfer->failed(API_EINTERNAL);
+				else return tslot->transfer->failed(API_EINTERNAL);
 
 			default:
-				if (!client->json.storeobject()) return ts->transfer->failed(API_EINTERNAL);
+				if (!client->json.storeobject()) return tslot->transfer->failed(API_EINTERNAL);
 		}
 	}
 }
 
 // request temporary source URL
 // p == private node
-CommandGetFile::CommandGetFile(TransferSlot* cts, handle h, int p)
+CommandGetFile::CommandGetFile(TransferSlot* ctslot, byte* key, handle h, bool p)
 {
 	cmd("g");
 	arg(p ? "n" : "p",(byte*)&h,MegaClient::NODEHANDLE);
 	arg("g",1);
 
-	ts = cts;
+	tslot = ctslot;
+
+	if (!tslot)
+	{
+		ph = h;
+		memcpy(filekey,key,FILENODEKEYLENGTH);
+	}
 }
 
-// decrypt returned attributes, open local file for writing and start transfer
+// process file credentials
 void CommandGetFile::procresult()
 {
-	ts->pendingcmd = NULL;
+	if (tslot) tslot->pendingcmd = NULL;
 	if (canceled) return;
 
-	if (client->json.isnumeric()) return ts->transfer->failed((error)client->json.getint());
+	if (client->json.isnumeric())
+	{
+		if (tslot) return tslot->transfer->failed((error)client->json.getint());
+		return client->app->checkfile_result(ph,(error)client->json.getint());
+	}
 
 	const char* at = NULL;
 	error e = API_EINTERNAL;
 	m_off_t s = -1;
 	int d = 0;
 	byte* buf;
+	time_t ts = 0, tm = 0;
+
+	// credentials relevant to a non-TransferSlot scenario (node query)
+	string fileattrstring;
+	string filenamestring;
+	string filefingerprint;
 
 	for (;;)
 	{
 		switch (client->json.getnameid())
 		{
 			case 'g':
-				client->json.storeobject(&ts->tempurl);
+				client->json.storeobject(tslot ? &tslot->tempurl : NULL);
+				e = API_OK;
 				break;
 
 			case 's':
@@ -237,16 +254,25 @@ void CommandGetFile::procresult()
 				d = 1;
 				break;
 
+			case MAKENAMEID2('t','s'):
+				ts = client->json.getint();
+				break;
+
+			case MAKENAMEID3('t','m','d'):
+				tm = ts+client->json.getint();
+				break;
+			
 			case MAKENAMEID2('a','t'):
 				at = client->json.getvalue();
 				break;
 
 			case MAKENAMEID2('f','a'):
-				client->json.storeobject(&ts->fileattrstring);
+				if (tslot) client->json.storeobject(&tslot->fileattrstring);
+				else client->json.storeobject(&fileattrstring);
 				break;
 
 			case MAKENAMEID3('p','f','a'):
-				ts->fileattrsmutable = (int)client->json.getint();
+				if (tslot) tslot->fileattrsmutable = (int)client->json.getint();
 				break;
 
 			case 'e':
@@ -254,54 +280,81 @@ void CommandGetFile::procresult()
 				break;
 
 			case EOO:
-				if (d) return ts->transfer->failed(API_EBLOCKED);
+				if (d || !at)
+				{
+					e = at ? API_EBLOCKED : API_EINTERNAL;
+
+					if (tslot) return tslot->transfer->failed(e);
+					return client->app->checkfile_result(ph,e);
+				}
 				else
 				{
-					if (ts->tempurl.size() && s >= 0)
+					// decrypt at and set filename
+					SymmCipher key;
+					const char* eos = strchr(at,'"');
+
+					key.setkey(filekey,FILENODE);
+
+					if ((buf = Node::decryptattr(tslot ? &tslot->transfer->key : &key,at,eos ? eos-at : strlen(at))))
 					{
-						// decrypt at and set filename
-						const char* eos = strchr(at,'"');
-						string tmpfilename;
+						JSON json;
 
-						if ((buf = Node::decryptattr(&ts->transfer->key,at,eos ? eos-at : strlen(at))))
+						json.begin((char*)buf+5);
+
+						for (;;)
 						{
-							JSON json;
-
-							json.begin((char*)buf+5);
-
-							for (;;)
+							switch (json.getnameid())
 							{
-								switch (json.getnameid())
-								{
-									case 'n':
-										if (!json.storeobject(&tmpfilename))
-										{
-											delete[] buf;
-											return ts->transfer->failed(API_EINTERNAL);
-										}
-										break;
-
-									case EOO:
+								case 'c':
+									if (!json.storeobject(&filefingerprint))
+									{
 										delete[] buf;
-										ts->starttime = ts->lastdata = client->waiter->ds;
-										return ts->progress();
+										if (tslot) return tslot->transfer->failed(API_EINTERNAL);
+										return client->app->checkfile_result(ph,API_EINTERNAL);
+									}
+									break;
 
-									default:
-										if (!json.storeobject())
-										{
-											delete[] buf;
-											return ts->transfer->failed(API_EINTERNAL);
-										}
-								}
+								case 'n':
+									if (!json.storeobject(&filenamestring))
+									{
+										delete[] buf;
+										if (tslot) return tslot->transfer->failed(API_EINTERNAL);
+										return client->app->checkfile_result(ph,API_EINTERNAL);
+									}
+									break;
+
+								case EOO:
+									delete[] buf;
+
+									if (tslot)
+									{
+										tslot->starttime = tslot->lastdata = client->waiter->ds;
+										if (tslot->tempurl.size() && s >= 0) return tslot->progress();
+										return tslot->transfer->failed(e);
+									}
+									else return client->app->checkfile_result(ph,e,filekey,s,ts,tm,&filenamestring,&filefingerprint,&fileattrstring);
+
+								default:
+									if (!json.storeobject())
+									{
+										delete[] buf;
+										if (tslot) return tslot->transfer->failed(API_EINTERNAL);
+										else return client->app->checkfile_result(ph,API_EINTERNAL);
+									}
 							}
 						}
 					}
+
+					if (tslot) return tslot->transfer->failed(API_EKEY);
+					else return client->app->checkfile_result(ph,API_EKEY);
 				}
 
-				return ts->transfer->failed(e);
-
 			default:
-				if (!client->json.storeobject()) return ts->transfer->failed(API_EINTERNAL);
+				if (!client->json.storeobject())
+				{
+					if (tslot) return tslot->transfer->failed(API_EINTERNAL);
+					else return client->app->checkfile_result(ph,API_EINTERNAL);
+				}
 		}
 	}
 }
@@ -336,7 +389,7 @@ void CommandSetAttr::procresult()
 // (the result is not processed directly - we rely on the server-client response)
 CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* userhandle, NewNode* newnodes, int numnodes, int ctag, putsource csource)
 {
-	byte key[Node::FILENODEKEYLENGTH];
+	byte key[FILENODEKEYLENGTH];
 	int i;
 
 	nn = newnodes;
@@ -984,7 +1037,7 @@ void CommandGetUA::procresult()
 // set node keys (e.g. to convert asymmetric keys to symmetric ones)
 CommandNodeKeyUpdate::CommandNodeKeyUpdate(MegaClient* client, handle_vector* v)
 {
-	byte nodekey[Node::FILENODEKEYLENGTH];
+	byte nodekey[FILENODEKEYLENGTH];
 
 	cmd("k");
 	beginarray("nk");
@@ -1410,7 +1463,7 @@ void CommandSetPH::procresult()
 	client->app->exportnode_result(h,ph);
 }
 
-CommandGetPH::CommandGetPH(MegaClient* client, handle cph, const byte* ckey)
+CommandGetPH::CommandGetPH(MegaClient* client, handle cph, const byte* ckey, int cop)
 {
 	cmd("g");
 	arg("p",(byte*)&cph,MegaClient::NODEHANDLE);
@@ -1418,6 +1471,7 @@ CommandGetPH::CommandGetPH(MegaClient* client, handle cph, const byte* ckey)
 	ph = cph;
 	memcpy(key,ckey,sizeof key);
 	tag = client->reqtag;
+	op = cop;
 }
 
 void CommandGetPH::procresult()
@@ -1457,7 +1511,7 @@ void CommandGetPH::procresult()
 				if (s >= 0)
 				{
 					a.resize(Base64::atob(a.c_str(),(byte*)a.data(),a.size()));
-					client->app->openfilelink_result(ph,key,s,&a,fa.c_str(),ts,tm);
+					client->app->openfilelink_result(ph,key,s,&a,fa.c_str(),ts,tm,op);
 				}
 				else client->app->openfilelink_result(API_EINTERNAL);
 				return;
@@ -1736,7 +1790,7 @@ void CommandMoveSyncDebris::procresult()
 
 	if ((it = client->newsyncdebris.find(h)) != client->newsyncdebris.end())
 	{
-		if (it->second == 3) ok = true;	// give up
+		if (it->second >= 6) ok = true;	// give up
 		else it->second++;
 
 		if (ok) client->newsyncdebris.erase(it);

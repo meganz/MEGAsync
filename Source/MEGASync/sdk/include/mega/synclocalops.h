@@ -1,6 +1,6 @@
 /**
- * @file mega/win32/megasys.h
- * @brief Mega SDK platform-specific includes (Win32)
+ * @file mega/synclocalops.h
+ * @brief Various sync-related local filesystem operations
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
  *
@@ -19,27 +19,31 @@
  * program.
  */
 
-#ifndef MEGA_WIN32_OS_H
-#define MEGA_WIN32_OS_H 1
+#ifndef MEGA_LOCALSYNCOPS_H
+#define MEGA_LOCALSYNCOPS_H 1
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <errno.h>
-#include <assert.h>
-#include <memory.h>
-#include <time.h>
+#include "types.h"
+#include "megaclient.h"
 
-#include <winsock2.h>
-#include <windows.h>
-#define atoll _atoi64
-#define snprintf _snprintf
-#define _CRT_SECURE_NO_WARNINGS
+namespace mega {
 
-// XXX: move to auto-generated file
-#define MEGA_MAJOR_VERSION 0
-#define MEGA_MINOR_VERSION 2
-#define MEGA_MICRO_VERSION 3
+// local file/folder rename/deletion
+class SyncLocalOp
+{
+protected:
+	MegaClient* client;
+	nodetype type;
+	string to;
 
+public:
+	string from;
+
+	bool recurse(nodetype, string*, string*);
+	bool exec();
+
+	SyncLocalOp(MegaClient*, nodetype, string*, string* = NULL);
+};
+
+} // namespace
 
 #endif

@@ -22,8 +22,8 @@
 #ifndef MEGA_TRANSFER_H
 #define MEGA_TRANSFER_H 1
 
-#include "backofftimer.h"
 #include "node.h"
+#include "backofftimer.h"
 
 namespace mega {
 
@@ -46,9 +46,9 @@ struct Transfer : public FileFingerprint
 	// representative local filename for this transfer
 	string localfilename;
 
-	m_off_t pos, size;
+	m_off_t pos;
 
-	byte filekey[Node::FILENODEKEYLENGTH];
+	byte filekey[FILENODEKEYLENGTH];
 
 	// CTR mode IV
 	int64_t ctriv;
@@ -75,7 +75,7 @@ struct Transfer : public FileFingerprint
 
 	// backlink to base
 	MegaClient* client;
-
+	int tag;
 	Transfer(MegaClient*, direction);
 	virtual ~Transfer();
 };
