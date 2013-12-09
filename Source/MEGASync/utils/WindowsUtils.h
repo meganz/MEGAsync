@@ -117,15 +117,10 @@ public:
 	static QHash<QString, QString> extensionIcons;
     static void initialize();
     static boolean enableIcon(QString &executable);
-    static void notifyNewFolder(QString &path);
-    static void notifyFolderContentsChange(QString &path);
-    static void notifyFolderDeleted(QString &path);
-    static void notifyNewFile(QString &path);
-    static void notifyFileDeleted(QString &path);
     static void notifyItemChange(QString &path);
-    static void notifyAttributeChange(QString &path);
     static bool startOnStartup(bool value);
 	static void showInFolder(QString pathIn);
+	static void countFilesAndFolders(QString path, long *numFiles, long *numFolders);
 };
 
 

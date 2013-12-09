@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTimer>
 #include <QProcess>
+#include <QDateTime>
 
 #include "SettingsDialog.h"
 
@@ -59,7 +60,7 @@ protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
 	void showPopup(QPoint globalpos, bool download);
 	void updateRecentFiles();
-
+	QDateTime lastPopupUpdate;
     QTimer *timer;
     MegaApplication *app;
 };

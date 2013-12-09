@@ -16,8 +16,7 @@ public:
     ~ActiveTransfer();
 
     void setFileName(QString fileName);
-    void setPercentage(int percentage);
-    int getPercentage();
+	void setProgress(long long completedSize, long long totalSize);
     void setType(int type);
 	void hideTransfer();
 
@@ -26,7 +25,6 @@ private:
 
 protected:
     QString fileName;
-    int percentage;
     int type;
 };
 

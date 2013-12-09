@@ -202,6 +202,7 @@ Section "Principal" SEC01
            inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)" "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe" "$INSTDIR\vcredist_x86.exe" /end
            pop $0
            StrCmp $0 "OK" dlok1
+           MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Incomplete download, aborting!"
            Abort
            dlok1:
 
@@ -233,6 +234,7 @@ Section "Principal" SEC01
                 inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
                 pop $0
                 StrCmp $0 "OK" dlok2
+                MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Incomplete download, aborting!"
                 Abort
                 dlok2:
                  
