@@ -191,7 +191,7 @@ struct LocalNode : public File
 	void* notifyhandle;
 
 	// build full local path to this node
-	void getlocalpath(MegaClient*, string*);
+	void getlocalpath(string*);
 
 	void prepare();
 	void completed(Transfer*, LocalNode*);

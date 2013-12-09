@@ -40,8 +40,8 @@ Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode, int ctag)
 	localroot.init(this,crootpath,FOLDERNODE,NULL,crootpath);
 	localroot.setnode(remotenode);
 
-	queuescan(NULL,NULL,NULL,NULL,true);
-	procscanq();
+	queuescan(MAIN,NULL,NULL,NULL,NULL,true);
+	procscanq(MAIN);
 
 	sync_it = client->syncs.insert(client->syncs.end(),this);
 }
@@ -141,7 +141,7 @@ LocalNode* Sync::queuefsrecord(string* localpath, string* localname, LocalNode* 
 	if (client->app->sync_syncable(name.c_str(),localpath,localname))
 	{
 		l = (it = parent->children.find(localname)) != parent->children.end() ? it->second : NULL;
-		queuescan(localpath,localname,l,parent,fulltree);
+		queuescan(MAIN,localpath,localname,l,parent,fulltree);
 
 		return l;
 	}
@@ -149,12 +149,12 @@ LocalNode* Sync::queuefsrecord(string* localpath, string* localname, LocalNode* 
 	return NULL;
 }
 
-void Sync::queuescan(string* localpath, string* localname, LocalNode* localnode, LocalNode* parent, bool fulltree)
+void Sync::queuescan(int q, string* localpath, string* localname, LocalNode* localnode, LocalNode* parent, bool fulltree)
 {
 	// FIXME: efficient copy-free push_back? C++11 emplace()?
-	scanq.resize(scanq.size()+1);
+	scanq[q].resize(scanq[q].size()+1);
 
-	ScanItem* si = &scanq.back();
+	ScanItem* si = &scanq[q].back();
 
 	// FIXME: don't create mass copies of localpath
 	if (localpath) si->localpath = *localpath;
@@ -167,14 +167,14 @@ void Sync::queuescan(string* localpath, string* localname, LocalNode* localnode,
 
 // add or refresh local filesystem item from scan stack, add items to scan stack
 // must be called with a scanq.siz() > 0
-void Sync::procscanq()
+void Sync::procscanq(int q)
 {
-	ScanItem* si = &*scanq.begin();
+	ScanItem* si = &*scanq[q].begin();
 
 	// ignore deleted ScanItems
 	if (si->deleted)
 	{
-		scanq.pop_front();
+		scanq[q].pop_front();
 		return;
 	}
 
@@ -269,7 +269,10 @@ void Sync::procscanq()
 		if (fa->retry)
 		{
 			// fopen() signals that the failure is potentially transient - do nothing, but request a recheck
-
+			localpath->resize(localpath->size()-client->fsaccess->localseparator.size()-localname->size());
+			queuescan(RETRY,localpath,localname,l,si->parent,true);
+			
+			l = NULL;	// make no changes yet
 		}
 		else if (l)
 		{
@@ -307,9 +310,9 @@ void Sync::procscanq()
 
 	delete fa;
 
-	scanq.pop_front();
+	scanq[q].pop_front();
 
-	if (scanq.size()) client->syncactivity = true;
+	if (scanq[q].size()) client->syncactivity = true;
 }
 
 } // namespace
