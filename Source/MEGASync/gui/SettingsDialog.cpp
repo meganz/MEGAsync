@@ -359,6 +359,18 @@ void SettingsDialog::on_bAdd_clicked()
         return;
 
    QString localFolderPath = dialog->getLocalFolder();
+   long numFiles = 0;
+   long numFolders = 0;
+   WindowsUtils::countFilesAndFolders(localFolderPath, &numFiles, &numFolders);
+   cout << "files: " << numFiles << "   folders: " << numFolders << endl;
+   if(numFolders > 500 || numFiles > 20000)
+   {
+	   QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (>500 folders, >20000 files).\n"
+													"Please, select another folder."), QMessageBox::Ok);
+	   return;
+   }
+
+
    long long handle = dialog->getMegaFolder();
    Node *node = megaApi->getNodeByHandle(handle);
    if(!localFolderPath.length() || !node)

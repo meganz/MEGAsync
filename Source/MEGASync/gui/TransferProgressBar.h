@@ -20,8 +20,6 @@ public:
 private:
     Ui::TransferProgressBar *ui;
 
-protected:
-    int progress;
 };
 
 #endif // TRANSFERPROGRESSBAR_H

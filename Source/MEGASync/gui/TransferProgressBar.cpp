@@ -13,9 +13,8 @@ TransferProgressBar::~TransferProgressBar()
     delete ui;
 }
 
-void TransferProgressBar::setProgress(int value)
+void TransferProgressBar::setProgress(int permil)
 {
-    if(value>100) value = 100;
-    this->progress = value;
-    ui->wProgress->resize(value*3.6, ui->wProgress->width());
+	if(permil>1000) permil = 1000;
+	ui->wProgress->resize(permil*0.36, ui->wProgress->width());
 }

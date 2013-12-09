@@ -1572,23 +1572,19 @@ void MegaApi::transfer_update(Transfer *tr)
 	if(tr->slot)
 	{				
 		transfer->setTime(tr->slot->lastdata);
+		transfer->setStartTime(tr->slot->starttime);
+		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
+		transfer->setTransferredBytes(tr->slot->progressreported);
+		transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
+		transfer->setUpdateTime(waiter->getdstime());
 
-		if(transfer->getTransferredBytes() != tr->slot->progresscompleted)
-		{
-			transfer->setStartTime(tr->slot->starttime);
-			transfer->setDeltaSize(tr->slot->progresscompleted - transfer->getTransferredBytes());
-			transfer->setTransferredBytes(tr->slot->progresscompleted);
-			transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
-			transfer->setUpdateTime(waiter->getdstime());
-
-			string th;
-			if (tr->type == GET) th = "TD ";
-			else th = "TU ";
-			cout << th << transfer->getFileName() << ": Update: " << transfer->getTransferredBytes()/1024 << " KB of "
-				 << transfer->getTotalBytes()/1024 << " KB, " << transfer->getTransferredBytes()*10/(1024*(waiter->getdstime()-transfer->getStartTime())+1) << " KB/s" << endl;
-			fireOnTransferUpdate(this, transfer);
-			WindowsUtils::notifyItemChange(QString(transfer->getPath()));
-		}
+		string th;
+		if (tr->type == GET) th = "TD ";
+		else th = "TU ";
+		cout << th << transfer->getFileName() << ": Update: " << transfer->getTransferredBytes()/1024 << " KB of "
+			 << transfer->getTotalBytes()/1024 << " KB, " << transfer->getTransferredBytes()*10/(1024*(waiter->getdstime()-transfer->getStartTime())+1) << " KB/s" << endl;
+		fireOnTransferUpdate(this, transfer);
+		WindowsUtils::notifyItemChange(QString(transfer->getPath()));
 	}
 }
 
@@ -1630,8 +1626,8 @@ void MegaApi::transfer_complete(Transfer* tr)
 		transfer->setStartTime(tr->slot->starttime);
 		transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
 		transfer->setTime(tr->slot->lastdata);
-		transfer->setDeltaSize(tr->slot->progresscompleted - transfer->getTransferredBytes());
-		transfer->setTransferredBytes(tr->slot->progresscompleted);
+		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
+		transfer->setTransferredBytes(tr->slot->progressreported);
 	}
 
 	string tmpPath;
@@ -1716,7 +1712,6 @@ void MegaApi::syncupdate_local_folder_addition(Sync *, const char *s)
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 {
 	cout << "syncupdate_local_folder_deletion: " << s << endl;
-	WindowsUtils::notifyFolderDeleted(QString(s));
 }
 
 void MegaApi::syncupdate_local_file_addition(Sync *, const char *s)
@@ -1729,7 +1724,6 @@ void MegaApi::syncupdate_local_file_addition(Sync *, const char *s)
 void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
 {
 	cout << "syncupdate_local_file_deletion: " << s << endl;
-	WindowsUtils::notifyFileDeleted(QString(s));
 }
 
 void MegaApi::syncupdate_get(Sync *, const char *s)
@@ -1777,6 +1771,20 @@ void MegaApi::syncupdate_remote_copy(Sync *, const char *s)
 void MegaApi::syncupdate_remote_move(string *a, string *b)
 {
 	cout << "syncupdate_remote_move: " << a << " -> " << b << endl;
+}
+
+bool MegaApi::sync_syncable(Node *node)
+{
+	QString name = QString::fromUtf8(node->displayname());
+	if(!name.compare("Thumbs.db")) return false;
+	return true;
+}
+
+bool MegaApi::sync_syncable(const char *fileName, string *, string *)
+{
+	QString name = QString::fromUtf8(fileName);
+	if(!name.compare("Thumbs.db")) return false;
+	return true;
 }
 
 

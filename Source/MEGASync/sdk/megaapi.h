@@ -884,6 +884,9 @@ protected:
 	virtual void syncupdate_remote_copy(Sync*, const char*);
 	virtual void syncupdate_remote_move(string*, string*);
 
+	virtual bool sync_syncable(Node*);
+	virtual bool sync_syncable(const char*, string*, string*);
+
     // suggest reload due to possible race condition with other clients
 	virtual void reload(const char*);
 

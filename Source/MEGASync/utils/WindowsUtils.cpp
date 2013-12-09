@@ -131,60 +131,12 @@ boolean WindowsUtils::enableIcon(QString &executable)
     return true;
 }
 
-void WindowsUtils::notifyNewFolder(QString &path)
-{
-	wchar_t windowsPath[MAX_PATH];
-	int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
-	SHChangeNotify(SHCNE_MKDIR, SHCNF_IDLIST, windowsPath, NULL);
-}
-
-void WindowsUtils::notifyFolderContentsChange(QString &path)
-{
-	wchar_t windowsPath[MAX_PATH];
-	int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
-	SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_IDLIST, windowsPath, NULL);
-}
-
-void WindowsUtils::notifyFolderDeleted(QString &path)
-{
-	wchar_t windowsPath[MAX_PATH];
-	int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
-	SHChangeNotify(SHCNE_RMDIR, SHCNF_IDLIST, windowsPath, NULL);
-}
-
-void WindowsUtils::notifyNewFile(QString &path)
-{
-	wchar_t windowsPath[MAX_PATH];
-	int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
-	SHChangeNotify(SHCNE_CREATE, SHCNF_PATH, windowsPath, NULL);
-}
-
-void WindowsUtils::notifyFileDeleted(QString &path)
-{
-	wchar_t windowsPath[MAX_PATH];
-	int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
-	SHChangeNotify(SHCNE_DELETE, SHCNF_PATH, windowsPath, NULL);
-}
-
 void WindowsUtils::notifyItemChange(QString &path)
 {
 	wchar_t windowsPath[MAX_PATH];
 	int len = path.toWCharArray(windowsPath);
 	windowsPath[len]=L'\0';
 	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
-}
-
-void WindowsUtils::notifyAttributeChange(QString &path)
-{
-	wchar_t windowsPath[MAX_PATH];
-	int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
-	SHChangeNotify(SHCNE_ATTRIBUTES, SHCNF_PATH, windowsPath, NULL);
 }
 
 #include <QDebug>
@@ -425,7 +377,27 @@ void WindowsUtils::showInFolder(QString pathIn)
 		success = success && error.isEmpty();
 		if (!success)
 			showGraphicalShellError(parent, app, error);
-	#endif
+#endif
+}
+
+void WindowsUtils::countFilesAndFolders(QString path, long *numFiles, long *numFolders)
+{
+	QFileInfo baseDir(path);
+	if(!baseDir.exists() || !baseDir.isDir()) return;
+	if(((*numFolders) > 500) || ((*numFiles) > 20000)) return;
+
+	QDir dir(path);
+	QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+	for(int i=0; i<entries.size(); i++)
+	{
+		QFileInfo info = entries[i];
+		if(info.isFile()) (*numFiles)++;
+		else if(info.isDir())
+		{
+			countFilesAndFolders(info.absoluteFilePath(), numFiles, numFolders);
+			(*numFolders)++;
+		}
+	}
 }
 
 

@@ -95,8 +95,7 @@ void InfoDialog::setTransfer(int type, QString &fileName, long long completedSiz
        transfer = ui->wTransfer2;
 
     transfer->setFileName(fileName);
-    int percentage = 100*(double)completedSize/totalSize;
-    transfer->setPercentage(percentage);
+	transfer->setProgress(completedSize, totalSize);
 
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
@@ -313,9 +312,13 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
 
 void InfoDialog::showPopup(QPoint globalpos, bool download)
 {
-	static int mb = 500;
-	mb++;
+	if(lastPopupUpdate.isNull()) lastPopupUpdate = QDateTime::currentDateTime();
 
+	QDateTime now = QDateTime::currentDateTime();
+	if(lastPopupUpdate.secsTo(now)<1) return;
+	lastPopupUpdate = now;
+
+	cout << "SHOW POPUP " << lastPopupUpdate.secsTo(now) << endl;
 
 	QString operation;
 	QString xOfxFilesPattern(tr("%1 of %2 files at %3/s"));

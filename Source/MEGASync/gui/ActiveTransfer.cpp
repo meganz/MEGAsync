@@ -7,7 +7,6 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
 {
     ui->setupUi(this);
     fileName = "";
-    percentage = 100;
     ui->lType->setPixmap(QPixmap());
     ui->lPercentage->setText(QString());
     ui->pProgress->hide();
@@ -27,19 +26,13 @@ void ActiveTransfer::setFileName(QString fileName)
 	ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 }
 
-void ActiveTransfer::setPercentage(int percentage)
+void ActiveTransfer::setProgress(long long completedSize, long long totalSize)
 {
-    if(percentage > 100) percentage = 100;
-    this->percentage = percentage;
-    ui->pProgress->setProgress(percentage);
-    ui->lPercentage->setText(QString::number(percentage) + "%");
+	int permil = (1000*completedSize)/totalSize;
+	ui->pProgress->setProgress(permil);
+	ui->lPercentage->setText(QString::number(permil/10) + "%");
     ui->pProgress->show();
     ui->lType->show();
-}
-
-int ActiveTransfer::getPercentage()
-{
-    return percentage;
 }
 
 void ActiveTransfer::setType(int type)
