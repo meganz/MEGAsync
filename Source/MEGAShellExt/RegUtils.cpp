@@ -1,6 +1,125 @@
 #include "RegUtils.h"
 #include <strsafe.h>
 
+
+//*************************************************************
+//
+//  RegDelnodeRecurse()
+//
+//  Purpose:    Deletes a registry key and all its subkeys / values.
+//
+//  Parameters: hKeyRoot    -   Root key
+//              lpSubKey    -   SubKey to delete
+//
+//  Return:     TRUE if successful.
+//              FALSE if an error occurs.
+//
+//*************************************************************
+
+BOOL RegDelNodeRecurse (HKEY hKeyRoot, LPTSTR lpSubKey)
+{
+	LPTSTR lpEnd;
+	LONG lResult;
+	DWORD dwSize;
+	TCHAR szName[MAX_PATH];
+	HKEY hKey;
+	FILETIME ftWrite;
+
+	// First, see if we can delete the key without having
+	// to recurse.
+
+	lResult = RegDeleteKey(hKeyRoot, lpSubKey);
+
+	if (lResult == ERROR_SUCCESS)
+		return TRUE;
+
+	lResult = RegOpenKeyEx (hKeyRoot, lpSubKey, 0, KEY_READ, &hKey);
+
+	if (lResult != ERROR_SUCCESS)
+	{
+		if (lResult == ERROR_FILE_NOT_FOUND) {
+			printf("Key not found.\n");
+			return TRUE;
+		}
+		else {
+			printf("Error opening key.\n");
+			return FALSE;
+		}
+	}
+
+	// Check for an ending slash and add one if it is missing.
+
+	lpEnd = lpSubKey + lstrlen(lpSubKey);
+
+	if (*(lpEnd - 1) != TEXT('\\'))
+	{
+		*lpEnd =  TEXT('\\');
+		lpEnd++;
+		*lpEnd =  TEXT('\0');
+	}
+
+	// Enumerate the keys
+
+	dwSize = MAX_PATH;
+	lResult = RegEnumKeyEx(hKey, 0, szName, &dwSize, NULL,
+						   NULL, NULL, &ftWrite);
+
+	if (lResult == ERROR_SUCCESS)
+	{
+		do {
+
+			StringCchCopy (lpEnd, MAX_PATH*2, szName);
+
+			if (!RegDelNodeRecurse(hKeyRoot, lpSubKey)) {
+				break;
+			}
+
+			dwSize = MAX_PATH;
+
+			lResult = RegEnumKeyEx(hKey, 0, szName, &dwSize, NULL,
+								   NULL, NULL, &ftWrite);
+
+		} while (lResult == ERROR_SUCCESS);
+	}
+
+	lpEnd--;
+	*lpEnd = TEXT('\0');
+
+	RegCloseKey (hKey);
+
+	// Try again to delete the key.
+
+	lResult = RegDeleteKey(hKeyRoot, lpSubKey);
+
+	if (lResult == ERROR_SUCCESS)
+		return TRUE;
+
+	return FALSE;
+}
+
+//*************************************************************
+//
+//  RegDelnode()
+//
+//  Purpose:    Deletes a registry key and all its subkeys / values.
+//
+//  Parameters: hKeyRoot    -   Root key
+//              lpSubKey    -   SubKey to delete
+//
+//  Return:     TRUE if successful.
+//              FALSE if an error occurs.
+//
+//*************************************************************
+
+BOOL RegDelNode (HKEY hKeyRoot, LPTSTR lpSubKey)
+{
+	TCHAR szDelKey[MAX_PATH*2];
+
+	StringCchCopy (szDelKey, MAX_PATH*2, lpSubKey);
+	return RegDelNodeRecurse(hKeyRoot, szDelKey);
+
+}
+
 HRESULT SetRegistryKeyAndValue(HKEY  hkey, PCWSTR pszSubKey, PCWSTR pszValueName,
     PCWSTR pszData)
 {
@@ -105,10 +224,7 @@ HRESULT UnregisterInprocServer(const CLSID& clsid)
     wchar_t szSubkey[MAX_PATH];
 
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey), L"CLSID\\%s", szCLSID);
-    if (SUCCEEDED(hr))
-    {
-        hr = HRESULT_FROM_WIN32(RegDeleteTree(HKEY_CLASSES_ROOT, szSubkey));
-    }
+	if (SUCCEEDED(hr)) RegDelNode(HKEY_CLASSES_ROOT, szSubkey);
 
     return hr;
 }
@@ -227,7 +343,7 @@ HRESULT UnregisterShellExtContextMenuHandler(
         L"%s\\shellex\\ContextMenuHandlers\\%s", pszFileType, pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
     
-    hr = HRESULT_FROM_WIN32(RegDeleteTree(HKEY_CLASSES_ROOT, szSubkey));
+	RegDelNode(HKEY_CLASSES_ROOT, szSubkey);
     return hr;
 }
 
@@ -242,10 +358,7 @@ HRESULT UnregisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName
 	hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey),
         L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers\\%s", pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
-
-    hr = HRESULT_FROM_WIN32(RegDeleteTree(HKEY_LOCAL_MACHINE, szSubkey));
-    if (!SUCCEEDED(hr)) return hr;
-
+	RegDelNode(HKEY_LOCAL_MACHINE, szSubkey);
 
 	HKEY hkey;
 	hr = RegOpenKey(HKEY_LOCAL_MACHINE,
