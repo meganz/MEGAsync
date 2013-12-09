@@ -23,7 +23,7 @@ public:
     void startAnimation();
 	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
     void setTransfer(int type, QString &fileName, long long completedSize, long long totalSize);
-	void addRecentFile(QString &fileName, long long fileHandle);
+	void addRecentFile(QString &fileName, long long fileHandle, QString localPath);
 	void setTransferCount(int totalDownloads, int totalUploads, int remainingDownloads, int remainingUploads);
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
@@ -40,6 +40,8 @@ private slots:
     void on_bOfficialWeb_clicked();
 
     void on_bSyncFolder_clicked();
+
+	void openFolder(QString path);
 
 private:
     Ui::InfoDialog *ui;

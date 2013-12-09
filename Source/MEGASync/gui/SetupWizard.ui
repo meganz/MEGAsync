@@ -29,7 +29,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Setup Wizard - MEGASync</string>
+   <string>Setup Wizard - MEGAsync</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#sPages

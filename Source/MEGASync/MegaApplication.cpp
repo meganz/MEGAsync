@@ -4,6 +4,7 @@
 
 #include <QClipboard>
 
+
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
@@ -114,13 +115,10 @@ void MegaApplication::startSyncs()
 
 void MegaApplication::stopSyncs()
 {
-	int i = 0;
 	sync_list *syncs = megaApi->getActiveSyncs();
-	for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
-	{
-		delete *it;
-		cout << "Sync " << i << " removed." << endl;
-	}
+	sync_list::iterator it = syncs->begin();
+	while(it != syncs->end())
+		delete *it++;
 }
 
 void MegaApplication::processUploadQueue(handle nodeHandle)
@@ -137,7 +135,8 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 	while(!uploadQueue.isEmpty())
 	{
 		QString filePath = uploadQueue.dequeue();
-		filePath.replace('/', '\\');
+		if(!QFileInfo(filePath).isFile()) continue;
+		filePath = QDir::toNativeSeparators(filePath);
 		cout << "Starting upload for " << filePath.toStdString() << endl;
 		megaApi->startUpload(filePath.toUtf8().constData(), node);
 	}
@@ -412,7 +411,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 			QString linkForClipboard(request->getLink());
 			QClipboard *clipboard = QApplication::clipboard();
 			clipboard->setText(linkForClipboard);
-			trayIcon->showMessage(tr("MegaSync"), tr("The link has been copied to the clipboard"));
+			trayIcon->showMessage(tr("MEGAsync"), tr("The link has been copied to the clipboard"));
 			linkForClipboard.clear();
 		}
 		break;
@@ -500,20 +499,21 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 		queuedDownloads--;
 		totalDownloadedSize += transfer->getDeltaSize();
 		downloadSpeed = transfer->getSpeed();
-		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
+		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle(), transfer->getPath());
 	}
 	else
 	{
 		queuedUploads--;
 		totalUploadedSize += transfer->getDeltaSize();
 		uploadSpeed = transfer->getSpeed();
+		uploadLocalPaths[transfer->getTag()]=transfer->getPath();
 	}
 
-	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
 	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName())
 							,transfer->getTransferredBytes(), transfer->getTotalBytes());
+	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
 	infoDialog->updateDialog();
 
 	if(queuedDownloads || queuedUploads)
@@ -532,12 +532,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-	if((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) &&
-			(transfer->getTransferredBytes() == transfer->getTotalBytes()))
-	{
-		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle());
-		cout << "Download finished" << endl;
-	}
 	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
 						transfer->getTransferredBytes(), transfer->getTotalBytes());
 
@@ -574,11 +568,42 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
-		if(node->type==FILENODE && !node->removed /*&& node->tag*/ && !node->syncdeleted)
+		if(node->type==FILENODE && !node->removed && node->tag && !node->syncdeleted)
 		{
 			cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " <<
 					node->tag << endl;
-			infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle);
+			QString localPath;
+
+
+			if(node->localnode)
+			{
+				cout << "Sync upload" << endl;
+				string localseparator;
+				localseparator.assign((char*)L"\\",sizeof(wchar_t));
+				string path;
+				LocalNode* l = node->localnode;
+				while (l)
+				{
+					path.insert(0,l->localname);
+					if ((l = l->parent)) path.insert(0, localseparator);
+				}
+				path.append("", 1);
+				localPath = QString::fromWCharArray((const wchar_t *)path.data());
+				cout << "Sync path: " << localPath.toStdString() << endl;
+			}
+			else if(uploadLocalPaths.contains(node->tag))
+			{
+				localPath = uploadLocalPaths.value(node->tag);
+				uploadLocalPaths.remove(node->tag);
+				cout << "Local upload: " << localPath.toStdString() << endl;
+			}
+			else
+			{
+				cout << "LOCAL PATH NOT FOUND" << endl;
+			}
+
+			WindowsUtils::notifyItemChange(localPath);
+			infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle, localPath);
 		}
 	}
 	infoDialog->updateDialog();

@@ -52,9 +52,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 		#endif
 		defaultFolder.mkpath(".");
 		defaultFolderPath = defaultFolder.absolutePath();
-		#ifdef WIN32
-			defaultFolderPath = defaultFolderPath.replace("/","\\");
-		#endif
+		defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
 	}
 	else defaultFolderPath = preferences->downloadFolder();
 	ui->eLocalFolder->setText(defaultFolderPath);

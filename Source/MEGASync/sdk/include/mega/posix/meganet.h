@@ -1,5 +1,5 @@
 /**
- * @file mega/posix/net.h
+ * @file mega/posix/meganet.h
  * @brief POSIX network access layer (using cURL)
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand

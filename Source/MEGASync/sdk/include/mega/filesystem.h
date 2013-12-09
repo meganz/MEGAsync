@@ -98,9 +98,6 @@ struct FileSystemAccess : public EventTrigger
 	// generate local temporary file name
 	virtual void tmpnamelocal(string*, string* = NULL) = 0;
 
-	// check if local file/name is to be treated as hidden
-	virtual bool localhidden(string*, string*) = 0;
-
 	// rename file, overwrite target
 	virtual bool renamelocal(string*, string*) = 0;
 
@@ -132,11 +129,17 @@ struct FileSystemAccess : public EventTrigger
 	virtual void delnotify(LocalNode*) = 0;
 
 	// return next notified local name and corresponding parent node
-	virtual bool notifynext(sync_list*, string*, LocalNode**) = 0;
+	virtual bool notifynext(sync_list*, string*, LocalNode**, bool*) = 0;
 
 	// true if notifications were unreliable and/or a full rescan is required
 	virtual bool notifyfailed() = 0;
+	
+	// set whenever an operation fails due to a transient condition (e.g. locking violation)
+	bool transient_error;
 
+	// set whenever an operation fails because the target already exists
+	bool target_exists;
+	
 	virtual ~FileSystemAccess() { }
 };
 

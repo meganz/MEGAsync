@@ -107,18 +107,6 @@ void SymmCipher::setint64(int64_t value, byte* data)
 	memcpy(data,(char*)&value,sizeof value);
 }
 
-int64_t SymmCipher::getint64(const byte* data)
-{
-#if __BYTE_ORDER == __LITTLE_ENDIAN
-	return htobe64(*(int64_t*)data);
-#else
-#if __BYTE_ORDER != __BIG_ENDIAN
-#error "Unknown or unsupported endianness"
-#endif
-#endif
-	return *(int64_t*)data;
-}
-
 void SymmCipher::xorblock(const byte* src, byte* dst)
 {
 	long* lsrc = (long*)src;

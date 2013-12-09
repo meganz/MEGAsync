@@ -93,16 +93,8 @@ struct MegaFileGet : public MegaFile
         delete this;
     }
 
-    MegaFileGet(MegaClient *client, Node* n)
-    {
-        h = n->nodehandle;
-        *(FileFingerprint*)this = *n;
-        name = n->displayname();
-		localname = name;
-		client->fsaccess->name2local(&localname);
-    }
-
-    ~MegaFileGet() {}
+	MegaFileGet(MegaClient *client, Node* n, string dstPath);
+	~MegaFileGet() {}
 };
 
 struct MegaFilePut : public MegaFile
@@ -336,6 +328,7 @@ class MegaTransfer
 		long long getSpeed() const;
 		long long getDeltaSize() const;
 		long long getUpdateTime() const;
+		void *getParameter() const;
 
 		void setStartTime(long long startTime);
 		void setTransferredBytes(long long transferredBytes);
@@ -359,6 +352,7 @@ class MegaTransfer
 		void setSpeed(long long speed);
 		void setDeltaSize(long long deltaSize);
 		void setUpdateTime(long long updateTime);
+		void setParameter(void *parameter);
 
 	protected:
 		int slot;
@@ -377,6 +371,7 @@ class MegaTransfer
 		const char* parentPath;
 		const char* fileName;
 		const char* base64Key;
+		void *parameter;
 
 		int numConnections;
 		long long startPos;
@@ -696,8 +691,8 @@ public:
 	void startDownload(Node* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
 	void startDownload(Node* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
 	void startDownload(Node* node, const char* localFolder, MegaTransferListener *listener);
-	void startPublicDownload(Node* node, const char* localFolder, MegaTransferListener *listener);
-	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener);
+	void startPublicDownload(Node* node, const char* localFolder, MegaTransferListener *listener = NULL);
+//	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
 
 //	void cancelTransfer(MegaTransfer *transfer);
 
@@ -847,7 +842,10 @@ protected:
     virtual void checkout_result(error) { }
     virtual void checkout_result(const char*) { }
 
-    // user invites/attributes
+	virtual void checkfile_result(handle h, error e);
+	virtual void checkfile_result(handle h, error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring);
+
+	// user invites/attributes
     virtual void invite_result(error);
     virtual void putua_result(error);
     virtual void getua_result(error);
@@ -859,7 +857,7 @@ protected:
 
     // exported link access result
 	virtual void openfilelink_result(error);
-	virtual void openfilelink_result(handle, const byte*, m_off_t, string*, const char*, time_t, time_t);
+	virtual void openfilelink_result(handle, const byte*, m_off_t, string*, const char*, time_t, time_t, int);
 
     // global transfer queue updates (separate signaling towards the queued objects)
     virtual void transfer_added(Transfer*);
@@ -870,21 +868,21 @@ protected:
     virtual void transfer_limit(Transfer*);
     virtual void transfer_complete(Transfer*);
 
-    // sync updates
-    virtual void syncupdate_state(Sync*, syncstate);
-    virtual void syncupdate_local_folder_addition(Sync*, const char*);
-    virtual void syncupdate_local_folder_deletion(Sync*, const char*);
-    virtual void syncupdate_local_file_addition(Sync*, const char*);
-    virtual void syncupdate_local_file_deletion(Sync*, const char*);
-    virtual void syncupdate_get(Sync*, const char*);
-    virtual void syncupdate_put(Sync*, const char*);
-    virtual void syncupdate_local_mkdir(Sync*, const char*);
-    virtual void syncupdate_local_unlink(Node*);
-    virtual void syncupdate_local_rmdir(Node*);
-    virtual void syncupdate_remote_unlink(Node*);
-    virtual void syncupdate_remote_rmdir(Node*);
-    virtual void syncupdate_remote_mkdir(Sync*, const char*);
-    virtual void syncupdate_remote_copy(Sync*, const char*);
+	// sync status updates and events
+	virtual void syncupdate_state(Sync*, syncstate);
+	virtual void syncupdate_stuck(string*);
+	virtual void syncupdate_local_folder_addition(Sync*, const char*);
+	virtual void syncupdate_local_folder_deletion(Sync*, const char*);
+	virtual void syncupdate_local_file_addition(Sync*, const char*);
+	virtual void syncupdate_local_file_deletion(Sync*, const char*);
+	virtual void syncupdate_get(Sync*, const char*);
+	virtual void syncupdate_put(Sync*, const char*);
+	virtual void syncupdate_remote_file_addition(Node*);
+	virtual void syncupdate_remote_file_deletion(Node*);
+	virtual void syncupdate_remote_folder_addition(Node*);
+	virtual void syncupdate_remote_folder_deletion(Node*);
+	virtual void syncupdate_remote_copy(Sync*, const char*);
+	virtual void syncupdate_remote_move(string*, string*);
 
     // suggest reload due to possible race condition with other clients
 	virtual void reload(const char*);

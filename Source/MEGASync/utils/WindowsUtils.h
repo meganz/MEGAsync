@@ -125,6 +125,7 @@ public:
     static void notifyItemChange(QString &path);
     static void notifyAttributeChange(QString &path);
     static bool startOnStartup(bool value);
+	static void showInFolder(QString pathIn);
 };
 
 

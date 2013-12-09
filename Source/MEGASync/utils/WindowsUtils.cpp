@@ -133,43 +133,58 @@ boolean WindowsUtils::enableIcon(QString &executable)
 
 void WindowsUtils::notifyNewFolder(QString &path)
 {
-    SHChangeNotify(SHCNE_MKDIR, SHCNF_IDLIST, path.toStdString().c_str(), NULL);
+	wchar_t windowsPath[MAX_PATH];
+	int len = path.toWCharArray(windowsPath);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_MKDIR, SHCNF_IDLIST, windowsPath, NULL);
 }
 
 void WindowsUtils::notifyFolderContentsChange(QString &path)
 {
-    SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_IDLIST, path.toStdString().c_str(), NULL);
+	wchar_t windowsPath[MAX_PATH];
+	int len = path.toWCharArray(windowsPath);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_IDLIST, windowsPath, NULL);
 }
 
 void WindowsUtils::notifyFolderDeleted(QString &path)
 {
-    SHChangeNotify(SHCNE_RMDIR, SHCNF_IDLIST, path.toStdString().c_str(), NULL);
+	wchar_t windowsPath[MAX_PATH];
+	int len = path.toWCharArray(windowsPath);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_RMDIR, SHCNF_IDLIST, windowsPath, NULL);
 }
 
 void WindowsUtils::notifyNewFile(QString &path)
 {
-    SHChangeNotify(SHCNE_CREATE, SHCNF_PATH, path.toStdString().c_str(), NULL);
+	wchar_t windowsPath[MAX_PATH];
+	int len = path.toWCharArray(windowsPath);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_CREATE, SHCNF_PATH, windowsPath, NULL);
 }
 
 void WindowsUtils::notifyFileDeleted(QString &path)
 {
-    SHChangeNotify(SHCNE_DELETE, SHCNF_PATH, path.toStdString().c_str(), NULL);
+	wchar_t windowsPath[MAX_PATH];
+	int len = path.toWCharArray(windowsPath);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_DELETE, SHCNF_PATH, windowsPath, NULL);
 }
 
 void WindowsUtils::notifyItemChange(QString &path)
 {
-	wchar_t windowsPath[512];
+	wchar_t windowsPath[MAX_PATH];
 	int len = path.toWCharArray(windowsPath);
-	string str;
-	str.append((char *)windowsPath, len*sizeof(wchar_t));
-	str.append("",1);
-	wprintf(L"Updating icon for %s\n", str.data());
-	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, str.data(), NULL);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
 }
 
 void WindowsUtils::notifyAttributeChange(QString &path)
 {
-    SHChangeNotify(SHCNE_ATTRIBUTES, SHCNF_PATH, path.toStdString().c_str(), NULL);
+	wchar_t windowsPath[MAX_PATH];
+	int len = path.toWCharArray(windowsPath);
+	windowsPath[len]=L'\0';
+	SHChangeNotify(SHCNE_ATTRIBUTES, SHCNF_PATH, windowsPath, NULL);
 }
 
 #include <QDebug>
@@ -350,18 +365,18 @@ bool WindowsUtils::startOnStartup(bool value)
         return false;
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += "\\MegaSync.lnk";
+	startupPath += "\\MEGAsync.lnk";
 
     if(value)
     {
         WCHAR executablePath[MAX_PATH];
-        WCHAR description[]=L"Start MegaSync";
+		WCHAR description[]=L"Start MEGAsync";
 
         int len = startupPath.toWCharArray(path);
         path[len] = L'\0';
 
         QString exec = QCoreApplication::applicationFilePath();
-        exec.replace('/','\\');
+		exec = QDir::toNativeSeparators(exec);
         len = exec.toWCharArray(executablePath);
         executablePath[len]= L'\0';
 
@@ -375,7 +390,42 @@ bool WindowsUtils::startOnStartup(bool value)
     {
         QFile::remove(startupPath);
         return true;
-    }
+	}
+}
+
+void WindowsUtils::showInFolder(QString pathIn)
+{
+	#if defined(Q_OS_WIN)
+		QString param;
+		param = QLatin1String("/select,");
+		param += "\"\"" + QDir::toNativeSeparators(pathIn) + "\"\"";
+		QProcess::startDetached("explorer " + param);
+	#elif defined(Q_OS_MAC)
+		Q_UNUSED(parent)
+		QStringList scriptArgs;
+		scriptArgs << QLatin1String("-e")
+				   << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"")
+										 .arg(pathIn);
+		QProcess::execute(QLatin1String("/usr/bin/osascript"), scriptArgs);
+		scriptArgs.clear();
+		scriptArgs << QLatin1String("-e")
+				   << QLatin1String("tell application \"Finder\" to activate");
+		QProcess::execute("/usr/bin/osascript", scriptArgs);
+	#else
+		// we cannot select a file here, because no file browser really supports it...
+		const QFileInfo fileInfo(pathIn);
+		const QString folder = fileInfo.absoluteFilePath();
+		const QString app = Utils::UnixUtils::fileBrowser(Core::ICore::instance()->settings());
+		QProcess browserProc;
+		const QString browserArgs = Utils::UnixUtils::substituteFileBrowserParameters(app, folder);
+		if (debug)
+			qDebug() <<  browserArgs;
+		bool success = browserProc.startDetached(browserArgs);
+		const QString error = QString::fromLocal8Bit(browserProc.readAllStandardError());
+		success = success && error.isEmpty();
+		if (!success)
+			showGraphicalShellError(parent, app, error);
+	#endif
 }
 
 
@@ -402,7 +452,7 @@ QString WindowsUtils::getSizeString(unsigned long long bytes)
 	if(bytes > KB)
 		return QString::number( ((int)((100 * bytes) / KB))/100.0) + " KB";
 
-	return QString::number(bytes) + " KB";
+	return QString::number(bytes) + " bytes";
 }
 
 

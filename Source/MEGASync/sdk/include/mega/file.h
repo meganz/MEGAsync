@@ -52,9 +52,15 @@ struct File : public FileFingerprint
 
 	// local filename (must be set upon injection for uploads, can be set in start() for downloads)
 	string localname;
-
+	
 	// source/target node handle
 	handle h;
+	
+	// source handle private?
+	bool hprivate;
+
+	// if !hprivate, filekey and size must be valid
+	byte filekey[FILENODEKEYLENGTH];
 
 	// for remote file drops: uid or e-mail address of recipient
 	string targetuser;

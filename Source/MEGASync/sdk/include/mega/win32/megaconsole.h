@@ -1,5 +1,5 @@
 /**
- * @file mega/win32/console.h
+ * @file mega/win32/megaconsole.h
  * @brief Win32 console I/O
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand

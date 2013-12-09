@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #define PREFER_STDARG
 #include "megaapi.h"
 #include <FreeImage.h>
+#include "utils/WindowsUtils.h"
 
 #ifdef _WIN32
 #define snprintf _snprintf
@@ -130,6 +131,26 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 		FreeImage_Unload(dib);
 }
 
+MegaFileGet::MegaFileGet(MegaClient *client, Node* n, string dstPath)
+{
+	h = n->nodehandle;
+	*(FileFingerprint*)this = *n;
+	name = n->displayname();
+	string finalPath;
+	if(dstPath.size())
+	{
+		char c = dstPath[dstPath.size()-1];
+		if((c == '\\') || (c == '/')) finalPath = dstPath+name;
+		else finalPath = dstPath;
+	}
+	else finalPath = name;
+
+	size = n->size;
+	mtime = n->mtime;
+	memcpy(filekey,n->nodekey.data(),sizeof filekey);
+	client->fsaccess->path2local(&finalPath, &localname);
+	hprivate = (n->parent!=NULL);
+}
 
 int MegaFile::nextseqno = 0;
 
@@ -407,6 +428,7 @@ MegaTransfer::MegaTransfer(int type, MegaTransferListener *listener)
 	this->speed = 0;
 	this->deltaSize = 0;
 	this->updateTime = 0;
+	this->parameter = NULL;
 }
 
 MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
@@ -455,6 +477,7 @@ MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
 	this->setSpeed(transfer.getSpeed());
 	this->setDeltaSize(transfer.getDeltaSize());
 	this->setUpdateTime(transfer.getUpdateTime());
+	this->setParameter(transfer.getParameter());
 }
 
 MegaTransfer* MegaTransfer::copy()
@@ -468,6 +491,8 @@ Transfer* MegaTransfer::getTransfer() const { return transfer; }
 long long MegaTransfer::getSpeed() const { return speed; }
 long long MegaTransfer::getDeltaSize() const { return deltaSize; }
 long long MegaTransfer::getUpdateTime() const { return updateTime; }
+
+void *MegaTransfer::getParameter() const { return parameter; }
 int MegaTransfer::getType() const { return type; }
 long long MegaTransfer::getStartTime() const { return startTime; }
 long long MegaTransfer::getTransferredBytes() const {return transferredBytes; }
@@ -492,6 +517,8 @@ void MegaTransfer::setTransfer(Transfer *transfer) { this->transfer = transfer; 
 void MegaTransfer::setSpeed(long long speed) { this->speed = speed; }
 void MegaTransfer::setDeltaSize(long long deltaSize){ this->deltaSize = deltaSize; }
 void MegaTransfer::setUpdateTime(long long updateTime) { this->updateTime = updateTime; }
+
+void MegaTransfer::setParameter(void *parameter) { this->parameter = parameter; }
 void MegaTransfer::setStartTime(long long startTime) { this->startTime = startTime; }
 void MegaTransfer::setTransferredBytes(long long transferredBytes) { this->transferredBytes = transferredBytes; }
 void MegaTransfer::setTotalBytes(long long totalBytes) { this->totalBytes = totalBytes; }
@@ -1160,7 +1187,7 @@ void MegaApi::startDownload(handle nodehandle, const char* target, int connectio
 	transfer->setMaxRetries(maxRetries);
 
 	transferQueue.push(transfer);
-    waiter->notify();
+	waiter->notify();
 }
 
 void MegaApi::startDownload(Node* node, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener)
@@ -1174,18 +1201,16 @@ void MegaApi::startDownload(Node* node, const char* localFolder, MegaTransferLis
 
 void MegaApi::startPublicDownload(Node* node, const char* localFolder, MegaTransferListener *listener)
 {
-	if(node)
-	{
-		char base64Key[Node::FILENODEKEYLENGTH*4/3+3];
-		Base64::btoa((const byte*)node->nodekey.data(),Node::FILENODEKEYLENGTH,base64Key);
-		startDownload(node->nodehandle, localFolder, 1, 0, 0, base64Key, listener);
-		return;
-	}
-	startDownload(UNDEF, localFolder, 1, 0, 0, NULL, listener);
+	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_DOWNLOAD, listener);
+	transfer->setParentPath(localFolder);
+	transfer->setNodeHandle(node->nodehandle);
+	transfer->setParameter(MegaApi::copyNode(node));
+	transferQueue.push(transfer);
+	waiter->notify();
 }
 
-void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
-{ startDownload(nodehandle, localFolder, 1, 0, 0, base64key, listener); }
+//void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
+//{ startDownload(nodehandle, localFolder, 1, 0, 0, base64key, listener); }
 
 /*
 void MegaApi::cancelTransfer(MegaTransfer *transfer)
@@ -1484,6 +1509,7 @@ void MegaApi::transfer_added(Transfer *t)
 	currentTransfer = NULL;
 	transferMap[t]=transfer;
 	transfer->setTotalBytes(t->size);
+	transfer->setTag(t->tag);
 
 	cout << "transfer_added: " <<t->size << endl;
 	fireOnTransferStart(this, transfer);
@@ -1542,8 +1568,9 @@ void MegaApi::transfer_update(Transfer *tr)
 	MegaTransfer* transfer = transferMap[tr];
 	if(!transfer) return;
 
+	cout << "transfer_update" << endl;
 	if(tr->slot)
-	{		
+	{				
 		transfer->setTime(tr->slot->lastdata);
 
 		if(transfer->getTransferredBytes() != tr->slot->progresscompleted)
@@ -1560,6 +1587,7 @@ void MegaApi::transfer_update(Transfer *tr)
 			cout << th << transfer->getFileName() << ": Update: " << transfer->getTransferredBytes()/1024 << " KB of "
 				 << transfer->getTotalBytes()/1024 << " KB, " << transfer->getTransferredBytes()*10/(1024*(waiter->getdstime()-transfer->getStartTime())+1) << " KB/s" << endl;
 			fireOnTransferUpdate(this, transfer);
+			WindowsUtils::notifyItemChange(QString(transfer->getPath()));
 		}
 	}
 }
@@ -1664,94 +1692,93 @@ void MegaApi::transfer_complete(Transfer* tr)
 	requestMap[client->nextreqtag()]=request;
 
 	//TODO: Send files to users
-    client->putnodes(uploadtarget,newnode,1);*/
+	client->putnodes(uploadtarget,newnode,1);*/
 }
 
-void MegaApi::syncupdate_state(Sync *sync, syncstate state)
+void MegaApi::syncupdate_state(Sync *, syncstate s)
 {
-	cout << "syncupdate_state" << endl;
-/*	pthread_mutex_lock(&listenerMutex);
-	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
-		(*it)->onSyncStateChanged(sync, state);
-	pthread_mutex_unlock(&listenerMutex);*/
+	cout << "syncupdate_state: " << s << endl;
+
 }
 
-void MegaApi::syncupdate_local_folder_addition(Sync *, const char *data)
+void MegaApi::syncupdate_stuck(string *s)
 {
-	cout << "syncupdate_local_folder_addition: " << data << endl;
+	cout << "syncupdate_stuck: " << s << endl;
+
 }
 
-void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *data)
+void MegaApi::syncupdate_local_folder_addition(Sync *, const char *s)
 {
-	cout << "syncupdate_local_folder_deletion: " << data << endl;
+	cout << "syncupdate_local_folder_addition: " << s << endl;
+	WindowsUtils::notifyItemChange(QString(s));
 }
 
-void MegaApi::syncupdate_local_file_addition(Sync *, const char *data)
+void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 {
-	cout << "syncupdate_local_file_addition: " << data << endl;
+	cout << "syncupdate_local_folder_deletion: " << s << endl;
+	WindowsUtils::notifyFolderDeleted(QString(s));
 }
 
-void MegaApi::syncupdate_local_file_deletion(Sync *, const char *data)
+void MegaApi::syncupdate_local_file_addition(Sync *, const char *s)
 {
-	cout << "syncupdate_local_file_deletion: " << data << endl;
+	cout << "syncupdate_local_file_addition: " << s << endl;
+	WindowsUtils::notifyItemChange(QString(s));
+
 }
 
-void MegaApi::syncupdate_get(Sync *sync, const char *file)
+void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
 {
-	cout << "syncupdate_get: " << file << endl;
-/*	pthread_mutex_lock(&listenerMutex);
-	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
-		(*it)->onSyncGet(sync, file);
-	pthread_mutex_unlock(&listenerMutex);*/
+	cout << "syncupdate_local_file_deletion: " << s << endl;
+	WindowsUtils::notifyFileDeleted(QString(s));
 }
 
-void MegaApi::syncupdate_put(Sync *sync, const char *file)
+void MegaApi::syncupdate_get(Sync *, const char *s)
 {
-	cout << "syncupdate_put: " << file << endl;
-/*	pthread_mutex_lock(&listenerMutex);
-	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
-		(*it)->onSyncPut(sync, file);
-	pthread_mutex_unlock(&listenerMutex);*/
+	cout << "syncupdate_get: " << s << endl;
+
 }
 
-void MegaApi::syncupdate_local_mkdir(Sync *, const char *file)
+void MegaApi::syncupdate_put(Sync *, const char *s)
 {
-	cout << "syncupdate_local_mkdir: " << file << endl;
+	cout << "syncupdate_put: " << s << endl;
+	WindowsUtils::notifyItemChange(QString(s));
 }
 
-void MegaApi::syncupdate_local_unlink(Node *node)
+void MegaApi::syncupdate_remote_file_addition(Node *)
 {
-	cout << "syncupdate_local_unlink: " << node->displayname() << endl;
+	cout << "syncupdate_remote_file_addition" << endl;
+
 }
 
-void MegaApi::syncupdate_local_rmdir(Node *node)
+void MegaApi::syncupdate_remote_file_deletion(Node *)
 {
-	cout << "syncupdate_local_rmdir: " << node->displayname() << endl;
+	cout << "syncupdate_remote_file_deletion" << endl;
+
 }
 
-void MegaApi::syncupdate_remote_unlink(Node *node)
+void MegaApi::syncupdate_remote_folder_addition(Node *)
 {
-	cout << "syncupdate_remote_unlink: " << node->displayname() << endl;
+	cout << "syncupdate_remote_folder_addition" << endl;
+
 }
 
-void MegaApi::syncupdate_remote_rmdir(Node *node)
+void MegaApi::syncupdate_remote_folder_deletion(Node *)
 {
-	cout << "syncupdate_remote_rmdir: " << node->displayname() << endl;
+	cout << "syncupdate_remote_folder_deletion" << endl;
+
 }
 
-void MegaApi::syncupdate_remote_mkdir(Sync *, const char *name)
+void MegaApi::syncupdate_remote_copy(Sync *, const char *s)
 {
-	cout << "syncupdate_remote_mkdir: " << name << endl;
+	cout << "syncupdate_remote_copy: " << s << endl;
+
 }
 
-void MegaApi::syncupdate_remote_copy(Sync *s, const char *name)
+void MegaApi::syncupdate_remote_move(string *a, string *b)
 {
-	cout << "syncupdate_remote_copy: " << name << endl;
-/*	pthread_mutex_lock(&listenerMutex);
-	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
-		(*it)->onSyncRemoteCopy(s, name);
-	pthread_mutex_unlock(&listenerMutex);*/
+	cout << "syncupdate_remote_move: " << a << " -> " << b << endl;
 }
+
 
 // user addition/update (users never get deleted)
 void MegaApi::users_updated(User** u, int count)
@@ -2059,13 +2086,13 @@ void MegaApi::exportnode_result(handle h, handle ph)
 		cout << "Exported node finished" << endl;
 
 		char node[9];
-		char key[Node::FILENODEKEYLENGTH*4/3+3];
+		char key[FILENODEKEYLENGTH*4/3+3];
 
 		Base64::btoa((byte*)&ph,MegaClient::NODEHANDLE,node);
 
 		// the key
-		if (n->type == FILENODE) Base64::btoa((const byte*)n->nodekey.data(),Node::FILENODEKEYLENGTH,key);
-		else if (n->sharekey) Base64::btoa(n->sharekey->key,Node::FOLDERNODEKEYLENGTH,key);
+		if (n->type == FILENODE) Base64::btoa((const byte*)n->nodekey.data(),FILENODEKEYLENGTH,key);
+		else if (n->sharekey) Base64::btoa(n->sharekey->key,FOLDERNODEKEYLENGTH,key);
 		else
 		{
 			cout << "No key available for exported folder" << endl;
@@ -2106,8 +2133,9 @@ void MegaApi::openfilelink_result(error result)
 
 // the requested link was opened successfully
 // (it is the application's responsibility to delete n!)
-void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, time_t ts, time_t tm)
+void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, time_t ts, time_t tm, int)
 {
+	cout << "openfilelink_result" << endl;
 	//cout << "Importing " << n->displayname() << "..." << endl;
 	MegaRequest *request = requestMap[client->restag];
 	if(!request) return;
@@ -2133,7 +2161,7 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 			newnode->clienttimestamp = tm;
 			newnode->parenthandle = UNDEF;
 
-			newnode->nodekey.assign((char*)key,Node::FILENODEKEYLENGTH);
+			newnode->nodekey.assign((char*)key,FILENODEKEYLENGTH);
 
 			newnode->attrstring = *a;
 
@@ -2432,6 +2460,16 @@ void MegaApi::setkeypair_result(error e)
 
 	if (e) cout << "RSA keypair setup failed (" << megaError.getErrorString() << ")" << endl;
 	else cout << "RSA keypair added. Account setup complete." << endl;
+}
+
+void MegaApi::checkfile_result(handle h, error e)
+{
+	cout << "Link check failed: " << endl;
+}
+
+void MegaApi::checkfile_result(handle h, error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring)
+{
+	cout << "Link check OK: " << endl;
 }
 
 void MegaApi::addListener(MegaListener* listener)
@@ -3144,9 +3182,8 @@ void MegaApi::sendPendingTransfers()
 	int nextTag;
 	while((transfer = transferQueue.pop()))
 	{
-        nextTag = MegaFile::nextseqno;
-		transfer->setTag(nextTag);
 		e = API_OK;
+		nextTag=client->nextreqtag();
 
 		switch(transfer->getType())
 		{
@@ -3166,11 +3203,18 @@ void MegaApi::sendPendingTransfers()
 			case MegaTransfer::TYPE_DOWNLOAD:
 			{
                 handle nodehandle = transfer->getNodeHandle();
-                Node *node = client->nodebyhandle(nodehandle);
-                if(!node) { e = API_EARGS; break; }
+				Node *node = client->nodebyhandle(nodehandle);
 				currentTransfer=transfer;
-                MegaFileGet *f = new MegaFileGet(client, node);
-                client->startxfer(GET,f);
+				if(!node) node = (Node *)transfer->getParameter();
+				if(!node)  { e = API_EARGS; break; }
+
+				string path = transfer->getParentPath();
+				path += node->displayname();
+				transfer->setPath(path.c_str());
+				MegaFileGet *f = new MegaFileGet(client, node, transfer->getPath());
+				client->startxfer(GET,f);
+
+				delete transfer->getParameter();
 				break;
 			}
 		}
@@ -3221,7 +3265,7 @@ void MegaApi::sendPendingRequests()
 			NewNode *newnode = new NewNode[1];
 			SymmCipher key;
 			string attrstring;
-			byte buf[Node::FOLDERNODEKEYLENGTH];
+			byte buf[FOLDERNODEKEYLENGTH];
 
 			// set up new node as folder node
 			newnode->source = NEW_NODE;
@@ -3231,8 +3275,8 @@ void MegaApi::sendPendingRequests()
             newnode->clienttimestamp = time(NULL);
 
 			// generate fresh random key for this folder node
-			PrnGen::genblock(buf,Node::FOLDERNODEKEYLENGTH);
-			newnode->nodekey.assign((char*)buf,Node::FOLDERNODEKEYLENGTH);
+			PrnGen::genblock(buf,FOLDERNODEKEYLENGTH);
+			newnode->nodekey.assign((char*)buf,FOLDERNODEKEYLENGTH);
 			key.setkey(buf);
 
 			// generate fresh attribute object with the folder name
@@ -3336,7 +3380,8 @@ void MegaApi::sendPendingRequests()
 			if(!megaFileLink) { e = API_EARGS; break; }
 			if((request->getType()==MegaRequest::TYPE_IMPORT_LINK) && (!node)) { e = API_EARGS; break; }
 
-			e = client->openfilelink(megaFileLink);
+			e = client->openfilelink(megaFileLink, 1);
+			cout << "Opening link: " << megaFileLink << " " << e << endl;
 			break;
 		}
 		case MegaRequest::TYPE_IMPORT_NODE:
@@ -3613,9 +3658,9 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 		if (n->type == FILENODE) t->nodekey = n->nodekey;
 		else
 		{
-			byte buf[Node::FOLDERNODEKEYLENGTH];
+			byte buf[FOLDERNODEKEYLENGTH];
 			PrnGen::genblock(buf,sizeof buf);
-			t->nodekey.assign((char*)buf,Node::FOLDERNODEKEYLENGTH);
+			t->nodekey.assign((char*)buf,FOLDERNODEKEYLENGTH);
 		}
 
 		key.setkey((const byte*)t->nodekey.data(),n->type);

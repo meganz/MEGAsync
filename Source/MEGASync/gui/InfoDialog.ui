@@ -722,7 +722,7 @@ color: rgb(102, 102, 102);
          </font>
         </property>
         <property name="text">
-         <string>MEGA Website</string>
+         <string>MEGA website</string>
         </property>
         <property name="icon">
          <iconset>

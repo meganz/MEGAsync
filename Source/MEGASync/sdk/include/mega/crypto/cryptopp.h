@@ -80,7 +80,6 @@ public:
 	void ctr_crypt(byte*, unsigned, m_off_t, ctr_iv, byte*, int);
 
 	static void setint64(int64_t, byte*);
-	static int64_t getint64(const byte*);
 
 	static void xorblock(const byte*, byte*);
 	static void xorblock(const byte*, byte*, int);

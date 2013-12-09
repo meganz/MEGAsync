@@ -26,10 +26,6 @@
 #define MEGA_SDK
 #endif
 
-#define MEGA_MAJOR_VERSION 1
-#define MEGA_MINOR_VERSION 1
-#define MEGA_MICRO_VERSION 0
-
 // project types
 #include "mega/types.h"
 
@@ -52,6 +48,7 @@
 #include "mega/serialize64.h"
 #include "mega/share.h"
 #include "mega/sharenodekeys.h"
+#include "mega/synclocalops.h"
 #include "mega/treeproc.h"
 #include "mega/user.h"
 #include "mega/utils.h"

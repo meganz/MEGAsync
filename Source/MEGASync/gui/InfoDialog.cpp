@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QHelpEvent>
 #include <QToolTip>
+#include <QSignalMapper>
 
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
@@ -100,12 +101,12 @@ void InfoDialog::setTransfer(int type, QString &fileName, long long completedSiz
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
-void InfoDialog::addRecentFile(QString &fileName, long long fileHandle)
+void InfoDialog::addRecentFile(QString &fileName, long long fileHandle, QString localPath)
 {
     QLayoutItem *item = ui->recentLayout->itemAt(2);
     RecentFile * recentFile = ((RecentFile *)item->widget());
     ui->recentLayout->insertWidget(0, recentFile);
-	recentFile->setFile(fileName, fileHandle);
+	recentFile->setFile(fileName, fileHandle, localPath);
 }
 
 void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int remainingDownloads, int remainingUploads)
@@ -223,17 +224,10 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::timerUpdate()
 {
-	if(ui->wTransfer1->getPercentage()==100)
-	{
-		ui->wTransfer1->hideTransfer();
-	}
+	if(!remainingDownloads) ui->wTransfer1->hideTransfer();
+	if(!remainingUploads) ui->wTransfer2->hideTransfer();
 
-	if(ui->wTransfer2->getPercentage()==100)
-	{
-		ui->wTransfer2->hideTransfer();
-	}
-
-	if((ui->wTransfer1->getPercentage()==100) && ui->wTransfer2->getPercentage()==100)
+	if(!remainingDownloads && !remainingUploads)
 	{
 		downloadSpeed = 0;
 		uploadSpeed = 0;
@@ -245,6 +239,7 @@ void InfoDialog::timerUpdate()
 		totalDownloadSize = totalUploadSize = 0;
 		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 		app->showSyncedIcon();
+		app->getMegaApi()->getAccountDetails();
 	}
 }
 
@@ -262,10 +257,37 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-    QString filePath = app->getPreferences()->getLocalFolder(0);
-    QStringList args;
-    args << QDir::toNativeSeparators(filePath);
-	QProcess::startDetached("explorer", args);
+	Preferences *prefences = app->getPreferences();
+	int num = prefences->getNumSyncedFolders();
+	/*if(num==0)
+	{
+		QString filePath = app->getPreferences()->getLocalFolder(0);
+		QStringList args;
+		args << QDir::toNativeSeparators(filePath);
+		QProcess::startDetached("explorer", args);
+	}
+	else*/
+	{
+		QMenu menu;
+		QSignalMapper signalMapper;
+
+		for(int i=0; i<num; i++)
+		{
+			QFileInfo info(prefences->getLocalFolder(i));
+
+			QAction *action = menu.addAction(info.fileName(), &signalMapper, SLOT(map()));
+			action->setIcon(QIcon("://images/folder.ico"));
+			signalMapper.setMapping(action, info.absoluteFilePath());
+			connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
+		}
+		menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -(num-1)*30)));
+	}
+}
+
+void InfoDialog::openFolder(QString path)
+{
+	cout << path.toStdString() << endl;
+	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *event)

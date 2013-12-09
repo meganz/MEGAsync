@@ -69,7 +69,7 @@ HRESULT RegisterInprocServer(PCWSTR pszModule, const CLSID& clsid,
     // Create the HKCR\CLSID\{<CLSID>} key.
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey), L"CLSID\\%s", szCLSID);
     if (SUCCEEDED(hr))
-    {
+	{
         hr = SetRegistryKeyAndValue(HKEY_CLASSES_ROOT, szSubkey, NULL, pszFriendlyName);
 
         // Create the HKCR\CLSID\{<CLSID>}\InprocServer32 key.

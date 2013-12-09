@@ -49,7 +49,7 @@ void ShareNodeKeys::add(NodeCore* n, Node* sn, int specific, const byte* item, i
 {
 	char buf[96];
 	char* ptr;
-	byte key[Node::FILENODEKEYLENGTH];
+	byte key[FILENODEKEYLENGTH];
 
 	int addnode = 0;
 

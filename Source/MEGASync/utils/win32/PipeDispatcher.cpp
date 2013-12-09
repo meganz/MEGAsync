@@ -314,17 +314,17 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
 
 VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 {
-   wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
+   //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
    wchar_t c = pipe->chRequest[0];
    if(((c != L'P') && (c != L'F')) || (lstrlen(pipe->chRequest)<3))
    {
-	   cout << "ContextMenu Start/Stop" << endl;
+	   //cout << "ContextMenu Start/Stop" << endl;
 	   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("9") );
 	   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 	   if(!uploadQueue.isEmpty())
 	   {
-		   cout << "Emit signal" << endl;
+		   //cout << "Emit signal" << endl;
 		   emit newUploadQueue(uploadQueue);
 		   uploadQueue.clear();
 	   }
@@ -341,7 +341,7 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 	   QFileInfo file(QString::fromWCharArray(path));
 	   if(file.exists())
 	   {
-		   cout << "Adding file to queue" << endl;
+		   //cout << "Adding file to queue" << endl;
 		   uploadQueue.enqueue(file.absoluteFilePath());
 	   }
 	   return;
@@ -386,6 +386,11 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 				   //cout << "File synced"<< endl;
 				   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("0") );
 				   break;
+				case PATHSTATE_SYNCING:
+					//cout << "File synced"<< endl;
+					StringCchCopy( pipe->chReply, BUFSIZE, TEXT("2") );
+					break;
+			   case PATHSTATE_PENDING:
 			   case PATHSTATE_NOTFOUND:
 				   //cout << "STATE NOT FOUND" << endl;
 			   default:

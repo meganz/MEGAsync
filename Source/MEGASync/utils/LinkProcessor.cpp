@@ -126,14 +126,12 @@ handle LinkProcessor::getImportParentFolder()
 
 void LinkProcessor::downloadLinks(QString localPath)
 {
-	return;
-
 	for(int i=0; i<linkList.size(); i++)
 	{
 		if(linkNode[i] && linkSelected[i])
 		{
-			//megaApi->startDownload(megaApi->getNodeByPath("/MegaSyncQT_bin.zip"),(localPath+"\\").toUtf8().constData(), NULL);
-			//megaApi->startPublicDownload(linkNode[i], (localPath+"\\").toUtf8().constData(), NULL);
+			cout << "Start public download" << endl;
+			megaApi->startPublicDownload(linkNode[i], (localPath+"\\").toUtf8().constData());
 		}
 	}
 }
