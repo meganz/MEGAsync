@@ -6,7 +6,7 @@
 
 extern HINSTANCE g_hInst;
 
-ShellExt::ShellExt(int id)
+ShellExt::ShellExt(int id) : m_cRef(1)
 {
 	this->id = id;
 	if (!GetModuleFileName(g_hInst, szModule, ARRAYSIZE(szModule))) 
