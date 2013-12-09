@@ -29,13 +29,15 @@ namespace mega {
 class Sync
 {
 public:
+	enum { MAIN, RETRY };
+
 	MegaClient* client;
 
 	// root of local filesystem tree, holding the sync's root folder
 	LocalNode localroot;
 
-	// queued ScanItems
-	scanitem_deque scanq;
+	// queued ScanItems - [0] is the main queue, [1] for locked item retries
+	scanitem_deque scanq[2];
 
 	// current state
 	syncstate state;
@@ -44,13 +46,13 @@ public:
 	void changestate(syncstate);
 
 	// process and remove one scanq item
-	void procscanq();
+	void procscanq(int);
 
 	m_off_t localbytes;
 	unsigned localnodes[2];
 
 	// add or update LocalNode item, scan newly added folders
-	void queuescan(string*, string*, LocalNode*, LocalNode*, bool);
+	void queuescan(int, string*, string*, LocalNode*, LocalNode*, bool);
 
 	// examine filesystem item and queue it for scanning
 	LocalNode* queuefsrecord(string*, string*, LocalNode*, bool);

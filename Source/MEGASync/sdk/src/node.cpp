@@ -506,7 +506,7 @@ LocalNode::~LocalNode()
 	if (sync->state >= SYNC_INITIALSCAN)
 	{
 		// eliminate queued filesystem events for direct children
-		for (scanitem_deque::iterator it = sync->scanq.begin(); it != sync->scanq.end(); it++) if ((*it).parent == this) (*it).deleted = true;
+		for (int q = 2; q--; ) for (scanitem_deque::iterator it = sync->scanq[q].begin(); it != sync->scanq[q].end(); it++) if ((*it).parent == this) (*it).deleted = true;
 
 		// record deletion
 		sync->client->syncdeleted[type].insert(syncid);
@@ -525,7 +525,7 @@ LocalNode::~LocalNode()
 	}
 }
 
-void LocalNode::getlocalpath(MegaClient* client, string* path)
+void LocalNode::getlocalpath(string* path)
 {
 	LocalNode* l = this;
 
@@ -534,13 +534,13 @@ void LocalNode::getlocalpath(MegaClient* client, string* path)
 	while (l)
 	{
 		path->insert(0,l->localname);
-		if ((l = l->parent)) path->insert(0,client->fsaccess->localseparator);
+		if ((l = l->parent)) path->insert(0,sync->client->fsaccess->localseparator);
 	}
 }
 
 void LocalNode::prepare()
 {
-	getlocalpath(transfer->client,&transfer->localfilename);
+	getlocalpath(&transfer->localfilename);
 }
 
 void LocalNode::completed(Transfer* t, LocalNode*)

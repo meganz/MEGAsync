@@ -10,17 +10,13 @@ endif
 
 # Libs
 if WIN32
-src_libmega_la_LIBADD =  $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS)
-
+src_libmega_la_LIBADD =  $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS) $(DB_LIBS)
 else
-src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS)
+src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS) $(DB_LIBS)
 endif
 
-
-
+# add library version
 src_libmega_la_LDFLAGS = -version-info $(VERSION_INFO)
-
-
 
 # common sources
 src_libmega_la_SOURCES = src/megaclient.cpp

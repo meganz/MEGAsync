@@ -400,9 +400,12 @@ public:
 	// a local fs op has failed with a transient error
 	bool synclocalopretry;
 	BackoffTimer synclocalopretrybt;
-	
+
 	// pending local filesystem operations
 	synclocalop_deque synclocalops;
+
+	// retry accessing locked filesystem items
+	BackoffTimer scanretrybt;
 	
 	// execute synclocalops, abort if a transient FS error is detected
 	void execsynclocalops();
