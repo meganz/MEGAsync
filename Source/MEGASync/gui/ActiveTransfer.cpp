@@ -28,7 +28,7 @@ void ActiveTransfer::setFileName(QString fileName)
 
 void ActiveTransfer::setProgress(long long completedSize, long long totalSize)
 {
-	int permil = (1000*completedSize)/totalSize;
+	int permil = (1000*completedSize)/(totalSize+1);
 	ui->pProgress->setProgress(permil);
 	ui->lPercentage->setText(QString::number(permil/10) + "%");
     ui->pProgress->show();
