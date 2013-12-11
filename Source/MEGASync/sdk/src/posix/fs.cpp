@@ -175,6 +175,12 @@ void PosixFileSystemAccess::local2name(string* filename)
 	}
 }
 
+// no legacy DOS garbage here...
+bool PosixFileSystemAccess::getsname(string*, string*)
+{
+	return false;
+}
+
 bool PosixFileSystemAccess::renamelocal(string* oldname, string* newname)
 {
 	return !rename(oldname->c_str(),newname->c_str());
@@ -305,8 +311,7 @@ bool PosixFileSystemAccess::notifynext(sync_list*, string* localname, LocalNode*
 					*localname = in->name;
 					*localnodep = it->second;
 
-					// FIXME: check if inotify requires this to be set to true (e.g. for local folder renames)
-					if (fulltreep) *fulltreep = false;
+					if (fulltreep) *fulltreep = true;
 
 					return true;
 				}

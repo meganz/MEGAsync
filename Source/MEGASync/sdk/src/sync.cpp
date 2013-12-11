@@ -84,7 +84,7 @@ pathstate_t Sync::pathstate(string* localpath)
 		{
 			t.assign(ptr,nptr-ptr);
 
-			if ((it = l->children.find(&t)) == l->children.end()) return PATHSTATE_NOTFOUND;
+			if ((it = l->children.find(&t)) == l->children.end() && (it = l->schildren.find(&t)) == l->schildren.end()) return PATHSTATE_NOTFOUND;
 
 			l = it->second;
 
@@ -140,7 +140,9 @@ LocalNode* Sync::queuefsrecord(string* localpath, string* localname, LocalNode* 
 	// check if this record is to be ignored
 	if (client->app->sync_syncable(name.c_str(),localpath,localname))
 	{
-		l = (it = parent->children.find(localname)) != parent->children.end() ? it->second : NULL;
+		if ((it = parent->children.find(localname)) != parent->children.end() || (it = parent->schildren.find(localname)) != parent->schildren.end()) l = it->second;
+		else l = NULL;
+
 		queuescan(MAIN,localpath,localname,l,parent,fulltree);
 
 		return l;
@@ -213,9 +215,10 @@ void Sync::procscanq(int q)
 	if (si->parent)
 	{
 		// have we seen this item before?
-		localnode_map::iterator it = si->parent->children.find(localname);
+		localnode_map::iterator it;
 
-		if (it != si->parent->children.end()) l = it->second;
+		// check if it exists as a child or an schild
+		if ((it = si->parent->children.find(localname)) != si->parent->children.end() || (it = si->parent->schildren.find(localname)) != si->parent->schildren.end()) l = it->second;
 		else l = NULL;
 	}
 	else l = NULL;

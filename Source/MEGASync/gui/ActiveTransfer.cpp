@@ -30,7 +30,7 @@ void ActiveTransfer::setProgress(long long completedSize, long long totalSize)
 {
 	int permil = (1000*completedSize)/(totalSize+1);
 	ui->pProgress->setProgress(permil);
-	ui->lPercentage->setText(QString::number(permil/10) + "%");
+    ui->lPercentage->setText(QString::number((permil+5)/10) + "%");
     ui->pProgress->show();
     ui->lType->show();
 }

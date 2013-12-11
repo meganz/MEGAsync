@@ -62,7 +62,7 @@ dstime WinWaiter::getdstime()
 		if (t < prevt) tickhigh += 0x100000000;
 		prevt = t;
 
-		return (t+tickhigh)/100;
+		return ds = (t+tickhigh)/100;
 	}
 }
 

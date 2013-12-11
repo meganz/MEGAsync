@@ -98,6 +98,9 @@ struct FileSystemAccess : public EventTrigger
 	// generate local temporary file name
 	virtual void tmpnamelocal(string*, string* = NULL) = 0;
 
+	// obtain local secondary name
+	virtual bool getsname(string*, string*) = 0;
+	
 	// rename file, overwrite target
 	virtual bool renamelocal(string*, string*) = 0;
 

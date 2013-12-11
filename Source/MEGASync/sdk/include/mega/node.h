@@ -174,6 +174,10 @@ struct LocalNode : public File
 
 	// children by name
 	localnode_map children;
+	
+	// for filesystems with botched secondary ("short") names
+	string slocalname;
+	localnode_map schildren;
 
 	// related cloud node, if any
 	Node* node;
@@ -191,7 +195,7 @@ struct LocalNode : public File
 	void* notifyhandle;
 
 	// build full local path to this node
-	void getlocalpath(string*);
+	void getlocalpath(string*, bool sdisable = false);
 
 	void prepare();
 	void completed(Transfer*, LocalNode*);
