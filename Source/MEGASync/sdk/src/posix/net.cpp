@@ -78,7 +78,7 @@ void CurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
 		curl_easy_setopt(curl,CURLOPT_URL,req->posturl.c_str());
 		curl_easy_setopt(curl,CURLOPT_POSTFIELDS,data ? data : req->out->data());
 		curl_easy_setopt(curl,CURLOPT_POSTFIELDSIZE,data ? len : req->out->size());
-		curl_easy_setopt(curl,CURLOPT_USERAGENT,"MEGA Client Access Engine/1.0");
+		curl_easy_setopt(curl,CURLOPT_USERAGENT,"MEGA Client Access Engine/2.0");
 		curl_easy_setopt(curl,CURLOPT_HTTPHEADER,req->type == REQ_JSON ? contenttypejson : contenttypebinary);
 		curl_easy_setopt(curl,CURLOPT_SHARE,curlsh);
 		curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_data);

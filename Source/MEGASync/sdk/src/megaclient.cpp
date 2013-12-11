@@ -1780,7 +1780,11 @@ void MegaClient::notifypurge(void)
 
 					if (is_rename || is_move)
 					{
-						if (n->localnode->parent) n->localnode->parent->children.erase(&n->localnode->localname);
+						if (n->localnode->parent)
+						{
+							n->localnode->parent->children.erase(&n->localnode->localname);
+							if (n->localnode->slocalname.size()) n->localnode->parent->schildren.erase(&n->localnode->slocalname);
+						}
 
 						n->localnode->getlocalpath(&localpath);
 
@@ -1799,7 +1803,9 @@ void MegaClient::notifypurge(void)
 						}
 
 						n->localnode->parent->children[&n->localnode->localname] = n->localnode;
-						n->localnode->getlocalpath(&newlocalpath);
+						if (n->localnode->slocalname.size()) n->localnode->parent->schildren[&n->localnode->slocalname] = n->localnode;
+
+						n->localnode->getlocalpath(&newlocalpath,true);
 
 						synclocalops.push_back(new SyncLocalOp(this,n->type,&localpath,&newlocalpath));
 
@@ -3548,7 +3554,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath)
 		}
 	}
 
-	// eliminate remote items that exist locally, recuse into existing folders
+	// eliminate remote items that exist locally, recurse into existing folders
 	for (localnode_map::iterator lit = l->children.begin(); lit != l->children.end(); lit++)
 	{
 		localname = *lit->first;
@@ -3638,7 +3644,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath)
 
 						// create local folder and start notifications
 						ll = new LocalNode;
-						ll->init(l->sync,&ait->second,FOLDERNODE,l,localpath);
+						ll->init(l->sync,&localname,FOLDERNODE,l,localpath);
 						ll->setnode(rit->second);
 
 						syncdown(ll,localpath);

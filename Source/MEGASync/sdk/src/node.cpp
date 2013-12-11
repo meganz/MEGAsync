@@ -480,11 +480,12 @@ void LocalNode::init(Sync* csync, string* clocalname, nodetype ctype, LocalNode*
 
 	if (parent)
 	{
-		// we don't construct a UTF-8 name for the root path
+		// (we don't construct a UTF-8 or sname for the root path)
 		name = *clocalname;
 		sync->client->fsaccess->local2name(&name);
-
 		parent->children[&localname] = this;
+
+		if (sync->client->fsaccess->getsname(clocalpath,&slocalname)) parent->schildren[&slocalname] = this;
 	}
 
 	// enable folder notification
@@ -514,7 +515,11 @@ LocalNode::~LocalNode()
 
 	if (type == FOLDERNODE) sync->client->fsaccess->delnotify(this);
 
-	if (parent) parent->children.erase(&localname);
+	if (parent)
+	{
+		parent->children.erase(&localname);
+		if (slocalname.size()) parent->children.erase(&slocalname);
+	}
 
 	for (localnode_map::iterator it = children.begin(); it != children.end(); ) delete it++->second;
 
@@ -525,7 +530,7 @@ LocalNode::~LocalNode()
 	}
 }
 
-void LocalNode::getlocalpath(string* path)
+void LocalNode::getlocalpath(string* path, bool sdisable)
 {
 	LocalNode* l = this;
 
@@ -533,8 +538,13 @@ void LocalNode::getlocalpath(string* path)
 
 	while (l)
 	{
-		path->insert(0,l->localname);
+		// use short name, if available (less likely to overflow MAXPATH, perhaps faster?) and sdisable not set
+		if (!sdisable && l->slocalname.size()) path->insert(0,l->slocalname);
+		else path->insert(0,l->localname);
+
 		if ((l = l->parent)) path->insert(0,sync->client->fsaccess->localseparator);
+		
+		if (sdisable) sdisable = false;
 	}
 }
 

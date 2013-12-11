@@ -55,8 +55,8 @@ dstime MegaApiWinWaiter::getdstime()
 		if (t < prevt) tickhigh += 0x100000000;
 		prevt = t;
 
-		return (t+tickhigh)/100;
-	}
+        return ds = (t+tickhigh)/100;
+    }
 }
 
 // wait for events (socket, I/O completion, timeout + application events)

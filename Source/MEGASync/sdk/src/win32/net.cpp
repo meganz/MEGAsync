@@ -169,13 +169,15 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 		case WINHTTP_CALLBACK_STATUS_WRITE_COMPLETE:
 			if (httpctx->postpos < httpctx->postlen)
 			{
-				unsigned t = httpctx->postlen-httpctx->postpos;
+				unsigned pos = httpctx->postpos;
+				unsigned t = httpctx->postlen-pos;
 
 				if (t > HTTP_POST_CHUNK_SIZE) t = HTTP_POST_CHUNK_SIZE;
 
-				if (!WinHttpWriteData(httpctx->hRequest,(LPVOID)(httpctx->postdata+httpctx->postpos),t,NULL)) req->httpio->cancel(req);
-
 				httpctx->postpos += t;
+
+				if (!WinHttpWriteData(httpctx->hRequest,(LPVOID)(httpctx->postdata+pos),t,NULL)) req->httpio->cancel(req);
+
 				httpio->httpevent();
 			}
 			else
@@ -232,7 +234,7 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
 
 				WinHttpSetStatusCallback(httpctx->hRequest,asynccallback,WINHTTP_CALLBACK_FLAG_DATA_AVAILABLE | WINHTTP_CALLBACK_FLAG_READ_COMPLETE | WINHTTP_CALLBACK_FLAG_HEADERS_AVAILABLE | WINHTTP_CALLBACK_FLAG_REQUEST_ERROR | WINHTTP_CALLBACK_FLAG_SECURE_FAILURE | WINHTTP_CALLBACK_FLAG_SENDREQUEST_COMPLETE | WINHTTP_CALLBACK_FLAG_WRITE_COMPLETE | WINHTTP_CALLBACK_FLAG_HANDLES ,0);
 
-				LPCWSTR pwszHeaders = REQ_JSON ? L"Content-Type: application/json" : L"Content-Type: application/octet-stream";
+				LPCWSTR pwszHeaders = req->type == REQ_JSON ? L"Content-Type: application/json" : L"Content-Type: application/octet-stream";
 
 				// data is sent in HTTP_POST_CHUNK_SIZE instalments to ensure semi-smooth UI progress info
 				httpctx->postlen = data ? len : req->out->size();
