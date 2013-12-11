@@ -48,7 +48,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 		#if QT_VERSION < 0x050000
 			QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync Downloads");
 		#else
-			QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation)[0] + "/MEGAsync Downloads");
+			QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + "/MEGAsync Downloads");
 		#endif
 		defaultFolder.mkpath(".");
 		defaultFolderPath = defaultFolder.absolutePath();

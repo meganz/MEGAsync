@@ -42,7 +42,6 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/db/sqlite.cpp  \
     $$PWD/src/win32/net.cpp  \
     $$PWD/src/win32/fs.cpp  \
-    $$PWD/src/win32/wait.cpp  \
     $$PWD/win32/megaapiwait.cpp  \
     $$PWD/megaapi.cpp \
     $$PWD/sqlite3.c \
@@ -87,7 +86,6 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/win32/meganet.h  \
 	    $$PWD/include/mega/win32/megasys.h  \
 	    $$PWD/include/mega/win32/megafs.h  \
-	    $$PWD/include/mega/win32/megawait.h  \
 	    $$PWD/win32/megaapiwait.h  \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
@@ -115,7 +113,7 @@ win32 {
     INCLUDEPATH += $$PWD/3rdparty/include/db
     INCLUDEPATH += $$PWD/3rdparty/include/pthread
 
-    LIBS += winhttp.lib ws2_32.lib
+    LIBS += -lwinhttp -lws2_32
 }
 
 unix {

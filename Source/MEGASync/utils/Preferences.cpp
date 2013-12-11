@@ -1,6 +1,9 @@
 #include "Preferences.h"
 #include <QApplication>
 
+const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 1000;
+const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 200;
+
 const QString Preferences::trayIconEnabledKey       = "trayIconEnabled";
 const QString Preferences::emailKey                 = "email";
 const QString Preferences::passwordKey              = "password";
@@ -70,7 +73,7 @@ QString Preferences::email()
     return settings->value(emailKey).toString();
 }
 
-void Preferences::setEmail(QString &email)
+void Preferences::setEmail(QString email)
 {
     settings->setValue(emailKey, email);
     settings->sync();
@@ -81,7 +84,7 @@ QString Preferences::password()
     return settings->value(passwordKey).toString();
 }
 
-void Preferences::setPassword(QString &password)
+void Preferences::setPassword(QString password)
 {
     settings->setValue(passwordKey, password);
     settings->sync();

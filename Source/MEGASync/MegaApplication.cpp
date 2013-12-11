@@ -3,7 +3,7 @@
 #include "gui/ImportMegaLinksDialog.h"
 
 #include <QClipboard>
-
+#include <QDesktopWidget>
 
 int main(int argc, char *argv[])
 {
@@ -45,8 +45,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 	uploadSpeed = downloadSpeed = 0;
     preferences = new Preferences();
-	megaApi = new MegaApi(delegateListener,
-         &(QCoreApplication::applicationDirPath()+"/").toStdString());
+	QString basePath = QCoreApplication::applicationDirPath()+"/";
+	string tmpPath = basePath.toStdString();
+	megaApi = new MegaApi(delegateListener, &tmpPath);
 
 #ifdef WIN32
 	WindowsUtils::initialize();
@@ -346,6 +347,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 			return;
 		}
         infoDialog->updateDialog();
+		QRect screenGeometry = QApplication::desktop()->availableGeometry();
+		infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
 		infoDialog->show();
 
 		//infoDialog->startAnimation();
@@ -568,7 +571,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
-		if(node->type==FILENODE && !node->removed && node->tag && !node->syncdeleted)
+		if(!node->removed && node->tag && !node->syncdeleted)
 		{
 			cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " <<
 					node->tag << endl;
@@ -602,8 +605,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 				cout << "LOCAL PATH NOT FOUND" << endl;
 			}
 
-			WindowsUtils::notifyItemChange(localPath);
-			infoDialog->addRecentFile(QString(node->displayname()), node->nodehandle, localPath);
+			if(!localPath.isNull()) WindowsUtils::notifyItemChange(localPath);
+            if(node->type == FILENODE) infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
 		}
 	}
 	infoDialog->updateDialog();

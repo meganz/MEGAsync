@@ -96,7 +96,7 @@ HRESULT __stdcall TrayNotificationReceiver::Notify (ULONG Event,
     return S_OK;
 }
 
-boolean WindowsUtils::enableIcon(QString &executable)
+boolean WindowsUtils::enableIcon(QString executable)
 {
     HRESULT hr;
     ITrayNotify *m_ITrayNotify;
@@ -131,7 +131,7 @@ boolean WindowsUtils::enableIcon(QString &executable)
     return true;
 }
 
-void WindowsUtils::notifyItemChange(QString &path)
+void WindowsUtils::notifyItemChange(QString path)
 {
 	wchar_t windowsPath[MAX_PATH];
 	int len = path.toWCharArray(windowsPath);
@@ -317,7 +317,7 @@ bool WindowsUtils::startOnStartup(bool value)
         return false;
 
     QString startupPath = QString::fromWCharArray(path);
-	startupPath += "\\MEGAsync.lnk";
+    startupPath += "\\MEGAsync.lnk";
 
     if(value)
     {
@@ -380,24 +380,40 @@ void WindowsUtils::showInFolder(QString pathIn)
 #endif
 }
 
-void WindowsUtils::countFilesAndFolders(QString path, long *numFiles, long *numFolders)
+void WindowsUtils::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
 {
-	QFileInfo baseDir(path);
-	if(!baseDir.exists() || !baseDir.isDir()) return;
-	if(((*numFolders) > 500) || ((*numFiles) > 20000)) return;
+    QFileInfo baseDir(path);
+    if(!baseDir.exists() || !baseDir.isDir()) return;
+    if((((*numFolders) > folderLimit)) ||
+       (((*numFiles) > fileLimit)))
+        return;
 
-	QDir dir(path);
-	QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-	for(int i=0; i<entries.size(); i++)
-	{
-		QFileInfo info = entries[i];
-		if(info.isFile()) (*numFiles)++;
-		else if(info.isDir())
-		{
-			countFilesAndFolders(info.absoluteFilePath(), numFiles, numFolders);
-			(*numFolders)++;
-		}
-	}
+    QDir dir(path);
+    QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+    for(int i=0; i<entries.size(); i++)
+    {
+        QFileInfo info = entries[i];
+        if(info.isFile()) (*numFiles)++;
+        else if(info.isDir())
+        {
+            countFilesAndFolders(info.absoluteFilePath(), numFiles, numFolders, fileLimit, folderLimit);
+            (*numFolders)++;
+        }
+    }
+}
+
+bool WindowsUtils::verifySyncedFolderLimits(QString path)
+{
+    long numFiles = 0;
+    long numFolders = 0;
+    countFilesAndFolders(path, &numFiles, &numFolders,
+                         Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER,
+                         Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER);
+
+    if(((numFolders > Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)) ||
+       ((numFiles > Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER)))
+        return false;
+    return true;
 }
 
 

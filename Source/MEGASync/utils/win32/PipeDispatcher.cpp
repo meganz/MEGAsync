@@ -377,9 +377,9 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 		   //cout << "Inside the base path" << endl;
 
 		   wchar_t *relativePath = path+basePath.length()+1;
+           string tmpPath((const char*)relativePath, lstrlen(relativePath)*sizeof(wchar_t));
 		   //wprintf(L"Checking: %s\n", relativePath);
-		   pathstate_t state = (*it)->pathstate(&string((const char*)relativePath,
-				lstrlen(relativePath)*sizeof(wchar_t)));
+		   pathstate_t state = (*it)->pathstate(&tmpPath);
 		   switch(state)
 		   {
 			   case PATHSTATE_SYNCED:

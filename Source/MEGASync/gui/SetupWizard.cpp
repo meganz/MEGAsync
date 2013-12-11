@@ -209,7 +209,7 @@ void SetupWizard::on_bNext_clicked()
     #if QT_VERSION < 0x050000
 		QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync");
     #else
-		QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation)[0] + "/MEGAsync");
+		QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + "/MEGAsync");
 	#endif
 
         defaultFolder.mkpath(".");
@@ -257,17 +257,14 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-		long numFiles = 0;
-		long numFolders = 0;
-		WindowsUtils::countFilesAndFolders(ui->eLocalFolder->text(), &numFiles, &numFolders);
-		cout << "files: " << numFiles << "   folders: " << numFolders << endl;
-		if(numFolders > 500 || numFiles > 20000)
-		{
-			QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (>500 folders, >20000 files).\n"
-														 "Please, select another folder."), QMessageBox::Ok);
-			return;
-		}
-
+        QString localFolderPath = ui->eLocalFolder->text();
+        if(!WindowsUtils::verifySyncedFolderLimits(localFolderPath))
+        {
+            QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (+%1 folders or +%2 files).\n"
+                 "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
+                 .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER), QMessageBox::Ok);
+            return;
+        }
 
         Node *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
         if(!node)

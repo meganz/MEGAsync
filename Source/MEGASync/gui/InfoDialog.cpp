@@ -86,7 +86,7 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
     ui->lTotalUsed->setText(usage);
 }
 
-void InfoDialog::setTransfer(int type, QString &fileName, long long completedSize, long long totalSize)
+void InfoDialog::setTransfer(int type, QString fileName, long long completedSize, long long totalSize)
 {
     ActiveTransfer *transfer;
     if(type == MegaTransfer::TYPE_DOWNLOAD)
@@ -100,7 +100,7 @@ void InfoDialog::setTransfer(int type, QString &fileName, long long completedSiz
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
-void InfoDialog::addRecentFile(QString &fileName, long long fileHandle, QString localPath)
+void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
 {
     QLayoutItem *item = ui->recentLayout->itemAt(2);
     RecentFile * recentFile = ((RecentFile *)item->widget());
@@ -258,14 +258,14 @@ void InfoDialog::on_bSyncFolder_clicked()
 {
 	Preferences *prefences = app->getPreferences();
 	int num = prefences->getNumSyncedFolders();
-	/*if(num==0)
+	if(num==1)
 	{
 		QString filePath = app->getPreferences()->getLocalFolder(0);
 		QStringList args;
 		args << QDir::toNativeSeparators(filePath);
 		QProcess::startDetached("explorer", args);
 	}
-	else*/
+	else
 	{
 		QMenu menu;
 		QSignalMapper signalMapper;
