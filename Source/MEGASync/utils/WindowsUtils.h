@@ -111,16 +111,17 @@ class WindowsUtils
 private:
     WindowsUtils();
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc);
+    static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
 
 public:
 	static QString getSizeString(unsigned long long bytes);
 	static QHash<QString, QString> extensionIcons;
     static void initialize();
-    static boolean enableIcon(QString &executable);
-    static void notifyItemChange(QString &path);
+    static boolean enableIcon(QString executable);
+    static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);
 	static void showInFolder(QString pathIn);
-	static void countFilesAndFolders(QString path, long *numFiles, long *numFolders);
+    static bool verifySyncedFolderLimits(QString path);
 };
 
 

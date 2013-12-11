@@ -19,9 +19,9 @@ public:
     bool isTrayIconEnabled();
     void setTrayIconEnabled(bool value);
     QString email();
-    void setEmail(QString &email);
+    void setEmail(QString email);
     QString password();
-    void setPassword(QString &password);
+    void setPassword(QString password);
     long long totalStorage();
     void setTotalStorage(long long value);
     long long usedStorage();
@@ -92,6 +92,9 @@ public:
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3
     };
+
+    static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
+    static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
 
 protected:
 

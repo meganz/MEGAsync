@@ -49,3 +49,4 @@ FORMS    += gui/SettingsDialog.ui \
 
 RESOURCES += gui/Resources.qrc
 
+INCLUDEPATH += $$PWD
