@@ -406,6 +406,8 @@ bool WindowsUtils::verifySyncedFolderLimits(QString path)
 {
     long numFiles = 0;
     long numFolders = 0;
+    QFileInfo info(path);
+    if(!info.isDir()) return true;
     countFilesAndFolders(path, &numFiles, &numFolders,
                          Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER,
                          Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER);
