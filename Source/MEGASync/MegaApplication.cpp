@@ -48,6 +48,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 	QString basePath = QCoreApplication::applicationDirPath()+"/";
 	string tmpPath = basePath.toStdString();
 	megaApi = new MegaApi(delegateListener, &tmpPath);
+    uploader = new MegaUploader(megaApi);
 
 #ifdef WIN32
 	WindowsUtils::initialize();
@@ -124,8 +125,9 @@ void MegaApplication::stopSyncs()
 
 void MegaApplication::processUploadQueue(handle nodeHandle)
 {
-	cout << "processUploadQueue " <<  uploadQueue.size() << endl;
 	Node *node = megaApi->getNodeByHandle(nodeHandle);
+    QStringList notUploaded;
+
 	if(!node || node->type==FILENODE)
 	{
 		uploadQueue.clear();
@@ -136,11 +138,31 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 	while(!uploadQueue.isEmpty())
 	{
 		QString filePath = uploadQueue.dequeue();
-		if(!QFileInfo(filePath).isFile()) continue;
-		filePath = QDir::toNativeSeparators(filePath);
-		cout << "Starting upload for " << filePath.toStdString() << endl;
-		megaApi->startUpload(filePath.toUtf8().constData(), node);
-	}
+        if(!WindowsUtils::verifySyncedFolderLimits(filePath))
+        {
+            notUploaded.append(QFileInfo(filePath).fileName());
+            continue;
+        }
+        uploader->upload(filePath, node);
+    }
+
+    if(notUploaded.size())
+    {
+        if(notUploaded.size()==1)
+        {
+            trayIcon->showMessage("Warning", QString("The folder (%1) wasn't uploaded "
+                "because it contains too much files or folders (+%2 folders or +%3 files)")
+                .arg(notUploaded[0]).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
+                .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
+        }
+        else
+        {
+            trayIcon->showMessage("Warning", QString("%1 folders weren't uploaded "
+                "because they contain too much files or folders (+%2 folders or +%3 files)")
+                .arg(notUploaded.size()).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
+                .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
+        }
+    }
 }
 
 void MegaApplication::reloadSyncs()
@@ -321,9 +343,9 @@ void MegaApplication::showUploadDialog()
 	if(uploadFolderSelector->result()==QDialog::Accepted)
 	{
 		handle nodeHandle = uploadFolderSelector->getSelectedHandle();
-		processUploadQueue(nodeHandle);
 		if(uploadFolderSelector->isDefaultFolder())
 			preferences->setUploadFolder(nodeHandle);
+        processUploadQueue(nodeHandle);
 	}
 	else uploadQueue.clear();
 
@@ -599,10 +621,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 				localPath = uploadLocalPaths.value(node->tag);
 				uploadLocalPaths.remove(node->tag);
 				cout << "Local upload: " << localPath.toStdString() << endl;
-			}
-			else
-			{
-				cout << "LOCAL PATH NOT FOUND" << endl;
 			}
 
 			if(!localPath.isNull()) WindowsUtils::notifyItemChange(localPath);

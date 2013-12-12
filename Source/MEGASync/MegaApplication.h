@@ -19,6 +19,7 @@
 #include "utils/HTTPServer.h"
 #include "utils/FileDownloader.h"
 #include "utils/WindowsUtils.h"
+#include "utils/MegaUploader.h"
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
 
@@ -108,6 +109,7 @@ protected:
     syncstate syncState;
 	QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
+    MegaUploader *uploader;
 };
 
 #endif // MEGAAPPLICATION_H
