@@ -138,13 +138,12 @@ void Transfer::complete()
 	// notify all files and give them an opportunity to self-destruct
 	for (file_list::iterator it = files.begin(); it != files.end(); )
 	{
-		Transfer* t = (*it)->transfer;
-
-		(*it)->transfer = NULL;
-		(*it++)->completed(t,NULL);
+		(*it)->transfer = NULL;		// prevent deletion of associated Transfer object in completed()
+		(*it)->completed(this,NULL);
+		files.erase(it++);
 	}
 
-	delete this;
+	if (!files.size()) delete this;
 }
 
 } // namespace

@@ -28,7 +28,7 @@ namespace mega {
 // FIXME: support invite links (including responding to sharekey requests)
 // FIXME: Sync: recognize folder renames and use setattr() instead of potentially huge delete/putnodes sequences
 // FIXME: instead of copying nodes, move if the source is in the rubbish to reduce node creaton load on the servers
-// FIXME: support filesystems with timestamp resolutions > 1 s (FAT)?
+// FIXME: support filesystems with timestamp granularity > 1 s (FAT)?
 
 // root URL for API access
 const char* const MegaClient::APIURL = "https://g.api.mega.co.nz/";
@@ -293,6 +293,8 @@ void MegaClient::init()
 	xferpaused[GET] = false;
 	
 	putmbpscap = 0;
+	
+	scnotifyurl.clear();
 }
 
 MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k)
@@ -1845,7 +1847,7 @@ void MegaClient::notifypurge(void)
 					{
 						FileAccess* fa = fsaccess->newfileaccess();
 
-						if (fa->fopen(&localpath,1,0))
+						if (fa->fopen(&localpath,true,false))
 						{
 							if (fa->mtime == n->mtime)
 							{
@@ -1896,7 +1898,7 @@ void MegaClient::notifypurge(void)
 
 				delete n;
 			}
-			else n->notified = 0;
+			else n->notified = false;
 		}
 
 		nodenotify.clear();
@@ -2989,7 +2991,7 @@ void MegaClient::notifynode(Node* n)
 {
 	if (!n->notified)
 	{
-		n->notified = 1;
+		n->notified = true;
 		nodenotify.push_back(n);
 	}
 }

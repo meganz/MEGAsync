@@ -23,12 +23,6 @@
 
 namespace mega {
 
-/*#ifdef __MACH__
-#define _DARWIN_C_SOURCE
-ssize_t pread(int, void *, size_t, off_t) __DARWIN_ALIAS_C(pread);
-ssize_t pwrite(int, const void *, size_t, off_t) __DARWIN_ALIAS_C(pwrite);
-#endif*/
-
 PosixFileAccess::PosixFileAccess()
 {
 	fd = -1;

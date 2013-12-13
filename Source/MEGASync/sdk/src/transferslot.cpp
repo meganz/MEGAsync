@@ -80,7 +80,6 @@ void TransferSlot::disconnect()
 	for (int i = connections; i--; ) if (reqs[i]) reqs[i]->disconnect();
 }
 
-
 // coalesce block macs into file mac
 int64_t TransferSlot::macsmac(chunkmac_map* macs)
 {
