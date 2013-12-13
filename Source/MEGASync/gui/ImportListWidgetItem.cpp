@@ -1,6 +1,6 @@
 #include "ImportListWidgetItem.h"
 #include "ui_ImportListWidgetItem.h"
-#include "utils/WindowsUtils.h"
+#include "utils/Utils.h"
 
 #include <QFileInfo>
 
@@ -36,15 +36,9 @@ void ImportListWidgetItem::setData(QString fileName, linkstatus status, long lon
 
 void ImportListWidgetItem::updateGui()
 {
-	if(fileSize) ui->lName->setText(fileName + " (" + WindowsUtils::getSizeString(fileSize) + ")");
+    if(fileSize) ui->lName->setText(fileName + " (" + Utils::getSizeString(fileSize) + ")");
 	else ui->lName->setText(fileName);
-
-	QFileInfo f(fileName);
-
-	if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
-		ui->lImage->setPixmap(QPixmap(QString(WindowsUtils::extensionIcons[f.suffix().toLower()]).insert(0, "://images/small_")));
-	else
-		ui->lImage->setPixmap(QPixmap("://images/small_generic.png"));
+    ui->lImage->setPixmap(Utils::getExtensionPixmapSmall(fileName));
 
 	switch(status)
 	{

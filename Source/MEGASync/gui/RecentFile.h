@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QFileInfo>
 #include <QDateTime>
-#include "utils/WindowsUtils.h"
+#include "utils/Utils.h"
 
 namespace Ui {
 class RecentFile;

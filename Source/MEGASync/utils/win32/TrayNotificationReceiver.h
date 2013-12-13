@@ -1,17 +1,7 @@
-#ifndef WINDOWSUTILS_H
-#define WINDOWSUTILS_H
+#ifndef TRAYNOTIFICATIONRECEIVER_H
+#define TRAYNOTIFICATIONRECEIVER_H
 
-#include "utils/win32/PipeDispatcher.h"
-
-#include <QApplication>
 #include <QString>
-#include <QFile>
-#include <QHash>
-#include <QPixmap>
-#include <QThread>
-
-#define     WIN32_LEAN_AND_MEAN
-#define     _WIN32_WINNT    0x0501
 
 #include <windows.h>
 #include <winbase.h>
@@ -23,10 +13,7 @@
 #include <commctrl.h>
 #include <iostream>
 #include <Shobjidl.h>
-
 #include <wchar.h>
-using namespace std;
-
 
 typedef interface ITrayNotify ITrayNotify;
 typedef interface ITrayNotifyNew ITrayNotifyNew;
@@ -104,25 +91,5 @@ public:
     HRESULT __stdcall Notify(ULONG Event, NOTIFYITEM *NotifyItem);
 };
 
-class WindowsUtils
-{
 
-
-private:
-    WindowsUtils();
-    static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc);
-    static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
-
-public:
-	static QString getSizeString(unsigned long long bytes);
-	static QHash<QString, QString> extensionIcons;
-    static void initialize();
-    static boolean enableIcon(QString executable);
-    static void notifyItemChange(QString path);
-    static bool startOnStartup(bool value);
-	static void showInFolder(QString pathIn);
-    static bool verifySyncedFolderLimits(QString path);
-};
-
-
-#endif // WINDOWSUTILS_H
+#endif // TRAYNOTIFICATIONRECEIVER_H

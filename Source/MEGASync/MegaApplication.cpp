@@ -1,6 +1,7 @@
 #include "MegaApplication.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
+#include "utils/Utils.h"
 
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -11,10 +12,6 @@ int main(int argc, char *argv[])
     return app.exec();
 }
 
-
-#ifdef WIN32
-    #include "WindowsUtils.h"
-#endif
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
@@ -30,7 +27,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     createActions();
     createTrayIcon();
 
-	delegateListener = new QTMegaListener(this);
+    delegateListener = new QTMegaListener(this);
     infoDialog = new InfoDialog(this);
     setupWizard = NULL;
     settingsDialog = NULL;
@@ -50,10 +47,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 	megaApi = new MegaApi(delegateListener, &tmpPath);
     uploader = new MegaUploader(megaApi);
 
-#ifdef WIN32
-	WindowsUtils::initialize();
-	WindowsUtils::startOnStartup(preferences->startOnStartup());
-#endif
+    Utils::startOnStartup(preferences->startOnStartup());
 
     //downloader = new FileDownloader(QUrl("http://www.google.es"));
     //connect(downloader, SIGNAL(downloaded()), this, SLOT(updateDowloaded()));
@@ -75,22 +69,15 @@ void MegaApplication::init()
 					   preferences->password().toUtf8().constData());
 	}
 
-	ShellDispatcher *shellDispatcher = new ShellDispatcher();
-	connect(shellDispatcher, SIGNAL(newUploadQueue(QQueue<QString>)), this, SLOT(uploadFiles(QQueue<QString>)));
-	shellDispatcher->start();
+    Utils::startShellDispatcher(this);
+
     trayIcon->show();
 	trayIcon->showMessage(tr("MEGAsync"), tr("MEGAsync is running"));
 
-#ifdef WIN32
-	if(preferences->isTrayIconEnabled())
-    {
-        preferences->setTrayIconEnabled(true);
-        if(!WindowsUtils::enableIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
-            cout << "Error enabling trayicon" << endl;
-        else
-            cout << "OK enabling trayicon" << endl;
-    }
-#endif
+    if(!Utils::enableTrayIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
+        cout << "Error enabling trayicon" << endl;
+    else
+        cout << "OK enabling trayicon" << endl;
 
 	//QString s(tr("MEGA Sync is paused"));
 
@@ -138,7 +125,7 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 	while(!uploadQueue.isEmpty())
 	{
 		QString filePath = uploadQueue.dequeue();
-        if(!WindowsUtils::verifySyncedFolderLimits(filePath))
+        if(!Utils::verifySyncedFolderLimits(filePath))
         {
             notUploaded.append(QFileInfo(filePath).fileName());
             continue;
@@ -173,7 +160,7 @@ void MegaApplication::reloadSyncs()
 
 void MegaApplication::unlink()
 {
-    preferences->clearAll();
+    preferences->unlink();
     delete localServer;
     localServer = NULL;
     delete httpServer;
@@ -320,7 +307,7 @@ void MegaApplication::copyFileLink(handle fileHandle)
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
 }
 
-void MegaApplication::uploadFiles(QQueue<QString> newUploadQueue)
+void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 {
 	uploadQueue.append(newUploadQueue);
 
@@ -386,8 +373,7 @@ void MegaApplication::openSettings()
 			settingsDialog->activateWindow();
 			return;
 		}
-		settingsDialog->show();
-		return;
+        delete settingsDialog;
 	}
     settingsDialog = new SettingsDialog(this);
 	settingsDialog->show();

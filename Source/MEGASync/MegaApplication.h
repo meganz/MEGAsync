@@ -18,14 +18,14 @@
 #include "utils/Preferences.h"
 #include "utils/HTTPServer.h"
 #include "utils/FileDownloader.h"
-#include "utils/WindowsUtils.h"
+#include "utils/ShellDispatcherListener.h"
 #include "utils/MegaUploader.h"
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-class MegaApplication : public QApplication, public MegaListener
+class MegaApplication : public QApplication, public MegaListener, public ShellDispatcherListener
 {
     Q_OBJECT
 
@@ -70,7 +70,7 @@ public slots:
 	void importLinks();
     void updateDowloaded();
 	void copyFileLink(handle fileHandle);
-	void uploadFiles(QQueue<QString> newUploadQueue);
+    void shellUpload(QQueue<QString> newUploadQueue);
 	void showUploadDialog();
 	void onLinkImportFinished();
 

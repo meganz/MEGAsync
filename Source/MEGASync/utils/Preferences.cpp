@@ -1,10 +1,13 @@
 #include "Preferences.h"
+#include "Utils.h"
+
 #include <QApplication>
 
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 1000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 200;
 
-const QString Preferences::trayIconEnabledKey       = "trayIconEnabled";
+const QString Preferences::syncsGroupKey            = "Syncs";
+const QString Preferences::currentAccountKey        = "currentAccount";
 const QString Preferences::emailKey                 = "email";
 const QString Preferences::passwordKey              = "password";
 const QString Preferences::totalStorageKey          = "totalStorage";
@@ -25,9 +28,9 @@ const QString Preferences::proxyPortKey             = "proxyPort";
 const QString Preferences::proxyRequiresAuthKey     = "proxyRequiresAuth";
 const QString Preferences::proxyUsernameKey         = "proxyUsername";
 const QString Preferences::proxyPasswordKey         = "proxyPassword";
-const QString Preferences::localFoldersKey          = "localFolders";
-const QString Preferences::megaFoldersKey           = "megaFolders";
-const QString Preferences::megaFolderHandlesKey     = "megaFolderHandles";
+const QString Preferences::localFolderKey          = "localFolder";
+const QString Preferences::megaFolderKey           = "megaFolder";
+const QString Preferences::megaFolderHandleKey     = "megaFolderHandle";
 const QString Preferences::downloadFolderKey		= "downloadFolder";
 const QString Preferences::uploadFolderKey			= "uploadFolder";
 const QString Preferences::importFolderKey			= "importFolder";
@@ -49,23 +52,9 @@ Preferences::Preferences()
 {
     settings = new QSettings(qApp->organizationName(), qApp->applicationName());
     locale = new QLocale();
-    qRegisterMetaType<QList<long long> >("QListLongLong");
-    qRegisterMetaTypeStreamOperators<QList<long long> >("QListLongLong");
 
-	//clearAll();
-
-    readFolders();
-}
-
-bool Preferences::isTrayIconEnabled()
-{
-	return settings->value(trayIconEnabledKey, true).toBool();
-}
-
-void Preferences::setTrayIconEnabled(bool value)
-{
-    settings->setValue(trayIconEnabledKey, value);
-    settings->sync();
+    QString currentAccount = settings->value(currentAccountKey).toString();
+    if(currentAccount.size()) login(currentAccount);
 }
 
 QString Preferences::email()
@@ -75,6 +64,7 @@ QString Preferences::email()
 
 void Preferences::setEmail(QString email)
 {
+    login(email);
     settings->setValue(emailKey, email);
     settings->sync();
 }
@@ -348,10 +338,12 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long 
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     writeFolders();
+    Utils::syncFolderAdded(localFolder);
 }
 
 void Preferences::removeSyncedFolder(int num)
 {
+    Utils::syncFolderRemoved(localFolders[num]);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
@@ -360,30 +352,89 @@ void Preferences::removeSyncedFolder(int num)
 
 void Preferences::removeAllFolders()
 {
+    for(int i=0; i<localFolders.size(); i++)
+        Utils::syncFolderRemoved(localFolders[i]);
+
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
     writeFolders();
 }
 
+void Preferences::unlink()
+{
+    if(logged())
+    {
+        removeAllFolders();
+        settings->remove("");
+        settings->endGroup();
+    }
+    settings->remove(currentAccountKey);
+    localFolders.clear();
+    megaFolders.clear();
+    megaFolderHandles.clear();
+}
+
 void Preferences::clearAll()
 {
 	removeAllFolders();
     settings->clear();
-	settings->sync();
+    settings->sync();
+}
+
+void Preferences::login(QString account)
+{
+    logout();
+    settings->setValue(currentAccountKey, account);
+    settings->beginGroup(account);
+    readFolders();
+}
+
+bool Preferences::logged()
+{
+    if(settings->group().isEmpty()) return false;
+}
+
+void Preferences::logout()
+{
+    if(logged()) settings->endGroup();
+    localFolders.clear();
+    megaFolders.clear();
+    megaFolderHandles.clear();
 }
 
 void Preferences::readFolders()
 {
-    localFolders = settings->value(localFoldersKey).toStringList();
-    megaFolders = settings->value(megaFoldersKey).toStringList();
-    megaFolderHandles = settings->value(megaFolderHandlesKey).value<QList<long long> >();
+    localFolders.clear();
+    megaFolders.clear();
+    megaFolderHandles.clear();
+
+    settings->beginGroup(syncsGroupKey);
+    QStringList syncs = settings->childGroups();
+    for(int i=0; i<syncs.size(); i++)
+    {
+        settings->beginGroup(syncs[i]);
+            localFolders.append(settings->value(localFolderKey).toString());
+            megaFolders.append(settings->value(megaFolderKey).toString());
+            megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
+        settings->endGroup();
+    }
+    settings->endGroup();
 }
 
 void Preferences::writeFolders()
 {
-    settings->setValue(localFoldersKey, localFolders);
-    settings->setValue(megaFoldersKey, megaFolders);
-    settings->setValue(megaFolderHandlesKey, QVariant::fromValue(megaFolderHandles));
+    settings->beginGroup(syncsGroupKey);
+        settings->remove("");
+        for(int i=0; i<localFolders.size(); i++)
+        {
+            settings->beginGroup(QString::number(i));
+                settings->setValue(localFolderKey, localFolders[i]);
+                settings->setValue(megaFolderKey, megaFolders[i]);
+                settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
+            settings->endGroup();
+        }
+    settings->endGroup();
+
     settings->sync();
 }
