@@ -6,6 +6,7 @@ BindFolderDialog::BindFolderDialog(QWidget *parent) :
     ui(new Ui::BindFolderDialog)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
 }
 
 BindFolderDialog::~BindFolderDialog()

@@ -29,7 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #define PREFER_STDARG
 #include "megaapi.h"
 #include <FreeImage.h>
-#include "utils/WindowsUtils.h"
+#include "utils/Utils.h"
 
 #ifdef _WIN32
 #define snprintf _snprintf

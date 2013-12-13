@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>80</height>
+    <height>98</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,7 +48,10 @@
         <item>
          <widget class="QLineEdit" name="eLocalFolder">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -79,7 +82,10 @@
         <item>
          <widget class="QLineEdit" name="eMegaFolder">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

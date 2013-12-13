@@ -16,8 +16,6 @@ class Preferences
 public:
     Preferences();
 
-    bool isTrayIconEnabled();
-    void setTrayIconEnabled(bool value);
     QString email();
     void setEmail(QString email);
     QString password();
@@ -74,6 +72,7 @@ public:
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
+    void unlink();
     void clearAll();
 
     enum {
@@ -98,6 +97,10 @@ public:
 
 protected:
 
+    void login(QString account);
+    bool logged();
+    void logout();
+
     void readFolders();
     void writeFolders();
 
@@ -107,7 +110,8 @@ protected:
     QStringList localFolders;
     QList<long long> megaFolderHandles;
 
-    static const QString trayIconEnabledKey;
+    static const QString currentAccountKey;
+    static const QString syncsGroupKey;
     static const QString emailKey;
     static const QString passwordKey;
     static const QString totalStorageKey;
@@ -128,9 +132,9 @@ protected:
     static const QString proxyRequiresAuthKey;
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
-    static const QString localFoldersKey;
-    static const QString megaFoldersKey;
-    static const QString megaFolderHandlesKey;
+    static const QString localFolderKey;
+    static const QString megaFolderKey;
+    static const QString megaFolderHandleKey;
 	static const QString downloadFolderKey;
 	static const QString uploadFolderKey;
 	static const QString importFolderKey;

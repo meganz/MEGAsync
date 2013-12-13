@@ -6,10 +6,7 @@
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
 #include "ui_SettingsDialog.h"
-
-#ifdef WIN32
-    #include <utils/WindowsUtils.h>
-#endif
+#include <utils/Utils.h>
 
 SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -198,9 +195,9 @@ void SettingsDialog::loadSettings()
 	{
 		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
 		ui->pStorage->setValue(percentage);
-		ui->lStorage->setText(WindowsUtils::getSizeString(preferences->usedStorage()) + " (" +
+        ui->lStorage->setText(Utils::getSizeString(preferences->usedStorage()) + " (" +
 			  QString::number(percentage) + "%) of " +
-			  WindowsUtils::getSizeString(preferences->totalStorage()) + " used");
+              Utils::getSizeString(preferences->totalStorage()) + " used");
 	}
     switch(preferences->accountType())
     {
@@ -239,9 +236,9 @@ void SettingsDialog::loadSettings()
 	{
 		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
 		ui->pUsedBandwidth->setValue(bandwidthPercentage);
-		ui->lBandwidth->setText(WindowsUtils::getSizeString(preferences->usedBandwidth()) + " (" +
+        ui->lBandwidth->setText(Utils::getSizeString(preferences->usedBandwidth()) + " (" +
 			QString::number(bandwidthPercentage) + "%) of " +
-			WindowsUtils::getSizeString(preferences->totalBandwidth()) + " used");
+            Utils::getSizeString(preferences->totalBandwidth()) + " used");
 	}
 
     //Proxies
@@ -359,7 +356,7 @@ void SettingsDialog::on_bAdd_clicked()
         return;
 
    QString localFolderPath = dialog->getLocalFolder();
-   if(!WindowsUtils::verifySyncedFolderLimits(localFolderPath))
+   if(!Utils::verifySyncedFolderLimits(localFolderPath))
    {
        QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (+%1 folders or +%2 files).\n"
             "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
@@ -371,16 +368,6 @@ void SettingsDialog::on_bAdd_clicked()
    Node *node = megaApi->getNodeByHandle(handle);
    if(!localFolderPath.length() || !node)
        return;
-
-   /*for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-   {
-	   QString s = preferences->getLocalFolder(i);
-	   if(!s.compare(localFolderPath))
-	   {
-		   cout << "Local folder already synced" << endl;
-		   return;
-	   }
-   }*/
 
    QTableWidgetItem *localFolder = new QTableWidgetItem();
    localFolder->setText("  " + localFolderPath + "  ");

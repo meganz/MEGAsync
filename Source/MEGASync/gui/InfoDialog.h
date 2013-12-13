@@ -34,6 +34,7 @@ public:
 
 public slots:
    void timerUpdate();
+   void addSync();
 
 private slots:
     void on_bSettings_clicked();

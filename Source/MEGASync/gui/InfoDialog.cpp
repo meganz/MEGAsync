@@ -78,11 +78,11 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 	int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
 	QString used(QString::number(percentage));
-	used += "% of " + WindowsUtils::getSizeString(totalBytes);
+    used += "% of " + Utils::getSizeString(totalBytes);
 	ui->lPercentageUsed->setText(used);
 
     QString usage("Usage: ");
-	usage += WindowsUtils::getSizeString(usedBytes);
+    usage += Utils::getSizeString(usedBytes);
     ui->lTotalUsed->setText(usage);
 }
 
@@ -125,7 +125,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	{
 		QString pattern(tr("%1 of %2"));
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-		if(downloadSpeed) downloadString += " (" + WindowsUtils::getSizeString(downloadSpeed) + "/s)";
+        if(downloadSpeed) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
 		ui->lDownloads->setText(downloadString);
 		ui->bDownloads->show();
 	}
@@ -139,7 +139,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	{
 		QString pattern(tr("%1 of %2"));
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-		if(uploadSpeed) uploadString += " (" + WindowsUtils::getSizeString(uploadSpeed) + "/s)";
+        if(uploadSpeed) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
 		ui->lUploads->setText(uploadString);
 		ui->bUploads->show();
 	}
@@ -166,7 +166,7 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	{
 		QString pattern(tr("%1 of %2"));
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-		if(downloadSpeed) downloadString += " (" + WindowsUtils::getSizeString(downloadSpeed) + "/s)";
+        if(downloadSpeed) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
 		ui->lDownloads->setText(downloadString);
 		ui->bDownloads->show();
 	}
@@ -180,7 +180,7 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	{
 		QString pattern(tr("%1 of %2"));
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-		if(uploadSpeed) uploadString += " (" + WindowsUtils::getSizeString(uploadSpeed) + "/s)";
+        if(uploadSpeed) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
 		ui->lUploads->setText(uploadString);
 		ui->bUploads->show();
 	}
@@ -239,7 +239,34 @@ void InfoDialog::timerUpdate()
 		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 		app->showSyncedIcon();
 		app->getMegaApi()->getAccountDetails();
-	}
+    }
+}
+
+void InfoDialog::addSync()
+{
+    BindFolderDialog *dialog = new BindFolderDialog(this);
+    int result = dialog->exec();
+    if(result != QDialog::Accepted)
+        return;
+
+   QString localFolderPath = dialog->getLocalFolder();
+   if(!Utils::verifySyncedFolderLimits(localFolderPath))
+   {
+       QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (+%1 folders or +%2 files).\n"
+            "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
+            .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER), QMessageBox::Ok);
+       return;
+   }
+
+   MegaApi *megaApi = app->getMegaApi();
+   long long handle = dialog->getMegaFolder();
+   Node *node = megaApi->getNodeByHandle(handle);
+   if(!localFolderPath.length() || !node)
+       return;
+
+   Preferences *preferences = app->getPreferences();
+   preferences->addSyncedFolder(localFolderPath, megaApi->getNodePath(node), handle);
+   app->reloadSyncs();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -258,29 +285,26 @@ void InfoDialog::on_bSyncFolder_clicked()
 {
 	Preferences *prefences = app->getPreferences();
 	int num = prefences->getNumSyncedFolders();
-	if(num==1)
-	{
-		QString filePath = app->getPreferences()->getLocalFolder(0);
-		QStringList args;
-		args << QDir::toNativeSeparators(filePath);
-		QProcess::startDetached("explorer", args);
-	}
-	else
-	{
-		QMenu menu;
-		QSignalMapper signalMapper;
 
-		for(int i=0; i<num; i++)
-		{
-			QFileInfo info(prefences->getLocalFolder(i));
+    QMenu menu;
 
-			QAction *action = menu.addAction(info.fileName(), &signalMapper, SLOT(map()));
-			action->setIcon(QIcon("://images/folder.ico"));
-			signalMapper.setMapping(action, info.absoluteFilePath());
-			connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
-		}
-		menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -(num-1)*30)));
-	}
+    menu.setStyleSheet("QMenu { background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;}");
+    QAction *addSyncAction = menu.addAction("Add Sync", this, SLOT(addSync()));
+    addSyncAction->setIcon(QIcon("://images/folder.ico"));
+    menu.addSeparator();
+
+    QSignalMapper signalMapper;
+    for(int i=0; i<num; i++)
+    {
+        QFileInfo info(prefences->getLocalFolder(i));
+
+        QAction *action = menu.addAction(info.fileName(), &signalMapper, SLOT(map()));
+        action->setIcon(QIcon("://images/folder.ico"));
+        signalMapper.setMapping(action, info.absoluteFilePath());
+        connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
+    }
+    menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+
 }
 
 void InfoDialog::openFolder(QString path)
@@ -332,8 +356,8 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		if(!totalDownloads) return;
 		operation = tr("Downloading ");
 		long long remainingBytes = totalDownloadSize-totalDownloadedSize;
-		remainingSize = WindowsUtils::getSizeString(remainingBytes);
-		xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(WindowsUtils::getSizeString(downloadSpeed));
+        remainingSize = Utils::getSizeString(remainingBytes);
+        xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
 		totalRemainingSeconds = downloadSpeed ? remainingBytes/downloadSpeed : 0;
 	}
 	else
@@ -342,8 +366,8 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 
 		operation = tr("Uploading ");
 		long long remainingBytes = totalUploadSize-totalUploadedSize;
-		remainingSize = WindowsUtils::getSizeString(totalUploadSize-totalUploadedSize);
-		xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(WindowsUtils::getSizeString(uploadSpeed));
+        remainingSize = Utils::getSizeString(totalUploadSize-totalUploadedSize);
+        xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
 		totalRemainingSeconds = uploadSpeed ? remainingBytes/uploadSpeed : 0;
 	}
 

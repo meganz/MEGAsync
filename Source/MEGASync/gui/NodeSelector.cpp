@@ -30,7 +30,7 @@ void NodeSelector::nodesReady()
     addChildren(root, rootNode);
     ui->tMegaFolders->addTopLevelItem(root);
     ui->tMegaFolders->setCurrentItem(root);
-    ui->tMegaFolders->expandAll();
+    ui->tMegaFolders->expandToDepth(1);
 }
 
 long long NodeSelector::getSelectedFolderHandle()

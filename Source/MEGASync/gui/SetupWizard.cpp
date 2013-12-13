@@ -2,6 +2,7 @@
 #include "ui_SetupWizard.h"
 
 #include "MegaApplication.h"
+#include "utils/Utils.h"
 
 SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -55,12 +56,8 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		{
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
-				preferences->setEmail(ui->eLoginEmail->text().toLower().trimmed());
-				preferences->setPassword(ui->eLoginPassword->text());
-
 				ui->lProgress->setText(tr("Fetching file list..."));
 				megaApi->fetchNodes(delegateListener);
-				megaApi->getAccountDetails();
 			}
 			else if(error->getErrorCode() == MegaError::API_ENOENT)
 			{
@@ -149,7 +146,6 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        preferences->setEmail(email);
 		megaApi->logout();
 		megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
         ui->lProgress->setText(tr("Logging in..."));
@@ -258,7 +254,7 @@ void SetupWizard::on_bNext_clicked()
         }
 
         QString localFolderPath = ui->eLocalFolder->text();
-        if(!WindowsUtils::verifySyncedFolderLimits(localFolderPath))
+        if(!Utils::verifySyncedFolderLimits(localFolderPath))
         {
             QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (+%1 folders or +%2 files).\n"
                  "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
@@ -314,10 +310,13 @@ void SetupWizard::on_bCancel_clicked()
 {
     if(ui->sPages->currentWidget() == ui->pWelcome)
     {
+        preferences->setEmail(ui->eLoginEmail->text().toLower().trimmed());
+        preferences->setPassword(ui->eLoginPassword->text());
         preferences->addSyncedFolder(ui->lFinalLocalFolder->text(), ui->lFinalMegaFolder->text(), selectedMegaFolderHandle);
         preferences->setSetupWizardCompleted(true);
-        this->close();
+        megaApi->getAccountDetails();
 		megaApi->syncFolder(ui->lFinalLocalFolder->text().toUtf8().constData(), megaApi->getNodeByHandle(selectedMegaFolderHandle));
+        this->close();
         return;
     }
 

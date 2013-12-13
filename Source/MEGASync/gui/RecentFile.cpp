@@ -37,11 +37,7 @@ void RecentFile::updateWidget()
 	if(fileName.compare(ui->lFileName->text()))
 	{
 		ui->lFileName->setText(fileName);
-		QFileInfo f(fileName);
-		if(WindowsUtils::extensionIcons.contains(f.suffix().toLower()))
-			ui->lFileType->setPixmap(QPixmap(QString(WindowsUtils::extensionIcons[f.suffix().toLower()]).insert(0, "://images/drag_")));
-		else
-			ui->lFileType->setPixmap(QPixmap("://images/drag_generic.png"));
+        ui->lFileType->setPixmap(Utils::getExtensionPixmapMedium(fileName));
 		ui->pArrow->show();
 	}
 

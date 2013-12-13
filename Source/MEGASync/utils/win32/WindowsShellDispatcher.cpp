@@ -1,4 +1,4 @@
-#include "PipeDispatcher.h"
+#include "WindowsShellDispatcher.h"
 
 PIPEINST Pipe[INSTANCES];
 HANDLE hEvents[INSTANCES];
@@ -8,22 +8,23 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
 
-ShellDispatcher::ShellDispatcher()
+WindowsShellDispatcher::WindowsShellDispatcher(MegaApplication *receiver)
 {
 	stop = false;
+    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
 }
 
-void ShellDispatcher::stopTask()
+WindowsShellDispatcher::~WindowsShellDispatcher()
 {
 	stop = true;
 }
 
-void ShellDispatcher::run()
+void WindowsShellDispatcher::run()
 {
 	dispatchPipe();
 }
 
-int ShellDispatcher::dispatchPipe()
+int WindowsShellDispatcher::dispatchPipe()
 {
    DWORD i, dwWait, cbRet, dwErr;
    BOOL fSuccess;
@@ -312,7 +313,7 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
-VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
+VOID WindowsShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 {
    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
@@ -320,7 +321,7 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
    if(((c != L'P') && (c != L'F')) || (lstrlen(pipe->chRequest)<3))
    {
 	   //cout << "ContextMenu Start/Stop" << endl;
-	   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("9") );
+       wcscpy_s( pipe->chReply, BUFSIZE, TEXT("9") );
 	   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 	   if(!uploadQueue.isEmpty())
 	   {
@@ -368,7 +369,7 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 		   if(!wcsicmp(path, wBasePath))
 		   {
 			   //cout << "Base path found" << endl;
-			   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("0") );
+               wcscpy_s( pipe->chReply, BUFSIZE, TEXT("0") );
 			   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 			   return;
 		   }
@@ -384,18 +385,18 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
 		   {
 			   case PATHSTATE_SYNCED:
 				   //cout << "File synced"<< endl;
-				   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("0") );
+                   wcscpy_s( pipe->chReply, BUFSIZE, TEXT("0") );
 				   break;
 				case PATHSTATE_SYNCING:
 					//cout << "File synced"<< endl;
-					StringCchCopy( pipe->chReply, BUFSIZE, TEXT("2") );
+                    wcscpy_s( pipe->chReply, BUFSIZE, TEXT("2") );
 					break;
 			   case PATHSTATE_PENDING:
 			   case PATHSTATE_NOTFOUND:
 				   //cout << "STATE NOT FOUND" << endl;
 			   default:
 				   //cout << "File not synced"<< endl;
-				   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("1") );
+                   wcscpy_s( pipe->chReply, BUFSIZE, TEXT("1") );
 				   break;
 		   }
 		   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
@@ -404,10 +405,6 @@ VOID ShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
    }
 
    //cout << "File out of a synced folder" << endl;
-   StringCchCopy( pipe->chReply, BUFSIZE, TEXT("9") );
+   wcscpy_s( pipe->chReply, BUFSIZE, TEXT("9") );
    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 }
-
-
-
-

@@ -1,18 +1,24 @@
-#ifndef PIPEDISPATCHER_H
-#define PIPEDISPATCHER_H
-
-#include "sdk/megaapi.h"
-#include "MegaApplication.h"
-
-#include <windows.h>
-#include <stdio.h>
-#include <tchar.h>
-#include <strsafe.h>
-
-#include <iostream>
+#ifndef WINDOWSSHELLDISPATCHER_H
+#define WINDOWSSHELLDISPATCHER_H
 
 #include <QString>
 #include <QThread>
+
+#include "MegaApplication.h"
+#include "sdk/megaapi.h"
+#include "utils/Preferences.h"
+
+#include <windows.h>
+#include <winbase.h>
+#include <Shlobj.h>
+#include <objbase.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <commctrl.h>
+#include <iostream>
+#include <Shobjidl.h>
+#include <wchar.h>
 
 #define CONNECTING_STATE 0
 #define READING_STATE 1
@@ -33,13 +39,13 @@ typedef struct
    BOOL fPendingIO;
 } PIPEINST, *LPPIPEINST;
 
-class ShellDispatcher : public QThread
- {
-	 Q_OBJECT
+class WindowsShellDispatcher : public QThread
+{
+    Q_OBJECT
 
  public:
-	ShellDispatcher();
-	void stopTask();
+    WindowsShellDispatcher(MegaApplication *receiver);
+    ~WindowsShellDispatcher();
 
  protected:
 	void run ();
@@ -51,7 +57,7 @@ class ShellDispatcher : public QThread
  signals:
 	void newUploadQueue(QQueue<QString> uploadQueue);
 
- };
+};
 
 #endif
 
