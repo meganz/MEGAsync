@@ -28,7 +28,7 @@ extern bool debug;
 WinHttpIO::WinHttpIO()
 {
     // create the session handle using the default settings.
-    hSession = WinHttpOpen(L"MEGA Client Access Engine/1.0",WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,WINHTTP_NO_PROXY_NAME,WINHTTP_NO_PROXY_BYPASS,WINHTTP_FLAG_ASYNC);
+    hSession = WinHttpOpen(L"MEGA Client Access Engine/2.0",WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,WINHTTP_NO_PROXY_NAME,WINHTTP_NO_PROXY_BYPASS,WINHTTP_FLAG_ASYNC);
 
 	InitializeCriticalSection(&csHTTP);
 	EnterCriticalSection(&csHTTP);

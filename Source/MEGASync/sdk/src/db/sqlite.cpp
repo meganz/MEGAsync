@@ -21,6 +21,7 @@
 
 #include "mega.h"
 
+#ifdef USE_SQLITE
 namespace mega {
 
 SqliteDbAccess::SqliteDbAccess(string* path)
@@ -179,3 +180,5 @@ void SqliteDbTable::abort()
 }
 
 } // namespace
+
+#endif

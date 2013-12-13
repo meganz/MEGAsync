@@ -492,6 +492,8 @@ void LocalNode::init(Sync* csync, string* clocalname, nodetype ctype, LocalNode*
 	if (type == FOLDERNODE) sync->client->fsaccess->addnotify(this,clocalpath);
 
 	sync->client->syncactivity = true;
+	
+	sync->localnodes[type]++;
 }
 
 void LocalNode::setnode(Node* cnode)
@@ -504,6 +506,9 @@ void LocalNode::setnode(Node* cnode)
 
 LocalNode::~LocalNode()
 {
+	sync->localnodes[type]--;
+	if (type == FILENODE) sync->localbytes -= size;
+
 	if (sync->state >= SYNC_INITIALSCAN)
 	{
 		// eliminate queued filesystem events for direct children
@@ -518,7 +523,7 @@ LocalNode::~LocalNode()
 	if (parent)
 	{
 		parent->children.erase(&localname);
-		if (slocalname.size()) parent->children.erase(&slocalname);
+		if (slocalname.size()) parent->schildren.erase(&slocalname);
 	}
 
 	for (localnode_map::iterator it = children.begin(); it != children.end(); ) delete it++->second;

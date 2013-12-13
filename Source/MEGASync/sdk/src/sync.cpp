@@ -223,12 +223,6 @@ void Sync::procscanq(int q)
 	}
 	else l = NULL;
 
-	if (l)
-	{
-		localnodes[l->type]--;
-		if (l->type == FILENODE) localbytes -= l->size;
-	}
-
 	// attempt to open/type this file, bail if unsuccessful
 	fa = client->fsaccess->newfileaccess();
 
@@ -262,7 +256,12 @@ void Sync::procscanq(int q)
 		else
 		{
 			if (!l) changestate(SYNC_FAILED);	// root node cannot be a file
-			else if (l->genfingerprint(fa)) changed = true;
+			else
+			{
+				if (l->size > 0) localbytes -= l->size;
+				if (l->genfingerprint(fa)) changed = true;
+				if (l->size > 0) localbytes += l->size;
+			}
 		}
 
 		if (changed) client->syncadded.insert(l->syncid);
@@ -274,7 +273,7 @@ void Sync::procscanq(int q)
 			// fopen() signals that the failure is potentially transient - do nothing, but request a recheck
 			localpath->resize(localpath->size()-client->fsaccess->localseparator.size()-localname->size());
 			queuescan(RETRY,localpath,localname,l,si->parent,true);
-			
+
 			l = NULL;	// make no changes yet
 		}
 		else if (l)
@@ -299,15 +298,11 @@ void Sync::procscanq(int q)
 			client->fsaccess->local2path(localpath,&tmpname);
 		}
 
-		localnodes[l->type]++;
-
-		if (l->type == FILENODE)
+		if (changed)
 		{
-			if (changed) client->app->syncupdate_local_file_addition(this,tmpname.c_str());
-			localbytes += l->size;
+			if (l->type == FILENODE) client->app->syncupdate_local_file_addition(this,tmpname.c_str());
+			else client->app->syncupdate_local_folder_addition(this,tmpname.c_str());
 		}
-		else if (changed) client->app->syncupdate_local_folder_addition(this,tmpname.c_str());
-
 		client->syncactivity = true;
 	}
 

@@ -21,8 +21,9 @@
 
 // FIXME: close in a way that does not require logfile merging upon the next open()
 
-#include "mega/megaclient.h"
-#include "mega/db/bdb.h"
+#ifdef USE_BDB
+
+#include "mega.h"
 
 namespace mega {
 
@@ -190,3 +191,5 @@ void BdbTable::abort()
 }
 
 } // namespace
+
+#endif
