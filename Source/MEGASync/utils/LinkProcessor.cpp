@@ -44,7 +44,7 @@ int LinkProcessor::getError(int id)
 	return linkError[id];
 }
 
-Node *LinkProcessor::getNode(int id)
+PublicNode *LinkProcessor::getNode(int id)
 {
 	return linkNode[id];
 }
@@ -59,12 +59,12 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 	cout << "Notification received" << endl;
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
-		linkNode[currentIndex] = MegaApi::copyNode(request->getPublicNode());
+        linkNode[currentIndex] = new PublicNode(request->getPublicNode());
 		linkError[currentIndex] = e->getErrorCode();
 		linkSelected[currentIndex] = (linkError[currentIndex]==MegaError::API_OK);
 		if(!linkError[currentIndex])
 		{
-			QString name = QString::fromUtf8(linkNode[currentIndex]->displayname());
+            QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
 			if(!name.compare("NO_KEY") || !name.compare("DECRYPTION_ERROR"))
 				linkSelected[currentIndex] = false;
 		}
@@ -114,7 +114,8 @@ void LinkProcessor::importLinks(Node *node)
 		if(linkNode[i] && linkSelected[i] && !linkError[i])
 		{
 			remainingNodes++;
-			megaApi->importPublicNode(linkNode[i], node, this);
+            megaApi->importPublicNode(linkNode[i], node, this);
+            //megaApi->importFileLink(linkList[i].toUtf8().constData(), node, this);
 		}
 	}
 }

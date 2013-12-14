@@ -140,16 +140,16 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 {
 	ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
-	Node *node = linkProcessor->getNode(id);
+    PublicNode *node = linkProcessor->getNode(id);
 	item->setNode(node);
 
 	if(node && (linkProcessor->getError(id) == MegaError::API_OK))
 	{
-		QString name = QString::fromUtf8(node->displayname());
+        QString name = QString::fromUtf8(node->getName());
 		if(!name.compare("NO_KEY") || !name.compare("CRYPTO_ERROR"))
-			item->setData("Decryption error", ImportListWidgetItem::WARNING, node->size);
+            item->setData("Decryption error", ImportListWidgetItem::WARNING, node->getSize());
 		else
-			item->setData(name, ImportListWidgetItem::CORRECT, node->size);
+            item->setData(name, ImportListWidgetItem::CORRECT, node->getSize());
 	}
 	else
 	{

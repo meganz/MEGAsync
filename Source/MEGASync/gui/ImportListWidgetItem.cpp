@@ -22,7 +22,7 @@ ImportListWidgetItem::~ImportListWidgetItem()
 	delete ui;
 }
 
-void ImportListWidgetItem::setNode(Node *node)
+void ImportListWidgetItem::setNode(PublicNode *node)
 {
 	this->node = node;
 }

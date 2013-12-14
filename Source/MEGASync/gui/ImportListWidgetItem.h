@@ -18,7 +18,7 @@ public:
 	explicit ImportListWidgetItem(QString link, int id, QWidget *parent = 0);
 	~ImportListWidgetItem();
 
-	void setNode(Node *node);
+    void setNode(PublicNode *node);
 	void setData(QString fileName, linkstatus status, long long size=0);
 	void updateGui();
 	bool isSelected();
@@ -32,7 +32,7 @@ signals:
 
 private:
 	Ui::ImportListWidgetItem *ui;
-	Node *node;
+    PublicNode *node;
 	QString fileName;
 	linkstatus status;
 	long long fileSize;
