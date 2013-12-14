@@ -69,67 +69,58 @@ public:
     MegaDbAccess(string *basePath = NULL) : SqliteDbAccess(basePath){}
 };
 
+class MegaApi;
+class PublicNode
+{
+    public:
+        PublicNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, handle nodehandle, string *nodekey, string *attrstring);
+        PublicNode(PublicNode *node);
+        ~PublicNode();
+
+        int getType();
+        const char* getName();
+        m_off_t getSize();
+        time_t getCreationTime();
+        time_t getModificationTime();
+        handle getHandle();
+        string* getNodeKey();
+        string* getAttrString();
+
+    private:
+        int type;
+        const char *name;
+        m_off_t size;
+        time_t ctime;
+        time_t mtime;
+        handle nodehandle;
+        string nodekey;
+        string attrstring;
+};
+
 struct MegaFile : public File
 {
     // app-internal sequence number for queue management
     int seqno;
     static int nextseqno;
 
-    bool failed(error e)
-    {
-        return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 10;
-    }
-
-    MegaFile()
-    {
-        seqno = ++nextseqno;
-    }
+    bool failed(error e);
+    MegaFile();
 };
 
 struct MegaFileGet : public MegaFile
 {
-    void completed(Transfer*, LocalNode*)
-    {
-        delete this;
-    }
-
+    void completed(Transfer*, LocalNode*);
 	MegaFileGet(MegaClient *client, Node* n, string dstPath);
+    MegaFileGet(MegaClient *client, PublicNode* n, string dstPath);
 	~MegaFileGet() {}
 };
 
 struct MegaFilePut : public MegaFile
 {
-    void completed(Transfer* t, LocalNode*)
-    {
-        File::completed(t,NULL);
-        delete this;
-    }
-
-	MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser)
-    {
-        // this assumes that the local OS uses an ASCII path separator, which should be true for most
-        string separator = client->fsaccess->localseparator;
-
-        // full local path
-		localname = *clocalname;
-
-        // target parent node
-        h = ch;
-
-        // target user
-        targetuser = ctargetuser;
-
-        // erase path component
-		name = *clocalname;
-        client->fsaccess->local2name(&name);
-        client->fsaccess->local2name(&separator);
-
-        name.erase(0,name.find_last_of(*separator.c_str())+1);
-    }
-
+    void completed(Transfer* t, LocalNode*);
+    MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser);
     ~MegaFilePut() {}
 };
-
 
 //Wrapping for arrays, to ease the use of SWIG
 template <class T>
@@ -237,9 +228,8 @@ class MegaRequest
 		const char* getFile() const;
 		int getNumRetry() const;
 		int getNextRetryDelay() const;
-		Node *getPublicNode();
+        PublicNode *getPublicNode();
 		int getAttrType() const;
-		void *getParameter() const;
 
 		void setNodeHandle(handle nodeHandle);
 		void setLink(const char* link);
@@ -253,11 +243,10 @@ class MegaRequest
 		void setAccess(const char* access);
 		void setNumRetry(int ds);
 		void setNextRetryDelay(int delay);
-		void setPublicNode(Node* node);
+        void setPublicNode(PublicNode* publicNode);
 		void setNumDetails(int numDetails);
 		void setFile(const char* file);
 		void setAttrType(int type);
-		void setParameter(void *parameter);
 
 		MegaRequestListener *getListener() const;
 		MegaTransfer * getTransfer() const;
@@ -283,8 +272,7 @@ class MegaRequest
 		MegaTransfer *transfer;
 		AccountDetails *accountDetails;
 		int numDetails;
-		Node* publicNode;
-		void* parameter;
+        PublicNode* publicNode;
 		int numRetry;
 		int nextRetryDelay;
 };
@@ -328,7 +316,7 @@ class MegaTransfer
 		long long getSpeed() const;
 		long long getDeltaSize() const;
 		long long getUpdateTime() const;
-		void *getParameter() const;
+        PublicNode *getPublicNode() const;
 
 		void setStartTime(long long startTime);
 		void setTransferredBytes(long long transferredBytes);
@@ -352,7 +340,7 @@ class MegaTransfer
 		void setSpeed(long long speed);
 		void setDeltaSize(long long deltaSize);
 		void setUpdateTime(long long updateTime);
-		void setParameter(void *parameter);
+        void setPublicNode(PublicNode *publicNode);
 
 	protected:
 		int slot;
@@ -371,7 +359,7 @@ class MegaTransfer
 		const char* parentPath;
 		const char* fileName;
 		const char* base64Key;
-		void *parameter;
+        PublicNode *publicNode;
 
 		int numConnections;
 		long long startPos;
@@ -670,7 +658,7 @@ public:
 	void share(Node* node, const char* email, const char *level, MegaRequestListener *listener = NULL);
 	void folderAccess(const char* megaFolderLink, MegaRequestListener *listener = NULL);
 	void importFileLink(const char* megaFileLink, Node* parent, MegaRequestListener *listener = NULL);
-	void importPublicNode(Node *publicNode, Node* parent, MegaRequestListener *listener = NULL);
+    void importPublicNode(PublicNode *publicNode, Node* parent, MegaRequestListener *listener = NULL);
 	void getPublicNode(const char* megaFileLink, MegaRequestListener *listener = NULL);
 	void exportNode(Node *node, MegaRequestListener *listener = NULL);
 	void fetchNodes(MegaRequestListener *listener = NULL);
@@ -691,7 +679,7 @@ public:
 	void startDownload(Node* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
 	void startDownload(Node* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
 	void startDownload(Node* node, const char* localFolder, MegaTransferListener *listener);
-	void startPublicDownload(Node* node, const char* localFolder, MegaTransferListener *listener = NULL);
+    void startPublicDownload(PublicNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
 //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
 
 //	void cancelTransfer(MegaTransfer *transfer);
@@ -731,7 +719,6 @@ public:
 	
 	//General porpuse
 	static char* strdup(const char* buffer);
-	static Node* copyNode(Node *node);
 
 	//Do not use
 	static void *threadEntryPoint(void *param);

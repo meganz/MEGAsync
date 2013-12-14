@@ -134,11 +134,46 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 		FreeImage_Unload(dib);
 }
 
-MegaFileGet::MegaFileGet(MegaClient *client, Node* n, string dstPath)
+int MegaFile::nextseqno = 0;
+
+bool MegaFile::failed(error e)
 {
-	h = n->nodehandle;
-	*(FileFingerprint*)this = *n;
-	name = n->displayname();
+    return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 10;
+}
+
+MegaFile::MegaFile()
+{
+    seqno = ++nextseqno;
+}
+
+MegaFileGet::MegaFileGet(MegaClient *client, Node *n, string dstPath)
+{
+    h = n->nodehandle;
+    *(FileFingerprint*)this = *n;
+    name = n->displayname();
+    string finalPath;
+    if(dstPath.size())
+    {
+        char c = dstPath[dstPath.size()-1];
+        if((c == '\\') || (c == '/')) finalPath = dstPath+name;
+        else finalPath = dstPath;
+    }
+    else finalPath = name;
+
+    size = n->size;
+    mtime = n->mtime;
+
+    if(n->nodekey.size()>=sizeof(filekey))
+        memcpy(filekey,n->nodekey.data(),sizeof filekey);
+
+    client->fsaccess->path2local(&finalPath, &localname);
+    hprivate = true;
+}
+
+MegaFileGet::MegaFileGet(MegaClient *client, PublicNode *n, string dstPath)
+{
+    h = n->getHandle();
+    name = n->getName();
 	string finalPath;
 	if(dstPath.size())
 	{
@@ -148,14 +183,90 @@ MegaFileGet::MegaFileGet(MegaClient *client, Node* n, string dstPath)
 	}
 	else finalPath = name;
 
-	size = n->size;
-	mtime = n->mtime;
-	memcpy(filekey,n->nodekey.data(),sizeof filekey);
-	client->fsaccess->path2local(&finalPath, &localname);
-	hprivate = (n->parent!=NULL);
+    size = n->getSize();
+    mtime = n->getModificationTime();
+
+    if(n->getNodeKey()->size()>=sizeof(filekey))
+        memcpy(filekey,n->getNodeKey()->data(),sizeof filekey);
+
+    client->fsaccess->path2local(&finalPath, &localname);
+    hprivate = false;
 }
 
-int MegaFile::nextseqno = 0;
+void MegaFileGet::completed(Transfer*, LocalNode*)
+{
+    delete this;
+}
+
+MegaFilePut::MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser)
+{
+    // this assumes that the local OS uses an ASCII path separator, which should be true for most
+    string separator = client->fsaccess->localseparator;
+
+    // full local path
+    localname = *clocalname;
+
+    // target parent node
+    h = ch;
+
+    // target user
+    targetuser = ctargetuser;
+
+    // erase path component
+    name = *clocalname;
+    client->fsaccess->local2name(&name);
+    client->fsaccess->local2name(&separator);
+
+    name.erase(0,name.find_last_of(*separator.c_str())+1);
+}
+
+void MegaFilePut::completed(Transfer* t, LocalNode*)
+{
+    File::completed(t,NULL);
+    delete this;
+}
+
+
+PublicNode::PublicNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, handle nodehandle, string *nodekey, string *attrstring)
+{
+    this->name = MegaApi::strdup(name);
+    this->type = type;
+    this->size = size;
+    this->ctime = ctime;
+    this->mtime = mtime;
+    this->nodehandle = nodehandle;
+    this->attrstring.assign(attrstring->data(), attrstring->size());
+    this->nodekey.assign(nodekey->data(),nodekey->size());
+}
+
+PublicNode::PublicNode(PublicNode *node)
+{
+    this->name = MegaApi::strdup(node->getName());
+    this->type = node->type;
+    this->size = node->getSize();
+    this->ctime = node->getCreationTime();
+    this->mtime = node->getModificationTime();
+    this->nodehandle = node->getHandle();
+    string * attrstring = node->getAttrString();
+    this->attrstring.assign(attrstring->data(), attrstring->size());
+    string *nodekey = node->getNodeKey();
+    this->nodekey.assign(nodekey->data(),nodekey->size());
+}
+
+PublicNode::~PublicNode()
+{
+    delete name;
+}
+
+
+int PublicNode::getType() { return type; }
+const char* PublicNode::getName() { return name; }
+m_off_t PublicNode::getSize() { return size; }
+time_t PublicNode::getCreationTime() { return ctime; }
+time_t PublicNode::getModificationTime() { return mtime; }
+handle PublicNode::getHandle() { return nodehandle; }
+string *PublicNode::getNodeKey() { return &nodekey; }
+string *PublicNode::getAttrString() { return &attrstring; }
 
 MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 { 
@@ -209,18 +320,19 @@ MegaRequest::MegaRequest(MegaTransfer *transfer)
 
 MegaRequest::MegaRequest(MegaRequest &request)
 {
-	this->link = NULL;
-	this->name = NULL;
-	this->email = NULL;
-	this->password = NULL;
-	this->newPassword = NULL;
-	this->privateKey = NULL;
-	this->access = NULL;
-	this->userHandle = NULL;
-	this->file = NULL;
-	this->parameter = NULL;
+    this->link = NULL;
+    this->userHandle = NULL;
+    this->name = NULL;
+    this->email = NULL;
+    this->password = NULL;
+    this->newPassword = NULL;
+    this->privateKey = NULL;
+    this->access = NULL;
+    this->publicNode = NULL;
+    this->file = NULL;
+    this->publicNode = NULL;
 
-	this->type = request.getType();
+    this->type = request.getType();
 	this->setNodeHandle(request.getNodeHandle());
 	this->setLink(request.getLink());
 	this->setParentHandle(request.getParentHandle());
@@ -236,6 +348,7 @@ MegaRequest::MegaRequest(MegaRequest &request)
 	this->numDetails = 0;
 	this->setFile(request.getFile());
 	this->setAttrType(request.getAttrType());
+    this->setPublicNode(request.getPublicNode());
 
 	this->transfer = request.getTransfer();
 	this->listener = request.getListener();
@@ -260,7 +373,6 @@ MegaRequest::MegaRequest(MegaRequest &request)
 		this->accountDetails->transfer_reserved = temp->transfer_reserved;
 		this->accountDetails->transfer_limit = temp->transfer_limit;
 	}
-	this->publicNode = MegaApi::copyNode(request.getPublicNode());
 }
 
 
@@ -298,14 +410,12 @@ const char* MegaRequest::getAccess() const { return access; }
 const char* MegaRequest::getFile() const { return file; }
 int MegaRequest::getAttrType() const { return attrType; }
 
-void *MegaRequest::getParameter() const { return parameter; }
 int MegaRequest::getNumRetry() const { return numRetry; }
 int MegaRequest::getNextRetryDelay() const { return nextRetryDelay; }
 AccountDetails* MegaRequest::getAccountDetails() const { return accountDetails; }
 int MegaRequest::getNumDetails() const { return numDetails; }
 void MegaRequest::setNumDetails(int numDetails) { this->numDetails = numDetails; }
-Node* MegaRequest::getPublicNode() { return publicNode;}
-void MegaRequest::setPublicNode(Node *node) { this->publicNode = node; }
+PublicNode *MegaRequest::getPublicNode() { return publicNode;}
 void MegaRequest::setNodeHandle(handle nodeHandle) { this->nodeHandle = nodeHandle; }
 void MegaRequest::setParentHandle(handle parentHandle) { this->parentHandle = parentHandle; }
 void MegaRequest::setUserHandle(const char* userHandle) 
@@ -364,9 +474,11 @@ void MegaRequest::setAttrType(int type)
 	this->attrType = type;
 }
 
-void MegaRequest::setParameter(void *parameter)
+void MegaRequest::setPublicNode(PublicNode *publicNode)
 {
-	this->parameter = parameter;
+    if(this->publicNode) delete publicNode;
+    if(!publicNode) this->publicNode = NULL;
+    else this->publicNode = new PublicNode(publicNode);
 }
 
 const char *MegaRequest::getRequestString() const
@@ -431,33 +543,19 @@ MegaTransfer::MegaTransfer(int type, MegaTransferListener *listener)
 	this->speed = 0;
 	this->deltaSize = 0;
 	this->updateTime = 0;
-	this->parameter = NULL;
+    this->publicNode = NULL;
 }
 
 MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
 {
-	this->type = type;
-	this->slot = -1;
-	this->tag = -1;
-	this->path = NULL;
-	this->nodeHandle = UNDEF;
-	this->parentHandle = UNDEF;
-	this->startPos = 0;
-	this->endPos = 0;
-	this->numConnections = 1;
-	this->maxSpeed = 1;
-	this->parentPath = NULL;
-	this->listener = listener;
-	this->retry = 0;
-	this->maxRetries = 3;
-	this->time = 0;
-	this->startTime = 0;
-	this->transferredBytes = 0;
-	this->totalBytes = 0;
-	this->fileName = NULL;
-	this->base64Key = NULL;
-	this->transfer = NULL;
+    path = NULL;
+    parentPath = NULL;
+    fileName = NULL;
+    base64Key = NULL;
+    publicNode = NULL;
 
+    this->listener = transfer.getListener();
+    this->transfer = transfer.getTransfer();
 	this->type = transfer.getType();
 	this->setSlot(transfer.getSlot());
 	this->setTag(transfer.getTag());
@@ -480,7 +578,7 @@ MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
 	this->setSpeed(transfer.getSpeed());
 	this->setDeltaSize(transfer.getDeltaSize());
 	this->setUpdateTime(transfer.getUpdateTime());
-	this->setParameter(transfer.getParameter());
+    this->setPublicNode(transfer.getPublicNode());
 }
 
 MegaTransfer* MegaTransfer::copy()
@@ -495,7 +593,7 @@ long long MegaTransfer::getSpeed() const { return speed; }
 long long MegaTransfer::getDeltaSize() const { return deltaSize; }
 long long MegaTransfer::getUpdateTime() const { return updateTime; }
 
-void *MegaTransfer::getParameter() const { return parameter; }
+PublicNode *MegaTransfer::getPublicNode() const { return publicNode; }
 int MegaTransfer::getType() const { return type; }
 long long MegaTransfer::getStartTime() const { return startTime; }
 long long MegaTransfer::getTransferredBytes() const {return transferredBytes; }
@@ -521,7 +619,13 @@ void MegaTransfer::setSpeed(long long speed) { this->speed = speed; }
 void MegaTransfer::setDeltaSize(long long deltaSize){ this->deltaSize = deltaSize; }
 void MegaTransfer::setUpdateTime(long long updateTime) { this->updateTime = updateTime; }
 
-void MegaTransfer::setParameter(void *parameter) { this->parameter = parameter; }
+void MegaTransfer::setPublicNode(PublicNode *publicNode)
+{
+    if(this->publicNode) delete publicNode;
+    if(!publicNode) this->publicNode = NULL;
+    else this->publicNode = new PublicNode(publicNode);
+}
+
 void MegaTransfer::setStartTime(long long startTime) { this->startTime = startTime; }
 void MegaTransfer::setTransferredBytes(long long transferredBytes) { this->transferredBytes = transferredBytes; }
 void MegaTransfer::setTotalBytes(long long totalBytes) { this->totalBytes = totalBytes; }
@@ -590,10 +694,12 @@ MegaTransfer::~MegaTransfer()
 	if(path) delete[] path;
 	if(parentPath) delete[] parentPath;
 	if(fileName) delete [] fileName;
+    if(base64Key) delete [] base64Key;
+    if(publicNode) delete publicNode;
 }
 
-const char * MegaTransfer::toString() const { return getTransferString(); };
-const char * MegaTransfer::__str__() const { return getTransferString(); };
+const char * MegaTransfer::toString() const { return getTransferString(); }
+const char * MegaTransfer::__str__() const { return getTransferString(); }
 
 MegaError::MegaError(int errorCode) 
 { 
@@ -1036,30 +1142,10 @@ void MegaApi::importFileLink(const char* megaFileLink, Node *parent, MegaRequest
     waiter->notify();
 }
 
-void MegaApi::importPublicNode(Node *publicNode, Node* parent, MegaRequestListener *listener)
+void MegaApi::importPublicNode(PublicNode *publicNode, Node* parent, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_IMPORT_NODE, listener);
-
-	if(publicNode)
-	{
-		NewNode *newnode = new NewNode[1];
-		string attrstring;
-
-		// copy core properties
-		*(NodeCore*)newnode = *(NodeCore*)publicNode;
-
-		// generate encrypted attribute string
-		publicNode->attrs.getjson(&attrstring);
-		client->makeattr(&publicNode->key,&newnode->attrstring,attrstring.c_str());
-		newnode->nodehandle = publicNode->nodehandle;
-		newnode->clienttimestamp = publicNode->ctime;
-		newnode->source = NEW_PUBLIC;
-		newnode->type = FILENODE;
-		newnode->parenthandle = UNDEF;
-
-		request->setParameter(newnode);
-	}
-
+    request->setPublicNode(publicNode);
 	if(parent)	request->setParentHandle(parent->nodehandle);
 	requestQueue.push(request);
     waiter->notify();
@@ -1202,12 +1288,12 @@ void MegaApi::startDownload(Node* node, const char* localFolder, long startPos, 
 void MegaApi::startDownload(Node* node, const char* localFolder, MegaTransferListener *listener)
 { startDownload((node != NULL) ? node->nodehandle : UNDEF, localFolder, 1, 0, 0, NULL, listener); }
 
-void MegaApi::startPublicDownload(Node* node, const char* localFolder, MegaTransferListener *listener)
+void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_DOWNLOAD, listener);
 	transfer->setParentPath(localFolder);
-	transfer->setNodeHandle(node->nodehandle);
-	transfer->setParameter(MegaApi::copyNode(node));
+    transfer->setNodeHandle(node->getHandle());
+    transfer->setPublicNode(node);
 	transferQueue.push(transfer);
 	waiter->notify();
 }
@@ -2171,17 +2257,8 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 			newnode->nodehandle = ph;
 			newnode->clienttimestamp = tm;
 			newnode->parenthandle = UNDEF;
-
 			newnode->nodekey.assign((char*)key,FILENODEKEYLENGTH);
-
 			newnode->attrstring = *a;
-
-			//unsigned len = a->size()*3/4+4;
-			//newnode->attrstring.resize(len);
-			//len = Base64::atob(a->data(),(byte *)newnode->attrstring.data(),len);
-			//newnode->attrstring.resize(len);
-
-			//newnode->attrstring.assign(a->c_str(), a->length());
 
 			// add node
 			requestMap.erase(client->restag);
@@ -2192,17 +2269,42 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 		}
 		else
 		{
-			Node *n = new Node(NULL, NULL, ph, UNDEF, FILENODE, size,
-					NULL, NULL, ts, tm);
+            string attrstring;
+            string fileName;
+            string keystring;
 
-			n->attrstring.resize(a->length()*4/3+4);
-			n->attrstring.resize(Base64::btoa((const byte *)a->data(),a->length(), (char *)n->attrstring.data()));
-			n->setkey(key);
-			n->parent = NULL;
-			n->inshare = NULL;
-			n->sharekey = NULL;
+            attrstring.resize(a->length()*4/3+4);
+            attrstring.resize(Base64::btoa((const byte *)a->data(),a->length(), (char *)attrstring.data()));
 
-			request->setPublicNode(n);
+            if(key)
+            {
+                SymmCipher nodeKey;
+                keystring.assign((char*)key,FILENODEKEYLENGTH);
+                nodeKey.setkey(key, FILENODE);
+
+                byte *buf = Node::decryptattr(&nodeKey,attrstring.c_str(),attrstring.size());
+                if(buf)
+                {
+                    JSON json;
+                    nameid name;
+                    string* t;
+                    AttrMap attrs;
+
+                    json.begin((char*)buf+5);
+                    while ((name = json.getnameid()) != EOO && json.storeobject((t = &attrs.map[name]))) JSON::unescape(t);
+                    delete[] buf;
+
+                    attr_map::iterator it;
+                    it = attrs.map.find('n');
+                    if (it == attrs.map.end()) fileName = "CRYPTO_ERROR";
+                    else if (!it->second.size()) fileName = "BLANK";
+                    else fileName = it->second.c_str();
+                }
+                else fileName = "CRYPTO_ERROR";
+            }
+            else fileName = "NO_KEY";
+
+            request->setPublicNode(new PublicNode(fileName.c_str(), FILENODE, size, ts, tm, ph, &keystring, a));
 			fireOnRequestFinish(this, request, MegaError(MegaError::API_OK));
 		}
     }
@@ -3216,17 +3318,26 @@ void MegaApi::sendPendingTransfers()
 			{
                 handle nodehandle = transfer->getNodeHandle();
 				Node *node = client->nodebyhandle(nodehandle);
-				currentTransfer=transfer;
-				if(!node) node = (Node *)transfer->getParameter();
-				if(!node)  { e = API_EARGS; break; }
+                PublicNode *publicNode = transfer->getPublicNode();
+                const char *parentPath = transfer->getParentPath();
+                if((!node && !publicNode) || !parentPath) { e = API_EARGS; break; }
 
-				string path = transfer->getParentPath();
-				path += node->displayname();
-				transfer->setPath(path.c_str());
-				MegaFileGet *f = new MegaFileGet(client, node, transfer->getPath());
-				client->startxfer(GET,f);
+                currentTransfer=transfer;
+                string path = parentPath;
+                MegaFileGet *f;
+                if(node)
+                {
+                    path += node->displayname();
+                    f = new MegaFileGet(client, node, path);
+                }
+                else
+                {
+                    path += publicNode->getName();
+                    f = new MegaFileGet(client, publicNode, path);
+                }
+                transfer->setPath(path.c_str());
+                client->startxfer(GET,f);
 
-				delete transfer->getParameter();
 				break;
 			}
 		}
@@ -3398,10 +3509,19 @@ void MegaApi::sendPendingRequests()
 		}
 		case MegaRequest::TYPE_IMPORT_NODE:
 		{
-			NewNode *newnode = (NewNode *)request->getParameter();
+            PublicNode *publicNode = request->getPublicNode();
 			Node *parent = client->nodebyhandle(request->getParentHandle());
 
-			if(!newnode || !parent) { e = API_EARGS; break; }
+            if(!publicNode || !parent) { e = API_EARGS; break; }
+
+            NewNode *newnode = new NewNode[1];
+            newnode->nodekey.assign(publicNode->getNodeKey()->data(), publicNode->getNodeKey()->size());
+            newnode->attrstring.assign(publicNode->getAttrString()->data(), publicNode->getAttrString()->size());
+            newnode->nodehandle = publicNode->getHandle();
+            newnode->clienttimestamp = publicNode->getCreationTime();
+            newnode->source = NEW_PUBLIC;
+            newnode->type = FILENODE;
+            newnode->parenthandle = UNDEF;
 
 			// add node
 			client->putnodes(parent->nodehandle,newnode,1);
@@ -3618,20 +3738,6 @@ char* MegaApi::strdup(const char* buffer)
 	char *newbuffer = new char[tam];
 	memcpy(newbuffer, buffer, tam);
 	return newbuffer;
-}
-
-Node *MegaApi::copyNode(Node* node)
-{
-	if(!node) return NULL;
-	Node *copy = new Node(NULL, NULL, node->nodehandle, UNDEF, FILENODE, node->size,
-			NULL, NULL, node->ctime, node->clienttimestamp);
-	copy->attrs = node->attrs;
-	copy->nodekey.assign(node->nodekey.data(), node->nodekey.size());
-	copy->key.setkey((const byte *)node->nodekey.data(), node->type);
-	copy->parent = NULL;
-	copy->inshare = NULL;
-	copy->sharekey = NULL;
-	return copy;
 }
 
 TreeProcCopy::TreeProcCopy()

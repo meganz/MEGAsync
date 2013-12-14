@@ -18,7 +18,7 @@ public:
 	QString getLink(int id);
 	bool isSelected(int id);
 	int getError(int id);
-	Node *getNode(int id);
+    PublicNode *getNode(int id);
 	int size();
 
 	void requestLinkInfo();
@@ -36,7 +36,7 @@ protected:
 	MegaApi *megaApi;
 	QStringList linkList;
 	QList<bool> linkSelected;
-	QList<Node*> linkNode;
+    QList<PublicNode *> linkNode;
 	QList<int> linkError;
 	int currentIndex;
 	int remainingNodes;
