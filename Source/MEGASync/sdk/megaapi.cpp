@@ -3518,7 +3518,7 @@ void MegaApi::sendPendingRequests()
             newnode->nodekey.assign(publicNode->getNodeKey()->data(), publicNode->getNodeKey()->size());
             newnode->attrstring.assign(publicNode->getAttrString()->data(), publicNode->getAttrString()->size());
             newnode->nodehandle = publicNode->getHandle();
-            newnode->clienttimestamp = publicNode->getCreationTime();
+            newnode->clienttimestamp = publicNode->getModificationTime();
             newnode->source = NEW_PUBLIC;
             newnode->type = FILENODE;
             newnode->parenthandle = UNDEF;

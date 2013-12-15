@@ -22,10 +22,11 @@
 #ifndef HTTPIO_CLASS
 #define HTTPIO_CLASS WinHttpIO
 
-#include "../megaclient.h"
+#include "mega/megaclient.h"
 
-#include "megawait.h"
+#include "win32/megaapiwait.h"
 
+#include <specstrings.h>
 #include <winhttp.h>
 #include <shellapi.h>
 
