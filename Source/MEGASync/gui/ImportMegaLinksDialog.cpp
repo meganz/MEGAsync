@@ -143,7 +143,8 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     PublicNode *node = linkProcessor->getNode(id);
 	item->setNode(node);
 
-	if(node && (linkProcessor->getError(id) == MegaError::API_OK))
+    int e = linkProcessor->getError(id);
+    if(node && (e == MegaError::API_OK))
 	{
         QString name = QString::fromUtf8(node->getName());
 		if(!name.compare("NO_KEY") || !name.compare("CRYPTO_ERROR"))
@@ -153,13 +154,13 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 	}
 	else
 	{
-		if(linkProcessor->getError(id) != MegaError::API_OK)
+        if((e != MegaError::API_OK) && (e != MegaError::API_ETOOMANY))
 		{
 			ImportListWidgetItem::linkstatus status = ImportListWidgetItem::FAILED;
-			if(linkProcessor->getError(id) == MegaError::API_ETEMPUNAVAIL)
+            if(e == MegaError::API_ETEMPUNAVAIL)
 				status = ImportListWidgetItem::WARNING;
 
-			item->setData(MegaError::getErrorString(linkProcessor->getError(id)), status);
+            item->setData(MegaError::getErrorString(e), status);
 		}
 		else
 		{

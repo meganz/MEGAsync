@@ -38,7 +38,7 @@ class WinHttpIO : public HttpIO
 	HANDLE hWakeupEvent;
 
 	protected:
-	WinWaiter* waiter;
+    MegaApiWinWaiter* waiter;
 	HINTERNET hSession;
 	bool completion;
 
