@@ -81,7 +81,7 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t
 Node::~Node()
 {
 	// remove node's fingerprint from hash
-	if (client && type == FILENODE && fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
+	if (type == FILENODE && fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
 
 	// delete outshares, including pointers from users for this node
 	for (share_map::iterator it = outshares.begin(); it != outshares.end(); it++) delete it->second;
@@ -331,7 +331,7 @@ void Node::setfingerprint()
 {
 	if (type == FILENODE)
 	{
-		if (client && fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
+		if (fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
 
 		attr_map::iterator it = attrs.map.find('c');
 
@@ -344,7 +344,7 @@ void Node::setfingerprint()
 			mtime = clienttimestamp;
 		}
 
-		if(client) fingerprint_it = client->fingerprints.insert((FileFingerprint*)this);
+		fingerprint_it = client->fingerprints.insert((FileFingerprint*)this);
 	}
 }
 

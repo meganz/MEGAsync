@@ -273,7 +273,7 @@ void Sync::procscanq(int q)
 			// fopen() signals that the failure is potentially transient - do nothing, but request a recheck
 			localpath->resize(localpath->size()-client->fsaccess->localseparator.size()-localname->size());
 			queuescan(RETRY,localpath,localname,l,si->parent,true);
-
+			
 			l = NULL;	// make no changes yet
 		}
 		else if (l)
@@ -303,6 +303,7 @@ void Sync::procscanq(int q)
 			if (l->type == FILENODE) client->app->syncupdate_local_file_addition(this,tmpname.c_str());
 			else client->app->syncupdate_local_folder_addition(this,tmpname.c_str());
 		}
+		
 		client->syncactivity = true;
 	}
 
