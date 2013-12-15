@@ -59,7 +59,9 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 	cout << "Notification received" << endl;
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
-        linkNode[currentIndex] = new PublicNode(request->getPublicNode());
+        if(e->getErrorCode() != API_OK)  linkNode[currentIndex] = NULL;
+        else linkNode[currentIndex] = new PublicNode(request->getPublicNode());
+
 		linkError[currentIndex] = e->getErrorCode();
 		linkSelected[currentIndex] = (linkError[currentIndex]==MegaError::API_OK);
 		if(!linkError[currentIndex])
