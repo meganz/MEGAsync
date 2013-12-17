@@ -171,7 +171,7 @@ color: rgb(102, 102, 102);
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QCheckBox" name="bPause">
         <property name="minimumSize">
          <size>
           <width>40</width>
@@ -184,12 +184,24 @@ color: rgb(102, 102, 102);
           <height>40</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator {
+     width: 24px;
+     height: 24px;
+	 subcontrol-position:  center;
+ }
+
+  QCheckBox::indicator:checked
+  {
+    image: url(://images/tray_play_ico.png);
+  }
+  QCheckBox::indicator:unchecked
+  {
+    image: url(://images/tray_pause_ico.png);
+  }</string>
+        </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="Resources.qrc">
-          <normaloff>:/images/tray_pause_ico.png</normaloff>:/images/tray_pause_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -197,8 +209,11 @@ color: rgb(102, 102, 102);
           <height>24</height>
          </size>
         </property>
-        <property name="flat">
-         <bool>true</bool>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -316,35 +331,59 @@ color: rgb(102, 102, 102);
         <number>0</number>
        </property>
        <item>
-        <widget class="ActiveTransfer" name="wTransfer1" native="true">
+        <widget class="QWidget" name="wTransfers" native="true">
          <property name="minimumSize">
           <size>
            <width>400</width>
-           <height>60</height>
+           <height>120</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>400</width>
-           <height>60</height>
+           <height>120</height>
           </size>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="ActiveTransfer" name="wTransfer2" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>400</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>400</width>
-           <height>60</height>
-          </size>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="ActiveTransfer" name="wTransfer1" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>60</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="ActiveTransfer" name="wTransfer2" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>400</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>60</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -764,8 +803,6 @@ color: rgb(102, 102, 102);
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

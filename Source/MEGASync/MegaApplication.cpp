@@ -196,6 +196,11 @@ void MegaApplication::rebootApplication()
     QApplication::exit();
 }
 
+void MegaApplication::pauseTransfers(bool pause)
+{
+    megaApi->pauseTransfers(pause);
+}
+
 void MegaApplication::reloadSyncs()
 {
 	stopSyncs();
@@ -498,6 +503,13 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		infoDialog->setUsage(details->storage_max, details->storage_used);
         break;
     }
+    case MegaRequest::TYPE_PAUSE_TRANSFERS:
+    {
+        infoDialog->setPaused(request->getFlag());
+        if(request->getFlag()) trayIcon->setIcon(QIcon("://images/tray_pause.ico"));
+        else if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon("://images/tray_sync.ico"));
+        else trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
+    }
     default:
         break;
     }
@@ -547,7 +559,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 		downloadSpeed = transfer->getSpeed();
 
         //Show the transfer in the "recently updated" list
-		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle(), transfer->getPath());
+        if(e->getErrorCode() == MegaError::API_OK)
+            infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle(), transfer->getPath());
 	}
 	else
 	{
@@ -560,7 +573,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //The SDK still has to put the new node.
         //onNodes update will be called with node->tag == transfer->getTag()
         //so we save the path of the file to show it later
-        uploadLocalPaths[transfer->getTag()]=transfer->getPath();
+        if(e->getErrorCode() == MegaError::API_OK)
+            uploadLocalPaths[transfer->getTag()]=transfer->getPath();
 	}
 
     //Send updated statics to the information dialog

@@ -29,7 +29,7 @@ public:
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
-
+    void setPaused(bool paused);
 	void updateDialog();
 
 public slots:
@@ -45,8 +45,13 @@ private slots:
 
 	void openFolder(QString path);
 
+    void on_bPause_clicked();
+
+    void onOverlayClicked();
 private:
     Ui::InfoDialog *ui;
+    QPushButton *overlay;
+
 	long long downloadSpeed;
 	long long uploadSpeed;
 	int currentUpload;

@@ -289,6 +289,7 @@ MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 	this->numDetails = 0;
 	this->file = NULL;
 	this->attrType = 0;
+    this->flag = false;
 
 	if(type == MegaRequest::TYPE_ACCOUNT_DETAILS) this->accountDetails = new AccountDetails();
 	else this->accountDetails = NULL;
@@ -316,6 +317,7 @@ MegaRequest::MegaRequest(MegaTransfer *transfer)
 	this->numDetails = 0;
 	this->file = NULL;
 	this->attrType = 0;
+    this->flag = false;
 }
 
 MegaRequest::MegaRequest(MegaRequest &request)
@@ -349,7 +351,7 @@ MegaRequest::MegaRequest(MegaRequest &request)
 	this->setFile(request.getFile());
 	this->setAttrType(request.getAttrType());
     this->setPublicNode(request.getPublicNode());
-
+    this->setFlag(request.getFlag());
 	this->transfer = request.getTransfer();
 	this->listener = request.getListener();
 	this->accountDetails = NULL;
@@ -409,7 +411,7 @@ const char* MegaRequest::getPrivateKey() const { return privateKey; }
 const char* MegaRequest::getAccess() const { return access; }
 const char* MegaRequest::getFile() const { return file; }
 int MegaRequest::getAttrType() const { return attrType; }
-
+bool MegaRequest::getFlag() const { return flag;}
 int MegaRequest::getNumRetry() const { return numRetry; }
 int MegaRequest::getNextRetryDelay() const { return nextRetryDelay; }
 AccountDetails* MegaRequest::getAccountDetails() const { return accountDetails; }
@@ -471,7 +473,12 @@ void MegaRequest::setFile(const char* file)
 
 void MegaRequest::setAttrType(int type)
 {
-	this->attrType = type;
+    this->attrType = type;
+}
+
+void MegaRequest::setFlag(bool flag)
+{
+    this->flag = flag;
 }
 
 void MegaRequest::setPublicNode(PublicNode *publicNode)
@@ -1239,6 +1246,14 @@ void MegaApi::addContact(const char* email, MegaRequestListener* listener)
     waiter->notify();
 }
 
+void MegaApi::pauseTransfers(bool pause, MegaRequestListener* listener)
+{
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_PAUSE_TRANSFERS, listener);
+    request->setFlag(pause);
+    requestQueue.push(request);
+    waiter->notify();
+}
+
 void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD, listener);
@@ -1295,7 +1310,7 @@ void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, Meg
     transfer->setNodeHandle(node->getHandle());
     transfer->setPublicNode(node);
 	transferQueue.push(transfer);
-	waiter->notify();
+    waiter->notify();
 }
 
 //void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
@@ -3420,7 +3435,11 @@ void MegaApi::sendPendingRequests()
 			Node *newParent = client->nodebyhandle(request->getParentHandle());
 			if(!node || !newParent) { e = API_EARGS; break; }
 
-			if(node->parent == newParent) fireOnRequestFinish(this, request, MegaError(API_OK));
+            if(node->parent == newParent)
+            {
+                fireOnRequestFinish(this, request, MegaError(API_OK));
+                break;
+            }
 			if((e = client->checkmove(node,newParent))) break;
 
 			e = client->rename(node, newParent);
@@ -3712,6 +3731,13 @@ void MegaApi::sendPendingRequests()
 			cout << "Go to addSync" << endl;
 			new Sync(client,&localname,node, -1);
             break;
+        }
+        case MegaRequest::TYPE_PAUSE_TRANSFERS:
+        {
+            bool pause = request->getFlag();
+            client->pausexfers(PUT, pause);
+            client->pausexfers(GET, pause);
+            fireOnRequestFinish(this, request, MegaError(API_OK));
         }
 		}
 
