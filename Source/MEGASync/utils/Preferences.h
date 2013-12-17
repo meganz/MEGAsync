@@ -72,8 +72,12 @@ public:
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
+    void addRecentFile(QString fileName, long long fileHandle, QString localPath);
+    QString getRecentFileName(int num);
+    long long getRecentFileHandle(int num);
+    QString getRecentLocalPath(int num);
+
     void unlink();
-    void clearAll();
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -104,14 +108,22 @@ protected:
     void readFolders();
     void writeFolders();
 
+    void readRecentFiles();
+    void writeRecentFiles();
+
     QSettings *settings;
     QLocale *locale;
     QStringList megaFolders;
     QStringList localFolders;
     QList<long long> megaFolderHandles;
 
+    QStringList recentFileNames;
+    QList<long long> recentFileHandles;
+    QStringList recentLocalPaths;
+
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
+    static const QString recentGroupKey;
     static const QString emailKey;
     static const QString passwordKey;
     static const QString totalStorageKey;
@@ -138,6 +150,9 @@ protected:
 	static const QString downloadFolderKey;
 	static const QString uploadFolderKey;
 	static const QString importFolderKey;
+    static const QString fileNameKey;
+    static const QString fileHandleKey;
+    static const QString localPathKey;
 
     static const bool defaultSetupWizardCompleted;
     static const bool defaultShowNotifications;
@@ -151,6 +166,7 @@ protected:
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
     static const QString defaultProxyPassword;	
+    static const int NUM_RECENT_ITEMS;
 };
 
 #endif // PREFERENCES_H
