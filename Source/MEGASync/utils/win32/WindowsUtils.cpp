@@ -1,7 +1,8 @@
 #include "WindowsUtils.h"
 #include "utils/Utils.h"
 
-WindowsShellDispatcher* WindowsUtils::shellDispatcher = NULL;
+ShellDispatcherTask* WindowsUtils::shellDispatcherTask = NULL;
+QThread WindowsUtils::shellDispatcherThread;
 
 boolean WindowsUtils::enableTrayIcon(QString executable)
 {
@@ -143,13 +144,18 @@ void WindowsUtils::showInFolder(QString pathIn)
 
 void WindowsUtils::startShellDispatcher(MegaApplication *receiver)
 {
-    shellDispatcher = new WindowsShellDispatcher(receiver);
-    shellDispatcher->start();
+    shellDispatcherTask = new ShellDispatcherTask(receiver);
+    shellDispatcherTask->moveToThread(&shellDispatcherThread);
+    shellDispatcherThread.start();
+    QMetaObject::invokeMethod(shellDispatcherTask, "doWork", Qt::QueuedConnection);
 }
 
 void WindowsUtils::stopShellDispatcher()
 {
-    delete shellDispatcher;
+    shellDispatcherTask->exitTask();
+    shellDispatcherThread.quit();
+    shellDispatcherThread.wait();
+    delete shellDispatcherTask;
 }
 
 void WindowsUtils::syncFolderAdded(QString syncPath)

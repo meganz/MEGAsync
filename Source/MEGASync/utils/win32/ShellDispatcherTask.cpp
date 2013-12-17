@@ -1,30 +1,30 @@
-#include "WindowsShellDispatcher.h"
+#include "ShellDispatcherTask.h"
 
 PIPEINST Pipe[INSTANCES];
-HANDLE hEvents[INSTANCES];
+HANDLE hEvents[INSTANCES+1];
 
 VOID DisconnectAndReconnect(DWORD i);
 BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
 
-WindowsShellDispatcher::WindowsShellDispatcher(MegaApplication *receiver)
+ShellDispatcherTask::ShellDispatcherTask(MegaApplication *receiver) : QObject()
 {
-	stop = false;
+    this->receiver = receiver;
+}
+
+ShellDispatcherTask::~ShellDispatcherTask()
+{
+}
+
+void ShellDispatcherTask::doWork()
+{
+    printf("Shell dispatcher starting...\n");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
-}
-
-WindowsShellDispatcher::~WindowsShellDispatcher()
-{
-	stop = true;
-}
-
-void WindowsShellDispatcher::run()
-{
 	dispatchPipe();
 }
 
-int WindowsShellDispatcher::dispatchPipe()
+int ShellDispatcherTask::dispatchPipe()
 {
    DWORD i, dwWait, cbRet, dwErr;
    BOOL fSuccess;
@@ -85,6 +85,12 @@ int WindowsShellDispatcher::dispatchPipe()
 		 READING_STATE;     // ready to read
    }
 
+   hEvents[INSTANCES] = CreateEvent(
+      NULL,    // default security attribute
+      FALSE,    // auro-reset event
+      FALSE,    // initial state = unsignaled
+      NULL);   // unnamed event object
+
    while (1)
    {
    // Wait for the event object to be signaled, indicating
@@ -92,7 +98,7 @@ int WindowsShellDispatcher::dispatchPipe()
    // connect operation.
 
 	  dwWait = WaitForMultipleObjects(
-		 INSTANCES,    // number of event objects
+         INSTANCES+1,    // number of event objects
 		 hEvents,      // array of event objects
 		 FALSE,        // does not wait for all
 		 INFINITE);    // waits indefinitely
@@ -102,7 +108,13 @@ int WindowsShellDispatcher::dispatchPipe()
 	  i = dwWait - WAIT_OBJECT_0;  // determines which pipe
 	  if (i < 0 || i > (INSTANCES - 1))
 	  {
-		 printf("Index out of range.\n");
+         printf("Shell dispatcher closing...\n");
+         for(int j=0; j < INSTANCES; j++)
+             CloseHandle(Pipe[j].hPipeInst);
+
+         for(int j=0; j < (INSTANCES+1); j++)
+            CloseHandle(hEvents[j]);
+
 		 return 0;
 	  }
 
@@ -241,7 +253,12 @@ int WindowsShellDispatcher::dispatchPipe()
 	  }
   }
 
-  return 0;
+   return 0;
+}
+
+void ShellDispatcherTask::exitTask()
+{
+    SetEvent(hEvents[INSTANCES]);
 }
 
 
@@ -313,7 +330,7 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
-VOID WindowsShellDispatcher::GetAnswerToRequest(LPPIPEINST pipe)
+VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 

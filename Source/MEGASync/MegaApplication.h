@@ -17,9 +17,9 @@
 #include "gui/UploadToMegaDialog.h"
 #include "utils/Preferences.h"
 #include "utils/HTTPServer.h"
-#include "utils/FileDownloader.h"
 #include "utils/ShellDispatcherListener.h"
 #include "utils/MegaUploader.h"
+#include "utils/UpdateTask.h"
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
 
@@ -59,26 +59,28 @@ public:
     void unlink();
 
 signals:
+    void startUpdaterThread();
 
 public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void openSettings();
-    void onNewLocalConnection();
-    void onDataReady();
     void pauseSync();
     void resumeSync();
 	void importLinks();
-    void updateDowloaded();
 	void copyFileLink(handle fileHandle);
     void shellUpload(QQueue<QString> newUploadQueue);
 	void showUploadDialog();
 	void onLinkImportFinished();
+    void onUpdateCompleted();
+    void onThreadFinished();
+    void rebootApplication();
 
 protected:
     void createActions();
     void createTrayIcon();
     bool showTrayIconAlwaysNEW();
     void init();
+    void loggedIn();
 	void startSyncs();
 	void stopSyncs();
 	void processUploadQueue(handle nodeHandle);
@@ -96,9 +98,7 @@ protected:
     InfoDialog *infoDialog;
     Preferences *preferences;
     MegaApi *megaApi;
-    QLocalServer *localServer;
     HTTPServer *httpServer;
-    FileDownloader *downloader;
 	UploadToMegaDialog *uploadFolderSelector;
 	QQueue<QString> uploadQueue;
     int queuedUploads, queuedDownloads;
@@ -110,6 +110,12 @@ protected:
 	QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
+
+    QThread updateThread;
+    UpdateTask updateTask;
+    bool reboot;
+
+    static const int VERSION_CODE;
 };
 
 #endif // MEGAAPPLICATION_H
