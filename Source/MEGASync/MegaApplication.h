@@ -74,6 +74,7 @@ public slots:
     void onUpdateCompleted();
     void onThreadFinished();
     void rebootApplication();
+    void pauseTransfers(bool pause);
 
 protected:
     void createActions();
@@ -114,6 +115,7 @@ protected:
     QThread updateThread;
     UpdateTask updateTask;
     bool reboot;
+    bool syncActive;
 
     static const int VERSION_CODE;
 };

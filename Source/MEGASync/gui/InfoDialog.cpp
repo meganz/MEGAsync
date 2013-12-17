@@ -19,15 +19,16 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
+
+    //Install event filters to show custom tooltips
 	ui->bDownloads->installEventFilter(this);
 	ui->bUploads->installEventFilter(this);
 
+    //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+
+    //Initialize fields
     this->app = app;
-
-    QRect screenGeometry = QApplication::desktop()->availableGeometry();
-    this->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
-
 	downloadSpeed = 0;
 	uploadSpeed = 0;
 	currentUpload = 0;
@@ -43,6 +44,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	ui->bUploads->hide();
 
 	/***************************/
+    //Example transfers
 	/*ui->wRecent1->setFileName("filename_compressed.zip");
     ui->wRecent2->setFileName("filename_document.pdf");
     ui->wRecent3->setFileName("filename_image.png");
@@ -54,13 +56,23 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setPercentage(50);
 	ui->wTransfer2->setType(1);*/
 	/******************************/
-	ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+
+    //Set properties of some widgets
+    ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
-	/*ui->bDownloads->setToolTip("<body bgcolor=\"black\"><font color=\"green\">Downloads</font>"
-							   "<font color=\"white\"> 1 of 20 files at 908 KB/s</font><br />"
-							   "<font color=\"red\">Total Remaining:</font>"
-							   "<font color=\"white\"> 512.34 MB</font></body>");*/
+    ui->bPause->hide();
+
+    //Create the overlay widget with a semi-transparent background
+    //that will be shown over the transfers when they are paused
+    overlay = new QPushButton(ui->wTransfers);
+    overlay->setIcon(QPixmap("://images/tray_paused_large_ico.png"));
+    overlay->setIconSize(QSize(64, 64));
+    //overlay->setAlignment(Qt::AlignCenter);
+    overlay->setStyleSheet("background-color: rgba(255, 255, 255, 200); border: none;");
+    overlay->resize(ui->wTransfers->minimumSize());
+    overlay->hide();
+    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 }
 
 InfoDialog::~InfoDialog()
@@ -125,8 +137,12 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	{
 		QString pattern(tr("%1 of %2"));
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-        if(downloadSpeed) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
-		ui->lDownloads->setText(downloadString);
+        if(downloadSpeed)
+        {
+            if(downloadSpeed > 0) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
+            else downloadString += tr(" (paused)");
+        }
+        ui->lDownloads->setText(downloadString);
 		ui->bDownloads->show();
 	}
 	else
@@ -139,8 +155,12 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	{
 		QString pattern(tr("%1 of %2"));
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-        if(uploadSpeed) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
-		ui->lUploads->setText(uploadString);
+        if(uploadSpeed)
+        {
+            if(uploadSpeed > 0) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
+            else uploadString += tr(" (paused)");
+        }
+        ui->lUploads->setText(uploadString);
 		ui->bUploads->show();
 	}
 	else
@@ -154,7 +174,12 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 		showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 
 	if(!remainingDownloads && !remainingUploads)
-		this->startAnimation();
+    {
+        ui->bPause->setChecked(false);
+        ui->bPause->hide();
+        this->startAnimation();
+    }
+    else ui->bPause->show();
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
@@ -166,7 +191,11 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	{
 		QString pattern(tr("%1 of %2"));
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-        if(downloadSpeed) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
+        if(downloadSpeed)
+        {
+            if(downloadSpeed > 0) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
+            else downloadString += tr(" (paused)");
+        }
 		ui->lDownloads->setText(downloadString);
 		ui->bDownloads->show();
 	}
@@ -180,7 +209,11 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	{
 		QString pattern(tr("%1 of %2"));
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-        if(uploadSpeed) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
+        if(uploadSpeed)
+        {
+            if(uploadSpeed > 0) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
+            else uploadString += tr(" (paused)");
+        }
 		ui->lUploads->setText(uploadString);
 		ui->bUploads->show();
 	}
@@ -213,7 +246,15 @@ void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long tot
 	if(ui->bDownloads->underMouse())
 		showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
 	else if(ui->bUploads->underMouse())
-		showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+        showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+}
+
+void InfoDialog::setPaused(bool paused)
+{
+    ui->bPause->setEnabled(true);
+    ui->bPause->setChecked(paused);
+    overlay->setVisible(paused);
+    if(paused) setTransferSpeeds(-1, -1);
 }
 
 void InfoDialog::updateDialog()
@@ -316,6 +357,7 @@ void InfoDialog::openFolder(QString path)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
 {
 	if (event->type() != QEvent::ToolTip) return false;
+    if(ui->bPause->isChecked()) return false;
 
 	bool download;
 	QPoint globalpos;
@@ -331,7 +373,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
 	}
 
 	showPopup(globalpos, download);
-	return true;
+    return true;
 }
 
 void InfoDialog::showPopup(QPoint globalpos, bool download)
@@ -413,4 +455,16 @@ void InfoDialog::updateRecentFiles()
 	ui->wRecent1->updateWidget();
 	ui->wRecent2->updateWidget();
 	ui->wRecent3->updateWidget();
+}
+
+void InfoDialog::on_bPause_clicked()
+{
+    ui->bPause->setEnabled(false);
+    app->pauseTransfers(ui->bPause->isChecked());
+}
+
+void InfoDialog::onOverlayClicked()
+{
+    ui->bPause->setChecked(false);
+    on_bPause_clicked();
 }

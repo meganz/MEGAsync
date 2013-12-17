@@ -200,9 +200,16 @@ class MegaApi;
 class MegaRequest
 {	
 	public:
-		enum {TYPE_LOGIN, TYPE_MKDIR, TYPE_MOVE, TYPE_COPY, TYPE_RENAME, TYPE_REMOVE, TYPE_SHARE, 
-		    TYPE_FOLDER_ACCESS, TYPE_IMPORT_LINK, TYPE_IMPORT_NODE, TYPE_EXPORT, TYPE_FETCH_NODES, TYPE_ACCOUNT_DETAILS, TYPE_CHANGE_PW, TYPE_UPLOAD, TYPE_LOGOUT, TYPE_FAST_LOGIN, TYPE_GET_PUBLIC_NODE, TYPE_GET_ATTR_FILE,
-            TYPE_SET_ATTR_FILE, TYPE_RETRY_PENDING_CONNECTIONS, TYPE_ADD_CONTACT, TYPE_CREATE_ACCOUNT, TYPE_FAST_CREATE_ACCOUNT, TYPE_CONFIRM_ACCOUNT, TYPE_FAST_CONFIRM_ACCOUNT, TYPE_QUERY_SIGNUP_LINK, TYPE_SYNC};
+        enum {  TYPE_LOGIN, TYPE_MKDIR, TYPE_MOVE, TYPE_COPY,
+                TYPE_RENAME, TYPE_REMOVE, TYPE_SHARE,
+                TYPE_FOLDER_ACCESS, TYPE_IMPORT_LINK, TYPE_IMPORT_NODE,
+                TYPE_EXPORT, TYPE_FETCH_NODES, TYPE_ACCOUNT_DETAILS,
+                TYPE_CHANGE_PW, TYPE_UPLOAD, TYPE_LOGOUT, TYPE_FAST_LOGIN,
+                TYPE_GET_PUBLIC_NODE, TYPE_GET_ATTR_FILE,
+                TYPE_SET_ATTR_FILE, TYPE_RETRY_PENDING_CONNECTIONS,
+                TYPE_ADD_CONTACT, TYPE_CREATE_ACCOUNT, TYPE_FAST_CREATE_ACCOUNT,
+                TYPE_CONFIRM_ACCOUNT, TYPE_FAST_CONFIRM_ACCOUNT,
+                TYPE_QUERY_SIGNUP_LINK, TYPE_SYNC, TYPE_PAUSE_TRANSFERS};
 
 		MegaRequest(int type, MegaRequestListener *listener = NULL);
 		MegaRequest(MegaTransfer *transfer);
@@ -230,6 +237,7 @@ class MegaRequest
 		int getNextRetryDelay() const;
         PublicNode *getPublicNode();
 		int getAttrType() const;
+        bool getFlag() const;
 
 		void setNodeHandle(handle nodeHandle);
 		void setLink(const char* link);
@@ -247,6 +255,7 @@ class MegaRequest
 		void setNumDetails(int numDetails);
 		void setFile(const char* file);
 		void setAttrType(int type);
+        void setFlag(bool flag);
 
 		MegaRequestListener *getListener() const;
 		MegaTransfer * getTransfer() const;
@@ -267,6 +276,7 @@ class MegaRequest
 		const char* access;
 		const char* file;
 		int attrType;
+        bool flag;
 		
 		MegaRequestListener *listener;
 		MegaTransfer *transfer;
@@ -669,7 +679,8 @@ public:
 	void getNodeAttribute(Node* node, int type, char *dstFilePath, MegaRequestListener *listener = NULL);
 	void setNodeAttribute(Node* node, int type, char *srcFilePath, MegaRequestListener *listener = NULL);
 	void addContact(const char* email, MegaRequestListener* listener=NULL);
-	
+    void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);
+
 	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
 	void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
 	void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener);
@@ -680,7 +691,7 @@ public:
 	void startDownload(Node* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
 	void startDownload(Node* node, const char* localFolder, MegaTransferListener *listener);
     void startPublicDownload(PublicNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
-//	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
+    //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
 
 //	void cancelTransfer(MegaTransfer *transfer);
 
