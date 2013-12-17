@@ -64,9 +64,9 @@ void WinHttpIO::leavecs()
 // ensure wakeup from WinHttpIO events
 void WinHttpIO::addevents(Waiter* w)
 {
-	WinWaiter* pw = (WinWaiter*)w;
+    MegaApiWinWaiter* pw = (MegaApiWinWaiter*)w;
 
-	pw->hWakeup[WinWaiter::WAKEUP_HTTP] = hWakeupEvent;
+    pw->hWakeup[MegaApiWinWaiter::WAKEUP_HTTP] = hWakeupEvent;
 	pw->pcsHTTP = &csHTTP;
 }
 

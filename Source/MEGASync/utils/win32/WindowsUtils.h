@@ -1,7 +1,7 @@
 #ifndef WINDOWSUTILS_H
 #define WINDOWSUTILS_H
 
-#include "utils/win32/WindowsShellDispatcher.h"
+#include "utils/win32/ShellDispatcherTask.h"
 #include "utils/win32/TrayNotificationReceiver.h"
 
 #include <QApplication>
@@ -13,7 +13,7 @@
 #include <QDir>
 #include <QProcess>
 
-class WindowsShellDispatcher;
+class ShellDispatcherTask;
 class WindowsUtils
 {
 
@@ -22,7 +22,8 @@ private:
 
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR pszIconfile=NULL, int iIconindex=0);
     static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
-    static WindowsShellDispatcher *shellDispatcher;
+    static ShellDispatcherTask *shellDispatcherTask;
+    static QThread shellDispatcherThread;
 
 public:
 

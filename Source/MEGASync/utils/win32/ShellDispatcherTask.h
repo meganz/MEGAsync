@@ -1,5 +1,5 @@
-#ifndef WINDOWSSHELLDISPATCHER_H
-#define WINDOWSSHELLDISPATCHER_H
+#ifndef SHELLDISPATCHERTASK_H
+#define SHELLDISPATCHERTASK_H
 
 #include <QString>
 #include <QThread>
@@ -39,23 +39,26 @@ typedef struct
    BOOL fPendingIO;
 } PIPEINST, *LPPIPEINST;
 
-class WindowsShellDispatcher : public QThread
+class ShellDispatcherTask : public QObject
 {
     Q_OBJECT
 
  public:
-    WindowsShellDispatcher(MegaApplication *receiver);
-    ~WindowsShellDispatcher();
+    ShellDispatcherTask(MegaApplication *receiver);
+    virtual ~ShellDispatcherTask();
+    void exitTask();
 
  protected:
-	void run ();
 	int dispatchPipe();
 	VOID GetAnswerToRequest(LPPIPEINST pipe);
 	QQueue<QString> uploadQueue;
-	boolean stop;
+    MegaApplication *receiver;
 
  signals:
 	void newUploadQueue(QQueue<QString> uploadQueue);
+
+ public slots:
+   void doWork();
 
 };
 

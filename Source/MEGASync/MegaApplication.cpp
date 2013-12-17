@@ -6,94 +6,119 @@
 #include <QClipboard>
 #include <QDesktopWidget>
 
+const int MegaApplication::VERSION_CODE = 101; //1.00
+
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
     return app.exec();
 }
 
-
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+    //Hack to have tooltips with a black background
 	QApplication::setStyleSheet("QToolTip { color: #fff; background-color: #151412; border: none; }");
+
+    //Set QApplication fields
     setOrganizationName("Mega Limited");
     setOrganizationDomain("mega.co.nz");
 	setApplicationName("MEGAsync");
-	QDir::setCurrent(QCoreApplication::applicationDirPath());
-	qRegisterMetaType<QQueue<QString> >("QQueueQString");
+    setApplicationVersion(QString::number(VERSION_CODE));
+
+    //Set the working directory
+    QDir::setCurrent(QCoreApplication::applicationDirPath());
+
+    //Register metatypes to use them in signals/slots
+    qRegisterMetaType<QQueue<QString> >("QQueueQString");
 	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
-    createActions();
-    createTrayIcon();
+    //Start the update task in the update thread
+    updateTask.moveToThread(&updateThread);
+    updateThread.start();
+    connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()));
+    connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()));
+    connect(&updateThread, SIGNAL(finished()), this, SLOT(onThreadFinished()));
 
+    emit startUpdaterThread();
+
+    //Initialize fields to manage communications and transfers
     delegateListener = new QTMegaListener(this);
-    infoDialog = new InfoDialog(this);
-    setupWizard = NULL;
-    settingsDialog = NULL;
-	uploadFolderSelector = NULL;
-    localServer = NULL;
     httpServer = NULL;
 	queuedDownloads = 0;
     queuedUploads = 0;
 	totalUploads = totalDownloads = 0;
 	totalDownloadSize = totalUploadSize = 0;
 	totalDownloadedSize = totalUploadedSize = 0;
-
 	uploadSpeed = downloadSpeed = 0;
-    preferences = new Preferences();
 	QString basePath = QCoreApplication::applicationDirPath()+"/";
 	string tmpPath = basePath.toStdString();
 	megaApi = new MegaApi(delegateListener, &tmpPath);
     uploader = new MegaUploader(megaApi);
+    reboot = false;
 
+    //Create GUI elements
+    createActions();
+    createTrayIcon();
+    infoDialog = new InfoDialog(this);
+    setupWizard = NULL;
+    settingsDialog = NULL;
+    uploadFolderSelector = NULL;
+    preferences = new Preferences();
+
+    //Apply the "Start on startup" configuration
     Utils::startOnStartup(preferences->startOnStartup());
 
-    //downloader = new FileDownloader(QUrl("http://www.google.es"));
-    //connect(downloader, SIGNAL(downloaded()), this, SLOT(updateDowloaded()));
+    //Start the app
     init();
 }
 
 void MegaApplication::init()
 {
+    //Start the initial setup wizard if needed
     if(!preferences->isSetupWizardCompleted())
     {
         setupWizard = new SetupWizard(this);
 		setupWizard->exec();
         if(!preferences->isSetupWizardCompleted())
             ::exit(0);
+        loggedIn();
     }
 	else
 	{
+        //Otherwise, login in the account
 		megaApi->login(preferences->email().toUtf8().constData(),
 					   preferences->password().toUtf8().constData());
 	}
+}
 
-    Utils::startShellDispatcher(this);
+void MegaApplication::loggedIn()
+{
+    //Start the Sync feature
+    startSyncs();
 
+    //Show the tray icon
     trayIcon->show();
 	trayIcon->showMessage(tr("MEGAsync"), tr("MEGAsync is running"));
 
+    //Try to keep the tray icon always active
     if(!Utils::enableTrayIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
         cout << "Error enabling trayicon" << endl;
     else
         cout << "OK enabling trayicon" << endl;
 
-	//QString s(tr("MEGA Sync is paused"));
+    Utils::startShellDispatcher(this);
 
-	if(localServer) delete localServer;
-    localServer = new QLocalServer();
-    connect(localServer, SIGNAL(newConnection()), this, SLOT(onNewLocalConnection()));
-    localServer->listen("MegaLocalServer");
-    cout << "Server socket started" << endl;
-
-    if(httpServer) delete httpServer;
+    //Start the HTTP server
 	httpServer = new HTTPServer(2973, NULL);
 }
 
 void MegaApplication::startSyncs()
 {
+    //Ensure that there is no active syncs
 	if(megaApi->getActiveSyncs()->size() != 0) stopSyncs();
+
+    //Start syncs
 	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
 	{
 		cout << "Sync " << i << " added." << endl;
@@ -104,17 +129,21 @@ void MegaApplication::startSyncs()
 
 void MegaApplication::stopSyncs()
 {
+    //Stop syncs
 	sync_list *syncs = megaApi->getActiveSyncs();
 	sync_list::iterator it = syncs->begin();
 	while(it != syncs->end())
 		delete *it++;
 }
 
+//This function is called to upload all files in the uploadQueue field
+//to the Mega node that is passed as parameter
 void MegaApplication::processUploadQueue(handle nodeHandle)
 {
 	Node *node = megaApi->getNodeByHandle(nodeHandle);
     QStringList notUploaded;
 
+    //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
 	if(!node || node->type==FILENODE)
 	{
 		uploadQueue.clear();
@@ -122,17 +151,20 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 		return;
 	}
 
+    //Process the upload queue using the MegaUploader object
 	while(!uploadQueue.isEmpty())
 	{
 		QString filePath = uploadQueue.dequeue();
         if(!Utils::verifySyncedFolderLimits(filePath))
         {
+            //If a folder can't be uploaded, save its name
             notUploaded.append(QFileInfo(filePath).fileName());
             continue;
         }
         uploader->upload(filePath, node);
     }
 
+    //If any file or folder couldn't be uploaded, inform users
     if(notUploaded.size())
     {
         if(notUploaded.size()==1)
@@ -152,6 +184,18 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
     }
 }
 
+void MegaApplication::rebootApplication()
+{
+    if(queuedDownloads || queuedUploads)
+        return;
+
+    QString app = QApplication::applicationFilePath();
+    QStringList arguments = QApplication::arguments();
+    QString wd = QDir::currentPath();
+    QProcess::startDetached(app, arguments, wd);
+    QApplication::exit();
+}
+
 void MegaApplication::reloadSyncs()
 {
 	stopSyncs();
@@ -160,98 +204,15 @@ void MegaApplication::reloadSyncs()
 
 void MegaApplication::unlink()
 {
+    //Reset fields that will be initialized again upon login
     preferences->unlink();
-    delete localServer;
-    localServer = NULL;
     delete httpServer;
     httpServer = NULL;
     trayIcon->hide();
+    stopSyncs();
+    megaApi->logout();
+
     init();
-}
-
-void MegaApplication::onNewLocalConnection()
-{
-    QLocalSocket *clientConnection = localServer->nextPendingConnection();
-    connect(clientConnection, SIGNAL(disconnected()),
-            clientConnection, SLOT(deleteLater()));
-
-    connect(clientConnection, SIGNAL(readyRead()),
-            this,             SLOT(onDataReady()));
-    cout << "Local connection received!" << endl;
-}
-
-void MegaApplication::onDataReady()
-{
-	//static int i=0;
-	//i++;
-
-    QLocalSocket * clientConnection = (QLocalSocket *)QObject::sender();
-    if (clientConnection->bytesAvailable() < (int)sizeof(quint16))
-        return;
-
-    QDataStream stream(clientConnection);
-    stream.setVersion(QDataStream::Qt_4_8);
-    QString path;
-    stream >> path;
-
-	//string s = path.toAscii().constData();
-	//cout << "Local message received: " << s << endl;
-
-	/*int numFolders = preferences->getNumSyncedFolders();
-    for(int i=0; i<numFolders; i++)
-    {
-        QString localFolder = preferences->getLocalFolder(i);
-        if(path.startsWith(localFolder))
-        {
-            uint hash = qHash(path);
-            cout << "Hash: " << hash << endl;
-            if(hash%3) stream << QString("0");
-            else stream << QString("1");
-            clientConnection->flush();
-            return;
-        }
-	}*/
-
-	sync_list * syncs = megaApi->getActiveSyncs();
-	int i=0;
-	for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
-	{
-		if(preferences->getNumSyncedFolders()<=i) break;
-		QString basePath = preferences->getLocalFolder(i);
-		if(path.startsWith(basePath))
-		{
-			if(!path.compare(basePath))
-			{
-				cout << "Base path found" << endl;
-				stream << QString("0");
-				clientConnection->flush();
-				return;
-			}
-			QString relativePath = path.mid(basePath.length()+1);
-			wchar_t windowsPath[512];
-			int len = relativePath.toWCharArray(windowsPath);
-			string str;
-			str.append((char *)windowsPath, len*sizeof(wchar_t));
-			wprintf(L"Checking: %s\n", str.data());
-			pathstate_t state = (*it)->pathstate(&str);
-			switch(state)
-			{
-				case PATHSTATE_SYNCED:
-					stream << QString("0");
-					break;
-				case PATHSTATE_NOTFOUND:
-					cout << "STATE NOT FOUND FOR FILE: " << relativePath.toStdString() << endl;
-				default:
-					stream << QString("1");
-					break;
-			}
-			clientConnection->flush();
-			return;
-		}
-	}
-
-    stream << QString("2");
-    clientConnection->flush();
 }
 
 void MegaApplication::pauseSync()
@@ -270,55 +231,74 @@ void MegaApplication::resumeSync()
 	trayMenu->insertAction(settingsAction, pauseAction);
 }
 
+//Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
 {
+    //Show the dialog to paste public links
 	PasteMegaLinksDialog dialog;
 	dialog.exec();
+
+    //If the dialog isn't accepted, return
 	if(dialog.result()!=QDialog::Accepted) return;
-	QStringList linkList = dialog.getLinks();
+
+    //Get the list of links from the dialog
+    QStringList linkList = dialog.getLinks();
+
+    //Send links to the link processor
 	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
+
+    //Open the import dialog
 	ImportMegaLinksDialog importDialog(megaApi, preferences, linkProcessor);
 	importDialog.exec();
 	if(importDialog.result()!=QDialog::Accepted) return;
 
+    //If the user wants to download some links, do it
 	if(importDialog.shouldDownload())
 	{
 		preferences->setDownloadFolder(importDialog.getDownloadPath());
 		linkProcessor->downloadLinks(importDialog.getDownloadPath());
 	}
 
+    //If the user wants to import some links, do it
 	if(importDialog.shouldImport())
 	{
 		connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
 		linkProcessor->importLinks(importDialog.getImportPath());
 	}
+    //If importing links isn't needed, we can delete the link processor
+    //It doesn't track transfers, only the importation of links
 	else delete linkProcessor;
 }
 
-void MegaApplication::updateDowloaded()
-{
-    //cout << "Downloaded" << endl;
-    //QString s(downloader->downloadedData());
-	//cout << s.toStdString() << endl;
-}
-
+//Called when the user wants to generate the public link for a node
 void MegaApplication::copyFileLink(handle fileHandle)
 {
+    //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
 }
 
+//Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 {
+    //Append the list of files to the upload queue
 	uploadQueue.append(newUploadQueue);
 
+    //If the dialog to select the upload folder is active, return.
+    //Files will be uploaded when the user selects the upload folder
 	if(uploadFolderSelector) return;
+
+    //If there is a default upload folder in the preferences
 	Node *node = megaApi->getNodeByHandle(preferences->uploadFolder());
 	if(node)
 	{
+        //use it to upload the list of files
 		processUploadQueue(node->nodehandle);
 		return;
 	}
 
+    //If there isn't a default upload folder, show the dialog
+    //with a delay to make sure that the click in the context menu
+    //of the shell has finished
 	uploadFolderSelector = new UploadToMegaDialog(megaApi);
 	QTimer::singleShot(1000, this, SLOT(showUploadDialog()));
 	return;
@@ -326,59 +306,95 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
 void MegaApplication::showUploadDialog()
 {
+    //Show the dialog to select the upload folder
+    uploadFolderSelector->activateWindow();
 	uploadFolderSelector->exec();
+
 	if(uploadFolderSelector->result()==QDialog::Accepted)
 	{
+        //If the dialog is accepted, get the destination node
 		handle nodeHandle = uploadFolderSelector->getSelectedHandle();
 		if(uploadFolderSelector->isDefaultFolder())
 			preferences->setUploadFolder(nodeHandle);
         processUploadQueue(nodeHandle);
 	}
+    //If the dialog is rejected, cancel uploads
 	else uploadQueue.clear();
 
+    //Free the dialog
 	delete uploadFolderSelector;
 	uploadFolderSelector = NULL;
 }
 
+//Called when the link import finishes
 void MegaApplication::onLinkImportFinished()
 {
 	LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
 	preferences->setImportFolder(linkProcessor->getImportParentFolder());
+    linkProcessor->deleteLater();
 }
 
+void MegaApplication::onUpdateCompleted()
+{
+    cout << "Update completed. Initializing a silent reboot..." << endl;
+    reboot = true;
+    updateThread.quit();
+    Utils::stopShellDispatcher();
+}
+
+void MegaApplication::onThreadFinished()
+{
+    QTimer::singleShot(10000, this, SLOT(rebootApplication()));
+}
+
+//Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
+        //If the information dialog is visible, hide it
 		if(infoDialog->isVisible())
 		{
 			infoDialog->hide();
 			return;
 		}
-        infoDialog->updateDialog();
-		QRect screenGeometry = QApplication::desktop()->availableGeometry();
-		infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
-		infoDialog->show();
 
-		//infoDialog->startAnimation();
+        //If the information dialog isn't visible:
+        //Update it
+        infoDialog->updateDialog();
+
+        //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
+        QRect screenGeometry = QApplication::desktop()->availableGeometry();
+		infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
+
+        //Show the dialog
+		infoDialog->show();
     }
 }
 
+//Called when the user wants to open the settings dialog
 void MegaApplication::openSettings()
 {
 	if(settingsDialog)
-	{
+    {
+        //If the dialog is active
 		if(settingsDialog->isVisible())
 		{
+            //and visible -> show it
 			settingsDialog->activateWindow();
 			return;
 		}
+
+        //Otherwise, delete it
         delete settingsDialog;
 	}
+
+    //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
 	settingsDialog->show();
 }
 
+//This function creates the menu actions
 void MegaApplication::createActions()
 {
     exitAction = new QAction(tr("Exit"), this);
@@ -393,6 +409,7 @@ void MegaApplication::createActions()
 	connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 }
 
+//This function creates the tray icon
 void MegaApplication::createTrayIcon()
 {
     trayMenu = new QMenu();
@@ -407,11 +424,13 @@ void MegaApplication::createTrayIcon()
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 }
 
+//Called when a request is about to start
 void MegaApplication::onRequestStart(MegaApi* api, MegaRequest *request)
 {
 
 }
 
+//Called when a request has finished
 void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e)
 {
     switch (request->getType()) {
@@ -419,40 +438,47 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 	{
 		if(e->getErrorCode() == MegaError::API_OK)
 		{
+            //A public link has been created, put it in the clipboard and inform users
 			QString linkForClipboard(request->getLink());
-			QClipboard *clipboard = QApplication::clipboard();
-			clipboard->setText(linkForClipboard);
+            QApplication::clipboard()->setText(linkForClipboard);
 			trayIcon->showMessage(tr("MEGAsync"), tr("The link has been copied to the clipboard"));
-			linkForClipboard.clear();
 		}
 		break;
 	}
 	case MegaRequest::TYPE_LOGIN:
 	{
+        //This prevents to handle logins in the initial setup wizard
 		if(preferences->isSetupWizardCompleted())
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
+                //Successful login, fetch nodes and account details
 				megaApi->fetchNodes();
 				megaApi->getAccountDetails();
+                break;
 			}
-			else
-			{
-				unlink();
-			}
+
+            //Wrong login -> logout
+            unlink();
 		}
 		break;
 	}
 	case MegaRequest::TYPE_FETCH_NODES:
 	{
+        //This prevents to handle node requests in the initial setup wizard
 		if(preferences->isSetupWizardCompleted())
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
-				startSyncs();
-				return;
+                //If we have got the filesystem, start the app
+                loggedIn();
+                break;
 			}
-			cout << "Error fetching nodes" << endl;
+
+            //Problem fetching nodes.
+            //This shouldn't happen -> logout
+            cout << "Error fetching nodes" << endl;
+            unlink();
 		}
 
 		break;
@@ -462,6 +488,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		if(e->getErrorCode() != MegaError::API_OK)
 			break;
 
+        //Account details retrieved, update the preferences and the information dialog
         AccountDetails *details = request->getAccountDetails();
         preferences->setAccountType(details->pro_level);
         preferences->setTotalStorage(details->storage_max);
@@ -476,8 +503,10 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
 }
 
+//Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
+    //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
 		downloadSpeed = 0;
@@ -493,23 +522,31 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 		totalUploadSize += transfer->getTotalBytes();
 	}
 
+    //Send statics to the information dialog
 	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
-	this->showSyncingIcon();
+
+    //Update the state of the tray icon
+    showSyncingIcon();
 }
 
+//Called when there is a temporal problem in a request
 void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 {
 
 }
 
+//Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {	
+    //Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
 		queuedDownloads--;
 		totalDownloadedSize += transfer->getDeltaSize();
 		downloadSpeed = transfer->getSpeed();
+
+        //Show the transfer in the "recently updated" list
 		infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle(), transfer->getPath());
 	}
 	else
@@ -517,9 +554,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 		queuedUploads--;
 		totalUploadedSize += transfer->getDeltaSize();
 		uploadSpeed = transfer->getSpeed();
-		uploadLocalPaths[transfer->getTag()]=transfer->getPath();
+
+        //Here the file isn't added to the "recently updated" list,
+        //because the file isn't in the destination folder yet.
+        //The SDK still has to put the new node.
+        //onNodes update will be called with node->tag == transfer->getTag()
+        //so we save the path of the file to show it later
+        uploadLocalPaths[transfer->getTag()]=transfer->getPath();
 	}
 
+    //Send updated statics to the information dialog
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
 	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName())
@@ -527,25 +571,25 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
 	infoDialog->updateDialog();
 
-	if(queuedDownloads || queuedUploads)
-	{
-		this->showSyncingIcon();
-	}
-	else
-	{
+    //If there are no pending transfers, reset the statics and update the state of the tray icon
+    if(!queuedDownloads && !queuedUploads)
+    {
 		totalUploads = totalDownloads = 0;
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
 		uploadSpeed = downloadSpeed = 0;
 		this->showSyncedIcon();
+        if(reboot)
+        {
+            QTimer::singleShot(10000, this, SLOT(rebootApplication()));
+        }
 	}
 }
 
+//Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
-						transfer->getTransferredBytes(), transfer->getTotalBytes());
-
+    //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
 		downloadSpeed = transfer->getSpeed();
@@ -557,37 +601,50 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 		totalUploadedSize += transfer->getDeltaSize();
 	}
 
+    //Send updated statics to the information dialog
+    infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
+                        transfer->getTransferredBytes(), transfer->getTotalBytes());
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-
 	infoDialog->updateDialog();
 }
 
+//Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
+    //Show information to users
 	trayIcon->showMessage(transfer->getFileName(), tr("Temporarily error in transfer: ") + e->getErrorString());
 }
 
+//Called when contacts have been updated in MEGA
 void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
 {
 
 }
 
+//Called when nodes have been updated in MEGA
 void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
+    //If this is a full reload, return
 	if(!nodes) return;
+
+    //Check all modified nodes
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
 		if(!node->removed && node->tag && !node->syncdeleted)
 		{
-			cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " <<
-					node->tag << endl;
-			QString localPath;
+            //If the node has been modified by a local operation...
 
+            cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " << node->tag << endl;
 
+            //Get the associated local node
+            QString localPath;
 			if(node->localnode)
 			{
+                //If the node has been uploaded by a synced folder
+                //The SDK provides its local path
+
 				cout << "Sync upload" << endl;
 				string localseparator;
 				localseparator.assign((char*)L"\\",sizeof(wchar_t));
@@ -604,15 +661,22 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 			}
 			else if(uploadLocalPaths.contains(node->tag))
 			{
+                //If the node has been uploaded by a regular upload,
+                //we recover the path using the tag of the transfer
 				localPath = uploadLocalPaths.value(node->tag);
 				uploadLocalPaths.remove(node->tag);
 				cout << "Local upload: " << localPath.toStdString() << endl;
 			}
 
+            //If we have the local path, notify the state change in the local file
 			if(!localPath.isNull()) WindowsUtils::notifyItemChange(localPath);
+
+            //If the new node is a file, add it to the "recently updated" list
             if(node->type == FILENODE) infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
 		}
 	}
+
+    //Update the information dialog
 	infoDialog->updateDialog();
 }
 
@@ -622,6 +686,7 @@ void MegaApplication::onReloadNeeded(MegaApi* api)
 	megaApi->fetchNodes();
 }
 
+//TODO: Manage sync callbacks here
 /*
 void MegaApplication::onSyncStateChanged(Sync *, syncstate state)
 {
