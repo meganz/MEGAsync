@@ -96,6 +96,7 @@ LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
 
 debug {
     LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/staticd"
+    DEFINES += SQLITE_DEBUG
 }
 else {
     LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/static"

@@ -63,6 +63,29 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
     ui->bPause->hide();
 
+    //Initialize the "recently updated" list with stored values
+    Preferences *preferences = app->getPreferences();
+    if(preferences->getRecentFileHandle(0) != UNDEF)
+    {
+        ui->wRecent1->setFile(preferences->getRecentFileName(0),
+                          preferences->getRecentFileHandle(0),
+                          preferences->getRecentLocalPath(0));
+
+        if(preferences->getRecentFileHandle(1) != UNDEF)
+        {
+            ui->wRecent2->setFile(preferences->getRecentFileName(1),
+                                  preferences->getRecentFileHandle(1),
+                                  preferences->getRecentLocalPath(1));
+
+            if(preferences->getRecentFileHandle(2) != UNDEF)
+            {
+                ui->wRecent3->setFile(preferences->getRecentFileName(2),
+                                      preferences->getRecentFileHandle(2),
+                                      preferences->getRecentLocalPath(2));
+            }
+        }
+    }
+
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(ui->wTransfers);
@@ -118,6 +141,7 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     RecentFile * recentFile = ((RecentFile *)item->widget());
     ui->recentLayout->insertWidget(0, recentFile);
 	recentFile->setFile(fileName, fileHandle, localPath);
+    app->getPreferences()->addRecentFile(fileName, fileHandle, localPath);
 }
 
 void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int remainingDownloads, int remainingUploads)

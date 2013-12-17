@@ -60,7 +60,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     //Create GUI elements
     createActions();
     createTrayIcon();
-    infoDialog = new InfoDialog(this);
+    infoDialog = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
     uploadFolderSelector = NULL;
@@ -94,6 +94,8 @@ void MegaApplication::init()
 
 void MegaApplication::loggedIn()
 {
+    infoDialog = new InfoDialog(this);
+
     //Start the Sync feature
     startSyncs();
 
@@ -216,7 +218,7 @@ void MegaApplication::unlink()
     trayIcon->hide();
     stopSyncs();
     megaApi->logout();
-
+    delete infoDialog;
     init();
 }
 
