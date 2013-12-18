@@ -29,6 +29,8 @@ WinFileAccess::WinFileAccess()
 {
 	hFile = INVALID_HANDLE_VALUE;
 	hFind = INVALID_HANDLE_VALUE;
+
+	fsidvalid = false;
 }
 
 WinFileAccess::~WinFileAccess()
@@ -90,58 +92,68 @@ time_t FileTime_to_POSIX(FILETIME* ft)
 }
 
 // emulates Linux open-directory-as-file semantics
-// FIXME: use CreateFileW() to open the directory instead of FindFirstFileW()? How to read such a directory?
+// FIXME #1: How to open files and directories with a single atomic CreateFile() operation without first looking at the attributes?
+// FIXME #2: How to convert a CreateFile()-opened directory directly to a hFind without doing a FindFirstFile()?
 bool WinFileAccess::fopen(string* name, bool read, bool write)
 {
+	WIN32_FILE_ATTRIBUTE_DATA fad;
+	BY_HANDLE_FILE_INFORMATION bhfi;
+
 	name->append("",1);
-	hFile = CreateFileW((LPCWSTR)name->data(),read ? GENERIC_READ : GENERIC_WRITE,FILE_SHARE_WRITE | FILE_SHARE_READ,NULL,read ? OPEN_EXISTING : OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
-	name->resize(name->size()-1);
 
-	// (race condition between CreateFile() and FindFirstFile() possible - fixable with the current Win32 API?)
-
-	if (hFile == INVALID_HANDLE_VALUE)
+	if (write) type = FILENODE;
+	else
 	{
-		DWORD e = GetLastError();
-		
-		if (e == ERROR_ACCESS_DENIED)
+		if (!GetFileAttributesExW((LPCWSTR)name->data(),GetFileExInfoStandard,(LPVOID)&fad))
 		{
-			// this could be a directory, try to enumerate...
-			name->append((char*)L"\\*",5);
-			hFind = FindFirstFileW((LPCWSTR)name->data(),&ffd);
-			name->resize(name->size()-5);
-
-			if (hFind != INVALID_HANDLE_VALUE)
-			{
-				type = FOLDERNODE;
-				return true;
-			}
-		}
-		
-		retry = WinFileSystemAccess::istransient(e);
-		return false;
-	}
-
-	if (read)
-	{
-		BY_HANDLE_FILE_INFORMATION fi;
-
-		if (!GetFileInformationByHandle(hFile,&fi))
-		{
-			retry = false;
+			name->resize(name->size()-1);
+			
+			retry = WinFileSystemAccess::istransient(GetLastError());
 			return false;
 		}
-
-		size = ((m_off_t)fi.nFileSizeHigh << 32)+(m_off_t)fi.nFileSizeLow;
-
-		mtime = FileTime_to_POSIX(&fi.ftLastWriteTime);
+		
+		type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? FOLDERNODE : FILENODE;
 	}
-	else if (!GetFileSizeEx(hFile,(LARGE_INTEGER*)&size))
+
+	// (race condition between GetFileAttributesEx()/FindFirstFile() possible - fixable with the current Win32 API?)
+
+	hFile = CreateFileW((LPCWSTR)name->data(),read ? GENERIC_READ : GENERIC_WRITE,FILE_SHARE_WRITE | FILE_SHARE_READ,NULL,read ? OPEN_EXISTING : OPEN_ALWAYS,((type == FOLDERNODE) ? FILE_FLAG_BACKUP_SEMANTICS : 0),NULL);
+
+	name->resize(name->size()-1);
+
+	// FIXME: verify that keeping the directory opened quashes the possibility of a race condition between CreateFile() and FindFirstFile()
+	
+	if (hFile == INVALID_HANDLE_VALUE)
 	{
-		retry = false;
+		retry = WinFileSystemAccess::istransient(GetLastError());
 		return false;
 	}
 
-	type = FILENODE;
+	mtime = FileTime_to_POSIX(&fad.ftLastWriteTime);
+
+	if (read && (fsidvalid = !!GetFileInformationByHandle(hFile,&bhfi))) fsid = ((handle)bhfi.nFileIndexHigh << 32) | (handle)bhfi.nFileIndexLow;
+
+	if (type == FOLDERNODE)
+	{
+		// enumerate directory
+		name->append((char*)L"\\*",5);
+
+		hFind = FindFirstFileW((LPCWSTR)name->data(),&ffd);
+		name->resize(name->size()-5);
+
+		if (hFind == INVALID_HANDLE_VALUE)
+		{
+			retry = WinFileSystemAccess::istransient(GetLastError());
+			return false;
+		}
+		
+		CloseHandle(hFile);
+		hFile = INVALID_HANDLE_VALUE;
+		retry = false;
+		return true;
+	}
+
+	if (read) size = ((m_off_t)fad.nFileSizeHigh << 32)+(m_off_t)fad.nFileSizeLow;
 
 	return true;
 }
@@ -149,7 +161,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 WinFileSystemAccess::WinFileSystemAccess()
 {
 	pendingevents = 0;
-	notifyerr = false;
 	localseparator.assign((char*)L"\\",sizeof(wchar_t));
 }
 
@@ -444,9 +455,9 @@ void WinDirNotify::process(DWORD dwBytes)
 	{
 		FILE_NOTIFY_INFORMATION* fni = (FILE_NOTIFY_INFORMATION*)ptr;
 
-		// FIXME: perform GetLongPathName() here - the 8.3 short name issue still plagues Windows, apparently
-		// FIXME: eliminate unnecessary copying
-		notifyq.insert(notifyq.end(),string((char*)fni->FileName,fni->FileNameLength));
+		// FIXME: use C++11 emplace() instead
+		pathq[DirNotify::DIREVENTS].resize(pathq[DirNotify::DIREVENTS].size()+1);
+		pathq[DirNotify::DIREVENTS].back().assign((char*)fni->FileName,fni->FileNameLength);
 
 		if (!fni->NextEntryOffset) break;
 
@@ -457,115 +468,32 @@ void WinDirNotify::process(DWORD dwBytes)
 // request change notifications on the subtree under hDirectory
 void WinDirNotify::readchanges()
 {
-	if (!ReadDirectoryChangesW(hDirectory,(LPVOID)notifybuf[active].data(),notifybuf[active].size(),TRUE,FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_CREATION,&dwBytes,&overlapped,completion)) if (GetLastError() == ERROR_NOTIFY_ENUM_DIR) fsaccess->notifyerr = true;
+	if (ReadDirectoryChangesW(hDirectory,(LPVOID)notifybuf[active].data(),notifybuf[active].size(),TRUE,FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_LAST_WRITE | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_CREATION,&dwBytes,&overlapped,completion)) failed = false;
+	else
+	{
+		if (GetLastError() == ERROR_NOTIFY_ENUM_DIR) error = true;	// notification buffer overflow
+		else failed = true;	// permanent failure
+	}
 }
 
-WinDirNotify::WinDirNotify(WinFileSystemAccess* cfsaccess, LocalNode* clocalnode, string* cpath)
+WinDirNotify::WinDirNotify(string* localbasepath) : DirNotify(localbasepath)
 {
-	fsaccess = cfsaccess;
-	basepath = *cpath;
-	localnode = clocalnode;
-
 	ZeroMemory(&overlapped,sizeof(overlapped));
 
 	overlapped.hEvent = this;
 
 	active = 0;
-	notifybuf[0].resize(65536);
-	notifybuf[1].resize(65536);
+	notifybuf[0].resize(32768);
+	notifybuf[1].resize(32768);
 
-	basepath.append("",1);
-	if ((hDirectory = CreateFileW((LPCWSTR)basepath.data(),FILE_LIST_DIRECTORY,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL)) != INVALID_HANDLE_VALUE) readchanges();
+	localbasepath->append("",1);
+	if ((hDirectory = CreateFileW((LPCWSTR)localbasepath->data(),FILE_LIST_DIRECTORY,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL)) != INVALID_HANDLE_VALUE) readchanges();
+	localbasepath->resize(localbasepath->size()-1);
 }
 
 WinDirNotify::~WinDirNotify()
 {
 	if (hDirectory != INVALID_HANDLE_VALUE) CloseHandle(hDirectory);
-}
-
-void WinFileSystemAccess::addnotify(LocalNode* l, string* name)
-{
-	// Win32 directory change notification watches entire subtrees, hence we only care about the toplevel node
-	if (!l->parent) l->notifyhandle = (void*)new WinDirNotify(this,l,name);
-}
-
-void WinFileSystemAccess::delnotify(LocalNode* l)
-{
-	if (!l->parent) delete (WinDirNotify*)l->notifyhandle;
-}
-
-// return next notified local name and corresponding parent node
-bool WinFileSystemAccess::notifynext(sync_list* syncs, string* localname, LocalNode** localnodep, bool* fulltreep)
-{
-	WinDirNotify* dn;
-	LocalNode* l;
-	localnode_map::iterator lit;
-	string name;
-
-	pendingevents = 0;
-
-	for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++)
-	{
-		if ((*it)->state == SYNC_ACTIVE && (dn = (WinDirNotify*)(*it)->localroot.notifyhandle))
-		{
-			while (dn->notifyq.size())
-			{
-				// find parent node of first stored notified path
-				dn->notifyq[0].append("",1);
-
-				wchar_t* wbase = (wchar_t*)dn->notifyq[0].data();
-
-				l = &(*it)->localroot;
-
-				// walk path components
-				while (*wbase)
-				{
-					wchar_t* wptr = wbase;
-
-					while (*++wptr && *wptr != '\\');
-
-					if (*wptr)
-					{
-						name.assign((char*)wbase,(wptr-wbase)*sizeof(wchar_t));
-
-						if ((lit = l->children.find(&name)) != l->children.end() || (lit = l->schildren.find(&name)) != l->schildren.end())
-						{
-							l = lit->second;
-							wbase = wptr+1;
-						}
-						else
-						{
-							// we don't have that child directory yet: defer until it has been created by the processing of previous updates
-							pendingevents = 1;
-							break;
-						}
-					}
-					else
-					{
-						localname->assign((char*)wbase,(wptr-wbase)*sizeof(wchar_t));
-						*localnodep = l;
-
-						dn->notifyq.pop_front();
-
-						// need to scan new folders fully (no notification for contained items!)
-						if (fulltreep) *fulltreep = true;
-
-						return true;
-					}
-				}
-
-				dn->notifyq.pop_front();
-			}
-		}
-	}
-
-	return false;
-}
-
-// true if notifications were unreliable and/or a full rescan is required
-bool WinFileSystemAccess::notifyfailed()
-{
-	return notifyerr ? (notifyerr = false) || true : false;
 }
 
 FileAccess* WinFileSystemAccess::newfileaccess()
@@ -576,6 +504,11 @@ FileAccess* WinFileSystemAccess::newfileaccess()
 DirAccess* WinFileSystemAccess::newdiraccess()
 {
 	return new WinDirAccess();
+}
+
+DirNotify* WinFileSystemAccess::newdirnotify(string* clocalpath)
+{
+	return new WinDirNotify(clocalpath);
 }
 
 bool WinDirAccess::dopen(string* name, FileAccess* f, bool glob)

@@ -382,7 +382,6 @@ void InfoDialog::openFolder(QString path)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
 {
 	if (event->type() != QEvent::ToolTip) return false;
-    if(ui->bPause->isChecked()) return false;
 
 	bool download;
 	QPoint globalpos;
@@ -413,6 +412,7 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 
 	QString operation;
 	QString xOfxFilesPattern(tr("%1 of %2 files at %3/s"));
+    QString xOfxFilesPausedPattern(tr("%1 of %2 files (paused)"));
 	QString totalRemaining(tr("Total Remaining: "));
 	QString remainingSize;
 	QString xOfxFiles;
@@ -424,8 +424,12 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		operation = tr("Downloading ");
 		long long remainingBytes = totalDownloadSize-totalDownloadedSize;
         remainingSize = Utils::getSizeString(remainingBytes);
-        xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
-		totalRemainingSeconds = downloadSpeed ? remainingBytes/downloadSpeed : 0;
+        if(downloadSpeed>=0)
+            xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
+        else
+            xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
+
+        totalRemainingSeconds = (downloadSpeed>0) ? remainingBytes/downloadSpeed : 0;
 	}
 	else
 	{
@@ -434,16 +438,28 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		operation = tr("Uploading ");
 		long long remainingBytes = totalUploadSize-totalUploadedSize;
         remainingSize = Utils::getSizeString(totalUploadSize-totalUploadedSize);
-        xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
-		totalRemainingSeconds = uploadSpeed ? remainingBytes/uploadSpeed : 0;
+        if(uploadSpeed>=0)
+            xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
+        else
+            xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);
+
+        totalRemainingSeconds = (uploadSpeed>0) ? remainingBytes/uploadSpeed : 0;
 	}
 
 	int remainingHours = totalRemainingSeconds/3600;
 	int remainingMinutes = (totalRemainingSeconds%3600)/60;
 	int remainingSeconds =  (totalRemainingSeconds%60);
-	QString remainingTime = QString("%1:%2:%3").arg(remainingHours, 2, 10, QChar('0'))
+    QString remainingTime;
+    if(totalRemainingSeconds)
+    {
+        remainingTime = QString("%1:%2:%3").arg(remainingHours, 2, 10, QChar('0'))
 			.arg(remainingMinutes, 2, 10, QChar('0'))
 			.arg(remainingSeconds, 2, 10, QChar('0'));
+    }
+    else
+    {
+        remainingTime = QString("--:--:--");
+    }
 
 	QString popupHtml(
 		"<table border=\"0\" height=\"75\" width=\"280\" cellspacing=\"12\">"

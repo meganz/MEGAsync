@@ -129,6 +129,8 @@ struct MegaApp
 	virtual void syncupdate_local_folder_deletion(Sync*, const char*) { }
 	virtual void syncupdate_local_file_addition(Sync*, const char*) { }
 	virtual void syncupdate_local_file_deletion(Sync*, const char*) { }
+	virtual void syncupdate_local_file_change(Sync*, const char*) { }
+	virtual void syncupdate_local_move(Sync*, const char*, const char*) { }
 	virtual void syncupdate_get(Sync*, const char*) { }
 	virtual void syncupdate_put(Sync*, const char*) { }
 	virtual void syncupdate_remote_file_addition(Node*) { }

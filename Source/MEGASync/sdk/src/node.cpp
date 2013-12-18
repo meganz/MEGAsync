@@ -467,32 +467,95 @@ bool Node::isbelow(Node* p) const
 	}
 }
 
-// initialize fresh LocalNode object - must be called exactly once
-void LocalNode::init(Sync* csync, string* clocalname, nodetype ctype, LocalNode* cparent, string* clocalpath)
+// set, change or remove LocalNode's parent and name/localname/slocalname.
+// clocalpath must be a full path and must not point to an empty string.
+// no shortname allowed as the last path component.
+void LocalNode::setnameparent(LocalNode* newparent, string* newlocalpath)
 {
-	sync = csync;
-	parent = cparent;
-	node = NULL;
-	type = ctype;
-	syncid = sync->client->nextsyncid();
-
-	localname = *clocalname;
+	bool newnode = !localname.size();
 
 	if (parent)
 	{
-		// (we don't construct a UTF-8 or sname for the root path)
-		name = *clocalname;
-		sync->client->fsaccess->local2name(&name);
-		parent->children[&localname] = this;
-
-		if (sync->client->fsaccess->getsname(clocalpath,&slocalname)) parent->schildren[&slocalname] = this;
+		// remove existing child linkage
+		parent->children.erase(&localname);
+		if (slocalname.size()) parent->schildren.erase(&slocalname);
 	}
 
+	if (newlocalpath)
+	{
+		// extract name component from localpath, check for rename unless newnode
+		int p;
+		
+		for (p = newlocalpath->size(); p -= sync->client->fsaccess->localseparator.size(); )
+		{
+			if (!memcmp(newlocalpath->data()+p,sync->client->fsaccess->localseparator.data(),sync->client->fsaccess->localseparator.size()))
+			{
+				p += sync->client->fsaccess->localseparator.size();
+				break;
+			}
+		}
+	
+		// has the name changed?
+		if (memcmp(localname.data(),newlocalpath->data()+p,newlocalpath->size()-p))
+		{
+			// set new name
+			localname.assign(newlocalpath->data()+p,newlocalpath->size()-p);
+
+			name = localname;
+			sync->client->fsaccess->local2name(&name);
+
+			if (!newnode && node)
+			{
+				// set new name
+				node->attrs.map['n'] = name;
+				sync->client->setattr(node);
+			}
+		}
+	}
+
+	if (newparent)
+	{
+		if (newparent != parent)
+		{
+			parent = newparent;
+
+			if (!newnode && node && parent->node)
+			{
+				// FIXME: detect if rename permitted, copy/delete if not
+				sync->client->rename(node,parent->node);
+			}
+		}
+
+		// (we don't construct a UTF-8 or sname for the root path)
+		parent->children[&localname] = this;
+		if (sync->client->fsaccess->getsname(newlocalpath,&slocalname)) parent->schildren[&slocalname] = this;
+	}
+}
+
+// initialize fresh LocalNode object - must be called exactly once
+void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* clocalpath)
+{
+	sync = csync;
+	parent = NULL;
+	node = NULL;
+	notseen = 0;
+
+	type = ctype;
+	syncid = sync->client->nextsyncid();
+
+	setnameparent(cparent,clocalpath);
+
+	scanseqno = sync->scanseqno;
+
+	// mark fsid as not valid
+	fsid_it	= sync->client->fsidnode.end();
+
 	// enable folder notification
-	if (type == FOLDERNODE) sync->client->fsaccess->addnotify(this,clocalpath);
+	// FIXME: re-enable for inotify
+//	if (type == FOLDERNODE) sync->dirnotify->add(clocalpath);
 
 	sync->client->syncactivity = true;
-	
+
 	sync->localnodes[type]++;
 }
 
@@ -504,27 +567,52 @@ void LocalNode::setnode(Node* cnode)
 	sync->client->syncidhandles[syncid] = node->nodehandle;
 }
 
+void LocalNode::setnotseen(int newnotseen)
+{
+	if (!newnotseen)
+	{
+		if (notseen) sync->client->localsyncnotseen.erase(notseen_it);
+		notseen = 0;
+	}
+	else
+	{
+		if (!notseen) notseen_it = sync->client->localsyncnotseen.insert(this).first;
+		notseen = newnotseen;
+	}
+}
+
+void LocalNode::setfsid(handle newfsid)
+{
+	assert(fsid_it == sync->client->fsidnode.end());
+	
+	fsid = newfsid;
+	
+	pair<handlelocalnode_map::iterator,bool> r = sync->client->fsidnode.insert(pair<handle,LocalNode*>(fsid,this));
+
+	// FIXME: alert if inode dupe detected
+	if (r.second) fsid_it = r.first;
+}
+
 LocalNode::~LocalNode()
 {
+	setnotseen(0);
+
+	// remove from fsidnode map, if present
+	if (fsid_it != sync->client->fsidnode.end()) sync->client->fsidnode.erase(fsid_it);
+	
 	sync->localnodes[type]--;
-	if (type == FILENODE) sync->localbytes -= size;
+	if (type == FILENODE && size > 0) sync->localbytes -= size;
 
 	if (sync->state >= SYNC_INITIALSCAN)
 	{
-		// eliminate queued filesystem events for direct children
-		for (int q = 2; q--; ) for (scanitem_deque::iterator it = sync->scanq[q].begin(); it != sync->scanq[q].end(); it++) if ((*it).parent == this) (*it).deleted = true;
-
-		// record deletion
-		sync->client->syncdeleted[type].insert(syncid);
+		// record deletion unless local node already marked as removed
+		if (node && !node->removed) sync->client->syncdeleted[type].insert(syncid);
 	}
 
 	if (type == FOLDERNODE) sync->client->fsaccess->delnotify(this);
 
-	if (parent)
-	{
-		parent->children.erase(&localname);
-		if (slocalname.size()) parent->schildren.erase(&slocalname);
-	}
+	// remove parent association
+	if (parent) setnameparent(NULL,NULL);
 
 	for (localnode_map::iterator it = children.begin(); it != children.end(); ) delete it++->second;
 
@@ -551,6 +639,16 @@ void LocalNode::getlocalpath(string* path, bool sdisable)
 		
 		if (sdisable) sdisable = false;
 	}
+}
+
+// locate child by localname or slocalname
+LocalNode* LocalNode::childbyname(string* localname)
+{
+	localnode_map::iterator it;
+
+	if ((it = children.find(localname)) == children.end() && (it = schildren.find(localname)) == schildren.end()) return NULL;
+
+	return it->second;
 }
 
 void LocalNode::prepare()

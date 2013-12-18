@@ -179,6 +179,10 @@ struct LocalNode : public File
 	string slocalname;
 	localnode_map schildren;
 
+	// local filesystem node ID (inode...) for rename/move detection
+	handle fsid;
+	handlelocalnode_map::iterator fsid_it;
+
 	// related cloud node, if any
 	Node* node;
 
@@ -186,23 +190,35 @@ struct LocalNode : public File
 	nodetype type;
 
 	// detection of deleted filesystem records
-	handle scanseqno;
+	int scanseqno;
 
 	// global sync reference
 	handle syncid;
 
-	// for folders: generic OS filesystem notification handle/pointer
-	void* notifyhandle;
-
+	// number of iterations since last seen
+	int notseen;
+	
+	// if delage > 0, own iterator inside MegaClient::localsyncgone
+	localnode_set::iterator notseen_it;
+	
 	// build full local path to this node
 	void getlocalpath(string*, bool sdisable = false);
+
+	// return child node by name
+	LocalNode* childbyname(string*);
 
 	void prepare();
 	void completed(Transfer*, LocalNode*);
 
 	void setnode(Node*);
 
-	void init(Sync*, string*, nodetype, LocalNode*, string*);
+	void setnotseen(int);
+
+	void setfsid(handle);
+
+	void setnameparent(LocalNode*, string*);
+	
+	void init(Sync*, nodetype, LocalNode*, string*);
 
 	~LocalNode();
 };

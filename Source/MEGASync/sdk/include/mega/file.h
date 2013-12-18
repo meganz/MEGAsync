@@ -75,12 +75,13 @@ struct File : public FileFingerprint
 
 struct SyncFileGet : public File
 {
+	Sync* sync;
 	Node* n;
-
+	
 	// self-destruct after completion
 	void completed(Transfer*, LocalNode*);
 
-	SyncFileGet(Node*, string*);
+	SyncFileGet(Sync*, Node*, string*);
 	~SyncFileGet();
 };
 

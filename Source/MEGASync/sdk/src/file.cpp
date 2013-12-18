@@ -126,8 +126,10 @@ void File::displayname(string* dname)
 	}
 }
 
-SyncFileGet::SyncFileGet(Node* cn, string* clocalname)
+SyncFileGet::SyncFileGet(Sync* csync, Node* cn, string* clocalname)
 {
+	sync = csync;
+
 	n = cn;
 	h = n->nodehandle;
 	*(FileFingerprint*)this = *n;
@@ -141,10 +143,11 @@ SyncFileGet::~SyncFileGet()
 	n->syncget = NULL;
 }
 
-// complete, then self-destruct
+// add corresponding LocalNode, then self-destruct
 void SyncFileGet::completed(Transfer* t, LocalNode* n)
 {
-	File::completed(t,n);
+	localname.erase(0,sync->dirnotify->localbasepath.size()+sync->client->fsaccess->localseparator.size());
+	sync->checkpath(&localname);
 	delete this;
 }
 

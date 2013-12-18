@@ -28,4 +28,18 @@ bool FileSystemAccess::islchex(char c)
 	return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z');
 }
 
+// default DirNotify: no notification available
+DirNotify::DirNotify(string* clocalpath)
+{
+	localbasepath = *clocalpath;
+	
+	failed = true;
+	error = false;
+}
+
+DirNotify* FileSystemAccess::newdirnotify(string* localpath)
+{
+	return new DirNotify(localpath);
+}
+
 } // namespace

@@ -885,8 +885,9 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
 	updatingSID = 0;
 	updateSIDtime = -10000000;
 	currentTransfer = NULL;
+    pausetime = 0;
 
-	//Start blocking thread
+    //Start blocking thread
 	threadExit = 0;
 	pthread_create(&thread, NULL, threadEntryPoint, this);
 }
@@ -1678,7 +1679,7 @@ void MegaApi::transfer_update(Transfer *tr)
 	if(tr->slot)
 	{				
 		transfer->setTime(tr->slot->lastdata);
-		transfer->setStartTime(tr->slot->starttime);
+        if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
 		transfer->setTransferredBytes(tr->slot->progressreported);
 		transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
@@ -1729,8 +1730,8 @@ void MegaApi::transfer_complete(Transfer* tr)
 
 	if(tr->slot)
 	{
-		transfer->setStartTime(tr->slot->starttime);
-		transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
+        if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
+        transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
 		transfer->setTime(tr->slot->lastdata);
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
 		transfer->setTransferredBytes(tr->slot->progressreported);
@@ -3731,12 +3732,31 @@ void MegaApi::sendPendingRequests()
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
 			cout << "Go to addSync" << endl;
-			new Sync(client,&localname,node, -1);
+            e = client->addsync(&localname,node, -1);
             break;
         }
         case MegaRequest::TYPE_PAUSE_TRANSFERS:
         {
             bool pause = request->getFlag();
+            if(pause)
+            {
+                if(!pausetime) pausetime = waiter->getdstime();
+            }
+            else if(pausetime)
+            {
+                for(std::map<Transfer*, MegaTransfer *>::iterator iter = transferMap.begin(); iter != transferMap.end(); iter++)
+                {
+                    MegaTransfer *transfer = iter->second;
+                    dstime starttime = transfer->getStartTime();
+                    if(starttime)
+                    {
+                        dstime timepaused = waiter->getdstime() - pausetime;
+                        iter->second->setStartTime(starttime + timepaused);
+                    }
+                }
+                pausetime = 0;
+            }
+
             client->pausexfers(PUT, pause);
             client->pausexfers(GET, pause);
             fireOnRequestFinish(this, request, MegaError(API_OK));
