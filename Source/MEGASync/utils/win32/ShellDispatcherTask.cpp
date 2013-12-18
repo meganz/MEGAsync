@@ -367,7 +367,6 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
    sync_list * syncs = megaApi->getActiveSyncs();
    int i=0;
-   TCHAR  wBasePath[MAX_PATH+1];
 
    for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
    {
@@ -378,6 +377,7 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 	   if(basePath.length()>=MAX_PATH) continue;
 	   //cout << "BasePath: " << basePath.toStdString() << endl;
 
+       wchar_t *wBasePath = new wchar_t[basePath.length()+1];
 	   int len = basePath.toWCharArray(wBasePath);
 	   wBasePath[len]=L'\0';
 	   //wprintf(L"A: %s\nB: %s\n%d\n", wBasePath, path, len);
@@ -388,6 +388,7 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 			   //cout << "Base path found" << endl;
                wcscpy_s( pipe->chReply, BUFSIZE, TEXT("0") );
 			   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
+               delete wBasePath;
 			   return;
 		   }
 		   //cout << "NO ROOT" << endl;
@@ -417,8 +418,10 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 				   break;
 		   }
 		   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
+           delete wBasePath;
 		   return;
 	   }
+       delete wBasePath;
    }
 
    //cout << "File out of a synced folder" << endl;

@@ -71,25 +71,29 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 void MegaApplication::init()
 {
     //Start the initial setup wizard if needed
-    if(!preferences->isSetupWizardCompleted())
+    if(!preferences->logged())
     {
         setupWizard = new SetupWizard(this);
 		setupWizard->exec();
-        if(!preferences->isSetupWizardCompleted())
+        if(!preferences->logged())
             ::exit(0);
         loggedIn();
     }
 	else
 	{
         //Otherwise, login in the account
-		megaApi->login(preferences->email().toUtf8().constData(),
-					   preferences->password().toUtf8().constData());
+        megaApi->fastLogin(preferences->email().toUtf8().constData(),
+                       preferences->emailHash().toUtf8().constData(),
+                       preferences->privatePw().toUtf8().constData());
 	}
 }
 
 void MegaApplication::loggedIn()
 {
     infoDialog = new InfoDialog(this);
+
+    //Get account details
+    megaApi->getAccountDetails();
 
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
@@ -220,15 +224,11 @@ void MegaApplication::reloadSyncs()
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
-    preferences->unlink();
     delete httpServer;
     httpServer = NULL;
-    trayIcon->hide();
     stopSyncs();
     megaApi->logout();
-    delete infoDialog;
-    init();
-}
+}  
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
@@ -504,9 +504,10 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		break;
 	}
 	case MegaRequest::TYPE_LOGIN:
+    case MegaRequest::TYPE_FAST_LOGIN:
 	{
         //This prevents to handle logins in the initial setup wizard
-		if(preferences->isSetupWizardCompleted())
+        if(preferences->logged())
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
@@ -521,10 +522,20 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		}
 		break;
 	}
+    case MegaRequest::TYPE_LOGOUT:
+    {
+        if(preferences->logged())
+        {
+            preferences->unlink();
+            trayIcon->hide();
+            delete infoDialog;
+            init();
+        }
+    }
 	case MegaRequest::TYPE_FETCH_NODES:
 	{
         //This prevents to handle node requests in the initial setup wizard
-		if(preferences->isSetupWizardCompleted())
+        if(preferences->logged())
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{

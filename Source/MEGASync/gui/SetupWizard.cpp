@@ -53,6 +53,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			break;
 		}
 		case MegaRequest::TYPE_LOGIN:
+        case MegaRequest::TYPE_FAST_LOGIN:
 		{
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
@@ -103,6 +104,17 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		}
 		case MegaRequest::TYPE_FETCH_NODES:
 		{
+            QString email = ui->eLoginEmail->text().toLower().trimmed();
+            if(preferences->hasEmail(email))
+            {
+                QString privatePw = megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData());
+                QString emailHash = megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData());
+                preferences->setEmail(email);
+                preferences->setCredentials(emailHash, privatePw);
+                close();
+                return;
+            }
+
 			ui->bBack->setEnabled(true);
 			ui->bNext->setEnabled(true);
 			ui->sPages->setCurrentWidget(ui->pSetupType);
@@ -310,12 +322,13 @@ void SetupWizard::on_bCancel_clicked()
 {
     if(ui->sPages->currentWidget() == ui->pWelcome)
     {
-        preferences->setEmail(ui->eLoginEmail->text().toLower().trimmed());
-        preferences->setPassword(ui->eLoginPassword->text());
+        QString email = ui->eLoginEmail->text().toLower().trimmed();
+        QString privatePw = megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData());
+        QString emailHash = megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData());
+
+        preferences->setEmail(email);
+        preferences->setCredentials(emailHash, privatePw);
         preferences->addSyncedFolder(ui->lFinalLocalFolder->text(), ui->lFinalMegaFolder->text(), selectedMegaFolderHandle);
-        preferences->setSetupWizardCompleted(true);
-        megaApi->getAccountDetails();
-		megaApi->syncFolder(ui->lFinalLocalFolder->text().toUtf8().constData(), megaApi->getNodeByHandle(selectedMegaFolderHandle));
         this->close();
         return;
     }

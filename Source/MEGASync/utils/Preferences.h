@@ -16,10 +16,13 @@ class Preferences
 public:
     Preferences();
 
+    bool logged();
+    bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
-    QString password();
-    void setPassword(QString password);
+    QString emailHash();
+    QString privatePw();
+    void setCredentials(QString emailHash, QString privatePw);
     long long totalStorage();
     void setTotalStorage(long long value);
     long long usedStorage();
@@ -30,8 +33,6 @@ public:
 	void setUsedBandwidth(long long value);
     int accountType();
     void setAccountType(int value);
-    bool isSetupWizardCompleted();
-    void setSetupWizardCompleted(bool value);
     bool showNotifications();
     void setShowNotifications(bool value);
     bool startOnStartup();
@@ -102,7 +103,6 @@ public:
 protected:
 
     void login(QString account);
-    bool logged();
     void logout();
 
     void readFolders();
@@ -125,7 +125,8 @@ protected:
     static const QString syncsGroupKey;
     static const QString recentGroupKey;
     static const QString emailKey;
-    static const QString passwordKey;
+    static const QString emailHashKey;
+    static const QString privatePwKey;
     static const QString totalStorageKey;
     static const QString usedStorageKey;
 	static const QString totalBandwidthKey;
@@ -154,7 +155,6 @@ protected:
     static const QString fileHandleKey;
     static const QString localPathKey;
 
-    static const bool defaultSetupWizardCompleted;
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
