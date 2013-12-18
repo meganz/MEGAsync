@@ -260,12 +260,19 @@ void SettingsDialog::saveSettings()
 {
     //General
     preferences->setShowNotifications(ui->cShowNotifications->isChecked());
-    preferences->setUpdateAutomatically(ui->cAutoUpdate->isChecked());
-    preferences->setStartOnStartup(ui->cStartOnStartup->isChecked());
 
-    #ifdef WIN32
-		WindowsUtils::startOnStartup(ui->cStartOnStartup->isChecked());
-    #endif
+    bool updateAutomatically = ui->cAutoUpdate->isChecked();
+    if(updateAutomatically != preferences->updateAutomatically())
+    {
+        if(updateAutomatically) app->startUpdateTask();
+        else app->stopUpdateTask();
+    }
+
+    preferences->setUpdateAutomatically(updateAutomatically);
+
+    bool startOnStartup = ui->cStartOnStartup->isChecked();
+    Utils::startOnStartup(startOnStartup);
+    preferences->setStartOnStartup(startOnStartup);
 
     //Syncs
 	if(syncsChanged)
@@ -293,7 +300,7 @@ void SettingsDialog::saveSettings()
     else preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
 
     //Proxies
-    if(ui->rNoProxy->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
+/*  if(ui->rNoProxy->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
     else if(ui->rProxyAuto->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
     else preferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
 
@@ -303,6 +310,7 @@ void SettingsDialog::saveSettings()
     preferences->setProxyRequiresAuth(ui->cProxyRequiresPassword->isChecked());
     preferences->setProxyUsername(ui->eProxyUsername->text());
     preferences->setProxyPassword(ui->eProxyPassword->text());
+*/
 
     ui->bApply->setEnabled(false);
 }
@@ -393,8 +401,8 @@ void SettingsDialog::on_bApply_clicked()
 
 void SettingsDialog::on_bUnlink_clicked()
 {
-    if(QMessageBox::question(this, tr("Unlink account"),
-            tr("All your settings will be deleted.") + " " + tr("Are you sure?"),
+    if(QMessageBox::question(this, tr("Logout"),
+            tr("Synchronization will stop working.") + " " + tr("Are you sure?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         this->close();

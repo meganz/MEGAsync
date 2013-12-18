@@ -682,9 +682,10 @@ public:
     void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);
 
 	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
-	void startUpload(const char* localPath, Node* parent=NULL, int connections=1, int maxSpeed = 0, const char* fileName = NULL, MegaTransferListener *listener = NULL);
-	void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener);
-	void startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener);
+    void startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
+    void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener=NULL);
+    void startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener = NULL);
+    void startUpload(const char* localPath, Node* parent, int maxSpeed, MegaTransferListener *listener = NULL);
 
 	void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
 	void startDownload(Node* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);

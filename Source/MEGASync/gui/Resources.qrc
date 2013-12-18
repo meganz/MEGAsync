@@ -133,5 +133,6 @@
         <file>images/tray_paused_large_ico.png</file>
         <file>images/tray_play_ico.png</file>
         <file>images/tray_tooltip_clock_ico.png</file>
+        <file>images/tray_add_sync_ico.png</file>
     </qresource>
 </RCC>

@@ -1274,6 +1274,8 @@ void MegaApi::startUpload(const char* localPath, Node* parent, MegaTransferListe
 void MegaApi::startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener)
 { return startUpload(localPath, parent, 1, 0, fileName, listener); }
 
+void MegaApi::startUpload(const char* localPath, Node* parent, int maxSpeed, MegaTransferListener *listener)
+{ return startUpload(localPath, parent, 1, maxSpeed, (const char *)NULL, listener); }
 
 void MegaApi::startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener)
 {
