@@ -96,6 +96,8 @@ bool WindowsUtils::startOnStartup(bool value)
 
     if(value)
     {
+        if(QFile(startupPath).exists()) return true;
+
         WCHAR wDescription[]=L"Start MEGAsync";
         WCHAR *wStartupPath = new wchar_t[startupPath.length()+1];
         int len = startupPath.toWCharArray(wStartupPath);
@@ -171,6 +173,7 @@ void WindowsUtils::syncFolderAdded(QString syncPath)
 
     QFileInfo syncPathInfo(syncPath);
     QString linkPath = linksPath + "\\" + syncPathInfo.fileName() + ".lnk";
+    if(QFile(linkPath).exists()) return;
 
     WCHAR wDescription[]=L"MEGAsync synchronized folder";
     linkPath = QDir::toNativeSeparators(linkPath);

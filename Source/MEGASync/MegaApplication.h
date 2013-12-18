@@ -57,6 +57,13 @@ public:
     void showSyncingIcon();
 	void reloadSyncs();
     void unlink();
+    void showInfoMessage(QString message, QString title = tr("MEGAsync"));
+    void showWarningMessage(QString message, QString title = tr("MEGAsync"));
+    void showErrorMessage(QString message, QString title = tr("MEGAsync"));
+    void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
+
+    void startUpdateTask();
+    void stopUpdateTask();
 
 signals:
     void startUpdaterThread();
@@ -72,8 +79,8 @@ public slots:
 	void showUploadDialog();
 	void onLinkImportFinished();
     void onUpdateCompleted();
-    void onThreadFinished();
     void rebootApplication();
+    void exitApplication();
     void pauseTransfers(bool pause);
 
 protected:

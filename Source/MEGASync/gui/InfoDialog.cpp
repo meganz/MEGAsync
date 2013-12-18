@@ -304,6 +304,7 @@ void InfoDialog::timerUpdate()
 		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 		app->showSyncedIcon();
 		app->getMegaApi()->getAccountDetails();
+        app->showNotificationMessage(tr("All transfers have been finished"));
     }
 }
 
@@ -355,7 +356,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 
     menu.setStyleSheet("QMenu { background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;}");
     QAction *addSyncAction = menu.addAction("Add Sync", this, SLOT(addSync()));
-    addSyncAction->setIcon(QIcon("://images/folder.ico"));
+    addSyncAction->setIcon(QIcon("://images/tray_add_sync_ico.png"));
     menu.addSeparator();
 
     QSignalMapper signalMapper;
@@ -364,7 +365,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         QFileInfo info(prefences->getLocalFolder(i));
 
         QAction *action = menu.addAction(info.fileName(), &signalMapper, SLOT(map()));
-        action->setIcon(QIcon("://images/folder.ico"));
+        action->setIcon(QIcon("://images/small_folder.png"));
         signalMapper.setMapping(action, info.absoluteFilePath());
         connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
     }

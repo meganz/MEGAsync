@@ -33,30 +33,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
 	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
-    //Start the update task in the update thread
-    updateTask.moveToThread(&updateThread);
-    updateThread.start();
-    connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()));
-    connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()));
-    connect(&updateThread, SIGNAL(finished()), this, SLOT(onThreadFinished()));
-
-    emit startUpdaterThread();
-
-    //Initialize fields to manage communications and transfers
-    delegateListener = new QTMegaListener(this);
-    httpServer = NULL;
-	queuedDownloads = 0;
-    queuedUploads = 0;
-	totalUploads = totalDownloads = 0;
-	totalDownloadSize = totalUploadSize = 0;
-	totalDownloadedSize = totalUploadedSize = 0;
-	uploadSpeed = downloadSpeed = 0;
-	QString basePath = QCoreApplication::applicationDirPath()+"/";
-	string tmpPath = basePath.toStdString();
-	megaApi = new MegaApi(delegateListener, &tmpPath);
-    uploader = new MegaUploader(megaApi);
-    reboot = false;
-
     //Create GUI elements
     createActions();
     createTrayIcon();
@@ -66,8 +42,27 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadFolderSelector = NULL;
     preferences = new Preferences();
 
+    //Initialize fields to manage communications and transfers
+    delegateListener = new QTMegaListener(this);
+    httpServer = NULL;
+    queuedDownloads = 0;
+    queuedUploads = 0;
+    totalUploads = totalDownloads = 0;
+    totalDownloadSize = totalUploadSize = 0;
+    totalDownloadedSize = totalUploadedSize = 0;
+    uploadSpeed = downloadSpeed = 0;
+    QString basePath = QCoreApplication::applicationDirPath()+"/";
+    string tmpPath = basePath.toStdString();
+    megaApi = new MegaApi(delegateListener, &tmpPath);
+    uploader = new MegaUploader(megaApi, preferences);
+    reboot = false;
+
     //Apply the "Start on startup" configuration
     Utils::startOnStartup(preferences->startOnStartup());
+
+    //Start the update task in the update thread
+    if(preferences->updateAutomatically())
+        startUpdateTask();
 
     //Start the app
     init();
@@ -101,7 +96,7 @@ void MegaApplication::loggedIn()
 
     //Show the tray icon
     trayIcon->show();
-	trayIcon->showMessage(tr("MEGAsync"), tr("MEGAsync is running"));
+    showNotificationMessage(tr("MEGAsync is running"));
 
     //Try to keep the tray icon always active
     if(!Utils::enableTrayIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
@@ -149,7 +144,7 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 	if(!node || node->type==FILENODE)
 	{
 		uploadQueue.clear();
-		trayIcon->showMessage(tr("MEGAsync"), tr("Error: Invalid destination folder. The upload has been cancelled"));
+        showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
 		return;
 	}
 
@@ -171,14 +166,14 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
     {
         if(notUploaded.size()==1)
         {
-            trayIcon->showMessage("Warning", QString("The folder (%1) wasn't uploaded "
+            showInfoMessage(tr("The folder (%1) wasn't uploaded "
                 "because it contains too much files or folders (+%2 folders or +%3 files)")
                 .arg(notUploaded[0]).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
                 .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
         }
         else
         {
-            trayIcon->showMessage("Warning", QString("%1 folders weren't uploaded "
+            showInfoMessage(tr("%1 folders weren't uploaded "
                 "because they contain too much files or folders (+%2 folders or +%3 files)")
                 .arg(notUploaded.size()).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
                 .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
@@ -191,10 +186,20 @@ void MegaApplication::rebootApplication()
     if(queuedDownloads || queuedUploads)
         return;
 
+    stopUpdateTask();
+    Utils::stopShellDispatcher();
+
     QString app = QApplication::applicationFilePath();
     QStringList arguments = QApplication::arguments();
     QString wd = QDir::currentPath();
     QProcess::startDetached(app, arguments, wd);
+    QApplication::exit();
+}
+
+void MegaApplication::exitApplication()
+{
+    stopUpdateTask();
+    Utils::stopShellDispatcher();
     QApplication::exit();
 }
 
@@ -220,6 +225,48 @@ void MegaApplication::unlink()
     megaApi->logout();
     delete infoDialog;
     init();
+}
+
+void MegaApplication::showInfoMessage(QString message, QString title)
+{
+    if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Information);
+    else QMessageBox::information(NULL, title, message);
+}
+
+void MegaApplication::showWarningMessage(QString message, QString title)
+{
+    if(!preferences->showNotifications()) return;
+    if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Warning);
+    else QMessageBox::warning(NULL, title, message);
+}
+
+void MegaApplication::showErrorMessage(QString message, QString title)
+{
+    QMessageBox::critical(NULL, title, message);
+}
+
+void MegaApplication::showNotificationMessage(QString message, QString title)
+{
+    if(!preferences->showNotifications()) return;
+    if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 8000);
+}
+
+void MegaApplication::startUpdateTask()
+{
+    if(!updateThread.isRunning())
+    {
+        updateTask.moveToThread(&updateThread);
+        updateThread.start();
+        connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()), Qt::UniqueConnection);
+        connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
+        emit startUpdaterThread();
+    }
+}
+
+void MegaApplication::stopUpdateTask()
+{
+    if(updateThread.isRunning())
+        updateThread.quit();
 }
 
 void MegaApplication::pauseSync()
@@ -345,12 +392,6 @@ void MegaApplication::onUpdateCompleted()
 {
     cout << "Update completed. Initializing a silent reboot..." << endl;
     reboot = true;
-    updateThread.quit();
-    Utils::stopShellDispatcher();
-}
-
-void MegaApplication::onThreadFinished()
-{
     QTimer::singleShot(10000, this, SLOT(rebootApplication()));
 }
 
@@ -405,7 +446,7 @@ void MegaApplication::openSettings()
 void MegaApplication::createActions()
 {
     exitAction = new QAction(tr("Exit"), this);
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(quit()));
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
     settingsAction = new QAction(tr("Settings"), this);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
     pauseAction = new QAction(tr("Pause synchronization"), this);
@@ -448,7 +489,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
             //A public link has been created, put it in the clipboard and inform users
 			QString linkForClipboard(request->getLink());
             QApplication::clipboard()->setText(linkForClipboard);
-			trayIcon->showMessage(tr("MEGAsync"), tr("The link has been copied to the clipboard"));
+            showInfoMessage(tr("The link has been copied to the clipboard"));
 		}
 		break;
 	}
@@ -629,7 +670,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
     //Show information to users
-	trayIcon->showMessage(transfer->getFileName(), tr("Temporarily error in transfer: ") + e->getErrorString());
+    showWarningMessage(tr("Temporarily error in transfer: ") + e->getErrorString(), transfer->getFileName());
 }
 
 //Called when contacts have been updated in MEGA
@@ -641,6 +682,8 @@ void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
 //Called when nodes have been updated in MEGA
 void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
+    bool externalNodes = 0;
+
     //If this is a full reload, return
 	if(!nodes) return;
 
@@ -648,6 +691,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
+        if(!node->tag) externalNodes++;
+
 		if(!node->removed && node->tag && !node->syncdeleted)
 		{
             //If the node has been modified by a local operation...
@@ -694,6 +739,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
     //Update the information dialog
 	infoDialog->updateDialog();
+
+    if(externalNodes) showNotificationMessage(tr("You have new or updated files in your account"));
 }
 
 void MegaApplication::onReloadNeeded(MegaApi* api)

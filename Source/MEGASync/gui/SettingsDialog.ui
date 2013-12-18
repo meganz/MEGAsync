@@ -520,7 +520,7 @@ margin-top: 6px;
                 <item>
                  <widget class="QPushButton" name="bUnlink">
                   <property name="text">
-                   <string>Unlink</string>
+                   <string>Logout</string>
                   </property>
                  </widget>
                 </item>
