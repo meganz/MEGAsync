@@ -680,6 +680,7 @@ public:
 	void setNodeAttribute(Node* node, int type, char *srcFilePath, MegaRequestListener *listener = NULL);
 	void addContact(const char* email, MegaRequestListener* listener=NULL);
     void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);
+    void setUploadLimit(int bpslimit);
 
 	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
     void startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);

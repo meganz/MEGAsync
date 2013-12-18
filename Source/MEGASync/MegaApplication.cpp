@@ -54,7 +54,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QString basePath = QCoreApplication::applicationDirPath()+"/";
     string tmpPath = basePath.toStdString();
     megaApi = new MegaApi(delegateListener, &tmpPath);
-    uploader = new MegaUploader(megaApi, preferences);
+    uploader = new MegaUploader(megaApi);
     reboot = false;
 
     //Apply the "Start on startup" configuration
@@ -90,6 +90,9 @@ void MegaApplication::init()
 void MegaApplication::loggedIn()
 {
     infoDialog = new InfoDialog(this);
+
+    //Set the upload limit
+    setUploadLimit(preferences->uploadLimitKB());
 
     //Start the Sync feature
     startSyncs();
@@ -249,6 +252,13 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
 {
     if(!preferences->showNotifications()) return;
     if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 8000);
+}
+
+//KB/s
+void MegaApplication::setUploadLimit(int limit)
+{
+    if(limit<0) megaApi->setUploadLimit(-1);
+    else megaApi->setUploadLimit(limit*1024);
 }
 
 void MegaApplication::startUpdateTask()

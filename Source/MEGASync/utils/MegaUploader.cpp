@@ -1,9 +1,8 @@
 #include "MegaUploader.h"
 
-MegaUploader::MegaUploader(MegaApi *megaApi, Preferences *preferences) : delegateListener(this)
+MegaUploader::MegaUploader(MegaApi *megaApi) : delegateListener(this)
 {
     this->megaApi = megaApi;
-    this->preferences = preferences;
 }
 
 bool MegaUploader::upload(QString path, Node *parent)
@@ -15,8 +14,7 @@ bool MegaUploader::upload(QFileInfo info, Node *parent)
 {
     if(info.isFile())
     {
-        megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent,
-                             preferences->uploadLimitKB());
+        megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
         return true;
     }
     else if(info.isDir())

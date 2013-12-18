@@ -1255,6 +1255,12 @@ void MegaApi::pauseTransfers(bool pause, MegaRequestListener* listener)
     waiter->notify();
 }
 
+//-1 -> AUTO, 0 -> NONE, >0 -> b/s
+void MegaApi::setUploadLimit(int bpslimit)
+{
+    client->putmbpscap = bpslimit;
+}
+
 void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD, listener);
