@@ -10,13 +10,13 @@ const QString Preferences::syncsGroupKey            = "Syncs";
 const QString Preferences::recentGroupKey           = "Recent";
 const QString Preferences::currentAccountKey        = "currentAccount";
 const QString Preferences::emailKey                 = "email";
-const QString Preferences::passwordKey              = "password";
+const QString Preferences::emailHashKey             = "emailHash";
+const QString Preferences::privatePwKey             = "privatePw";
 const QString Preferences::totalStorageKey          = "totalStorage";
 const QString Preferences::usedStorageKey           = "usedStorage";
 const QString Preferences::totalBandwidthKey		= "totalBandwidth";
 const QString Preferences::usedBandwidthKey			= "usedBandwidth";
 const QString Preferences::accountTypeKey           = "accountType";
-const QString Preferences::setupWizardCompletedKey  = "setupWizardCompleted";
 const QString Preferences::showNotificationsKey     = "showNotifications";
 const QString Preferences::startOnStartupKey        = "startOnStartup";
 const QString Preferences::languageKey              = "language";
@@ -39,7 +39,6 @@ const QString Preferences::fileNameKey              = "fileName";
 const QString Preferences::fileHandleKey            = "fileHandle";
 const QString Preferences::localPathKey             = "localPath";
 
-const bool Preferences::defaultSetupWizardCompleted = false;
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
@@ -76,18 +75,26 @@ void Preferences::setEmail(QString email)
     settings->sync();
 }
 
-QString Preferences::password()
+QString Preferences::emailHash()
 {
     assert(logged());
 
-    return settings->value(passwordKey).toString();
+    return settings->value(emailHashKey).toString();
 }
 
-void Preferences::setPassword(QString password)
+QString Preferences::privatePw()
 {
     assert(logged());
 
-    settings->setValue(passwordKey, password);
+    return settings->value(privatePwKey).toString();
+}
+
+void Preferences::setCredentials(QString emailHash, QString privatePw)
+{
+    assert(logged());
+
+    settings->setValue(emailHashKey, emailHash);
+    settings->setValue(privatePwKey, privatePw);
     settings->sync();
 }
 
@@ -163,17 +170,6 @@ void Preferences::setAccountType(int value)
     assert(logged());
 
     settings->setValue(accountTypeKey, value);
-    settings->sync();
-}
-
-bool Preferences::isSetupWizardCompleted()
-{
-    return settings->value(setupWizardCompletedKey, defaultSetupWizardCompleted).toBool();
-}
-
-void Preferences::setSetupWizardCompleted(bool value)
-{
-    settings->setValue(setupWizardCompletedKey, value);
     settings->sync();
 }
 
@@ -495,14 +491,17 @@ void Preferences::unlink()
 {
     assert(logged());
 
-    removeAllFolders();
-    settings->remove("");
+    settings->remove(emailHashKey);
+    settings->remove(privatePwKey);
     settings->endGroup();
 
     settings->remove(currentAccountKey);
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    recentFileNames.clear();
+    recentFileHandles.clear();
+    recentLocalPaths.clear();
 }
 
 void Preferences::login(QString account)
@@ -518,6 +517,13 @@ bool Preferences::logged()
 {
     if(settings->group().isEmpty()) return false;
     return true;
+}
+
+bool Preferences::hasEmail(QString email)
+{
+    assert(!logged());
+
+    return settings->childGroups().contains(email);
 }
 
 void Preferences::logout()

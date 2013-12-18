@@ -76,6 +76,7 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->wStack->setCurrentWidget(ui->pBandwidth);
 }
 
+/*
 void SettingsDialog::on_bProxies_clicked()
 {
     ui->bGeneral->setChecked(false);
@@ -85,6 +86,7 @@ void SettingsDialog::on_bProxies_clicked()
 	//ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
 }
+*/
 
 void SettingsDialog::on_bCancel_clicked()
 {

@@ -3608,23 +3608,23 @@ void MegaApi::sendPendingRequests()
 			if(loginRequest) delete loginRequest;
 			loginRequest = NULL;
 
-			for (std::map<int,MegaRequest*>::iterator it=requestMap.begin(); it!=requestMap.end(); ++it)
-			{
-				if(it->first != nextTag)
-				{
-					client->restag = it->first;
-					if(it->second) fireOnRequestFinish(this, it->second, MegaError(MegaError::API_EACCESS));
-				}
-			}
+            requestMap.erase(nextTag);
+            while(!requestMap.empty())
+            {
+                std::map<int,MegaRequest*>::iterator it=requestMap.begin();
+                client->restag = it->first;
+                if(it->second) fireOnRequestFinish(this, it->second, MegaError(MegaError::API_EACCESS));
+            }
 
-			/*for (std::map<int,MegaTransfer*>::iterator it=transferMap.begin(); it!=transferMap.end(); ++it)
-			{
-				client->restag = it->first;
-				if(it->second) fireOnTransferFinish(this, it->second, MegaError(MegaError::API_EACCESS));
-			}*/
+            while(!transferMap.empty())
+            {
+                std::map<Transfer*, MegaTransfer *>::iterator it=transferMap.begin();
+                if(it->second) fireOnTransferFinish(this, it->second, MegaError(MegaError::API_EACCESS));
+            }
 
 			client->logout();
 
+            requestMap[nextTag]=request;
 			client->restag = nextTag;
 			fireOnRequestFinish(this, request, MegaError(e));
 			break;
