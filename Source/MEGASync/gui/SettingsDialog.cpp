@@ -223,9 +223,11 @@ void SettingsDialog::loadSettings()
     loadSyncSettings();
 
     //Bandwidth
-    ui->rLimit->setChecked(preferences->uploadLimitKB()>=0);
-    ui->rNoLimit->setChecked(preferences->uploadLimitKB()<0);
+    ui->rAutoLimit->setChecked(preferences->uploadLimitKB()<0);
+    ui->rLimit->setChecked(preferences->uploadLimitKB()>0);
+    ui->rNoLimit->setChecked(preferences->uploadLimitKB()==0);
     ui->eLimit->setText((preferences->uploadLimitKB()<=0)? "0" : QString::number(preferences->uploadLimitKB()));
+    ui->eLimit->setEnabled(ui->rLimit->isChecked());
 
 	if(preferences->totalBandwidth() == 0)
 	{
@@ -296,8 +298,11 @@ void SettingsDialog::saveSettings()
 	}
 
     //Bandwidth
-    if(ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length()==0) preferences->setUploadLimitKB(-1);
+    if(ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length()==0) preferences->setUploadLimitKB(0);
+    else if(ui->rAutoLimit->isChecked()) preferences->setUploadLimitKB(-1);
     else preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
+
+    app->setUploadLimit(preferences->uploadLimitKB());
 
     //Proxies
 /*  if(ui->rNoProxy->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_NONE);

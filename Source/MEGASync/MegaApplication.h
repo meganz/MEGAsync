@@ -61,7 +61,7 @@ public:
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));
     void showErrorMessage(QString message, QString title = tr("MEGAsync"));
     void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
-
+    void setUploadLimit(int limit);
     void startUpdateTask();
     void stopUpdateTask();
 
