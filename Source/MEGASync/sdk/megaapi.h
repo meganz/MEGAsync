@@ -780,7 +780,8 @@ protected:
 	int updatingSID;
 	long long updateSIDtime;
 	int threadExit;
-	
+    dstime pausetime;
+
 	handle cwd;
 	void loop();
 	

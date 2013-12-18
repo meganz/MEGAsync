@@ -26,7 +26,13 @@
 
 namespace mega {
 
-// generic host file access interface
+// generic host filesystem node ID interface
+struct FsNodeId
+{
+	virtual bool isequalto(FsNodeId*) = 0;
+};
+
+// generic host file/directory access interface
 struct FileAccess
 {
 	// file size
@@ -35,6 +41,10 @@ struct FileAccess
 	// mtime of a file opened for reading
 	time_t mtime;
 
+	// local filesystem record id (survives renames & moves)
+	handle fsid;
+	bool fsidvalid;
+	
 	// type of opened path
 	nodetype type;
 
@@ -68,6 +78,26 @@ struct DirAccess
 	virtual ~DirAccess() { }
 };
 
+// generic filesystem change notification
+struct DirNotify
+{
+	enum { DIREVENTS, RETRY, NUMQUEUES };
+
+	// pathq[DIREVENTS] is fed with filesystem change paths, pathq[RETRY] receives paths with transient errors that need to be retried
+	string_deque pathq[NUMQUEUES];
+	
+	// set if no notification available on this platform or a permanent failure occurred
+	bool failed;
+	
+	// set if a temporary error occurred
+	bool error;
+	
+	// base path
+	string localbasepath;
+	
+	DirNotify(string*);
+};
+
 // generic host filesystem access interface
 struct FileSystemAccess : public EventTrigger
 {
@@ -77,8 +107,11 @@ struct FileSystemAccess : public EventTrigger
 	// instantiate FileAccess object
 	virtual FileAccess* newfileaccess() = 0;
 
-	// return DirAccess object or NULL if unsuccessful
+	// instantiate DirAccess object
 	virtual DirAccess* newdiraccess() = 0;
+
+	// instantiate DirNotify object (default to periodic scanning handler if no notification configured) with given root path
+	virtual DirNotify* newdirnotify(string*);
 
 	// check if character is lowercase hex ASCII
 	bool islchex(char);
@@ -126,17 +159,11 @@ struct FileSystemAccess : public EventTrigger
 	virtual bool chdirlocal(string*) = 0;
 
 	// add notification (has to be called for all directories in tree for full crossplatform support)
-	virtual void addnotify(LocalNode*, string*) = 0;
+	virtual void addnotify(LocalNode*, string*) { }
 
 	// delete notification
-	virtual void delnotify(LocalNode*) = 0;
+	virtual void delnotify(LocalNode*) { }
 
-	// return next notified local name and corresponding parent node
-	virtual bool notifynext(sync_list*, string*, LocalNode**, bool*) = 0;
-
-	// true if notifications were unreliable and/or a full rescan is required
-	virtual bool notifyfailed() = 0;
-	
 	// set whenever an operation fails due to a transient condition (e.g. locking violation)
 	bool transient_error;
 

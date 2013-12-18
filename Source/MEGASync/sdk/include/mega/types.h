@@ -200,7 +200,13 @@ typedef map<pair<handle,fatype>,pair<handle,int> > fa_map;
 
 typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate;
 
-typedef vector<struct LocalNode*> localnode_vector;
+typedef vector<LocalNode*> localnode_vector;
+
+typedef map<handle,LocalNode*> handlelocalnode_map;
+
+typedef set<LocalNode*> localnode_set;
+
+typedef set<Node*> node_set;
 
 // enumerates a node's children
 // FIXME: switch to forward_list once C++11 becomes more widely available
@@ -295,19 +301,9 @@ typedef map<handle,char> handlecount_map;
 // maps FileFingerprints to node
 typedef multiset<FileFingerprint*, FileFingerprintCmp> fingerprint_set;
 
-struct ScanItem
-{
-	string localpath;
-	string localname;
-	LocalNode* parent;
-	LocalNode* localnode;
-	bool fulltree;
-	bool deleted;
-};
-
 typedef enum { PATHSTATE_NOTFOUND, PATHSTATE_SYNCED, PATHSTATE_SYNCING, PATHSTATE_PENDING } pathstate_t;
 
-typedef deque<ScanItem> scanitem_deque;
+typedef deque<string> string_deque;
 
 // FIXME: use forward_list instad (C++11)
 typedef list<HttpReqCommandPutFA*> putfa_list;

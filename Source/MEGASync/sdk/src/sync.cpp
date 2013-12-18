@@ -37,13 +37,14 @@ Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode, int ctag)
 	localnodes[FOLDERNODE] = 0;
 
 	state = SYNC_INITIALSCAN;
-	localroot.init(this,crootpath,FOLDERNODE,NULL,crootpath);
+
+	localroot.init(this,FOLDERNODE,NULL,crootpath);
 	localroot.setnode(remotenode);
 
-	queuescan(MAIN,NULL,NULL,NULL,NULL,true);
-	procscanq(MAIN);
-
 	sync_it = client->syncs.insert(client->syncs.end(),this);
+
+	dirnotify = client->fsaccess->newdirnotify(crootpath);
+	scan(crootpath,NULL);
 }
 
 Sync::~Sync()
@@ -66,9 +67,10 @@ void Sync::changestate(syncstate newstate)
 	}
 }
 
-// walk path and return state of the sync
+// walk path and return corresponding LocalNode and its parent
 // path must not start with a separator and be relative to the sync root
-pathstate_t Sync::pathstate(string* localpath)
+// NULL: no match
+LocalNode* Sync::localnodebypath(string* localpath, LocalNode** parent)
 {
 	const char* ptr = localpath->data();
 	const char* end = localpath->data()+localpath->size();
@@ -82,236 +84,222 @@ pathstate_t Sync::pathstate(string* localpath)
 	{
 		if (nptr == end || !memcmp(nptr,client->fsaccess->localseparator.data(),separatorlen))
 		{
-			t.assign(ptr,nptr-ptr);
+			if (parent) *parent = l;
 
-			if ((it = l->children.find(&t)) == l->children.end() && (it = l->schildren.find(&t)) == l->schildren.end()) return PATHSTATE_NOTFOUND;
+			t.assign(ptr,nptr-ptr);
+			if ((it = l->children.find(&t)) == l->children.end() && (it = l->schildren.find(&t)) == l->schildren.end()) return NULL;
 
 			l = it->second;
 
-			if (nptr == end) break;
+			if (nptr == end) return l;
 
 			ptr = nptr+separatorlen;
 			nptr = ptr;
 		}
 		else nptr += separatorlen;
 	}
+}
 
+// determine sync state of path
+pathstate_t Sync::pathstate(string* localpath)
+{
+	LocalNode* l = localnodebypath(localpath);
+
+	if (!l) return PATHSTATE_NOTFOUND;
 	if (l->node) return PATHSTATE_SYNCED;
 	if (l->transfer && l->transfer->slot) return PATHSTATE_SYNCING;
 	return PATHSTATE_PENDING;
 }
 
-
-// scan rootpath, add or update child nodes, call recursively for folder nodes
-void Sync::scan(string* localpath, FileAccess* fa, LocalNode* parent, bool fulltree)
+// scan localpath, add or update child nodes, call recursively for folder nodes
+// localpath must be prefixed with Sync
+void Sync::scan(string* localpath, FileAccess* fa)
 {
 	DirAccess* da;
-	string localname;
-	static handle scanseqno;
-	localnode_map::iterator it;
-	LocalNode* l;
-
-	scanseqno++;
+	string localname, name;
+	size_t baselen;
+	
+	baselen = dirnotify->localbasepath.size()+client->fsaccess->localseparator.size();
+	
+	if (baselen > localpath->size()) baselen = localpath->size();
 
 	da = client->fsaccess->newdiraccess();
 
 	// scan the dir, mark all items with a unique identifier
-	if (da->dopen(localpath,fa,false)) while (da->dnext(&localname)) if ((l = queuefsrecord(localpath,&localname,parent,fulltree))) l->scanseqno = scanseqno;
-
-	// delete items that disappeared
-	for (it = parent->children.begin(); it != parent->children.end(); )
+	if (da->dopen(localpath,fa,false))
 	{
-		if (scanseqno != it->second->scanseqno) delete (it++)->second;
-		else it++;
+		while (da->dnext(&localname))
+		{
+			name = localname;
+			client->fsaccess->local2name(&name);
+
+			// check if this record is to be ignored
+			if (client->app->sync_syncable(name.c_str(),localpath,&localname))
+			{
+				// new or existing record: place at the end of the queue
+				dirnotify->pathq[DirNotify::DIREVENTS].resize(dirnotify->pathq[DirNotify::DIREVENTS].size()+1);
+
+				dirnotify->pathq[DirNotify::DIREVENTS].back().assign(*localpath,baselen,string::npos);
+				if (dirnotify->pathq[DirNotify::DIREVENTS].back().size()) dirnotify->pathq[DirNotify::DIREVENTS].back().append(client->fsaccess->localseparator);
+				dirnotify->pathq[DirNotify::DIREVENTS].back().append(localname);
+			}
+		}
 	}
 
 	delete da;
 }
 
-LocalNode* Sync::queuefsrecord(string* localpath, string* localname, LocalNode* parent, bool fulltree)
+// check local path
+// path references a new FOLDERNODE: returns created node
+// path references a existing FILENODE: returns node
+// otherwise, returns NULL
+LocalNode* Sync::checkpath(string* localpath)
 {
-	localnode_map::iterator it;
-	LocalNode* l;
-	string name;
-
-	name = *localname;
-	client->fsaccess->local2name(&name);
-
-	// check if this record is to be ignored
-	if (client->app->sync_syncable(name.c_str(),localpath,localname))
-	{
-		if ((it = parent->children.find(localname)) != parent->children.end() || (it = parent->schildren.find(localname)) != parent->schildren.end()) l = it->second;
-		else l = NULL;
-
-		queuescan(MAIN,localpath,localname,l,parent,fulltree);
-
-		return l;
-	}
-
-	return NULL;
-}
-
-void Sync::queuescan(int q, string* localpath, string* localname, LocalNode* localnode, LocalNode* parent, bool fulltree)
-{
-	// FIXME: efficient copy-free push_back? C++11 emplace()?
-	scanq[q].resize(scanq[q].size()+1);
-
-	ScanItem* si = &scanq[q].back();
-
-	// FIXME: don't create mass copies of localpath
-	if (localpath) si->localpath = *localpath;
-	if (localname) si->localname = *localname;
-	si->localnode = localnode;
-	si->parent = parent;
-	si->fulltree = fulltree;
-	si->deleted = false;
-}
-
-// add or refresh local filesystem item from scan stack, add items to scan stack
-// must be called with a scanq.siz() > 0
-void Sync::procscanq(int q)
-{
-	ScanItem* si = &*scanq[q].begin();
-
-	// ignore deleted ScanItems
-	if (si->deleted)
-	{
-		scanq[q].pop_front();
-		return;
-	}
-
-	string* localpath = &si->localpath;
-	string* localname = &si->localname;
-
-	bool fulltree = si->fulltree;
-
 	FileAccess* fa;
-	bool changed = false;
-
-	string tmpname;
+	bool newnode = false, changed = false;
+	bool isroot;
 
 	LocalNode* l;
+	LocalNode* parent;
 
-	// if localpath was not specified, construct based on parents & base sync path
-	if (!localpath->size())
-	{
-		LocalNode* p = si->parent ? si->parent : &localroot;
+	string tmppath;
 
-		while (p)
-		{
-			localpath->insert(0,p->localname);
-			if ((p = p->parent)) localpath->insert(0,client->fsaccess->localseparator);
-		}
-	}
+	client->fsaccess->local2path(localpath,&tmppath);
 
-	if (localname->size())
-	{
-		localpath->append(client->fsaccess->localseparator);
-		localpath->append(*localname);
-	}
+	isroot = !localpath->size();
 
-	// check if a child by the same name already exists
-	// (skip this check for localroot)
-	if (si->parent)
-	{
-		// have we seen this item before?
-		localnode_map::iterator it;
+	l = isroot ? &localroot : localnodebypath(localpath,&parent);
 
-		// check if it exists as a child or an schild
-		if ((it = si->parent->children.find(localname)) != si->parent->children.end() || (it = si->parent->schildren.find(localname)) != si->parent->schildren.end()) l = it->second;
-		else l = NULL;
-	}
-	else l = NULL;
+	// prefix localpath with sync's base path
+	if (!isroot) localpath->insert(0,client->fsaccess->localseparator);
+	localpath->insert(0,dirnotify->localbasepath);
 
 	// attempt to open/type this file, bail if unsuccessful
 	fa = client->fsaccess->newfileaccess();
 
-	if (fa->fopen(localpath,1,0))
+	if (fa->fopen(localpath,true,false))
 	{
-		if (si->parent)
+		if (!isroot)
 		{
-			if (l && l->type != fa->type)
+			// has the file or directory been overwritten since the last scan?
+			if (l)
 			{
-				// type change (a directory replaced a file of the same name or vice versa)
-				delete l;
-				l = NULL;
+				if ((fa->fsidvalid && l->fsid_it != client->fsidnode.end() && l->fsid != fa->fsid) || l->type != fa->type)
+				{
+					l->setnotseen(l->notseen+1);
+					l = NULL;
+				}
+				else
+				{
+					l->setnotseen(0);
+					l->scanseqno = scanseqno;
+				}
 			}
 
 			// new node
 			if (!l)
 			{
-				// this is a new node: add
-				l = new LocalNode;
-				l->init(this,localname,fa->type,si->parent,localpath);
+				// rename or move of existing node?
+				handlelocalnode_map::iterator it;
 
-				changed = true;
+				if (fa->fsidvalid && (it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end())
+				{
+					client->app->syncupdate_local_move(this,it->second->name.c_str(),tmppath.c_str());
+
+					// (in case of a move, this synchronously updates l->parent and l->node->parent)
+					it->second->setnameparent(parent,localpath);
+
+					// unmark possible deletion
+					it->second->setnotseen(0);
+				}
+				else
+				{
+					// this is a new node: add
+					l = new LocalNode;
+					l->init(this,fa->type,parent,localpath);
+					if (fa->fsidvalid) l->setfsid(fa->fsid);
+					newnode = true;
+				}
 			}
 		}
 
-		// detect file changes or recurse into new subfolders
-		if (fa->type == FOLDERNODE)
+		if (l)
 		{
-			if (fulltree) scan(localpath,fa,si->parent ? l : &localroot,fulltree);
-		}
-		else
-		{
-			if (!l) changestate(SYNC_FAILED);	// root node cannot be a file
+			// detect file changes or recurse into new subfolders
+			if (l->type == FOLDERNODE)
+			{
+				if (newnode)
+				{
+					scan(localpath,fa);
+					client->app->syncupdate_local_folder_addition(this,tmppath.c_str());
+				}
+				else l = NULL;
+			}
 			else
 			{
-				if (l->size > 0) localbytes -= l->size;
-				if (l->genfingerprint(fa)) changed = true;
-				if (l->size > 0) localbytes += l->size;
+				if (isroot) changestate(SYNC_FAILED);	// root node cannot be a file
+				else
+				{
+					if (l->size > 0) localbytes -= l->size;
+					if (l->genfingerprint(fa)) changed = true;
+					if (l->size > 0) localbytes += l->size;
+					
+					if (newnode) client->app->syncupdate_local_file_addition(this,tmppath.c_str());
+					else if (changed) client->app->syncupdate_local_file_change(this,tmppath.c_str());
+				}
 			}
 		}
 
-		if (changed) client->syncadded.insert(l->syncid);
+		if (changed || newnode)
+		{
+			client->syncadded.insert(l->syncid);
+			client->syncactivity = true;
+		}
 	}
 	else
 	{
 		if (fa->retry)
 		{
 			// fopen() signals that the failure is potentially transient - do nothing, but request a recheck
-			localpath->resize(localpath->size()-client->fsaccess->localseparator.size()-localname->size());
-			queuescan(RETRY,localpath,localname,l,si->parent,true);
-			
-			l = NULL;	// make no changes yet
+			dirnotify->pathq[DirNotify::RETRY].resize(dirnotify->pathq[DirNotify::RETRY].size()+1);
+			dirnotify->pathq[DirNotify::RETRY].back().assign(localpath->data()+dirnotify->localbasepath.size()+client->fsaccess->localseparator.size(),localpath->size()-dirnotify->localbasepath.size()-client->fsaccess->localseparator.size());
 		}
 		else if (l)
 		{
-			// file gone
-			client->fsaccess->local2path(localpath,&tmpname);
-			if (l->type == FOLDERNODE) client->app->syncupdate_local_folder_deletion(this,tmpname.c_str());
-			else client->app->syncupdate_local_file_deletion(this,tmpname.c_str());
-
+			// immediately stop outgoing transfer, if any
+			if (l->transfer) client->stopxfer(l);
+			
 			client->syncactivity = true;
 
-			delete l;
-			l = NULL;
-		}
-	}
-
-	if (l)
-	{
-		if (changed)
-		{
-			client->syncactivity = true;
-			client->fsaccess->local2path(localpath,&tmpname);
-		}
-
-		if (changed)
-		{
-			if (l->type == FILENODE) client->app->syncupdate_local_file_addition(this,tmpname.c_str());
-			else client->app->syncupdate_local_folder_addition(this,tmpname.c_str());
+			l->setnotseen(1);
 		}
 		
-		client->syncactivity = true;
+		l = NULL;
 	}
 
 	delete fa;
+	
+	return l;
+}
 
-	scanq[q].pop_front();
+// add or refresh local filesystem item from scan stack, add items to scan stack
+void Sync::procscanq(int q)
+{
+	while (dirnotify->pathq[q].size())
+	{
+		string* localpath = &dirnotify->pathq[q].front();
 
-	if (scanq[q].size()) client->syncactivity = true;
+		LocalNode* l = checkpath(localpath);
+
+		dirnotify->pathq[q].pop_front();
+		
+		// we return control to the application in case a filenode was encountered
+		// (in order to avoid lengthy blocking episodes due to multiple fingerprint calculations)
+		if (l && l->type == FILENODE) break;
+	}
+
+	if (dirnotify->pathq[q].size()) client->syncactivity = true;
+	else if (!dirnotify->pathq[!q].size()) scanseqno++;	// all queues empty: new scan sweep begins
 }
 
 } // namespace

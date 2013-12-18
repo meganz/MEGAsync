@@ -29,15 +29,10 @@ namespace mega {
 class Sync
 {
 public:
-	enum { MAIN, RETRY };
-
 	MegaClient* client;
 
 	// root of local filesystem tree, holding the sync's root folder
 	LocalNode localroot;
-
-	// queued ScanItems - [0] is the main queue, [1] for locked item retries
-	scanitem_deque scanq[2];
 
 	// current state
 	syncstate state;
@@ -45,20 +40,23 @@ public:
 	// change state, signal to application
 	void changestate(syncstate);
 
-	// process and remove one scanq item
+	// sync-wide directory notification provider
+	DirNotify* dirnotify;
+	
+	// process and remove one directory notification queue item from *notify
 	void procscanq(int);
+
+	// scan specific path
+	LocalNode* checkpath(string*);
 
 	m_off_t localbytes;
 	unsigned localnodes[2];
 
-	// add or update LocalNode item, scan newly added folders
-	void queuescan(int, string*, string*, LocalNode*, LocalNode*, bool);
-
-	// examine filesystem item and queue it for scanning
-	LocalNode* queuefsrecord(string*, string*, LocalNode*, bool);
-
+	// look up LocalNode relative to localroot
+	LocalNode* localnodebypath(string*, LocalNode** = NULL);
+	
 	// scan items in specified path and add as children of the specified LocalNode
-	void scan(string*, FileAccess*, LocalNode*, bool);
+	void scan(string*, FileAccess*);
 
 	// determine status of a given path
 	pathstate_t pathstate(string*);
@@ -66,6 +64,9 @@ public:
 	// own position in session sync list
 	sync_list::iterator sync_it;
 
+	// rescan sequence number (incremented when a full rescan or a new notification batch starts)
+	int scanseqno;
+	
 	// notified nodes originating from this sync bear this tag
 	int tag;
 

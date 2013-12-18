@@ -43,10 +43,10 @@ class WinFileSystemAccess : public FileSystemAccess
 {
 public:
 	unsigned pendingevents;
-	bool notifyerr;
 
 	FileAccess* newfileaccess();
 	DirAccess* newdiraccess();
+	DirNotify* newdirnotify(string*);
 
 	void tmpnamelocal(string*, string* = NULL);
 
@@ -67,11 +67,6 @@ public:
 	bool setmtimelocal(string*, time_t);
 	bool chdirlocal(string*);
 
-	void addnotify(LocalNode*, string*);
-	void delnotify(LocalNode*);
-	bool notifynext(sync_list*, string*, LocalNode**, bool* = NULL);
-	bool notifyfailed();
-
 	void addevents(Waiter*);
 
 	static bool istransient(DWORD);
@@ -81,23 +76,14 @@ public:
 	~WinFileSystemAccess();
 };
 
-typedef deque<string> string_deque;
-
-struct WinDirNotify
+struct WinDirNotify : public DirNotify
 {
 	WinFileSystemAccess* fsaccess;
 
 	HANDLE hDirectory;
 
 	int active;
-
 	string notifybuf[2];
-
-	string_deque notifyq;
-
-	string basepath;
-	LocalNode* localnode;
-	string fullpath;
 
 	DWORD dwBytes;
 	OVERLAPPED overlapped;
@@ -107,7 +93,7 @@ struct WinDirNotify
 	void process(DWORD wNumberOfBytesTransfered);
 	void readchanges();
 
-	WinDirNotify(WinFileSystemAccess*, LocalNode*, string*);
+	WinDirNotify(string* basepath);
 	~WinDirNotify();
 };
 
