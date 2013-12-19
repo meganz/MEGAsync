@@ -2,10 +2,11 @@
 #define PREFERENCES_H
 
 #include <iostream>
-#include <QSettings>
 #include <QString>
 #include <QLocale>
 #include <QStringList>
+
+#include "utils/EncryptedSettings.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
 
@@ -111,7 +112,7 @@ protected:
     void readRecentFiles();
     void writeRecentFiles();
 
-    QSettings *settings;
+    EncryptedSettings *settings;
     QLocale *locale;
     QStringList megaFolders;
     QStringList localFolders;

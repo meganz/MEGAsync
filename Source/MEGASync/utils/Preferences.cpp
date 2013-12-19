@@ -54,7 +54,14 @@ const int Preferences::NUM_RECENT_ITEMS             = 3;
 
 Preferences::Preferences()
 {
-    settings = new QSettings(qApp->organizationName(), qApp->applicationName());
+    QByteArray key;
+    char seed = 211;
+    for(int i=0; i<256; i++)
+    {
+        seed = (seed*27+13)%256;
+        key.append(seed);
+    }
+    settings = new EncryptedSettings(key, qApp->organizationName(), qApp->applicationName());
     locale = new QLocale();
 
     QString currentAccount = settings->value(currentAccountKey).toString();
