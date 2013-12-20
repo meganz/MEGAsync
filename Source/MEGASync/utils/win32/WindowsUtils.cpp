@@ -235,3 +235,71 @@ void WindowsUtils::syncFolderRemoved(QString syncPath)
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
     delete wLinksPath;
 }
+
+QByteArray WindowsUtils::encrypt(QByteArray data, QByteArray key)
+{
+    DATA_BLOB dataIn;
+    DATA_BLOB dataOut;
+    DATA_BLOB entropy;
+
+    dataIn.pbData = (BYTE *)data.constData();
+    dataIn.cbData = data.size();
+    entropy.pbData = (BYTE *)key.constData();
+    entropy.cbData = key.size();
+
+    if(!CryptProtectData(&dataIn, L"", &entropy, NULL, NULL, 0, &dataOut))
+        return data;
+
+    QByteArray result((const char *)dataOut.pbData, dataOut.cbData);
+    LocalFree(dataOut.pbData);
+    return result;
+}
+
+QByteArray WindowsUtils::decrypt(QByteArray data, QByteArray key)
+{
+    DATA_BLOB dataIn;
+    DATA_BLOB dataOut;
+    DATA_BLOB entropy;
+
+    dataIn.pbData = (BYTE *)data.constData();
+    dataIn.cbData = data.size();
+    entropy.pbData = (BYTE *)key.constData();
+    entropy.cbData = key.size();
+
+    if (!CryptUnprotectData(&dataIn, NULL, &entropy, NULL, NULL, 0, &dataOut))
+        return data;
+
+    QByteArray result((const char *)dataOut.pbData, dataOut.cbData);
+    LocalFree(dataOut.pbData);
+    return result;
+}
+
+QByteArray WindowsUtils::getLocalStorageKey()
+{
+    HANDLE hToken = NULL;
+    if(!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
+        return QByteArray();
+
+    DWORD dwBufferSize = 0;
+    GetTokenInformation(hToken, TokenUser, NULL, 0, &dwBufferSize);
+    if(!dwBufferSize)
+    {
+        CloseHandle(hToken);
+        return QByteArray();
+    }
+
+    PTOKEN_USER userToken = (PTOKEN_USER)new char[dwBufferSize];
+    if (!GetTokenInformation(hToken, TokenUser, userToken, dwBufferSize, &dwBufferSize) ||
+            !IsValidSid(userToken->User.Sid))
+    {
+        CloseHandle(hToken);
+        delete userToken;
+        return QByteArray();
+    }
+
+    DWORD dwLength =  GetLengthSid(userToken->User.Sid);
+    QByteArray result((char *)userToken->User.Sid, dwLength);
+    CloseHandle(hToken);
+    delete userToken;
+    return result;
+}
