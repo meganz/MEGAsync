@@ -36,6 +36,9 @@ public:
     static void stopShellDispatcher();
     static void syncFolderAdded(QString syncPath);
     static void syncFolderRemoved(QString syncPath);
+    static QByteArray encrypt(QByteArray data, QByteArray key);
+    static QByteArray decrypt(QByteArray data, QByteArray key);
+    static QByteArray getLocalStorageKey();
 };
 
 #endif // WINDOWSUTILS_H

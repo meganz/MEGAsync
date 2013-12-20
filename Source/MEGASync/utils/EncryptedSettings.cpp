@@ -1,59 +1,105 @@
 #include "EncryptedSettings.h"
+#include "utils/Utils.h"
 
-EncryptedSettings::EncryptedSettings(QByteArray encryptionKey, QString organizationName, QString applicationName) :
-    QSettings(organizationName, applicationName)
+EncryptedSettings::EncryptedSettings(QString organizationName, QString applicationName) :
+    QSettings(QSettings::IniFormat, QSettings::UserScope, organizationName, applicationName)
 {
-    this->encryptionKey = encryptionKey;
+    QByteArray fixedSeed("$JY/X?o=h·&%v/M(");
+    QByteArray localKey = Utils::getLocalStorageKey();
+    QByteArray xLocalKey = XOR(fixedSeed, localKey);
+    QByteArray hLocalKey = QCryptographicHash::hash(xLocalKey, QCryptographicHash::Sha1);
+    encryptionKey = hLocalKey;
 }
 
 void EncryptedSettings::setValue(const QString &key, const QVariant &value)
 {
-    QSettings::setValue(encrypt(key), encrypt(value.toString()));
+    QSettings::setValue(hash(key), encrypt(key, value.toString()));
 }
 
-QVariant EncryptedSettings::value(const QString &key, const QVariant &defaultValue) const
+QVariant EncryptedSettings::value(const QString &key, const QVariant &defaultValue)
 {
-    return QVariant(decrypt(QSettings::value(encrypt(key), encrypt(defaultValue.toString())).toString()));
+    return QVariant(decrypt(key, QSettings::value(hash(key), encrypt(key, defaultValue.toString())).toString()));
 }
 
 void EncryptedSettings::beginGroup(const QString &prefix)
 {
-    QSettings::beginGroup(encrypt(prefix));
+    QSettings::beginGroup(hash(prefix));
 }
 
-QString EncryptedSettings::group() const
+void EncryptedSettings::endGroup()
 {
-    return decrypt(QSettings::group());
+    QSettings::endGroup();
 }
 
-QStringList EncryptedSettings::childGroups() const
+int EncryptedSettings::numChildGroups()
 {
-    QStringList list = QSettings::childGroups();
-    QStringList result;
-    for(int i=0; i<list.size(); i++)
-        result.append(decrypt(list[i]));
-    return result;
+    return QSettings::childGroups().size();
 }
 
-QByteArray EncryptedSettings::XOR(const QByteArray& data) const
+bool EncryptedSettings::containsGroup(QString groupName)
 {
+    return QSettings::childGroups().contains(hash(groupName));
+}
+
+bool EncryptedSettings::isGroupEmpty()
+{
+    return QSettings::group().isEmpty();
+}
+
+void EncryptedSettings::remove(const QString &key)
+{
+    if(!key.length()) QSettings::remove("");
+    else QSettings::remove(hash(key));
+}
+
+void EncryptedSettings::sync()
+{
+    QSettings::sync();
+}
+
+//Simplified XOR fun
+QByteArray EncryptedSettings::XOR(const QByteArray& key, const QByteArray& data) const
+{
+    int keyLen = key.length();
+    if(!keyLen) return data;
+
     QByteArray result;
-    for(int i = 0 , j = 0; i < data.length(); ++i , ++j)
+    int rotation = (key[keyLen/3]*key[keyLen/5])%keyLen;
+    int increment = (key[keyLen/2]*key[keyLen/7])%keyLen;
+    for(int i = 0 , j = rotation; i < data.length(); i++ , j-=increment)
     {
-        if(j == encryptionKey.length()) j = 0;
-        result.append(data.at(i) ^ encryptionKey.at(j));
+        if(j < 0) j += keyLen;
+        result.append(data.at(i) ^ key.at(j));
     }
     return result;
 }
 
-QString EncryptedSettings::encrypt(const QString value) const
+QString EncryptedSettings::encrypt(const QString key, const QString value) const
 {
-    if(!value.size()) return value;
-    return QString::fromAscii(qCompress(XOR(value.toUtf8().toHex())).toBase64().replace('/','-'));
+    if(value.isEmpty()) return value;
+
+    QByteArray k = hash(key).toAscii();
+    QByteArray xValue = XOR(k, value.toUtf8());
+    QByteArray xKey = XOR(k, group().toAscii());
+    QByteArray xEncrypted = XOR(k, Utils::encrypt(xValue, xKey));
+    return QString::fromAscii(xEncrypted.toBase64());
 }
 
-QString EncryptedSettings::decrypt(const QString value) const
+QString EncryptedSettings::decrypt(const QString key, const QString value) const
 {
-    if(!value.size()) return value;
-    return QString::fromUtf8(QByteArray::fromHex(XOR(qUncompress(QByteArray::fromBase64(QString(value).replace('-','/').toAscii())))));
+    if(value.isEmpty()) return value;
+
+    QByteArray k = hash(key).toAscii();
+    QByteArray xValue = XOR(k, QByteArray::fromBase64(value.toAscii()));
+    QByteArray xKey = XOR(k, group().toAscii());
+    QByteArray xDecrypted = XOR(k, Utils::decrypt(xValue, xKey));
+    return QString::fromUtf8(xDecrypted);
+}
+
+QString EncryptedSettings::hash(const QString key) const
+{
+    QByteArray xPath = XOR(encryptionKey, (key+group()).toUtf8());
+    QByteArray keyHash = QCryptographicHash::hash(xPath, QCryptographicHash::Sha1);
+    QByteArray xKeyHash = XOR(key.toUtf8(), keyHash);
+    return QString::fromAscii(xKeyHash.toHex());
 }

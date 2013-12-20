@@ -4,24 +4,30 @@
 #include <QSettings>
 #include <QVariant>
 #include <QStringList>
+#include <QCryptographicHash>
 
-class EncryptedSettings : public QSettings
+class EncryptedSettings : protected QSettings
 {
     Q_OBJECT
 
 public:
-    explicit EncryptedSettings(QByteArray encryptionKey, QString organizationName, QString applicationName);
+    explicit EncryptedSettings(QString organizationName, QString applicationName);
 
     void setValue(const QString & key, const QVariant & value);
-    QVariant value(const QString & key, const QVariant & defaultValue = QVariant() ) const;
+    QVariant value(const QString & key, const QVariant & defaultValue = QVariant());
     void beginGroup(const QString & prefix);
-    QString	group() const;
-    QStringList	childGroups () const;
+    void endGroup();
+    int numChildGroups();
+    bool containsGroup(QString groupName);
+    bool isGroupEmpty();
+    void remove(const QString & key);
+    void sync();
 
 protected:
-    QByteArray XOR(const QByteArray& data) const;
-    QString encrypt(const QString value) const;
-    QString decrypt(const QString value) const;
+    QByteArray XOR(const QByteArray &key, const QByteArray& data) const;
+    QString encrypt(const QString key, const QString value) const;
+    QString decrypt(const QString key, const QString value) const;
+    QString hash(const QString key) const;
     QByteArray encryptionKey;
 };
 

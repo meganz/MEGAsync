@@ -54,14 +54,7 @@ const int Preferences::NUM_RECENT_ITEMS             = 3;
 
 Preferences::Preferences()
 {
-    QByteArray key;
-    char seed = 211;
-    for(int i=0; i<256; i++)
-    {
-        seed = (seed*27+13)%256;
-        key.append(seed);
-    }
-    settings = new EncryptedSettings(key, qApp->organizationName(), qApp->applicationName());
+    settings = new EncryptedSettings(qApp->organizationName(), qApp->applicationName());
     locale = new QLocale();
 
     QString currentAccount = settings->value(currentAccountKey).toString();
@@ -522,7 +515,7 @@ void Preferences::login(QString account)
 
 bool Preferences::logged()
 {
-    if(settings->group().isEmpty()) return false;
+    if(settings->isGroupEmpty()) return false;
     return true;
 }
 
@@ -530,7 +523,7 @@ bool Preferences::hasEmail(QString email)
 {
     assert(!logged());
 
-    return settings->childGroups().contains(email);
+    return settings->containsGroup(email);
 }
 
 void Preferences::logout()
@@ -550,10 +543,10 @@ void Preferences::readFolders()
     megaFolderHandles.clear();
 
     settings->beginGroup(syncsGroupKey);
-    QStringList syncs = settings->childGroups();
-    for(int i=0; i<syncs.size(); i++)
+    int numSyncs = settings->numChildGroups();
+    for(int i=0; i<numSyncs; i++)
     {
-        settings->beginGroup(syncs[i]);
+        settings->beginGroup(QString::number(i));
             localFolders.append(settings->value(localFolderKey).toString());
             megaFolders.append(settings->value(megaFolderKey).toString());
             megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());

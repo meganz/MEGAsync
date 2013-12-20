@@ -29,5 +29,5 @@ win32 {
 }
 
 win32 {
-    LIBS += -lole32 -lShell32
+    LIBS += -lole32 -lShell32 -lcrypt32
 }

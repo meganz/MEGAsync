@@ -36,6 +36,9 @@ public:
     static void stopShellDispatcher() { T::stopShellDispatcher(); }
     static void syncFolderAdded(QString path) { T::syncFolderAdded(path); }
     static void syncFolderRemoved(QString path) { T::syncFolderRemoved(path); }
+    static QByteArray encrypt(QByteArray data, QByteArray key) { return T::encrypt(data, key); }
+    static QByteArray decrypt(QByteArray data, QByteArray key) { return T::decrypt(data, key); }
+    static QByteArray getLocalStorageKey() { return T::getLocalStorageKey(); }
 };
 
 template <class T>
