@@ -29,9 +29,10 @@ const QString Preferences::proxyPortKey             = "proxyPort";
 const QString Preferences::proxyRequiresAuthKey     = "proxyRequiresAuth";
 const QString Preferences::proxyUsernameKey         = "proxyUsername";
 const QString Preferences::proxyPasswordKey         = "proxyPassword";
-const QString Preferences::localFolderKey          = "localFolder";
-const QString Preferences::megaFolderKey           = "megaFolder";
-const QString Preferences::megaFolderHandleKey     = "megaFolderHandle";
+const QString Preferences::syncNameKey              = "syncName";
+const QString Preferences::localFolderKey           = "localFolder";
+const QString Preferences::megaFolderKey            = "megaFolder";
+const QString Preferences::megaFolderHandleKey      = "megaFolderHandle";
 const QString Preferences::downloadFolderKey		= "downloadFolder";
 const QString Preferences::uploadFolderKey			= "uploadFolder";
 const QString Preferences::importFolderKey			= "importFolder";
@@ -393,6 +394,13 @@ int Preferences::getNumSyncedFolders()
     return localFolders.length();
 }
 
+QString Preferences::getSyncName(int num)
+{
+    assert(logged());
+
+    return syncNames.at(num);
+}
+
 QString Preferences::getLocalFolder(int num)
 {
     assert(logged() && localFolders.size()>num);
@@ -402,7 +410,7 @@ QString Preferences::getLocalFolder(int num)
 
 QString Preferences::getMegaFolder(int num)
 {
-    assert(logged() && megaFolders.size()>num);
+    assert(logged() && syncNames.size()>num);
 
     return megaFolders.at(num);
 }
@@ -414,10 +422,12 @@ long long Preferences::getMegaFolderHandle(int num)
     return megaFolderHandles.at(num);
 }
 
-void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle)
+void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName)
 {
     assert(logged());
 
+    if(syncName.isEmpty()) syncName = QFileInfo(localFolder).fileName();
+    syncNames.append(syncName);
     localFolders.append(localFolder);
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
@@ -430,6 +440,7 @@ void Preferences::removeSyncedFolder(int num)
     assert(logged());
 
     Utils::syncFolderRemoved(localFolders[num]);
+    syncNames.removeAt(num);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
@@ -444,6 +455,7 @@ void Preferences::removeAllFolders()
     for(int i=0; i<localFolders.size(); i++)
         Utils::syncFolderRemoved(localFolders[i]);
 
+    syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -496,6 +508,7 @@ void Preferences::unlink()
     settings->endGroup();
 
     settings->remove(currentAccountKey);
+    syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -529,15 +542,20 @@ bool Preferences::hasEmail(QString email)
 void Preferences::logout()
 {
     if(logged()) settings->endGroup();
+    syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    recentFileNames.clear();
+    recentFileHandles.clear();
+    recentLocalPaths.clear();
 }
 
 void Preferences::readFolders()
 {
     assert(logged());
 
+    syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -547,6 +565,7 @@ void Preferences::readFolders()
     for(int i=0; i<numSyncs; i++)
     {
         settings->beginGroup(QString::number(i));
+            syncNames.append(settings->value(syncNameKey).toString());
             localFolders.append(settings->value(localFolderKey).toString());
             megaFolders.append(settings->value(megaFolderKey).toString());
             megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
@@ -564,6 +583,7 @@ void Preferences::writeFolders()
         for(int i=0; i<localFolders.size(); i++)
         {
             settings->beginGroup(QString::number(i));
+                settings->setValue(syncNameKey, syncNames[i]);
                 settings->setValue(localFolderKey, localFolders[i]);
                 settings->setValue(megaFolderKey, megaFolders[i]);
                 settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
