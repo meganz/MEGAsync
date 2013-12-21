@@ -64,12 +64,12 @@ QByteArray EncryptedSettings::XOR(const QByteArray& key, const QByteArray& data)
     if(!keyLen) return data;
 
     QByteArray result;
-    int rotation = (key[keyLen/3]*key[keyLen/5])%keyLen;
-    int increment = (key[keyLen/2]*key[keyLen/7])%keyLen;
+    int rotation = abs(key[keyLen/3]*key[keyLen/5])%keyLen;
+    int increment = abs(key[keyLen/2]*key[keyLen/7])%keyLen;
     for(int i = 0 , j = rotation; i < data.length(); i++ , j-=increment)
     {
         if(j < 0) j += keyLen;
-        result.append(data.at(i) ^ key.at(j));
+        result.append(data[i] ^ key[j]);
     }
     return result;
 }
