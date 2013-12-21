@@ -43,6 +43,9 @@ struct File : public FileFingerprint
 
 	// transfer failed
 	virtual bool failed(error);
+	
+	// update localname
+	virtual void updatelocalname() { }
 
 	// generic filename for this transfer
 	void displayname(string*);
@@ -78,6 +81,9 @@ struct SyncFileGet : public File
 	Sync* sync;
 	Node* n;
 	
+	// update localname (may have changed due to renames/moves of the synced files)
+	void updatelocalname();
+
 	// self-destruct after completion
 	void completed(Transfer*, LocalNode*);
 

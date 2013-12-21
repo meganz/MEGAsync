@@ -22,8 +22,9 @@
 #ifndef MEGA_TYPES_H
 #define MEGA_TYPES_H 1
 
+#include "megasys.h"
+
 // FIXME: #define PRI*64 is missing
-#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
 #include <iostream>
@@ -35,8 +36,6 @@
 #include <iterator>
 #include <queue>
 #include <list>
-
-#include "megasys.h"
 
 typedef int64_t m_off_t;
 
@@ -76,12 +75,6 @@ class SyncLocalOp;
 
 #define EOO 0
 #define THUMBNAIL120X120 0
-
-// interface enabling class to add its wakeup criteria to the waiter
-struct EventTrigger
-{
-	virtual void addevents(Waiter*) = 0;
-};
 
 // HttpReq states
 typedef enum { REQ_READY, REQ_PREPARED, REQ_INFLIGHT, REQ_SUCCESS, REQ_FAILURE, REQ_DONE } reqstatus;
@@ -303,7 +296,13 @@ typedef multiset<FileFingerprint*, FileFingerprintCmp> fingerprint_set;
 
 typedef enum { PATHSTATE_NOTFOUND, PATHSTATE_SYNCED, PATHSTATE_SYNCING, PATHSTATE_PENDING } pathstate_t;
 
-typedef deque<string> string_deque;
+struct Notification
+{
+	string path;
+	LocalNode* localnode;
+};
+
+typedef deque<Notification> notify_deque;
 
 // FIXME: use forward_list instad (C++11)
 typedef list<HttpReqCommandPutFA*> putfa_list;

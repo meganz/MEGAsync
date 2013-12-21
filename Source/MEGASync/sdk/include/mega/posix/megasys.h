@@ -37,10 +37,10 @@
 
 // XXX: posix
 //#define _POSIX_SOURCE
-#define _LARGE_FILES
+//#define _LARGE_FILES
 //#define _LARGEFILE64_SOURCE
-#define _GNU_SOURCE 1
-#define _FILE_OFFSET_BITS 64
+//#define _GNU_SOURCE 1
+//#define _FILE_OFFSET_BITS 64
 #define __DARWIN_C_LEVEL 199506L
 
 #include <sys/stat.h>
@@ -61,27 +61,18 @@
 #include <endian.h>
 #endif
 
+#ifdef HAVE_SENDFILE
 #include <sys/sendfile.h>
+#endif
+
+#ifdef USE_INOTIFY
 #include <sys/inotify.h>
+#endif
+
 #include <sys/select.h>
 
 #include <curl/curl.h>
-#endif // end of Linux specific includes
-
-
-// FIXME: #define PRI*64 if missing
-#define __STDC_FORMAT_MACROS
-#include <inttypes.h>
-
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <sstream>
-#include <map>
-#include <set>
-#include <iterator>
-#include <queue>
-#include <list>
+//#endif // end of Linux specific includes
 
 #ifdef __MACH__
 
@@ -101,3 +92,4 @@ int clock_gettime(int, struct timespec* t)
 }
 
 #endif
+#endif // MEGA_POSIX_OS_H

@@ -208,7 +208,7 @@ void TransferSlot::doio(MegaClient* client)
 		progress();
 	}
 
-    if (client->waiter->ds-lastdata >= XFERTIMEOUT) return transfer->failed(API_EFAILED);
+	if (client->waiter->ds-lastdata >= XFERTIMEOUT) return transfer->failed(API_EFAILED);
 	else
 	{
 		if (!backoff)

@@ -22,6 +22,9 @@
 #ifndef MEGA_WIN32_OS_H
 #define MEGA_WIN32_OS_H 1
 
+// XXX: move to autoconf
+#define __STDC_FORMAT_MACROS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

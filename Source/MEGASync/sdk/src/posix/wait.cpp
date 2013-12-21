@@ -75,6 +75,7 @@ int PosixWaiter::wait()
 
 	numfd = select(maxfd+1,&rfds,&wfds,&efds,maxds+1 ? &tv : NULL);
 
+	// timeout or error
 	if (numfd <= 0) return NEEDEXEC;
 
 	// application's own event processing:
