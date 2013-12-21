@@ -67,10 +67,11 @@ public:
 	void setImportFolder(long long value);
 
     int getNumSyncedFolders();
+    QString getSyncName(int num);
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
     long long getMegaFolderHandle(int num);
-    void addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle);
+    void addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName = QString());
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
@@ -114,6 +115,8 @@ protected:
 
     EncryptedSettings *settings;
     QLocale *locale;
+
+    QStringList syncNames;
     QStringList megaFolders;
     QStringList localFolders;
     QList<long long> megaFolderHandles;
@@ -146,6 +149,7 @@ protected:
     static const QString proxyRequiresAuthKey;
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
+    static const QString syncNameKey;
     static const QString localFolderKey;
     static const QString megaFolderKey;
     static const QString megaFolderHandleKey;
