@@ -61,7 +61,7 @@ bool SyncLocalOp::recurse(nodetype type, string* from, string* to)
 	else
 	{
 		if (client->fsaccess->rubbishlocal(from)) return true;
-		
+
 		if (client->fsaccess->transient_error) return false;
 		
 		if (type == FILENODE)

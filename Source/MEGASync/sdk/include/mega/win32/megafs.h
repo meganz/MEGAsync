@@ -80,6 +80,8 @@ struct WinDirNotify : public DirNotify
 {
 	WinFileSystemAccess* fsaccess;
 
+	LocalNode* localrootnode;
+
 	HANDLE hDirectory;
 
 	int active;
@@ -89,6 +91,8 @@ struct WinDirNotify : public DirNotify
 	OVERLAPPED overlapped;
 
 	static VOID CALLBACK completion(DWORD, DWORD, LPOVERLAPPED);
+
+	void addnotify(LocalNode*, string*);
 
 	void process(DWORD wNumberOfBytesTransfered);
 	void readchanges();

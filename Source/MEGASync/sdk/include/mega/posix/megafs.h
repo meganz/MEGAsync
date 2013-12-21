@@ -42,20 +42,19 @@ struct PosixDirAccess : public DirAccess
 
 class PosixFileSystemAccess : public FileSystemAccess
 {
+public:
 #ifdef USE_INOTIFY
 	int notifyfd;
-	char notifybuf[sizeof(struct inotify_event)+NAME_MAX+1];
-	int notifypos, notifyleft;
+	
+	bool notifyerr, notifyfailed;
 
 	typedef map<int,LocalNode*> wdlocalnode_map;
 	wdlocalnode_map wdnodes;
 #endif
 
-	bool notifyerr;
-
-public:
 	FileAccess* newfileaccess();
 	DirAccess* newdiraccess();
+	DirNotify* newdirnotify(string*);
 
 	void tmpnamelocal(string*, string* = NULL);
 
@@ -76,12 +75,8 @@ public:
 	bool setmtimelocal(string*, time_t);
 	bool chdirlocal(string*);
 
-	void addnotify(LocalNode*, string*);
-	void delnotify(LocalNode*);
-	bool notifynext(sync_list*, string*, LocalNode**, bool* = NULL);
-	bool notifyfailed();
-
 	void addevents(Waiter*);
+	int checkevents(Waiter*);
 
 	PosixFileSystemAccess();
 	~PosixFileSystemAccess();
@@ -103,6 +98,17 @@ public:
 
 	PosixFileAccess();
 	~PosixFileAccess();
+};
+
+class PosixDirNotify : public DirNotify
+{
+public:
+	PosixFileSystemAccess* fsaccess;
+
+	void addnotify(LocalNode*, string*);
+	void delnotify(LocalNode*);
+
+	PosixDirNotify(string*);
 };
 
 } // namespace

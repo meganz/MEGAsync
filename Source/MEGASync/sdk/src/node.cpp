@@ -533,7 +533,7 @@ void LocalNode::setnameparent(LocalNode* newparent, string* newlocalpath)
 }
 
 // initialize fresh LocalNode object - must be called exactly once
-void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* clocalpath)
+void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* clocalpath, string* cfullpath)
 {
 	sync = csync;
 	parent = NULL;
@@ -551,8 +551,7 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	fsid_it	= sync->client->fsidnode.end();
 
 	// enable folder notification
-	// FIXME: re-enable for inotify
-//	if (type == FOLDERNODE) sync->dirnotify->add(clocalpath);
+	if (type == FOLDERNODE) sync->dirnotify->addnotify(this,cfullpath);
 
 	sync->client->syncactivity = true;
 
@@ -609,7 +608,7 @@ LocalNode::~LocalNode()
 		if (node && !node->removed) sync->client->syncdeleted[type].insert(syncid);
 	}
 
-	if (type == FOLDERNODE) sync->client->fsaccess->delnotify(this);
+	if (type == FOLDERNODE) sync->dirnotify->delnotify(this);
 
 	// remove parent association
 	if (parent) setnameparent(NULL,NULL);
@@ -638,6 +637,22 @@ void LocalNode::getlocalpath(string* path, bool sdisable)
 		if ((l = l->parent)) path->insert(0,sync->client->fsaccess->localseparator);
 		
 		if (sdisable) sdisable = false;
+	}
+}
+
+void LocalNode::getlocalsubpath(string* path)
+{
+	LocalNode* l = this;
+
+	path->erase();
+	
+	for (;;)
+	{
+		path->insert(0,l->localname);
+		
+		if (!(l = l->parent) || !l->parent) break;
+		
+		path->insert(0,sync->client->fsaccess->localseparator);
 	}
 }
 

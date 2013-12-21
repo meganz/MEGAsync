@@ -20,6 +20,7 @@
  */
 
 #include "mega/filesystem.h"
+#include "mega/node.h"
 
 namespace mega {
 
@@ -29,12 +30,20 @@ bool FileSystemAccess::islchex(char c)
 }
 
 // default DirNotify: no notification available
-DirNotify::DirNotify(string* clocalpath)
+DirNotify::DirNotify(string* clocalbasepath)
 {
-	localbasepath = *clocalpath;
+	localbasepath = *clocalbasepath;
 	
 	failed = true;
 	error = false;
+}
+
+// notify base LocalNode + relative path/filename
+void DirNotify::notify(notifyqueue q, LocalNode* l, const char* localpath, size_t len)
+{
+	notifyq[q].resize(notifyq[q].size()+1);
+	notifyq[q].back().localnode = l;
+	notifyq[q].back().path.assign(localpath,len);
 }
 
 DirNotify* FileSystemAccess::newdirnotify(string* localpath)

@@ -435,6 +435,12 @@ bool WinFileSystemAccess::chdirlocal(string* name)
 	return r;
 }
 
+// set DirNotify's root LocalNode
+void WinDirNotify::addnotify(LocalNode* l, string*)
+{
+	if (!l->parent) localrootnode = l;
+}
+
 VOID CALLBACK WinDirNotify::completion(DWORD dwErrorCode, DWORD dwBytes, LPOVERLAPPED lpOverlapped)
 {
 	if (dwErrorCode != ERROR_OPERATION_ABORTED && dwBytes) ((WinDirNotify*)lpOverlapped->hEvent)->process(dwBytes);
@@ -455,9 +461,7 @@ void WinDirNotify::process(DWORD dwBytes)
 	{
 		FILE_NOTIFY_INFORMATION* fni = (FILE_NOTIFY_INFORMATION*)ptr;
 
-		// FIXME: use C++11 emplace() instead
-		pathq[DirNotify::DIREVENTS].resize(pathq[DirNotify::DIREVENTS].size()+1);
-		pathq[DirNotify::DIREVENTS].back().assign((char*)fni->FileName,fni->FileNameLength);
+		notify(DIREVENTS,localrootnode,(char*)fni->FileName,fni->FileNameLength);
 
 		if (!fni->NextEntryOffset) break;
 

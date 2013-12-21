@@ -26,6 +26,16 @@
 
 namespace mega {
 
+// interface enabling class to add its wakeup criteria to the waiter
+struct EventTrigger
+{
+	// add wakeup criterion
+	virtual void addevents(Waiter*) = 0;
+
+	// process events after wakeup
+	virtual int checkevents(Waiter*) { return 0; }
+};
+
 // wait for events
 struct Waiter
 {
@@ -42,8 +52,8 @@ struct Waiter
 	virtual void init(dstime) = 0;
 
 	// add wakeup events
-	void wakeupby(struct EventTrigger*);
-
+	void wakeupby(EventTrigger*);
+	
 	// wait for all added wakeup criteria (plus the host app's own), up to the specified number of deciseconds
 	virtual int wait() = 0;
 

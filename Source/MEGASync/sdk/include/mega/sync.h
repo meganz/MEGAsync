@@ -42,21 +42,21 @@ public:
 
 	// sync-wide directory notification provider
 	DirNotify* dirnotify;
-	
+
 	// process and remove one directory notification queue item from *notify
 	void procscanq(int);
 
 	// scan specific path
-	LocalNode* checkpath(string*);
+	LocalNode* checkpath(LocalNode*, string*);
 
 	m_off_t localbytes;
 	unsigned localnodes[2];
 
 	// look up LocalNode relative to localroot
-	LocalNode* localnodebypath(string*, LocalNode** = NULL);
+	LocalNode* localnodebypath(LocalNode*, string*, LocalNode** = NULL, string* = NULL);
 	
 	// scan items in specified path and add as children of the specified LocalNode
-	void scan(string*, FileAccess*);
+	bool scan(string*, FileAccess*);
 
 	// determine status of a given path
 	pathstate_t pathstate(string*);

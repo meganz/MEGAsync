@@ -71,6 +71,8 @@ void Transfer::complete()
 		delete slot->file;
 		slot->file = NULL;
 
+		// FIXME: multiple overwrite race conditions below (make all copies from already open file!)
+		
 		// set timestamp (subsequent moves & copies are assumed not to alter mtime)
 		client->fsaccess->setmtimelocal(&localfilename,mtime);
 
@@ -106,7 +108,10 @@ void Transfer::complete()
 			}
 		}
 
-		// ...and place it in all target locations
+		// ...and place it in all target locations. first, update the files' local target filenames,
+		// in case they have changed during the upload
+		for (file_list::iterator it = files.begin(); it != files.end(); it++) (*it)->updatelocalname();
+
 		string* renamedto = NULL;
 
 		// rename file to one of its final target locations

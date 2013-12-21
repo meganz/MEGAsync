@@ -30,6 +30,7 @@ namespace mega {
 // FIXME: instead of copying nodes, move if the source is in the rubbish to reduce node creaton load on the servers
 // FIXME: support filesystems with timestamp granularity > 1 s (FAT)?
 // FIXME: set folder timestamps
+// FIXME: prevent synced folder from being moved into another synced folder
 
 // root URL for API access
 const char* const MegaClient::APIURL = "https://g.api.mega.co.nz/";
@@ -656,7 +657,7 @@ void MegaClient::exec()
 	{
 		for (it = syncs.begin(); it != syncs.end(); it++)
 		{
-			if ((*it)->dirnotify->pathq[DirNotify::RETRY].size() && (*it)->state != SYNC_FAILED)
+			if ((*it)->dirnotify->notifyq[DirNotify::RETRY].size() && (*it)->state != SYNC_FAILED)
 			{
 				q = DirNotify::RETRY;
 				break;
@@ -682,13 +683,13 @@ void MegaClient::exec()
 			if (sync->state != SYNC_FAILED)
 			{
 				// process items from the scanq until depleted
-				if (sync->dirnotify->pathq[q].size())
+				if (sync->dirnotify->notifyq[q].size())
 				{
 					sync->procscanq(q);
 					syncactivity = true;
 				}
 
-				if (sync->dirnotify->pathq[q].size())
+				if (sync->dirnotify->notifyq[q].size())
 				{
 					syncscanning = true;
 				}
@@ -708,7 +709,7 @@ void MegaClient::exec()
 		if (localsyncnotseen.size())
 		{
 			// if all scanqs are complete, execute pending remote deletions
-			for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->dirnotify->pathq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->pathq[DirNotify::RETRY].size()) break;
+			for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size()) break;
 
 			if (it == syncs.end())
 			{
@@ -719,6 +720,7 @@ void MegaClient::exec()
 					{
 						(*it)->scanseqno = (*it)->sync->scanseqno;
 						(*it)->setnotseen((*it)->notseen+1);
+						syncactivity = true;
 					}
 				}
 			}
@@ -763,7 +765,7 @@ void MegaClient::exec()
 				{
 					if ((*it)->state == SYNC_ACTIVE && ((*it)->dirnotify->failed || (*it)->dirnotify->error))
 					{
-						(*it)->dirnotify->pathq[DirNotify::DIREVENTS].push_back("");
+						(*it)->dirnotify->notify(DirNotify::DIREVENTS,NULL,"",0);
 						totalnodes += (*it)->localnodes[FILENODE]+(*it)->localnodes[FOLDERNODE];
 						syncscanfailed = true;
 						(*it)->dirnotify->error = false;
@@ -821,26 +823,32 @@ int MegaClient::wait()
 		if (synclocalopretry) synclocalopretrybt.update(ds,&nds);
 
 		// retrying of transiently failed sync fopen()s
-		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++) if ((*it)->dirnotify->pathq[DirNotify::RETRY].size() && (*it)->state != SYNC_FAILED)
+		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++) if ((*it)->dirnotify->notifyq[DirNotify::RETRY].size() && (*it)->state != SYNC_FAILED)
 		{
 			scanretrybt.update(ds,&nds);
 			break;
 		}
 	}
 
-	if (nds)
-	{
-		// nds is either MAX_INT (== no pending events) or > ds
-		if (nds+1) nds -= ds;
+	// immediate action required?
+	if (!nds) return Waiter::NEEDEXEC;
+	
+	// nds is either MAX_INT (== no pending events) or > ds
+	if (nds+1) nds -= ds;
 
-		waiter->init(nds);
-		waiter->wakeupby(httpio);
-		waiter->wakeupby(fsaccess);
+	waiter->init(nds);
+	
+	// set subsystem wakeup criteria
+	waiter->wakeupby(httpio);
+	waiter->wakeupby(fsaccess);
 
-		return waiter->wait();
-	}
+	int r = waiter->wait();
+	
+	// process results
+	r |= httpio->checkevents(waiter);
+	r |= fsaccess->checkevents(waiter);
 
-	return Waiter::NEEDEXEC;
+	return r;
 }
 
 
@@ -1886,7 +1894,7 @@ void MegaClient::notifypurge(void)
 				Node* tn = NULL;
 
 				// find topmost deleted sync node
-				while (n && n->localnode && (n->removed || (n->parent && !n->parent->localnode)))
+				while (n && n->localnode && (n->removed || (n->parent && !n->parent->localnode && n != n->localnode->sync->localroot.node)))
 				{
 					tn = n;
 					n = n->parent;
@@ -3663,8 +3671,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath)
 					// create local path, add to LocalNodes and recurse
 					if (fsaccess->mkdirlocal(localpath))
 					{
-						localpath->erase(0,l->sync->dirnotify->localbasepath.size()+fsaccess->localseparator.size());
-						LocalNode* ll = l->sync->checkpath(localpath);	// (this will re-add the prefix stripped above)
+						LocalNode* ll = l->sync->checkpath(l,localpath);
 
 						if (ll)
 						{
@@ -4004,6 +4011,8 @@ void MegaClient::pausexfers(direction d, bool pause, bool hard)
 
 	if (!pause || hard)
 	{
+		waiter->getdstime();
+	
 		for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); )
 		{
 			if ((*it)->transfer->type == d)
@@ -4014,7 +4023,7 @@ void MegaClient::pausexfers(direction d, bool pause, bool hard)
 				}
 				else
 				{
-                    (*it)->lastdata = waiter->getdstime();
+					(*it)->lastdata = waiter->ds;
 					(*it++)->doio(this);
 				}
 			}
@@ -4107,17 +4116,50 @@ void MegaClient::movetosyncdebris(Node* n)
 }
 
 // check sync path, add sync if folder
+// disallow nested syncs (there is only one LocalNode pointer per node), return EEXIST otherwise
+// (FIXME: perform same check for local paths!)
 error MegaClient::addsync(string* rootpath, Node* remotenode, int tag)
 {
-	error e;
+	// cannot sync root node (why not?)
+	if (remotenode->type != FOLDERNODE) return API_EACCESS;
+
+	Node* n;
+
+	// any active syncs below?
+	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++)
+	{
+		if ((*it)->state != SYNC_FAILED)
+		{
+			n = (*it)->localroot.node;
+			
+			do {
+				if (n == remotenode) return API_EEXIST;
+			} while ((n = n->parent));
+		}
+	}
+	
+	// any active syncs above?
+	n = remotenode;
+	
+	do {
+		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state != SYNC_FAILED && n == (*it)->localroot.node) return API_EEXIST;
+	} while ((n = n->parent));
+	
 	FileAccess* fa = fsaccess->newfileaccess();
+	error e;
 
 	if (fa->fopen(rootpath,true,false))
 	{
 		if (fa->type == FOLDERNODE)
 		{
-			new Sync(this,rootpath,remotenode,tag);
-			e = API_OK;
+			Sync* sync = new Sync(this,rootpath,remotenode,tag);
+			
+			if (sync->scan(rootpath,fa)) e = API_OK;
+			else
+			{
+				delete sync;
+				e = API_ENOENT;
+			}
 		}
 		else e = API_EACCESS;	// cannot sync individual files
 	}
@@ -4148,6 +4190,7 @@ void MegaClient::execsynclocalops()
 
 			synclocalopretry = true;
 			synclocalopretrybt.backoff(waiter->ds,5);	// retry the failed fs op every 500 ms
+
 			return;
 		}
 
