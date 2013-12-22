@@ -3671,7 +3671,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath)
 					// create local path, add to LocalNodes and recurse
 					if (fsaccess->mkdirlocal(localpath))
 					{
-						LocalNode* ll = l->sync->checkpath(l,&localname);
+						LocalNode* ll = l->sync->checkpath(l,localpath,&localname);
 
 						if (ll)
 						{
