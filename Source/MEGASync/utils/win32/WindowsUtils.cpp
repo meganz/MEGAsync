@@ -160,7 +160,7 @@ void WindowsUtils::stopShellDispatcher()
     delete shellDispatcherTask;
 }
 
-void WindowsUtils::syncFolderAdded(QString syncPath)
+void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
@@ -171,8 +171,7 @@ void WindowsUtils::syncFolderAdded(QString syncPath)
     QFileInfo info(linksPath);
     if(!info.isDir()) return;
 
-    QFileInfo syncPathInfo(syncPath);
-    QString linkPath = linksPath + "\\" + syncPathInfo.fileName() + ".lnk";
+    QString linkPath = linksPath + "\\" + syncName + ".lnk";
     if(QFile(linkPath).exists()) return;
 
     WCHAR wDescription[]=L"MEGAsync synchronized folder";

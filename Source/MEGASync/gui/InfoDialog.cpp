@@ -64,7 +64,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bPause->hide();
 
     //Initialize the "recently updated" list with stored values
-    Preferences *preferences = app->getPreferences();
+    preferences = app->getPreferences();
     if(preferences->getRecentFileHandle(0) != UNDEF)
     {
         ui->wRecent1->setFile(preferences->getRecentFileName(0),
@@ -330,8 +330,31 @@ void InfoDialog::addSync()
    if(!localFolderPath.length() || !node)
        return;
 
+   bool repeated;
+   QString syncName = QFileInfo(localFolderPath).fileName();
+   do {
+       repeated = false;
+       for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+       {
+           if(!syncName.compare(preferences->getSyncName(i)))
+           {
+                repeated = true;
+
+                bool ok;
+                QString text = QInputDialog::getText(this, tr("Sync name"),
+                     tr("The name \"%1\" is already in use for another sync.\n"
+                     "Please, enter another name to identify this synced folder:").arg(syncName),
+                     QLineEdit::Normal, syncName, &ok).trimmed();
+                if (!ok && text.isEmpty())
+                    return;
+
+                syncName = text;
+           }
+       }
+   }while(repeated);
+
    Preferences *preferences = app->getPreferences();
-   preferences->addSyncedFolder(localFolderPath, megaApi->getNodePath(node), handle);
+   preferences->addSyncedFolder(localFolderPath, megaApi->getNodePath(node), handle, syncName);
    app->reloadSyncs();
 }
 
@@ -349,8 +372,8 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-	Preferences *prefences = app->getPreferences();
-	int num = prefences->getNumSyncedFolders();
+    Preferences *preferences = app->getPreferences();
+    int num = preferences->getNumSyncedFolders();
 
     QMenu menu;
 
@@ -362,11 +385,9 @@ void InfoDialog::on_bSyncFolder_clicked()
     QSignalMapper signalMapper;
     for(int i=0; i<num; i++)
     {
-        QFileInfo info(prefences->getLocalFolder(i));
-
-        QAction *action = menu.addAction(info.fileName(), &signalMapper, SLOT(map()));
+        QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
         action->setIcon(QIcon("://images/small_folder.png"));
-        signalMapper.setMapping(action, info.absoluteFilePath());
+        signalMapper.setMapping(action, preferences->getLocalFolder(i));
         connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
     }
     menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));

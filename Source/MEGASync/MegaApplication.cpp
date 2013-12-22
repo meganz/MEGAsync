@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+    setQuitOnLastWindowClosed(false);
+
     //Hack to have tooltips with a black background
 	QApplication::setStyleSheet("QToolTip { color: #fff; background-color: #151412; border: none; }");
 

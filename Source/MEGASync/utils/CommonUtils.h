@@ -34,7 +34,7 @@ public:
     static void showInFolder(QString pathIn) { T::showInFolder(pathIn); }
     static void startShellDispatcher(MegaApplication *receiver) { T::startShellDispatcher(receiver); }
     static void stopShellDispatcher() { T::stopShellDispatcher(); }
-    static void syncFolderAdded(QString path) { T::syncFolderAdded(path); }
+    static void syncFolderAdded(QString path, QString syncName) { T::syncFolderAdded(path, syncName); }
     static void syncFolderRemoved(QString path) { T::syncFolderRemoved(path); }
     static QByteArray encrypt(QByteArray data, QByteArray key) { return T::encrypt(data, key); }
     static QByteArray decrypt(QByteArray data, QByteArray key) { return T::decrypt(data, key); }

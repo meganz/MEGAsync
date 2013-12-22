@@ -1332,13 +1332,12 @@ pathstate_t MegaApi::syncPathState(string* path)
         if((sync->localroot.localname.size() == path->size()) &&
            (!memcmp(sync->localroot.localname.data(), path->data(), path->size())))
         {
-            cout << "Base path found" << endl;
             if(sync->state == SYNC_FAILED)
-                return PATHSTATE_PENDING;
-            return PATHSTATE_SYNCED;
+                state = PATHSTATE_PENDING;
+            else
+                state = PATHSTATE_SYNCED;
         }
-
-        state = sync->pathstate(path);
+        else state = sync->pathstate(path);
     }
     pthread_mutex_unlock(&fileSystemMutex);
     return state;
