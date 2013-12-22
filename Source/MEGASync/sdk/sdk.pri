@@ -103,7 +103,7 @@ else {
 }
 
 DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
-LIBS += -lcryptopp -lpthread
+LIBS += -lcryptopp
 INCLUDEPATH += $$PWD/include
 
 win32 {
@@ -111,8 +111,6 @@ win32 {
     INCLUDEPATH += $$PWD/include/mega/win32
     INCLUDEPATH += $$PWD/3rdparty/include
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
-    INCLUDEPATH += $$PWD/3rdparty/include/db
-    INCLUDEPATH += $$PWD/3rdparty/include/pthread
 
     LIBS += -lwinhttp -lws2_32
 }

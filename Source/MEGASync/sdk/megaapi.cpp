@@ -893,15 +893,11 @@ void *MegaApi::threadEntryPoint(void *param)
 
 MegaApi::MegaApi(MegaListener *listener, string *basePath)
 {
-	pthread_mutex_init(&listenerMutex, NULL);
-	pthread_mutex_init(&transferListenerMutex, NULL);
-	pthread_mutex_init(&requestListenerMutex, NULL);
-	pthread_mutex_init(&globalListenerMutex, NULL);
-
-	pthread_mutexattr_t attr;
-	pthread_mutexattr_init(&attr);
-	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-	pthread_mutex_init(&fileSystemMutex, &attr);
+    INIT_MUTEX(listenerMutex);
+    INIT_MUTEX(transferListenerMutex);
+    INIT_MUTEX(requestListenerMutex);
+    INIT_MUTEX(globalListenerMutex);
+    INIT_RECURSIVE_MUTEX(sdkMutex);
 
 	addListener(listener);
     httpio = new MegaHttpIO();
@@ -919,38 +915,44 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
 
     //Start blocking thread
 	threadExit = 0;
-	pthread_create(&thread, NULL, threadEntryPoint, this);
+    INIT_THREAD(thread, threadEntryPoint, this);
 }
 
 MegaApi::~MegaApi()
 {
 	threadExit = 1;
     waiter->notify();
-	pthread_join(thread, NULL);
+    JOIN_THREAD(thread);
+    DELETE_THREAD(thread);
 	delete client;
     delete httpio;
     delete waiter;
     delete dbAccess;
     delete fsAccess;
 	if(loginRequest) delete loginRequest;
+    MUTEX_DELETE(listenerMutex);
+    MUTEX_DELETE(transferListenerMutex);
+    MUTEX_DELETE(requestListenerMutex);
+    MUTEX_DELETE(globalListenerMutex);
+    MUTEX_DELETE(sdkMutex);
 }
 
 bool MegaApi::isLoggedIn()
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	bool result = client->loggedin();
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
 const char* MegaApi::getMyEmail()
 {
 	User* u;
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	if (!client->loggedin() || !(u = client->finduser(client->me))) return NULL;
 	const char *result = u->email.c_str();
 	//TODO: Copy string?
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
@@ -1093,11 +1095,11 @@ void MegaApi::loop()
 {
 	while(!threadExit)
 	{
-		pthread_mutex_lock(&fileSystemMutex);
+        MUTEX_LOCK(sdkMutex);
 		sendPendingTransfers();
 		sendPendingRequests();
 		client->exec();
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 
 		client->wait();
 	}
@@ -1354,7 +1356,7 @@ void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, Meg
 
 pathstate_t MegaApi::syncPathState(string* path)
 {
-    pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
     pathstate_t state = PATHSTATE_NOTFOUND;
     for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (state == PATHSTATE_NOTFOUND); it++)
     {
@@ -1369,7 +1371,7 @@ pathstate_t MegaApi::syncPathState(string* path)
         }
         else state = sync->pathstate(path);
     }
-    pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
     return state;
 }
 
@@ -1401,33 +1403,33 @@ void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
 
 Node *MegaApi::getRootNode()
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	Node *result = client->nodebyhandle(client->rootnodes[0]);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
 Node* MegaApi::getInboxNode()
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	Node *result = client->nodebyhandle(client->rootnodes[1]);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
 Node* MegaApi::getRubbishNode()
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	Node *result = client->nodebyhandle(client->rootnodes[2]);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
 Node* MegaApi::getMailNode()
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	Node *result = client->nodebyhandle(client->rootnodes[3]);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
@@ -1445,7 +1447,7 @@ bool MegaApi::userComparatorDefaultASC (User *i, User *j)
 
 UserList* MegaApi::getContacts()
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 
 	vector<User*> vUsers;
 	for (user_map::iterator it = client->users.begin() ; it != client->users.end() ; it++ )
@@ -1456,16 +1458,16 @@ UserList* MegaApi::getContacts()
 	}
 	UserList *userList = new UserList(&(vUsers[0]), vUsers.size(), 1);
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	return userList;
 }
 
 User* MegaApi::getContact(const char* email)
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	User *user = client->finduser(email, 0);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return user;
 }
 
@@ -1473,7 +1475,7 @@ NodeList* MegaApi::getInShares(User *user)
 {
 	if(!user) return new NodeList(NULL, 0, 0);
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	vector<Node*> vNodes;
 
 	Node *n;
@@ -1486,7 +1488,7 @@ NodeList* MegaApi::getInShares(User *user)
 	if(vNodes.size()) nodeList = new NodeList(vNodes.data(), vNodes.size(), 1);
 	else nodeList = new NodeList(NULL, 0, 0);
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return nodeList;
 }
 
@@ -1494,11 +1496,11 @@ ShareList* MegaApi::getOutShares(Node *node)
 {
 	if(!node) return new ShareList(NULL, 0, 0);
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node) 
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return new ShareList(NULL, 0, 0);
 	}
 	
@@ -1510,7 +1512,7 @@ ShareList* MegaApi::getOutShares(Node *node)
 	}
 
 	ShareList *shareList = new ShareList(&(vShares[0]), vShares.size(), 1);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return shareList;
 }
 
@@ -1518,22 +1520,22 @@ const char *MegaApi::getAccess(Node* node)
 {
 	if(!node) return NULL;
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return NULL;
 	}
 	
 	if (!client->loggedin())
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return "r";
 	}
 	if(node->type > FOLDERNODE)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return "own";
 	}
 
@@ -1545,7 +1547,7 @@ const char *MegaApi::getAccess(Node* node)
 		n = client->nodebyhandle(n->parenthandle);
 	}
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	switch(a)
 	{
@@ -1560,11 +1562,11 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 	if(!node) return 1; 
 	if(!processor) return 0;
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node) 
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return 1;
 	}
 
@@ -1576,7 +1578,7 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 			{
 				if(!processTree(*it++,processor))
 				{
-					pthread_mutex_unlock(&fileSystemMutex);
+                    MUTEX_UNLOCK(sdkMutex);
 					return 0;
 				}
 			}
@@ -1584,7 +1586,7 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 			{
 				if(!processor->processNode(*it++))
 				{
-					pthread_mutex_unlock(&fileSystemMutex);
+                    MUTEX_UNLOCK(sdkMutex);
 					return 0;
 				}
 			}
@@ -1592,7 +1594,7 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 	}
 	bool result = processor->processNode(node);
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
@@ -1600,11 +1602,11 @@ NodeList* MegaApi::search(Node* node, const char* searchString, bool recursive)
 {
 	if(!node || !searchString) return new NodeList(NULL, 0, 0);
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return new NodeList(NULL, 0, 0);
 	}
 
@@ -1616,7 +1618,7 @@ NodeList* MegaApi::search(Node* node, const char* searchString, bool recursive)
 	if(vNodes.size()) nodeList = new NodeList(vNodes.data(), vNodes.size(), 1);
 	else nodeList = new NodeList(NULL, 0, 0);
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	return nodeList;
 }
@@ -1960,9 +1962,9 @@ void MegaApi::users_updated(User** u, int count)
 
 	UserList* userList = new UserList(u, count);
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	fireOnUsersUpdate(this, userList);
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 
 	delete userList;
 }
@@ -2429,9 +2431,9 @@ void MegaApi::nodes_updated(Node** n, int count)
 	NodeList *nodeList = NULL;
 	if(n != NULL) nodeList = new NodeList(n, count);
 
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	fireOnNodesUpdate(this, nodeList);
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 
 	delete nodeList;
 }
@@ -2664,85 +2666,85 @@ void MegaApi::addListener(MegaListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	listeners.insert(listener);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::addRequestListener(MegaRequestListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&requestListenerMutex);
+    MUTEX_LOCK(requestListenerMutex);
 	requestListeners.insert(listener);
-	pthread_mutex_unlock(&requestListenerMutex);
+    MUTEX_UNLOCK(requestListenerMutex);
 }
 
 void MegaApi::addTransferListener(MegaTransferListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&transferListenerMutex);
+    MUTEX_LOCK(transferListenerMutex);
 	transferListeners.insert(listener);
-	pthread_mutex_unlock(&transferListenerMutex);
+    MUTEX_UNLOCK(transferListenerMutex);
 }
 
 void MegaApi::addGlobalListener(MegaGlobalListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&globalListenerMutex);
+    MUTEX_LOCK(globalListenerMutex);
 	globalListeners.insert(listener);	
-	pthread_mutex_unlock(&globalListenerMutex);
+    MUTEX_UNLOCK(globalListenerMutex);
 }
 
 void MegaApi::removeListener(MegaListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	listeners.erase(listener);	
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::removeRequestListener(MegaRequestListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&requestListenerMutex);
+    MUTEX_LOCK(requestListenerMutex);
 	requestListeners.erase(listener);
-	pthread_mutex_unlock(&requestListenerMutex);
+    MUTEX_UNLOCK(requestListenerMutex);
 }
 
 void MegaApi::removeTransferListener(MegaTransferListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&transferListenerMutex);
+    MUTEX_LOCK(transferListenerMutex);
 	transferListeners.erase(listener);	
-	pthread_mutex_unlock(&transferListenerMutex);
+    MUTEX_UNLOCK(transferListenerMutex);
 }
 
 void MegaApi::removeGlobalListener(MegaGlobalListener* listener)
 {
     if(!listener) return;
 
-	pthread_mutex_lock(&globalListenerMutex);
+    MUTEX_LOCK(globalListenerMutex);
 	globalListeners.erase(listener);	
-	pthread_mutex_unlock(&globalListenerMutex);
+    MUTEX_UNLOCK(globalListenerMutex);
 }
 
 void MegaApi::fireOnRequestStart(MegaApi* api, MegaRequest *request)
 {
-	pthread_mutex_lock(&requestListenerMutex);
+    MUTEX_LOCK(requestListenerMutex);
 	for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
 		(*it)->onRequestStart(api, request);
-	pthread_mutex_unlock(&requestListenerMutex);
+    MUTEX_UNLOCK(requestListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onRequestStart(api, request);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaRequestListener* listener = request->getListener();
 	if(listener) listener->onRequestStart(api, request);
@@ -2784,15 +2786,15 @@ void MegaApi::fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError 
 
 	MegaError *megaError = new MegaError(e);
 
-	pthread_mutex_lock(&requestListenerMutex);
+    MUTEX_LOCK(requestListenerMutex);
 	for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
 		(*it)->onRequestFinish(api, request, megaError);
-	pthread_mutex_unlock(&requestListenerMutex);
+    MUTEX_UNLOCK(requestListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onRequestFinish(api, request, megaError);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaRequestListener* listener = request->getListener();
 	if(listener) listener->onRequestFinish(api, request, megaError);
@@ -2806,15 +2808,15 @@ void MegaApi::fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, Me
 {
 	MegaError *megaError = new MegaError(e);
 
-	pthread_mutex_lock(&requestListenerMutex);
+    MUTEX_LOCK(requestListenerMutex);
 	for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
 		(*it)->onRequestTemporaryError(api, request, megaError);
-	pthread_mutex_unlock(&requestListenerMutex);
+    MUTEX_UNLOCK(requestListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onRequestTemporaryError(api, request, megaError);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaRequestListener* listener = request->getListener();
 	if(listener) listener->onRequestTemporaryError(api, request, megaError);
@@ -2823,15 +2825,15 @@ void MegaApi::fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, Me
 
 void MegaApi::fireOnTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-	pthread_mutex_lock(&transferListenerMutex);
+    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferStart(api, transfer);
-	pthread_mutex_unlock(&transferListenerMutex);
+    MUTEX_UNLOCK(transferListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onTransferStart(api, transfer);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferStart(api, transfer);
@@ -2841,15 +2843,15 @@ void MegaApi::fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaErr
 {
 	MegaError *megaError = new MegaError(e);
 
-	pthread_mutex_lock(&transferListenerMutex);
+    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferFinish(api, transfer, megaError);
-	pthread_mutex_unlock(&transferListenerMutex);
+    MUTEX_UNLOCK(transferListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onTransferFinish(api, transfer, megaError);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferFinish(api, transfer, megaError);
@@ -2863,15 +2865,15 @@ void MegaApi::fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer,
 {
 	MegaError *megaError = new MegaError(e);
 
-	pthread_mutex_lock(&transferListenerMutex);
+    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferTemporaryError(api, transfer, megaError);
-	pthread_mutex_unlock(&transferListenerMutex);
+    MUTEX_UNLOCK(transferListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onTransferTemporaryError(api, transfer, megaError);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferTemporaryError(api, transfer, megaError);
@@ -2880,15 +2882,15 @@ void MegaApi::fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer,
 
 void MegaApi::fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
-	pthread_mutex_lock(&transferListenerMutex);
+    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferUpdate(api, transfer);
-	pthread_mutex_unlock(&transferListenerMutex);
+    MUTEX_UNLOCK(transferListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onTransferUpdate(api, transfer);	
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferUpdate(api, transfer);	
@@ -2896,41 +2898,41 @@ void MegaApi::fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void MegaApi::fireOnUsersUpdate(MegaApi* api, UserList *users)
 {
-	pthread_mutex_lock(&globalListenerMutex);
+    MUTEX_LOCK(globalListenerMutex);
 	for(set<MegaGlobalListener *>::iterator it = globalListeners.begin(); it != globalListeners.end() ; it++)
 		(*it)->onUsersUpdate(api, users);
-	pthread_mutex_unlock(&globalListenerMutex);
+    MUTEX_UNLOCK(globalListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onUsersUpdate(api, users);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::fireOnNodesUpdate(MegaApi* api, NodeList *nodes)
 {
-	pthread_mutex_lock(&globalListenerMutex);
+    MUTEX_LOCK(globalListenerMutex);
 	for(set<MegaGlobalListener *>::iterator it = globalListeners.begin(); it != globalListeners.end() ; it++)
 		(*it)->onNodesUpdate(api, nodes);
-	pthread_mutex_unlock(&globalListenerMutex);
+    MUTEX_UNLOCK(globalListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onNodesUpdate(api, nodes);
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::fireOnReloadNeeded(MegaApi* api)
 {
-	pthread_mutex_lock(&globalListenerMutex);
+    MUTEX_LOCK(globalListenerMutex);
 	for(set<MegaGlobalListener *>::iterator it = globalListeners.begin(); it != globalListeners.end() ; it++)
 		(*it)->onReloadNeeded(api);
-	pthread_mutex_unlock(&globalListenerMutex);
+    MUTEX_UNLOCK(globalListenerMutex);
 
-	pthread_mutex_lock(&listenerMutex);
+    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)		
 		(*it)->onReloadNeeded(api);	
-	pthread_mutex_unlock(&listenerMutex);
+    MUTEX_UNLOCK(listenerMutex);
 }
 
 
@@ -2938,11 +2940,11 @@ MegaError MegaApi::checkAccess(Node* node, const char *level)
 {
 	if(!node || !level)	return MegaError(API_EINTERNAL);
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return MegaError(API_EINTERNAL);
 	}
 
@@ -2953,7 +2955,7 @@ MegaError MegaApi::checkAccess(Node* node, const char *level)
 	else if (!strcmp(level,"full")) a = FULL;
 	else if (!strcmp(level,"owner")) a = OWNER;
 	MegaError e(client->checkaccess(node, a) ? API_OK : API_EACCESS);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	return e;
 }
@@ -2962,17 +2964,17 @@ MegaError MegaApi::checkMove(Node* node, Node* target)
 {
 	if(!node || !target) return MegaError(API_EINTERNAL);
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	target = client->nodebyhandle(target->nodehandle);
 	if(!node || !target)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return MegaError(API_EINTERNAL);
 	}
 
 	MegaError e(client->checkmove(node,target));
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	return e;
 }
@@ -3018,11 +3020,11 @@ NodeList *MegaApi::getChildren(Node* parent, int order)
 {
 	if(!parent) return new NodeList(NULL, 0, 0);
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	parent = client->nodebyhandle(parent->nodehandle);
 	if(!parent)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return new NodeList(NULL, 0, 0);
 	}
 
@@ -3059,7 +3061,7 @@ NodeList *MegaApi::getChildren(Node* parent, int order)
 			childrenNodes.insert(i, n);
 		}
 	}
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	if(childrenNodes.size()) return new NodeList(childrenNodes.data(), childrenNodes.size(), 1);
 	else return new NodeList(NULL, 0, 0);
@@ -3069,11 +3071,11 @@ NodeList *MegaApi::getChildren(Node* parent, int order)
 Node* MegaApi::getChildNode(Node *parent, const char* name)
 {
 	if(!parent || !name) return NULL;
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	parent = client->nodebyhandle(parent->nodehandle);
 	if(!parent)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return NULL;
 	}
 
@@ -3086,7 +3088,7 @@ Node* MegaApi::getChildNode(Node *parent, const char* name)
 			break;
 		}
 	}
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
@@ -3094,16 +3096,16 @@ Node* MegaApi::getParentNode(Node* node)
 {
 	if(!node) return NULL;
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return NULL;
 	}
 
 	Node *result = client->nodebyhandle(node->parenthandle);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 
 	return result;
 }
@@ -3112,11 +3114,11 @@ const char* MegaApi::getNodePath(Node *n)
 {
 	if(!n) return NULL;
 
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	n = client->nodebyhandle(n->nodehandle);
 	if(!n)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return NULL;
 	}
 
@@ -3124,7 +3126,7 @@ const char* MegaApi::getNodePath(Node *n)
 	if (n->nodehandle == client->rootnodes[0])
 	{
 		path = "/";
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return stringToArray(path);
 	}
 
@@ -3140,28 +3142,28 @@ const char* MegaApi::getNodePath(Node *n)
 				path.insert(0,":");
 				if (n->inshare->user) path.insert(0,n->inshare->user->email);
 				else path.insert(0,"UNKNOWN");
-				pthread_mutex_unlock(&fileSystemMutex);
+                MUTEX_UNLOCK(sdkMutex);
 				return stringToArray(path);
 			}
 			break;
 
 		case INCOMINGNODE:
 			path.insert(0,"//in");
-			pthread_mutex_unlock(&fileSystemMutex);
+            MUTEX_UNLOCK(sdkMutex);
 			return stringToArray(path);
 
 		case ROOTNODE:
-			pthread_mutex_unlock(&fileSystemMutex);
+            MUTEX_UNLOCK(sdkMutex);
 			return stringToArray(path);
 
 		case RUBBISHNODE:
 			path.insert(0,"//bin");
-			pthread_mutex_unlock(&fileSystemMutex);
+            MUTEX_UNLOCK(sdkMutex);
 			return stringToArray(path);
 
 		case MAILNODE:
 			path.insert(0,"//mail");
-			pthread_mutex_unlock(&fileSystemMutex);
+            MUTEX_UNLOCK(sdkMutex);
 			return stringToArray(path);
 
 		case TYPE_UNKNOWN:
@@ -3173,13 +3175,13 @@ const char* MegaApi::getNodePath(Node *n)
 
 		n = getParentNode(n);
 	}
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return stringToArray(path);
 }
 
 Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 {
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	if(cwd) cwd = client->nodebyhandle(cwd->nodehandle);
 
 	vector<string> c;
@@ -3217,7 +3219,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 					{
 						if (c.size())
 						{
-							pthread_mutex_unlock(&fileSystemMutex);
+                            MUTEX_UNLOCK(sdkMutex);
 							return NULL;
 						}
 						remote = 1;
@@ -3242,7 +3244,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 
 	if (l)
 	{
-		pthread_mutex_unlock(&fileSystemMutex);
+        MUTEX_UNLOCK(sdkMutex);
 		return NULL;
 	}
 
@@ -3252,7 +3254,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 		if (c.size() == 2 && !c[1].size())
 		{
 			//if (user) *user = c[0];
-			pthread_mutex_unlock(&fileSystemMutex);
+            MUTEX_UNLOCK(sdkMutex);
 			return NULL;
 		}
 
@@ -3277,7 +3279,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 
 		if (!l)
 		{
-			pthread_mutex_unlock(&fileSystemMutex);
+            MUTEX_UNLOCK(sdkMutex);
 			return NULL;
 		}
 	}
@@ -3294,7 +3296,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 				else if (c[2] == "mail") n = client->nodebyhandle(client->rootnodes[3]);
 				else
 				{
-					pthread_mutex_unlock(&fileSystemMutex);
+                    MUTEX_UNLOCK(sdkMutex);
 					return NULL;
 				}
 
@@ -3327,7 +3329,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 
 					if (!nn)
 					{
-						pthread_mutex_unlock(&fileSystemMutex);
+                        MUTEX_UNLOCK(sdkMutex);
 						return NULL;
 					}
 
@@ -3338,16 +3340,16 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 
 		l++;
 	}
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return n;	
 }
 
 Node* MegaApi::getNodeByHandle(handle handle)
 {
 	if(handle == UNDEF) return NULL;
-	pthread_mutex_lock(&fileSystemMutex);
+    MUTEX_LOCK(sdkMutex);
 	Node *result = client->nodebyhandle(handle);
-	pthread_mutex_unlock(&fileSystemMutex);
+    MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
 
