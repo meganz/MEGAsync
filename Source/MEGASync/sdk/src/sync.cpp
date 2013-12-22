@@ -76,7 +76,7 @@ LocalNode* Sync::localnodebypath(LocalNode* l, string* localpath, LocalNode** pa
 	const char* end = ptr+localpath->size();
 	size_t separatorlen = client->fsaccess->localseparator.size();
 
-	assert(!rpath->size());
+	if (rpath) assert(!rpath->size());
 
 	if (!l)
 	{
@@ -145,7 +145,8 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 	size_t baselen;
 	bool success;
 
-	baselen = dirnotify->localbasepath.size()+client->fsaccess->localseparator.size();
+//	baselen = dirnotify->localbasepath.size()+client->fsaccess->localseparator.size();
+	baselen = localroot.localname.size()+client->fsaccess->localseparator.size();
 	
 	if (baselen > localpath->size()) baselen = localpath->size();
 
@@ -209,6 +210,10 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath)
 
 	// path invalid?
 	if (!l && !newname.size()) return NULL;
+
+	string name = newname;
+	client->fsaccess->local2name(&name);
+	if (!client->app->sync_syncable(name.c_str(),&tmppath,&newname)) return NULL;
 
 	isroot = l == &localroot && !newname.size();
 

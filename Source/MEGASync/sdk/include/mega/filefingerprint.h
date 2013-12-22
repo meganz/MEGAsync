@@ -38,7 +38,7 @@ struct FileFingerprint
 	// if false, constructed from node ctime/key
 	bool isvalid;
 
-	bool genfingerprint(FileAccess*);
+	bool genfingerprint(FileAccess*, bool = false);
 	void serializefingerprint(string*);
 	int unserializefingerprint(string*);
 

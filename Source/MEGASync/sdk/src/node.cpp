@@ -543,7 +543,8 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	type = ctype;
 	syncid = sync->client->nextsyncid();
 
-	setnameparent(cparent,clocalpath);
+	if (cparent) setnameparent(cparent,clocalpath);
+	else localname = *cfullpath;
 
 	scanseqno = sync->scanseqno;
 
