@@ -5,11 +5,18 @@
 
 #include <QClipboard>
 #include <QDesktopWidget>
+#include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 101; //1.00
+const int MegaApplication::VERSION_CODE = 101; //1.01
 
 int main(int argc, char *argv[])
 {
+    QSharedMemory singleInstanceChecker;
+    singleInstanceChecker.setKey("MEGAsyncSingleInstanceChecker");
+
+    if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
+        return 0;
+
     MegaApplication app(argc, argv);
     return app.exec();
 }
