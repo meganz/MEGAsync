@@ -47,7 +47,7 @@ public:
 	void procscanq(int);
 
 	// scan specific path
-	LocalNode* checkpath(LocalNode*, string*);
+	LocalNode* checkpath(LocalNode*, string*, string* = NULL);
 
 	m_off_t localbytes;
 	unsigned localnodes[2];

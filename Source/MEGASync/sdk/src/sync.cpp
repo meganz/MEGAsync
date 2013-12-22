@@ -145,7 +145,6 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 	size_t baselen;
 	bool success;
 
-//	baselen = dirnotify->localbasepath.size()+client->fsaccess->localseparator.size();
 	baselen = localroot.localname.size()+client->fsaccess->localseparator.size();
 	
 	if (baselen > localpath->size()) baselen = localpath->size();
@@ -181,11 +180,12 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 	return success;
 }
 
-// check local path - localpath is relative to l, with l == NULL being the root of the sync
+// check local path - if !localname, localpath is relative to l, with l == NULL being the root of the sync
+// if localname is set, localpath is absolute and localname its last component
 // path references a new FOLDERNODE: returns created node
 // path references a existing FILENODE: returns node
 // otherwise, returns NULL
-LocalNode* Sync::checkpath(LocalNode* l, string* localpath)
+LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 {
 	FileAccess* fa;
 	bool newnode = false, changed = false;
@@ -196,33 +196,43 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath)
 	string tmppath;		// full path represented by l + localpath
 	string newname;		// portion of tmppath not covered by the existing LocalNode structure (always the last path component that does not have a corresponding LocalNode yet)
 
-	// construct full filesystem path in tmppath
-	if (l) l->getlocalpath(&tmppath);
-
-	if (localpath->size())
+	if (localname)
 	{
-		if (tmppath.size()) tmppath.append(client->fsaccess->localseparator);
-		tmppath.append(*localpath);
+		// shortcut case (from within syncdown())
+		isroot = false;
+		parent = l;
+		l = NULL;
 	}
+	else
+	{
+		// construct full filesystem path in tmppath
+		if (l) l->getlocalpath(&tmppath);
 
-	// look up deepest existing LocalNode by path, store remainder (if any) in newname
-	l = localnodebypath(l,localpath,&parent,&newname);
+		if (localpath->size())
+		{
+			if (tmppath.size()) tmppath.append(client->fsaccess->localseparator);
+			tmppath.append(*localpath);
+		}
 
-	// path invalid?
-	if (!l && !newname.size()) return NULL;
+		// look up deepest existing LocalNode by path, store remainder (if any) in newname
+		l = localnodebypath(l,localpath,&parent,&newname);
 
-	string name = newname;
-	client->fsaccess->local2name(&name);
-	if (!client->app->sync_syncable(name.c_str(),&tmppath,&newname)) return NULL;
+		// path invalid?
+		if (!l && !newname.size()) return NULL;
 
-	isroot = l == &localroot && !newname.size();
+		string name = newname;
+		client->fsaccess->local2name(&name);
+		if (!client->app->sync_syncable(name.c_str(),&tmppath,&newname)) return NULL;
 
-	client->fsaccess->local2path(&tmppath,&path);
+		isroot = l == &localroot && !newname.size();
+
+		client->fsaccess->local2path(&tmppath,&path);
+	}
 
 	// attempt to open/type this file, bail if unsuccessful
 	fa = client->fsaccess->newfileaccess();
 
-	if (fa->fopen(&tmppath,true,false))
+	if (fa->fopen(localname ? localpath : &tmppath,true,false))
 	{
 		if (!isroot)
 		{
@@ -252,7 +262,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath)
 					client->app->syncupdate_local_move(this,it->second->name.c_str(),path.c_str());
 
 					// (in case of a move, this synchronously updates l->parent and l->node->parent)
-					it->second->setnameparent(parent,&newname);
+					it->second->setnameparent(parent,localname ? localname : &newname);
 
 					// unmark possible deletion
 					it->second->setnotseen(0);
@@ -261,7 +271,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath)
 				{
 					// this is a new node: add
 					l = new LocalNode;
-					l->init(this,fa->type,parent,&newname,&tmppath);
+					l->init(this,fa->type,parent,localname ? localname : &newname,localname ? localpath : &tmppath);
 					if (fa->fsidvalid) l->setfsid(fa->fsid);
 					newnode = true;
 				}
@@ -275,7 +285,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath)
 			{
 				if (newnode)
 				{
-					scan(&tmppath,fa);
+					scan(localname ? localpath : &tmppath,fa);
 					client->app->syncupdate_local_folder_addition(this,path.c_str());
 				}
 				else l = NULL;
