@@ -1811,6 +1811,11 @@ void MegaClient::notifypurge(void)
 
 	if ((t = nodenotify.size()))
 	{
+		// check for deleted syncs
+		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); )
+			if ((*it)->state != SYNC_FAILED && (*it)->localroot.node->removed) delete *(it++);
+			else it++;
+
 		applykeys();
 
 		app->nodes_updated(&nodenotify[0],t);

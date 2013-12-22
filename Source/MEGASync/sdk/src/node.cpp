@@ -496,7 +496,7 @@ void LocalNode::setnameparent(LocalNode* newparent, string* newlocalpath)
 		}
 	
 		// has the name changed?
-		if (memcmp(localname.data(),newlocalpath->data()+p,newlocalpath->size()-p))
+		if (localname.size() != newlocalpath->size()-p || memcmp(localname.data(),newlocalpath->data()+p,localname.size()))
 		{
 			// set new name
 			localname.assign(newlocalpath->data()+p,newlocalpath->size()-p);
@@ -583,7 +583,12 @@ void LocalNode::setnotseen(int newnotseen)
 
 void LocalNode::setfsid(handle newfsid)
 {
-	assert(fsid_it == sync->client->fsidnode.end());
+	if ((fsid_it != sync->client->fsidnode.end()))
+	{
+		if (newfsid == fsid) return;
+
+		sync->client->fsidnode.erase(fsid_it);
+	}
 	
 	fsid = newfsid;
 	
@@ -599,7 +604,7 @@ LocalNode::~LocalNode()
 
 	// remove from fsidnode map, if present
 	if (fsid_it != sync->client->fsidnode.end()) sync->client->fsidnode.erase(fsid_it);
-	
+
 	sync->localnodes[type]--;
 	if (type == FILENODE && size > 0) sync->localbytes -= size;
 
