@@ -256,8 +256,6 @@ Section "Principal" SEC01
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
   
   ;x86_32 files
-  File "${SRCDIR_MEGASYNC_X32}\pthreadVC2.dll"
-  File "${SRCDIR_MEGASYNC_X32}\FreeImage.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtCore4.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtGui4.dll"
   File "${SRCDIR_MEGASYNC_X32}\QtNetwork4.dll"
