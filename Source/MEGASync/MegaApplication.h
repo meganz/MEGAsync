@@ -82,6 +82,7 @@ public slots:
     void rebootApplication();
     void exitApplication();
     void pauseTransfers(bool pause);
+    void aboutDialog();
 
 protected:
     void createActions();
@@ -100,6 +101,7 @@ protected:
     QAction *pauseAction;
     QAction *resumeAction;
 	QAction *importLinksAction;
+    QAction *aboutAction;
 
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;

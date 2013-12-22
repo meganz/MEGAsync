@@ -27,6 +27,7 @@ public:
 
     static QPixmap getExtensionPixmapSmall(QString fileName);
     static QPixmap getExtensionPixmapMedium(QString fileName);
+    static QImage createThumbnail(QString imagePath, int size);
     static bool enableTrayIcon(QString executable) { return T::enableTrayIcon(executable); }
     static void notifyItemChange(QString path) { T::notifyItemChange(path); }
     static bool startOnStartup(bool value) { return T::startOnStartup(value); }
