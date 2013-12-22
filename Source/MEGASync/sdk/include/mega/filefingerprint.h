@@ -32,7 +32,9 @@ struct FileFingerprint
 {
 	m_off_t size;
 	time_t mtime;
-	byte crc[32];
+	int32_t crc[4];
+	
+	static const int MAXFULL = 8192;
 
 	// if true, represents actual file data
 	// if false, constructed from node ctime/key
