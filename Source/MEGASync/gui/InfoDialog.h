@@ -69,6 +69,7 @@ protected:
 	QDateTime lastPopupUpdate;
     QTimer *timer;
     MegaApplication *app;
+    Preferences *preferences;
 };
 
 #endif // INFODIALOG_H

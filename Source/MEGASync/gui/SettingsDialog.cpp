@@ -384,6 +384,30 @@ void SettingsDialog::on_bAdd_clicked()
    if(!localFolderPath.length() || !node)
        return;
 
+
+   bool repeated;
+   QString syncName = QFileInfo(localFolderPath).fileName();
+   do {
+       repeated = false;
+       for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+       {
+           if(!syncName.compare(preferences->getSyncName(i)))
+           {
+                repeated = true;
+
+                bool ok;
+                QString text = QInputDialog::getText(this, tr("Sync name"),
+                     tr("The name \"%1\" is already in use for another sync.\n"
+                     "Please, enter another name to identify this synced folder:").arg(syncName),
+                     QLineEdit::Normal, syncName, &ok).trimmed();
+                if (!ok && text.isEmpty())
+                    return;
+
+                syncName = text;
+           }
+       }
+   }while(repeated);
+
    QTableWidgetItem *localFolder = new QTableWidgetItem();
    localFolder->setText("  " + localFolderPath + "  ");
    QTableWidgetItem *megaFolder = new QTableWidgetItem();
