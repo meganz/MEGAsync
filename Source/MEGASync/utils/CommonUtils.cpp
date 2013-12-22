@@ -1,6 +1,8 @@
 #include "CommonUtils.h"
 #include "Utils.h"
 
+#include <QImageReader>
+
 //This force the compiler to instantiate the necessary methods
 //and allows having the implementation of this class in this separate .cpp file
 //This function doesn't need to be called, it's only to make the linker happy
@@ -10,6 +12,7 @@ void Instantiate_Template_Methods()
     Utils::verifySyncedFolderLimits("");
     Utils::getExtensionPixmapSmall("");
     Utils::getExtensionPixmapMedium("");
+    Utils::createThumbnail("",0);
 }
 
 template <class T>
@@ -193,6 +196,31 @@ template <class T>
 QPixmap CommonUtils<T>::getExtensionPixmapMedium(QString fileName)
 {
     return getExtensionPixmap(fileName, "://images/drag_");
+}
+
+template <class T>
+QImage CommonUtils<T>::createThumbnail(QString imagePath, int size)
+{
+    if(QImageReader::imageFormat(imagePath).isEmpty()) return QImage();
+
+    QImage image(imagePath);
+    int w = image.width();
+    int h = image.height();
+    if(!(w >= 20 && w >= 20)) return QImage();
+
+    if (w < h)
+    {
+        h = h*size/w;
+        w = size;
+    }
+    else
+    {
+        w = w*size/h;
+        h = size;
+    }
+
+    return image.scaled(w, h, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)
+             .copy((w-size)/2,(h-size)/3,size,size);
 }
 
 template <class T>

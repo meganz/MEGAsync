@@ -28,7 +28,6 @@ DEALINGS IN THE SOFTWARE.
 #define USE_VARARGS
 #define PREFER_STDARG
 #include "megaapi.h"
-#include <FreeImage.h>
 #include "utils/Utils.h"
 
 #ifdef _WIN32
@@ -39,6 +38,9 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 bool mega::debug = false;
+
+#ifdef USE_FREEIMAGE
+#include <FreeImage.h>
 
 // attempt to create a size*size JPEG thumbnail using FreeImage
 // thumbnail specs:
@@ -56,12 +58,28 @@ typedef const wchar_t freeimage_filename_char_t;
 typedef const char freeimage_filename_char_t;
 #endif
 
+#elif USE_QT
+#include <QImageReader>
+#include <QImage>
+#include <QByteArray>
+#include <QBuffer>
+#include <QIODevice>
+#endif
+
 static void createthumbnail(string* filename, unsigned size, string* result)
 {
+
+
+#ifdef USE_FREEIMAGE
+
 		FIBITMAP* dib;
 		FIBITMAP* tdib;
 		FIMEMORY* hmem;
 		int w, h;
+
+        QString name = QString::fromWCharArray((const wchar_t *)filename->data());
+        if(QImageReader::imageFormat(name).isEmpty()) return;
+
 
 		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeX((freeimage_filename_char_t*)filename->data());
 
@@ -108,7 +126,7 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 
 						dib = tdib;
 
-						if ((tdib = FreeImage_Copy(dib,(w-size)/2,(h-size)/3,size+(w-size)/2,size+(h-size)/3)))
+                        if ((tdib = FreeImage_Copy(dib,(w-size)/2,(h-size)/3,size+(w-size)/2,size+(h-size)/3)))
 						{
 								FreeImage_Unload(dib);
 
@@ -132,6 +150,18 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 		}
 
 		FreeImage_Unload(dib);
+
+#elif USE_QT
+
+    QString filePath = QString::fromWCharArray((wchar_t *)filename->data());
+    QImage image = Utils::createThumbnail(filePath, size);
+    if(image.isNull()) return;
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "JPG", 85);
+    result->assign(ba.constData(), ba.size());
+#endif
 }
 
 int MegaFile::nextseqno = 0;
@@ -1656,7 +1686,7 @@ void MegaApi::transfer_removed(Transfer *)
 
 void MegaApi::transfer_prepare(Transfer *t)
 {
-	MegaTransfer* transfer = transferMap[t];
+    MegaTransfer* transfer = transferMap.at(t);
 	string path;
 	fsAccess->local2path(&(t->localfilename), &path);
 	transfer->setPath(path.c_str());
@@ -1699,7 +1729,7 @@ void MegaApi::transfer_prepare(Transfer *t)
 
 void MegaApi::transfer_update(Transfer *tr)
 {
-	MegaTransfer* transfer = transferMap[tr];
+    MegaTransfer* transfer = transferMap.at(tr);
 	if(!transfer) return;
 
 	cout << "transfer_update" << endl;
@@ -1725,7 +1755,7 @@ void MegaApi::transfer_update(Transfer *tr)
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
 	MegaError megaError(e);
-	MegaTransfer* transfer = transferMap[tr];
+    MegaTransfer* transfer = transferMap.at(tr);
 	if(!transfer) return;
 
 	if(tr->slot) transfer->setTime(tr->slot->lastdata);
@@ -1752,7 +1782,7 @@ void MegaApi::transfer_limit(Transfer* tr)
 
 void MegaApi::transfer_complete(Transfer* tr)
 {
-	MegaTransfer* transfer = transferMap[tr];
+    MegaTransfer* transfer = transferMap.at(tr);
 	if(!transfer) return;
 
 	if(tr->slot)
@@ -2824,7 +2854,7 @@ void MegaApi::fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaErr
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferFinish(api, transfer, megaError);
 
-	transferMap[transfer->getTransfer()]=NULL;
+    transferMap.erase(transfer->getTransfer());
 	delete transfer;
 	delete megaError;
 }

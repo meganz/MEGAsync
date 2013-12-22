@@ -2,6 +2,8 @@
 #include "ui_RecentFile.h"
 #include "MegaApplication.h"
 
+#include <QImageReader>
+
 RecentFile::RecentFile(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RecentFile)
@@ -37,7 +39,11 @@ void RecentFile::updateWidget()
 	if(fileName.compare(ui->lFileName->text()))
 	{
 		ui->lFileName->setText(fileName);
-        ui->lFileType->setPixmap(Utils::getExtensionPixmapMedium(fileName));
+        QImage image = Utils::createThumbnail(localPath, 120);
+        if(!image.isNull())
+            ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
+        else
+            ui->lFileType->setPixmap(Utils::getExtensionPixmapMedium(fileName));
 		ui->pArrow->show();
 	}
 

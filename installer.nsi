@@ -264,8 +264,14 @@ Section "Principal" SEC01
   ;File /oname=ShellExtX32.dll "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll"
 
   SetOutPath "$INSTDIR\imageformats"
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qgif4.dll"
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
-  
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qjpeg4.dll"
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qmng4.dll"
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qsvg4.dll"
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qtga4.dll"
+  File "${SRCDIR_MEGASYNC_X32}\imageformats\qtiff4.dll"
+          
   SetOutPath "$INSTDIR"
   SetOverwrite on
   AllowSkipFiles off

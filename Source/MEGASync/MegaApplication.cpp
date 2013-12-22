@@ -91,9 +91,7 @@ void MegaApplication::init()
 }
 
 void MegaApplication::loggedIn()
-{
-    infoDialog = new InfoDialog(this);
-
+{    
     //Get account details
     megaApi->getAccountDetails();
 
@@ -117,6 +115,7 @@ void MegaApplication::loggedIn()
 
     //Start the HTTP server
 	httpServer = new HTTPServer(2973, NULL);
+    infoDialog = new InfoDialog(this);
 }
 
 void MegaApplication::startSyncs()
@@ -215,6 +214,11 @@ void MegaApplication::exitApplication()
 void MegaApplication::pauseTransfers(bool pause)
 {
     megaApi->pauseTransfers(pause);
+}
+
+void MegaApplication::aboutDialog()
+{
+    QMessageBox::about(NULL, tr("About MEGAsync"), tr("MEGAsync version code %1").arg(this->applicationVersion()));
 }
 
 void MegaApplication::reloadSyncs()
@@ -351,7 +355,15 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
     //If the dialog to select the upload folder is active, return.
     //Files will be uploaded when the user selects the upload folder
-	if(uploadFolderSelector) return;
+    if(uploadFolderSelector)
+    {
+        uploadFolderSelector->showMinimized();
+        uploadFolderSelector->setWindowState(Qt::WindowActive);
+        uploadFolderSelector->showNormal();
+        uploadFolderSelector->raise();
+        uploadFolderSelector->activateWindow();
+        return;
+    }
 
     //If there is a default upload folder in the preferences
 	Node *node = megaApi->getNodeByHandle(preferences->uploadFolder());
@@ -363,18 +375,19 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 	}
 
     //If there isn't a default upload folder, show the dialog
-    //with a delay to make sure that the click in the context menu
-    //of the shell has finished
 	uploadFolderSelector = new UploadToMegaDialog(megaApi);
-	QTimer::singleShot(1000, this, SLOT(showUploadDialog()));
-	return;
+    showUploadDialog();
+    return;
 }
 
 void MegaApplication::showUploadDialog()
 {
-    //Show the dialog to select the upload folder
+    uploadFolderSelector->showMinimized();
+    uploadFolderSelector->setWindowState(Qt::WindowActive);
+    uploadFolderSelector->showNormal();
+    uploadFolderSelector->raise();
     uploadFolderSelector->activateWindow();
-	uploadFolderSelector->exec();
+    uploadFolderSelector->exec();
 
 	if(uploadFolderSelector->result()==QDialog::Accepted)
 	{
@@ -459,6 +472,8 @@ void MegaApplication::createActions()
 {
     exitAction = new QAction(tr("Exit"), this);
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    aboutAction = new QAction(tr("About"), this);
+    connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
     settingsAction = new QAction(tr("Settings"), this);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
     pauseAction = new QAction(tr("Pause synchronization"), this);
@@ -473,6 +488,7 @@ void MegaApplication::createActions()
 void MegaApplication::createTrayIcon()
 {
     trayMenu = new QMenu();
+    trayMenu->addAction(aboutAction);
     trayMenu->addAction(pauseAction);
 	trayMenu->addAction(importLinksAction);
     trayMenu->addAction(settingsAction);
@@ -640,7 +656,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //onNodes update will be called with node->tag == transfer->getTag()
         //so we save the path of the file to show it later
         if(e->getErrorCode() == MegaError::API_OK)
-            uploadLocalPaths[transfer->getTag()]=transfer->getPath();
+            uploadLocalPaths[transfer->getTag()]=QString::fromUtf8(transfer->getPath());
 	}
 
     //Send updated statics to the information dialog
@@ -705,6 +721,8 @@ void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
 //Called when nodes have been updated in MEGA
 void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
+    if(!infoDialog) return;
+
     bool externalNodes = 0;
 
     //If this is a full reload, return
@@ -761,7 +779,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	}
 
     //Update the information dialog
-	infoDialog->updateDialog();
+    if(infoDialog) infoDialog->updateDialog();
 
     if(externalNodes) showNotificationMessage(tr("You have new or updated files in your account"));
 }

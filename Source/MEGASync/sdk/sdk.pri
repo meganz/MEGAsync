@@ -102,8 +102,8 @@ else {
     LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/static"
 }
 
-DEFINES += USE_SQLITE USE_CRYPTOPP
-LIBS += -lcryptopp -lpthread -lFreeImage
+DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
+LIBS += -lcryptopp -lpthread
 INCLUDEPATH += $$PWD/include
 
 win32 {
