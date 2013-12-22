@@ -57,14 +57,14 @@ FileFingerprint& FileFingerprint::operator=(FileFingerprint& rhs)
 	return *this;
 }
 
-bool FileFingerprint::genfingerprint(FileAccess* fa)
+bool FileFingerprint::genfingerprint(FileAccess* fa, bool ignoremtime)
 {
 	bool changed = false;
 
 	if (mtime != fa->mtime)
 	{
 		mtime = fa->mtime;
-		changed = true;
+		changed = !ignoremtime;
 	}
 
 	if (size != fa->size)

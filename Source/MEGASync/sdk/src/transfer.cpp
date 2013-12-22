@@ -135,7 +135,7 @@ void Transfer::complete()
 	else
 	{
 		// files must not change during a PUT transfer
-		if (genfingerprint(slot->file)) return failed(API_EREAD);
+		if (genfingerprint(slot->file,true)) return failed(API_EREAD);
 	}
 
 	client->app->transfer_complete(this);
