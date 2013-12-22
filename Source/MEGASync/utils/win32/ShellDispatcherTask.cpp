@@ -330,19 +330,22 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
+#define RESPONSE_DEFAULT    TEXT("9")
+#define RESPONSE_SYNCED     TEXT("0")
+#define RESPONSE_PENDING    TEXT("1")
+#define RESPONSE_SYNCING    TEXT("2")
+
 VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
-   wchar_t c = pipe->chRequest[0];
+    wchar_t c = pipe->chRequest[0];
    if(((c != L'P') && (c != L'F')) || (lstrlen(pipe->chRequest)<3))
    {
-	   //cout << "ContextMenu Start/Stop" << endl;
-       wcscpy_s( pipe->chReply, BUFSIZE, TEXT("9") );
+       wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
 	   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 	   if(!uploadQueue.isEmpty())
 	   {
-		   //cout << "Emit signal" << endl;
 		   emit newUploadQueue(uploadQueue);
 		   uploadQueue.clear();
 	   }
@@ -350,81 +353,37 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
    }
 
    wchar_t *path =  pipe->chRequest+2;
-   MegaApplication *app = (MegaApplication *)qApp;
-   MegaApi *megaApi = app->getMegaApi();
-   Preferences *preferences = app->getPreferences();
-
    if(c == L'F')
    {
-	   QFileInfo file(QString::fromWCharArray(path));
-	   if(file.exists())
-	   {
-		   //cout << "Adding file to queue" << endl;
-		   uploadQueue.enqueue(file.absoluteFilePath());
-	   }
-	   return;
+       QFileInfo file(QString::fromWCharArray(path));
+       if(file.exists())
+       {
+           //cout << "Adding file to queue" << endl;
+           uploadQueue.enqueue(file.absoluteFilePath());
+       }
+       wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
+       pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
+       return;
    }
 
-   sync_list * syncs = megaApi->getActiveSyncs();
-   int i=0;
-
-   for (sync_list::iterator it = syncs->begin(); it != syncs->end(); it++, i++)
+   MegaApplication *app = (MegaApplication *)qApp;
+   MegaApi *megaApi = app->getMegaApi();
+   string tmpPath((const char*)path, lstrlen(path)*sizeof(wchar_t));
+   pathstate_t state = megaApi->syncPathState(&tmpPath);
+   switch(state)
    {
-	   if(preferences->getNumSyncedFolders()<=i) break;
-	   //cout << "Synced folder number " << i << endl;
-
-	   QString basePath = preferences->getLocalFolder(i);
-	   if(basePath.length()>=MAX_PATH) continue;
-	   //cout << "BasePath: " << basePath.toStdString() << endl;
-
-       wchar_t *wBasePath = new wchar_t[basePath.length()+1];
-	   int len = basePath.toWCharArray(wBasePath);
-	   wBasePath[len]=L'\0';
-	   //wprintf(L"A: %s\nB: %s\n%d\n", wBasePath, path, len);
-	   if(!wcsnicmp(path, wBasePath, len))
-	   {
-		   if(!wcsicmp(path, wBasePath))
-		   {
-			   //cout << "Base path found" << endl;
-               wcscpy_s( pipe->chReply, BUFSIZE, TEXT("0") );
-			   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
-               delete wBasePath;
-			   return;
-		   }
-		   //cout << "NO ROOT" << endl;
-		   if(path[len]!='\\') continue;
-		   //cout << "Inside the base path" << endl;
-
-		   wchar_t *relativePath = path+basePath.length()+1;
-           string tmpPath((const char*)relativePath, lstrlen(relativePath)*sizeof(wchar_t));
-		   //wprintf(L"Checking: %s\n", relativePath);
-		   pathstate_t state = (*it)->pathstate(&tmpPath);
-		   switch(state)
-		   {
-			   case PATHSTATE_SYNCED:
-				   //cout << "File synced"<< endl;
-                   wcscpy_s( pipe->chReply, BUFSIZE, TEXT("0") );
-				   break;
-				case PATHSTATE_SYNCING:
-					//cout << "File synced"<< endl;
-                    wcscpy_s( pipe->chReply, BUFSIZE, TEXT("2") );
-					break;
-			   case PATHSTATE_PENDING:
-			   case PATHSTATE_NOTFOUND:
-				   //cout << "STATE NOT FOUND" << endl;
-			   default:
-				   //cout << "File not synced"<< endl;
-                   wcscpy_s( pipe->chReply, BUFSIZE, TEXT("1") );
-				   break;
-		   }
-		   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
-           delete wBasePath;
-		   return;
-	   }
-       delete wBasePath;
+       case PATHSTATE_SYNCED:
+           wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
+           break;
+        case PATHSTATE_SYNCING:
+            wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
+            break;
+       case PATHSTATE_PENDING:
+            wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
+            break;
+        case PATHSTATE_NOTFOUND:
+        default:
+            wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
    }
-
-   //cout << "File out of a synced folder" << endl;
-   wcscpy_s( pipe->chReply, BUFSIZE, TEXT("9") );
    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
 }

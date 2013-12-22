@@ -1322,6 +1322,28 @@ void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, Meg
     waiter->notify();
 }
 
+pathstate_t MegaApi::syncPathState(string* path)
+{
+    pthread_mutex_lock(&fileSystemMutex);
+    pathstate_t state = PATHSTATE_NOTFOUND;
+    for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (state == PATHSTATE_NOTFOUND); it++)
+    {
+        Sync *sync = (*it);
+        if((sync->localroot.localname.size() == path->size()) &&
+           (!memcmp(sync->localroot.localname.data(), path->data(), path->size())))
+        {
+            cout << "Base path found" << endl;
+            if(sync->state == SYNC_FAILED)
+                return PATHSTATE_PENDING;
+            return PATHSTATE_SYNCED;
+        }
+
+        state = sync->pathstate(path);
+    }
+    pthread_mutex_unlock(&fileSystemMutex);
+    return state;
+}
+
 //void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
 //{ startDownload(nodehandle, localFolder, 1, 0, 0, base64key, listener); }
 

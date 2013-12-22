@@ -697,7 +697,7 @@ public:
 
 //	void cancelTransfer(MegaTransfer *transfer);
 
-
+    pathstate_t syncPathState(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
 
 	//Filesystem
