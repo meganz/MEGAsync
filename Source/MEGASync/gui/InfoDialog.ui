@@ -31,35 +31,45 @@
 #InfoDialog
 {
 background: white;
-border: 1px solid rgb(100, 100, 100);
+border: 2px solid rgb(100, 100, 100);
 }
 
 #wHeader
 {
+margin-left: 1px;
+margin-right: 1px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #wRecent1
 {
+margin-left: 1px;
+margin-right: 1px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #wRecent2
 {
+margin-left: 1px;
+margin-right: 1px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #wRecent3
 {
+margin-left: 1px;
+margin-right: 1px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #wUsage
 {
+margin-left: 1px;
+margin-right: 1px;
 border: 0px;
 border-bottom: 2px solid rgb(217, 217, 217);
 }
@@ -69,6 +79,8 @@ border-bottom: 2px solid rgb(217, 217, 217);
 padding-left: 14px;
 background: rgb(241, 240, 240);
 color:  rgb(166, 166, 166);
+border-left: 1px solid rgb(100, 100, 100);
+border-right: 1px solid rgb(100, 100, 100);
 }
 
 #lSyncUpdated
@@ -79,6 +91,9 @@ color:  rgb(166, 166, 166);
 #wBottom
 {
 background: rgb(242, 242, 242);
+border-bottom: 2px solid rgb(100, 100, 100);
+border-left: 1px solid rgb(100, 100, 100);
+border-right: 1px solid rgb(100, 100, 100);
 }
 
 #sActiveTransfers

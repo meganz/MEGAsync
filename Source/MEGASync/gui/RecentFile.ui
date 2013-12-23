@@ -39,12 +39,14 @@ border-bottom: 2px solid rgb(241, 240, 240);
 
 #pArrow
 {
+margin-right: 1px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #lFileType
 {
+margin-left: 1px;
 padding-left: 10px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);

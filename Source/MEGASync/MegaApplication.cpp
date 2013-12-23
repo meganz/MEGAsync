@@ -496,8 +496,8 @@ void MegaApplication::createTrayIcon()
 {
     trayMenu = new QMenu();
     trayMenu->addAction(aboutAction);
-    trayMenu->addAction(pauseAction);
 	trayMenu->addAction(importLinksAction);
+    trayMenu->addAction(pauseAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 

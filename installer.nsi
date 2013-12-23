@@ -384,9 +384,13 @@ Section Uninstall
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
-  Delete "$INSTDIR\pthreadVC2.dll"
-  Delete "$INSTDIR\FreeImage.dll"
-  Delete "$INSTDIR\imageformats\qico4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qgif4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qjpeg4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qmng4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qsvg4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qtga4.dll"
+  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qtiff4.dll"
   Delete "$INSTDIR\MEGAsync.exe"
 
   ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
