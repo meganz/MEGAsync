@@ -83,7 +83,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			   Node *node = megaApi->getNodeByPath("/MEGAsync");
 			   if(!node)
 			   {
-				   QMessageBox::warning(this, tr("Error"), tr("Mega folder doesn't exist"), QMessageBox::Ok);
+                   QMessageBox::warning(this, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
 			   }
 			   else
 			   {
