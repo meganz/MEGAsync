@@ -118,7 +118,7 @@
           <item>
            <widget class="QRadioButton" name="rHaveAccount">
             <property name="text">
-             <string>I have a Mega account</string>
+             <string>I have a MEGA account</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -128,7 +128,7 @@
           <item>
            <widget class="QRadioButton" name="rDontHaveAccount">
             <property name="text">
-             <string>I don't have a Mega account</string>
+             <string>I don't have a MEGA account</string>
             </property>
            </widget>
           </item>
@@ -184,7 +184,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Create a new Mega account</string>
+          <string>Create a new MEGA account</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

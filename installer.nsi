@@ -214,8 +214,18 @@ Section "Principal" SEC01
                   Abort
            md5x32ok:
            
-           ;File "vcredist_x86.exe"
-           ExecWait '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /q'
+           retryvsredistx32:
+                ExecDos::exec /DETAILED '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /passive /showfinalerror /promptrestart'
+                Pop $0
+                StrCmp $0 "0" vcredist32ok
+                       StrCmp $0 "5100" askforretryx32 fatalvcredistx32
+                       askforretryx32:
+                       MessageBox MB_RETRYCANCEL "Another installation is already in progress. Please, finish it and retry." IDRETRY retryvsredistx32 IDABORT abortx32
+                       fatalvcredistx32:
+                       MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "There was a problem installing Microsoft VC++ 2010 x32 ($0), aborting!"
+                       abortx32:
+                       Abort
+           vcredist32ok:
            Delete "$INSTDIR\vcredist_x86.exe"
   VSRedist2010x86Installed:
   
@@ -246,9 +256,19 @@ Section "Principal" SEC01
                        Abort
                 md5x64ok:
                  
-                 
-                 ExecWait '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /q'
-                 Delete "$INSTDIR\vcredist_x64.exe"
+                retryvsredistx64:
+                ExecDos::exec /DETAILED /DISABLEFSR '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /passive /showfinalerror /promptrestart'
+                Pop $0
+                StrCmp $0 "0" vcredist64ok
+                       StrCmp $0 "5100" askforretryx64 fatalvcredistx64
+                       askforretryx64:
+                       MessageBox MB_RETRYCANCEL "Another installation is already in progress. Please, finish it and retry." IDRETRY retryvsredistx64 IDABORT abortx64
+                       fatalvcredistx64:
+                       MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "There was a problem installing Microsoft VC++ 2010 x64 ($0), aborting!"
+                       abortx64:
+                       Abort
+                vcredist64ok:
+                Delete "$INSTDIR\vcredist_x64.exe"
         VSRedist2010x64Installed:
         SetRegView 32
   ${EndIf}
