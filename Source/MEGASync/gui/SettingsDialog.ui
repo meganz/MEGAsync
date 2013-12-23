@@ -877,7 +877,7 @@ margin-top: 6px;
           </font>
          </property>
          <property name="text">
-          <string>Uploads limits are per upload server and are applied when starting new uploads</string>
+          <string>Upload limits are per upload server and are applied when starting new uploads</string>
          </property>
          <property name="margin">
           <number>10</number>
