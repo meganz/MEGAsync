@@ -9,7 +9,7 @@ RecentFile::RecentFile(QWidget *parent) :
     ui(new Ui::RecentFile)
 {
     ui->setupUi(this);
-    ui->lTime->setText(QString());
+    ui->lTime->setText(QString::fromAscii(""));
     ui->pArrow->hide();
 }
 
@@ -31,7 +31,7 @@ void RecentFile::updateWidget()
 	if(!fileName.length())
 	{
 		ui->lFileType->setPixmap(QPixmap());
-		ui->lTime->setText(QString());
+        ui->lTime->setText(QString::fromAscii(""));
 		ui->pArrow->hide();
 		return;
 	}

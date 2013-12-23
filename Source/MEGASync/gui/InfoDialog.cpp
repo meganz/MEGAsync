@@ -38,9 +38,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	totalDownloadedSize = totalUploadedSize = 0;
 	totalDownloadSize = totalUploadSize = 0;
 	remainingUploads = remainingDownloads = 0;
-	ui->lDownloads->setText("");
+    ui->lDownloads->setText(QString::fromAscii(""));
 	ui->bUploads->hide();
-	ui->lUploads->setText("");
+    ui->lUploads->setText(QString::fromAscii(""));
 	ui->bUploads->hide();
 
 	/***************************/
@@ -89,10 +89,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(ui->wTransfers);
-    overlay->setIcon(QPixmap("://images/tray_paused_large_ico.png"));
+    overlay->setIcon(QPixmap(QString::fromAscii("://images/tray_paused_large_ico.png")));
     overlay->setIconSize(QSize(64, 64));
     //overlay->setAlignment(Qt::AlignCenter);
-    overlay->setStyleSheet("background-color: rgba(255, 255, 255, 200); border: none;");
+    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(255, 255, 255, 200); border: none;"));
     overlay->resize(ui->wTransfers->minimumSize());
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
@@ -113,10 +113,10 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 	int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
 	QString used(QString::number(percentage));
-    used += "% of " + Utils::getSizeString(totalBytes);
+    used += tr("% of ") + Utils::getSizeString(totalBytes);
 	ui->lPercentageUsed->setText(used);
 
-    QString usage("Usage: ");
+    QString usage(tr("Usage: "));
     usage += Utils::getSizeString(usedBytes);
     ui->lTotalUsed->setText(usage);
 }
@@ -163,7 +163,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
         if(downloadSpeed)
         {
-            if(downloadSpeed > 0) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
+            if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
             else downloadString += tr(" (paused)");
         }
         ui->lDownloads->setText(downloadString);
@@ -171,7 +171,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	}
 	else
 	{
-		ui->lDownloads->setText("");
+        ui->lDownloads->setText(QString::fromAscii(""));
 		ui->bDownloads->hide();
 	}
 
@@ -181,7 +181,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
         if(uploadSpeed)
         {
-            if(uploadSpeed > 0) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
+            if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
             else uploadString += tr(" (paused)");
         }
         ui->lUploads->setText(uploadString);
@@ -189,7 +189,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	}
 	else
 	{
-		ui->lUploads->setText("");
+        ui->lUploads->setText(QString::fromAscii(""));
 		ui->bUploads->hide();
 	}
 	if(ui->bDownloads->underMouse())
@@ -217,7 +217,7 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
         if(downloadSpeed)
         {
-            if(downloadSpeed > 0) downloadString += " (" + Utils::getSizeString(downloadSpeed) + "/s)";
+            if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
             else downloadString += tr(" (paused)");
         }
 		ui->lDownloads->setText(downloadString);
@@ -225,7 +225,7 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	}
 	else
 	{
-		ui->lDownloads->setText("");
+        ui->lDownloads->setText(QString::fromAscii(""));
 		ui->bDownloads->hide();
 	}
 
@@ -235,7 +235,7 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
         if(uploadSpeed)
         {
-            if(uploadSpeed > 0) uploadString += " (" + Utils::getSizeString(uploadSpeed) + "/s)";
+            if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
             else uploadString += tr(" (paused)");
         }
 		ui->lUploads->setText(uploadString);
@@ -243,7 +243,7 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	}
 	else
 	{
-		ui->lUploads->setText("");
+        ui->lUploads->setText(QString::fromAscii(""));
 		ui->bUploads->hide();
 	}
 
@@ -354,7 +354,7 @@ void InfoDialog::addSync()
    }while(repeated);
 
    Preferences *preferences = app->getPreferences();
-   preferences->addSyncedFolder(localFolderPath, megaApi->getNodePath(node), handle, syncName);
+   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
    app->reloadSyncs();
 }
 
@@ -366,7 +366,7 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bOfficialWeb_clicked()
 {
-    QString helpUrl("https://mega.co.nz/");
+    QString helpUrl = QString::fromAscii("https://mega.co.nz/");
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
 
@@ -377,16 +377,16 @@ void InfoDialog::on_bSyncFolder_clicked()
 
     QMenu menu;
 
-    menu.setStyleSheet("QMenu { background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;}");
-    QAction *addSyncAction = menu.addAction("Add Sync", this, SLOT(addSync()));
-    addSyncAction->setIcon(QIcon("://images/tray_add_sync_ico.png"));
+    menu.setStyleSheet(QString::fromAscii("QMenu { background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;}"));
+    QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
+    addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
     menu.addSeparator();
 
     QSignalMapper signalMapper;
     for(int i=0; i<num; i++)
     {
         QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
-        action->setIcon(QIcon("://images/small_folder.png"));
+        action->setIcon(QIcon(QString::fromAscii("://images/small_folder.png")));
         signalMapper.setMapping(action, preferences->getLocalFolder(i));
         connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
     }
@@ -473,17 +473,17 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
     QString remainingTime;
     if(totalRemainingSeconds)
     {
-        remainingTime = QString("%1:%2:%3").arg(remainingHours, 2, 10, QChar('0'))
-			.arg(remainingMinutes, 2, 10, QChar('0'))
-			.arg(remainingSeconds, 2, 10, QChar('0'));
+        remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
+            .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
+            .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
     }
     else
     {
-        remainingTime = QString("--:--:--");
+        remainingTime = QString::fromAscii("--:--:--");
     }
 
 	QString popupHtml(
-		"<table border=\"0\" height=\"75\" width=\"280\" cellspacing=\"12\">"
+QString::fromUtf8("<table border=\"0\" height=\"75\" width=\"280\" cellspacing=\"12\">"
 			"<tr width=\"280\">"
 				"<td colspan=\"2\"><font color=\"#78B240\">%1</font>"
 				"<font color=\"white\">%2</font></td>"
@@ -506,7 +506,7 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 					"</table>"
 				"</td>"
 			"</tr>"
-		"</table>");
+        "</table>"));
 	QString popupText = popupHtml.arg(operation).arg(xOfxFiles).arg(totalRemaining).arg(remainingSize).arg(remainingTime);
 
 	QToolTip::showText(globalpos,popupText);

@@ -12,7 +12,7 @@ const int MegaApplication::VERSION_CODE = 101; //1.01
 int main(int argc, char *argv[])
 {
     QSharedMemory singleInstanceChecker;
-    singleInstanceChecker.setKey("MEGAsyncSingleInstanceChecker");
+    singleInstanceChecker.setKey(QString::fromAscii("MEGAsyncSingleInstanceChecker"));
 
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
@@ -27,12 +27,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setQuitOnLastWindowClosed(false);
 
     //Hack to have tooltips with a black background
-	QApplication::setStyleSheet("QToolTip { color: #fff; background-color: #151412; border: none; }");
+    QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
 
     //Set QApplication fields
-    setOrganizationName("Mega Limited");
-    setOrganizationDomain("mega.co.nz");
-	setApplicationName("MEGAsync");
+    setOrganizationName(QString::fromAscii("Mega Limited"));
+    setOrganizationDomain(QString::fromAscii("mega.co.nz"));
+    setApplicationName(QString::fromAscii("MEGAsync"));
     setApplicationVersion(QString::number(VERSION_CODE));
 
     //Set the working directory
@@ -60,7 +60,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
     uploadSpeed = downloadSpeed = 0;
-    QString basePath = QCoreApplication::applicationDirPath()+"/";
+    QString basePath = QCoreApplication::applicationDirPath()+QString::fromAscii("/");
     string tmpPath = basePath.toStdString();
     megaApi = new MegaApi(delegateListener, &tmpPath);
     uploader = new MegaUploader(megaApi);
@@ -295,7 +295,7 @@ void MegaApplication::stopUpdateTask()
 void MegaApplication::pauseSync()
 {
 	stopSyncs();
-	trayIcon->setIcon(QIcon("://images/tray_pause.ico"));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
 	trayMenu->removeAction(pauseAction);
     trayMenu->insertAction(settingsAction, resumeAction);
 }
@@ -303,7 +303,7 @@ void MegaApplication::pauseSync()
 void MegaApplication::resumeSync()
 {
 	startSyncs();
-	trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
     trayMenu->removeAction(resumeAction);
 	trayMenu->insertAction(settingsAction, pauseAction);
 }
@@ -501,7 +501,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
-	trayIcon = new QSystemTrayIcon(QIcon("://images/SyncApp_1.ico"));
+    trayIcon = new QSystemTrayIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
     trayIcon->setContextMenu(trayMenu);
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -522,7 +522,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		if(e->getErrorCode() == MegaError::API_OK)
 		{
             //A public link has been created, put it in the clipboard and inform users
-			QString linkForClipboard(request->getLink());
+            QString linkForClipboard(QString::fromUtf8(request->getLink()));
             QApplication::clipboard()->setText(linkForClipboard);
             showInfoMessage(tr("The link has been copied to the clipboard"));
 		}
@@ -595,9 +595,9 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
     {
         infoDialog->setPaused(request->getFlag());
-        if(request->getFlag()) trayIcon->setIcon(QIcon("://images/tray_pause.ico"));
-        else if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon("://images/tray_sync.ico"));
-        else trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
+        if(request->getFlag()) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+        else if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+        else trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
     }
     default:
         break;
@@ -649,7 +649,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         //Show the transfer in the "recently updated" list
         if(e->getErrorCode() == MegaError::API_OK)
-            infoDialog->addRecentFile(QString(transfer->getFileName()), transfer->getNodeHandle(), transfer->getPath());
+            infoDialog->addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), QString::fromUtf8(transfer->getPath()));
 	}
 	else
 	{
@@ -669,7 +669,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Send updated statics to the information dialog
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-	infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName())
+    infoDialog->setTransfer(transfer->getType(), QString::fromUtf8(transfer->getFileName())
 							,transfer->getTransferredBytes(), transfer->getTotalBytes());
 	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
 	infoDialog->updateDialog();
@@ -705,7 +705,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 	}
 
     //Send updated statics to the information dialog
-    infoDialog->setTransfer(transfer->getType(), QString(transfer->getFileName()),
+    infoDialog->setTransfer(transfer->getType(), QString::fromUtf8(transfer->getFileName()),
                         transfer->getTransferredBytes(), transfer->getTotalBytes());
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
@@ -716,7 +716,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
     //Show information to users
-    showWarningMessage(tr("Temporarily error in transfer: ") + e->getErrorString(), transfer->getFileName());
+    showWarningMessage(tr("Temporarily error in transfer: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
 }
 
 //Called when contacts have been updated in MEGA
@@ -739,7 +739,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	for(int i=0; i<nodes->size(); i++)
 	{
 		Node *node = nodes->get(i);
-        if(!node->tag) externalNodes++;
+        if(!node->tag && !node->removed && !node->syncdeleted)
+            externalNodes++;
 
 		if(!node->removed && node->tag && !node->syncdeleted)
 		{
@@ -831,14 +832,14 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 
 void MegaApplication::showSyncedIcon()
 {
-	trayIcon->setIcon(QIcon("://images/SyncApp_1.ico"));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
 	trayMenu->removeAction(resumeAction);
 	trayMenu->insertAction(importLinksAction, pauseAction);
 }
 
 void MegaApplication::showSyncingIcon()
 {
-	trayIcon->setIcon(QIcon("://images/tray_sync.ico"));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     trayMenu->removeAction(resumeAction);
 	trayMenu->insertAction(importLinksAction, pauseAction);
 }

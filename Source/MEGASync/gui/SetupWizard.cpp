@@ -48,7 +48,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			else
 			{
 				ui->sPages->setCurrentWidget(ui->pNewAccount);
-				QMessageBox::warning(this, tr("Error"), error->getErrorString(), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), QString::fromUtf8(error->getErrorString()), QMessageBox::Ok);
 			}
 			break;
 		}
@@ -65,14 +65,14 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 				ui->bBack->setEnabled(true);
 				ui->bNext->setEnabled(true);
 				ui->sPages->setCurrentWidget(ui->pLogin);
-				QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + " " + tr("Have you verified your account?"), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromAscii(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
 			}
 			else
 			{
 				ui->bBack->setEnabled(true);
 				ui->bNext->setEnabled(true);
 				ui->sPages->setCurrentWidget(ui->pLogin);
-				QMessageBox::warning(this, tr("Error"), error->getErrorString(), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), QString::fromUtf8(error->getErrorString()), QMessageBox::Ok);
 			}
 			break;
 		}
@@ -98,7 +98,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		   }
 		   else
 		   {
-			   QMessageBox::warning(this, tr("Error"), error->getErrorString(), QMessageBox::Ok);
+               QMessageBox::warning(this, tr("Error"), QString::fromUtf8(error->getErrorString()), QMessageBox::Ok);
 		   }
 		   break;
 		}
@@ -107,8 +107,8 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
             QString email = ui->eLoginEmail->text().toLower().trimmed();
             if(preferences->hasEmail(email))
             {
-                QString privatePw = megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData());
-                QString emailHash = megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData());
+                QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
+                QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
                 preferences->setEmail(email);
                 preferences->setCredentials(emailHash, privatePw);
                 close();
@@ -215,18 +215,18 @@ void SetupWizard::on_bNext_clicked()
     {
 
     #if QT_VERSION < 0x050000
-		QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync");
+        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromAscii("/MEGAsync"));
     #else
-		QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + "/MEGAsync");
+        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromAscii("/MEGAsync");
 	#endif
 
-        defaultFolder.mkpath(".");
+        defaultFolder.mkpath(QString::fromAscii("."));
         QString defaultFolderPath = defaultFolder.absolutePath();
 
 	   defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
 
 		ui->eLocalFolder->setText(defaultFolderPath);
-		ui->eMegaFolder->setText("/MEGAsync");
+        ui->eMegaFolder->setText(QString::fromAscii("/MEGAsync"));
         if(ui->rAdvancedSetup->isChecked())
         {
             ui->sPages->setCurrentWidget(ui->pAdvanced);
@@ -323,8 +323,8 @@ void SetupWizard::on_bCancel_clicked()
     if(ui->sPages->currentWidget() == ui->pWelcome)
     {
         QString email = ui->eLoginEmail->text().toLower().trimmed();
-        QString privatePw = megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData());
-        QString emailHash = megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData());
+        QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
+        QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
 
         preferences->setEmail(email);
         preferences->setCredentials(emailHash, privatePw);
@@ -356,5 +356,5 @@ void SetupWizard::on_bMegaFolder_clicked()
         return;
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    ui->eMegaFolder->setText(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
+    ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }

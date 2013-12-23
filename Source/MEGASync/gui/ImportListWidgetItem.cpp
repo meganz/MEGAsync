@@ -36,7 +36,7 @@ void ImportListWidgetItem::setData(QString fileName, linkstatus status, long lon
 
 void ImportListWidgetItem::updateGui()
 {
-    if(fileSize) ui->lName->setText(fileName + " (" + Utils::getSizeString(fileSize) + ")");
+    if(fileSize) ui->lName->setText(fileName + QString::fromAscii(" (") + Utils::getSizeString(fileSize) + QString::fromAscii(")"));
 	else ui->lName->setText(fileName);
     ui->lImage->setPixmap(Utils::getExtensionPixmapSmall(fileName));
 
@@ -46,15 +46,15 @@ void ImportListWidgetItem::updateGui()
 		//ui->lState->setText("LOADING");
 		break;
 	case CORRECT:
-		ui->lState->setPixmap(QPixmap("://images/import_ok_icon.png"));
+        ui->lState->setPixmap(QPixmap(QString::fromAscii("://images/import_ok_icon.png")));
 		break;
 	case WARNING:
-		ui->lState->setPixmap(QPixmap("://images/import_warning_ico.png"));
+        ui->lState->setPixmap(QPixmap(QString::fromAscii("://images/import_warning_ico.png")));
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;
 	default:
-		ui->lState->setPixmap(QPixmap("://images/import_error_ico.png"));
+        ui->lState->setPixmap(QPixmap(QString::fromAscii("://images/import_error_ico.png")));
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;

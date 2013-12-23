@@ -48,7 +48,7 @@ bool EncryptedSettings::isGroupEmpty()
 
 void EncryptedSettings::remove(const QString &key)
 {
-    if(!key.length()) QSettings::remove("");
+    if(!key.length()) QSettings::remove(QString::fromAscii(""));
     else QSettings::remove(hash(key));
 }
 

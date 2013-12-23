@@ -4114,7 +4114,7 @@ void MegaClient::movetosyncdebris(Node* n)
 				makeattr(&tkey,&nn->attrstring,tattrstring.c_str());
 			}
 
-			reqs[r].add(new CommandPutNodes(this,h == UNDEF ? rootnodes[RUBBISHNODE-ROOTNODE] : h,NULL,nn,h == UNDEF ? 2 : 1,0,PUTNODES_SYNCDEBRIS));
+            reqs[r].add(new CommandPutNodes(this,h == UNDEF ? rootnodes[RUBBISHNODE-ROOTNODE] : h,NULL,nn,h == UNDEF ? 2 : 1,-1,PUTNODES_SYNCDEBRIS));
 			syncdebrisadding = true;
 		}
 	}

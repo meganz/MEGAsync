@@ -46,11 +46,11 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	if(!test.isDir())
 	{
 		#if QT_VERSION < 0x050000
-			QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/MEGAsync Downloads");
+            QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads"));
 		#else
-			QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + "/MEGAsync Downloads");
+            QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads");
 		#endif
-		defaultFolder.mkpath(".");
+        defaultFolder.mkpath(QString::fromAscii("."));
 		defaultFolderPath = defaultFolder.absolutePath();
 		defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
 	}
@@ -58,8 +58,8 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	ui->eLocalFolder->setText(defaultFolderPath);
 
 	Node *testNode = megaApi->getNodeByHandle(preferences->importFolder());
-	if(testNode) ui->eMegaFolder->setText(megaApi->getNodePath(testNode));
-	else ui->eMegaFolder->setText("/MEGAsync Imports");
+    if(testNode) ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(testNode)));
+    else ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
 
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
 	connect(linkProcessor, SIGNAL(onLinkInfoRequestFinish()), this, SLOT(onLinkInfoRequestFinish()));
@@ -134,7 +134,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 		return;
 
 	handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-	ui->eMegaFolder->setText(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
+    ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }
 
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
@@ -147,8 +147,8 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     if(node && (e == MegaError::API_OK))
 	{
         QString name = QString::fromUtf8(node->getName());
-		if(!name.compare("NO_KEY") || !name.compare("CRYPTO_ERROR"))
-            item->setData("Decryption error", ImportListWidgetItem::WARNING, node->getSize());
+        if(!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, node->getSize());
 		else
             item->setData(name, ImportListWidgetItem::CORRECT, node->getSize());
 	}
@@ -160,11 +160,11 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
             if(e == MegaError::API_ETEMPUNAVAIL)
 				status = ImportListWidgetItem::WARNING;
 
-            item->setData(MegaError::getErrorString(e), status);
+            item->setData(QString::fromUtf8(MegaError::getErrorString(e)), status);
 		}
 		else
 		{
-			item->setData("Not found", ImportListWidgetItem::FAILED);
+            item->setData(tr("Not found"), ImportListWidgetItem::FAILED);
 		}
 	}
 	item->updateGui();
