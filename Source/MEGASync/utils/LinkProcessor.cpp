@@ -67,7 +67,7 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 		if(!linkError[currentIndex])
 		{
             QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
-			if(!name.compare("NO_KEY") || !name.compare("DECRYPTION_ERROR"))
+            if(!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
 				linkSelected[currentIndex] = false;
 		}
 		currentIndex++;
@@ -134,7 +134,7 @@ void LinkProcessor::downloadLinks(QString localPath)
 		if(linkNode[i] && linkSelected[i])
 		{
 			cout << "Start public download" << endl;
-			megaApi->startPublicDownload(linkNode[i], (localPath+"\\").toUtf8().constData());
+            megaApi->startPublicDownload(linkNode[i], (localPath+QString::fromAscii("\\")).toUtf8().constData());
 		}
 	}
 }

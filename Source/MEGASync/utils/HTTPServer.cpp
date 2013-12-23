@@ -41,8 +41,8 @@ HTTPServer::HTTPServer(quint16 port, QObject* parent)
      // document back.
      QTcpSocket* socket = (QTcpSocket*)sender();
      if (socket->canReadLine()) {
-         QStringList tokens = QString(socket->readLine()).split(QRegExp("[ \r\n][ \r\n]*"));
-         if (tokens[0] == "GET") {
+         QStringList tokens = QString::fromUtf8(socket->readLine()).split(QRegExp(QString::fromAscii("[ \r\n][ \r\n]*")));
+         if (tokens[0] == QString::fromAscii("GET")) {
              QTextStream os(socket);
              os.setAutoDetectUnicode(true);
              os << "HTTP/1.0 200 Ok\r\n"

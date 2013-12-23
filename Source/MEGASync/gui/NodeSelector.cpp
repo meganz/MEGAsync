@@ -7,7 +7,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, QWidget *parent) :
 {
     ui->setupUi(this);
     this->megaApi = megaApi;
-    folderIcon =  QIcon("://images/folder.ico");
+    folderIcon =  QIcon(QString::fromAscii("://images/folder.ico"));
     selectedFolder = UNDEF;
     selectedItem = NULL;
 	delegateListener = new QTMegaRequestListener(this);
@@ -45,7 +45,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 	{
 		Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
 		QTreeWidgetItem *item = new QTreeWidgetItem();
-		item->setText(0, node->displayname());
+        item->setText(0, QString::fromUtf8(node->displayname()));
 		item->setIcon(0, folderIcon);
 		item->setData(0, Qt::UserRole, (qulonglong)node->nodehandle);
 		selectedItem->addChild(item);
@@ -65,7 +65,7 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, Node *parentNode)
         if(node->type == FOLDERNODE)
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, node->displayname());
+            item->setText(0, QString::fromUtf8(node->displayname()));
             item->setIcon(0, folderIcon);
             item->setData(0, Qt::UserRole, (qulonglong)node->nodehandle);
             parentItem->addChild(item);
@@ -87,7 +87,7 @@ void NodeSelector::on_bNewFolder_clicked()
     bool ok;
     QString text = QInputDialog::getText(this, tr("New folder"),
                                          tr("Please, enter the new folder name:"), QLineEdit::Normal,
-                                         "", &ok);
+                                         QString::fromAscii(""), &ok);
 
     text = text.trimmed();
     if (ok && !text.isEmpty())

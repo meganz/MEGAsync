@@ -92,7 +92,7 @@ bool WindowsUtils::startOnStartup(bool value)
     if(res != S_OK) return false;
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += "\\MEGAsync.lnk";
+    startupPath += QString::fromAscii("\\MEGAsync.lnk");
 
     if(value)
     {
@@ -131,7 +131,7 @@ bool WindowsUtils::isStartOnStartupActive()
         return false;
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += "\\MEGAsync.lnk";
+    startupPath += QString::fromAscii("\\MEGAsync.lnk");
     if(QFileInfo(startupPath).isSymLink()) return true;
     return false;
 }
@@ -140,8 +140,8 @@ void WindowsUtils::showInFolder(QString pathIn)
 {
     QString param;
     param = QLatin1String("/select,");
-    param += "\"\"" + QDir::toNativeSeparators(pathIn) + "\"\"";
-    QProcess::startDetached("explorer " + param);
+    param += QString::fromAscii("\"\"") + QDir::toNativeSeparators(pathIn) + QString::fromAscii("\"\"");
+    QProcess::startDetached(QString::fromAscii("explorer ") + param);
 }
 
 void WindowsUtils::startShellDispatcher(MegaApplication *receiver)
@@ -167,11 +167,11 @@ void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
     if(res != S_OK) return;
 
     QString linksPath = QString::fromWCharArray(path);
-    linksPath += "\\Links";
+    linksPath += QString::fromAscii("\\Links");
     QFileInfo info(linksPath);
     if(!info.isDir()) return;
 
-    QString linkPath = linksPath + "\\" + syncName + ".lnk";
+    QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
     if(QFile(linkPath).exists()) return;
 
     WCHAR wDescription[]=L"MEGAsync synchronized folder";
@@ -213,12 +213,12 @@ void WindowsUtils::syncFolderRemoved(QString syncPath)
     if(res != S_OK) return;
 
     QString linksPath = QString::fromWCharArray(path);
-    linksPath += "\\Links";
+    linksPath += QString::fromAscii("\\Links");
     QFileInfo info(linksPath);
     if(!info.isDir()) return;
 
     QFileInfo syncPathInfo(syncPath);
-    QString linkPath = linksPath + "\\" + syncPathInfo.fileName() + ".lnk";
+    QString linkPath = linksPath + QString::fromAscii("\\") + syncPathInfo.fileName() + QString::fromAscii(".lnk");
 
     QFile::remove(linkPath);
 

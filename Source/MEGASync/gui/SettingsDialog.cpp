@@ -101,7 +101,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl("https://mega.co.nz/#help");
+    QString helpUrl = QString::fromAscii("https://mega.co.nz/#help");
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
 
@@ -145,13 +145,13 @@ void SettingsDialog::on_rNoProxy_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-	QString upgradeUrl("https://mega.co.nz/#pro");
+    QString upgradeUrl = QString::fromAscii("https://mega.co.nz/#pro");
 	QDesktopServices::openUrl(QUrl(upgradeUrl));
 }
 
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
-	QString upgradeUrl("https://mega.co.nz/#pro");
+    QString upgradeUrl = QString::fromAscii("https://mega.co.nz/#pro");
 	QDesktopServices::openUrl(QUrl(upgradeUrl));
 }
 
@@ -197,26 +197,26 @@ void SettingsDialog::loadSettings()
 	{
 		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
 		ui->pStorage->setValue(percentage);
-        ui->lStorage->setText(Utils::getSizeString(preferences->usedStorage()) + " (" +
-			  QString::number(percentage) + "%) of " +
-              Utils::getSizeString(preferences->totalStorage()) + " used");
+        ui->lStorage->setText(Utils::getSizeString(preferences->usedStorage()) + QString::fromAscii(" (") +
+              QString::number(percentage) + tr("%) of ") +
+              Utils::getSizeString(preferences->totalStorage()) + tr(" used"));
 	}
     switch(preferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
-			ui->lAccountImage->setPixmap(QPixmap("://images/Free.ico"));
+            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.ico")));
             ui->lAccountType->setText(tr("FREE"));
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
-			ui->lAccountImage->setPixmap(QPixmap("://images/Pro I.ico"));
+            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro I.ico")));
             ui->lAccountType->setText(tr("PRO I"));
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
-			ui->lAccountImage->setPixmap(QPixmap("://images/Pro II.ico"));
+            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro II.ico")));
             ui->lAccountType->setText(tr("PRO II"));
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
-			ui->lAccountImage->setPixmap(QPixmap("://images/Pro III.ico"));
+            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro III.ico")));
             ui->lAccountType->setText(tr("PRO III"));
             break;
     }
@@ -228,7 +228,7 @@ void SettingsDialog::loadSettings()
     ui->rAutoLimit->setChecked(preferences->uploadLimitKB()<0);
     ui->rLimit->setChecked(preferences->uploadLimitKB()>0);
     ui->rNoLimit->setChecked(preferences->uploadLimitKB()==0);
-    ui->eLimit->setText((preferences->uploadLimitKB()<=0)? "0" : QString::number(preferences->uploadLimitKB()));
+    ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
     ui->eLimit->setEnabled(ui->rLimit->isChecked());
 
 	if(preferences->totalBandwidth() == 0)
@@ -240,9 +240,9 @@ void SettingsDialog::loadSettings()
 	{
 		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
 		ui->pUsedBandwidth->setValue(bandwidthPercentage);
-        ui->lBandwidth->setText(Utils::getSizeString(preferences->usedBandwidth()) + " (" +
-			QString::number(bandwidthPercentage) + "%) of " +
-            Utils::getSizeString(preferences->totalBandwidth()) + " used");
+        ui->lBandwidth->setText(Utils::getSizeString(preferences->usedBandwidth()) + QString::fromAscii(" (") +
+            QString::number(bandwidthPercentage) + tr("%) of ") +
+            Utils::getSizeString(preferences->totalBandwidth()) + tr(" used"));
 	}
 
     //Proxies
@@ -290,8 +290,8 @@ void SettingsDialog::saveSettings()
 			Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
 			cout << "adding sync: " << localFolderPath.toUtf8().constData() << " - " <<
 					megaFolderPath.toUtf8().constData() << endl;
-			preferences->addSyncedFolder(localFolderPath.toUtf8().constData(),
-										 megaFolderPath.toUtf8().constData(),
+            preferences->addSyncedFolder(localFolderPath,
+                                         megaFolderPath,
 										 node->nodehandle);
 		}
 
@@ -354,9 +354,9 @@ void SettingsDialog::loadSyncSettings()
     for(int i=0; i<numFolders; i++)
     {
         QTableWidgetItem *localFolder = new QTableWidgetItem();
-        localFolder->setText("  " + preferences->getLocalFolder(i) + "  ");
+        localFolder->setText(QString::fromAscii("  ") + preferences->getLocalFolder(i) + QString::fromAscii("  "));
         QTableWidgetItem *megaFolder = new QTableWidgetItem();
-        megaFolder->setText("  " + preferences->getMegaFolder(i) + "  ");
+        megaFolder->setText(QString::fromAscii("  ") + preferences->getMegaFolder(i) + QString::fromAscii("  "));
         ui->tSyncs->setItem(i, 0, localFolder);
         ui->tSyncs->setItem(i, 1, megaFolder);
     }
@@ -409,9 +409,9 @@ void SettingsDialog::on_bAdd_clicked()
    }while(repeated);
 
    QTableWidgetItem *localFolder = new QTableWidgetItem();
-   localFolder->setText("  " + localFolderPath + "  ");
+   localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
    QTableWidgetItem *megaFolder = new QTableWidgetItem();
-   megaFolder->setText("  " +  QString(megaApi->getNodePath(node)) + "  ");
+   megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(megaApi->getNodePath(node)) + QString::fromAscii("  "));
    int pos = ui->tSyncs->rowCount();
    ui->tSyncs->setRowCount(pos+1);
    ui->tSyncs->setItem(pos, 0, localFolder);
@@ -433,7 +433,7 @@ void SettingsDialog::on_bApply_clicked()
 void SettingsDialog::on_bUnlink_clicked()
 {
     if(QMessageBox::question(this, tr("Logout"),
-            tr("Synchronization will stop working.") + " " + tr("Are you sure?"),
+            tr("Synchronization will stop working.") + QString::fromAscii(" ") + tr("Are you sure?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         this->close();

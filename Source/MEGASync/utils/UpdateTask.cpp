@@ -5,9 +5,9 @@ using namespace std;
 
 const unsigned int UpdateTask::INITIAL_DELAY_SECS = 300;
 const unsigned int UpdateTask::RETRY_INTERVAL_SECS = 7200;
-const QString UpdateTask::UPDATE_CHECK_URL = "http://www.pycusoft.com/update.txt";
-const QString UpdateTask::UPDATE_FOLDER_NAME = "update";
-const QString UpdateTask::BACKUP_FOLDER_NAME = "backup";
+const QString UpdateTask::UPDATE_CHECK_URL = QString::fromUtf8("http://www.pycusoft.com/update.txt");
+const QString UpdateTask::UPDATE_FOLDER_NAME = QString::fromAscii("update");
+const QString UpdateTask::BACKUP_FOLDER_NAME = QString::fromAscii("backup");
 const char UpdateTask::PUBLIC_KEY[] = "CADfKLVtM_wXRWS5cbw3Mo6CFWg0KaxK38wqTt6dCOrJS35PGhAAFk5_QJ4EHqa4Rh93m3akUBnbo9d1Jup0JepGSUsjGtWoE1p0yV_q84BDCSyRLW1kBD6BCetA54lZI98P_vFpE7v_zVpCWKLmvOC8fOdjqXHdMunPO1ytrbFICb7WXpovVGPNWBGbdPxRbcnupuBEEsF9Bf7fjFKSrg8q7ga3LXyovVL5KKTWQeqyw8DeAUyTzeMa-1t8C1wtqVaEzvCTZRIlD9eSPf_5w0Dhk6WI9GtU4FiTb1bwBdOplZw3cFInNA_xiG_faAZ1BNtuvIHuuvaxYNreC-wzIncfAAUR";
 const char UpdateTask::PRIVATE_KEY[] = "BADx27mvzbBv2Tld-sNgeK7QEWCZq8GOtZKWJBPXqshnJdWVQsUuHesh5EZkQfwatuVZCVv4uGKqdae_BGhgXOS7UTlKW9QtbfsYSPMrpc35cWvujS0kfft6jCqa06LZ081lI45yIKadxHG6UeyZE64StJYAruE1F0QGDLnkff-a9QQA7DUU6WtpFPsNQbpxCFzDtLgIIUJ2GCeP_u9f_nd29nLO8z3_45hcCODA1cnt0IZIIVSli12AdChLWgUNajMeX9LamPGrI-eeweZuEjhtzmsC1fNe-rsj4eZMtRoO_oROX-REgDeIZtbgBhYKP_NzStESzlzVHcvRlx0zc5DJpUMH-waQQZJFSy3cZNhHHB-9uOW1VeNqoy9g72qn930W2bqgVonbHpaXPotFqktqUDKYppKToZtrxIZ1wpKBJQNqhuPzGMxTnN9L3QNvVaUHKWtiJvU2Cr8tTSHptBh_R83qd4B4cIMXKy0rr9TGXyTncAWLM_tm3bOurIYYVYyjOeuHwtiiWmGYUdomKP8-InSWcvmQ4vr-6jHhCqQe1nvHBTkCKVv0AyU_teNqZQXzh4N1XG0tK4s7nF4HxbgTdTlXtnPJRCez7xUpHgpv55dl3emQJLx7icSUvB8WWo8glnNWaDYbN4YWvJGYMlZWJvuz3g5idjPafUnVCVgfBFtsCSUEALTpaVh3_wyMjv2U6D_F0vKNHtjuKlRakW20rf87zPiAfR0yIZipDo5hYydsmt3pqkSrrEZSf_Pmssb_lB3zFdpbNOxKm4hdkN2iruoNzFml0VcVpllBbYcJezdpydB_loYhN2yabfgcuxziGluGJfmvXOlJv2cgmhTq1YZVQW-M";
 
@@ -140,7 +140,7 @@ QString UpdateTask::readNextLine(QNetworkReply *reply)
     if((len <= 0) || (len >= (sizeof(line)-1)))
         return QString();
 
-    QString qLine(line);
+    QString qLine(QString::fromUtf8(line));
     return qLine.trimmed();
 }
 
@@ -223,7 +223,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     //Create the folder for the new file
     QFile localFile(updateFolder.absoluteFilePath(localPaths[currentFile]));
     QFileInfo info(localFile);
-    info.absoluteDir().mkpath(".");
+    info.absoluteDir().mkpath(QString::fromAscii("."));
 
     //Delete the file if it exists.
     localFile.remove();
@@ -269,8 +269,8 @@ bool UpdateTask::performUpdate()
     cout << "performUpdate" << endl;
 
     //Create backup folder
-    backupFolder = QDir(appFolder.absoluteFilePath(BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString("_dd_MM_yy__hh_mm_ss")));
-    backupFolder.mkdir(".");
+    backupFolder = QDir(appFolder.absoluteFilePath(BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
+    backupFolder.mkdir(QString::fromAscii("."));
 
     for(int i=0; i<localPaths.size(); i++)
     {

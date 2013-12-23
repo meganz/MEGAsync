@@ -18,6 +18,8 @@ include(utils/utils.pri)
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
+DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
+
 SOURCES += MegaApplication.cpp
 HEADERS += MegaApplication.h
 

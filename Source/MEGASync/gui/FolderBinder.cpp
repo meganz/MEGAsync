@@ -48,5 +48,5 @@ void FolderBinder::on_bMegaFolder_clicked()
         return;
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    ui->eMegaFolder->setText(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
+    ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }

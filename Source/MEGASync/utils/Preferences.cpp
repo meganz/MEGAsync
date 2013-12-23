@@ -6,51 +6,51 @@
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 1000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 200;
 
-const QString Preferences::syncsGroupKey            = "Syncs";
-const QString Preferences::recentGroupKey           = "Recent";
-const QString Preferences::currentAccountKey        = "currentAccount";
-const QString Preferences::emailKey                 = "email";
-const QString Preferences::emailHashKey             = "emailHash";
-const QString Preferences::privatePwKey             = "privatePw";
-const QString Preferences::totalStorageKey          = "totalStorage";
-const QString Preferences::usedStorageKey           = "usedStorage";
-const QString Preferences::totalBandwidthKey		= "totalBandwidth";
-const QString Preferences::usedBandwidthKey			= "usedBandwidth";
-const QString Preferences::accountTypeKey           = "accountType";
-const QString Preferences::showNotificationsKey     = "showNotifications";
-const QString Preferences::startOnStartupKey        = "startOnStartup";
-const QString Preferences::languageKey              = "language";
-const QString Preferences::updateAutomaticallyKey   = "updateAutomatically";
-const QString Preferences::uploadLimitKBKey         = "uploadLimitKB";
-const QString Preferences::proxyTypeKey             = "proxyType";
-const QString Preferences::proxyProtocolKey         = "proxyProtocol";
-const QString Preferences::proxyServerKey           = "proxyServer";
-const QString Preferences::proxyPortKey             = "proxyPort";
-const QString Preferences::proxyRequiresAuthKey     = "proxyRequiresAuth";
-const QString Preferences::proxyUsernameKey         = "proxyUsername";
-const QString Preferences::proxyPasswordKey         = "proxyPassword";
-const QString Preferences::syncNameKey              = "syncName";
-const QString Preferences::localFolderKey           = "localFolder";
-const QString Preferences::megaFolderKey            = "megaFolder";
-const QString Preferences::megaFolderHandleKey      = "megaFolderHandle";
-const QString Preferences::downloadFolderKey		= "downloadFolder";
-const QString Preferences::uploadFolderKey			= "uploadFolder";
-const QString Preferences::importFolderKey			= "importFolder";
-const QString Preferences::fileNameKey              = "fileName";
-const QString Preferences::fileHandleKey            = "fileHandle";
-const QString Preferences::localPathKey             = "localPath";
+const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
+const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
+const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
+const QString Preferences::emailKey                 = QString::fromAscii("email");
+const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
+const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
+const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
+const QString Preferences::usedStorageKey           = QString::fromAscii("usedStorage");
+const QString Preferences::totalBandwidthKey		= QString::fromAscii("totalBandwidth");
+const QString Preferences::usedBandwidthKey			= QString::fromAscii("usedBandwidth");
+const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
+const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
+const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
+const QString Preferences::languageKey              = QString::fromAscii("language");
+const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
+const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
+const QString Preferences::proxyTypeKey             = QString::fromAscii("proxyType");
+const QString Preferences::proxyProtocolKey         = QString::fromAscii("proxyProtocol");
+const QString Preferences::proxyServerKey           = QString::fromAscii("proxyServer");
+const QString Preferences::proxyPortKey             = QString::fromAscii("proxyPort");
+const QString Preferences::proxyRequiresAuthKey     = QString::fromAscii("proxyRequiresAuth");
+const QString Preferences::proxyUsernameKey         = QString::fromAscii("proxyUsername");
+const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyPassword");
+const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
+const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
+const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
+const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
+const QString Preferences::downloadFolderKey		= QString::fromAscii("downloadFolder");
+const QString Preferences::uploadFolderKey			= QString::fromAscii("uploadFolder");
+const QString Preferences::importFolderKey			= QString::fromAscii("importFolder");
+const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
+const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
+const QString Preferences::localPathKey             = QString::fromAscii("localPath");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultProxyType            = PROXY_TYPE_AUTO;
-const QString  Preferences::defaultProxyProtocol    = "HTTP";
-const QString  Preferences::defaultProxyServer      = "127.0.0.1";
+const QString  Preferences::defaultProxyProtocol    = QString::fromAscii("HTTP");
+const QString  Preferences::defaultProxyServer      = QString::fromAscii("127.0.0.1");
 const int Preferences::defaultProxyPort             = 8080;
 const bool Preferences::defaultProxyRequiresAuth    = false;
-const QString Preferences::defaultProxyUsername     = "";
-const QString Preferences::defaultProxyPassword     = "";
+const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
+const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 const int Preferences::NUM_RECENT_ITEMS             = 3;
 
 Preferences::Preferences()
@@ -579,7 +579,7 @@ void Preferences::writeFolders()
     assert(logged());
 
     settings->beginGroup(syncsGroupKey);
-        settings->remove("");
+        settings->remove(QString::fromAscii(""));
         for(int i=0; i<localFolders.size(); i++)
         {
             settings->beginGroup(QString::number(i));

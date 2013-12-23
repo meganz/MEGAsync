@@ -1750,7 +1750,7 @@ void MegaApi::transfer_update(Transfer *tr)
 		cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
 			 << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->getdstime()-transfer->getStartTime())+1) << " KB/s" << endl;
 		fireOnTransferUpdate(this, transfer);
-		WindowsUtils::notifyItemChange(QString(transfer->getPath()));
+        WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
 	}
 }
 
@@ -1872,7 +1872,7 @@ void MegaApi::syncupdate_stuck(string *s)
 void MegaApi::syncupdate_local_folder_addition(Sync *, const char *s)
 {
 	cout << "syncupdate_local_folder_addition: " << s << endl;
-	WindowsUtils::notifyItemChange(QString(s));
+    WindowsUtils::notifyItemChange(QString::fromUtf8(s));
 }
 
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
@@ -1883,7 +1883,7 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 void MegaApi::syncupdate_local_file_addition(Sync *, const char *s)
 {
 	cout << "syncupdate_local_file_addition: " << s << endl;
-	WindowsUtils::notifyItemChange(QString(s));
+    WindowsUtils::notifyItemChange(QString::fromUtf8(s));
 
 }
 
@@ -1901,7 +1901,7 @@ void MegaApi::syncupdate_get(Sync *, const char *s)
 void MegaApi::syncupdate_put(Sync *, const char *s)
 {
 	cout << "syncupdate_put: " << s << endl;
-	WindowsUtils::notifyItemChange(QString(s));
+    WindowsUtils::notifyItemChange(QString::fromUtf8(s));
 }
 
 void MegaApi::syncupdate_remote_file_addition(Node *)
@@ -1942,14 +1942,14 @@ void MegaApi::syncupdate_remote_move(string *a, string *b)
 bool MegaApi::sync_syncable(Node *node)
 {
 	QString name = QString::fromUtf8(node->displayname());
-	if(!name.compare("Thumbs.db")) return false;
+    if(!name.compare(QString::fromAscii("Thumbs.db"))) return false;
 	return true;
 }
 
 bool MegaApi::sync_syncable(const char *fileName, string *, string *)
 {
 	QString name = QString::fromUtf8(fileName);
-	if(!name.compare("Thumbs.db")) return false;
+    if(!name.compare(QString::fromAscii("Thumbs.db"))) return false;
 	return true;
 }
 

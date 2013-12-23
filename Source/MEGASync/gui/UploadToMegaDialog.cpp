@@ -10,7 +10,7 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
 	setAttribute(Qt::WA_QuitOnClose, false);
 
 	selectedHandle = UNDEF;
-	ui->eFolderPath->setText("/MEGAsync Uploads");
+    ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
 	this->megaApi = megaApi;
 	this->delegateListener = new QTMegaRequestListener(this);
 }
@@ -54,7 +54,7 @@ void UploadToMegaDialog::on_bChange_clicked()
 		return;
 
 	handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-	ui->eFolderPath->setText(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
+    ui->eFolderPath->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }
 
 void UploadToMegaDialog::on_buttonBox_accepted()
@@ -68,13 +68,13 @@ void UploadToMegaDialog::on_buttonBox_accepted()
 		return;
 	}
 
-	if(!ui->eFolderPath->text().compare("/MEGAsync Uploads"))
+    if(!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
 	{
-		megaApi->createFolder("MEGAsync Uploads", megaApi->getRootNode(), delegateListener);
+        megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), megaApi->getRootNode(), delegateListener);
 		return;
 	}
 
 	cout << "ERROR: FOLDER NOT FOUND" << endl;
-	ui->eFolderPath->setText("/MEGAsync Uploads");
+    ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
 	return;
 }
