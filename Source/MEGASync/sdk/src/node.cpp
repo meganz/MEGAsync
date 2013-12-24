@@ -448,6 +448,7 @@ bool Node::setparent(Node* p)
 	if (parent) parent->children.erase(child_it);
 
 	parent = p;
+    parenthandle = p->nodehandle;
 
 	child_it = parent->children.insert(parent->children.end(),this);
 

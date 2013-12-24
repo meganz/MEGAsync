@@ -99,6 +99,12 @@ void MegaApplication::init()
 
 void MegaApplication::loggedIn()
 {    
+    //Show the tray icon
+    trayIcon->show();
+    showNotificationMessage(tr("MEGAsync is running"));
+
+    infoDialog = new InfoDialog(this);
+
     //Get account details
     megaApi->getAccountDetails();
 
@@ -107,10 +113,6 @@ void MegaApplication::loggedIn()
 
     //Start the Sync feature
     startSyncs();
-
-    //Show the tray icon
-    trayIcon->show();
-    showNotificationMessage(tr("MEGAsync is running"));
 
     //Try to keep the tray icon always active
     if(!Utils::enableTrayIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
@@ -122,7 +124,6 @@ void MegaApplication::loggedIn()
 
     //Start the HTTP server
 	httpServer = new HTTPServer(2973, NULL);
-    infoDialog = new InfoDialog(this);
 }
 
 void MegaApplication::startSyncs()
@@ -133,9 +134,40 @@ void MegaApplication::startSyncs()
     //Start syncs
 	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
 	{
+        Node *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+        if(!node)
+        {
+            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                "because the remote folder doesn't exist")
+                             .arg(preferences->getSyncName(i)));
+            preferences->removeSyncedFolder(i);
+            i--;
+            continue;
+        }
+
+        if(megaApi->getParentNode(node) == megaApi->getRubbishNode())
+        {
+            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                "because the remote folder is in your Trash folder")
+                             .arg(preferences->getSyncName(i)));
+            preferences->removeSyncedFolder(i);
+            i--;
+            continue;
+        }
+
+        QString localFolder = preferences->getLocalFolder(i);
+        if(!QFileInfo(localFolder).isDir())
+        {
+            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                "because the local folder doesn't exist")
+                             .arg(preferences->getSyncName(i)));
+            preferences->removeSyncedFolder(i);
+            i--;
+            continue;
+        }
+
 		cout << "Sync " << i << " added." << endl;
-		megaApi->syncFolder(preferences->getLocalFolder(i).toUtf8().constData(),
-					megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i)));
+        megaApi->syncFolder(localFolder.toUtf8().constData(), node);
 	}
 }
 
