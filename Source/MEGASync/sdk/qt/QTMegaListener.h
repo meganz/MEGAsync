@@ -23,16 +23,16 @@ public:
 	virtual void onReloadNeeded(MegaApi* api);
 
 signals:
-	virtual void QTonRequestStartSignal(MegaApi* api, MegaRequest *request);
-	virtual void QTonRequestFinishSignal(MegaApi* api, MegaRequest *request, MegaError* e);
-	virtual void QTonRequestTemporaryErrorSignal(MegaApi *api, MegaRequest *request, MegaError* e);
-	virtual void QTonTransferStartSignal(MegaApi *api, MegaTransfer *transfer);
-	virtual void QTonTransferFinishSignal(MegaApi* api, MegaTransfer *transfer, MegaError* e);
-	virtual void QTonTransferUpdateSignal(MegaApi *api, MegaTransfer *transfer);
-	virtual void QTonTransferTemporaryErrorSignal(MegaApi *api, MegaTransfer *transfer, MegaError* e);
-	virtual void QTonUsersUpdateSignal(MegaApi* api, UserList *users);
-	virtual void QTonNodesUpdateSignal(MegaApi* api, NodeList *nodes);
-	virtual void QTonReloadNeededSignal(MegaApi* api);
+    void QTonRequestStartSignal(MegaApi* api, MegaRequest *request);
+    void QTonRequestFinishSignal(MegaApi* api, MegaRequest *request, MegaError* e);
+    void QTonRequestTemporaryErrorSignal(MegaApi *api, MegaRequest *request, MegaError* e);
+    void QTonTransferStartSignal(MegaApi *api, MegaTransfer *transfer);
+    void QTonTransferFinishSignal(MegaApi* api, MegaTransfer *transfer, MegaError* e);
+    void QTonTransferUpdateSignal(MegaApi *api, MegaTransfer *transfer);
+    void QTonTransferTemporaryErrorSignal(MegaApi *api, MegaTransfer *transfer, MegaError* e);
+    void QTonUsersUpdateSignal(MegaApi* api, UserList *users);
+    void QTonNodesUpdateSignal(MegaApi* api, NodeList *nodes);
+    void QTonReloadNeededSignal(MegaApi* api);
 
 public slots:
 	virtual void QTonRequestStart(MegaApi* api, MegaRequest *request);

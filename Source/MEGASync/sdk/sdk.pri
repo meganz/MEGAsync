@@ -80,7 +80,7 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/user.h \
 	    $$PWD/include/mega/utils.h \
 	    $$PWD/include/mega/waiter.h \
-	    $$PWD/include/mega/synclocalops.cpp  \
+	    $$PWD/include/mega/synclocalops.h  \
 	    $$PWD/include/mega/crypto/cryptopp.h  \
 	    $$PWD/include/mega/db/sqlite.h  \
 	    $$PWD/include/mega/win32/meganet.h  \
@@ -92,32 +92,43 @@ HEADERS  += $$PWD/include/mega.h \
     sdk/qt/QTMegaTransferListener.h \
     sdk/qt/QTMegaListener.h
 
-LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs"
-
-debug {
-    LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/staticd"
-    DEFINES += SQLITE_DEBUG
-}
-else {
-    LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/static"
-}
-
 DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
 LIBS += -lcryptopp
 INCLUDEPATH += $$PWD/include
 
+!release {
+    DEFINES += SQLITE_DEBUG
+}
+
 win32 {
+
     INCLUDEPATH += $$PWD
     INCLUDEPATH += $$PWD/include/mega/win32
     INCLUDEPATH += $$PWD/3rdparty/include
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
+
+    contains(CONFIG, BUILDX64) {
+	release {
+	    LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/static_x64"
+	}
+	else {
+	    LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/staticd_x64"
+	}
+    }
+
+    !contains(CONFIG, BUILDX64) {
+	release {
+	    LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/static"
+	}
+	else {
+	    LIBS += -L"$$_PRO_FILE_PWD_/sdk/3rdparty/libs/staticd"
+	}
+    }
 
     LIBS += -lwinhttp -lws2_32
 }
 
 unix {
    INCLUDEPATH += /usr/include/cryptopp
-
-   LIBS += -lssl -lcrypto -lcurl
+   LIBS += -lssl -lcurl
 }
-
