@@ -264,7 +264,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 					client->app->syncupdate_local_move(this,it->second->name.c_str(),path.c_str());
 
 					// (in case of a move, this synchronously updates l->parent and l->node->parent)
-					it->second->setnameparent(parent,localname ? localname : &newname);
+					it->second->setnameparent(parent,localname ? localpath : &tmppath);
 
 					// unmark possible deletion
 					it->second->setnotseen(0);

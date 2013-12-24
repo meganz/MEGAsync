@@ -201,6 +201,11 @@ struct LocalNode : public File
 	// if delage > 0, own iterator inside MegaClient::localsyncgone
 	localnode_set::iterator notseen_it;
 	
+	// if remoteqset >= 0, own iterator inside MegaClient::syncremoteq[remoteq]
+	syncremote remoteq;
+	localnode_list::iterator remoteq_it;
+	void enqremote(syncremote);
+
 	// build full local path to this node
 	void getlocalpath(string*, bool sdisable = false);
 	void getlocalsubpath(string*);

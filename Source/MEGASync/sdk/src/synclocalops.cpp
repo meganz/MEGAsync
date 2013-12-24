@@ -19,6 +19,10 @@
  * program.
  */
 
+#if 0
+
+// FIXME: use from within syncdown()
+
 #include "mega/synclocalops.h"
 #include "mega/megaapp.h"
 
@@ -73,7 +77,7 @@ bool SyncLocalOp::recurse(nodetype type, string* from, string* to)
 			if (client->fsaccess->rmdirlocal(from)) return true;
 		}
 	}
-	
+
 	if (type == FOLDERNODE)
 	{
 		DirAccess* da = client->fsaccess->newdiraccess();
@@ -121,3 +125,5 @@ bool SyncLocalOp::exec()
 }
 
 } // namespace
+
+#endif
