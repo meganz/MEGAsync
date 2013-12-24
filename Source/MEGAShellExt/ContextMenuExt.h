@@ -31,11 +31,16 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #define CONTEXTMENUEXT_H
 
 #include <windows.h>
-#include <shlobj.h>     // For IShellExtInit and IContextMenu
+#include <shlobj.h>
+#include <uxtheme.h>
 #include <vector>
 #include <string>
 
-class ContextMenuExt : public IShellExtInit, public IContextMenu
+typedef HRESULT (WINAPI *pGetBufferedPaintBits) (HPAINTBUFFER hBufferedPaint, RGBQUAD **ppbBuffer, int *pcxRow);
+typedef HPAINTBUFFER (WINAPI *pBeginBufferedPaint) (HDC hdcTarget, const RECT *prcTarget, BP_BUFFERFORMAT dwFormat, BP_PAINTPARAMS *pPaintParams, HDC *phdc);
+typedef HRESULT (WINAPI *pEndBufferedPaint) (HPAINTBUFFER hBufferedPaint, BOOL fUpdateTarget);
+
+class ContextMenuExt : public IShellExtInit, public IContextMenu3
 {
 public:
     // IUnknown
@@ -51,6 +56,9 @@ public:
     IFACEMETHODIMP InvokeCommand(LPCMINVOKECOMMANDINFO pici);
     IFACEMETHODIMP GetCommandString(UINT_PTR idCommand, UINT uFlags, UINT *pwReserved, LPSTR pszName, UINT cchMax);
 	
+    IFACEMETHODIMP HandleMenuMsg(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    IFACEMETHODIMP HandleMenuMsg2(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT *plResult);
+
     ContextMenuExt(void);
 
 protected:
@@ -66,9 +74,17 @@ private:
 
     // The method that handles the "display" verb.
     void OnVerbDisplayFileName(HWND hWnd);
+    HBITMAP getBitmap(HICON icon);
+    HBITMAP getBitmapLegacy(HICON hIcon);
+    bool legacyIcon;
+
+    pGetBufferedPaintBits GetBufferedPaintBits;
+    pBeginBufferedPaint BeginBufferedPaint;
+    pEndBufferedPaint EndBufferedPaint;
 
     PWSTR m_pszMenuText;
-    HANDLE m_hMenuBmp;
+    HBITMAP m_hMenuBmp;
+    HICON hIcon;
     PCSTR m_pszVerb;
     PCWSTR m_pwszVerb;
     PCSTR m_pszVerbCanonicalName;

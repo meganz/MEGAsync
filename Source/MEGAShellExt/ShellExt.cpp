@@ -49,7 +49,11 @@ IFACEMETHODIMP_(ULONG) ShellExt::Release()
 
 HRESULT ShellExt::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DWORD *pdwFlags)
 {
-	memcpy(pwszIconFile, szModule,  (lstrlen(szModule)+1)*sizeof(TCHAR));
+    int len = lstrlen(szModule)+1;
+    if (len > cchMax)
+        return S_FALSE;
+
+    memcpy(pwszIconFile, szModule, len*sizeof(TCHAR));
     *pIndex = id;
     *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
     return S_OK;
@@ -63,6 +67,8 @@ HRESULT ShellExt::GetPriority(int *pPriority)
 
 HRESULT ShellExt::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
 {
+   (void)dwAttrib;
+
    TCHAR chReadBuf[2]; 
    BOOL fSuccess; 
    DWORD cbRead; 

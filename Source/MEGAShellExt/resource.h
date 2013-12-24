@@ -5,7 +5,7 @@
 #define IDI_ICON1                       105
 #define IDI_ICON2                       106
 #define IDI_ICON3                       107
-#define IDB_BITMAP1                     113
+#define IDI_ICON4                       108
 
 // Next default values for new objects
 //
