@@ -14,9 +14,7 @@ LIBS += -luser32 -lole32 -loleaut32 -lgdi32 -luuid -lAdvapi32 -lShell32
 DEF_FILE = GlobalExportFunctions.def
 RC_FILE = MEGAShellExt.rc
 
-OTHER_FILES += \
-    MEGAShellExt.rc \
-    GlobalExportFunctions.def
+OTHER_FILES += GlobalExportFunctions.def
 
 HEADERS += \
     ShellExt.h \
@@ -39,3 +37,5 @@ SOURCES += \
     ClassFactoryShellExtPending.cpp \
     ClassFactoryContextMenuExt.cpp \
     ClassFactory.cpp
+
+win32:RC_FILE = MEGAShellExt.rc

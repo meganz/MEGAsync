@@ -50,11 +50,86 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 {
     InterlockedIncrement(&g_cDllRef);
 
-    // Load the bitmap for the menu item. 
-    // If you want the menu item bitmap to be transparent, the color depth of 
-    // the bitmap must not be greater than 8bpp.
-    m_hMenuBmp = LoadImage(g_hInst, MAKEINTRESOURCE(IDB_BITMAP1), 
-        IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADTRANSPARENT | LR_LOADMAP3DCOLORS);
+    legacyIcon = true;
+    HMODULE UxThemeDLL = LoadLibrary(L"UXTHEME.DLL");
+    if (UxThemeDLL)
+    {
+        GetBufferedPaintBits = (pGetBufferedPaintBits)::GetProcAddress(UxThemeDLL, "GetBufferedPaintBits");
+        BeginBufferedPaint = (pBeginBufferedPaint)::GetProcAddress(UxThemeDLL, "BeginBufferedPaint");
+        EndBufferedPaint = (pEndBufferedPaint)::GetProcAddress(UxThemeDLL, "EndBufferedPaint");
+        if(GetBufferedPaintBits && BeginBufferedPaint && EndBufferedPaint)
+            legacyIcon = false;
+        else
+            FreeLibrary(UxThemeDLL);
+    }
+
+    hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+    m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
+}
+
+HBITMAP ContextMenuExt::getBitmapLegacy(HICON hIcon)
+{
+    RECT rect;
+    rect.right = ::GetSystemMetrics(SM_CXMENUCHECK);
+    rect.bottom = ::GetSystemMetrics(SM_CYMENUCHECK);
+    rect.left = rect.top  = 0;
+
+    // Create a compatible DC
+    HDC dst_hdc = ::CreateCompatibleDC(NULL);
+    if (dst_hdc == NULL) return NULL;
+
+    // Create a new bitmap of icon size
+    HBITMAP bmp = ::CreateCompatibleBitmap(dst_hdc, rect.right, rect.bottom);
+    if (bmp == NULL)
+    {
+        DeleteDC(dst_hdc);
+        return NULL;
+    }
+
+    SelectObject(dst_hdc, bmp);
+    SetBkColor(dst_hdc, RGB(255, 255, 255));
+    ExtTextOut(dst_hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
+    DrawIconEx(dst_hdc, 0, 0, hIcon, rect.right, rect.bottom, 0, NULL, DI_NORMAL);
+    DeleteDC(dst_hdc);
+    return bmp;
+}
+
+HBITMAP ContextMenuExt::getBitmap(HICON icon)
+{
+    HBITMAP bitmap = NULL;
+    HDC hdc = CreateCompatibleDC(NULL);
+    if (!hdc) return NULL;
+
+    int width   = GetSystemMetrics(SM_CXSMICON);
+    int height  = GetSystemMetrics(SM_CYSMICON);
+    RECT rect   = {0, 0, width, height};
+
+    BITMAPINFO bmInfo = {0};
+    bmInfo.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
+    bmInfo.bmiHeader.biPlanes      = 1;
+    bmInfo.bmiHeader.biCompression = BI_RGB;
+    bmInfo.bmiHeader.biWidth       = width;
+    bmInfo.bmiHeader.biHeight      = height;
+    bmInfo.bmiHeader.biBitCount    = 32;
+
+    bitmap = CreateDIBSection(hdc, &bmInfo, DIB_RGB_COLORS, NULL, NULL, 0);
+    SelectObject(hdc, bitmap);
+    BLENDFUNCTION blendFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+    BP_PAINTPARAMS paintParams = {0};
+    paintParams.cbSize = sizeof(BP_PAINTPARAMS);
+    paintParams.dwFlags = BPPF_ERASE;
+    paintParams.pBlendFunction = &blendFunction;
+
+    HDC newHdc;
+    HPAINTBUFFER hPaintBuffer = BeginBufferedPaint(hdc, &rect, BPBF_DIB, &paintParams, &newHdc);
+    if (hPaintBuffer)
+    {
+        DrawIconEx(newHdc, 0, 0, icon, width, height, 0, NULL, DI_NORMAL);
+        EndBufferedPaint(hPaintBuffer, TRUE);
+    }
+
+    DeleteDC(hdc);
+    return bitmap;
 }
 
 ContextMenuExt::~ContextMenuExt(void)
@@ -95,6 +170,8 @@ IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
     static const QITAB qit[] = 
     {
         QITABENT(ContextMenuExt, IContextMenu),
+        QITABENT(ContextMenuExt, IContextMenu2),
+        QITABENT(ContextMenuExt, IContextMenu3),
         QITABENT(ContextMenuExt, IShellExtInit), 
         { 0 },
     };
@@ -226,7 +303,8 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
     mii.fType = MFT_STRING;
     mii.dwTypeData = m_pszMenuText;
     mii.fState = MFS_ENABLED;
-    mii.hbmpItem = static_cast<HBITMAP>(m_hMenuBmp);
+    mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
+
     if (!InsertMenuItem(hMenu, indexMenu, TRUE, &mii))
     {
         return HRESULT_FROM_WIN32(GetLastError());
@@ -402,6 +480,49 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
     // extension handler, return E_INVALIDARG.
 
     return hr;
+}
+
+IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, LRESULT *plResult)
+{
+    LRESULT res;
+    if (plResult == NULL)
+        plResult = &res;
+    *plResult = FALSE;
+
+    switch (uMsg)
+    {
+    case WM_MEASUREITEM:
+        {
+            MEASUREITEMSTRUCT* lpmis = (MEASUREITEMSTRUCT*)lParam;
+            if (lpmis==NULL)
+                break;
+            lpmis->itemWidth = 16;
+            lpmis->itemHeight = 16;
+            *plResult = TRUE;
+        }
+        break;
+
+    case WM_DRAWITEM:
+        {
+            DRAWITEMSTRUCT* lpdis = (DRAWITEMSTRUCT*)lParam;
+            if ((lpdis==NULL)||(lpdis->CtlType != ODT_MENU))
+                return S_OK;        //not for a menu
+
+            DrawIconEx(lpdis->hDC,
+                lpdis->rcItem.left,
+                lpdis->rcItem.top + (lpdis->rcItem.bottom - lpdis->rcItem.top - 16) / 2,
+                hIcon, 16, 16,
+                0, NULL, DI_NORMAL);
+            *plResult = TRUE;
+        }
+        break;
+    }
+    return S_OK;
+}
+
+IFACEMETHODIMP ContextMenuExt::HandleMenuMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    return HandleMenuMsg2(uMsg, wParam, lParam, NULL);
 }
 
 #pragma endregion
