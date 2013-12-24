@@ -1544,7 +1544,7 @@ const char *MegaApi::getAccess(Node* node)
 	while (n)
 	{
 		if (n->inshare) { a = n->inshare->access; break; }
-		n = client->nodebyhandle(n->parenthandle);
+        n = n->parent;
 	}
 
     MUTEX_UNLOCK(sdkMutex);
@@ -3104,7 +3104,7 @@ Node* MegaApi::getParentNode(Node* node)
 		return NULL;
 	}
 
-	Node *result = client->nodebyhandle(node->parenthandle);
+    Node *result = node->parent;
     MUTEX_UNLOCK(sdkMutex);
 
 	return result;
@@ -3173,7 +3173,7 @@ const char* MegaApi::getNodePath(Node *n)
 
 		path.insert(0,"/");
 
-		n = getParentNode(n);
+        n = n->parent;
 	}
     MUTEX_UNLOCK(sdkMutex);
 	return stringToArray(path);
@@ -3318,7 +3318,7 @@ Node* MegaApi::getNodeByPath(const char *path, Node* cwd)
 		{
 			if (c[l] == "..")
 			{
-				if (getParentNode(n)) n = getParentNode(n);
+                if (n->parent) n = n->parent;
 			}
 			else
 			{
@@ -3876,7 +3876,7 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 		t->source = NEW_NODE;
 		t->type = n->type;
 		t->nodehandle = n->nodehandle;
-		t->parenthandle = n->parenthandle;
+        t->parenthandle = n->parent->nodehandle;
         t->clienttimestamp = n->clienttimestamp;
 
 		// copy key (if file) or generate new key (if folder)
