@@ -11,10 +11,6 @@ SOURCES += utils/HTTPServer.cpp utils/Preferences.cpp \
     utils/UpdateTask.cpp \
     utils/EncryptedSettings.cpp
 
-win32 {
-    SOURCES += utils/win32/WindowsUtils.cpp utils/win32/ShellDispatcherTask.cpp
-}
-
 HEADERS  +=  utils/HTTPServer.h utils/Preferences.h \
     utils/LinkProcessor.h \
     utils/MegaUploader.h \
@@ -25,9 +21,7 @@ HEADERS  +=  utils/HTTPServer.h utils/Preferences.h \
     utils/EncryptedSettings.h
 
 win32 {
+    SOURCES += utils/win32/WindowsUtils.cpp utils/win32/ShellDispatcherTask.cpp
     HEADERS  += utils/win32/WindowsUtils.h utils/win32/ShellDispatcherTask.h
-}
-
-win32 {
     LIBS += -lole32 -lShell32 -lcrypt32
 }
