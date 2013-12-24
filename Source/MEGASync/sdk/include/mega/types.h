@@ -22,9 +22,8 @@
 #ifndef MEGA_TYPES_H
 #define MEGA_TYPES_H 1
 
-#include "megasys.h"
-
 // FIXME: #define PRI*64 is missing
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
 #include <iostream>
@@ -36,6 +35,8 @@
 #include <iterator>
 #include <queue>
 #include <list>
+
+#include "megasys.h"
 
 typedef int64_t m_off_t;
 
@@ -193,9 +194,13 @@ typedef map<pair<handle,fatype>,pair<handle,int> > fa_map;
 
 typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate;
 
+typedef enum { SYNCREMOTENOTSET = -1, SYNCREMOTEAFFECTED = 0, SYNCREMOTEDELETED, SYNCREMOTENUM } syncremote;
+
 typedef vector<LocalNode*> localnode_vector;
 
 typedef map<handle,LocalNode*> handlelocalnode_map;
+
+typedef list<LocalNode*> localnode_list;
 
 typedef set<LocalNode*> localnode_set;
 

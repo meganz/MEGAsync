@@ -448,7 +448,6 @@ bool Node::setparent(Node* p)
 	if (parent) parent->children.erase(child_it);
 
 	parent = p;
-    parenthandle = p->nodehandle;
 
 	child_it = parent->children.insert(parent->children.end(),this);
 
@@ -466,6 +465,14 @@ bool Node::isbelow(Node* p) const
 		if (n == p) return true;
 		n = n->parent;
 	}
+}
+
+// enqueue in master queue for a class of remote operations
+void LocalNode::enqremote(syncremote r)
+{
+	if (remoteq >= SYNCREMOTEAFFECTED) sync->client->syncremoteq[r].erase(remoteq_it);
+
+	if (r >= SYNCREMOTEAFFECTED) remoteq_it = sync->client->syncremoteq[r].insert(sync->client->syncremoteq[r].end(),this);
 }
 
 // set, change or remove LocalNode's parent and name/localname/slocalname.
@@ -540,11 +547,12 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	parent = NULL;
 	node = NULL;
 	notseen = 0;
+	remoteq = SYNCREMOTENOTSET;
 
 	type = ctype;
 	syncid = sync->client->nextsyncid();
 
-	if (cparent) setnameparent(cparent,clocalpath);
+	if (cparent) setnameparent(cparent,cfullpath);
 	else localname = *cfullpath;
 
 	scanseqno = sync->scanseqno;
@@ -620,6 +628,9 @@ LocalNode::~LocalNode()
 	// remove parent association
 	if (parent) setnameparent(NULL,NULL);
 
+	// remove from remoteq
+	enqremote(SYNCREMOTENOTSET);
+	
 	for (localnode_map::iterator it = children.begin(); it != children.end(); ) delete it++->second;
 
 	if (node)

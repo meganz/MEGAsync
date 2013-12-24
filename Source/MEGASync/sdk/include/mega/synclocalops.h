@@ -19,6 +19,7 @@
  * program.
  */
 
+#if 0
 #ifndef MEGA_LOCALSYNCOPS_H
 #define MEGA_LOCALSYNCOPS_H 1
 
@@ -46,4 +47,5 @@ public:
 
 } // namespace
 
+#endif
 #endif

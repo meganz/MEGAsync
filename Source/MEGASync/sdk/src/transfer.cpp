@@ -50,6 +50,7 @@ void Transfer::failed(error e)
 	bool defer = false;
 
 	bt.backoff(client->waiter->ds);
+
 	client->app->transfer_failed(this,e);
 
 	for (file_list::iterator it = files.begin(); it != files.end(); it++) if ((*it)->failed(e) && !defer) defer = true;

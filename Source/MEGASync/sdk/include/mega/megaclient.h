@@ -400,19 +400,17 @@ public:
 	// stuck flag (because of local filesystem locks preventing syncing from progressing)
 	bool syncstuck;
 	
-	// a local fs op has failed with a transient error
-	bool synclocalopretry;
-	BackoffTimer synclocalopretrybt;
-
-	// pending local filesystem operations
-	synclocalop_deque synclocalops;
-
-	// retry accessing locked filesystem items
-	BackoffTimer scanretrybt;
+	// retry accessing temporarily locked filesystem items
+	bool syncfslockretry;
+	BackoffTimer syncfslockretrybt;
 	
-	// execute synclocalops, abort if a transient FS error is detected
-	void execsynclocalops();
-	
+	// remote ops affecting a LocalNode
+	localnode_list syncremoteq[SYNCREMOTENUM];
+	BackoffTimer syncremoteretrybt;
+
+	// enqueue syncdown() operation of type AFFECTED or DELETED
+	void syncremoteadd(syncremote, LocalNode*);
+
 	// rescan timer if fs notification unavailable or broken
 	bool syncscanfailed;
 	BackoffTimer syncscanbt;
@@ -458,7 +456,7 @@ public:
 	void putnodes_sync_result(error, NewNode*);
 
 	// start downloading/copy missing files, create missing directories
-	void syncdown(LocalNode*, string* = NULL);
+	void syncdown(LocalNode*, string*, bool);
 
 	// move node to //bin/SyncDebris/yyyy-mm-dd/
 	void movetosyncdebris(Node*);
