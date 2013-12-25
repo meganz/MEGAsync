@@ -310,48 +310,18 @@ void InfoDialog::timerUpdate()
 
 void InfoDialog::addSync()
 {
-    BindFolderDialog *dialog = new BindFolderDialog(this);
+    BindFolderDialog *dialog = new BindFolderDialog(app, this);
     int result = dialog->exec();
     if(result != QDialog::Accepted)
         return;
 
-   QString localFolderPath = dialog->getLocalFolder();
-   if(!Utils::verifySyncedFolderLimits(localFolderPath))
-   {
-       QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (+%1 folders or +%2 files).\n"
-            "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
-            .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER), QMessageBox::Ok);
-       return;
-   }
-
-   MegaApi *megaApi = app->getMegaApi();
-   long long handle = dialog->getMegaFolder();
-   Node *node = megaApi->getNodeByHandle(handle);
-   if(!localFolderPath.length() || !node)
-       return;
-
-   bool repeated;
-   QString syncName = QFileInfo(localFolderPath).fileName();
-   do {
-       repeated = false;
-       for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-       {
-           if(!syncName.compare(preferences->getSyncName(i)))
-           {
-                repeated = true;
-
-                bool ok;
-                QString text = QInputDialog::getText(this, tr("Sync name"),
-                     tr("The name \"%1\" is already in use for another sync.\n"
-                     "Please, enter another name to identify this synced folder:").arg(syncName),
-                     QLineEdit::Normal, syncName, &ok).trimmed();
-                if (!ok && text.isEmpty())
-                    return;
-
-                syncName = text;
-           }
-       }
-   }while(repeated);
+    QString localFolderPath = QDir(dialog->getLocalFolder()).canonicalPath();
+    MegaApi *megaApi = app->getMegaApi();
+    long long handle = dialog->getMegaFolder();
+    Node *node = megaApi->getNodeByHandle(handle);
+    QString syncName = dialog->getSyncName();
+    if(!localFolderPath.length() || !node)
+        return;
 
    Preferences *preferences = app->getPreferences();
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
