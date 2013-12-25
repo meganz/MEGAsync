@@ -512,11 +512,14 @@ void LocalNode::setnameparent(LocalNode* newparent, string* newlocalpath)
 			name = localname;
 			sync->client->fsaccess->local2name(&name);
 
-			if (!newnode && node)
+			if (node)
 			{
-				// set new name
-				node->attrs.map['n'] = name;
-				sync->client->setattr(node);
+				if (name != node->attrs.map['n'])
+				{
+					// set new name
+					node->attrs.map['n'] = name;
+					sync->client->setattr(node);
+				}
 			}
 		}
 	}
