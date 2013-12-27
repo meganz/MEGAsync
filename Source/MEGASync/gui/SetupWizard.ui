@@ -660,6 +660,9 @@
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -676,6 +679,9 @@
             <item>
              <widget class="QLineEdit" name="eMegaFolder">
               <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
                <bool>true</bool>
               </property>
              </widget>
