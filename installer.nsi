@@ -57,6 +57,7 @@ var ICONS_GROUP
 ; Uninstaller pages
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
 
 ; Language files
 !insertmacro MUI_LANGUAGE "Afrikaans"
@@ -366,7 +367,7 @@ IntCmp $0 31 wrongdate 0 wrongdate
     Quit
   ${EndSwitch}
   
-  !insertmacro MUI_LANGDLL_DISPLAY
+  !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
 
 Section "Principal" SEC01
@@ -558,12 +559,6 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
 
-
-Function un.onUninstSuccess
-  HideWindow
-  MessageBox MB_ICONINFORMATION|MB_OK "La desinstalación de $(^Name) finalizó satisfactoriamente."
-FunctionEnd
-
 Function un.onInit
 UAC::RunElevated
   ${Switch} $0
@@ -583,8 +578,6 @@ UAC::RunElevated
   ${EndSwitch}
 
 !insertmacro MUI_UNGETLANGUAGE
-;  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "¿Está completamente seguro que desea desinstalar $(^Name) junto con todos sus componentes?" IDYES +2
-;  Abort
 FunctionEnd
 
 Section Uninstall
