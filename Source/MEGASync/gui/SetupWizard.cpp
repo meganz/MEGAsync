@@ -149,12 +149,19 @@ void SetupWizard::on_bNext_clicked()
         QString password = ui->eLoginPassword->text();
         if(email.length()==0)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
             return;
         }
+
+        if(!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+        {
+           QMessageBox::warning(this, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+           return;
+        }
+
         if(password.length()==0)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, enter your password"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
             return;
         }
 
@@ -174,19 +181,31 @@ void SetupWizard::on_bNext_clicked()
 
         if(name.length()==0)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, enter your name"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("Please, enter your name"), QMessageBox::Ok);
             return;
         }
 
         if(email.length()==0)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
             return;
+        }
+
+        if(!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+        {
+           QMessageBox::warning(this, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+           return;
         }
 
         if(password.length()==0)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, enter your password"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            return;
+        }
+
+        if(password.length()<8)
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"), QMessageBox::Ok);
             return;
         }
 
