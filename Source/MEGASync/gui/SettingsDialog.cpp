@@ -287,12 +287,14 @@ void SettingsDialog::saveSettings()
 		{
 			QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
 			QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
+            QString syncName = syncNames.at(i);
 			Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
 			cout << "adding sync: " << localFolderPath.toUtf8().constData() << " - " <<
 					megaFolderPath.toUtf8().constData() << endl;
             preferences->addSyncedFolder(localFolderPath,
                                          megaFolderPath,
-                                         node->nodehandle);
+                                         node->nodehandle,
+                                         syncName);
 		}
 
 		app->reloadSyncs();
@@ -335,6 +337,7 @@ void SettingsDialog::on_bDelete_clicked()
     cout << "Selected index: " << index << endl;
 
 	ui->tSyncs->removeRow(index);
+    syncNames.removeAt(index);
 
 	syncsChanged = true;
 	stateChanged();
@@ -346,6 +349,7 @@ void SettingsDialog::on_bDelete_clicked()
 void SettingsDialog::loadSyncSettings()
 {
     ui->tSyncs->clearContents();
+    syncNames.clear();
 
     ui->tSyncs->horizontalHeader()->setVisible(true);
     int numFolders = preferences->getNumSyncedFolders();
@@ -359,6 +363,7 @@ void SettingsDialog::loadSyncSettings()
         megaFolder->setText(QString::fromAscii("  ") + preferences->getMegaFolder(i) + QString::fromAscii("  "));
         ui->tSyncs->setItem(i, 0, localFolder);
         ui->tSyncs->setItem(i, 1, megaFolder);
+        syncNames.append(preferences->getSyncName(i));
     }
 }
 
@@ -384,6 +389,7 @@ void SettingsDialog::on_bAdd_clicked()
    ui->tSyncs->setRowCount(pos+1);
    ui->tSyncs->setItem(pos, 0, localFolder);
    ui->tSyncs->setItem(pos, 1, megaFolder);
+   syncNames.append(dialog->getSyncName());
 
    syncsChanged = true;
    stateChanged();

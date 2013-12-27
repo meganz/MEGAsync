@@ -67,6 +67,7 @@ private:
     Preferences *preferences;
     MegaApi *megaApi;
 	bool syncsChanged;
+    QStringList syncNames;
 
     void loadSyncSettings();
     void loadSettings();

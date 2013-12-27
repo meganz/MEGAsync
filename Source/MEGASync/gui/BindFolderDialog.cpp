@@ -48,14 +48,13 @@ void BindFolderDialog::on_buttonBox_accepted()
     Preferences *preferences = app->getPreferences();
     for(int i=0; i<preferences->getNumSyncedFolders(); i++)
     {
-        QString c = QDir(preferences->getLocalFolder(i)).canonicalPath();
-        if(localFolderPath.startsWith(c))
+        QString c = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
+        if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QChar::fromAscii('\\'))))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             return;
         }
-
-        if(c.startsWith(localFolderPath))
+        else if(c.startsWith(localFolderPath) && c[localFolderPath.size()]==QChar::fromAscii('\\'))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder contains an already synced folder"), QMessageBox::Ok);
             return;
@@ -66,13 +65,12 @@ void BindFolderDialog::on_buttonBox_accepted()
         {
             QString megaPath = QString::fromUtf8(megaApi->getNodePath(node));
             QString p = QString::fromUtf8(megaApi->getNodePath(n));
-            if(megaPath.startsWith(p))
+            if(megaPath.startsWith(p) && ((p.size() == megaPath.size()) || (megaPath[p.size()]==QChar::fromAscii('/'))))
             {
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 return;
             }
-
-            if(p.startsWith(megaPath))
+            else if(p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/'))
             {
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder contains an already synced folder"), QMessageBox::Ok);
                 return;
