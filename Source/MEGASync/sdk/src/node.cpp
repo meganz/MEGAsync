@@ -689,7 +689,7 @@ LocalNode* LocalNode::childbyname(string* localname)
 
 void LocalNode::prepare()
 {
-	getlocalpath(&transfer->localfilename);
+	getlocalpath(&transfer->localfilename,true);
 }
 
 void LocalNode::completed(Transfer* t, LocalNode*)

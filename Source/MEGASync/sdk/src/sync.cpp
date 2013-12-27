@@ -187,6 +187,7 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 // otherwise, returns NULL
 LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 {
+	LocalNode* ll = l;
 	FileAccess* fa;
 	bool newnode = false, changed = false;
 	bool isroot;
@@ -319,7 +320,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 		if (fa->retry)
 		{
 			// fopen() signals that the failure is potentially transient - do nothing and request a recheck
-			dirnotify->notify(DirNotify::RETRY,l,localpath->data(),localpath->size());
+			dirnotify->notify(DirNotify::RETRY,ll,localpath->data(),localpath->size());
 		}
 		else if (l)
 		{
