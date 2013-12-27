@@ -35,7 +35,11 @@ void FolderBinder::on_bLocalFolder_clicked()
                                                       QFileDialog::ShowDirsOnly
                                                       | QFileDialog::DontResolveSymlinks);
     if(path.length())
+    {
+        QDir dir(path);
+        if(!dir.exists() && !dir.mkpath(QString::fromAscii("."))) return;
         ui->eLocalFolder->setText(path);
+    }
 }
 
 void FolderBinder::on_bMegaFolder_clicked()

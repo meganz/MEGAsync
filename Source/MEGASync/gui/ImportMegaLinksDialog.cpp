@@ -122,7 +122,11 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 													  QFileDialog::ShowDirsOnly
 													  | QFileDialog::DontResolveSymlinks);
 	if(path.length())
-		ui->eLocalFolder->setText(path);
+    {
+        QDir dir(path);
+        if(!dir.exists() && !dir.mkpath(QString::fromAscii("."))) return;
+        ui->eLocalFolder->setText(path);
+    }
 }
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
