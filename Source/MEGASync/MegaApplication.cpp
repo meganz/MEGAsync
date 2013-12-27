@@ -60,14 +60,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
     preferences->setLastExecutionTime(now);
 
-    //Create GUI elements
-    createActions();
-    createTrayIcon();
-    infoDialog = NULL;
-    setupWizard = NULL;
-    settingsDialog = NULL;
-    uploadFolderSelector = NULL;
-
     //Initialize fields to manage communications and transfers
     delegateListener = new QTMegaListener(this);
     httpServer = NULL;
@@ -83,6 +75,15 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploader = new MegaUploader(megaApi);
     reboot = false;
 
+    //Create GUI elements
+    trayMenu = NULL;
+    trayIcon = new QSystemTrayIcon(this);
+    createActions();
+    infoDialog = NULL;
+    setupWizard = NULL;
+    settingsDialog = NULL;
+    uploadFolderSelector = NULL;
+
     //Apply the "Start on startup" configuration
     Utils::startOnStartup(preferences->startOnStartup());
 
@@ -96,6 +97,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 void MegaApplication::init()
 {
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+    trayIcon->setContextMenu(NULL);
+    trayIcon->show();
+
     //Start the initial setup wizard if needed
     if(!preferences->logged())
     {
@@ -117,7 +122,7 @@ void MegaApplication::init()
 void MegaApplication::loggedIn()
 {    
     //Show the tray icon
-    trayIcon->show();
+    createTrayIcon();
     showNotificationMessage(tr("MEGAsync is running"));
 
     infoDialog = new InfoDialog(this);
@@ -262,6 +267,7 @@ void MegaApplication::rebootApplication()
 
 void MegaApplication::exitApplication()
 {
+    stopSyncs();
     stopUpdateTask();
     Utils::stopShellDispatcher();
     QApplication::exit();
@@ -289,12 +295,8 @@ void MegaApplication::unlink()
     delete httpServer;
     httpServer = NULL;
     stopSyncs();
-    megaApi->logout();
-    trayIcon->hide();
-    delete infoDialog;
-    preferences->unlink();
     Utils::stopShellDispatcher();
-    init();
+    megaApi->logout();
 }  
 
 void MegaApplication::showInfoMessage(QString message, QString title)
@@ -484,6 +486,9 @@ void MegaApplication::onUpdateCompleted()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+    if(megaApi->isLoggedIn() != FULLACCOUNT)
+        return;
+
     if(reason == QSystemTrayIcon::Trigger)
     {
         //If the information dialog is visible, hide it
@@ -548,6 +553,7 @@ void MegaApplication::createActions()
 //This function creates the tray icon
 void MegaApplication::createTrayIcon()
 {
+    if(trayMenu) trayMenu->deleteLater();
     trayMenu = new QMenu();
     trayMenu->addAction(aboutAction);
 	trayMenu->addAction(importLinksAction);
@@ -555,10 +561,10 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
-    trayIcon = new QSystemTrayIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
     trayIcon->setContextMenu(trayMenu);
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));    
 }
 
 //Called when a request is about to start
@@ -606,7 +612,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         if(preferences->logged())
         {
             preferences->unlink();
-            trayIcon->hide();
             delete infoDialog;
             init();
         }
