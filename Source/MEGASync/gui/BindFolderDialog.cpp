@@ -35,7 +35,7 @@ QString BindFolderDialog::getSyncName()
 
 void BindFolderDialog::on_buttonBox_accepted()
 {
-    QString localFolderPath = QDir(ui->wBinder->selectedLocalFolder()).canonicalPath();
+    QString localFolderPath = QDir::toNativeSeparators(QDir(ui->wBinder->selectedLocalFolder()).canonicalPath());
     MegaApi *megaApi = app->getMegaApi();
     long long handle = ui->wBinder->selectedMegaFolder();
     Node *node = megaApi->getNodeByHandle(handle);
