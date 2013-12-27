@@ -1,8 +1,8 @@
 #include "EncryptedSettings.h"
 #include "utils/Utils.h"
 
-EncryptedSettings::EncryptedSettings(QString organizationName, QString applicationName) :
-    QSettings(QSettings::IniFormat, QSettings::UserScope, organizationName, applicationName)
+EncryptedSettings::EncryptedSettings(QString file) :
+    QSettings(file, QSettings::IniFormat)
 {
     QByteArray fixedSeed("$JY/X?o=h·&%v/M(");
     QByteArray localKey = Utils::getLocalStorageKey();
