@@ -4,7 +4,7 @@ RequestExecutionLevel user
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "MEGAsync"
-!define PRODUCT_VERSION "1.0"
+!define PRODUCT_VERSION "1.0 BETA"
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.co.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
@@ -157,7 +157,198 @@ Function RunExplorer
   ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
 FunctionEnd
 
+;----------------------------------------------------------------------------
+; Superseded by     : GetTime function.
+;----------------------------------------------------------------------------
+; Title             : Get Local Time
+; Short Name        : GetLocalTime
+; Last Changed      : 22/Feb/2005
+; Code Type         : Function
+; Code Sub-Type     : One-way Output
+;----------------------------------------------------------------------------
+; Required          : System plugin.
+; Description       : Gets the current local time of the user's computer
+;----------------------------------------------------------------------------
+; Function Call     : Call GetLocalTime
+;
+;                     Pop "$Variable1"
+;                       Day.
+;
+;                     Pop "$Variable2"
+;                       Month.
+;
+;                     Pop "$Variable3"
+;                       Year.
+;
+;                     Pop "$Variable4"
+;                       Day of the week name.
+;
+;                     Pop "$Variable5"
+;                       Hour.
+;
+;                     Pop "$Variable6"
+;                       Minute.
+;
+;                     Pop "$Variable7"
+;                       Second.
+;----------------------------------------------------------------------------
+; Author            : Diego Pedroso
+; Author Reg. Name  : deguix
+;----------------------------------------------------------------------------
+
+Function GetTime
+	!define GetTime `!insertmacro GetTimeCall`
+
+	!macro GetTimeCall _FILE _OPTION _R1 _R2 _R3 _R4 _R5 _R6 _R7
+		Push `${_FILE}`
+		Push `${_OPTION}`
+		Call GetTime
+		Pop ${_R1}
+		Pop ${_R2}
+		Pop ${_R3}
+		Pop ${_R4}
+		Pop ${_R5}
+		Pop ${_R6}
+		Pop ${_R7}
+	!macroend
+
+	Exch $1
+	Exch
+	Exch $0
+	Exch
+	Push $2
+	Push $3
+	Push $4
+	Push $5
+	Push $6
+	Push $7
+	ClearErrors
+
+	StrCmp $1 'L' gettime
+	StrCmp $1 'A' getfile
+	StrCmp $1 'C' getfile
+	StrCmp $1 'M' getfile
+	StrCmp $1 'LS' gettime
+	StrCmp $1 'AS' getfile
+	StrCmp $1 'CS' getfile
+	StrCmp $1 'MS' getfile
+	goto error
+
+	getfile:
+	IfFileExists $0 0 error
+	System::Call /NOUNLOAD '*(i,l,l,l,i,i,i,i,&t260,&t14) i .r6'
+	System::Call /NOUNLOAD 'kernel32::FindFirstFileA(t,i)i(r0,r6) .r2'
+	System::Call /NOUNLOAD 'kernel32::FindClose(i)i(r2)'
+
+	gettime:
+	System::Call /NOUNLOAD '*(&i2,&i2,&i2,&i2,&i2,&i2,&i2,&i2) i .r7'
+	StrCmp $1 'L' 0 systemtime
+	System::Call /NOUNLOAD 'kernel32::GetLocalTime(i)i(r7)'
+	goto convert
+	systemtime:
+	StrCmp $1 'LS' 0 filetime
+	System::Call /NOUNLOAD 'kernel32::GetSystemTime(i)i(r7)'
+	goto convert
+
+	filetime:
+	System::Call /NOUNLOAD '*$6(i,l,l,l,i,i,i,i,&t260,&t14)i(,.r4,.r3,.r2)'
+	System::Free /NOUNLOAD $6
+	StrCmp $1 'A' 0 +3
+	StrCpy $2 $3
+	goto tolocal
+	StrCmp $1 'C' 0 +3
+	StrCpy $2 $4
+	goto tolocal
+	StrCmp $1 'M' tolocal
+
+	StrCmp $1 'AS' tosystem
+	StrCmp $1 'CS' 0 +3
+	StrCpy $3 $4
+	goto tosystem
+	StrCmp $1 'MS' 0 +3
+	StrCpy $3 $2
+	goto tosystem
+
+	tolocal:
+	System::Call /NOUNLOAD 'kernel32::FileTimeToLocalFileTime(*l,*l)i(r2,.r3)'
+	tosystem:
+	System::Call /NOUNLOAD 'kernel32::FileTimeToSystemTime(*l,i)i(r3,r7)'
+
+	convert:
+	System::Call /NOUNLOAD '*$7(&i2,&i2,&i2,&i2,&i2,&i2,&i2,&i2)i(.r5,.r6,.r4,.r0,.r3,.r2,.r1,)'
+	System::Free $7
+
+	IntCmp $0 9 0 0 +2
+	StrCpy $0 '0$0'
+	IntCmp $1 9 0 0 +2
+	StrCpy $1 '0$1'
+	IntCmp $2 9 0 0 +2
+	StrCpy $2 '0$2'
+	IntCmp $6 9 0 0 +2
+	StrCpy $6 '0$6'
+
+	StrCmp $4 0 0 +3
+	StrCpy $4 Sunday
+	goto end
+	StrCmp $4 1 0 +3
+	StrCpy $4 Monday
+	goto end
+	StrCmp $4 2 0 +3
+	StrCpy $4 Tuesday
+	goto end
+	StrCmp $4 3 0 +3
+	StrCpy $4 Wednesday
+	goto end
+	StrCmp $4 4 0 +3
+	StrCpy $4 Thursday
+	goto end
+	StrCmp $4 5 0 +3
+	StrCpy $4 Friday
+	goto end
+	StrCmp $4 6 0 error
+	StrCpy $4 Saturday
+	goto end
+
+	error:
+	SetErrors
+	StrCpy $0 ''
+	StrCpy $1 ''
+	StrCpy $2 ''
+	StrCpy $3 ''
+	StrCpy $4 ''
+	StrCpy $5 ''
+	StrCpy $6 ''
+
+	end:
+	Pop $7
+	Exch $6
+	Exch
+	Exch $5
+	Exch 2
+	Exch $4
+	Exch 3
+	Exch $3
+	Exch 4
+	Exch $2
+	Exch 5
+	Exch $1
+	Exch 6
+	Exch $0
+FunctionEnd
+
 Function .onInit
+
+${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
+
+IntCmp $2 2013 yearok wrongdate wrongdate
+wrongdate:
+MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
+abort
+
+yearok:
+IntCmp $1 12 0 wrongdate wrongdate
+IntCmp $0 31 wrongdate 0 wrongdate
+
   UAC::RunElevated
   ${Switch} $0
   ${Case} 0
@@ -404,13 +595,13 @@ Section Uninstall
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qgif4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qjpeg4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qmng4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qsvg4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qtga4.dll"
-  Delete "${SRCDIR_MEGASYNC_X32}\imageformats\qtiff4.dll"
+  Delete "$INSTDIR\imageformats\qgif4.dll"
+  Delete "$INSTDIR\imageformats\qico4.dll"
+  Delete "$INSTDIR\imageformats\qjpeg4.dll"
+  Delete "$INSTDIR\imageformats\qmng4.dll"
+  Delete "$INSTDIR\imageformats\qsvg4.dll"
+  Delete "$INSTDIR\imageformats\qtga4.dll"
+  Delete "$INSTDIR\imageformats\qtiff4.dll"
   Delete "$INSTDIR\MEGAsync.exe"
 
   ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'

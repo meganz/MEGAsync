@@ -58,6 +58,8 @@ public:
     void setProxyUsername(const QString &value);
     QString getProxyPassword();
     void setProxyPassword(const QString &value);
+    long long lastExecutionTime();
+    void setLastExecutionTime(long long time);
 
 	QString downloadFolder();
 	void setDownloadFolder(QString value);
@@ -159,6 +161,7 @@ protected:
     static const QString fileNameKey;
     static const QString fileHandleKey;
     static const QString localPathKey;
+    static const QString lastExecutionTimeKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

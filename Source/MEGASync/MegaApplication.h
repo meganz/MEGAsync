@@ -64,6 +64,7 @@ public:
     void setUploadLimit(int limit);
     void startUpdateTask();
     void stopUpdateTask();
+    bool expired;
 
 signals:
     void startUpdaterThread();

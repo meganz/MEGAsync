@@ -39,8 +39,9 @@ const QString Preferences::importFolderKey			= QString::fromAscii("importFolder"
 const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
+const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 
-const bool Preferences::defaultShowNotifications    = true;
+const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const int  Preferences::defaultUploadLimitKB        = -1;
@@ -339,7 +340,18 @@ void Preferences::setProxyPassword(const QString &value)
     assert(logged());
 
     settings->setValue(proxyPasswordKey, value);
-	settings->sync();
+    settings->sync();
+}
+
+long long Preferences::lastExecutionTime()
+{
+    return settings->value(lastExecutionTimeKey, 0).toLongLong();
+}
+
+void Preferences::setLastExecutionTime(qint64 time)
+{
+    settings->setValue(lastExecutionTimeKey, time);
+    settings->sync();
 }
 
 QString Preferences::downloadFolder()
@@ -405,7 +417,7 @@ QString Preferences::getLocalFolder(int num)
 {
     assert(logged() && localFolders.size()>num);
 
-    return localFolders.at(num);
+    return QDir::toNativeSeparators(localFolders.at(num));
 }
 
 QString Preferences::getMegaFolder(int num)
@@ -428,7 +440,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long 
 
     if(syncName.isEmpty()) syncName = QFileInfo(localFolder).fileName();
     syncNames.append(syncName);
-    localFolders.append(localFolder);
+    localFolders.append(QDir::toNativeSeparators(localFolder));
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     writeFolders();
