@@ -56,7 +56,7 @@ const int Preferences::NUM_RECENT_ITEMS             = 3;
 
 Preferences::Preferences()
 {
-    settings = new EncryptedSettings(qApp->organizationName(), qApp->applicationName());
+    settings = new EncryptedSettings(QDir::currentPath() + QString::fromAscii("/MEGAsync.cfg"));
     locale = new QLocale();
 
     QString currentAccount = settings->value(currentAccountKey).toString();

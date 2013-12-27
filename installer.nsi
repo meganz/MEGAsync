@@ -582,6 +582,7 @@ FunctionEnd
 
 Section Uninstall
   ExecDos::exec /DETAILED "taskkill /f /IM MEGASync.exe"
+  Sleep 1000
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
@@ -596,6 +597,7 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qtga4.dll"
   Delete "$INSTDIR\imageformats\qtiff4.dll"
   Delete "$INSTDIR\MEGAsync.exe"
+  Delete "$INSTDIR\MEGAsync.cfg"
 
   ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
   ;${If} ${RunningX64}

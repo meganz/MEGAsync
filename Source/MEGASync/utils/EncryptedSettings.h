@@ -11,7 +11,7 @@ class EncryptedSettings : protected QSettings
     Q_OBJECT
 
 public:
-    explicit EncryptedSettings(QString organizationName, QString applicationName);
+    explicit EncryptedSettings(QString file);
 
     void setValue(const QString & key, const QVariant & value);
     QVariant value(const QString & key, const QVariant & defaultValue = QVariant());
