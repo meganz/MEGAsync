@@ -1674,6 +1674,7 @@ void MegaApi::transfer_added(Transfer *t)
 	if(!transfer) transfer = new MegaTransfer(t->type);
 	currentTransfer = NULL;
 	transferMap[t]=transfer;
+    transfer->setTransfer(t);
 	transfer->setTotalBytes(t->size);
 	transfer->setTag(t->tag);
 
@@ -1688,6 +1689,7 @@ void MegaApi::transfer_removed(Transfer *)
 
 void MegaApi::transfer_prepare(Transfer *t)
 {
+    if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
 	string path;
 	fsAccess->local2path(&(t->localfilename), &path);
@@ -1731,8 +1733,8 @@ void MegaApi::transfer_prepare(Transfer *t)
 
 void MegaApi::transfer_update(Transfer *tr)
 {
+    if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
-	if(!transfer) return;
 
 	cout << "transfer_update" << endl;
 	if(tr->slot)
@@ -1756,14 +1758,14 @@ void MegaApi::transfer_update(Transfer *tr)
 
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
-	MegaError megaError(e);
+    if(transferMap.find(tr) == transferMap.end()) return;
+    MegaError megaError(e);
     MegaTransfer* transfer = transferMap.at(tr);
-	if(!transfer) return;
 
 	if(tr->slot) transfer->setTime(tr->slot->lastdata);
 
 	cout << "TD " << transfer->getFileName() << ": Download failed (" << megaError.getErrorString() << ")" << endl;
-	fireOnTransferFinish(this, transfer, megaError);
+    //fireOnTransferFinish(this, transfer, megaError);
 
 	//filename.append(".tmp");
 	//unlink(filename.c_str());
@@ -1784,8 +1786,8 @@ void MegaApi::transfer_limit(Transfer* tr)
 
 void MegaApi::transfer_complete(Transfer* tr)
 {
+    if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
-	if(!transfer) return;
 
 	if(tr->slot)
 	{
@@ -1941,16 +1943,12 @@ void MegaApi::syncupdate_remote_move(string *a, string *b)
 
 bool MegaApi::sync_syncable(Node *node)
 {
-	QString name = QString::fromUtf8(node->displayname());
-    if(!name.compare(QString::fromAscii("Thumbs.db"))) return false;
-	return true;
+    return is_syncable(node->displayname());
 }
 
-bool MegaApi::sync_syncable(const char *fileName, string *, string *)
+bool MegaApi::sync_syncable(const char *name, string *, string *)
 {
-	QString name = QString::fromUtf8(fileName);
-    if(!name.compare(QString::fromAscii("Thumbs.db"))) return false;
-	return true;
+    return is_syncable(name);
 }
 
 
@@ -3424,7 +3422,12 @@ void MegaApi::sendPendingTransfers()
 			client->restag = nextTag;
 			fireOnTransferFinish(this, transfer, MegaError(e));
 		}
-	}
+    }
+}
+
+bool MegaApi::is_syncable(const char *name)
+{
+    return *name != '.' && *name != '~' && strcmp(name,"Thumbs.db") && strcmp(name,"desktop.ini");
 }
 
 

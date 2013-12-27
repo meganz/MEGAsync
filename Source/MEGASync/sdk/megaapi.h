@@ -950,7 +950,7 @@ protected:
 	virtual void syncupdate_remote_move(string*, string*);
 
 	virtual bool sync_syncable(Node*);
-	virtual bool sync_syncable(const char*, string*, string*);
+    virtual bool sync_syncable(const char*name, string*, string*);
 
     // suggest reload due to possible race condition with other clients
 	virtual void reload(const char*);
@@ -967,6 +967,7 @@ protected:
 	
 	void sendPendingRequests();
 	void sendPendingTransfers();
+    bool is_syncable(const char* name);
 	char *stringToArray(string &buffer);
 };
 
