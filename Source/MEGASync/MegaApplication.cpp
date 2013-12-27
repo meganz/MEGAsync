@@ -18,12 +18,15 @@ int main(int argc, char *argv[])
         return 0;
 
     MegaApplication app(argc, argv);
+    if(app.expired)
+        return 0;
     return app.exec();
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+    expired = false;
     setQuitOnLastWindowClosed(false);
 
     //Hack to have tooltips with a black background
@@ -42,6 +45,21 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
 	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
+    preferences = new Preferences();
+    QDate betaLimit(2013, 12, 31);
+    long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    long long previousTime = preferences->lastExecutionTime();
+    long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
+    if((now<previousTime) || (now > betaLimitTime))
+    {
+        QMessageBox::information(NULL, tr("MEGAsync BETA"), tr("Thank you for testing MEGAsync.<br>"
+           "This beta version is no longer current and has expired.<br>"
+           "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
+        expired = true;
+        return;
+    }
+    preferences->setLastExecutionTime(now);
+
     //Create GUI elements
     createActions();
     createTrayIcon();
@@ -49,7 +67,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setupWizard = NULL;
     settingsDialog = NULL;
     uploadFolderSelector = NULL;
-    preferences = new Preferences();
 
     //Initialize fields to manage communications and transfers
     delegateListener = new QTMegaListener(this);
@@ -273,6 +290,11 @@ void MegaApplication::unlink()
     httpServer = NULL;
     stopSyncs();
     megaApi->logout();
+    trayIcon->hide();
+    delete infoDialog;
+    preferences->unlink();
+    Utils::stopShellDispatcher();
+    init();
 }  
 
 void MegaApplication::showInfoMessage(QString message, QString title)
