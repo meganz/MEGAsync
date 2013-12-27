@@ -720,7 +720,7 @@ public:
 	void confirmAccount(const char* link, const char *password, MegaRequestListener *listener = NULL);
 	void fastConfirmAccount(const char* link, const char *base64pwkey, MegaRequestListener *listener = NULL);
 
-	bool isLoggedIn();
+    int isLoggedIn();
 	const char* getMyEmail();
 	
     void createFolder(const char* name, Node* parent, MegaRequestListener *listener = NULL);

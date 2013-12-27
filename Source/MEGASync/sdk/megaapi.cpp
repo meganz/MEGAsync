@@ -937,10 +937,10 @@ MegaApi::~MegaApi()
     MUTEX_DELETE(sdkMutex);
 }
 
-bool MegaApi::isLoggedIn()
+int MegaApi::isLoggedIn()
 {
     MUTEX_LOCK(sdkMutex);
-	bool result = client->loggedin();
+    int result = client->loggedin();
     MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
