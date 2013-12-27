@@ -509,7 +509,7 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
                 return S_OK;        //not for a menu
 
             DrawIconEx(lpdis->hDC,
-                lpdis->rcItem.left,
+                lpdis->rcItem.left-16,
                 lpdis->rcItem.top + (lpdis->rcItem.bottom - lpdis->rcItem.top - 16) / 2,
                 hIcon, 16, 16,
                 0, NULL, DI_NORMAL);
