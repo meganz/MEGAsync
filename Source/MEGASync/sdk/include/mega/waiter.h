@@ -26,7 +26,7 @@
 
 namespace mega {
 
-// interface enabling class to add its wakeup criteria to the waiter
+// interface enabling a class to add its wakeup criteria to the waiter
 struct EventTrigger
 {
 	// add wakeup criterion

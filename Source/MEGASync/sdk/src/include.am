@@ -39,7 +39,6 @@ src_libmega_la_SOURCES += src/serialize64.cpp
 src_libmega_la_SOURCES += src/share.cpp
 src_libmega_la_SOURCES += src/sharenodekeys.cpp
 src_libmega_la_SOURCES += src/sync.cpp
-src_libmega_la_SOURCES += src/synclocalops.cpp
 src_libmega_la_SOURCES += src/transfer.cpp
 src_libmega_la_SOURCES += src/transferslot.cpp
 src_libmega_la_SOURCES += src/treeproc.cpp

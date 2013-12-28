@@ -19,7 +19,8 @@
  * program.
  */
 
-#include "mega/commands.h"
+#include "mega/types.h"
+#include "mega/command.h"
 #include "mega/megaapp.h"
 #include "mega/fileattributefetch.h"
 #include "mega/base64.h"

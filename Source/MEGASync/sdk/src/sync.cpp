@@ -203,6 +203,8 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 		isroot = false;
 		parent = l;
 		l = NULL;
+		
+		client->fsaccess->local2path(localpath,&path);
 	}
 	else
 	{
