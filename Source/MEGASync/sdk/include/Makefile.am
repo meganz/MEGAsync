@@ -9,7 +9,6 @@ nobase_libmegainclude_HEADERS = \
 	mega/config.h \
 	mega/console.h \
 	mega/command.h \
-	mega/commands.h \
 	mega/db.h \
 	mega/fileattributefetch.h \
 	mega/filefingerprint.h \
@@ -26,7 +25,6 @@ nobase_libmegainclude_HEADERS = \
 	mega/share.h \
 	mega/sharenodekeys.h \
 	mega/sync.h \
-	mega/synclocalops.h \
 	mega/transfer.h \
 	mega/transferslot.h \
 	mega/treeproc.h \

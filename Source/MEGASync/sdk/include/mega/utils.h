@@ -26,8 +26,7 @@
 
 namespace mega {
 
-// convert
-// XXX: endianness
+// convert 2...8 character ID to int64 integer (endian agnostic)
 #define MAKENAMEID2(a,b) (nameid)(((a)<<8)+(b))
 #define MAKENAMEID3(a,b,c) (nameid)(((a)<<16)+((b)<<8)+(c))
 #define MAKENAMEID4(a,b,c,d) (nameid)(((a)<<24)+((b)<<16)+((c)<<8)+(d))
@@ -35,7 +34,6 @@ namespace mega {
 #define MAKENAMEID6(a,b,c,d,e,f) (nameid)((((uint64_t)a)<<40)+(((uint64_t)b)<<32)+((c)<<24)+((d)<<16)+((e)<<8)+(f))
 #define MAKENAMEID7(a,b,c,d,e,f,g) (nameid)((((uint64_t)a)<<48)+(((uint64_t)b)<<40)+(((uint64_t)c)<<32)+((d)<<24)+((e)<<16)+((f)<<8)+(g))
 #define MAKENAMEID8(a,b,c,d,e,f,g,h) (nameid)((((uint64_t)a)<<56)+(((uint64_t)b)<<48)+(((uint64_t)c)<<40)+(((uint64_t)d)<<32)+((e)<<24)+((f)<<16)+((g)<<8)+(h))
-
 
 struct ChunkedHash
 {
@@ -45,14 +43,12 @@ struct ChunkedHash
 	static m_off_t chunkceil(m_off_t);
 };
 
-
 // padded CBC encryption
 struct PaddedCBC
 {
 	static void encrypt(string*, SymmCipher*);
 	static bool decrypt(string*, SymmCipher*);
 };
-
 
 class HashSignature
 {

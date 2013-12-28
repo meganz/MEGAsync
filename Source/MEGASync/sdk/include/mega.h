@@ -48,7 +48,6 @@
 #include "mega/serialize64.h"
 #include "mega/share.h"
 #include "mega/sharenodekeys.h"
-#include "mega/synclocalops.h"
 #include "mega/treeproc.h"
 #include "mega/user.h"
 #include "mega/utils.h"
@@ -58,7 +57,6 @@
 #include "mega/sync.h"
 #include "mega/transfer.h"
 #include "mega/transferslot.h"
-#include "mega/commands.h"
 #include "mega/megaapp.h"
 #include "mega/megaclient.h"
 
