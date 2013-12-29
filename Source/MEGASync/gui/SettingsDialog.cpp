@@ -14,6 +14,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = app->getPreferences();

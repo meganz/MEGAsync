@@ -337,7 +337,7 @@ border: none;</string>
           </font>
          </property>
          <property name="text">
-          <string>MEGA sync is up to date</string>
+          <string>MEGAsync is up to date</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

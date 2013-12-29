@@ -275,12 +275,12 @@ void InfoDialog::setPaused(bool paused)
     overlay->setVisible(paused);
     if(ui->bPause->isChecked())
     {
-        ui->lSyncUpdated->setText(tr("MEGA sync is paused"));
+        ui->lSyncUpdated->setText(tr("MEGAsync is paused"));
         setTransferSpeeds(-1, -1);
     }
     else
     {
-        ui->lSyncUpdated->setText(tr("MEGA sync is up to date"));
+        ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
     }
 }
 
