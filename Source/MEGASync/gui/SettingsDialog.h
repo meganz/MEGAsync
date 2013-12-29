@@ -60,6 +60,7 @@ private slots:
 
     void on_bUnlink_clicked();
 
+    void on_tSyncs_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::SettingsDialog *ui;

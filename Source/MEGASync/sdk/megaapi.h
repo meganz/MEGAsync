@@ -778,7 +778,8 @@ public:
 	const char *getAccess(Node* node);
 	bool processTree(Node* node, TreeProcessor* processor, bool recursive = 1);
 	NodeList* search(Node* node, const char* searchString, bool recursive = 1);
-	
+    static const char *getBase64Handle(Node *node);
+
 	MegaError checkAccess(Node* node, const char *level);
 	MegaError checkMove(Node* node, Node* target);
 	
