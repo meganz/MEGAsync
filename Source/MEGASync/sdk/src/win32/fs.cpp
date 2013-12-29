@@ -448,7 +448,12 @@ VOID CALLBACK WinDirNotify::completion(DWORD dwErrorCode, DWORD dwBytes, LPOVERL
 
 void WinDirNotify::process(DWORD dwBytes)
 {
-	if (!dwBytes) readchanges();	// Windows sometimes passes empty notifications - simply restart
+	if (!dwBytes)
+	{
+		// empty notification: re-read all trees
+		readchanges();
+		error = true;
+	}
 	else
 	{
 		assert(dwBytes >= offsetof(FILE_NOTIFY_INFORMATION,FileName)+sizeof(wchar_t));
@@ -491,11 +496,11 @@ WinDirNotify::WinDirNotify(string* localbasepath) : DirNotify(localbasepath)
 	overlapped.hEvent = this;
 
 	active = 0;
-	notifybuf[0].resize(32768);
-	notifybuf[1].resize(32768);
+	notifybuf[0].resize(65534);
+	notifybuf[1].resize(65534);
 
 	localbasepath->append("",1);
-	if ((hDirectory = CreateFileW((LPCWSTR)localbasepath->data(),FILE_LIST_DIRECTORY,FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL)) != INVALID_HANDLE_VALUE) readchanges();
+	if ((hDirectory = CreateFileW((LPCWSTR)localbasepath->data(),FILE_LIST_DIRECTORY,FILE_SHARE_READ | FILE_SHARE_WRITE,NULL,OPEN_EXISTING,FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,NULL)) != INVALID_HANDLE_VALUE) readchanges();
 	localbasepath->resize(localbasepath->size()-1);
 }
 
