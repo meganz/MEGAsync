@@ -302,9 +302,8 @@ void MegaClient::init()
 
 MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k)
 {
-    reqtag = 0;
 	sctable = NULL;
-
+    reqtag = 0;
 	init();
 
 	app = a;
@@ -3468,11 +3467,11 @@ void MegaClient::stopxfers(LocalNode* l)
 // * attempt to execute renames, moves and deletions (deletions require rubbish == true)
 void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 {
+	// only use for LocalNodes with a corresponding and properly linked Node
+	if (l->type != FOLDERNODE || !l->node || l->node->parent->localnode != l->parent) return;
+
 	remotenode_map nchildren;
 	remotenode_map::iterator rit;
-
-	// only use for LocalNodes with a corresponding and properly linked Node
-	assert(l->type == FOLDERNODE && l->node && l->node->parent->localnode == l->parent);
 
 	// build array of sync-relevant (in case of clashes, the newest alias wins) remote children by name
 	attr_map::iterator ait;
