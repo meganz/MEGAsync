@@ -3451,6 +3451,14 @@ handle MegaClient::nextsyncid()
 	return currsyncid;
 }
 
+// recursively stop all transfers
+void MegaClient::stopxfers(LocalNode* l)
+{
+	if (l->type != FILENODE) for (localnode_map::iterator it = l->children.begin(); it != l->children.end(); it++) stopxfers(it->second);
+
+	stopxfer(l);
+}
+
 // downward sync - recursively scan for tree differences and execute them locally
 // this is first called after the local node tree is complete
 // actions taken:
@@ -3496,7 +3504,14 @@ void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 		// do we have a corresponding remote child?
 		if (rit == nchildren.end())
 		{
-			if (rubbish && !fsaccess->rubbishlocal(localpath) && fsaccess->transient_error) l->enqremote(SYNCREMOTEDELETED);
+			if (rubbish)
+			{
+				// recursively cancel all dangling transfers before deletion
+				stopxfers(lit->second);
+
+				// attempt deletion and re-queue for retry in case of a transient failure
+				if (!fsaccess->rubbishlocal(localpath) && fsaccess->transient_error) l->enqremote(SYNCREMOTEDELETED);
+			}
 		}
 		else
 		{

@@ -461,6 +461,9 @@ public:
 	// move node to //bin/SyncDebris/yyyy-mm-dd/
 	void movetosyncdebris(Node*);
 
+	// recursively cancel transfers in a subtree
+	void stopxfers(LocalNode*);
+
 	// determine if all transfer slots are full
 	bool slotavail();
 
