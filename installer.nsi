@@ -337,18 +337,112 @@ Function GetTime
 	Exch $0
 FunctionEnd
 
+Function IsLeapYear
+  Pop $0
+  IntOp $1 $0 % 4
+  IntCmp $1 0 test2
+  Goto ko
+  test2:
+    IntOp $1 $0 % 100
+    IntCmp $1 0 test3
+    Goto ok
+  test3:
+    IntOp $1 $0 % 400
+    IntCmp $1 0 ok
+    Goto ko
+  ok:
+    Push 1
+    Goto end
+  ko:
+    Push 0
+  end:
+FunctionEnd
+
+Function DaysInMonth
+  Pop $0 ;annee
+  Pop $1 ;mois
+
+  IntCmp $1 1 m31
+  IntCmp $1 2 m28
+  IntCmp $1 3 m31
+  IntCmp $1 4 m30
+  IntCmp $1 5 m31
+  IntCmp $1 6 m30
+  IntCmp $1 7 m31
+  IntCmp $1 8 m31
+  IntCmp $1 9 m30
+  IntCmp $1 10 m31
+  IntCmp $1 11 m30
+  IntCmp $1 12 m31
+
+  m31:
+    Push 31
+    Goto end
+  m30:
+    Push 30
+    Goto end
+  m28:
+    Push $0
+    Call IsLeapYear
+    Pop $0
+    IntCmp $0 1 m29
+      Push 28
+      Goto end
+    m29:
+     Push 29
+  end:
+FunctionEnd
+
+Function Date2Serial
+  Pop $R0 ;year
+  Pop $R1 ;month
+  Pop $R2 ;day
+  IntOp $R3 0 + 1
+  Loop:
+    IntCmp $R1 $R3 OutLoop
+    Push $R3
+    Push $R0
+    Call DaysInMonth
+    Pop $R4
+    IntOp $R2 $R2 + $R4
+    IntOp $R3 $R3 + 1
+    Goto Loop
+  OutLoop:
+    IntOp $R3 $R0 - 1
+    IntOp $R5 $R3 * 365
+    IntOp $R6 $R3 / 4
+    IntOp $R5 $R5 + $R6
+    IntOp $R6 $R3 / 100
+    IntOp $R5 $R5 - $R6
+    IntOp $R6 $R3 / 400
+    IntOp $R5 $R5 + $R6
+    IntOp $R5 $R5 + $R2
+    IntOp $R5 $R5 - 693594
+    Push $R5
+FunctionEnd
+
 Function .onInit
 
 ${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
 
-IntCmp $2 2013 yearok wrongdate wrongdate
+Push $0          
+Push $1        
+Push $2         
+Call Date2Serial
+Pop $4
+
+Push "03"
+Push "01"
+Push "2014"
+Call Date2Serial
+Pop $5
+
+IntCmp $4 $5 wrongdate dateok dateok
 wrongdate:
 MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
 abort
 
-yearok:
-IntCmp $1 12 0 wrongdate wrongdate
-IntCmp $0 31 wrongdate 0 wrongdate
+dateok:
 
   UAC::RunElevated
   ${Switch} $0
@@ -366,6 +460,8 @@ IntCmp $0 31 wrongdate 0 wrongdate
     MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This installer requires Administrator privileges. Error $0"
     Quit
   ${EndSwitch}
+  
+MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "This is a private BETA version and will expire on Jan 3, 2014.$\r$\nIf you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Bear in mind that Windows filenames are case insensitive. Do not place items in the same MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n1. Concurrent creation of identically named files and folders on different clients can result in server-side dupes.$\r$\n2. No in-place versioning. Deleted remote files can be found inyour rubbish bin in the SyncDebris folder, deleted local files in the client machine's recycle bin.$\r$\n3. No delta writes. Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing. Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit."
   
   !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd

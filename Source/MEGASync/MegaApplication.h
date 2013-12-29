@@ -122,8 +122,10 @@ protected:
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
 
-    QThread updateThread;
-    UpdateTask updateTask;
+    //TODO: Enable autoUpdate again in the next release
+    //QThread updateThread;
+    //UpdateTask updateTask;
+
     bool reboot;
     bool syncActive;
     bool paused;

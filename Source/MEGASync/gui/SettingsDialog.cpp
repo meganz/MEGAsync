@@ -183,7 +183,10 @@ void SettingsDialog::loadSettings()
 {
     //General
     ui->cShowNotifications->setChecked(preferences->showNotifications());
-    ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+
+    //TODO: Enable autoUpdate again in the next release
+    //ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+
     ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
     //Account
@@ -265,14 +268,14 @@ void SettingsDialog::saveSettings()
     //General
     preferences->setShowNotifications(ui->cShowNotifications->isChecked());
 
-    bool updateAutomatically = ui->cAutoUpdate->isChecked();
-    if(updateAutomatically != preferences->updateAutomatically())
-    {
-        if(updateAutomatically) app->startUpdateTask();
-        else app->stopUpdateTask();
-    }
-
-    preferences->setUpdateAutomatically(updateAutomatically);
+    //TODO: Enable autoUpdate again in the next release
+    //bool updateAutomatically = ui->cAutoUpdate->isChecked();
+    //if(updateAutomatically != preferences->updateAutomatically())
+    //{
+    //    if(updateAutomatically) app->startUpdateTask();
+    //    else app->stopUpdateTask();
+    //}
+    //preferences->setUpdateAutomatically(updateAutomatically);
 
     bool startOnStartup = ui->cStartOnStartup->isChecked();
     Utils::startOnStartup(startOnStartup);
