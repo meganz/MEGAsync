@@ -38,7 +38,10 @@ void RecentFile::updateWidget()
 
 	if(fileName.compare(ui->lFileName->text()))
 	{
-		ui->lFileName->setText(fileName);
+        QFont f = ui->lFileName->font();
+        QFontMetrics fm = QFontMetrics(f);
+        ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+
         QImage image = Utils::createThumbnail(localPath, 120);
         if(!image.isNull())
             ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
