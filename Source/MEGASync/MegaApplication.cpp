@@ -818,7 +818,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         if(!node->tag && !node->removed && !node->syncdeleted)
             externalNodes++;
 
-        if(!node->removed && node->tag && !node->syncdeleted && (node->type==FILENODE))
+        if(!node->removed && node->tag && !node->syncdeleted)
 		{
             //If the node has been modified by a local operation...
 
@@ -846,26 +846,20 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 				localPath = QString::fromWCharArray((const wchar_t *)path.data());
 				cout << "Sync path: " << localPath.toStdString() << endl;
 			}
-			else if(uploadLocalPaths.contains(node->tag))
+            else if((node->type==FILENODE) && uploadLocalPaths.contains(node->tag))
 			{
                 //If the node has been uploaded by a regular upload,
                 //we recover the path using the tag of the transfer
 				localPath = uploadLocalPaths.value(node->tag);
                 //uploadLocalPaths.remove(node->tag);
 				cout << "Local upload: " << localPath.toStdString() << endl;
-                if(node->type != FILENODE) cout << "BAD FOLDER1" << endl;
 			}
-            else
-            {
-                if(node->type == FILENODE) cout << "BAD FOLDER2" << endl;
-                cout << "TAG " << node->tag << " NOT FOUND" << endl;
-            }
 
             //If we have the local path, notify the state change in the local file
 			if(!localPath.isNull()) WindowsUtils::notifyItemChange(localPath);
 
             //If the new node is a file, add it to the "recently updated" list
-            infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
+            if((node->type==FILENODE)) infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
 		}
 	}
 
