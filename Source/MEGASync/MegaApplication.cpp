@@ -98,7 +98,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 void MegaApplication::init()
 {
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
     trayIcon->setContextMenu(NULL);
     trayIcon->show();
 
@@ -564,7 +564,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(exitAction);
 
     trayIcon->setContextMenu(trayMenu);
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));    
 }
@@ -668,7 +668,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
             if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-            else trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
+            else trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         }
     }
     default:
@@ -914,7 +914,7 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 
 void MegaApplication::showSyncedIcon()
 {
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
 	trayMenu->removeAction(resumeAction);
 	trayMenu->insertAction(importLinksAction, pauseAction);
 }

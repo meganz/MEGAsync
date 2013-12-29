@@ -359,7 +359,7 @@ void InfoDialog::on_bSyncFolder_clicked()
     for(int i=0; i<num; i++)
     {
         QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
-        action->setIcon(QIcon(QString::fromAscii("://images/small_folder.png")));
+        action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
         signalMapper.setMapping(action, preferences->getLocalFolder(i));
         connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
     }
