@@ -142,6 +142,9 @@ color: rgb(51, 51, 51)
        <height>50</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Get MEGA link</string>
+     </property>
      <property name="text">
       <string/>
      </property>
