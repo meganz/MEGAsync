@@ -99,6 +99,8 @@ border-right: 1px solid rgb(100, 100, 100);
 #sActiveTransfers
 {
 border: 0px;
+margin-left: 1px;
+margin-right: 1px;
 padding: 0px;
 }
 
@@ -282,7 +284,7 @@ color: rgb(102, 102, 102);
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <layout class="QGridLayout" name="gridLayout">
@@ -303,7 +305,7 @@ color: rgb(102, 102, 102);
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>90</height>
+           <height>95</height>
           </size>
          </property>
          <property name="text">
@@ -314,6 +316,9 @@ color: rgb(102, 102, 102);
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+         </property>
+         <property name="margin">
+          <number>3</number>
          </property>
         </widget>
        </item>

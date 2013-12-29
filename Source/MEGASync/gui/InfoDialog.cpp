@@ -61,7 +61,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
-    ui->bPause->hide();
 
     //Initialize the "recently updated" list with stored values
     preferences = app->getPreferences();
@@ -88,12 +87,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
-    overlay = new QPushButton(ui->wTransfers);
+    overlay = new QPushButton(this);
     overlay->setIcon(QPixmap(QString::fromAscii("://images/tray_paused_large_ico.png")));
     overlay->setIconSize(QSize(64, 64));
     //overlay->setAlignment(Qt::AlignCenter);
-    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(255, 255, 255, 200); border: none;"));
+    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(255, 255, 255, 200);"
+                                              "border: none; "
+                                              "margin-left: 4px; "
+                                              "margin-right: 4px; "));
+
     overlay->resize(ui->wTransfers->minimumSize());
+    overlay->move(1, 60);
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 }
@@ -161,11 +165,10 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	{
 		QString pattern(tr("%1 of %2"));
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-        if(downloadSpeed)
-        {
-            if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
-            else downloadString += tr(" (paused)");
-        }
+
+        if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
+        else downloadString += tr(" (paused)");
+
         ui->lDownloads->setText(downloadString);
 		ui->bDownloads->show();
 	}
@@ -179,11 +182,10 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 	{
 		QString pattern(tr("%1 of %2"));
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-        if(uploadSpeed)
-        {
-            if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
-            else uploadString += tr(" (paused)");
-        }
+
+        if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
+        else uploadString += tr(" (paused)");
+
         ui->lUploads->setText(uploadString);
 		ui->bUploads->show();
 	}
@@ -198,12 +200,7 @@ void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int rema
 		showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 
 	if(!remainingDownloads && !remainingUploads)
-    {
-        ui->bPause->setChecked(false);
-        ui->bPause->hide();
         this->startAnimation();
-    }
-    else ui->bPause->show();
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
@@ -215,11 +212,10 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	{
 		QString pattern(tr("%1 of %2"));
 		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-        if(downloadSpeed)
-        {
-            if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
-            else downloadString += tr(" (paused)");
-        }
+
+        if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
+        else downloadString += tr(" (paused)");
+
 		ui->lDownloads->setText(downloadString);
 		ui->bDownloads->show();
 	}
@@ -233,11 +229,10 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 	{
 		QString pattern(tr("%1 of %2"));
 		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-        if(uploadSpeed)
-        {
-            if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
-            else uploadString += tr(" (paused)");
-        }
+
+        if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
+        else uploadString += tr(" (paused)");
+
 		ui->lUploads->setText(uploadString);
 		ui->bUploads->show();
 	}
@@ -275,10 +270,18 @@ void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long tot
 
 void InfoDialog::setPaused(bool paused)
 {
-    ui->bPause->setEnabled(true);
     ui->bPause->setChecked(paused);
+    ui->bPause->setEnabled(true);
     overlay->setVisible(paused);
-    if(paused) setTransferSpeeds(-1, -1);
+    if(ui->bPause->isChecked())
+    {
+        ui->lSyncUpdated->setText(tr("MEGA sync is paused"));
+        setTransferSpeeds(-1, -1);
+    }
+    else
+    {
+        ui->lSyncUpdated->setText(tr("MEGA sync is updated"));
+    }
 }
 
 void InfoDialog::updateDialog()
@@ -415,7 +418,7 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		operation = tr("Downloading ");
 		long long remainingBytes = totalDownloadSize-totalDownloadedSize;
         remainingSize = Utils::getSizeString(remainingBytes);
-        if(downloadSpeed>=0)
+        if(downloadSpeed>0)
             xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
         else
             xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
@@ -429,7 +432,7 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		operation = tr("Uploading ");
 		long long remainingBytes = totalUploadSize-totalUploadedSize;
         remainingSize = Utils::getSizeString(totalUploadSize-totalUploadedSize);
-        if(uploadSpeed>=0)
+        if(uploadSpeed>0)
             xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
         else
             xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);
@@ -491,7 +494,6 @@ void InfoDialog::updateRecentFiles()
 
 void InfoDialog::on_bPause_clicked()
 {
-    ui->bPause->setEnabled(false);
     app->pauseTransfers(ui->bPause->isChecked());
 }
 

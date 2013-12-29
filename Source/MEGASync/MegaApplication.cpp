@@ -27,6 +27,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
     expired = false;
+    paused = false;
     setQuitOnLastWindowClosed(false);
 
     //Hack to have tooltips with a black background
@@ -350,18 +351,12 @@ void MegaApplication::stopUpdateTask()
 
 void MegaApplication::pauseSync()
 {
-	stopSyncs();
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-	trayMenu->removeAction(pauseAction);
-    trayMenu->insertAction(settingsAction, resumeAction);
+    pauseTransfers(true);
 }
 
 void MegaApplication::resumeSync()
 {
-	startSyncs();
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
-    trayMenu->removeAction(resumeAction);
-	trayMenu->insertAction(settingsAction, pauseAction);
+    pauseTransfers(false);
 }
 
 //Called when the "Import links" menu item is clicked
@@ -542,9 +537,9 @@ void MegaApplication::createActions()
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
     settingsAction = new QAction(tr("Settings"), this);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
-    pauseAction = new QAction(tr("Pause synchronization"), this);
+    pauseAction = new QAction(tr("Pause"), this);
     connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
-    resumeAction = new QAction(tr("Resume synchronization"), this);
+    resumeAction = new QAction(tr("Resume"), this);
     connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
 	importLinksAction = new QAction(tr("Import links"), this);
 	connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
@@ -654,9 +649,20 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
     {
         infoDialog->setPaused(request->getFlag());
-        if(request->getFlag()) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-        else if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-        else trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
+        paused = request->getFlag();
+        if(paused)
+        {
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+            trayMenu->removeAction(pauseAction);
+            trayMenu->insertAction(settingsAction, resumeAction);
+        }
+        else
+        {
+            trayMenu->removeAction(resumeAction);
+            trayMenu->insertAction(settingsAction, pauseAction);
+            if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+            else trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
+        }
     }
     default:
         break;
@@ -687,7 +693,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
 
     //Update the state of the tray icon
-    showSyncingIcon();
+    if(!paused) showSyncingIcon();
 }
 
 //Called when there is a temporal problem in a request
