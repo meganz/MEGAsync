@@ -405,6 +405,8 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 	cout << "SHOW POPUP " << lastPopupUpdate.secsTo(now) << endl;
 
 	QString operation;
+    QString oneFile = tr("one file at %1/s");
+    QString oneFilePaused = tr("one file (paused)");
 	QString xOfxFilesPattern(tr("%1 of %2 files at %3/s"));
     QString xOfxFilesPausedPattern(tr("%1 of %2 files (paused)"));
 	QString totalRemaining(tr("Total Remaining: "));
@@ -418,11 +420,20 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		operation = tr("Downloading ");
 		long long remainingBytes = totalDownloadSize-totalDownloadedSize;
         remainingSize = Utils::getSizeString(remainingBytes);
-        if(downloadSpeed>0)
-            xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
+        if(totalDownloads == 1)
+        {
+            if(downloadSpeed>0)
+                xOfxFiles = oneFile.arg(Utils::getSizeString(downloadSpeed));
+            else
+                xOfxFiles = oneFilePaused;
+        }
         else
-            xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
-
+        {
+            if(downloadSpeed>0)
+                xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
+            else
+                xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
+        }
         totalRemainingSeconds = (downloadSpeed>0) ? remainingBytes/downloadSpeed : 0;
 	}
 	else
@@ -432,10 +443,21 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		operation = tr("Uploading ");
 		long long remainingBytes = totalUploadSize-totalUploadedSize;
         remainingSize = Utils::getSizeString(totalUploadSize-totalUploadedSize);
-        if(uploadSpeed>0)
-            xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
+
+        if(totalUploads == 1)
+        {
+            if(uploadSpeed>0)
+                xOfxFiles = oneFile.arg(Utils::getSizeString(uploadSpeed));
+            else
+                xOfxFiles = oneFilePaused;
+        }
         else
-            xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);
+        {
+            if(uploadSpeed>0)
+                xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
+            else
+                xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);
+        }
 
         totalRemainingSeconds = (uploadSpeed>0) ? remainingBytes/uploadSpeed : 0;
 	}
