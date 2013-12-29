@@ -126,6 +126,7 @@ protected:
     UpdateTask updateTask;
     bool reboot;
     bool syncActive;
+    bool paused;
 
     static const int VERSION_CODE;
 };
