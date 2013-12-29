@@ -167,10 +167,16 @@ CommandPutFile::CommandPutFile(TransferSlot* ctslot, int ms)
 	arg("ms",ms);
 }
 
+void CommandPutFile::cancel()
+{
+	Command::cancel();
+	tslot = NULL;
+}
+
 // set up file transfer with returned target URL
 void CommandPutFile::procresult()
 {
-	tslot->pendingcmd = NULL;
+	if (tslot) tslot->pendingcmd = NULL;
 	if (canceled) return;
 
 	if (client->json.isnumeric()) return tslot->transfer->failed((error)client->json.getint());
@@ -212,6 +218,12 @@ CommandGetFile::CommandGetFile(TransferSlot* ctslot, byte* key, handle h, bool p
 		ph = h;
 		memcpy(filekey,key,FILENODEKEYLENGTH);
 	}
+}
+
+void CommandGetFile::cancel()
+{
+	Command::cancel();
+	tslot = NULL;
 }
 
 // process file credentials

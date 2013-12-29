@@ -54,7 +54,7 @@ public:
 
 	void cmd(const char*);
 	void notself(MegaClient*);
-	void cancel(void);
+	virtual void cancel(void);
 
 	void arg(const char*, const char*, int = 1);
 	void arg(const char*, const byte*, int);
@@ -291,6 +291,7 @@ class CommandGetFile : public Command
 	byte filekey[FILENODEKEYLENGTH];
 
 public:
+	void cancel();
 	void procresult();
 
 	CommandGetFile(TransferSlot*, byte*, handle, bool);
@@ -301,6 +302,7 @@ class CommandPutFile : public Command
 	TransferSlot* tslot;
 
 public:
+	void cancel(void);
 	void procresult();
 
 	CommandPutFile(TransferSlot*, int);
