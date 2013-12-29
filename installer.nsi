@@ -14,7 +14,7 @@ RequestExecutionLevel user
 !define CSIDL_STARTUP '0x7' ;Startup path
 !define CSIDL_LOCALAPPDATA '0x1C' ;Local Application Data path
 
-!define SRCDIR_MEGASYNC_X32 "Release_x32\MEGASync\release"
+!define SRCDIR_MEGASYNC_X32 "Release_x32\MEGAsync\release"
 !define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
 !define SRCDIR_MEGASHELLEXT_X64 "Release_x64\MEGAShellExt\release"
 
@@ -581,7 +581,7 @@ Section "Principal" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite on
   AllowSkipFiles off
-  File "${SRCDIR_MEGASYNC_X32}\MEGASync.exe"
+  File "${SRCDIR_MEGASYNC_X32}\MEGAsync.exe"
   
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
 
@@ -596,7 +596,7 @@ Section "Principal" SEC01
   ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe "$INSTDIR\ShellExtX32.dll"'
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
-  !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+  !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
 
@@ -613,7 +613,7 @@ Section "Principal" SEC01
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MegaShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+        !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION

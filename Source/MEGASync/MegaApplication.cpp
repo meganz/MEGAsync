@@ -269,7 +269,7 @@ void MegaApplication::rebootApplication()
 void MegaApplication::exitApplication()
 {
     if(QMessageBox::question(NULL, tr("MEGAsync"),
-            tr("Synchronization will stop working.") + QString::fromAscii(" ") + tr("Are you sure?"),
+            tr("Synchronization will stop.\nDeletions that occur while it is not running will not be propagated.\n\nExit anyway?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         stopSyncs();
