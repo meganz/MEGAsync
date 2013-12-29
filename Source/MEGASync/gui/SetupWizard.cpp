@@ -287,7 +287,7 @@ void SetupWizard::on_bNext_clicked()
         QString localFolderPath = ui->eLocalFolder->text();
         if(!Utils::verifySyncedFolderLimits(localFolderPath))
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Too many files or folders (+%1 folders or +%2 files).\n"
+            QMessageBox::warning(this, tr("Warning"), tr("Local folder too large (this beta is limited to %1 folders or %2 files.\n"
                  "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
                  .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER), QMessageBox::Ok);
             return;

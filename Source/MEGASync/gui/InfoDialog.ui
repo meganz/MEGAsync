@@ -248,6 +248,10 @@ color: rgb(102, 102, 102);
           <height>40</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">margin: 4px;
+border: none;</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -284,7 +288,7 @@ color: rgb(102, 102, 102);
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <layout class="QGridLayout" name="gridLayout">
@@ -333,7 +337,7 @@ color: rgb(102, 102, 102);
           </font>
          </property>
          <property name="text">
-          <string>MEGA sync is updated</string>
+          <string>MEGA sync is up to date</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -429,6 +433,10 @@ color: rgb(102, 102, 102);
               <bold>true</bold>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">margin: 4px;
+border: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -467,6 +475,10 @@ color: rgb(102, 102, 102);
               <weight>75</weight>
               <bold>true</bold>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">margin: 4px;
+border: none;</string>
             </property>
             <property name="text">
              <string/>
@@ -700,13 +712,13 @@ color: rgb(102, 102, 102);
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
-       <number>14</number>
+       <number>20</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>14</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -729,6 +741,9 @@ color: rgb(102, 102, 102);
          <font>
           <pointsize>9</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
         </property>
         <property name="text">
          <string>Syncs</string>
@@ -779,6 +794,9 @@ color: rgb(102, 102, 102);
          <font>
           <pointsize>9</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
         </property>
         <property name="text">
          <string>MEGA website</string>

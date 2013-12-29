@@ -86,7 +86,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadFolderSelector = NULL;
 
     //Apply the "Start on startup" configuration
-    Utils::startOnStartup(preferences->startOnStartup());
+    //Utils::startOnStartup(preferences->startOnStartup());
 
     //Start the update task in the update thread
     if(preferences->updateAutomatically())
@@ -235,16 +235,16 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
     if(notUploaded.size())
     {
         if(notUploaded.size()==1)
-        {
+        {            
             showInfoMessage(tr("The folder (%1) wasn't uploaded "
-                "because it contains too much files or folders (+%2 folders or +%3 files)")
+                               "because it's too large (this beta is limited to %2 folders or %3 files.")
                 .arg(notUploaded[0]).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
                 .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
         }
         else
         {
             showInfoMessage(tr("%1 folders weren't uploaded "
-                "because they contain too much files or folders (+%2 folders or +%3 files)")
+                 "because they are too large (this beta is limited to %2 folders or %3 files.")
                 .arg(notUploaded.size()).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
                 .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
         }
@@ -735,7 +735,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //onNodes update will be called with node->tag == transfer->getTag()
         //so we save the path of the file to show it later
         if(e->getErrorCode() == MegaError::API_OK)
+        {
+            cout << "Putting: " << transfer->getPath() << "   TAG: " << transfer->getTag() << endl;
             uploadLocalPaths[transfer->getTag()]=QString::fromUtf8(transfer->getPath());
+        }
 	}
 
     //Send updated statics to the information dialog
@@ -814,7 +817,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         if(!node->tag && !node->removed && !node->syncdeleted)
             externalNodes++;
 
-		if(!node->removed && node->tag && !node->syncdeleted)
+        if(!node->removed && node->tag && !node->syncdeleted && (node->type==FILENODE))
 		{
             //If the node has been modified by a local operation...
 
@@ -822,6 +825,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
             //Get the associated local node
             QString localPath;
+            cout << "Getting:   TAG: " << node->tag << endl;
 			if(node->localnode)
 			{
                 //If the node has been uploaded by a synced folder
@@ -846,15 +850,21 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 //If the node has been uploaded by a regular upload,
                 //we recover the path using the tag of the transfer
 				localPath = uploadLocalPaths.value(node->tag);
-				uploadLocalPaths.remove(node->tag);
+                //uploadLocalPaths.remove(node->tag);
 				cout << "Local upload: " << localPath.toStdString() << endl;
+                if(node->type != FILENODE) cout << "BAD FOLDER1" << endl;
 			}
+            else
+            {
+                if(node->type == FILENODE) cout << "BAD FOLDER2" << endl;
+                cout << "TAG " << node->tag << " NOT FOUND" << endl;
+            }
 
             //If we have the local path, notify the state change in the local file
 			if(!localPath.isNull()) WindowsUtils::notifyItemChange(localPath);
 
             //If the new node is a file, add it to the "recently updated" list
-            if(node->type == FILENODE) infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
+            infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
 		}
 	}
 

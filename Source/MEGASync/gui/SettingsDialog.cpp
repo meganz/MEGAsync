@@ -187,7 +187,7 @@ void SettingsDialog::loadSettings()
     //TODO: Enable autoUpdate again in the next release
     //ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
 
-    ui->cStartOnStartup->setChecked(preferences->startOnStartup());
+    //ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
     //Account
     ui->lEmail->setText(preferences->email());
@@ -277,9 +277,9 @@ void SettingsDialog::saveSettings()
     //}
     //preferences->setUpdateAutomatically(updateAutomatically);
 
-    bool startOnStartup = ui->cStartOnStartup->isChecked();
-    Utils::startOnStartup(startOnStartup);
-    preferences->setStartOnStartup(startOnStartup);
+    //bool startOnStartup = ui->cStartOnStartup->isChecked();
+    //Utils::startOnStartup(startOnStartup);
+    //preferences->setStartOnStartup(startOnStartup);
 
     //Syncs
 	if(syncsChanged)
