@@ -25,8 +25,8 @@ RequestExecutionLevel user
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "Source\MEGASync\SyncApp_1.ico"
-!define MUI_UNICON "Source\MEGASync\SyncApp_1.ico"
+!define MUI_ICON "installer\app_ico.ico"
+!define MUI_UNICON "installer\uninstall_ico.ico"
 
 ; Language Selection Dialog Settings
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
@@ -639,7 +639,7 @@ SectionEnd
 Section -AdditionalIcons
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url" "" "$INSTDIR\MEGAsync.exe" 1
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
 SectionEnd
