@@ -280,7 +280,7 @@ void InfoDialog::setPaused(bool paused)
     }
     else
     {
-        ui->lSyncUpdated->setText(tr("MEGA sync is updated"));
+        ui->lSyncUpdated->setText(tr("MEGA sync is up to date"));
     }
 }
 

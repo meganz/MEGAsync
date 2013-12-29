@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string/>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
     <number>0</number>
@@ -57,6 +60,11 @@
         </item>
         <item>
          <widget class="QPushButton" name="bLocalFolder">
+          <property name="styleSheet">
+           <string notr="true">margin: 4px;
+border: none;
+</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -69,6 +77,9 @@
             <width>24</width>
             <height>24</height>
            </size>
+          </property>
+          <property name="default">
+           <bool>false</bool>
           </property>
           <property name="flat">
            <bool>true</bool>
@@ -91,6 +102,13 @@
         </item>
         <item>
          <widget class="QPushButton" name="bMegaFolder">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">margin: 4px;
+border: none;</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -103,6 +121,9 @@
             <width>24</width>
             <height>24</height>
            </size>
+          </property>
+          <property name="default">
+           <bool>false</bool>
           </property>
           <property name="flat">
            <bool>true</bool>

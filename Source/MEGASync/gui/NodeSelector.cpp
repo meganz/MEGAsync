@@ -7,7 +7,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, QWidget *parent) :
 {
     ui->setupUi(this);
     this->megaApi = megaApi;
-    folderIcon =  QIcon(QString::fromAscii("://images/folder.ico"));
+    folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
     selectedFolder = UNDEF;
     selectedItem = NULL;
 	delegateListener = new QTMegaRequestListener(this);
@@ -28,9 +28,10 @@ void NodeSelector::nodesReady()
     root->setIcon(0, folderIcon);
     root->setData(0, Qt::UserRole, (qulonglong)rootNode->nodehandle);
     addChildren(root, rootNode);
+    ui->tMegaFolders->setIconSize(QSize(24, 24));
     ui->tMegaFolders->addTopLevelItem(root);
     ui->tMegaFolders->setCurrentItem(root);
-    ui->tMegaFolders->expandToDepth(1);
+    ui->tMegaFolders->expandToDepth(0);
 }
 
 long long NodeSelector::getSelectedFolderHandle()

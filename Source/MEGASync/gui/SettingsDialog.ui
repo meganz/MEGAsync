@@ -316,6 +316,9 @@ margin-top: 6px;
           </item>
           <item>
            <widget class="QCheckBox" name="cStartOnStartup">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Start on startup</string>
             </property>
