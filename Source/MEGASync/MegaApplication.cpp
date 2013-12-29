@@ -275,6 +275,7 @@ void MegaApplication::exitApplication()
         stopSyncs();
         stopUpdateTask();
         Utils::stopShellDispatcher();
+        trayIcon->hide();
         QApplication::exit();
     }
 }
