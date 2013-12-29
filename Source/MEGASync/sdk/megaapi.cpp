@@ -1620,7 +1620,14 @@ NodeList* MegaApi::search(Node* node, const char* searchString, bool recursive)
 
     MUTEX_UNLOCK(sdkMutex);
 
-	return nodeList;
+    return nodeList;
+}
+
+const char *MegaApi::getBase64Handle(Node *node)
+{
+    char *base64Handle = new char[12];
+    Base64::btoa((byte*)&(node->nodehandle),MegaClient::NODEHANDLE,base64Handle);
+    return base64Handle;
 }
 
 SearchTreeProcessor::SearchTreeProcessor(const char *search) { this->search = search; }

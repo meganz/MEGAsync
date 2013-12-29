@@ -103,7 +103,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.co.nz/#help");
+    QString helpUrl = QString::fromAscii("https://mega.co.nz/#help/sync");
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
 
@@ -417,5 +417,26 @@ void SettingsDialog::on_bUnlink_clicked()
     {
         this->close();
         app->unlink();
+    }
+}
+
+void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
+{
+    if(!index.column())
+    {
+        QString localFolderPath = ui->tSyncs->item(index.row(), 0)->text().trimmed();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
+    }
+    else
+    {
+        QString megaFolderPath = ui->tSyncs->item(index.row(), 1)->text().trimmed();
+        Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+        if(node)
+        {
+            const char *handle = MegaApi::getBase64Handle(node);
+            QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
+            QDesktopServices::openUrl(QUrl(url));
+            delete handle;
+        }
     }
 }
