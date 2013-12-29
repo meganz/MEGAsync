@@ -124,7 +124,7 @@ void MegaApplication::loggedIn()
 {    
     //Show the tray icon
     createTrayIcon();
-    showNotificationMessage(tr("MEGAsync is running"));
+    showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
 
     infoDialog = new InfoDialog(this);
 
