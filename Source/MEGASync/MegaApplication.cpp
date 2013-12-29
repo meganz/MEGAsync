@@ -47,7 +47,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     preferences = new Preferences();
-    QDate betaLimit(2013, 12, 31);
+    QDate betaLimit(2014, 1, 3);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
     long long previousTime = preferences->lastExecutionTime();
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
@@ -333,20 +333,22 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
-    if(!updateThread.isRunning())
-    {
-        updateTask.moveToThread(&updateThread);
-        updateThread.start();
-        connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()), Qt::UniqueConnection);
-        connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
-        emit startUpdaterThread();
-    }
+    //TODO: Enable autoUpdate again in the next release
+    //if(!updateThread.isRunning())
+    //{
+    //    updateTask.moveToThread(&updateThread);
+    //    updateThread.start();
+    //    connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()), Qt::UniqueConnection);
+    //    connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
+    //    emit startUpdaterThread();
+    //}
 }
 
 void MegaApplication::stopUpdateTask()
 {
-    if(updateThread.isRunning())
-        updateThread.quit();
+    //TODO: Enable autoUpdate again in the next release
+    //if(updateThread.isRunning())
+    //    updateThread.quit();
 }
 
 void MegaApplication::pauseSync()

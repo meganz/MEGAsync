@@ -323,6 +323,9 @@ margin-top: 6px;
           </item>
           <item>
            <widget class="QCheckBox" name="cAutoUpdate">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Update automatically</string>
             </property>
