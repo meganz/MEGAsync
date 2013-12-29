@@ -3496,7 +3496,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 		// do we have a corresponding remote child?
 		if (rit == nchildren.end())
 		{
-			if (rubbish && fsaccess->rubbishlocal(localpath) && fsaccess->transient_error) l->enqremote(SYNCREMOTEDELETED);
+			if (rubbish && !fsaccess->rubbishlocal(localpath) && fsaccess->transient_error) l->enqremote(SYNCREMOTEDELETED);
 		}
 		else
 		{
