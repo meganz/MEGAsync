@@ -268,10 +268,15 @@ void MegaApplication::rebootApplication()
 
 void MegaApplication::exitApplication()
 {
-    stopSyncs();
-    stopUpdateTask();
-    Utils::stopShellDispatcher();
-    QApplication::exit();
+    if(QMessageBox::question(NULL, tr("MEGAsync"),
+            tr("Synchronization will stop working.") + QString::fromAscii(" ") + tr("Are you sure?"),
+            QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+    {
+        stopSyncs();
+        stopUpdateTask();
+        Utils::stopShellDispatcher();
+        QApplication::exit();
+    }
 }
 
 void MegaApplication::pauseTransfers(bool pause)
@@ -552,9 +557,9 @@ void MegaApplication::createTrayIcon()
 {
     if(trayMenu) trayMenu->deleteLater();
     trayMenu = new QMenu();
-    trayMenu->addAction(aboutAction);
-	trayMenu->addAction(importLinksAction);
+    //trayMenu->addAction(aboutAction);
     trayMenu->addAction(pauseAction);
+	trayMenu->addAction(importLinksAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
@@ -656,12 +661,12 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
             trayMenu->removeAction(pauseAction);
-            trayMenu->insertAction(settingsAction, resumeAction);
+            trayMenu->insertAction(importLinksAction, resumeAction);
         }
         else
         {
             trayMenu->removeAction(resumeAction);
-            trayMenu->insertAction(settingsAction, pauseAction);
+            trayMenu->insertAction(importLinksAction, pauseAction);
             if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             else trayIcon->setIcon(QIcon(QString::fromAscii("://images/SyncApp_1.ico")));
         }
