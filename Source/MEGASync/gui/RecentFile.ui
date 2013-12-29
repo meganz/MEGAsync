@@ -95,13 +95,13 @@ color: rgb(51, 51, 51)
     <widget class="QWidget" name="wText" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>288</width>
        <height>50</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>288</width>
        <height>50</height>
       </size>
      </property>
@@ -114,6 +114,18 @@ color: rgb(51, 51, 51)
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="lFileName">
+        <property name="minimumSize">
+         <size>
+          <width>270</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>270</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string/>
         </property>
