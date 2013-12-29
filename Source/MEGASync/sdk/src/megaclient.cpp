@@ -31,8 +31,6 @@ namespace mega {
 // FIXME: support filesystems with timestamp granularity > 1 s (FAT)?
 // FIXME: set folder timestamps
 // FIXME: prevent synced folder from being moved into another synced folder
-// FIXME: high-load notifications stall under Win32
-// FIXME: properly retry temporarily locked filesystem item reads
 // FIXME: replace move with copy/delete if cross-device or source locked
 
 // root URL for API access
@@ -742,7 +740,7 @@ void MegaClient::exec()
 		}
 
 		// delete locally missing nodes unless a putnodes operation is in progress that may be still be referencing them
-		if (!syncadding)
+		if (!synccreate.size() && !syncadding)
 		{
 			for (localnode_set::iterator it = localsyncnotseen.begin(); it != localsyncnotseen.end(); )
 			{
@@ -3459,6 +3457,46 @@ void MegaClient::stopxfers(LocalNode* l)
 	stopxfer(l);
 }
 
+// close all open PUT transfers to make it more likely for renames to succeed under Windows
+void MegaClient::suspendputs()
+{
+	for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++)
+	{
+		if ((*it)->transfer->type == PUT)
+		{
+			delete (*it)->file;
+			(*it)->file = NULL;
+		}
+	}
+}
+
+// recreate filenames of active PUT transfers
+void MegaClient::updateputs()
+{
+	for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++)
+	{
+		if ((*it)->transfer->type == PUT)
+		{
+			if ((*it)->transfer->files.size()) (*it)->transfer->files.front()->prepare();
+		}
+	}
+}
+
+// open PUT transfer files
+void MegaClient::resumeputs()
+{
+	for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++)
+	{
+		if ((*it)->transfer->type == PUT)
+		{
+			(*it)->file = fsaccess->newfileaccess();
+			
+			// FIXME: handle failures
+			(*it)->file->fopen(&(*it)->transfer->localfilename,true,false);
+		}
+	}
+}
+
 // downward sync - recursively scan for tree differences and execute them locally
 // this is first called after the local node tree is complete
 // actions taken:
@@ -3571,16 +3609,23 @@ void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 					if (rit->second->localnode->parent)
 					{
 						string curpath;
-						
+	
+						// some operating systems prevent folders from being renamed
+						// while files are open for reading, so temporarily close the running PUT transfers
+						suspendputs();
+
 						rit->second->localnode->getlocalpath(&curpath);
 						
 						if (fsaccess->renamelocal(&curpath,localpath))
 						{
 							// update LocalNode tree to reflect the move/rename
 							rit->second->localnode->setnameparent(l,localpath);
+							updateputs();	// update filenames
 							syncactivity = true;
 						}
 						else if (fsaccess->transient_error) l->enqremote(SYNCREMOTEAFFECTED);	// schedule retry
+
+						resumeputs();
 					}
 				}
 				else
@@ -3805,11 +3850,15 @@ void MegaClient::syncupdate()
 		if (nnp == nn) delete[] nn;
 		else
 		{
-			syncadding++;
+			// add nodes unless parent node has been deleted
+			if (synccreate[start]->parent->node)
+			{
+				syncadding++;
 
-			reqs[r].add(new CommandPutNodes(this,synccreate[start]->parent->node->nodehandle,NULL,nn,nnp-nn,synccreate[start]->sync->tag,PUTNODES_SYNC));
+				reqs[r].add(new CommandPutNodes(this,synccreate[start]->parent->node->nodehandle,NULL,nn,nnp-nn,synccreate[start]->sync->tag,PUTNODES_SYNC));
 
-			syncactivity = true;
+				syncactivity = true;
+			}
 		}
 	}
 
