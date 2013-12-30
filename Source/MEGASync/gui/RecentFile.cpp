@@ -10,7 +10,7 @@ RecentFile::RecentFile(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lTime->setText(QString::fromAscii(""));
-    ui->pArrow->hide();
+    ui->pArrow->setIcon(QIcon());
 }
 
 RecentFile::~RecentFile()
@@ -32,8 +32,8 @@ void RecentFile::updateWidget()
 	{
 		ui->lFileType->setPixmap(QPixmap());
         ui->lTime->setText(QString::fromAscii(""));
-		ui->pArrow->hide();
-		return;
+        ui->pArrow->setIcon(QIcon());
+        return;
 	}
 
 	if(fileName.compare(ui->lFileName->text()))
@@ -47,8 +47,8 @@ void RecentFile::updateWidget()
             ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
         else
             ui->lFileType->setPixmap(Utils::getExtensionPixmapMedium(fileName));
-		ui->pArrow->show();
-	}
+        ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
+    }
 
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = dateTime.secsTo(now);
