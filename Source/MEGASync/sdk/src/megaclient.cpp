@@ -1027,8 +1027,7 @@ handle MegaClient::getuploadhandle()
 // clear transfer queue
 void MegaClient::freeq(direction d)
 {
-	for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); it++) delete it->second;
-	transfers[d].clear();
+	for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); ) delete (it++)->second;
 }
 
 // time at which next undispatched transfer retry occurs
@@ -3976,15 +3975,12 @@ void MegaClient::stopxfer(File* f)
 {
 	if (f->transfer)
 	{
+		// last file for this transfer removed
+		app->transfer_removed(f->transfer);
+
 		f->transfer->files.erase(f->file_it);
 
-		if (!f->transfer->files.size())
-		{
-			// last file for this transfer removed
-			app->transfer_removed(f->transfer);
-
-			delete f->transfer;
-		}
+		if (!f->transfer->files.size()) delete f->transfer;
 
 		f->transfer = NULL;
 	}
