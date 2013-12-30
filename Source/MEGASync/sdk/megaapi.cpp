@@ -1401,6 +1401,27 @@ void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
     waiter->notify();
 }
 
+int MegaApi::getNumActiveSyncs()
+{
+    MUTEX_LOCK(sdkMutex);
+    int num = client->syncs.size();
+    MUTEX_UNLOCK(sdkMutex);
+    return num;
+}
+
+void MegaApi::stopSyncs()
+{
+    MUTEX_LOCK(sdkMutex);
+    sync_list::iterator it = client->syncs.begin();
+    while(it != client->syncs.end())
+    {
+        Sync *sync = (*it);
+        it++;
+        delete sync;
+    }
+    MUTEX_UNLOCK(sdkMutex);
+}
+
 Node *MegaApi::getRootNode()
 {
     MUTEX_LOCK(sdkMutex);
@@ -1432,12 +1453,6 @@ Node* MegaApi::getMailNode()
     MUTEX_UNLOCK(sdkMutex);
 	return result;
 }
-
-sync_list *MegaApi::getActiveSyncs()
-{
-	return &(client->syncs);
-}
-
 
 bool MegaApi::userComparatorDefaultASC (User *i, User *j)
 {

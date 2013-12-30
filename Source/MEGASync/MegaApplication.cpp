@@ -157,7 +157,7 @@ void MegaApplication::loggedIn()
 void MegaApplication::startSyncs()
 {
     //Ensure that there is no active syncs
-	if(megaApi->getActiveSyncs()->size() != 0) stopSyncs();
+    if(megaApi->getNumActiveSyncs() != 0) stopSyncs();
 
     //Start syncs
 	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
@@ -202,10 +202,7 @@ void MegaApplication::startSyncs()
 void MegaApplication::stopSyncs()
 {
     //Stop syncs
-	sync_list *syncs = megaApi->getActiveSyncs();
-	sync_list::iterator it = syncs->begin();
-	while(it != syncs->end())
-		delete *it++;
+    megaApi->stopSyncs();
 }
 
 //This function is called to upload all files in the uploadQueue field
