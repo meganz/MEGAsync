@@ -765,6 +765,12 @@ public:
     void syncFolder(const char *localFolder, Node *megaFolder);
     int getNumActiveSyncs();
     void stopSyncs();
+    int getNumPendingUploads();
+    int getNumPendingDownloads();
+    int getTotalUploads();
+    int getTotalDownloads();
+    void resetTransferCounters();
+    void updateStatics();
 
 	//Filesystem
 	NodeList* getChildren(Node* parent, int order=1);
@@ -830,7 +836,10 @@ protected:
 	TransferQueue transferQueue;
 	map<int, MegaRequest *> requestMap;
     map<Transfer*, MegaTransfer *> transferMap;
-
+    int pendingUploads;
+    int pendingDownloads;
+    int totalUploads;
+    int totalDownloads;
 	set<MegaRequestListener *> requestListeners;
 	set<MegaTransferListener *> transferListeners;
 	set<MegaGlobalListener *> globalListeners;

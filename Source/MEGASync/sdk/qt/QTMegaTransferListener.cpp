@@ -30,7 +30,7 @@ void QTMegaTransferListener::onTransferUpdate(MegaApi *api, MegaTransfer *transf
 
 void QTMegaTransferListener::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-	emit QTonTransferTemporaryErrorSignal(api, transfer->copy(), e);
+    emit QTonTransferTemporaryErrorSignal(api, transfer->copy(), e->copy());
 }
 
 void QTMegaTransferListener::QTonTransferStart(MegaApi *api, MegaTransfer *transfer)
