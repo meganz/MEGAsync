@@ -101,6 +101,9 @@ void MegaApplication::init()
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
     trayIcon->setContextMenu(NULL);
     trayIcon->show();
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+    setupWizard = NULL;
 
     //Start the initial setup wizard if needed
     if(!preferences->logged())
@@ -124,7 +127,9 @@ void MegaApplication::loggedIn()
 {    
     //Show the tray icon
     createTrayIcon();
-    showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
+    if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
+    else showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
+    preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     infoDialog = new InfoDialog(this);
 
@@ -490,7 +495,13 @@ void MegaApplication::onUpdateCompleted()
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(megaApi->isLoggedIn() != FULLACCOUNT)
+    {
+        if(setupWizard && setupWizard->isVisible())
+            setupWizard->activateWindow();
+        else
+            showInfoMessage(tr("Logging in..."));
         return;
+    }
 
     if(reason == QSystemTrayIcon::Trigger)
     {
@@ -565,9 +576,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(exitAction);
 
     trayIcon->setContextMenu(trayMenu);
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));    
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));    
 }
 
 //Called when a request is about to start
