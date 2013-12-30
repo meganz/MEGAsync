@@ -286,23 +286,65 @@ void SettingsDialog::saveSettings()
     //Syncs
 	if(syncsChanged)
 	{
-		preferences->removeAllFolders();
+        //Check for removed folders
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        {
+            QString localPath = preferences->getLocalFolder(i);
+            long long megaHandle = preferences->getMegaFolderHandle(i);
 
+            int j;
+            for(j=0; j<ui->tSyncs->rowCount(); j++)
+            {
+                QString newLocalPath = ui->tSyncs->item(j, 0)->text().trimmed();
+                QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
+                Node *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+                if(!n) continue;
+
+                if((n->nodehandle == megaHandle) || !localPath.compare(newLocalPath))
+                    break;
+            }
+
+            if(j == ui->tSyncs->rowCount())
+            {
+                cout << "REMOVING SYNC: " << preferences->getSyncName(i).toStdString() << endl;
+                preferences->removeSyncedFolder(i);
+                megaApi->removeSync(megaHandle);
+                i--;
+            }
+        }
+
+        //Check for new folders
 		for(int i=0; i<ui->tSyncs->rowCount(); i++)
 		{
 			QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
 			QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
             QString syncName = syncNames.at(i);
 			Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-			cout << "adding sync: " << localFolderPath.toUtf8().constData() << " - " <<
-					megaFolderPath.toUtf8().constData() << endl;
-            preferences->addSyncedFolder(localFolderPath,
-                                         megaFolderPath,
-                                         node->nodehandle,
-                                         syncName);
+            if(!node) continue;
+            int j;
+            for(j=0; j<preferences->getNumSyncedFolders(); j++)
+            {
+                QString previousLocalPath = preferences->getLocalFolder(j);
+                long long previousMegaHandle = preferences->getMegaFolderHandle(j);
+
+                if((node->nodehandle == previousMegaHandle) || !localFolderPath.compare(previousLocalPath))
+                    break;
+            }
+
+            if(j == preferences->getNumSyncedFolders())
+            {
+                cout << "ADDING SYNC: " << localFolderPath.toUtf8().constData() << " - " <<
+                        megaFolderPath.toUtf8().constData() << endl;
+                preferences->addSyncedFolder(localFolderPath,
+                                             megaFolderPath,
+                                             node->nodehandle,
+                                             syncName);
+                megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+            }
 		}
 
-		app->reloadSyncs();
+
+
 		syncsChanged = false;
 	}
 

@@ -1405,6 +1405,24 @@ void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
     waiter->notify();
 }
 
+void MegaApi::removeSync(handle nodehandle)
+{
+    MUTEX_LOCK(sdkMutex);
+    sync_list::iterator it = client->syncs.begin();
+    while(it != client->syncs.end())
+    {
+        Sync *sync = (*it);
+        if(sync->localroot.node->nodehandle == nodehandle)
+        {
+            cout << "DELETING SYNC IN MEGAAPI" << endl;
+            delete sync;
+            break;
+        }
+        it++;
+    }
+    MUTEX_UNLOCK(sdkMutex);
+}
+
 int MegaApi::getNumActiveSyncs()
 {
     MUTEX_LOCK(sdkMutex);
@@ -1827,6 +1845,9 @@ void MegaApi::transfer_limit(Transfer* t)
 void MegaApi::transfer_complete(Transfer* tr)
 {
     updateStatics();
+    if (tr->type == GET) pendingDownloads--;
+    else pendingUploads --;
+
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
 
@@ -1917,7 +1938,7 @@ void MegaApi::syncupdate_stuck(string *s)
 
 void MegaApi::syncupdate_local_folder_addition(Sync *, const char *s)
 {
-	cout << "syncupdate_local_folder_addition: " << s << endl;
+    //cout << "syncupdate_local_folder_addition: " << s << endl;
     WindowsUtils::notifyItemChange(QString::fromUtf8(s));
 }
 
@@ -1928,7 +1949,7 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 
 void MegaApi::syncupdate_local_file_addition(Sync *, const char *s)
 {
-	cout << "syncupdate_local_file_addition: " << s << endl;
+    //cout << "syncupdate_local_file_addition: " << s << endl;
     WindowsUtils::notifyItemChange(QString::fromUtf8(s));
 
 }

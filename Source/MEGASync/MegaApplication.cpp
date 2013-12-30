@@ -289,12 +289,6 @@ void MegaApplication::aboutDialog()
     QMessageBox::about(NULL, tr("About MEGAsync"), tr("MEGAsync version code %1").arg(this->applicationVersion()));
 }
 
-void MegaApplication::reloadSyncs()
-{
-	stopSyncs();
-	startSyncs();
-}
-
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
@@ -878,7 +872,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
 {
-	stopSyncs();
 	megaApi->fetchNodes();
 }
 

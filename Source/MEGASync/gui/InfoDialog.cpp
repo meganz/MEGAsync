@@ -201,7 +201,7 @@ void InfoDialog::updateTransfers()
     else if(ui->bUploads->underMouse())
         showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 
-    if(!remainingDownloads && !remainingUploads)
+    if((ui->sActiveTransfers->currentWidget() != ui->pUpdated) && !remainingDownloads && !remainingUploads)
         this->startAnimation();
     else finishing = false;
 }
@@ -298,7 +298,7 @@ void InfoDialog::addSync()
 
    Preferences *preferences = app->getPreferences();
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
-   app->reloadSyncs();
+   app->getMegaApi()->syncFolder(localFolderPath.toUtf8().constData(), node);
 }
 
 void InfoDialog::on_bSettings_clicked()
