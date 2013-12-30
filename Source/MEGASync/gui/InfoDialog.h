@@ -25,12 +25,12 @@ public:
 	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
 	void setTransfer(int type, QString fileName, long long completedSize, long long totalSize);
 	void addRecentFile(QString fileName, long long fileHandle, QString localPath);
-	void setTransferCount(int totalDownloads, int totalUploads, int remainingDownloads, int remainingUploads);
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
     void setPaused(bool paused);
 	void updateDialog();
+    void updateTransfers();
 
 public slots:
    void timerUpdate();
@@ -66,10 +66,12 @@ protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
 	void showPopup(QPoint globalpos, bool download);
 	void updateRecentFiles();
+
 	QDateTime lastPopupUpdate;
     QTimer *timer;
     MegaApplication *app;
     Preferences *preferences;
+    bool finishing;
 };
 
 #endif // INFODIALOG_H

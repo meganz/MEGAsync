@@ -42,7 +42,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	ui->bUploads->hide();
     ui->lUploads->setText(QString::fromAscii(""));
 	ui->bUploads->hide();
-
+    finishing = false;
 	/***************************/
     //Example transfers
 	/*ui->wRecent1->setFileName("filename_compressed.zip");
@@ -109,6 +109,8 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::startAnimation()
 {
+    if(finishing) return;
+    finishing = true;
 	QTimer::singleShot(3000, this, SLOT(timerUpdate()));
 }
 
@@ -148,104 +150,67 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     app->getPreferences()->addRecentFile(fileName, fileHandle, localPath);
 }
 
-void InfoDialog::setTransferCount(int totalDownloads, int totalUploads, int remainingDownloads, int remainingUploads)
+void InfoDialog::updateTransfers()
 {
-	cout << "TD: " << totalDownloads << "   TU: " << totalUploads << endl;
-	//ui->lQueued->setText(tr("%1 Queued").arg(QString::number(queuedUploads+queuedDownloads)));
-	//ui->bDownloads->setText(QString::number(totalDownloads));
-	//ui->bUploads->setText(QString::number(totalUploads));
-	this->totalDownloads = totalDownloads;
-	this->totalUploads = totalUploads;
-	this->remainingDownloads = remainingDownloads;
-	this->remainingUploads = remainingUploads;
-	currentDownload = totalDownloads - remainingDownloads + 1;
-	currentUpload = totalUploads - remainingUploads + 1;
+    remainingUploads = app->getMegaApi()->getNumPendingUploads();
+    remainingDownloads = app->getMegaApi()->getNumPendingDownloads();
+    totalUploads = app->getMegaApi()->getTotalUploads();
+    totalDownloads = app->getMegaApi()->getTotalDownloads();
 
-	if(remainingDownloads)
-	{
-		QString pattern(tr("%1 of %2"));
-		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
+    cout << "RU: " << remainingUploads << "   RD: " << remainingDownloads << endl;
+    cout << "TU: " << totalUploads << "   TD: " << totalDownloads << endl;
+
+    currentDownload = totalDownloads - remainingDownloads + 1;
+    currentUpload = totalUploads - remainingUploads + 1;
+
+    if(remainingDownloads)
+    {
+        QString pattern(tr("%1 of %2"));
+        QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
 
         if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
         else downloadString += tr(" (paused)");
 
         ui->lDownloads->setText(downloadString);
-		ui->bDownloads->show();
-	}
-	else
-	{
+        ui->bDownloads->show();
+    }
+    else
+    {
         ui->lDownloads->setText(QString::fromAscii(""));
-		ui->bDownloads->hide();
-	}
+        ui->bDownloads->hide();
+    }
 
-	if(remainingUploads)
-	{
-		QString pattern(tr("%1 of %2"));
-		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
+    if(remainingUploads)
+    {
+        QString pattern(tr("%1 of %2"));
+        QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
 
         if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
         else uploadString += tr(" (paused)");
 
         ui->lUploads->setText(uploadString);
-		ui->bUploads->show();
-	}
-	else
-	{
+        ui->bUploads->show();
+    }
+    else
+    {
         ui->lUploads->setText(QString::fromAscii(""));
-		ui->bUploads->hide();
-	}
-	if(ui->bDownloads->underMouse())
-		showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)),true);
-	else if(ui->bUploads->underMouse())
-		showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+        ui->bUploads->hide();
+    }
+    if(ui->bDownloads->underMouse())
+        showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)),true);
+    else if(ui->bUploads->underMouse())
+        showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 
-	if(!remainingDownloads && !remainingUploads)
+    if(!remainingDownloads && !remainingUploads)
         this->startAnimation();
+    else finishing = false;
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
 {
 	this->downloadSpeed = downloadSpeed;
 	this->uploadSpeed = uploadSpeed;
-
-	if(remainingDownloads)
-	{
-		QString pattern(tr("%1 of %2"));
-		QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
-
-        if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
-        else downloadString += tr(" (paused)");
-
-		ui->lDownloads->setText(downloadString);
-		ui->bDownloads->show();
-	}
-	else
-	{
-        ui->lDownloads->setText(QString::fromAscii(""));
-		ui->bDownloads->hide();
-	}
-
-	if(remainingUploads)
-	{
-		QString pattern(tr("%1 of %2"));
-		QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
-
-        if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
-        else uploadString += tr(" (paused)");
-
-		ui->lUploads->setText(uploadString);
-		ui->bUploads->show();
-	}
-	else
-	{
-        ui->lUploads->setText(QString::fromAscii(""));
-		ui->bUploads->hide();
-	}
-
-	if(ui->bDownloads->underMouse())
-		showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
-	else if(ui->bUploads->underMouse())
-		showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+    updateTransfers();
 }
 
 void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize)
@@ -291,6 +256,9 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::timerUpdate()
 {
+    remainingDownloads = app->getMegaApi()->getNumPendingDownloads();
+    remainingUploads = app->getMegaApi()->getNumPendingUploads();
+
 	if(!remainingDownloads) ui->wTransfer1->hideTransfer();
 	if(!remainingUploads) ui->wTransfer2->hideTransfer();
 
@@ -305,6 +273,8 @@ void InfoDialog::timerUpdate()
 		totalDownloadedSize = totalUploadedSize = 0;
 		totalDownloadSize = totalUploadSize = 0;
 		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        app->getMegaApi()->resetTransferCounters();
+        updateTransfers();
 		app->showSyncedIcon();
 		app->getMegaApi()->getAccountDetails();
         app->showNotificationMessage(tr("All transfers have been finished"));

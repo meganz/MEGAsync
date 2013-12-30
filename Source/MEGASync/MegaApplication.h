@@ -112,8 +112,6 @@ protected:
     HTTPServer *httpServer;
 	UploadToMegaDialog *uploadFolderSelector;
 	QQueue<QString> uploadQueue;
-    int queuedUploads, queuedDownloads;
-	int totalUploads, totalDownloads;
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
 	long long uploadSpeed, downloadSpeed;

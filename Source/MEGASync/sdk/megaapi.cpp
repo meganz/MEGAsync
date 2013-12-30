@@ -912,6 +912,10 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
 	updateSIDtime = -10000000;
 	currentTransfer = NULL;
     pausetime = 0;
+    pendingUploads = 0;
+    pendingDownloads = 0;
+    totalUploads = 0;
+    totalDownloads = 0;
 
     //Start blocking thread
 	threadExit = 0;
@@ -1422,6 +1426,31 @@ void MegaApi::stopSyncs()
     MUTEX_UNLOCK(sdkMutex);
 }
 
+int MegaApi::getNumPendingUploads()
+{
+    return pendingUploads;
+}
+
+int MegaApi::getNumPendingDownloads()
+{
+    return pendingDownloads;
+}
+
+int MegaApi::getTotalUploads()
+{
+    return totalUploads;
+}
+
+int MegaApi::getTotalDownloads()
+{
+    return totalDownloads;
+}
+
+void MegaApi::resetTransferCounters()
+{
+    totalDownloads = totalUploads = 0;
+}
+
 Node *MegaApi::getRootNode()
 {
     MUTEX_LOCK(sdkMutex);
@@ -1663,35 +1692,9 @@ vector<Node *> &SearchTreeProcessor::getResults()
 	return results;
 }
 
-// topen() succeeded (download only)
-//void MegaApi::topen_result(int td, string* filename, const char* fa, int pfa)
-//{
-    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
-	if(!transfer) return;
-
-	transfer->setTime(client->httpio->ds);
-
-	//cout << "TD " << td << ": File opened successfully, filename: " << *filename << endl;
-	//if (fa) cout << "File has attributes: " << fa << " / " << pfa << endl;
-	MegaClient::escapefilename(filename);
-
-	string tmpfilename;
-	if(transfer->getPath()) tmpfilename = transfer->getPath();
-	else
-	{
-		tmpfilename = transfer->getParentPath();
-		tmpfilename += "/";
-		tmpfilename += *filename;
-		transfer->setPath(tmpfilename.c_str());
-	}
-	tmpfilename.append(".tmp");
-
-	client->dlopen(td,tmpfilename.c_str());
-    fireOnTransferUpdate(this, transfer);*/
-//}
-
 void MegaApi::transfer_added(Transfer *t)
 {
+    updateStatics();
 	MegaTransfer *transfer = currentTransfer;
 	if(!transfer) transfer = new MegaTransfer(t->type);
 	currentTransfer = NULL;
@@ -1700,17 +1703,25 @@ void MegaApi::transfer_added(Transfer *t)
 	transfer->setTotalBytes(t->size);
 	transfer->setTag(t->tag);
 
+    if (t->type == GET) totalDownloads++;
+    else totalUploads++;
+
 	cout << "transfer_added: " <<t->size << endl;
 	fireOnTransferStart(this, transfer);
 }
 
-void MegaApi::transfer_removed(Transfer *)
+void MegaApi::transfer_removed(Transfer *t)
 {
+    updateStatics();
+    if(transferMap.find(t) == transferMap.end()) return;
+    MegaTransfer* transfer = transferMap.at(t);
 	cout << "transfer_removed" << endl;
+    fireOnTransferTemporaryError(this, transfer, MegaError(API_OK));
 }
 
 void MegaApi::transfer_prepare(Transfer *t)
 {
+    updateStatics();
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
 	string path;
@@ -1755,6 +1766,7 @@ void MegaApi::transfer_prepare(Transfer *t)
 
 void MegaApi::transfer_update(Transfer *tr)
 {
+    updateStatics();
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
 
@@ -1783,6 +1795,7 @@ void MegaApi::transfer_update(Transfer *tr)
 
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
+    updateStatics();
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaError megaError(e);
     MegaTransfer* transfer = transferMap.at(tr);
@@ -1790,15 +1803,16 @@ void MegaApi::transfer_failed(Transfer* tr, error e)
 	if(tr->slot) transfer->setTime(tr->slot->lastdata);
 
 	cout << "TD " << transfer->getFileName() << ": Download failed (" << megaError.getErrorString() << ")" << endl;
-    //fireOnTransferFinish(this, transfer, megaError);
-
-	//filename.append(".tmp");
-	//unlink(filename.c_str());
+    fireOnTransferTemporaryError(this, transfer, megaError);
 }
 
-void MegaApi::transfer_limit(Transfer* tr)
+void MegaApi::transfer_limit(Transfer* t)
 {
+    updateStatics();
+    if(transferMap.find(t) == transferMap.end()) return;
+    MegaTransfer* transfer = transferMap.at(t);
     cout << "transfer_limit" << endl;
+    fireOnTransferTemporaryError(this, transfer, MegaError(API_EOVERQUOTA));
 
     /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
 	if(!transfer) return;
@@ -1811,6 +1825,7 @@ void MegaApi::transfer_limit(Transfer* tr)
 
 void MegaApi::transfer_complete(Transfer* tr)
 {
+    updateStatics();
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
 
@@ -3866,7 +3881,16 @@ char* MegaApi::stringToArray(string &buffer)
 	char *newbuffer = new char[buffer.size()+1];
 	buffer.copy(newbuffer, buffer.size());
 	newbuffer[buffer.size()]='\0';
-	return newbuffer;
+    return newbuffer;
+}
+
+void MegaApi::updateStatics()
+{
+    MUTEX_LOCK(sdkMutex);
+    cout << "Updating statics" << endl;
+    pendingDownloads = client->transfers[0].size();
+    pendingUploads = client->transfers[1].size();
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 char* MegaApi::strdup(const char* buffer)

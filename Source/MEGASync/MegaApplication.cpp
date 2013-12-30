@@ -64,9 +64,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     //Initialize fields to manage communications and transfers
     delegateListener = new QTMegaListener(this);
     httpServer = NULL;
-    queuedDownloads = 0;
-    queuedUploads = 0;
-    totalUploads = totalDownloads = 0;
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
     uploadSpeed = downloadSpeed = 0;
@@ -255,7 +252,7 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 
 void MegaApplication::rebootApplication()
 {
-    if(queuedDownloads || queuedUploads)
+    if(megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads())
         return;
 
     stopUpdateTask();
@@ -518,6 +515,9 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 		infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
 
         //Show the dialog
+        megaApi->updateStatics();
+        infoDialog->updateTransfers();
+        infoDialog->updateDialog();
 		infoDialog->show();
     }
 }
@@ -674,8 +674,10 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         {
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
-            if(queuedUploads || queuedDownloads) trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-            else trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+            if(megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+            else
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         }
     }
     default:
@@ -690,21 +692,17 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
 		downloadSpeed = 0;
-		queuedDownloads++;
-		totalDownloads++;
 		totalDownloadSize += transfer->getTotalBytes();
 	}
 	else
 	{
 		uploadSpeed = 0;
-		queuedUploads++;
-		totalUploads++;
 		totalUploadSize += transfer->getTotalBytes();
 	}
 
     //Send statics to the information dialog
-	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+    infoDialog->updateTransfers();
 
     //Update the state of the tray icon
     if(!paused) showSyncingIcon();
@@ -713,7 +711,6 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 //Called when there is a temporal problem in a request
 void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 {
-
 }
 
 //Called when a transfer has finished
@@ -722,7 +719,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
-		queuedDownloads--;
 		totalDownloadedSize += transfer->getDeltaSize();
 		downloadSpeed = transfer->getSpeed();
 
@@ -732,7 +728,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 	}
 	else
 	{
-		queuedUploads--;
 		totalUploadedSize += transfer->getDeltaSize();
 		uploadSpeed = transfer->getSpeed();
 
@@ -751,15 +746,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Send updated statics to the information dialog
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-    infoDialog->setTransfer(transfer->getType(), QString::fromUtf8(transfer->getFileName())
-							,transfer->getTransferredBytes(), transfer->getTotalBytes());
-	infoDialog->setTransferCount(totalDownloads, totalUploads, queuedDownloads, queuedUploads);
-	infoDialog->updateDialog();
+    infoDialog->updateTransfers();
+    infoDialog->updateDialog();
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if(!queuedDownloads && !queuedUploads)
+    if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
     {
-		totalUploads = totalDownloads = 0;
+        infoDialog->setTransfer(transfer->getType(), QString::fromUtf8(transfer->getFileName())
+                                ,transfer->getTransferredBytes(), transfer->getTotalBytes());
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
 		uploadSpeed = downloadSpeed = 0;
@@ -797,8 +791,10 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
+    infoDialog->updateTransfers();
     //Show information to users
-    showWarningMessage(tr("Temporarily error in transfer: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+    if(e->getErrorCode()!= API_OK)
+        showWarningMessage(tr("Temporarily error in transfer: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
 }
 
 //Called when contacts have been updated in MEGA
@@ -870,7 +866,12 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	}
 
     //Update the information dialog
-    if(infoDialog) infoDialog->updateDialog();
+    if(infoDialog)
+    {
+        megaApi->updateStatics();
+        infoDialog->updateTransfers();
+        infoDialog->updateDialog();
+    }
 
     if(externalNodes) showNotificationMessage(tr("You have new or updated files in your account"));
 }
