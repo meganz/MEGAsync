@@ -1765,14 +1765,17 @@ void MegaApi::transfer_update(Transfer *tr)
         if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
 		transfer->setTransferredBytes(tr->slot->progressreported);
-		transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
+
+        if(waiter->getdstime()<transfer->getStartTime())
+            transfer->setStartTime(waiter->ds);
+        transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->ds-transfer->getStartTime()+1));
 		transfer->setUpdateTime(waiter->getdstime());
 
-		string th;
-		if (tr->type == GET) th = "TD ";
-		else th = "TU ";
-		cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
-			 << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->getdstime()-transfer->getStartTime())+1) << " KB/s" << endl;
+        string th;
+        if (tr->type == GET) th = "TD ";
+        else th = "TU ";
+        cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
+             << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
 		fireOnTransferUpdate(this, transfer);
         WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
 	}
@@ -1814,7 +1817,10 @@ void MegaApi::transfer_complete(Transfer* tr)
 	if(tr->slot)
 	{
         if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
-        transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->getdstime()-transfer->getStartTime()+1));
+        if(waiter->getdstime()<transfer->getStartTime())
+            transfer->setStartTime(waiter->ds);
+
+        transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->ds-transfer->getStartTime()+1));
 		transfer->setTime(tr->slot->lastdata);
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
 		transfer->setTransferredBytes(tr->slot->progressreported);
