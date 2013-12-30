@@ -2074,8 +2074,10 @@ void MegaApi::unlink_result(handle h, error e)
     MegaRequest* request = requestMap.at(client->restag);
     if(!request) return;
 
-	if(request->getType() != MegaRequest::TYPE_REMOVE) cout << "INCORRECT REQUEST OBJECT (3)";
-	request->setNodeHandle(h);
+    if(request->getType() != MegaRequest::TYPE_REMOVE)
+        cout << "INCORRECT REQUEST OBJECT (3)";
+
+    request->setNodeHandle(h);
 	fireOnRequestFinish(this, request, megaError);
 }
 
@@ -3516,6 +3518,7 @@ void MegaApi::sendPendingTransfers()
 
 bool MegaApi::is_syncable(const char *name)
 {
+    cout << "isSyncable: " << name << endl;
     return *name != '.' && *name != '~' && strcmp(name,"Thumbs.db") && strcmp(name,"desktop.ini");
 }
 
@@ -3910,6 +3913,7 @@ void MegaApi::sendPendingRequests()
 
             client->pausexfers(PUT, pause);
             client->pausexfers(GET, pause);
+            client->restag = nextTag;
             fireOnRequestFinish(this, request, MegaError(API_OK));
         }
 		}

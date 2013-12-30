@@ -33,7 +33,7 @@ void TrayNotificationReceiver::stop()
     else if(m_ITrayNotifyNew)
     {
         m_ITrayNotifyNew->UnregisterCallback(id);
-        m_ITrayNotifyNew->Release();
+        if(m_ITrayNotifyNew) m_ITrayNotifyNew->Release();
         m_ITrayNotifyNew = NULL;
     }
 }
