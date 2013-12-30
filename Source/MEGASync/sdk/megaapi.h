@@ -763,6 +763,8 @@ public:
 
     pathstate_t syncPathState(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
+    int getNumActiveSyncs();
+    void stopSyncs();
 
 	//Filesystem
 	NodeList* getChildren(Node* parent, int order=1);
@@ -787,7 +789,6 @@ public:
 	Node* getInboxNode();
 	Node* getRubbishNode();
 	Node* getMailNode();
-	sync_list *getActiveSyncs();
 	StringList *getRootNodeNames();
 	StringList *getRootNodePaths();
 
