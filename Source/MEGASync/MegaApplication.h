@@ -55,7 +55,6 @@ public:
 
     void showSyncedIcon();
     void showSyncingIcon();
-	void reloadSyncs();
     void unlink();
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));

@@ -763,6 +763,7 @@ public:
 
     pathstate_t syncPathState(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
+    void removeSync(handle nodehandle);
     int getNumActiveSyncs();
     void stopSyncs();
     int getNumPendingUploads();
@@ -771,6 +772,7 @@ public:
     int getTotalDownloads();
     void resetTransferCounters();
     void updateStatics();
+
 
 	//Filesystem
 	NodeList* getChildren(Node* parent, int order=1);
