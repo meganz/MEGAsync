@@ -1712,11 +1712,11 @@ void MegaApi::transfer_added(Transfer *t)
 
 void MegaApi::transfer_removed(Transfer *t)
 {
-    updateStatics();
+    /*updateStatics();
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
 	cout << "transfer_removed" << endl;
-    fireOnTransferTemporaryError(this, transfer, MegaError(API_OK));
+    fireOnTransferTemporaryError(this, transfer, MegaError(API_OK));*/
 }
 
 void MegaApi::transfer_prepare(Transfer *t)
@@ -1780,6 +1780,7 @@ void MegaApi::transfer_update(Transfer *tr)
 
         if(waiter->getdstime()<transfer->getStartTime())
             transfer->setStartTime(waiter->ds);
+
         transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->ds-transfer->getStartTime()+1));
 		transfer->setUpdateTime(waiter->getdstime());
 
@@ -2014,8 +2015,10 @@ void MegaApi::setattr_result(handle h, error e)
 {
 	MegaError megaError(e);
 	if(e) cout << "Node attribute update failed (" << megaError.getErrorString() << ")" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 	
 	if(request->getType() != MegaRequest::TYPE_RENAME)
 	{
@@ -2031,8 +2034,10 @@ void MegaApi::rename_result(handle h, error e)
 {
 	MegaError megaError(e);
 	if(e) cout << "Node move failed (" << megaError.getErrorString() << ")" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_MOVE) cout << "INCORRECT REQUEST OBJECT (2)";
 	request->setNodeHandle(h);
@@ -2043,8 +2048,10 @@ void MegaApi::unlink_result(handle h, error e)
 {
 	MegaError megaError(e);
 	if(e) cout << "Node deletion failed (" << megaError.getErrorString() << ")" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_REMOVE) cout << "INCORRECT REQUEST OBJECT (3)";
 	request->setNodeHandle(h);
@@ -2054,8 +2061,10 @@ void MegaApi::unlink_result(handle h, error e)
 void MegaApi::fetchnodes_result(error e)
 {
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if((request->getType() != MegaRequest::TYPE_FETCH_NODES) && (request->getType() != MegaRequest::TYPE_FOLDER_ACCESS))
 		cout << "INCORRECT REQUEST OBJECT (4)";
@@ -2073,11 +2082,11 @@ void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
 	}
 
 	if(e) cout << "Node addition failed (" << megaError.getErrorString() << ")" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request)
-	{
-		return;
-	}
+
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
+
 
 	if((request->getType() != MegaRequest::TYPE_IMPORT_LINK) && (request->getType() != MegaRequest::TYPE_MKDIR) &&
 			(request->getType() != MegaRequest::TYPE_COPY) && (request->getType() != MegaRequest::TYPE_UPLOAD) &&
@@ -2114,8 +2123,9 @@ void MegaApi::share_result(error e)
 	MegaError megaError(e);
 	cout << "Share creation/modification request failed (" << megaError.getErrorString() << ")" << endl;
 
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() == MegaRequest::TYPE_EXPORT)
 	{ 
@@ -2144,8 +2154,9 @@ void MegaApi::share_result(int, error e)
 void MegaApi::fa_complete(Node* n, fatype type, const char* data, uint32_t len)
 {
 	cout << "Got attribute of type " << type << " (" << len << " bytes) for " << n->displayname() << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_GET_ATTR_FILE) cout << "INCORRECT REQUEST OBJECT (fa_complete)";
 
@@ -2160,8 +2171,9 @@ void MegaApi::fa_complete(Node* n, fatype type, const char* data, uint32_t len)
 int MegaApi::fa_failed(handle, fatype type, int retries)
 {
 	cout << "File attribute retrieval of type " << type << " failed (retries: " << retries << ")" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return 1;
+    if(requestMap.find(client->restag) == requestMap.end()) return 1;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return 1;
 
 	if(request->getType() != MegaRequest::TYPE_GET_ATTR_FILE) cout << "INCORRECT REQUEST OBJECT (fa_complete)";
 	if(retries > 3)
@@ -2176,8 +2188,9 @@ int MegaApi::fa_failed(handle, fatype type, int retries)
 void MegaApi::putfa_result(handle, fatype, error e)
 {
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(e) cout << "File attribute attachment failed (" << megaError.getErrorString() << ")" << endl;
 	fireOnRequestFinish(this, request, megaError);
@@ -2206,8 +2219,9 @@ void MegaApi::request_error(error e)
 {	
 	MegaError megaError(e);
 	cout << "FATAL: Request failed (" << megaError.getErrorString() << "), exiting" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	fireOnRequestFinish(this, request, megaError);
 }
@@ -2216,8 +2230,9 @@ void MegaApi::request_error(error e)
 void MegaApi::login_result(error result)
 {    
 	MegaError megaError(result);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
     if(result) cout << "Login failed" << endl;
     else cout << "Login OK" << endl;
@@ -2269,8 +2284,9 @@ void MegaApi::changepw_result(error result)
 	MegaError megaError(result);
 	if (result == API_OK) cout << "Password updated." << endl;
 	else cout << "Password update failed: " << megaError.getErrorString() << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_CHANGE_PW) cout << "INCORRECT REQUEST OBJECT (8)";
 	fireOnRequestFinish(this, request, megaError);
@@ -2281,8 +2297,9 @@ void MegaApi::exportnode_result(error result)
 {
 	MegaError megaError(result);
 	cout << "Export failed: " << megaError.getErrorString() << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_EXPORT) cout << "INCORRECT REQUEST OBJECT (9)";
 	fireOnRequestFinish(this, request, megaError);
@@ -2291,8 +2308,9 @@ void MegaApi::exportnode_result(error result)
 void MegaApi::exportnode_result(handle h, handle ph)
 {
 	Node* n;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_EXPORT) cout << "INCORRECT REQUEST OBJECT (10)";		
 
@@ -2337,8 +2355,9 @@ void MegaApi::openfilelink_result(error result)
 {
 	MegaError megaError(result);
 	cout << "Failed to open link: " << megaError.getErrorString() << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if((request->getType() != MegaRequest::TYPE_IMPORT_LINK) && (request->getType() != MegaRequest::TYPE_GET_PUBLIC_NODE))
 		cout << "INCORRECT REQUEST OBJECT (11)";
@@ -2352,8 +2371,9 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 {
 	cout << "openfilelink_result" << endl;
 	//cout << "Importing " << n->displayname() << "..." << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if((request->getType() != MegaRequest::TYPE_IMPORT_LINK) && (request->getType() != MegaRequest::TYPE_GET_PUBLIC_NODE))
 		cout << "INCORRECT REQUEST OBJECT (12)";
@@ -2482,8 +2502,9 @@ void MegaApi::nodes_updated(Node** n, int count)
 // display account details/history
 void MegaApi::account_details(AccountDetails* ad, bool storage, bool transfer, bool pro, bool purchases, bool transactions, bool sessions)
 {
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	int numDetails = request->getNumDetails();
 	numDetails--;
@@ -2499,8 +2520,9 @@ void MegaApi::account_details(AccountDetails* ad, error e)
 {
 	MegaError megaError(e);
 	cout << "Account details retrieval failed (" << megaError.getErrorString() << ")" << endl;
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if(request->getType() != MegaRequest::TYPE_ACCOUNT_DETAILS) cout << "INCORRECT REQUEST OBJECT (14)";
 	fireOnRequestFinish(this, request, megaError);
@@ -2509,8 +2531,9 @@ void MegaApi::account_details(AccountDetails* ad, error e)
 void MegaApi::invite_result(error e)
 {
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if (e) cout << "Invitation failed (" << megaError.getErrorString() << ")" << endl;
 	else cout << "Success." << endl;
@@ -2555,8 +2578,9 @@ void MegaApi::ephemeral_result(error e)
     cout << "Ephemeral error" << endl;
 
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if (e) cout << "Ephemeral session error (" << megaError.getErrorString() << ")" << endl;
 	fireOnRequestFinish(this, request, megaError);
@@ -2566,12 +2590,9 @@ void MegaApi::ephemeral_result(handle uh, const byte* pw)
 {
     cout << "Ephemeral ok" << endl;
 
-	MegaRequest *request = requestMap[client->restag];
-    if(!request)
-    {
-        cout << "No request" << endl;
-        return;
-    }
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if((request->getType() != MegaRequest::TYPE_CREATE_ACCOUNT) &&
 		(request->getType() != MegaRequest::TYPE_FAST_CREATE_ACCOUNT))
@@ -2593,8 +2614,9 @@ void MegaApi::ephemeral_result(handle uh, const byte* pw)
 void MegaApi::sendsignuplink_result(error e)
 {
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if((request->getType() != MegaRequest::TYPE_CREATE_ACCOUNT) &&
 		(request->getType() != MegaRequest::TYPE_FAST_CREATE_ACCOUNT))
@@ -2608,8 +2630,9 @@ void MegaApi::sendsignuplink_result(error e)
 void MegaApi::querysignuplink_result(error e)
 {
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	cout << "Signuplink confirmation failed (" << megaError.getErrorString() << ")" << endl;
 	fireOnRequestFinish(this, request, megaError);
@@ -2617,8 +2640,9 @@ void MegaApi::querysignuplink_result(error e)
 
 void MegaApi::querysignuplink_result(handle uh, const char* email, const char* name, const byte* pwc, const byte* kc, const byte* c, size_t len)
 {
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	cout << "Ready to confirm user account " << email << " (" << name << ") - enter confirm to execute." << endl;
 
@@ -2673,8 +2697,9 @@ void MegaApi::querysignuplink_result(handle uh, const char* email, const char* n
 void MegaApi::confirmsignuplink_result(error e)
 {
 	MegaError megaError(e);
-	MegaRequest *request = requestMap[client->restag];
-	if(!request) return;
+    if(requestMap.find(client->restag) == requestMap.end()) return;
+    MegaRequest* request = requestMap.at(client->restag);
+    if(!request) return;
 
 	if (e) cout << "Signuplink confirmation failed (" << megaError.getErrorString() << ")" << endl;
 	else
