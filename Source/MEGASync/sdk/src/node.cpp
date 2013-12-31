@@ -639,7 +639,7 @@ LocalNode::~LocalNode()
 
 	if (node)
 	{
-		node->syncdeleted = true;
+		if (sync->state >= SYNC_INITIALSCAN) node->syncdeleted = true;
 		node->localnode = NULL;
 	}
 }
