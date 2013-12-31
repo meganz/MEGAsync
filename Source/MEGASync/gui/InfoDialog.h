@@ -23,7 +23,7 @@ public:
 
     void startAnimation();
 	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
-	void setTransfer(int type, QString fileName, long long completedSize, long long totalSize);
+    void setTransfer(MegaTransfer *transfer);
 	void addRecentFile(QString fileName, long long fileHandle, QString localPath);
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
@@ -35,6 +35,8 @@ public:
 public slots:
    void timerUpdate();
    void addSync();
+   void onTransfer1Clicked(int x, int y);
+   void onTransfer2Clicked(int x, int y);
 
 private slots:
     void on_bSettings_clicked();

@@ -746,8 +746,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
     {
-        infoDialog->setTransfer(transfer->getType(), QString::fromUtf8(transfer->getFileName())
-                                ,transfer->getTransferredBytes(), transfer->getTotalBytes());
+        infoDialog->setTransfer(transfer);
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
 		uploadSpeed = downloadSpeed = 0;
@@ -775,10 +774,9 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 	}
 
     //Send updated statics to the information dialog
-    infoDialog->setTransfer(transfer->getType(), QString::fromUtf8(transfer->getFileName()),
-                        transfer->getTransferredBytes(), transfer->getTotalBytes());
+    infoDialog->setTransfer(transfer);
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+    infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
 	infoDialog->updateDialog();
 }
 
