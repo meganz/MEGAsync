@@ -431,7 +431,7 @@ Push $2
 Call Date2Serial
 Pop $4
 
-Push "03"
+Push "04"
 Push "01"
 Push "2014"
 Call Date2Serial
@@ -461,7 +461,7 @@ dateok:
     Quit
   ${EndSwitch}
   
-MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "This is a private BETA version and will expire on Jan 3, 2014.$\r$\nIf you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Bear in mind that Windows filenames are case insensitive. Do not place items in the same MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. Concurrent creation of identically named files and folders on different clients can result in server-side dupes.$\r$\n2. No in-place versioning. Deleted remote files can be found inyour rubbish bin in the SyncDebris folder, deleted local files in the client machine's recycle bin.$\r$\n3. No delta writes. Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing. Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit."
+MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "This is a private BETA version and will expire on Jan 4, 2014.$\r$\nIf you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Bear in mind that Windows filenames are case insensitive. Do not place items in the same MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. Concurrent creation of identically named files and folders on different clients can result in server-side dupes.$\r$\n2. No in-place versioning. Deleted remote files can be found inyour rubbish bin in the SyncDebris folder, deleted local files in the client machine's recycle bin.$\r$\n3. No delta writes. Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing. Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit."
   
   !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
