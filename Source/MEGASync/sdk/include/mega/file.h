@@ -62,6 +62,9 @@ struct File : public FileFingerprint
 	// source handle private?
 	bool hprivate;
 
+	// is this part of a sync transfer?
+	bool syncxfer;
+
 	// if !hprivate, filekey and size must be valid
 	byte filekey[FILENODEKEYLENGTH];
 

@@ -1,6 +1,6 @@
 /**
- * @file waiter.cpp
- * @brief Generic waiter interface
+ * @file posix/consolewaiter.cpp
+ * @brief POSIX event/timeout handling, listens for stdin
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
  *
@@ -19,14 +19,29 @@
  * program.
  */
 
-#include "mega/waiter.h"
+#include "megaconsolewaiter.h"
 
 namespace mega {
 
-// add events to wakeup criteria
-void Waiter::wakeupby(EventTrigger* et, int flags)
+// this implementation returns the presence of pending stdin data in bit 1.
+int PosixConsoleWaiter::wait()
 {
-	et->addevents(this,flags);
+    int numfd;
+
+	// application's own wakeup criteria:
+	// wake up upon user input
+	FD_SET(STDIN_FILENO,&rfds);
+
+    numfd = select ();
+
+	// timeout or error
+	if (numfd <= 0) return HAVESTDIN;
+
+	// application's own event processing:
+	// user interaction from stdin?
+	if (FD_ISSET(STDIN_FILENO,&rfds)) return (numfd == 1) ? HAVESTDIN : (HAVESTDIN | NEEDEXEC);
+
+	return NEEDEXEC;
 }
 
 } // namespace

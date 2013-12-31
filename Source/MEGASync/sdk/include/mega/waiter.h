@@ -30,7 +30,7 @@ namespace mega {
 struct EventTrigger
 {
 	// add wakeup criterion
-	virtual void addevents(Waiter*) = 0;
+	virtual void addevents(Waiter*, int) = 0;
 
 	// process events after wakeup
 	virtual int checkevents(Waiter*) { return 0; }
@@ -52,7 +52,7 @@ struct Waiter
 	virtual void init(dstime) = 0;
 
 	// add wakeup events
-	void wakeupby(EventTrigger*);
+	void wakeupby(EventTrigger*, int);
 	
 	// wait for all added wakeup criteria (plus the host app's own), up to the specified number of deciseconds
 	virtual int wait() = 0;

@@ -61,10 +61,11 @@
 #include "mega/megaclient.h"
 
 // target-specific headers
-#include "megawait.h"
+#include "megawaiter.h"
 #include "meganet.h"
 #include "megafs.h"
 #include "megaconsole.h"
+#include "megaconsolewaiter.h"
 
 #include "mega/db/sqlite.h"
 #include "mega/db/bdb.h"

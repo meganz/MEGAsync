@@ -67,7 +67,7 @@ public:
 	bool setmtimelocal(string*, time_t);
 	bool chdirlocal(string*);
 
-	void addevents(Waiter*);
+	void addevents(Waiter*, int);
 
 	static bool istransient(DWORD);
 	bool istransientorexists(DWORD);

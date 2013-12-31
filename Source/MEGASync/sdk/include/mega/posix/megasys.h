@@ -74,6 +74,10 @@
 #include <curl/curl.h>
 //#endif // end of Linux specific includes
 
+#ifndef FD_COPY
+#define FD_COPY(s, d) (memcpy ((d), (s), sizeof (fd_set)))
+#endif
+
 #ifdef __MACH__
 
 // FIXME: revisit OS X support

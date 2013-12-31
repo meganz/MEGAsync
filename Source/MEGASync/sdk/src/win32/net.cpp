@@ -62,7 +62,7 @@ void WinHttpIO::leavecs()
 }
 
 // ensure wakeup from WinHttpIO events
-void WinHttpIO::addevents(Waiter* w)
+void WinHttpIO::addevents(Waiter* w, int flags)
 {
     MegaApiWinWaiter* pw = (MegaApiWinWaiter*)w;
 

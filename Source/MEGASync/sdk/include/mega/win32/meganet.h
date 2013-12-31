@@ -26,10 +26,6 @@
 
 #include "win32/megaapiwait.h"
 
-#include <specstrings.h>
-#include <winhttp.h>
-#include <shellapi.h>
-
 namespace mega {
 
 class WinHttpIO : public HttpIO
@@ -56,7 +52,7 @@ public:
 
 	bool doio(void);
 
-	void addevents(Waiter*);
+	void addevents(Waiter*, int);
 
 	void entercs();
 	void leavecs();

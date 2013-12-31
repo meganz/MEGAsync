@@ -1,6 +1,6 @@
 /**
- * @file waiter.cpp
- * @brief Generic waiter interface
+ * @file mega/win32/megaconsolewaiter.h
+ * @brief Win32 event/timeout handling, listens for console input
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
  *
@@ -19,14 +19,21 @@
  * program.
  */
 
-#include "mega/waiter.h"
+#ifndef CONSOLE_WAIT_CLASS
+#define CONSOLE_WAIT_CLASS WinConsoleWaiter
 
 namespace mega {
 
-// add events to wakeup criteria
-void Waiter::wakeupby(EventTrigger* et, int flags)
+class WinConsoleWaiter : public WinWaiter
 {
-	et->addevents(this,flags);
-}
+    HANDLE hInput;
+
+public:
+    int wait();
+
+	WinConsoleWaiter();
+};
 
 } // namespace
+
+#endif
