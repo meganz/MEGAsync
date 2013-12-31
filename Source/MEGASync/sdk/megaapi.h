@@ -574,6 +574,7 @@ class MegaListener
 	virtual void onUsersUpdate(MegaApi* api, UserList *users);
 	virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
 	virtual void onReloadNeeded(MegaApi* api);
+    virtual void onSyncStateChanged(MegaApi *api);
 
 	//virtual void onSyncStateChanged(Sync*, syncstate) {}
 	//virtual void onSyncGet(Sync*, const char*) {}
@@ -772,6 +773,7 @@ public:
     int getTotalDownloads();
     void resetTransferCounters();
     void updateStatics();
+    bool isIndexing();
 
 
 	//Filesystem
@@ -826,6 +828,7 @@ protected:
 	void fireOnUsersUpdate(MegaApi* api, UserList *users);
 	void fireOnNodesUpdate(MegaApi* api, NodeList *nodes);
 	void fireOnReloadNeeded(MegaApi* api);
+    void fireOnSyncStateChanged(MegaApi* api);
 
     DECLARE_THREAD(thread);
 	MegaClient *client;

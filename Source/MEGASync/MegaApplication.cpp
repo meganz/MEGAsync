@@ -27,7 +27,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
     expired = false;
-    paused = false;
     setQuitOnLastWindowClosed(false);
 
     //Hack to have tooltips with a black background
@@ -95,6 +94,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 void MegaApplication::init()
 {
+    paused = false;
+    indexing = false;
+
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
     trayIcon->setContextMenu(NULL);
     trayIcon->show();
@@ -668,7 +670,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         {
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
-            if(megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+            if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
@@ -870,7 +872,20 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
 {
-	megaApi->fetchNodes();
+    megaApi->fetchNodes();
+}
+
+void MegaApplication::onSyncStateChanged(MegaApi *api)
+{
+    indexing = megaApi->isIndexing();
+    infoDialog->setIndexing(indexing);
+
+    if(paused)
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+    else if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+    else
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
 }
 
 //TODO: Manage sync callbacks here
