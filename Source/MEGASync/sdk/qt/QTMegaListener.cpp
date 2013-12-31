@@ -63,7 +63,7 @@ void QTMegaListener::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void QTMegaListener::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-	emit QTonTransferTemporaryErrorSignal(api, transfer->copy(), e);
+    emit QTonTransferTemporaryErrorSignal(api, transfer->copy(), e->copy());
 }
 
 void QTMegaListener::onUsersUpdate(MegaApi *api, UserList *users)

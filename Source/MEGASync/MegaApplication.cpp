@@ -45,6 +45,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
 	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
+    connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
+
     preferences = new Preferences();
     QDate betaLimit(2014, 1, 5);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
@@ -75,6 +77,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     //Create GUI elements
     trayMenu = NULL;
     trayIcon = new QSystemTrayIcon(this);
+    refreshTimer = new QTimer(this);
+    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
+    refreshTimer->start(10000);
+
     createActions();
     infoDialog = NULL;
     setupWizard = NULL;
@@ -289,6 +295,18 @@ void MegaApplication::pauseTransfers(bool pause)
 void MegaApplication::aboutDialog()
 {
     QMessageBox::about(NULL, tr("About MEGAsync"), tr("MEGAsync version code %1").arg(this->applicationVersion()));
+}
+
+void MegaApplication::refreshTrayIcon()
+{
+    cout << "Refreshing tray icon" << endl;
+    trayIcon->show();
+}
+
+void MegaApplication::cleanAll()
+{
+    cout << "Cleaning resources" << endl;
+    Utils::stopShellDispatcher();
 }
 
 void MegaApplication::unlink()

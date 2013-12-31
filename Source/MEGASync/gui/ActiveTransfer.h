@@ -18,6 +18,8 @@ public:
     void setFileName(QString fileName);
 	void setProgress(long long completedSize, long long totalSize);
     void setType(int type);
+    void setRegular(bool regular);
+    bool isRegular();
 	void hideTransfer();
 
 signals:
@@ -31,6 +33,9 @@ protected:
 
     QString fileName;
     int type;
+    bool regular;
+private slots:
+    void on_bCancel_clicked();
 };
 
 #endif // ACTIVETRANSFER_H

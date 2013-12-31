@@ -12,6 +12,8 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
     ui->lPercentage->setText(QString());
     ui->pProgress->hide();
     ui->lType->hide();
+    ui->bCancel->hide();
+    regular = false;
 }
 
 ActiveTransfer::~ActiveTransfer()
@@ -29,7 +31,7 @@ void ActiveTransfer::setFileName(QString fileName)
 
 void ActiveTransfer::setProgress(long long completedSize, long long totalSize)
 {
-	int permil = (1000*completedSize)/(totalSize+1);
+    int permil = (1000*completedSize)/(totalSize+1);
 	ui->pProgress->setProgress(permil);
     ui->lPercentage->setText(QString::number((permil+5)/10) + QString::fromAscii("%"));
     ui->pProgress->show();
@@ -48,19 +50,36 @@ void ActiveTransfer::setType(int type)
     {
         ui->lType->setPixmap(QPixmap(QString::fromAscii("://images/tray_download_ico.png")));
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
-	}
+    }
+}
+
+void ActiveTransfer::setRegular(bool regular)
+{
+    ui->bCancel->setVisible(regular);
+    this->regular = regular;
+}
+
+bool ActiveTransfer::isRegular()
+{
+    return regular;
 }
 
 void ActiveTransfer::hideTransfer()
 {
-	ui->lFileName->setText(QString());
-	ui->lType->setPixmap(QPixmap());
-	ui->lPercentage->setText(QString());
+    ui->lFileName->setText(QString::fromAscii(""));
+    ui->lPercentage->setText(QString::fromAscii(""));
 	ui->pProgress->hide();
     ui->lType->hide();
+    ui->bCancel->hide();
 }
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 {
+    if(!regular) return;
     emit clicked(event->x(), event->y());
+}
+
+void ActiveTransfer::on_bCancel_clicked()
+{
+    emit clicked(ui->bCancel->pos().x(), ui->bCancel->pos().y());
 }

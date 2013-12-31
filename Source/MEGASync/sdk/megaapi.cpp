@@ -616,6 +616,7 @@ MegaTransfer::MegaTransfer(const MegaTransfer &transfer)
 	this->setDeltaSize(transfer.getDeltaSize());
 	this->setUpdateTime(transfer.getUpdateTime());
     this->setPublicNode(transfer.getPublicNode());
+    this->setTransfer(transfer.getTransfer());
 }
 
 MegaTransfer* MegaTransfer::copy()
@@ -1361,6 +1362,99 @@ void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, Meg
     waiter->notify();
 }
 
+bool MegaApi::checkTransfer(Transfer *transfer)
+{
+    MUTEX_LOCK(sdkMutex);
+    for (transfer_map::iterator it = client->transfers[0].begin() ; it != client->transfers[0].end() ; it++)
+    {
+        Transfer *t = it->second;
+        if(t == transfer)
+        {
+            MUTEX_UNLOCK(sdkMutex);
+            return true;
+        }
+    }
+
+    for (transfer_map::iterator it = client->transfers[1].begin() ; it != client->transfers[1].end() ; it++)
+    {
+        Transfer *t = it->second;
+        if(t == transfer)
+        {
+            MUTEX_UNLOCK(sdkMutex);
+            return true;
+        }
+    }
+
+    MUTEX_UNLOCK(sdkMutex);
+    return false;
+}
+
+
+
+void MegaApi::cancelTransfer(MegaTransfer *t)
+{
+    cancelTransfer(t->getTransfer());
+}
+
+void MegaApi::cancelTransfer(Transfer *transfer)
+{
+    MUTEX_LOCK(sdkMutex);
+    if(!checkTransfer(transfer))
+    {
+        MUTEX_UNLOCK(sdkMutex);
+        return;
+    }
+    file_list files = transfer->files;
+    file_list::iterator iterator = files.begin();
+    while (iterator != files.end())
+    {
+        File *file = *iterator;
+        iterator++;
+        if(!file->syncxfer) client->stopxfer(file);
+    }
+    MUTEX_UNLOCK(sdkMutex);
+}
+
+void MegaApi::cancelRegularTransfers(int direction)
+{
+    MUTEX_LOCK(sdkMutex);
+    for (transfer_map::iterator it = client->transfers[direction].begin() ; it != client->transfers[direction].end() ; )
+    {
+        Transfer *t = it->second;
+        it++;
+        cancelTransfer(t);
+    }
+    MUTEX_UNLOCK(sdkMutex);
+}
+
+bool MegaApi::isRegularTransfer(Transfer *transfer)
+{
+    bool regular = false;
+    MUTEX_LOCK(sdkMutex);
+    if(!checkTransfer(transfer))
+    {
+        MUTEX_UNLOCK(sdkMutex);
+        return false;
+    }
+    file_list::const_iterator iterator;
+    for (iterator = transfer->files.begin(); iterator != transfer->files.end(); iterator++)
+    {
+        File *file = *iterator;
+        if(!file->syncxfer)
+        {
+            regular = true;
+            break;
+        }
+    }
+    MUTEX_UNLOCK(sdkMutex);
+    return regular;
+}
+
+bool MegaApi::isRegularTransfer(MegaTransfer *transfer)
+{
+    return isRegularTransfer(transfer->getTransfer());
+}
+
 pathstate_t MegaApi::syncPathState(string* path)
 {
     MUTEX_LOCK(sdkMutex);
@@ -1733,11 +1827,13 @@ void MegaApi::transfer_added(Transfer *t)
 
 void MegaApi::transfer_removed(Transfer *t)
 {
-    /*updateStatics();
+    updateStatics();
+    if (t->type == GET) pendingDownloads--;
+    else pendingUploads --;
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
 	cout << "transfer_removed" << endl;
-    fireOnTransferTemporaryError(this, transfer, MegaError(API_OK));*/
+    fireOnTransferTemporaryError(this, transfer, MegaError(API_OK));
 }
 
 void MegaApi::transfer_prepare(Transfer *t)
@@ -1810,8 +1906,12 @@ void MegaApi::transfer_update(Transfer *tr)
         else th = "TU ";
         cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
              << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
-		fireOnTransferUpdate(this, transfer);
-        WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
+
+        if(transfer->getTransferredBytes())
+        {
+            fireOnTransferUpdate(this, transfer);
+            WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
+        }
 	}
 }
 

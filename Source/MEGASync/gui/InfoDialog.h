@@ -38,6 +38,10 @@ public slots:
    void addSync();
    void onTransfer1Clicked(int x, int y);
    void onTransfer2Clicked(int x, int y);
+   void cancelAllUploads();
+   void cancelAllDownloads();
+   void cancelCurrentUpload();
+   void cancelCurrentDownload();
 
 private slots:
     void on_bSettings_clicked();
@@ -75,6 +79,8 @@ protected:
     QTimer *timer;
     MegaApplication *app;
     Preferences *preferences;
+    Transfer *transfer1;
+    Transfer *transfer2;
     bool finishing;
 };
 

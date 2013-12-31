@@ -65,6 +65,9 @@
         <property name="text">
          <string>Download to my computer</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -88,7 +91,7 @@
          <item>
           <widget class="QLineEdit" name="eLocalFolder">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -98,7 +101,7 @@
          <item>
           <widget class="QPushButton" name="bLocalFolder">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="minimumSize">
             <size>

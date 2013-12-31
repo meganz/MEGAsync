@@ -760,7 +760,12 @@ public:
     void startPublicDownload(PublicNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
     //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
 
-//	void cancelTransfer(MegaTransfer *transfer);
+    bool checkTransfer(Transfer *transfer);
+    void cancelTransfer(MegaTransfer *transfer);
+    void cancelTransfer(Transfer *t);
+    void cancelRegularTransfers(int direction);
+    bool isRegularTransfer(Transfer *transfer);
+    bool isRegularTransfer(MegaTransfer *transfer);
 
     pathstate_t syncPathState(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
