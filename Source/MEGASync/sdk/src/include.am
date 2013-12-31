@@ -53,14 +53,16 @@ if WIN32
 src_libmega_la_SOURCES+= src/win32/fs.cpp
 src_libmega_la_SOURCES+= src/win32/console.cpp
 src_libmega_la_SOURCES+= src/win32/net.cpp
-src_libmega_la_SOURCES+= src/win32/wait.cpp
+src_libmega_la_SOURCES+= src/win32/waiter.cpp
+src_libmega_la_SOURCES+= src/win32/consolewaiter.cpp
 
 # posix sources
 else
 src_libmega_la_SOURCES += src/posix/fs.cpp
 src_libmega_la_SOURCES += src/posix/console.cpp
 src_libmega_la_SOURCES += src/posix/net.cpp
-src_libmega_la_SOURCES += src/posix/wait.cpp
+src_libmega_la_SOURCES += src/posix/waiter.cpp
+src_libmega_la_SOURCES += src/posix/consolewaiter.cpp
 
 endif
 

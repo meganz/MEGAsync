@@ -1,6 +1,6 @@
 /**
- * @file waiter.cpp
- * @brief Generic waiter interface
+ * @file mega/posix/megaconsolewaiter.h
+ * @brief Posix event/timeout handling, listens for stdin input
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
  *
@@ -19,14 +19,18 @@
  * program.
  */
 
-#include "mega/waiter.h"
+#ifndef CONSOLE_WAIT_CLASS
+#define CONSOLE_WAIT_CLASS PosixConsoleWaiter
+
+#include "megawaiter.h"
 
 namespace mega {
 
-// add events to wakeup criteria
-void Waiter::wakeupby(EventTrigger* et, int flags)
+struct PosixConsoleWaiter : public PosixWaiter
 {
-	et->addevents(this,flags);
-}
+	int wait();
+};
 
 } // namespace
+
+#endif

@@ -41,6 +41,7 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/db/sqlite.cpp  \
     $$PWD/src/win32/net.cpp  \
     $$PWD/src/win32/fs.cpp  \
+    $$PWD/src/win32/waiter.cpp  \
     $$PWD/win32/megaapiwait.cpp  \
     $$PWD/megaapi.cpp \
     $$PWD/sqlite3.c \

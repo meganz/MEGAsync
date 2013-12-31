@@ -301,7 +301,7 @@ void MegaClient::init()
 MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k)
 {
 	sctable = NULL;
-    reqtag = 0;
+
 	init();
 
 	app = a;
@@ -845,12 +845,12 @@ int MegaClient::wait()
 
 	waiter->init(nds);
 	
-	// set subsystem wakeup criteria
-	waiter->wakeupby(httpio);
-	waiter->wakeupby(fsaccess);
+	// set subsystem wakeup criteria (WinWaiter assumes httpio to be set first!)
+	waiter->wakeupby(httpio,Waiter::NEEDEXEC);
+	waiter->wakeupby(fsaccess,Waiter::NEEDEXEC);
 
 	int r = waiter->wait();
-	
+
 	// process results
 	r |= httpio->checkevents(waiter);
 	r |= fsaccess->checkevents(waiter);

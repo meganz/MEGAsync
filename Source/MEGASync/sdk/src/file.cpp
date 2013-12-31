@@ -32,6 +32,7 @@ File::File()
 {
 	transfer = NULL;
 	hprivate = true;
+	syncxfer = false;
 }
 
 File::~File()
@@ -135,6 +136,7 @@ SyncFileGet::SyncFileGet(Sync* csync, Node* cn, string* clocalname)
 	*(FileFingerprint*)this = *n;
 	localname = *clocalname;
 
+	syncxfer = true;
 	n->syncget = this;
 }
 

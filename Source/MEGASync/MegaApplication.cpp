@@ -47,7 +47,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     preferences = new Preferences();
-    QDate betaLimit(2014, 1, 4);
+    QDate betaLimit(2014, 1, 5);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
     long long previousTime = preferences->lastExecutionTime();
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();

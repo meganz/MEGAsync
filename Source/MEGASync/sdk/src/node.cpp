@@ -551,6 +551,7 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	node = NULL;
 	notseen = 0;
 	remoteq = SYNCREMOTENOTSET;
+	syncxfer = true;
 
 	type = ctype;
 	syncid = sync->client->nextsyncid();

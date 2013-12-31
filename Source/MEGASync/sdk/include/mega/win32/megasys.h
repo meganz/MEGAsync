@@ -33,8 +33,12 @@
 #include <memory.h>
 #include <time.h>
 
+#include <specstrings.h>
 #include <winsock2.h>
 #include <windows.h>
+#include <winhttp.h>
+#include <shellapi.h>
+
 #define atoll _atoi64
 #define snprintf _snprintf
 #define _CRT_SECURE_NO_WARNINGS
@@ -44,5 +48,6 @@
 #define MEGA_MINOR_VERSION 2
 #define MEGA_MICRO_VERSION 3
 
+#include <conio.h>
 
 #endif

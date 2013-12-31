@@ -1,6 +1,6 @@
 /**
- * @file waiter.cpp
- * @brief Generic waiter interface
+ * @file mega/posix/megawaiter.h
+ * @brief POSIX event/timeout handling
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
  *
@@ -19,14 +19,28 @@
  * program.
  */
 
+#ifndef WAIT_CLASS
+#define WAIT_CLASS PosixWaiter
+
 #include "mega/waiter.h"
 
 namespace mega {
 
-// add events to wakeup criteria
-void Waiter::wakeupby(EventTrigger* et, int flags)
+struct PosixWaiter : public Waiter
 {
-	et->addevents(this,flags);
-}
+	int maxfd;
+	fd_set rfds, wfds, efds;
+
+	dstime getdstime();
+
+	void init(dstime);
+	int wait();
+	void bumpmaxfd(int);
+
+    int select ();
+    void fdset (fd_set *read_fd_set, fd_set *write_fd_set, fd_set *exc_fd_set, int *max_fd);
+};
 
 } // namespace
+
+#endif
