@@ -226,6 +226,10 @@ void SettingsDialog::loadSettings()
             break;
     }
 
+    Node *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+    if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+    else ui->eUploadFolder->setText(QString::fromUtf8(megaApi->getNodePath(node)));
+
     //Syncs
     loadSyncSettings();
 
@@ -282,6 +286,11 @@ void SettingsDialog::saveSettings()
     //bool startOnStartup = ui->cStartOnStartup->isChecked();
     //Utils::startOnStartup(startOnStartup);
     //preferences->setStartOnStartup(startOnStartup);
+
+    //Account
+    Node *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
+    if(node && ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")))
+        preferences->setUploadFolder(node->nodehandle);
 
     //Syncs
 	if(syncsChanged)
@@ -480,5 +489,23 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
             QDesktopServices::openUrl(QUrl(url));
             delete handle;
         }
+    }
+}
+
+void SettingsDialog::on_bUploadFolder_clicked()
+{
+    NodeSelector *nodeSelector = new NodeSelector(megaApi, this);
+    nodeSelector->nodesReady();
+    int result = nodeSelector->exec();
+
+    if(result != QDialog::Accepted)
+        return;
+
+    handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    QString newPath = QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
+    if(newPath.compare(ui->eUploadFolder->text()))
+    {
+        ui->eUploadFolder->setText(newPath);
+        stateChanged();
     }
 }
