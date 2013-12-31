@@ -301,7 +301,7 @@ void MegaClient::init()
 MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k)
 {
 	sctable = NULL;
-
+    reqtag = 0;
 	init();
 
 	app = a;

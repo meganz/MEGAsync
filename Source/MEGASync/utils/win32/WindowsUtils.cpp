@@ -154,10 +154,14 @@ void WindowsUtils::startShellDispatcher(MegaApplication *receiver)
 
 void WindowsUtils::stopShellDispatcher()
 {
-    shellDispatcherTask->exitTask();
-    shellDispatcherThread.quit();
-    shellDispatcherThread.wait();
-    delete shellDispatcherTask;
+    if(shellDispatcherTask)
+    {
+        shellDispatcherTask->exitTask();
+        shellDispatcherThread.quit();
+        shellDispatcherThread.wait();
+        delete shellDispatcherTask;
+        shellDispatcherTask = NULL;
+    }
 }
 
 void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)

@@ -84,6 +84,8 @@ public slots:
     void exitApplication();
     void pauseTransfers(bool pause);
     void aboutDialog();
+    void refreshTrayIcon();
+    void cleanAll();
 
 protected:
     void createActions();
@@ -119,6 +121,7 @@ protected:
 	QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
+    QTimer *refreshTimer;
 
     //TODO: Enable autoUpdate again in the next release
     //QThread updateThread;

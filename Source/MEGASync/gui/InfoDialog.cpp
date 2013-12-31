@@ -44,6 +44,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	ui->bUploads->hide();
     finishing = false;
     indexing = false;
+    transfer1 = NULL;
+    transfer2 = NULL;
 	/***************************/
     //Example transfers
 	/*ui->wRecent1->setFileName("filename_compressed.zip");
@@ -102,7 +104,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(ui->wTransfer1, SIGNAL(clicked(int, int)), this, SLOT(onTransfer1Clicked(int, int)));
-    connect(ui->wTransfer1, SIGNAL(clicked(int, int)), this, SLOT(onTransfer2Clicked(int, int)));
+    connect(ui->wTransfer2, SIGNAL(clicked(int, int)), this, SLOT(onTransfer2Clicked(int, int)));
 }
 
 InfoDialog::~InfoDialog()
@@ -139,13 +141,19 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
     ActiveTransfer *wTransfer;
     if(type == MegaTransfer::TYPE_DOWNLOAD)
-       wTransfer = ui->wTransfer1;
+    {
+        wTransfer = ui->wTransfer1;
+        transfer1 = transfer->getTransfer();
+    }
     else
-       wTransfer = ui->wTransfer2;
+    {
+        wTransfer = ui->wTransfer2;
+        transfer2 = transfer->getTransfer();
+    }
 
     wTransfer->setFileName(fileName);
     wTransfer->setProgress(completedSize, totalSize);
-
+    wTransfer->setRegular(app->getMegaApi()->isRegularTransfer(transfer->getTransfer()));
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
@@ -184,6 +192,7 @@ void InfoDialog::updateTransfers()
     }
     else
     {
+        ui->wTransfer1->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
         ui->bDownloads->hide();
     }
@@ -201,6 +210,7 @@ void InfoDialog::updateTransfers()
     }
     else
     {
+        ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
         ui->bUploads->hide();
     }
@@ -320,13 +330,44 @@ void InfoDialog::addSync()
 
 void InfoDialog::onTransfer1Clicked(int x, int y)
 {
-
+    QMenu menu;
+    QAction *cancelAll = menu.addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+    QAction *cancelCurrent = menu.addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+    menu.addAction(cancelCurrent);
+    menu.addAction(cancelAll);
+    menu.exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
 }
 
 void InfoDialog::onTransfer2Clicked(int x, int y)
 {
-
+    QMenu menu;
+    QAction *cancelAll = menu.addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+    QAction *cancelCurrent = menu.addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+    menu.addAction(cancelCurrent);
+    menu.addAction(cancelAll);
+    menu.exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
 }
+
+void InfoDialog::cancelAllUploads()
+{
+    app->getMegaApi()->cancelRegularTransfers(1);
+}
+
+void InfoDialog::cancelAllDownloads()
+{
+    app->getMegaApi()->cancelRegularTransfers(0);
+}
+
+void InfoDialog::cancelCurrentUpload()
+{
+    app->getMegaApi()->cancelTransfer(transfer2);
+}
+
+void InfoDialog::cancelCurrentDownload()
+{
+    app->getMegaApi()->cancelTransfer(transfer1);
+}
+
 
 void InfoDialog::on_bSettings_clicked()
 {
