@@ -100,6 +100,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->move(1, 60);
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
+    connect(ui->wTransfer1, SIGNAL(clicked(int, int)), this, SLOT(onTransfer1Clicked(int, int)));
+    connect(ui->wTransfer1, SIGNAL(clicked(int, int)), this, SLOT(onTransfer2Clicked(int, int)));
 }
 
 InfoDialog::~InfoDialog()
@@ -127,16 +129,21 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
     ui->lTotalUsed->setText(usage);
 }
 
-void InfoDialog::setTransfer(int type, QString fileName, long long completedSize, long long totalSize)
+void InfoDialog::setTransfer(MegaTransfer *transfer)
 {
-    ActiveTransfer *transfer;
-    if(type == MegaTransfer::TYPE_DOWNLOAD)
-       transfer = ui->wTransfer1;
-    else
-       transfer = ui->wTransfer2;
+    int type = transfer->getType();
+    QString fileName = QString::fromUtf8(transfer->getFileName());
+    long long completedSize = transfer->getTransferredBytes();
+    long long totalSize = transfer->getTotalBytes();
 
-    transfer->setFileName(fileName);
-	transfer->setProgress(completedSize, totalSize);
+    ActiveTransfer *wTransfer;
+    if(type == MegaTransfer::TYPE_DOWNLOAD)
+       wTransfer = ui->wTransfer1;
+    else
+       wTransfer = ui->wTransfer2;
+
+    wTransfer->setFileName(fileName);
+    wTransfer->setProgress(completedSize, totalSize);
 
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
@@ -299,6 +306,16 @@ void InfoDialog::addSync()
    Preferences *preferences = app->getPreferences();
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
    app->getMegaApi()->syncFolder(localFolderPath.toUtf8().constData(), node);
+}
+
+void InfoDialog::onTransfer1Clicked(int x, int y)
+{
+
+}
+
+void InfoDialog::onTransfer2Clicked(int x, int y)
+{
+
 }
 
 void InfoDialog::on_bSettings_clicked()

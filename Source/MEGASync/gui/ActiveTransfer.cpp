@@ -1,5 +1,6 @@
 #include "ActiveTransfer.h"
 #include "ui_ActiveTransfer.h"
+#include <QMouseEvent>
 
 ActiveTransfer::ActiveTransfer(QWidget *parent) :
     QWidget(parent),
@@ -56,5 +57,10 @@ void ActiveTransfer::hideTransfer()
 	ui->lType->setPixmap(QPixmap());
 	ui->lPercentage->setText(QString());
 	ui->pProgress->hide();
-	ui->lType->hide();
+    ui->lType->hide();
+}
+
+void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
+{
+    emit clicked(event->x(), event->y());
 }

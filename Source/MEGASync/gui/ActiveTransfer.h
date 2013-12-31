@@ -20,10 +20,15 @@ public:
     void setType(int type);
 	void hideTransfer();
 
+signals:
+    void clicked(int x, int y);
+
 private:
     Ui::ActiveTransfer *ui;
 
 protected:
+    void mouseReleaseEvent ( QMouseEvent * event );
+
     QString fileName;
     int type;
 };
