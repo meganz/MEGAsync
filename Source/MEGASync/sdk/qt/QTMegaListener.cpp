@@ -27,7 +27,8 @@ QTMegaListener::QTMegaListener(MegaListener *listener)
 			Qt::BlockingQueuedConnection);
 	connect(this, SIGNAL(QTonReloadNeededSignal(MegaApi *)),
 			this, SLOT(QTonReloadNeeded(MegaApi *)));
-
+    connect(this, SIGNAL(QTonSyncStateChangedSignal(MegaApi *)),
+            this, SLOT(QTonSyncStateChanged(MegaApi *)));
 }
 
 void QTMegaListener::onRequestStart(MegaApi *api, MegaRequest *request)
@@ -77,7 +78,12 @@ void QTMegaListener::onNodesUpdate(MegaApi *api, NodeList *nodes)
 
 void QTMegaListener::onReloadNeeded(MegaApi *api)
 {
-	emit QTonReloadNeeded(api);
+    emit QTonReloadNeededSignal(api);
+}
+
+void QTMegaListener::onSyncStateChanged(MegaApi *api)
+{
+    emit QTonSyncStateChangedSignal(api);
 }
 
 void QTMegaListener::QTonRequestStart(MegaApi *api, MegaRequest *request)
@@ -138,5 +144,10 @@ void QTMegaListener::QTonNodesUpdate(MegaApi *api, NodeList *nodes)
 
 void QTMegaListener::QTonReloadNeeded(MegaApi *api)
 {
-	if(listener) listener->onReloadNeeded(api);
+    if(listener) listener->onReloadNeeded(api);
+}
+
+void QTMegaListener::QTonSyncStateChanged(MegaApi *api)
+{
+    if(listener) listener->onSyncStateChanged(api);
 }

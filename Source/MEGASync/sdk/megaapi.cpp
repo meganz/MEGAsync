@@ -878,6 +878,9 @@ void MegaListener::onNodesUpdate(MegaApi*, NodeList *nodes)
 { cout << "onNodesUpdate   Nodes: " << nodes->size() << endl; }
 void MegaListener::onReloadNeeded(MegaApi*)
 { cout << "onReloadNeeded" << endl; }
+void MegaListener::onSyncStateChanged(MegaApi *api)
+{ cout << "onSyncStateChanged" << endl; }
+
 MegaListener::~MegaListener() {}
 
 int TreeProcessor::processNode(Node*){ return 0; /* Stops the processing */ }
@@ -1927,7 +1930,7 @@ void MegaApi::transfer_complete(Transfer* tr)
 void MegaApi::syncupdate_state(Sync *, syncstate s)
 {
 	cout << "syncupdate_state: " << s << endl;
-
+    fireOnSyncStateChanged(this);
 }
 
 void MegaApi::syncupdate_stuck(string *s)
@@ -3024,6 +3027,14 @@ void MegaApi::fireOnReloadNeeded(MegaApi* api)
     MUTEX_UNLOCK(listenerMutex);
 }
 
+void MegaApi::fireOnSyncStateChanged(MegaApi* api)
+{
+    MUTEX_LOCK(listenerMutex);
+    for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
+        (*it)->onSyncStateChanged(api);
+    MUTEX_UNLOCK(listenerMutex);
+}
+
 
 MegaError MegaApi::checkAccess(Node* node, const char *level)
 {
@@ -3941,6 +3952,25 @@ void MegaApi::updateStatics()
     pendingDownloads = client->transfers[0].size();
     pendingUploads = client->transfers[1].size();
     MUTEX_UNLOCK(sdkMutex);
+}
+
+bool MegaApi::isIndexing()
+{
+    bool indexing = false;
+    MUTEX_LOCK(sdkMutex);
+    sync_list::iterator it = client->syncs.begin();
+    while(it != client->syncs.end())
+    {
+        Sync *sync = (*it);
+        if(sync->state == SYNC_INITIALSCAN)
+        {
+            indexing = true;
+            break;
+        }
+        it++;
+    }
+    MUTEX_UNLOCK(sdkMutex);
+    return indexing;
 }
 
 char* MegaApi::strdup(const char* buffer)

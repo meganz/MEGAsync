@@ -43,6 +43,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->lUploads->setText(QString::fromAscii(""));
 	ui->bUploads->hide();
     finishing = false;
+    indexing = false;
 	/***************************/
     //Example transfers
 	/*ui->wRecent1->setFileName("filename_compressed.zip");
@@ -213,6 +214,14 @@ void InfoDialog::updateTransfers()
     else finishing = false;
 }
 
+void InfoDialog::setIndexing(bool indexing)
+{
+    this->indexing = indexing;
+    if(ui->bPause->isChecked()) ui->lSyncUpdated->setText(tr("MEGAsync is paused"));
+    else if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+    else ui->lSyncUpdated->setText(tr("MEGAsync is indexing"));
+}
+
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
 {
 	this->downloadSpeed = downloadSpeed;
@@ -252,7 +261,8 @@ void InfoDialog::setPaused(bool paused)
     }
     else
     {
-        ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+        if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+        else ui->lSyncUpdated->setText(tr("MEGAsync is indexing"));
     }
 }
 

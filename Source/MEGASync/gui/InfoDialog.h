@@ -31,6 +31,7 @@ public:
     void setPaused(bool paused);
 	void updateDialog();
     void updateTransfers();
+    void setIndexing(bool indexing);
 
 public slots:
    void timerUpdate();
@@ -63,6 +64,7 @@ private:
 	long long totalDownloadedSize, totalUploadedSize;
 	long long totalDownloadSize, totalUploadSize;
 	int remainingUploads, remainingDownloads;
+    bool indexing;
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *ev);

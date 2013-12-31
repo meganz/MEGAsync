@@ -42,6 +42,7 @@ public:
     virtual void onUsersUpdate(MegaApi* api, UserList *users);
     virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
     virtual void onReloadNeeded(MegaApi* api);
+    virtual void onSyncStateChanged(MegaApi *api);
 
 	/*
     virtual void onSyncStateChanged(Sync*, syncstate);
@@ -126,6 +127,7 @@ protected:
     bool reboot;
     bool syncActive;
     bool paused;
+    bool indexing;
 
     static const int VERSION_CODE;
 };
