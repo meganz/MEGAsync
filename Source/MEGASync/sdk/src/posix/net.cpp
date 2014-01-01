@@ -48,7 +48,7 @@ CurlHttpIO::~CurlHttpIO()
 }
 
 // wake up from cURL I/O
-void CurlHttpIO::addevents(Waiter* w)
+void CurlHttpIO::addevents(Waiter* w, int flags)
 {
 	int t;
 	PosixWaiter* pw = (PosixWaiter*)w;

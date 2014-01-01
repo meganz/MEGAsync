@@ -23,19 +23,18 @@
 
 namespace mega {
 
-// this implementation returns the presence of pending stdin data in bit 1.
 int PosixConsoleWaiter::wait()
 {
-    int numfd;
+	int numfd;
 
 	// application's own wakeup criteria:
 	// wake up upon user input
 	FD_SET(STDIN_FILENO,&rfds);
 
-    numfd = select ();
+	numfd = select ();
 
 	// timeout or error
-	if (numfd <= 0) return HAVESTDIN;
+	if (numfd <= 0) return NEEDEXEC;
 
 	// application's own event processing:
 	// user interaction from stdin?

@@ -65,4 +65,77 @@ void TreeProcDel::proc(MegaClient* client, Node* n)
 	client->notifynode(n);
 }
 
+// stop sync get
+void TreeProcDelSyncGet::proc(MegaClient*, Node* n)
+{
+	if (n->syncget)
+	{
+		delete n->syncget;
+		n->syncget = NULL;
+	}
+}
+
+TreeProcSyncStatus::TreeProcSyncStatus()
+{
+	state = PATHSTATE_SYNCED;
+}
+
+// determine subtree's sync status
+void TreeProcSyncStatus::proc(MegaClient* client, Node* n)
+{
+	if (state == PATHSTATE_SYNCING) return;
+
+	if (!n->localnode)
+	{
+		if (n->type == FILENODE)
+		{
+			// SYNCING > PENDING > SYNCED
+			if (n->syncget) state = PATHSTATE_SYNCING;
+			else if (state == PATHSTATE_SYNCED) state = PATHSTATE_PENDING;
+		}
+		else
+		{
+			// missing local folders are subject to immediate creation, so always show SYNCING
+			state = PATHSTATE_SYNCING;
+		}
+	}
+	else
+	{
+		if (n->type == FILENODE)
+		{
+			// missing remote file - uploading already?
+			if (n->localnode->transfer)
+			{
+				if (n->localnode->transfer->slot) state = PATHSTATE_SYNCING;
+				else if (state == PATHSTATE_SYNCED) state = PATHSTATE_PENDING;
+			}
+		}
+		else
+		{
+			// find and check LocalNodes without corresponding Node, but don't recurse
+			for (localnode_map::iterator it = n->localnode->children.begin(); it != n->localnode->children.end(); it++)
+			{
+				if (!it->second->node)
+				{
+					if (it->second->type == FILENODE)
+					{
+						// missing remote file - uploading already?
+						if (it->second->transfer)
+						{
+							if (it->second->transfer->slot) state = PATHSTATE_SYNCING;
+							else if (state == PATHSTATE_SYNCED) state = PATHSTATE_PENDING;
+						}
+					}
+					else
+					{
+						// missing remote folders are subject to immediate creation, so always show SYNCING
+						state = PATHSTATE_SYNCING;
+					}
+				}
+			}
+		}
+	}
+}
+
+
 } // namespace
