@@ -24,6 +24,7 @@
 
 #include "sharenodekeys.h"
 #include "node.h"
+#include "transfer.h"
 
 namespace mega {
 
@@ -82,6 +83,21 @@ public:
 	void get(Command*);
 
 	TreeProcShareKeys(Node* = NULL);
+};
+
+class TreeProcDelSyncGet : public TreeProc
+{
+public:
+	void proc(MegaClient*, Node*);
+};
+
+class TreeProcSyncStatus : public TreeProc
+{
+public:
+	pathstate_t state;
+
+	void proc(MegaClient*, Node*);
+	TreeProcSyncStatus();
 };
 
 } // namespace

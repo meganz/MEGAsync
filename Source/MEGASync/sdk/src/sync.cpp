@@ -22,6 +22,7 @@
 #include "mega/sync.h"
 #include "mega/megaapp.h"
 #include "mega/transfer.h"
+#include "mega/megaclient.h"
 
 namespace mega {
 
@@ -50,6 +51,10 @@ Sync::~Sync()
 {
 	// prevent remote mass deletion while rootlocal destructor runs
 	state = SYNC_CANCELED;
+
+	// stop all active and pending downloads
+	TreeProcDelSyncGet tdsg;
+	client->proctree(localroot.node,&tdsg);
 
 	client->syncs.erase(sync_it);
 
@@ -131,7 +136,14 @@ pathstate_t Sync::pathstate(string* localpath)
 	LocalNode* l = localnodebypath(NULL,localpath);
 
 	if (!l) return PATHSTATE_NOTFOUND;
-	if (l->node) return PATHSTATE_SYNCED;
+
+	if (l->node)
+	{
+		TreeProcSyncStatus tpss;
+		client->proctree(l->node,&tpss);
+		return tpss.state;
+	}
+
 	if (l->transfer && l->transfer->slot) return PATHSTATE_SYNCING;
 	return PATHSTATE_PENDING;
 }

@@ -45,7 +45,7 @@ class PosixFileSystemAccess : public FileSystemAccess
 public:
 #ifdef USE_INOTIFY
 	int notifyfd;
-	
+
 	bool notifyerr, notifyfailed;
 
 	typedef map<int,LocalNode*> wdlocalnode_map;
@@ -75,7 +75,7 @@ public:
 	bool setmtimelocal(string*, time_t);
 	bool chdirlocal(string*);
 
-	void addevents(Waiter*);
+	void addevents(Waiter*, int);
 	int checkevents(Waiter*);
 
 	PosixFileSystemAccess();

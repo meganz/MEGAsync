@@ -119,7 +119,7 @@ PosixFileSystemAccess::~PosixFileSystemAccess()
 
 #ifdef USE_INOTIFY
 // wake up from filesystem updates
-void PosixFileSystemAccess::addevents(Waiter* w)
+void PosixFileSystemAccess::addevents(Waiter* w, int flags)
 {
 	PosixWaiter* pw = (PosixWaiter*)w;
 
