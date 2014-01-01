@@ -102,13 +102,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bGeneral">
         <property name="minimumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
@@ -143,13 +143,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
@@ -178,13 +178,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bSyncs">
         <property name="minimumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
@@ -213,13 +213,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bBandwidth">
         <property name="minimumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>107</width>
+          <width>85</width>
           <height>60</height>
          </size>
         </property>
@@ -229,6 +229,41 @@ margin-top: 6px;
         <property name="icon">
          <iconset>
           <normaloff>://images/bandwidth_32.png</normaloff>://images/bandwidth_32.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="bAdvanced">
+        <property name="minimumSize">
+         <size>
+          <width>85</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Advanced</string>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -935,6 +970,7 @@ padding: 4px;</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="pAdvanced"/>
      <widget class="QWidget" name="pProxies">
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <property name="topMargin">

@@ -31,6 +31,8 @@ private slots:
 
     void on_bBandwidth_clicked();
 
+    void on_bAdvanced_clicked();
+
     //void on_bProxies_clicked();
 
     void on_bCancel_clicked();
