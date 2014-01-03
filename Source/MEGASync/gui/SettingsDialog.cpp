@@ -20,6 +20,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     this->megaApi = app->getMegaApi();
     this->preferences = app->getPreferences();
 	syncsChanged = false;
+    excludedNamesChanged = false;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -386,10 +387,16 @@ void SettingsDialog::saveSettings()
     app->setUploadLimit(preferences->uploadLimitKB());
 
     //Advanced
-    QStringList excludedNames;
-    for(int i=0; i<ui->lExcludedNames->count(); i++)
-        excludedNames.append(ui->lExcludedNames->item(i)->text());
-    preferences->setExcludedSyncNames(excludedNames);
+    if(excludedNamesChanged)
+    {
+        QStringList excludedNames;
+        for(int i=0; i<ui->lExcludedNames->count(); i++)
+            excludedNames.append(ui->lExcludedNames->item(i)->text());
+        preferences->setExcludedSyncNames(excludedNames);
+
+        QMessageBox::information(this, tr("Warning"), QString::fromUtf8("The new excluded file names will be taken into account\n"
+                                                                        "when the application starts again."), QMessageBox::Ok);
+    }
 
     //Proxies
 /*  if(ui->rNoProxy->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
@@ -541,7 +548,7 @@ void SettingsDialog::on_bAddName_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Excluded name"),
-                                         tr("Please, enter a name to exclude from synchronization.\n(wilcards * and ? are allowed):"), QLineEdit::Normal,
+                                         tr("Please, enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"), QLineEdit::Normal,
                                          QString::fromAscii(""), &ok);
 
     text = text.trimmed();
@@ -555,6 +562,8 @@ void SettingsDialog::on_bAddName_clicked()
     }
 
     ui->lExcludedNames->addItem(text);
+
+    excludedNamesChanged = true;
     stateChanged();
 }
 
@@ -571,5 +580,6 @@ void SettingsDialog::on_bDeleteName_clicked()
     for(int i=0; i<selected.size(); i++)
        delete selected[i];
 
+    excludedNamesChanged = true;
     stateChanged();
 }
