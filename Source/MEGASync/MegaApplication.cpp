@@ -48,7 +48,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
     preferences = new Preferences();
-    QDate betaLimit(2014, 1, 5);
+    QDate betaLimit(2014, 1, 11);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
     long long previousTime = preferences->lastExecutionTime();
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
