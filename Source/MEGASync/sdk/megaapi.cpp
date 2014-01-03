@@ -1910,7 +1910,7 @@ void MegaApi::transfer_update(Transfer *tr)
         if(transfer->getTransferredBytes())
         {
             fireOnTransferUpdate(this, transfer);
-            WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
+            //WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
         }
 	}
 }
