@@ -50,9 +50,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     preferences = new Preferences();
     QDate betaLimit(2014, 1, 11);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
-    long long previousTime = preferences->lastExecutionTime();
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
-    if((now<previousTime) || (now > betaLimitTime))
+    if(now > betaLimitTime)
     {
         QMessageBox::information(NULL, tr("MEGAsync BETA"), tr("Thank you for testing MEGAsync.<br>"
            "This beta version is no longer current and has expired.<br>"
