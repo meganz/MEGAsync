@@ -65,6 +65,9 @@ private slots:
     void on_tSyncs_doubleClicked(const QModelIndex &index);
     void on_bUploadFolder_clicked();
 
+    void on_bAddName_clicked();
+    void on_bDeleteName_clicked();
+
 private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
