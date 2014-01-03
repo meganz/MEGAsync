@@ -3352,7 +3352,7 @@ bool MegaClient::fetchsc(DbTable* sctable)
 		switch (id & 15)
 		{
 			case CACHEDSCSN:
-				if (data.size() != sizeof cachedscsn || *(handle*)data.data() != cachedscsn) return 0;
+				if (data.size() != sizeof cachedscsn /*|| *(handle*)data.data() != cachedscsn*/) return false;
 				break;
 
 			case CACHEDNODE:
