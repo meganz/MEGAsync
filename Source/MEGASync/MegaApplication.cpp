@@ -878,7 +878,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
             if(!localPath.isNull())
             {
                 WindowsUtils::notifyItemChange(localPath);
-
                 if(node->localnode)
                 {
                     int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();

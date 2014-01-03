@@ -908,7 +908,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
     dbAccess = new MegaDbAccess(basePath);
-	client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
+    client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
 
 	maxRetries = 3;
 	loginRequest = NULL;
@@ -2039,10 +2039,20 @@ void MegaApi::syncupdate_stuck(string *s)
 
 }
 
-void MegaApi::syncupdate_local_folder_addition(Sync *, const char *s)
+void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
 {
     //cout << "syncupdate_local_folder_addition: " << s << endl;
-    WindowsUtils::notifyItemChange(QString::fromUtf8(s));
+    QString localPath = QString::fromUtf8(s);
+    WindowsUtils::notifyItemChange(localPath);
+    int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
+
+    QDir parent = QFileInfo(localPath).dir();
+    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
+    {
+        WindowsUtils::notifyItemChange(parent.absolutePath());
+        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+        parent = QFileInfo(parent.absolutePath()).dir();
+    }
 }
 
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
@@ -2050,11 +2060,20 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 	cout << "syncupdate_local_folder_deletion: " << s << endl;
 }
 
-void MegaApi::syncupdate_local_file_addition(Sync *, const char *s)
+void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
 {
     //cout << "syncupdate_local_file_addition: " << s << endl;
-    WindowsUtils::notifyItemChange(QString::fromUtf8(s));
+    QString localPath = QString::fromUtf8(s);
+    WindowsUtils::notifyItemChange(localPath);
+    int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
 
+    QDir parent = QFileInfo(localPath).dir();
+    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
+    {
+        WindowsUtils::notifyItemChange(parent.absolutePath());
+        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+        parent = QFileInfo(parent.absolutePath()).dir();
+    }
 }
 
 void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
@@ -2068,10 +2087,20 @@ void MegaApi::syncupdate_get(Sync *, const char *s)
 
 }
 
-void MegaApi::syncupdate_put(Sync *, const char *s)
+void MegaApi::syncupdate_put(Sync *sync, const char *s)
 {
 	cout << "syncupdate_put: " << s << endl;
-    WindowsUtils::notifyItemChange(QString::fromUtf8(s));
+    QString localPath = QString::fromUtf8(s);
+    WindowsUtils::notifyItemChange(localPath);
+    int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
+
+    QDir parent = QFileInfo(localPath).dir();
+    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
+    {
+        WindowsUtils::notifyItemChange(parent.absolutePath());
+        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+        parent = QFileInfo(parent.absolutePath()).dir();
+    }
 }
 
 void MegaApi::syncupdate_remote_file_addition(Node *)
@@ -3907,13 +3936,14 @@ void MegaApi::sendPendingRequests()
 			byte pwkey[SymmCipher::KEYLENGTH];
 			Base64::atob(base64pwkey, (byte *)pwkey, sizeof pwkey);
 
-			byte strhash[SymmCipher::KEYLENGTH];
+            client->login(email, pwkey);
+            /*byte strhash[SymmCipher::KEYLENGTH];
 			Base64::atob(stringHash, (byte *)strhash, sizeof strhash);
 
-			client->key.setkey((byte*)pwkey);
+            client->key.setkey((byte*)pwkey);
 			client->reqs[client->r].add(new CommandLogin(client,email,*(uint64_t*)strhash));
 
-			if(updatingSID) return;
+            if(updatingSID) return;*/
 			break;
 		}
 		case MegaRequest::TYPE_GET_ATTR_FILE:
