@@ -875,11 +875,28 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 			}
 
             //If we have the local path, notify the state change in the local file
-			if(!localPath.isNull()) WindowsUtils::notifyItemChange(localPath);
+            if(!localPath.isNull())
+            {
+                WindowsUtils::notifyItemChange(localPath);
 
-            //If the new node is a file, add it to the "recently updated" list
-            if((node->type==FILENODE)) infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
-		}
+                if(node->localnode)
+                {
+                    int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();
+
+                    QDir parent = QFileInfo(localPath).dir();
+                    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
+                    {
+                        WindowsUtils::notifyItemChange(parent.absolutePath());
+                        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+                        parent = QFileInfo(parent.absolutePath()).dir();
+                    }
+                }
+
+                //If the new node is a file, add it to the "recently updated" list
+                if((node->type==FILENODE))
+                    infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
+            }
+        }
 	}
 
     //Update the information dialog
