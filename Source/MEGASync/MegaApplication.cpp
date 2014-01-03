@@ -98,6 +98,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     init();
 }
 
+MegaApplication::~MegaApplication()
+{
+    delete megaApi;
+}
+
 void MegaApplication::init()
 {
     paused = false;

@@ -31,6 +31,7 @@ class MegaApplication : public QApplication, public MegaListener, public ShellDi
 
 public:
     explicit MegaApplication(int &argc, char **argv);
+    ~MegaApplication();
 
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
