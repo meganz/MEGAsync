@@ -17,16 +17,16 @@
    <string notr="true">#wProgress
 {
 	background-color: white;
-	border-radius: 4px;
+	border-radius: 3px;
 }
 
 #wBackground
 {
-	margin-top: 1px;
-	margin-bottom: 3px;
-	margin-right: 1px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
 	margin-left: 0px;
-	border-radius: 5px;
+	border-radius: 4px;
 	background-color: rgb(178, 178, 178);
 }</string>
   </property>
@@ -43,28 +43,28 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap resource="Resources.qrc">://images/transferProgress.png</pixmap>
+    <pixmap resource="Resources.qrc">:/images/transferProgress.png</pixmap>
    </property>
   </widget>
   <widget class="QWidget" name="wProgress" native="true">
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>6</y>
+     <y>7</y>
      <width>60</width>
-     <height>8</height>
+     <height>6</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>0</width>
-     <height>8</height>
+     <height>6</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>16777215</width>
-     <height>8</height>
+     <height>6</height>
     </size>
    </property>
   </widget>
@@ -73,26 +73,60 @@
     <rect>
      <x>5</x>
      <y>6</y>
-     <width>355</width>
-     <height>10</height>
+     <width>356</width>
+     <height>8</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>355</width>
-     <height>10</height>
+     <height>8</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>355</width>
-     <height>10</height>
+     <height>8</height>
     </size>
    </property>
   </widget>
+  <widget class="QPushButton" name="bCancel">
+   <property name="geometry">
+    <rect>
+     <x>348</x>
+     <y>3</y>
+     <width>12</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>12</width>
+     <height>15</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>15</width>
+     <height>15</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: none;
+border-left: 1px solid white;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/images/tray_cancel_ico.png</normaloff>:/images/tray_cancel_ico.png</iconset>
+   </property>
+  </widget>
+  <zorder>lProgress</zorder>
   <zorder>wBackground</zorder>
   <zorder>wProgress</zorder>
-  <zorder>lProgress</zorder>
+  <zorder>bCancel</zorder>
  </widget>
  <resources>
   <include location="Resources.qrc"/>

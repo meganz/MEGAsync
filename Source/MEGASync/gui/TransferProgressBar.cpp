@@ -13,8 +13,20 @@ TransferProgressBar::~TransferProgressBar()
     delete ui;
 }
 
-void TransferProgressBar::setProgress(int permil)
+void TransferProgressBar::setProgress(int permil, bool cancellable)
 {
 	if(permil>1000) permil = 1000;
-	ui->wProgress->resize(permil*0.36, ui->wProgress->width());
+    ui->bCancel->setVisible(cancellable);
+
+    int newWidth = (ui->wBackground->width() * permil) / 1000;
+    if(newWidth<6) newWidth = 6;
+    else if(newWidth>ui->wBackground->width()-ui->bCancel->width())
+        ui->bCancel->hide();
+    ui->wProgress->resize(newWidth, ui->wProgress->height());
+}
+
+
+void TransferProgressBar::on_bCancel_clicked()
+{
+    emit cancel(ui->bCancel->pos().x(), ui->bCancel->pos().y());
 }
