@@ -127,8 +127,16 @@ bool SqliteDbTable::get(uint32_t index, string* data)
 // add/update record by index
 bool SqliteDbTable::put(uint32_t index, char* data, unsigned len)
 {
-	sqlite3_stmt *stmt;
+    static char lastscsn[8];
+    if(index==0 && len==8)
+    {
+        if(!memcmp(lastscsn, data, len))
+            return true;
+        memcpy(lastscsn, data, len);
+    }
 
+	sqlite3_stmt *stmt;
+    cout << "Put" << endl;
 	int rc = sqlite3_prepare(db,"INSERT OR REPLACE INTO statecache ( id, content ) VALUES ( ?, ? )",-1,&stmt,NULL);
 	if (rc) return false;
 
