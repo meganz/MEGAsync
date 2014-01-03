@@ -56,7 +56,6 @@
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
         <file>images/logo.png</file>
-        <file>images/preferences_mega_logo.png</file>
         <file>images/Pro I.ico</file>
         <file>images/Pro II.ico</file>
         <file>images/Pro III.ico</file>
@@ -104,7 +103,6 @@
         <file>images/small_web_lang.png</file>
         <file>images/small_word.png</file>
         <file>images/syncs_32.png</file>
-        <file>images/Thumbs.db</file>
         <file>images/transferProgress.png</file>
         <file>images/tray_download_ico.png</file>
         <file>images/tray_folder_ico.png</file>
@@ -137,5 +135,6 @@
         <file>images/login_ico.ico</file>
         <file>images/tray_sync_ico.png</file>
         <file>images/advanced_32.png</file>
+        <file>images/preferences_mega_logo.png</file>
     </qresource>
 </RCC>
