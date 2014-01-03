@@ -502,7 +502,7 @@ void MegaApplication::onUpdateCompleted()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if(megaApi->isLoggedIn() != FULLACCOUNT)
+    if(!infoDialog || megaApi->isLoggedIn() != FULLACCOUNT)
     {
         if(setupWizard && setupWizard->isVisible())
             setupWizard->activateWindow();
