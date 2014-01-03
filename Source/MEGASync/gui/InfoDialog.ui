@@ -180,7 +180,7 @@ color: rgb(102, 102, 102);
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>://images/tray_mega_logo.png</pixmap>
+         <pixmap resource="Resources.qrc">:/images/preferences_mega_logo.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -841,6 +841,8 @@ border: none;</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
