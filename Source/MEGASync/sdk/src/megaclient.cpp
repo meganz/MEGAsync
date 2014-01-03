@@ -1814,7 +1814,7 @@ void MegaClient::notifypurge(void)
 	int i, t;
 	string localpath;
 
-	updatesc();
+	if (nodenotify.size() || usernotify.size()) updatesc();
 
 	if ((t = nodenotify.size()))
 	{

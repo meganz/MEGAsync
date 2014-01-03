@@ -187,7 +187,7 @@ bool WinFileSystemAccess::istransientorexists(DWORD e)
 void WinFileSystemAccess::addevents(Waiter* w, int)
 {
 	// overlapped completion wakes up WaitForMultipleObjectsEx()
-    ((MegaApiWinWaiter*)w)->pendingfsevents = pendingevents;
+	((WinWaiter*)w)->pendingfsevents = pendingevents;
 }
 
 // generate unique local filename in the same fs as relatedpath

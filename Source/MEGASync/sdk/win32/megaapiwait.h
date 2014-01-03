@@ -19,29 +19,24 @@ DEALINGS IN THE SOFTWARE.
 #ifndef MEGA_API_WAIT_CLASS
 #define MEGA_API_WAIT_CLASS MegaApiWinWaiter
 
+#include "mega/types.h"
+#include "mega.h"
+#include "mega/waiter.h"
+#include "mega/win32/megawaiter.h"
+
 namespace mega {
 
-class MegaApiWinWaiter : public Waiter
+class MegaApiWinWaiter : public WinWaiter
 {
-	typedef ULONGLONG (WINAPI* PGTC)();
-	PGTC pGTC;
-	ULONGLONG tickhigh;
-	DWORD prevt;
 
 public:
-    enum { WAKEUP_HTTP, WAKEUP_CUSTOM };
-	HANDLE hWakeup[2];
-	PCRITICAL_SECTION pcsHTTP;
-	unsigned pendingfsevents;
-
-	dstime getdstime();
-
-	void init(dstime);
-	void waitfor(EventTrigger*);
+    MegaApiWinWaiter();
 	int wait();
     void notify();
 
-    MegaApiWinWaiter();
+protected:
+    HANDLE customEvent;
+
 };
 
 }
