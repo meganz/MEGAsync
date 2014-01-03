@@ -71,7 +71,7 @@ struct MegaApp
 	// user attribute update notification
 	virtual void userattr_update(User*, int, const char*) { }
 
-	// node fetch has failed
+	// node fetch result
 	virtual void fetchnodes_result(error) { }
 
 	// node addition has failed
