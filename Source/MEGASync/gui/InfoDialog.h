@@ -36,8 +36,8 @@ public:
 public slots:
    void timerUpdate();
    void addSync();
-   void onTransfer1Clicked(int x, int y);
-   void onTransfer2Clicked(int x, int y);
+   void onTransfer1Cancel(int x, int y);
+   void onTransfer2Cancel(int x, int y);
    void cancelAllUploads();
    void cancelAllDownloads();
    void cancelCurrentUpload();

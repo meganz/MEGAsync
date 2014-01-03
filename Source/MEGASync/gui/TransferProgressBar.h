@@ -15,7 +15,13 @@ public:
     explicit TransferProgressBar(QWidget *parent = 0);
     ~TransferProgressBar();
 
-    void setProgress(int value);
+    void setProgress(int value, bool cancellable);
+
+signals:
+    void cancel(int x, int y);
+
+private slots:
+    void on_bCancel_clicked();
 
 private:
     Ui::TransferProgressBar *ui;

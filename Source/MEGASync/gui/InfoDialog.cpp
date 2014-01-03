@@ -103,8 +103,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->move(1, 60);
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
-    connect(ui->wTransfer1, SIGNAL(clicked(int, int)), this, SLOT(onTransfer1Clicked(int, int)));
-    connect(ui->wTransfer2, SIGNAL(clicked(int, int)), this, SLOT(onTransfer2Clicked(int, int)));
+    connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
+    connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
 }
 
 InfoDialog::~InfoDialog()
@@ -152,8 +152,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     }
 
     wTransfer->setFileName(fileName);
-    wTransfer->setProgress(completedSize, totalSize);
-    wTransfer->setRegular(app->getMegaApi()->isRegularTransfer(transfer->getTransfer()));
+    wTransfer->setProgress(completedSize, totalSize, app->getMegaApi()->isRegularTransfer(transfer->getTransfer()));
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
@@ -328,7 +327,7 @@ void InfoDialog::addSync()
    app->getMegaApi()->syncFolder(localFolderPath.toUtf8().constData(), node);
 }
 
-void InfoDialog::onTransfer1Clicked(int x, int y)
+void InfoDialog::onTransfer1Cancel(int x, int y)
 {
     QMenu menu;
     QAction *cancelAll = menu.addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
@@ -338,7 +337,7 @@ void InfoDialog::onTransfer1Clicked(int x, int y)
     menu.exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
 }
 
-void InfoDialog::onTransfer2Clicked(int x, int y)
+void InfoDialog::onTransfer2Cancel(int x, int y)
 {
     QMenu menu;
     QAction *cancelAll = menu.addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));

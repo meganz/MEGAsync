@@ -12,8 +12,8 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
     ui->lPercentage->setText(QString());
     ui->pProgress->hide();
     ui->lType->hide();
-    ui->bCancel->hide();
     regular = false;
+    connect(ui->pProgress, SIGNAL(cancel(int,int)), this, SLOT(onCancelClicked(int,int)));
 }
 
 ActiveTransfer::~ActiveTransfer()
@@ -29,10 +29,11 @@ void ActiveTransfer::setFileName(QString fileName)
 	ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 }
 
-void ActiveTransfer::setProgress(long long completedSize, long long totalSize)
+void ActiveTransfer::setProgress(long long completedSize, long long totalSize, bool cancellable)
 {
     int permil = (1000*completedSize)/(totalSize+1);
-	ui->pProgress->setProgress(permil);
+    regular = cancellable;
+    ui->pProgress->setProgress(permil, cancellable);
     ui->lPercentage->setText(QString::number((permil+5)/10) + QString::fromAscii("%"));
     ui->pProgress->show();
     ui->lType->show();
@@ -53,33 +54,22 @@ void ActiveTransfer::setType(int type)
     }
 }
 
-void ActiveTransfer::setRegular(bool regular)
-{
-    ui->bCancel->setVisible(regular);
-    this->regular = regular;
-}
-
-bool ActiveTransfer::isRegular()
-{
-    return regular;
-}
-
 void ActiveTransfer::hideTransfer()
 {
     ui->lFileName->setText(QString::fromAscii(""));
     ui->lPercentage->setText(QString::fromAscii(""));
 	ui->pProgress->hide();
     ui->lType->hide();
-    ui->bCancel->hide();
 }
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(!regular) return;
-    emit clicked(event->x(), event->y());
+    if(!regular || !(event->button()==Qt::RightButton)) return;
+    emit cancel(event->x(), event->y());
 }
 
-void ActiveTransfer::on_bCancel_clicked()
+void ActiveTransfer::onCancelClicked(int x, int y)
 {
-    emit clicked(ui->bCancel->pos().x(), ui->bCancel->pos().y());
+    emit cancel(ui->pProgress->pos().x()+x,
+                 ui->pProgress->pos().y()+y);
 }

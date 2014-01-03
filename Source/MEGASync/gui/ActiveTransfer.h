@@ -16,14 +16,12 @@ public:
     ~ActiveTransfer();
 
     void setFileName(QString fileName);
-	void setProgress(long long completedSize, long long totalSize);
+    void setProgress(long long completedSize, long long totalSize, bool cancellable);
     void setType(int type);
-    void setRegular(bool regular);
-    bool isRegular();
 	void hideTransfer();
 
 signals:
-    void clicked(int x, int y);
+    void cancel(int x, int y);
 
 private:
     Ui::ActiveTransfer *ui;
@@ -34,8 +32,9 @@ protected:
     QString fileName;
     int type;
     bool regular;
-private slots:
-    void on_bCancel_clicked();
+
+public slots:
+    void onCancelClicked(int x, int y);
 };
 
 #endif // ACTIVETRANSFER_H
