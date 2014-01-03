@@ -270,7 +270,7 @@ void SettingsDialog::loadSettings()
 	}
 
     //Proxies
-    ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
+    /*ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
     ui->rProxyAuto->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_AUTO);
     ui->rProxyManual->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_CUSTOM);
     ui->cProxyType->setCurrentIndex(preferences->proxyProtocol());
@@ -278,7 +278,13 @@ void SettingsDialog::loadSettings()
     ui->eProxyPort->setText(QString::number(preferences->proxyPort()));
     ui->cProxyRequiresPassword->setChecked(preferences->proxyRequiresAuth());
     ui->eProxyUsername->setText(preferences->getProxyUsername());
-    ui->eProxyPassword->setText(preferences->getProxyPassword());
+    ui->eProxyPassword->setText(preferences->getProxyPassword());*/
+
+    //Advanced
+    QStringList excludedNames = preferences->getExcludedSyncNames();
+    for(int i=0; i<excludedNames.size(); i++)
+        ui->lExcludedNames->addItem(excludedNames[i]);
+
 
     ui->bApply->setEnabled(false);
     this->update();
@@ -378,6 +384,12 @@ void SettingsDialog::saveSettings()
     else preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
 
     app->setUploadLimit(preferences->uploadLimitKB());
+
+    //Advanced
+    QStringList excludedNames;
+    for(int i=0; i<ui->lExcludedNames->count(); i++)
+        excludedNames.append(ui->lExcludedNames->item(i)->text());
+    preferences->setExcludedSyncNames(excludedNames);
 
     //Proxies
 /*  if(ui->rNoProxy->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
@@ -523,4 +535,41 @@ void SettingsDialog::on_bUploadFolder_clicked()
         ui->eUploadFolder->setText(newPath);
         stateChanged();
     }
+}
+
+void SettingsDialog::on_bAddName_clicked()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Excluded name"),
+                                         tr("Please, enter a name to exclude from synchronization.\n(wilcards * and ? are allowed):"), QLineEdit::Normal,
+                                         QString::fromAscii(""), &ok);
+
+    text = text.trimmed();
+    if (!ok && text.isEmpty()) return;
+
+    QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
+    if(!regExp.isValid())
+    {
+        QMessageBox::warning(this, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
+        return;
+    }
+
+    ui->lExcludedNames->addItem(text);
+    stateChanged();
+}
+
+void SettingsDialog::on_bDeleteName_clicked()
+{
+    cout << "bDelete clicked" << endl;
+    QList<QListWidgetItem *> selected = ui->lExcludedNames->selectedItems();
+    if(selected.size()==0)
+    {
+        cout << "No items selected" << endl;
+        return;
+    }
+
+    for(int i=0; i<selected.size(); i++)
+       delete selected[i];
+
+    stateChanged();
 }

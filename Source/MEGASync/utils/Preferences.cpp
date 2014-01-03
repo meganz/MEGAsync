@@ -40,6 +40,7 @@ const QString Preferences::fileNameKey              = QString::fromAscii("fileNa
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
+const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -509,6 +510,27 @@ QString Preferences::getRecentLocalPath(int num)
     assert(logged() && recentLocalPaths.size()>num);
 
     return recentLocalPaths[num];
+}
+
+QStringList Preferences::getExcludedSyncNames()
+{
+    assert(logged());
+
+    if(excludedSyncNames.isEmpty())
+        excludedSyncNames = settings->value(excludedSyncNamesKey).toStringList();
+
+    if(excludedSyncNames.size()==1 && excludedSyncNames[0].isEmpty())
+        return QStringList();
+    return excludedSyncNames;
+}
+
+void Preferences::setExcludedSyncNames(QStringList names)
+{
+    assert(logged());
+
+    excludedSyncNames = names;
+    settings->setValue(excludedSyncNamesKey, names);
+    settings->sync();
 }
 
 void Preferences::unlink()

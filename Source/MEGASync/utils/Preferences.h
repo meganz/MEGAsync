@@ -82,6 +82,9 @@ public:
     long long getRecentFileHandle(int num);
     QString getRecentLocalPath(int num);
 
+    QStringList getExcludedSyncNames();
+    void setExcludedSyncNames(QStringList names);
+
     void unlink();
 
     enum {
@@ -127,6 +130,8 @@ protected:
     QList<long long> recentFileHandles;
     QStringList recentLocalPaths;
 
+    QStringList excludedSyncNames;
+
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
     static const QString recentGroupKey;
@@ -162,6 +167,7 @@ protected:
     static const QString fileHandleKey;
     static const QString localPathKey;
     static const QString lastExecutionTimeKey;
+    static const QString excludedSyncNamesKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
