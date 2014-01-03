@@ -24,7 +24,7 @@
 
 #include "mega/megaclient.h"
 
-#include "win32/megaapiwait.h"
+#include "megawaiter.h"
 
 namespace mega {
 
@@ -34,7 +34,7 @@ class WinHttpIO : public HttpIO
 	HANDLE hWakeupEvent;
 
 	protected:
-    MegaApiWinWaiter* waiter;
+	WinWaiter* waiter;
 	HINTERNET hSession;
 	bool completion;
 

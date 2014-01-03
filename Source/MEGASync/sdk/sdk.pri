@@ -41,7 +41,7 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/db/sqlite.cpp  \
     $$PWD/src/win32/net.cpp  \
     $$PWD/src/win32/fs.cpp  \
-    $$PWD/src/win32/waiter.cpp  \
+    $$PWD/src/win32/winwaiter.cpp  \
     $$PWD/win32/megaapiwait.cpp  \
     $$PWD/megaapi.cpp \
     $$PWD/sqlite3.c \
@@ -84,6 +84,7 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/win32/meganet.h  \
 	    $$PWD/include/mega/win32/megasys.h  \
 	    $$PWD/include/mega/win32/megafs.h  \
+	    $$PWD/include/mega/win32/megawaiter.h  \
 	    $$PWD/win32/megaapiwait.h  \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
