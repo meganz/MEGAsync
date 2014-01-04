@@ -17,7 +17,7 @@ class RecentFile : public QWidget
 public:
     explicit RecentFile(QWidget *parent = 0);
     ~RecentFile();
-	void setFile(QString fileName, long long fileHandle, QString localPath);
+    void setFile(QString fileName, long long fileHandle, QString localPath, long long time);
 	void updateWidget();
 
 private:

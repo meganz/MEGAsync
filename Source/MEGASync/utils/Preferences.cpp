@@ -39,8 +39,11 @@ const QString Preferences::importFolderKey			= QString::fromAscii("importFolder"
 const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
+const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
+
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
+const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -496,10 +499,12 @@ void Preferences::addRecentFile(QString fileName, long long fileHandle, QString 
     recentFileNames.pop_back();
     recentFileHandles.pop_back();
     recentLocalPaths.pop_back();
+    recentFileTime.pop_back();
 
     recentFileNames.insert(0, fileName);
     recentFileHandles.insert(0, fileHandle);
     recentLocalPaths.insert(0, localPath);
+    recentFileTime.insert(0, QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     writeRecentFiles();
 }
@@ -525,15 +530,33 @@ QString Preferences::getRecentLocalPath(int num)
     return recentLocalPaths[num];
 }
 
+long long Preferences::getRecentFileTime(int num)
+{
+    assert(logged() && recentLocalPaths.size()>num);
+
+    return recentFileTime[num];
+}
+
 QStringList Preferences::getExcludedSyncNames()
 {
     assert(logged());
 
     if(excludedSyncNames.isEmpty())
-        excludedSyncNames = settings->value(excludedSyncNamesKey).toStringList();
+        excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n"));
 
     if(excludedSyncNames.size()==1 && excludedSyncNames[0].isEmpty())
-        return QStringList();
+        excludedSyncNames = QStringList();
+
+    if((settings->value(lastVersionKey).toInt() < 104) &&
+       (settings->value(lastVersionKey) != MegaApplication::VERSION_CODE))
+    {
+        excludedSyncNames.insert(0, QString::fromUtf8("Thumbs.db"));
+        excludedSyncNames.insert(0, QString::fromUtf8("desktop.ini"));
+        excludedSyncNames.insert(0, QString::fromUtf8("~*"));
+        excludedSyncNames.insert(0, QString::fromUtf8(".*"));
+        setExcludedSyncNames(excludedSyncNames);
+    }
+
     return excludedSyncNames;
 }
 
@@ -542,7 +565,7 @@ void Preferences::setExcludedSyncNames(QStringList names)
     assert(logged());
 
     excludedSyncNames = names;
-    settings->setValue(excludedSyncNamesKey, names);
+    settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
     settings->sync();
 }
 
@@ -562,6 +585,7 @@ void Preferences::unlink()
     recentFileNames.clear();
     recentFileHandles.clear();
     recentLocalPaths.clear();
+    recentFileTime.clear();
 }
 
 void Preferences::login(QString account)
@@ -571,6 +595,9 @@ void Preferences::login(QString account)
     settings->beginGroup(account);
     readFolders();
     readRecentFiles();
+    getExcludedSyncNames();
+    settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
+    settings->sync();
 }
 
 bool Preferences::logged()
@@ -596,6 +623,7 @@ void Preferences::logout()
     recentFileNames.clear();
     recentFileHandles.clear();
     recentLocalPaths.clear();
+    recentFileTime.clear();
 }
 
 void Preferences::readFolders()
@@ -648,6 +676,7 @@ void Preferences::readRecentFiles()
     recentFileNames.clear();
     recentFileHandles.clear();
     recentLocalPaths.clear();
+    recentFileTime.clear();
 
     settings->beginGroup(recentGroupKey);
     for(int i=0; i<NUM_RECENT_ITEMS; i++)
@@ -656,6 +685,7 @@ void Preferences::readRecentFiles()
             recentFileNames.append(settings->value(fileNameKey).toString());
             recentFileHandles.append(settings->value(fileHandleKey).toLongLong());
             recentLocalPaths.append(settings->value(localPathKey).toString());
+            recentFileTime.append(settings->value(fileTimeKey, QDateTime::currentDateTime().toMSecsSinceEpoch()).toLongLong());
         settings->endGroup();
     }
     settings->endGroup();
@@ -672,6 +702,7 @@ void Preferences::writeRecentFiles()
             settings->setValue(fileNameKey, recentFileNames[i]);
             settings->setValue(fileHandleKey, recentFileHandles[i]);
             settings->setValue(localPathKey, recentLocalPaths[i]);
+            settings->setValue(fileTimeKey, recentFileTime[i]);
         settings->endGroup();
     }
     settings->endGroup();

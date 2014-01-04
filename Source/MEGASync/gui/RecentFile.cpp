@@ -18,12 +18,12 @@ RecentFile::~RecentFile()
     delete ui;
 }
 
-void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath)
+void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath, long long time)
 {
     this->fileName = fileName;
 	this->fileHandle = fileHandle;
 	this->localPath = localPath;
-	this->dateTime = QDateTime::currentDateTime();
+    this->dateTime = QDateTime::fromMSecsSinceEpoch(time);
 }
 
 void RecentFile::updateWidget()
@@ -57,15 +57,45 @@ void RecentFile::updateWidget()
     else if(secs < 60)
         ui->lTime->setText(tr("%1 seconds ago").arg(secs));
     else if(secs < 3600)
-        ui->lTime->setText(tr("%1 minutes ago").arg(secs/60));
+    {
+        int minutes = secs/60;
+        if(minutes == 1)
+            ui->lTime->setText(tr("1 minute ago"));
+        else
+            ui->lTime->setText(tr("%1 minutes ago").arg(minutes));
+    }
     else if(secs < 86400)
-        ui->lTime->setText(tr("%1 hours ago").arg(secs/3600));
+    {
+        int hours = secs/3600;
+        if(hours == 1)
+            ui->lTime->setText(tr("1 hour ago"));
+        else
+            ui->lTime->setText(tr("%1 hours ago").arg(hours));
+    }
     else if(secs < 292000)
-        ui->lTime->setText(tr("%1 days ago").arg(secs/86400));
+    {
+        int days = secs/86400;
+        if(days == 1)
+            ui->lTime->setText(tr("1 day ago"));
+        else
+            ui->lTime->setText(tr("%1 days ago").arg(days));
+    }
     else if(secs < 31536000)
-        ui->lTime->setText(tr("%1 months ago").arg(secs/292000));
+    {
+        int months = secs/292000;
+        if(months == 1)
+            ui->lTime->setText(tr("1 month ago"));
+        else
+            ui->lTime->setText(tr("%1 months ago").arg(months));
+    }
     else
-        ui->lTime->setText(tr("%1 years ago").arg(secs/31536000));
+    {
+        int years = secs/31536000;
+        if(years == 1)
+            ui->lTime->setText(tr("1 year ago"));
+        else
+            ui->lTime->setText(tr("%1 years ago").arg(years));
+    }
 }
 
 void RecentFile::on_pArrow_clicked()

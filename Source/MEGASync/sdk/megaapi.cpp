@@ -3661,9 +3661,6 @@ void MegaApi::sendPendingTransfers()
 
 bool MegaApi::is_syncable(const char *name)
 {
-    if(!(*name != '.' && *name != '~' && strcmp(name,"Thumbs.db") && strcmp(name,"desktop.ini")))
-        return false;
-
     QStringList excludedNames = ((MegaApplication *)qApp)->getPreferences()->getExcludedSyncNames();
     for(int i=0; i< excludedNames.size(); i++)
     {
