@@ -904,9 +904,11 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     INIT_RECURSIVE_MUTEX(sdkMutex);
 
 	addListener(listener);
+    this->basepath=*basePath;
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
+    fsAccess->path2local(basePath, &localbasepath);
     dbAccess = new MegaDbAccess(basePath);
     client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
 
@@ -1851,6 +1853,7 @@ void MegaApi::transfer_prepare(Transfer *t)
 	if (t->type == GET)
 	{
 		client->fsaccess->tmpnamelocal(&t->localfilename);
+        t->localfilename.insert(0, localbasepath);
 		transfer->setNodeHandle(t->files.front()->h);
 	}
 	else
