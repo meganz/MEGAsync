@@ -39,7 +39,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setApplicationVersion(QString::number(VERSION_CODE));
 
     //Set the working directory
-    QDir::setCurrent(QCoreApplication::applicationDirPath());
+#if QT_VERSION < 0x050000
+    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#else
+    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+#endif
+    QDir::setCurrent(dataPath);
 
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
@@ -67,7 +72,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
     uploadSpeed = downloadSpeed = 0;
-    QString basePath = QCoreApplication::applicationDirPath()+QString::fromAscii("/");
+
+    QString basePath = QDir::toNativeSeparators(dataPath+QString::fromAscii("/"));
     string tmpPath = basePath.toStdString();
     megaApi = new MegaApi(delegateListener, &tmpPath);
     uploader = new MegaUploader(megaApi);

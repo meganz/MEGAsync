@@ -867,7 +867,8 @@ protected:
 	long long updateSIDtime;
 	int threadExit;
     dstime pausetime;
-
+    string basepath;
+    string localbasepath;
 	handle cwd;
 	void loop();
 	

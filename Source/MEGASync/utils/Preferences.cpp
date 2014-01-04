@@ -57,7 +57,20 @@ const int Preferences::NUM_RECENT_ITEMS             = 3;
 
 Preferences::Preferences()
 {
-    settings = new EncryptedSettings(QDir::currentPath() + QString::fromAscii("/MEGAsync.cfg"));
+    QString prevPath = QDir::toNativeSeparators(QDir::currentPath() + QString::fromAscii("/MEGAsync.cfg"));
+
+#if QT_VERSION < 0x050000
+    QString newPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#else
+    QString newPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+#endif
+
+    newPath = QDir::toNativeSeparators(newPath + QString::fromAscii("/MEGAsync.cfg"));
+
+    if(QFile(prevPath).exists())
+        QDir().rename(prevPath, newPath);
+
+    settings = new EncryptedSettings(newPath);
     locale = new QLocale();
 
     QString currentAccount = settings->value(currentAccountKey).toString();

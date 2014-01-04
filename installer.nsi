@@ -13,14 +13,19 @@ RequestExecutionLevel user
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 !define CSIDL_STARTUP '0x7' ;Startup path
 !define CSIDL_LOCALAPPDATA '0x1C' ;Local Application Data path
+!define CSIDL_COMMON_APPDATA '0x23'
 
 !define SRCDIR_MEGASYNC_X32 "Release_x32\MEGAsync\release"
 !define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
 !define SRCDIR_MEGASHELLEXT_X64 "Release_x64\MEGAShellExt\release"
+!define MULTIUSER_MUI
+!define MULTIUSER_EXECUTIONLEVEL Standard
+!define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
 
 !include "MUI2.nsh"
 !include "Library.nsh"
 !include "UAC.nsh"
+!include "MultiUser.nsh"
 !include "x64.nsh"
 
 ; MUI Settings
@@ -46,10 +51,13 @@ RequestExecutionLevel user
 ;!define MUI_FINISHPAGE_NOAUTOCLOSE
 
 var ICONS_GROUP
+var INSTALLDAY
+var EXPIRATIONDAY
 
 ; Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "installer\terms.txt"
+!insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_STARTMENU Application $ICONS_GROUP
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -158,291 +166,16 @@ Function RunExplorer
   ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
 FunctionEnd
 
-;----------------------------------------------------------------------------
-; Superseded by     : GetTime function.
-;----------------------------------------------------------------------------
-; Title             : Get Local Time
-; Short Name        : GetLocalTime
-; Last Changed      : 22/Feb/2005
-; Code Type         : Function
-; Code Sub-Type     : One-way Output
-;----------------------------------------------------------------------------
-; Required          : System plugin.
-; Description       : Gets the current local time of the user's computer
-;----------------------------------------------------------------------------
-; Function Call     : Call GetLocalTime
-;
-;                     Pop "$Variable1"
-;                       Day.
-;
-;                     Pop "$Variable2"
-;                       Month.
-;
-;                     Pop "$Variable3"
-;                       Year.
-;
-;                     Pop "$Variable4"
-;                       Day of the week name.
-;
-;                     Pop "$Variable5"
-;                       Hour.
-;
-;                     Pop "$Variable6"
-;                       Minute.
-;
-;                     Pop "$Variable7"
-;                       Second.
-;----------------------------------------------------------------------------
-; Author            : Diego Pedroso
-; Author Reg. Name  : deguix
-;----------------------------------------------------------------------------
-
-Function GetTime
-	!define GetTime `!insertmacro GetTimeCall`
-
-	!macro GetTimeCall _FILE _OPTION _R1 _R2 _R3 _R4 _R5 _R6 _R7
-		Push `${_FILE}`
-		Push `${_OPTION}`
-		Call GetTime
-		Pop ${_R1}
-		Pop ${_R2}
-		Pop ${_R3}
-		Pop ${_R4}
-		Pop ${_R5}
-		Pop ${_R6}
-		Pop ${_R7}
-	!macroend
-
-	Exch $1
-	Exch
-	Exch $0
-	Exch
-	Push $2
-	Push $3
-	Push $4
-	Push $5
-	Push $6
-	Push $7
-	ClearErrors
-
-	StrCmp $1 'L' gettime
-	StrCmp $1 'A' getfile
-	StrCmp $1 'C' getfile
-	StrCmp $1 'M' getfile
-	StrCmp $1 'LS' gettime
-	StrCmp $1 'AS' getfile
-	StrCmp $1 'CS' getfile
-	StrCmp $1 'MS' getfile
-	goto error
-
-	getfile:
-	IfFileExists $0 0 error
-	System::Call /NOUNLOAD '*(i,l,l,l,i,i,i,i,&t260,&t14) i .r6'
-	System::Call /NOUNLOAD 'kernel32::FindFirstFileA(t,i)i(r0,r6) .r2'
-	System::Call /NOUNLOAD 'kernel32::FindClose(i)i(r2)'
-
-	gettime:
-	System::Call /NOUNLOAD '*(&i2,&i2,&i2,&i2,&i2,&i2,&i2,&i2) i .r7'
-	StrCmp $1 'L' 0 systemtime
-	System::Call /NOUNLOAD 'kernel32::GetLocalTime(i)i(r7)'
-	goto convert
-	systemtime:
-	StrCmp $1 'LS' 0 filetime
-	System::Call /NOUNLOAD 'kernel32::GetSystemTime(i)i(r7)'
-	goto convert
-
-	filetime:
-	System::Call /NOUNLOAD '*$6(i,l,l,l,i,i,i,i,&t260,&t14)i(,.r4,.r3,.r2)'
-	System::Free /NOUNLOAD $6
-	StrCmp $1 'A' 0 +3
-	StrCpy $2 $3
-	goto tolocal
-	StrCmp $1 'C' 0 +3
-	StrCpy $2 $4
-	goto tolocal
-	StrCmp $1 'M' tolocal
-
-	StrCmp $1 'AS' tosystem
-	StrCmp $1 'CS' 0 +3
-	StrCpy $3 $4
-	goto tosystem
-	StrCmp $1 'MS' 0 +3
-	StrCpy $3 $2
-	goto tosystem
-
-	tolocal:
-	System::Call /NOUNLOAD 'kernel32::FileTimeToLocalFileTime(*l,*l)i(r2,.r3)'
-	tosystem:
-	System::Call /NOUNLOAD 'kernel32::FileTimeToSystemTime(*l,i)i(r3,r7)'
-
-	convert:
-	System::Call /NOUNLOAD '*$7(&i2,&i2,&i2,&i2,&i2,&i2,&i2,&i2)i(.r5,.r6,.r4,.r0,.r3,.r2,.r1,)'
-	System::Free $7
-
-	IntCmp $0 9 0 0 +2
-	StrCpy $0 '0$0'
-	IntCmp $1 9 0 0 +2
-	StrCpy $1 '0$1'
-	IntCmp $2 9 0 0 +2
-	StrCpy $2 '0$2'
-	IntCmp $6 9 0 0 +2
-	StrCpy $6 '0$6'
-
-	StrCmp $4 0 0 +3
-	StrCpy $4 Sunday
-	goto end
-	StrCmp $4 1 0 +3
-	StrCpy $4 Monday
-	goto end
-	StrCmp $4 2 0 +3
-	StrCpy $4 Tuesday
-	goto end
-	StrCmp $4 3 0 +3
-	StrCpy $4 Wednesday
-	goto end
-	StrCmp $4 4 0 +3
-	StrCpy $4 Thursday
-	goto end
-	StrCmp $4 5 0 +3
-	StrCpy $4 Friday
-	goto end
-	StrCmp $4 6 0 error
-	StrCpy $4 Saturday
-	goto end
-
-	error:
-	SetErrors
-	StrCpy $0 ''
-	StrCpy $1 ''
-	StrCpy $2 ''
-	StrCpy $3 ''
-	StrCpy $4 ''
-	StrCpy $5 ''
-	StrCpy $6 ''
-
-	end:
-	Pop $7
-	Exch $6
-	Exch
-	Exch $5
-	Exch 2
-	Exch $4
-	Exch 3
-	Exch $3
-	Exch 4
-	Exch $2
-	Exch 5
-	Exch $1
-	Exch 6
-	Exch $0
-FunctionEnd
-
-Function IsLeapYear
-  Pop $0
-  IntOp $1 $0 % 4
-  IntCmp $1 0 test2
-  Goto ko
-  test2:
-    IntOp $1 $0 % 100
-    IntCmp $1 0 test3
-    Goto ok
-  test3:
-    IntOp $1 $0 % 400
-    IntCmp $1 0 ok
-    Goto ko
-  ok:
-    Push 1
-    Goto end
-  ko:
-    Push 0
-  end:
-FunctionEnd
-
-Function DaysInMonth
-  Pop $0 ;annee
-  Pop $1 ;mois
-
-  IntCmp $1 1 m31
-  IntCmp $1 2 m28
-  IntCmp $1 3 m31
-  IntCmp $1 4 m30
-  IntCmp $1 5 m31
-  IntCmp $1 6 m30
-  IntCmp $1 7 m31
-  IntCmp $1 8 m31
-  IntCmp $1 9 m30
-  IntCmp $1 10 m31
-  IntCmp $1 11 m30
-  IntCmp $1 12 m31
-
-  m31:
-    Push 31
-    Goto end
-  m30:
-    Push 30
-    Goto end
-  m28:
-    Push $0
-    Call IsLeapYear
-    Pop $0
-    IntCmp $0 1 m29
-      Push 28
-      Goto end
-    m29:
-     Push 29
-  end:
-FunctionEnd
-
-Function Date2Serial
-  Pop $R0 ;year
-  Pop $R1 ;month
-  Pop $R2 ;day
-  IntOp $R3 0 + 1
-  Loop:
-    IntCmp $R1 $R3 OutLoop
-    Push $R3
-    Push $R0
-    Call DaysInMonth
-    Pop $R4
-    IntOp $R2 $R2 + $R4
-    IntOp $R3 $R3 + 1
-    Goto Loop
-  OutLoop:
-    IntOp $R3 $R0 - 1
-    IntOp $R5 $R3 * 365
-    IntOp $R6 $R3 / 4
-    IntOp $R5 $R5 + $R6
-    IntOp $R6 $R3 / 100
-    IntOp $R5 $R5 - $R6
-    IntOp $R6 $R3 / 400
-    IntOp $R5 $R5 + $R6
-    IntOp $R5 $R5 + $R2
-    IntOp $R5 $R5 - 693594
-    Push $R5
-FunctionEnd
-
 Function .onInit
 
-${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
+  ${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
+  strCpy $INSTALLDAY "$2$1$0"
+  strCpy $EXPIRATIONDAY "20140111"
 
-Push $0          
-Push $1        
-Push $2         
-Call Date2Serial
-Pop $4
-
-Push "11"
-Push "01"
-Push "2014"
-Call Date2Serial
-Pop $5
-
-IntCmp $4 $5 wrongdate dateok dateok
-wrongdate:
-MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
-abort
-
-dateok:
+  ${if} $INSTALLDAY >= $EXPIRATIONDAY
+      MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
+      abort
+  ${EndIf}
 
   UAC::RunElevated
   ${Switch} $0
@@ -467,9 +200,19 @@ FunctionEnd
 
 Section "Principal" SEC01
 
+  StrCmp "CurrentUser" $MultiUser.InstallMode currentuser
+allusers:
+  SetShellVarContext all
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
+  goto modeselected
+currentuser:
+  SetShellVarContext current
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
+
+modeselected:
+
   StrCpy $INSTDIR "$1\MEGAsync"
-  
+
   ;SetRebootFlag true
   SetOverwrite try
 
@@ -617,7 +360,7 @@ Section "Principal" SEC01
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
   ${EndIf}
-  
+
   ${UAC.CallFunctionAsUser} RunExplorer
    
   SetRebootFlag false
