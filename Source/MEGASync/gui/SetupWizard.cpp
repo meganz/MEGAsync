@@ -371,7 +371,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(app->getMegaApi());
+    NodeSelector *nodeSelector = new NodeSelector(app->getMegaApi(), false, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
 

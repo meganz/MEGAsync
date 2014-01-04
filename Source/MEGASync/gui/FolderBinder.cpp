@@ -44,7 +44,7 @@ void FolderBinder::on_bLocalFolder_clicked()
 
 void FolderBinder::on_bMegaFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(megaApi, this);
+    NodeSelector *nodeSelector = new NodeSelector(megaApi, false, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
 

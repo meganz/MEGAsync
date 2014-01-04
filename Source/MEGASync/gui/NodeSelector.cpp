@@ -1,7 +1,9 @@
 #include "NodeSelector.h"
 #include "ui_NodeSelector.h"
 
-NodeSelector::NodeSelector(MegaApi *megaApi, QWidget *parent) :
+#include <QMessageBox>
+
+NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector)
 {
@@ -10,6 +12,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, QWidget *parent) :
     folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
     selectedFolder = UNDEF;
     selectedItem = NULL;
+    this->rootAllowed = rootAllowed;
 	delegateListener = new QTMegaRequestListener(this);
 }
 
@@ -114,4 +117,16 @@ void NodeSelector::on_bNewFolder_clicked()
             }
         }
     }
+}
+
+void NodeSelector::on_bOk_clicked()
+{
+    if(!rootAllowed && (selectedFolder == megaApi->getRootNode()->nodehandle))
+    {
+        QMessageBox::warning(this, tr("Error"), tr("The root folder can't be synced.\n"
+                                                 "Please, select a subfolder"), QMessageBox::Ok);
+        return;
+    }
+
+    accept();
 }

@@ -116,22 +116,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>bOk</sender>
-   <signal>clicked()</signal>
-   <receiver>NodeSelector</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>272</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>bCancel</sender>
    <signal>clicked()</signal>
    <receiver>NodeSelector</receiver>
