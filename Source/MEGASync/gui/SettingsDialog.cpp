@@ -396,6 +396,7 @@ void SettingsDialog::saveSettings()
 
         QMessageBox::information(this, tr("Warning"), QString::fromUtf8("The new excluded file names will be taken into account\n"
                                                                         "when the application starts again."), QMessageBox::Ok);
+        excludedNamesChanged = false;
     }
 
     //Proxies
@@ -552,7 +553,7 @@ void SettingsDialog::on_bAddName_clicked()
                                          QString::fromAscii(""), &ok);
 
     text = text.trimmed();
-    if (!ok && text.isEmpty()) return;
+    if (!ok || text.isEmpty()) return;
 
     QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
     if(!regExp.isValid())
