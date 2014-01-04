@@ -1,4 +1,5 @@
 #include "UpdateTask.h"
+#include "utils/Utils.h"
 #include <iostream>
 
 using namespace std;
@@ -99,7 +100,7 @@ void UpdateTask::initialCleanup()
     for(int i=0; i<subdirs.size(); i++)
     {
         if(subdirs[i].startsWith(BACKUP_FOLDER_NAME))
-            removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
+            Utils::removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
     }
 
     //Initialize update info
@@ -116,7 +117,7 @@ void UpdateTask::finalCleanup()
     QApplication::setApplicationVersion(QString::number(updateVersion));
 
     //Remove the update folder
-    removeRecursively(QDir(updateFolder));
+    Utils::removeRecursively(QDir(updateFolder));
     emit updateCompleted();
 }
 
@@ -300,33 +301,6 @@ void UpdateTask::rollbackUpdate(int fileNum)
         backupFolder.rename(file, appFolder.absoluteFilePath(file));
         cout << "File restored: " << file.toStdString() << endl;
     }
-}
-
-bool UpdateTask::removeRecursively(QDir dir)
-{
-    if (!dir.exists())
-        return true;
-
-    bool success = true;
-    const QString dirPath = dir.path();
-    // not empty -- we must empty it first
-    QDirIterator di(dirPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
-    while (di.hasNext()) {
-        di.next();
-        const QFileInfo& fi = di.fileInfo();
-        bool ok;
-        if (fi.isDir() && !fi.isSymLink())
-            ok = removeRecursively(QDir(di.filePath())); // recursive
-        else
-            ok = QFile::remove(di.filePath());
-        if (!ok)
-            success = false;
-    }
-
-    if (success)
-        success = dir.rmdir(dir.absolutePath());
-
-    return success;
 }
 
 void UpdateTask::addToSignature(QString value)

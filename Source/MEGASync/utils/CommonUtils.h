@@ -7,6 +7,7 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
+#include <QDir>
 
 template <class T>
 class CommonUtils
@@ -28,6 +29,7 @@ public:
     static QPixmap getExtensionPixmapSmall(QString fileName);
     static QPixmap getExtensionPixmapMedium(QString fileName);
     static QImage createThumbnail(QString imagePath, int size);
+    static bool removeRecursively(QDir dir);
     static bool enableTrayIcon(QString executable) { return T::enableTrayIcon(executable); }
     static void notifyItemChange(QString path) { T::notifyItemChange(path); }
     static bool startOnStartup(bool value) { return T::startOnStartup(value); }

@@ -10,6 +10,7 @@ void Instantiate_Template_Methods()
 {
     Utils::getSizeString(0);
     Utils::verifySyncedFolderLimits(QString::fromAscii(""));
+    Utils::removeRecursively(QDir());
     Utils::getExtensionPixmapSmall(QString::fromAscii(""));
     Utils::getExtensionPixmapMedium(QString::fromAscii(""));
     Utils::createThumbnail(QString::fromAscii(""),0);
@@ -220,7 +221,35 @@ QImage CommonUtils<T>::createThumbnail(QString imagePath, int size)
     }
 
     return image.scaled(w, h, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)
-             .copy((w-size)/2,(h-size)/3,size,size);
+            .copy((w-size)/2,(h-size)/3,size,size);
+}
+
+template <class T>
+bool CommonUtils<T>::removeRecursively(QDir dir)
+{
+    if (!dir.exists())
+        return true;
+
+    bool success = true;
+    const QString dirPath = dir.path();
+    // not empty -- we must empty it first
+    QDirIterator di(dirPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+    while (di.hasNext()) {
+        di.next();
+        const QFileInfo& fi = di.fileInfo();
+        bool ok;
+        if (fi.isDir() && !fi.isSymLink())
+            ok = removeRecursively(QDir(di.filePath())); // recursive
+        else
+            ok = QFile::remove(di.filePath());
+        if (!ok)
+            success = false;
+    }
+
+    if (success)
+        success = dir.rmdir(dir.absolutePath());
+
+    return success;
 }
 
 template <class T>
