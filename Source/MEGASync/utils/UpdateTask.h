@@ -34,7 +34,6 @@ protected:
    bool processFile(QNetworkReply *reply);
    bool performUpdate();
    void rollbackUpdate(int fileNum);
-   bool removeRecursively(QDir dir);
    void addToSignature(QString value);
    void addToSignature(QByteArray bytes);
    void initSignature();
