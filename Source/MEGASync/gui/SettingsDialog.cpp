@@ -528,7 +528,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(megaApi, this);
+    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
 

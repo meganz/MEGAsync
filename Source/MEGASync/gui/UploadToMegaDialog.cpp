@@ -46,7 +46,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, Meg
 
 void UploadToMegaDialog::on_bChange_clicked()
 {
-	NodeSelector *nodeSelector = new NodeSelector(megaApi, this);
+    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, this);
 	nodeSelector->nodesReady();
 	int result = nodeSelector->exec();
 
