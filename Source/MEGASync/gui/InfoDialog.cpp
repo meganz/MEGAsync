@@ -71,19 +71,22 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     {
         ui->wRecent1->setFile(preferences->getRecentFileName(0),
                           preferences->getRecentFileHandle(0),
-                          preferences->getRecentLocalPath(0));
+                          preferences->getRecentLocalPath(0),
+                          preferences->getRecentFileTime(0));
 
         if(preferences->getRecentFileHandle(1) != UNDEF)
         {
             ui->wRecent2->setFile(preferences->getRecentFileName(1),
                                   preferences->getRecentFileHandle(1),
-                                  preferences->getRecentLocalPath(1));
+                                  preferences->getRecentLocalPath(1),
+                                  preferences->getRecentFileTime(1));
 
             if(preferences->getRecentFileHandle(2) != UNDEF)
             {
                 ui->wRecent3->setFile(preferences->getRecentFileName(2),
                                       preferences->getRecentFileHandle(2),
-                                      preferences->getRecentLocalPath(2));
+                                      preferences->getRecentLocalPath(2),
+                                      preferences->getRecentFileTime(2));
             }
         }
     }
@@ -161,7 +164,7 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     QLayoutItem *item = ui->recentLayout->itemAt(2);
     RecentFile * recentFile = ((RecentFile *)item->widget());
     ui->recentLayout->insertWidget(0, recentFile);
-	recentFile->setFile(fileName, fileHandle, localPath);
+    recentFile->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
     app->getPreferences()->addRecentFile(fileName, fileHandle, localPath);
 }
 
@@ -226,7 +229,7 @@ void InfoDialog::updateTransfers()
 void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
-    if(ui->bPause->isChecked()) ui->lSyncUpdated->setText(tr("MEGAsync is paused"));
+    if(ui->bPause->isChecked()) ui->lSyncUpdated->setText(tr("File transfers paused"));
     else if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
     else ui->lSyncUpdated->setText(tr("MEGAsync is indexing"));
 }
@@ -265,7 +268,7 @@ void InfoDialog::setPaused(bool paused)
     overlay->setVisible(paused);
     if(ui->bPause->isChecked())
     {
-        ui->lSyncUpdated->setText(tr("MEGAsync is paused"));
+        ui->lSyncUpdated->setText(tr("File transfers paused"));
         setTransferSpeeds(-1, -1);
     }
     else

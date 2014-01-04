@@ -33,6 +33,8 @@ public:
     explicit MegaApplication(int &argc, char **argv);
     ~MegaApplication();
 
+    static const int VERSION_CODE;
+
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
     virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
@@ -132,8 +134,6 @@ protected:
     bool syncActive;
     bool paused;
     bool indexing;
-
-    static const int VERSION_CODE;
 };
 
 #endif // MEGAAPPLICATION_H

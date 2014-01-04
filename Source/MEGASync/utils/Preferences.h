@@ -81,6 +81,7 @@ public:
     QString getRecentFileName(int num);
     long long getRecentFileHandle(int num);
     QString getRecentLocalPath(int num);
+    long long getRecentFileTime(int num);
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
@@ -129,6 +130,7 @@ protected:
     QStringList recentFileNames;
     QList<long long> recentFileHandles;
     QStringList recentLocalPaths;
+    QList<long long> recentFileTime;
 
     QStringList excludedSyncNames;
 
@@ -166,8 +168,11 @@ protected:
     static const QString fileNameKey;
     static const QString fileHandleKey;
     static const QString localPathKey;
+    static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
+    static const QString lastVersionKey;
+
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
