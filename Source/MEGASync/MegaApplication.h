@@ -33,6 +33,8 @@ public:
     explicit MegaApplication(int &argc, char **argv);
     ~MegaApplication();
 
+    void initialize();
+
     static const int VERSION_CODE;
 
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
@@ -67,13 +69,13 @@ public:
     void setUploadLimit(int limit);
     void startUpdateTask();
     void stopUpdateTask();
-    bool expired;
 
 signals:
     void startUpdaterThread();
 
 public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+    void start();
     void openSettings();
     void pauseSync();
     void resumeSync();
@@ -94,7 +96,6 @@ protected:
     void createActions();
     void createTrayIcon();
     bool showTrayIconAlwaysNEW();
-    void init();
     void loggedIn();
 	void startSyncs();
 	void stopSyncs();

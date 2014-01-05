@@ -2,6 +2,7 @@
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
 #include "utils/Utils.h"
+#include "utils/CrashHandler.h"
 
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -11,27 +12,53 @@ const int MegaApplication::VERSION_CODE = 104; //1.04
 
 int main(int argc, char *argv[])
 {
+    MegaApplication app(argc, argv);
+
+    QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
+    QDir crashDir(crashPath);
+    if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
+    CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
+
     QSharedMemory singleInstanceChecker;
     singleInstanceChecker.setKey(QString::fromAscii("MEGAsyncSingleInstanceChecker"));
+    if((argc == 2) && !strcmp("/reboot", argv[1]))
+    {
+        //If the app is being restarted, wait up to 10 seconds or until the previous instance ends.
+        for(int i=0; i<10; i++)
+        {
+            if(!singleInstanceChecker.attach()) break;
+            singleInstanceChecker.detach();
+
+            #ifdef WIN32
+                Sleep(1000);
+            #else
+                sleep(1);
+            #endif
+        }
+    }
 
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
 
-    MegaApplication app(argc, argv);
-    if(app.expired)
+    QDate betaLimit(2014, 1, 11);
+    long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
+    if(now > betaLimitTime)
+    {
+        QMessageBox::information(NULL, app.tr("MEGAsync BETA"), app.tr("Thank you for testing MEGAsync.<br>"
+           "This beta version is no longer current and has expired.<br>"
+           "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
         return 0;
+    }
+
+    app.initialize();
+    app.start();
     return app.exec();
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
-    expired = false;
-    setQuitOnLastWindowClosed(false);
-
-    //Hack to have tooltips with a black background
-    QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
-
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
@@ -44,63 +71,23 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #else
     QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
 #endif
+
+    QDir currentDir(dataPath);
+    if(!currentDir.exists()) currentDir.mkpath(QString::fromAscii("."));
     QDir::setCurrent(dataPath);
 
-    //Register metatypes to use them in signals/slots
-    qRegisterMetaType<QQueue<QString> >("QQueueQString");
-	qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
-
-    connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
-
-    preferences = new Preferences();
-    QDate betaLimit(2014, 1, 11);
-    long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
-    long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
-    if(now > betaLimitTime)
-    {
-        QMessageBox::information(NULL, tr("MEGAsync BETA"), tr("Thank you for testing MEGAsync.<br>"
-           "This beta version is no longer current and has expired.<br>"
-           "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
-        expired = true;
-        return;
-    }
-    preferences->setLastExecutionTime(now);
-
-    //Initialize fields to manage communications and transfers
-    delegateListener = new QTMegaListener(this);
+    trayIcon = NULL;
+    trayMenu = NULL;
+    megaApi = NULL;
     httpServer = NULL;
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
     uploadSpeed = downloadSpeed = 0;
-
-    QString basePath = QDir::toNativeSeparators(dataPath+QString::fromAscii("/"));
-    string tmpPath = basePath.toStdString();
-    megaApi = new MegaApi(delegateListener, &tmpPath);
-    uploader = new MegaUploader(megaApi);
-    reboot = false;
-
-    //Create GUI elements
-    trayMenu = NULL;
-    trayIcon = new QSystemTrayIcon(this);
-    refreshTimer = new QTimer(this);
-    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
-    refreshTimer->start(10000);
-
-    createActions();
     infoDialog = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
     uploadFolderSelector = NULL;
-
-    //Apply the "Start on startup" configuration
-    //Utils::startOnStartup(preferences->startOnStartup());
-
-    //Start the update task in the update thread
-    if(preferences->updateAutomatically())
-        startUpdateTask();
-
-    //Start the app
-    init();
+    reboot = false;
 }
 
 MegaApplication::~MegaApplication()
@@ -108,7 +95,43 @@ MegaApplication::~MegaApplication()
     delete megaApi;
 }
 
-void MegaApplication::init()
+void MegaApplication::initialize()
+{
+    if(megaApi != NULL) return;
+
+    setQuitOnLastWindowClosed(false);
+
+    //Register metatypes to use them in signals/slots
+    qRegisterMetaType<QQueue<QString> >("QQueueQString");
+    qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
+
+    //Hack to have tooltips with a black background
+    QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
+
+    preferences = new Preferences();
+    delegateListener = new QTMegaListener(this);
+    QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
+    string tmpPath = basePath.toStdString();
+    megaApi = new MegaApi(delegateListener, &tmpPath);
+    uploader = new MegaUploader(megaApi);
+
+    //Create GUI elements
+    trayIcon = new QSystemTrayIcon(this);
+    refreshTimer = new QTimer(this);
+    refreshTimer->start(10000);
+
+    createActions();
+    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
+    connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
+
+    //Apply the "Start on startup" configuration
+    //Utils::startOnStartup(preferences->startOnStartup());
+
+    preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
+    startUpdateTask();
+}
+
+void MegaApplication::start()
 {
     paused = false;
     indexing = false;
@@ -277,9 +300,9 @@ void MegaApplication::rebootApplication()
     Utils::stopShellDispatcher();
 
     QString app = QApplication::applicationFilePath();
-    QStringList arguments = QApplication::arguments();
-    QString wd = QDir::currentPath();
-    QProcess::startDetached(app, arguments, wd);
+    QStringList args = QStringList();
+    args.append(QString::fromAscii("/reboot"));
+    QProcess::startDetached(app, args);
     QApplication::exit();
 }
 
@@ -317,6 +340,7 @@ void MegaApplication::cleanAll()
 {
     cout << "Cleaning resources" << endl;
     Utils::stopShellDispatcher();
+    trayIcon->hide();
 }
 
 void MegaApplication::unlink()
@@ -362,6 +386,8 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
+    if(!preferences->updateAutomatically()) return;
+
     //TODO: Enable autoUpdate again in the next release
     //if(!updateThread.isRunning())
     //{
@@ -646,7 +672,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         {
             preferences->unlink();
             delete infoDialog;
-            init();
+            start();
         }
     }
 	case MegaRequest::TYPE_FETCH_NODES:
