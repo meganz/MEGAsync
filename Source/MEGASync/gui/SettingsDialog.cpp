@@ -460,7 +460,20 @@ void SettingsDialog::loadSyncSettings()
 
 void SettingsDialog::on_bAdd_clicked()
 {
-    BindFolderDialog *dialog = new BindFolderDialog(app, this);
+    QStringList currentLocalFolders;
+    QList<long long> currentMegaFolders;
+    for(int i=0; i<ui->tSyncs->rowCount(); i++)
+    {
+        QString localFolder = ui->tSyncs->item(i, 0)->text().trimmed();
+        currentLocalFolders.append(localFolder);
+
+        QString newMegaPath = ui->tSyncs->item(i, 1)->text().trimmed();
+        Node *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+        if(!n) continue;
+        currentMegaFolders.append(n->nodehandle);
+    }
+
+    BindFolderDialog *dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFolders, this);
     int result = dialog->exec();
     if(result != QDialog::Accepted)
         return;

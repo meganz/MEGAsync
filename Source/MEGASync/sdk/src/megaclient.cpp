@@ -307,14 +307,14 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 {
 	sctable = NULL;
     reqtag = 0;
+    syncscanstate = false;
+    init();
 
-	app = a;
+    app = a;
 	waiter = w;
 	httpio = h;
 	fsaccess = f;
 	dbaccess = d;
-
-    init();
 
 	a->client = this;
 

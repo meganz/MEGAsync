@@ -453,6 +453,26 @@ long long Preferences::getMegaFolderHandle(int num)
     return megaFolderHandles.at(num);
 }
 
+QStringList Preferences::getSyncNames()
+{
+    return syncNames;
+}
+
+QStringList Preferences::getMegaFolders()
+{
+    return megaFolders;
+}
+
+QStringList Preferences::getLocalFolders()
+{
+    return localFolders;
+}
+
+QList<long long> Preferences::getMegaFolderHandles()
+{
+    return megaFolderHandles;
+}
+
 void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName)
 {
     assert(logged());

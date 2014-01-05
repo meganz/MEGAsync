@@ -730,6 +730,23 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         }
     }
+    case MegaRequest::TYPE_SYNC:
+    {
+        if(e->getErrorCode() == MegaError::API_OK)
+            break;
+
+        //Error adding sync
+        cout << "Error adding sync" << endl;
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        {
+            if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)) &&
+                (QString::fromUtf8(request->getFile())==preferences->getLocalFolder(i)))
+            {
+                preferences->removeSyncedFolder(i);
+                break;
+            }
+        }
+    }
     default:
         break;
     }

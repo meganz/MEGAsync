@@ -73,6 +73,11 @@ public:
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
     long long getMegaFolderHandle(int num);
+    QStringList getSyncNames();
+    QStringList getMegaFolders();
+    QStringList getLocalFolders();
+    QList<long long> getMegaFolderHandles();
+
     void addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName = QString());
     void removeSyncedFolder(int num);
     void removeAllFolders();

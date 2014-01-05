@@ -17,6 +17,10 @@ class BindFolderDialog : public QDialog
 
 public:
     explicit BindFolderDialog(MegaApplication *app, QWidget *parent = 0);
+    BindFolderDialog(MegaApplication *app, QStringList syncNames,
+                                       QStringList localFolders,
+                                       QList<long long> megaFolderHandles,
+                                       QWidget *parent = 0);
     ~BindFolderDialog();
 
     long long getMegaFolder();
@@ -30,6 +34,10 @@ private:
     Ui::BindFolderDialog *ui;
     MegaApplication *app;
     QString syncName;
+
+    QStringList syncNames;
+    QStringList localFolders;
+    QList<long long> megaFolderHandles;
 };
 
 #endif // BINDFOLDERDIALOG_H

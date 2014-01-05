@@ -11,6 +11,25 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     this->app = app;
+    Preferences *preferences = app->getPreferences();
+    syncNames = preferences->getSyncNames();
+    localFolders = preferences->getLocalFolders();
+    megaFolderHandles = preferences->getMegaFolderHandles();
+}
+
+BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
+                                   QStringList localFolders,
+                                   QList<long long> megaFolderHandles,
+                                   QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::BindFolderDialog)
+{
+    ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    this->app = app;
+    this->syncNames = syncNames;
+    this->localFolders = localFolders;
+    this->megaFolderHandles = megaFolderHandles;
 }
 
 BindFolderDialog::~BindFolderDialog()
@@ -45,10 +64,9 @@ void BindFolderDialog::on_buttonBox_accepted()
         return;
     }
 
-    Preferences *preferences = app->getPreferences();
-    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+    for(int i=0; i<localFolders.size(); i++)
     {
-        QString c = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
+        QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
         if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QChar::fromAscii('\\'))))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
@@ -59,8 +77,11 @@ void BindFolderDialog::on_buttonBox_accepted()
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder contains an already synced folder"), QMessageBox::Ok);
             return;
         }
+    }
 
-        Node *n = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+    for(int i=0; i<megaFolderHandles.size(); i++)
+    {
+        Node *n = megaApi->getNodeByHandle(megaFolderHandles[i]);
         if(n)
         {
             QString megaPath = QString::fromUtf8(megaApi->getNodePath(node));
@@ -70,7 +91,7 @@ void BindFolderDialog::on_buttonBox_accepted()
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 return;
             }
-            else if(p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/'))
+            else if(megaPath==QString::fromAscii("/") || (p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/')))
             {
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder contains an already synced folder"), QMessageBox::Ok);
                 return;
@@ -90,9 +111,9 @@ void BindFolderDialog::on_buttonBox_accepted()
    syncName = QFileInfo(localFolderPath).fileName();
    do {
        repeated = false;
-       for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+       for(int i=0; i<syncNames.size(); i++)
        {
-           if(!syncName.compare(preferences->getSyncName(i)))
+           if(!syncName.compare(syncNames[i]))
            {
                 repeated = true;
 
