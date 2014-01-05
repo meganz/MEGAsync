@@ -904,14 +904,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     INIT_RECURSIVE_MUTEX(sdkMutex);
 
 	addListener(listener);
-    this->basepath=*basePath;
-    httpio = new MegaHttpIO();
-    waiter = new MegaWaiter();
-    fsAccess = new MegaFileSystemAccess();
-    fsAccess->path2local(basePath, &localbasepath);
-    dbAccess = new MegaDbAccess(basePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
-
+    basepath=*basePath;
 	maxRetries = 3;
 	loginRequest = NULL;
 	updatingSID = 0;
@@ -922,6 +915,14 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     pendingDownloads = 0;
     totalUploads = 0;
     totalDownloads = 0;
+    client = NULL;
+
+    httpio = new MegaHttpIO();
+    waiter = new MegaWaiter();
+    fsAccess = new MegaFileSystemAccess();
+    fsAccess->path2local(basePath, &localbasepath);
+    dbAccess = new MegaDbAccess(basePath);
+    client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2033,6 +2034,12 @@ void MegaApi::transfer_complete(Transfer* tr)
 void MegaApi::syncupdate_state(Sync *, syncstate s)
 {
 	cout << "syncupdate_state: " << s << endl;
+    fireOnSyncStateChanged(this);
+}
+
+void MegaApi::syncupdate_scanning(bool scanning)
+{
+    if(client) client->syncscanstate = scanning;
     fireOnSyncStateChanged(this);
 }
 
@@ -4095,6 +4102,8 @@ void MegaApi::updateStatics()
 
 bool MegaApi::isIndexing()
 {
+    if(!client || client->syncscanstate) return true;
+
     bool indexing = false;
     MUTEX_LOCK(sdkMutex);
     sync_list::iterator it = client->syncs.begin();

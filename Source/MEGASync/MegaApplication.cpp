@@ -947,6 +947,8 @@ void MegaApplication::onReloadNeeded(MegaApi* api)
 
 void MegaApplication::onSyncStateChanged(MegaApi *api)
 {
+    if(!infoDialog) return;
+
     indexing = megaApi->isIndexing();
     infoDialog->setIndexing(indexing);
 

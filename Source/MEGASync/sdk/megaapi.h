@@ -957,6 +957,7 @@ protected:
 
 	// sync status updates and events
 	virtual void syncupdate_state(Sync*, syncstate);
+    virtual void syncupdate_scanning(bool scanning);
 	virtual void syncupdate_stuck(string*);
 	virtual void syncupdate_local_folder_addition(Sync*, const char*);
 	virtual void syncupdate_local_folder_deletion(Sync*, const char*);
