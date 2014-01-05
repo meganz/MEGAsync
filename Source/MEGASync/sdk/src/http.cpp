@@ -105,7 +105,7 @@ m_off_t HttpReq::transferred(MegaClient*)
 }
 
 // prepare file chunk download
-void HttpReqDL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key, chunkmac_map* macs, uint64_t ctriv, m_off_t pos, m_off_t npos)
+bool HttpReqDL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key, chunkmac_map* macs, uint64_t ctriv, m_off_t pos, m_off_t npos)
 {
 	char urlbuf[256];
 
@@ -123,6 +123,8 @@ void HttpReqDL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key, ch
 		buf = new byte[(size+SymmCipher::BLOCKSIZE-1)&-SymmCipher::BLOCKSIZE];
 		buflen = size;
 	}
+
+	return true;
 }
 
 // decrypt, mac and write downloaded chunk
@@ -151,18 +153,18 @@ void HttpReqDL::finalize(FileAccess* fa, SymmCipher* key, chunkmac_map* macs, ui
 }
 
 // prepare chunk for uploading: mac and encrypt
-void HttpReqUL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key, chunkmac_map* macs, uint64_t ctriv, m_off_t pos, m_off_t npos)
+bool HttpReqUL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key, chunkmac_map* macs, uint64_t ctriv, m_off_t pos, m_off_t npos)
 {
+	size = (unsigned)(npos-pos);
+
+	// FIXME: check return value and abort upload in case file read fails
+	if (!fa->fread(out,size,(-(int)size)&(SymmCipher::BLOCKSIZE-1),pos)) return false;
+
 	byte mac[SymmCipher::BLOCKSIZE] = { 0 };
 	char buf[256];
 
 	snprintf(buf,sizeof buf,"%s/%" PRIu64,tempurl,pos);
 	setreq(buf,REQ_BINARY);
-
-	size = (unsigned)(npos-pos);
-
-	// FIXME: check return value and abort upload in case file read fails
-	fa->fread(out,size,(-(int)size)&(SymmCipher::BLOCKSIZE-1),pos);
 
 	key->ctr_crypt((byte*)out->data(),size,pos,ctriv,mac,1);
 
@@ -170,6 +172,8 @@ void HttpReqUL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key, ch
 
 	// unpad for POSTing
 	out->resize(size);
+	
+	return true;
 }
 
 // number of bytes sent in this request

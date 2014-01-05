@@ -25,6 +25,7 @@
 #include "mega/base64.h"
 #include "mega/sync.h"
 #include "mega/transfer.h"
+#include "mega/transferslot.h"
 
 namespace mega {
 
@@ -691,6 +692,9 @@ LocalNode* LocalNode::childbyname(string* localname)
 void LocalNode::prepare()
 {
 	getlocalpath(&transfer->localfilename,true);
+
+	// is this transfer in progress? update file's filename.
+	if (transfer->slot && transfer->slot->file->localname.size()) transfer->slot->file->updatelocalname(&transfer->localfilename);
 }
 
 void LocalNode::completed(Transfer* t, LocalNode*)

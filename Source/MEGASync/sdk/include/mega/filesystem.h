@@ -45,24 +45,43 @@ struct FileAccess
 	// local filesystem record id (survives renames & moves)
 	handle fsid;
 	bool fsidvalid;
-	
+
 	// type of opened path
 	nodetype type;
 
 	// if the open failed, retry indicates a potentially transient reason
 	bool retry;
 
+	// for files "opened" in nonblocking mode, the current local filename
+	string localname;
+
 	// open for reading, writing or reading and writing
 	virtual bool fopen(string*, bool, bool) = 0;
 
+	// open by name only
+	bool fopen(string*);
+	
+	// update localname (only has an effect if operating in by-name mode)
+	virtual void updatelocalname(string*) = 0;
+
 	// absolute position read, with NUL padding
-	virtual bool fread(string*, unsigned, unsigned, m_off_t) = 0;
+	bool fread(string*, unsigned, unsigned, m_off_t);
 
 	// absolute position read to byte buffer
-	virtual bool frawread(byte*, unsigned, m_off_t) = 0;
+	bool frawread(byte*, unsigned, m_off_t);
+
+	// non-locking ops: open/close temporary hFile
+	bool openf();
+	void closef();
 
 	// absolute position write
 	virtual bool fwrite(const byte*, unsigned, m_off_t) = 0;
+
+	// system-specific raw read/open/close
+	virtual bool sysread(byte*, unsigned, m_off_t) = 0;
+	virtual bool sysstat(time_t*, m_off_t*) = 0;
+	virtual bool sysopen() = 0;
+	virtual void sysclose() = 0;
 
 	virtual ~FileAccess() { }
 };

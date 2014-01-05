@@ -51,4 +51,57 @@ DirNotify* FileSystemAccess::newdirnotify(string* localpath)
 	return new DirNotify(localpath);
 }
 
+// open file for reading
+bool FileAccess::fopen(string* name)
+{
+	localname.resize(1);
+	updatelocalname(name);
+	
+	return sysstat(&mtime,&size);
+}
+
+// check if size and mtime are unchanged, then open for reading
+bool FileAccess::openf()
+{
+	if (!localname.size()) return true;
+	
+	time_t curr_mtime;
+	m_off_t curr_size;
+	
+	if (!sysstat(&curr_mtime,&curr_size) || curr_mtime != mtime || curr_size != size) return false;
+
+	return sysopen();
+}
+
+void FileAccess::closef()
+{
+	if (localname.size()) sysclose();
+}
+
+bool FileAccess::fread(string* dst, unsigned len, unsigned pad, m_off_t pos)
+{
+	if (!openf()) return false;
+
+	bool r;
+	
+	dst->resize(len+pad);
+
+	if ((r = sysread((byte*)dst->data(),len,pos))) memset((char*)dst->data()+len,0,pad);
+
+	closef();
+	
+	return r;
+}
+
+bool FileAccess::frawread(byte* dst, unsigned len, m_off_t pos)
+{
+	if (!openf()) return false;
+	
+	bool r = sysread(dst,len,pos);
+	
+	closef();
+	
+	return r;
+}
+
 } // namespace

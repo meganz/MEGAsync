@@ -106,7 +106,7 @@ struct HttpReqXfer : public HttpReq
 {
 	unsigned size;
 
-	virtual void prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t) = 0;
+	virtual bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t) = 0;
 	virtual void finalize(FileAccess*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t) { }
 
 	HttpReqXfer() : HttpReq(1) { };
@@ -115,7 +115,7 @@ struct HttpReqXfer : public HttpReq
 // file chunk upload
 struct HttpReqUL : public HttpReqXfer
 {
-	void prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
+	bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
 
 	m_off_t transferred(MegaClient*);
 
@@ -127,7 +127,7 @@ struct HttpReqDL : public HttpReqXfer
 {
 	m_off_t dlpos;
 
-	void prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
+	bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
 	void finalize(FileAccess*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
 
 	~HttpReqDL() { };

@@ -162,9 +162,6 @@ void TransferSlot::doio(MegaClient* client)
 					break;
 
 				case REQ_FAILURE:
-					reqs[i]->status = REQ_PREPARED;
-					break;
-
 					if (reqs[i]->httpstatus == 509)
 					{
 						client->app->transfer_limit(transfer);
@@ -172,7 +169,7 @@ void TransferSlot::doio(MegaClient* client)
 						// fixed ten-minute retry intervals
 						backoff = 6000;
 					}
-					else return transfer->failed(API_ETEMPUNAVAIL);
+					else reqs[i]->status = REQ_READY;
 
 				default:;
 			}
@@ -186,11 +183,20 @@ void TransferSlot::doio(MegaClient* client)
 
 			if (npos > transfer->pos || !transfer->size)
 			{
-				if (!reqs[i]) reqs[i] = (transfer->type == PUT) ? (HttpReqXfer*)new HttpReqUL() : (HttpReqXfer*)new HttpReqDL();
+				if (!reqs[i]) reqs[i] = transfer->type == PUT ? (HttpReqXfer*)new HttpReqUL() : (HttpReqXfer*)new HttpReqDL();
 
-				reqs[i]->prepare(file,tempurl.c_str(),&transfer->key,&transfer->chunkmacs,transfer->ctriv,transfer->pos,npos);
-				reqs[i]->status = REQ_PREPARED;
-				transfer->pos = npos;
+				if (reqs[i]->prepare(file,tempurl.c_str(),&transfer->key,&transfer->chunkmacs,transfer->ctriv,transfer->pos,npos))
+				{
+					reqs[i]->status = REQ_PREPARED;
+					transfer->pos = npos;
+				}
+				else
+				{
+					if (!file->retry) return transfer->failed(API_EREAD);
+
+					// retry the read shortly
+					backoff = 2;
+				}
 			}
 			else if (reqs[i]) reqs[i]->status = REQ_DONE;
 		}
