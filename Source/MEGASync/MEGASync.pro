@@ -14,6 +14,7 @@ TEMPLATE = app
 include(gui/gui.pri)
 include(sdk/sdk.pri)
 include(utils/utils.pri)
+include(google_breakpad/google_breakpad.pri)
 
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
@@ -26,6 +27,4 @@ HEADERS += MegaApplication.h
 win32 {
     RC_FILE = icon.rc
 }
-
-FORMS +=
 
