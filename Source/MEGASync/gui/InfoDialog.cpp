@@ -46,19 +46,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     indexing = false;
     transfer1 = NULL;
     transfer2 = NULL;
-	/***************************/
-    //Example transfers
-	/*ui->wRecent1->setFileName("filename_compressed.zip");
-    ui->wRecent2->setFileName("filename_document.pdf");
-    ui->wRecent3->setFileName("filename_image.png");
-
-    ui->wTransfer1->setFileName("Photoshop_file_2.psd");
-    ui->wTransfer1->setPercentage(76);
-    ui->wTransfer1->setType(0);
-    ui->wTransfer2->setFileName("Illustrator_file.ai");
-    ui->wTransfer2->setPercentage(50);
-	ui->wTransfer2->setType(1);*/
-	/******************************/
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -231,7 +218,7 @@ void InfoDialog::setIndexing(bool indexing)
     this->indexing = indexing;
     if(ui->bPause->isChecked()) ui->lSyncUpdated->setText(tr("File transfers paused"));
     else if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
-    else ui->lSyncUpdated->setText(tr("MEGAsync is indexing"));
+    else ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
@@ -274,7 +261,7 @@ void InfoDialog::setPaused(bool paused)
     else
     {
         if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
-        else ui->lSyncUpdated->setText(tr("MEGAsync is indexing"));
+        else ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
     }
 }
 
