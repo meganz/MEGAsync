@@ -21,8 +21,6 @@
 
 #include "mega.h"
 
-
-
 namespace mega {
 
 PosixFileAccess::PosixFileAccess()
@@ -40,20 +38,44 @@ PosixFileAccess::~PosixFileAccess()
 	if (fd >= 0) close(fd);
 }
 
-bool PosixFileAccess::fread(string* dst, unsigned len, unsigned pad, m_off_t pos)
+bool PosixFileAccess::sysstat(time_t* mtime, m_off_t* size)
 {
-	dst->resize(len+pad);
+	struct stat statbuf;
 
-	if (pread(fd,(char*)dst->data(),len,pos) == len)
+	if (!stat(localname.c_str(),&statbuf))
 	{
-		memset((char*)dst->data()+len,0,pad);
+                if (S_ISDIR(statbuf.st_mode)) return false;
+
+		*size = statbuf.st_size;
+		*mtime = statbuf.st_mtime;
 		return true;
 	}
 
-	return false;
+	return true;
 }
 
-bool PosixFileAccess::frawread(byte* dst, unsigned len, m_off_t pos)
+bool PosixFileAccess::sysopen()
+{
+	return (fd = open(localname.c_str(),O_RDONLY)) >= 0;
+}
+
+void PosixFileAccess::sysclose()
+{
+	if (localname.size())
+	{
+		// fd will always be valid at this point
+		close(fd);
+		fd = -1;
+	}
+}
+
+// update local name
+void PosixFileAccess::updatelocalname(string* name)
+{
+	if (localname.size()) localname = *name;
+}
+
+bool PosixFileAccess::sysread(byte* dst, unsigned len, m_off_t pos)
 {
 	return pread(fd,(char*)dst,len,pos) == len;
 }

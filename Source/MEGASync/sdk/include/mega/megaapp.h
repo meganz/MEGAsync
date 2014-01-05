@@ -124,7 +124,7 @@ struct MegaApp
 
 	// sync status updates and events
 	virtual void syncupdate_state(Sync*, syncstate) { }
-	virtual void syncupdate_stuck(string*) { }
+	virtual void syncupdate_scanning(bool) { }
 	virtual void syncupdate_local_folder_addition(Sync*, const char*) { }
 	virtual void syncupdate_local_folder_deletion(Sync*, const char*) { }
 	virtual void syncupdate_local_file_addition(Sync*, const char*) { }

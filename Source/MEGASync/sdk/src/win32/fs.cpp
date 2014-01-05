@@ -37,26 +37,7 @@ WinFileAccess::~WinFileAccess()
 	else if (hFind != INVALID_HANDLE_VALUE) FindClose(hFind);
 }
 
-bool WinFileAccess::fread(string* dst, unsigned len, unsigned pad, m_off_t pos)
-{
-	DWORD dwRead;
-
-	if (!SetFilePointerEx(hFile,*(LARGE_INTEGER*)&pos,NULL,FILE_BEGIN)) return false;
-
-	dst->resize(len+pad);
-
-	memset((char*)dst->data(),0,len+pad);
-
-	if (ReadFile(hFile,(LPVOID)dst->data(),(DWORD)len,&dwRead,NULL) && dwRead == len)
-	{
-		memset((char*)dst->data()+len,0,pad);
-		return true;
-	}
-
-	return false;
-}
-
-bool WinFileAccess::frawread(byte* dst, unsigned len, m_off_t pos)
+bool WinFileAccess::sysread(byte* dst, unsigned len, m_off_t pos)
 {
 	DWORD dwRead;
 
@@ -87,6 +68,57 @@ time_t FileTime_to_POSIX(FILETIME* ft)
 
 	// converts back from 100-nanoseconds to seconds
 	return date.QuadPart/10000000;
+}
+
+bool WinFileAccess::sysstat(time_t* mtime, m_off_t* size)
+{
+	WIN32_FILE_ATTRIBUTE_DATA fad;
+
+	if (!GetFileAttributesExW((LPCWSTR)localname.data(),GetFileExInfoStandard,(LPVOID)&fad))
+	{
+		retry = WinFileSystemAccess::istransient(GetLastError());
+		return false;
+	}
+
+	if (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) return false;
+
+	*mtime = FileTime_to_POSIX(&fad.ftLastWriteTime);
+	*size = ((m_off_t)fad.nFileSizeHigh << 32)+(m_off_t)fad.nFileSizeLow;
+
+	return true;
+}
+
+bool WinFileAccess::sysopen()
+{
+	hFile = CreateFileW((LPCWSTR)localname.data(),GENERIC_READ,FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,0,NULL);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		retry = WinFileSystemAccess::istransient(GetLastError());
+		return false;
+	}
+	
+	return true;
+}
+
+void WinFileAccess::sysclose()
+{
+	if (localname.size())
+	{
+		// hFile will always be valid at this point
+		CloseHandle(hFile);
+		hFile = INVALID_HANDLE_VALUE;
+	}
+}
+
+// update local name
+void WinFileAccess::updatelocalname(string* name)
+{
+	if (localname.size())
+	{
+		localname = *name;
+		localname.append("",1);
+	}
 }
 
 // emulates Linux open-directory-as-file semantics

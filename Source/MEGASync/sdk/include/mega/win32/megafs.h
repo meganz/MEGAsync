@@ -110,9 +110,15 @@ public:
 	WIN32_FIND_DATAW ffd;
 
 	bool fopen(string*, bool, bool);
+	void updatelocalname(string*);
 	bool fread(string*, unsigned, unsigned, m_off_t);
 	bool frawread(byte*, unsigned, m_off_t);
 	bool fwrite(const byte*, unsigned, m_off_t);
+
+	bool sysread(byte*, unsigned, m_off_t);
+	bool sysstat(time_t*, m_off_t*);
+	bool sysopen();
+	void sysclose();
 
 	WinFileAccess();
 	~WinFileAccess();
