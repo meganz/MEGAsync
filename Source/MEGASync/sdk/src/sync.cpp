@@ -257,7 +257,10 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 				// (we tolerate overwritten folders, because we do a content scan anyway)
 				if (fa->type == FILENODE && (fa->fsidvalid && l->fsid_it != client->fsidnode.end() && l->fsid != fa->fsid))
 				{
-					l->setnotseen(l->notseen+1);
+					// file overwritten: immediate deletion with de-linked corresponding remote node (syncnotseen not needed - can never reappear later)
+					if (l->node) l->node->localnode = NULL;
+					l->node = NULL;
+					delete l;
 					l = NULL;
 				}
 				else
