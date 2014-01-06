@@ -1957,18 +1957,14 @@ void MegaApi::transfer_complete(Transfer* tr)
 
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
+    if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
+    if(waiter->getdstime()<transfer->getStartTime())
+        transfer->setStartTime(waiter->ds);
 
-	if(tr->slot)
-	{
-        if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
-        if(waiter->getdstime()<transfer->getStartTime())
-            transfer->setStartTime(waiter->ds);
-
-        transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->ds-transfer->getStartTime()+1));
-		transfer->setTime(tr->slot->lastdata);
-		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
-		transfer->setTransferredBytes(tr->slot->progressreported);
-	}
+    transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->ds-transfer->getStartTime()+1));
+    transfer->setTime(waiter->ds);
+    transfer->setDeltaSize(tr->size - transfer->getTransferredBytes());
+    transfer->setTransferredBytes(tr->size);
 
 	string tmpPath;
 	fsAccess->local2path(&tr->localfilename, &tmpPath);
@@ -2060,7 +2056,7 @@ void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
     while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
     {
         WindowsUtils::notifyItemChange(parent.absolutePath());
-        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
         parent = QFileInfo(parent.absolutePath()).dir();
     }
 }
@@ -2081,7 +2077,7 @@ void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
     while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
     {
         WindowsUtils::notifyItemChange(parent.absolutePath());
-        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
         parent = QFileInfo(parent.absolutePath()).dir();
     }
 }
@@ -2108,7 +2104,7 @@ void MegaApi::syncupdate_put(Sync *sync, const char *s)
     while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
     {
         WindowsUtils::notifyItemChange(parent.absolutePath());
-        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
         parent = QFileInfo(parent.absolutePath()).dir();
     }
 }

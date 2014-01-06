@@ -41,11 +41,8 @@ boolean WindowsUtils::enableTrayIcon(QString executable)
 
 void WindowsUtils::notifyItemChange(QString path)
 {
-    WCHAR *windowsPath = new wchar_t[path.length()+1];
-    int len = path.toWCharArray(windowsPath);
-	windowsPath[len]=L'\0';
+    WCHAR *windowsPath = (WCHAR *)path.utf16();
 	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
-    delete windowsPath;
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
@@ -99,19 +96,13 @@ bool WindowsUtils::startOnStartup(bool value)
         if(QFile(startupPath).exists()) return true;
 
         WCHAR wDescription[]=L"Start MEGAsync";
-        WCHAR *wStartupPath = new wchar_t[startupPath.length()+1];
-        int len = startupPath.toWCharArray(wStartupPath);
-        wStartupPath[len] = L'\0';
+        WCHAR *wStartupPath = (WCHAR *)startupPath.utf16();
 
         QString exec = QCoreApplication::applicationFilePath();
 		exec = QDir::toNativeSeparators(exec);
-        WCHAR *wExecPath = new wchar_t[exec.length()+1];
-        len = exec.toWCharArray(wExecPath);
-        wExecPath[len]= L'\0';
+        WCHAR *wExecPath = (WCHAR *)exec.utf16();
 
         res = CreateLink(wExecPath, wStartupPath, wDescription);
-        delete wStartupPath;
-        delete wExecPath;
 
         if(res != S_OK) return false;
         return true;
@@ -180,34 +171,20 @@ void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
 
     WCHAR wDescription[]=L"MEGAsync synchronized folder";
     linkPath = QDir::toNativeSeparators(linkPath);
-    WCHAR *wLinkPath = new wchar_t[linkPath.length()+1];
-    int linkPathLen = linkPath.toWCharArray(wLinkPath);
-    wLinkPath[linkPathLen] = L'\0';
+    WCHAR *wLinkPath = (WCHAR *)linkPath.utf16();
 
     syncPath = QDir::toNativeSeparators(syncPath);
-    WCHAR *wSyncPath = new wchar_t[syncPath.length()+1];
-    int syncPathLen = syncPath.toWCharArray(wSyncPath);
-    wSyncPath[syncPathLen] = L'\0';
+    WCHAR *wSyncPath = (WCHAR *)syncPath.utf16();
 
     QString exec = QCoreApplication::applicationFilePath();
     exec = QDir::toNativeSeparators(exec);
-    WCHAR *wExecPath = new wchar_t[exec.length()+1];
-    int execPathLen = exec.toWCharArray(wExecPath);
-    wExecPath[execPathLen] = L'\0';
-
-
+    WCHAR *wExecPath = (WCHAR *)exec.utf16();
     res = CreateLink(wSyncPath, wLinkPath, wDescription, wExecPath);
-    delete wSyncPath;
-    delete wExecPath;
 
     SHChangeNotify(SHCNE_CREATE, SHCNF_PATH, wLinkPath, NULL);
-    delete wLinkPath;
 
-    WCHAR *wLinksPath = new wchar_t[linksPath.length()+1];
-    int linksPathLen = linksPath.toWCharArray(wLinksPath);
-    wLinksPath[linksPathLen]=L'\0';
+    WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
-    delete wLinksPath;
 }
 
 void WindowsUtils::syncFolderRemoved(QString syncPath)
@@ -226,17 +203,11 @@ void WindowsUtils::syncFolderRemoved(QString syncPath)
 
     QFile::remove(linkPath);
 
-    WCHAR *wLinkPath = new wchar_t[linkPath.length()+1];
-    int linkPathLen = linkPath.toWCharArray(wLinkPath);
-    wLinkPath[linkPathLen]=L'\0';
+    WCHAR *wLinkPath = (WCHAR *)linkPath.utf16();
     SHChangeNotify(SHCNE_DELETE, SHCNF_PATH, wLinkPath, NULL);
-    delete wLinkPath;
 
-    WCHAR *wLinksPath = new wchar_t[linksPath.length()+1];
-    int linksPathLen = linksPath.toWCharArray(wLinksPath);
-    wLinksPath[linksPathLen]=L'\0';
+    WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
-    delete wLinksPath;
 }
 
 QByteArray WindowsUtils::encrypt(QByteArray data, QByteArray key)

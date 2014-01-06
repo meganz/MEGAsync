@@ -42,27 +42,25 @@
 	color: red;
 }
 
-#rTypicalSetup
+#wTypicalSetup
 {
-	padding: 15px;
+	background: rgb(250,240,240);
+	border: 1px solid red;
 	border-radius: 10px;
 }
 
-#rAdvancedSetup
+#wAdvancedSetup
 {
-	padding: 15px;
+	background: rgb(240,240,240);
 	border-radius: 10px;
 }
 
-#rTypicalSetup:checked
+#lTypical,#lAdvanced
 {
-	background-color: rgb(242,242,242);
+margin-left: 100px;
 }
 
-#rAdvancedSetup:checked
-{
-	background-color: rgb(242,242,242);
-}</string>
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -495,6 +493,12 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
            <height>40</height>
           </size>
          </property>
@@ -514,58 +518,180 @@
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="rTypicalSetup">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Typical</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
-         </property>
-         <property name="iconSize">
+        <widget class="QWidget" name="wTypicalSetup" native="true">
+         <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>0</width>
+           <height>90</height>
           </size>
          </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>15</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lTypical">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string> Sync your entire cloud drive</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="rTypicalSetup">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: none;</string>
+            </property>
+            <property name="text">
+             <string>Full account sync</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="rAdvancedSetup">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Advanced</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
-         </property>
-         <property name="iconSize">
+        <widget class="QWidget" name="wAdvancedSetup" native="true">
+         <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>0</width>
+           <height>90</height>
           </size>
          </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>15</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="rAdvancedSetup">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border: none;</string>
+            </property>
+            <property name="text">
+             <string>Selective sync</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lAdvanced">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string> Sync specific folders in your cloud drive</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <spacer name="vsSetupType">
+        <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -804,7 +930,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="lFinalMegaFolderIntro">
          <property name="text">
           <string>and your MEGA folder:</string>
          </property>
@@ -923,13 +1049,48 @@
   <tabstop>cAgreeWithTerms</tabstop>
   <tabstop>eLoginEmail</tabstop>
   <tabstop>eLoginPassword</tabstop>
-  <tabstop>rTypicalSetup</tabstop>
-  <tabstop>rAdvancedSetup</tabstop>
   <tabstop>eLocalFolder</tabstop>
   <tabstop>bLocalFolder</tabstop>
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>rAdvancedSetup</sender>
+   <signal>clicked()</signal>
+   <receiver>SetupWizard</receiver>
+   <slot>wAdvancedSetup_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>277</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rTypicalSetup</sender>
+   <signal>clicked()</signal>
+   <receiver>SetupWizard</receiver>
+   <slot>wTypicalSetup_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>277</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>wAdvancedSetup_clicked()</slot>
+  <slot>wTypicalSetup_clicked()</slot>
+ </slots>
 </ui>

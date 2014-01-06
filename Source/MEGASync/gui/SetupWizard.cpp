@@ -3,6 +3,7 @@
 
 #include "MegaApplication.h"
 #include "utils/Utils.h"
+#include "sdk/SizeProcessor.h"
 
 SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -10,6 +11,11 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    ui->wAdvancedSetup->installEventFilter(this);
+    ui->wTypicalSetup->installEventFilter(this);
+    ui->rTypicalSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->rAdvancedSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     ui->bBack->setVisible(false);
     this->app = app;
@@ -58,7 +64,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
 				ui->lProgress->setText(tr("Fetching file list..."));
-				megaApi->fetchNodes(delegateListener);
+                megaApi->fetchNodes(delegateListener);
 			}
 			else if(error->getErrorCode() == MegaError::API_ENOENT)
 			{
@@ -102,7 +108,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		   }
 		   break;
 		}
-		case MegaRequest::TYPE_FETCH_NODES:
+        case MegaRequest::TYPE_FETCH_NODES:
 		{
             QString email = ui->eLoginEmail->text().toLower().trimmed();
             if(preferences->hasEmail(email))
@@ -118,6 +124,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			ui->bBack->setEnabled(true);
 			ui->bNext->setEnabled(true);
 			ui->sPages->setCurrentWidget(ui->pSetupType);
+
 			break;
 		}
 	}
@@ -232,43 +239,54 @@ void SetupWizard::on_bNext_clicked()
     }
     else if(w == ui->pSetupType)
     {
+        if(ui->rAdvancedSetup->isChecked())
+        {
+            ui->eMegaFolder->setText(QString::fromAscii("/MEGAsync"));
+            ui->sPages->setCurrentWidget(ui->pAdvanced);
+        }
+        else
+        {
+            SizeProcessor sizeProcessor;
+            megaApi->processTree(megaApi->getRootNode(), &sizeProcessor);
+            long long totalSize = sizeProcessor.getTotalBytes();
+            if(totalSize > 2147483648)
+            {
+                int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in your Cloud Drive.\n"
+                                                             "Are you sure you want to sync your entire Cloud Drive?")
+                                                            .arg(Utils::getSizeString(totalSize)),
+                                     QMessageBox::Yes, QMessageBox::No);
+                if(res != QMessageBox::Yes)
+                {
+                    this->wAdvancedSetup_clicked();
+                    return;
+                }
+            }
+
+            ui->eMegaFolder->setText(QString::fromAscii("/"));
+            Node *node = megaApi->getRootNode();
+            selectedMegaFolderHandle = node->nodehandle;
+            ui->bBack->setVisible(false);
+            ui->bNext->setVisible(false);
+            ui->bCancel->setText(tr("Finish"));
+            ui->bCancel->setFocus();
+            ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
+            ui->sPages->setCurrentWidget(ui->pWelcome);
+            ui->lFinalMegaFolderIntro->setText(tr("and your MEGA Cloud Drive"));
+            ui->lFinalMegaFolder->hide();
+        }
 
     #if QT_VERSION < 0x050000
         QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromAscii("/MEGAsync"));
     #else
         QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromAscii("/MEGAsync");
-	#endif
+    #endif
 
         defaultFolder.mkpath(QString::fromAscii("."));
         QString defaultFolderPath = defaultFolder.absolutePath();
 
-	   defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
-
-		ui->eLocalFolder->setText(defaultFolderPath);
-        ui->eMegaFolder->setText(QString::fromAscii("/MEGAsync"));
-        if(ui->rAdvancedSetup->isChecked())
-        {
-            ui->sPages->setCurrentWidget(ui->pAdvanced);
-        }
-        else
-        {
-            Node *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
-            if(!node || (node->type==FILENODE))
-            {
-				megaApi->createFolder("MEGAsync", megaApi->getRootNode(), delegateListener);
-            }
-            else
-            {
-                selectedMegaFolderHandle = node->nodehandle;
-                ui->bBack->setVisible(false);
-                ui->bNext->setVisible(false);
-                ui->bCancel->setText(tr("Finish"));
-                ui->bCancel->setFocus();
-                ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
-                ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
-				ui->sPages->setCurrentWidget(ui->pWelcome);
-			}
-        }
+        defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
+        ui->eLocalFolder->setText(defaultFolderPath);
+        ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
     }
     else if(w == ui->pAdvanced)
     {
@@ -347,7 +365,9 @@ void SetupWizard::on_bCancel_clicked()
 
         preferences->setEmail(email);
         preferences->setCredentials(emailHash, privatePw);
-        preferences->addSyncedFolder(ui->lFinalLocalFolder->text(), ui->lFinalMegaFolder->text(), selectedMegaFolderHandle);
+        QString syncName;
+        if(selectedMegaFolderHandle == megaApi->getRootNode()->nodehandle) syncName = QString::fromAscii("MEGAsync");
+        preferences->addSyncedFolder(ui->lFinalLocalFolder->text(), ui->lFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
         this->close();
         return;
     }
@@ -371,7 +391,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(app->getMegaApi(), false, this);
+    NodeSelector *nodeSelector = new NodeSelector(app->getMegaApi(), true, true, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
 
@@ -380,4 +400,43 @@ void SetupWizard::on_bMegaFolder_clicked()
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
+}
+
+void SetupWizard::wTypicalSetup_clicked()
+{
+    ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
+                                     "#wTypicalSetup {background: rgb(250,240,240);"
+                                     "border: 1px solid red;"
+                                     "border-radius: 10px;}"));
+    ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
+                                     "#wAdvancedSetup {background: rgb(240,240,240);"
+                                     "border: none;"
+                                     "border-radius: 10px;}"));
+    ui->rTypicalSetup->setChecked(true);
+    ui->rAdvancedSetup->setChecked(false);
+}
+
+void SetupWizard::wAdvancedSetup_clicked()
+{
+    ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
+                                     "#wTypicalSetup { background: rgb(240,240,240); "
+                                     "border: none; "
+                                     "border-radius: 10px; } "));
+    ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
+                                     "#wAdvancedSetup { background: rgb(250,240,240); "
+                                     "border: 1px solid red; "
+                                     "border-radius: 10px; } "));
+    ui->rTypicalSetup->setChecked(false);
+    ui->rAdvancedSetup->setChecked(true);
+}
+
+bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
+{
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+        if(obj == ui->wTypicalSetup) wTypicalSetup_clicked();
+        else if(obj == ui->wAdvancedSetup) wAdvancedSetup_clicked();
+        return true;
+    }
+    return QObject::eventFilter(obj, event);
 }

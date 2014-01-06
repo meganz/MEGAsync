@@ -2,8 +2,10 @@
 #include "ui_NodeSelector.h"
 
 #include <QMessageBox>
+#include "sdk/SizeProcessor.h"
+#include "utils/Utils.h"
 
-NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, QWidget *parent) :
+NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector)
 {
@@ -13,6 +15,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, QWidget *parent) 
     selectedFolder = UNDEF;
     selectedItem = NULL;
     this->rootAllowed = rootAllowed;
+    this->sizeWarning = sizeWarning;
 	delegateListener = new QTMegaRequestListener(this);
 }
 
@@ -121,12 +124,30 @@ void NodeSelector::on_bNewFolder_clicked()
 
 void NodeSelector::on_bOk_clicked()
 {
-    /*if(!rootAllowed && (selectedFolder == megaApi->getRootNode()->nodehandle))
+    if(!rootAllowed && (selectedFolder == megaApi->getRootNode()->nodehandle))
     {
         QMessageBox::warning(this, tr("Error"), tr("The root folder can't be synced.\n"
                                                  "Please, select a subfolder"), QMessageBox::Ok);
         return;
-    }*/
+    }
+
+    if(sizeWarning)
+    {
+        SizeProcessor sizeProcessor;
+        megaApi->processTree(megaApi->getNodeByHandle(selectedFolder), &sizeProcessor);
+        long long totalSize = sizeProcessor.getTotalBytes();
+        if(totalSize > 2147483648)
+        {
+            int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in this folder.\n"
+                                                         "Are you sure you want to sync it?")
+                                                        .arg(Utils::getSizeString(totalSize)),
+                                 QMessageBox::Yes, QMessageBox::No);
+            if(res != QMessageBox::Yes)
+            {
+                return;
+            }
+        }
+    }
 
     accept();
 }

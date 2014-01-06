@@ -18,7 +18,7 @@ class NodeSelector : public QDialog, public MegaRequestListener
     Q_OBJECT
 
 public:
-    explicit NodeSelector(MegaApi *megaApi, bool rootAllowed = false, QWidget *parent = 0);
+    explicit NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent = 0);
     ~NodeSelector();
     void nodesReady();
     long long getSelectedFolderHandle();
@@ -30,6 +30,7 @@ private:
     unsigned long long selectedFolder;
     QTreeWidgetItem *selectedItem;
     bool rootAllowed;
+    bool sizeWarning;
 
 protected:
     void addChildren(QTreeWidgetItem *parentItem, Node *parentNode);

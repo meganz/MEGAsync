@@ -39,6 +39,13 @@ private slots:
 
     void on_bMegaFolder_clicked();
 
+    void wTypicalSetup_clicked();
+
+    void wAdvancedSetup_clicked();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 private:
     Ui::SetupWizard *ui;
     MegaApplication *app;

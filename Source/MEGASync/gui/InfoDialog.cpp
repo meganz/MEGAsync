@@ -375,23 +375,28 @@ void InfoDialog::on_bSyncFolder_clicked()
     Preferences *preferences = app->getPreferences();
     int num = preferences->getNumSyncedFolders();
 
-    QMenu menu;
-
-    menu.setStyleSheet(QString::fromAscii("QMenu { background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;}"));
-    QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
-    addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
-    menu.addSeparator();
-
-    QSignalMapper signalMapper;
-    for(int i=0; i<num; i++)
+    if(num == 1 && preferences->getMegaFolderHandle(0)==app->getMegaApi()->getRootNode()->nodehandle)
     {
-        QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
-        action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
-        signalMapper.setMapping(action, preferences->getLocalFolder(i));
-        connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
+        openFolder(preferences->getLocalFolder(0));
     }
-    menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+    else
+    {
+        QMenu menu;
+        menu.setStyleSheet(QString::fromAscii("QMenu { background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;}"));
+        QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
+        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
+        menu.addSeparator();
 
+        QSignalMapper signalMapper;
+        for(int i=0; i<num; i++)
+        {
+            QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
+            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
+            signalMapper.setMapping(action, preferences->getLocalFolder(i));
+            connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
+        }
+        menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+    }
 }
 
 void InfoDialog::openFolder(QString path)
