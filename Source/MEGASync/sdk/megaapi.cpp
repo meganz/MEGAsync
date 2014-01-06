@@ -4090,7 +4090,6 @@ char* MegaApi::stringToArray(string &buffer)
 void MegaApi::updateStatics()
 {
     MUTEX_LOCK(sdkMutex);
-    cout << "Updating statics" << endl;
     pendingDownloads = client->transfers[0].size();
     pendingUploads = client->transfers[1].size();
     MUTEX_UNLOCK(sdkMutex);

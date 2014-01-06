@@ -8,7 +8,7 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 104; //1.04
+const int MegaApplication::VERSION_CODE = 105; //1.05
 
 int main(int argc, char *argv[])
 {

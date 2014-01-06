@@ -162,8 +162,8 @@ void InfoDialog::updateTransfers()
     totalUploads = app->getMegaApi()->getTotalUploads();
     totalDownloads = app->getMegaApi()->getTotalDownloads();
 
-    cout << "RU: " << remainingUploads << "   RD: " << remainingDownloads << endl;
-    cout << "TU: " << totalUploads << "   TD: " << totalDownloads << endl;
+    //cout << "RU: " << remainingUploads << "   RD: " << remainingDownloads << endl;
+    //cout << "TU: " << totalUploads << "   TD: " << totalDownloads << endl;
 
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
