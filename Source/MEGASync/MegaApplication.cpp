@@ -332,7 +332,6 @@ void MegaApplication::aboutDialog()
 
 void MegaApplication::refreshTrayIcon()
 {
-    cout << "Refreshing tray icon" << endl;
     trayIcon->show();
 }
 
@@ -697,6 +696,8 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 	}
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
+        if(!preferences->logged()) break;
+
 		if(e->getErrorCode() != MegaError::API_OK)
 			break;
 
@@ -811,6 +812,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 	}
 
     //Send updated statics to the information dialog
+    infoDialog->setTransfer(transfer);
 	infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
 	infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
     infoDialog->updateTransfers();
@@ -934,7 +936,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                     while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
                     {
                         WindowsUtils::notifyItemChange(parent.absolutePath());
-                        cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+                        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
                         parent = QFileInfo(parent.absolutePath()).dir();
                     }
                 }
