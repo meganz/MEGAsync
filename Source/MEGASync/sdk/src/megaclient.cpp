@@ -299,9 +299,7 @@ void MegaClient::init()
 	xferpaused[GET] = false;
 	
 	putmbpscap = 0;
-	
-	reqtag = 0;
-	
+		
 	scnotifyurl.clear();
 }
 
@@ -309,6 +307,7 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 {
 	sctable = NULL;
 	syncscanstate = false;
+    reqtag = 0;
 
 	init();
 
