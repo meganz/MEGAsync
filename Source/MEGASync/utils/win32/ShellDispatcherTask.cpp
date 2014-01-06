@@ -337,7 +337,7 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
 
 VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
-   wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
+   //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
     wchar_t c = pipe->chRequest[0];
    if(((c != L'P') && (c != L'F')) || (lstrlen(pipe->chRequest)<3))
@@ -383,7 +383,7 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             break;
         case PATHSTATE_NOTFOUND:
         default:
-            cout << "Not found" << endl;
+            //cout << "Not found" << endl;
             wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
    }
    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);

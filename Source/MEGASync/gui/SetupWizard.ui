@@ -735,7 +735,7 @@ margin-left: 100px;
           </font>
          </property>
          <property name="text">
-          <string>Advanced configuration</string>
+          <string>Selective sync</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
