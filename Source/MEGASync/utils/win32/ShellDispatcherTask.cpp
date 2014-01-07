@@ -28,7 +28,7 @@ int ShellDispatcherTask::dispatchPipe()
 {
    DWORD i, dwWait, cbRet, dwErr;
    BOOL fSuccess;
-   LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
+   LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGAprivacyMEGAsync");
 
 // The initial loop creates several instances of a named pipe
 // along with an event object for each instance.  An

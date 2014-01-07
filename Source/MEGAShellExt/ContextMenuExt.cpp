@@ -31,6 +31,9 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #include "resource.h"
 #include <strsafe.h>
 #include <Shlwapi.h>
+
+#include "MEGAinterface.h"
+
 #pragma comment(lib, "shlwapi.lib")
 
 
@@ -146,19 +149,8 @@ ContextMenuExt::~ContextMenuExt(void)
 
 void ContextMenuExt::OnVerbDisplayFileName(HWND)
 {
-	for(unsigned int i=0; i<m_szSelectedFiles.size(); i++)
-	{
-		DWORD cbRead;
-		LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
-		CallNamedPipe(
-			lpszPipename,														// pipe name
-			(char *)m_szSelectedFiles[i].data(),								// message to server
-			(lstrlen((LPCWSTR)m_szSelectedFiles[i].c_str())+1)*sizeof(TCHAR),			// message length
-			NULL,																// buffer to receive reply
-			0,																	// size of read buffer
-			&cbRead,								// number of bytes read
-			NMPWAIT_NOWAIT);						// waits
-	}
+    for(unsigned int i=0; i<selectedFiles.size(); i++)
+        MegaInterface::upload((PCWSTR)selectedFiles[i].data());
 }
 
 
@@ -218,44 +210,47 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
     // The pDataObj pointer contains the objects being acted upon. In this 
     // example, we get an HDROP handle for enumerating the selected files and 
     // folders.
-	m_szSelectedFiles.clear();
+    selectedFiles.clear();
+    pathStates.clear();
+    pathTypes.clear();
     if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
     {
         // Get an HDROP handle.
+        WIN32_FILE_ATTRIBUTE_DATA fad;
         HDROP hDrop = static_cast<HDROP>(GlobalLock(stm.hGlobal));
         if (hDrop != NULL)
         {
             UINT nFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
 			if (nFiles != 0)
             {
-				LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
-				DWORD cbRead = 0;
-				TCHAR chReadBuf[2];
-				TCHAR  lpszWrite[]=L"9";
-				BOOL fSuccess = CallNamedPipe(
-				   lpszPipename,							// pipe name
-				   lpszWrite,								// message to server
-				   sizeof(lpszWrite),						// message length
-				   chReadBuf,								// buffer to receive reply
-				   sizeof(chReadBuf),						// size of read buffer
-				   &cbRead,									// number of bytes read
-				   NMPWAIT_NOWAIT);
-
-				if (fSuccess && cbRead!=0)
+                if (MegaInterface::startRequest())
 				{
-					hr = S_OK;
 					for(unsigned int i=0; i<nFiles; i++)
 					{
-						int characters = DragQueryFile(hDrop, i, NULL, 0);
+                        int characters = DragQueryFileW(hDrop, i, NULL, 0);
+                        int type = MegaInterface::TYPE_UNKNOWN;
 						if(characters)
 						{
-							int prefixLenght = 2*sizeof(wchar_t);
-							std::string buffer((const char *)L"F:", prefixLenght);
-							buffer.resize((characters+1)*sizeof(wchar_t)+prefixLenght);
-							int ok = DragQueryFile(hDrop, i, (LPWSTR)(buffer.data()+prefixLenght), (UINT)(characters+1));
-							if(ok) m_szSelectedFiles.push_back(buffer);
+                            characters+=1; //NUL character
+                            std::string buffer;
+                            buffer.resize(characters*sizeof(wchar_t));
+                            int ok = DragQueryFileW(hDrop, i, (LPWSTR)buffer.data(), characters);
+                            ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
+                            if(ok)
+                            {
+                                if (GetFileAttributesExW((LPCWSTR)buffer.data(),GetFileExInfoStandard,(LPVOID)&fad))
+                                    type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
+                                                MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
+
+                                selectedFiles.push_back(buffer);
+                                pathStates.push_back(MegaInterface::getPathState((PCWSTR)buffer.data()));
+                                pathTypes.push_back(type);
+                            }
 						}
 					}
+
+                    if(selectedFiles.size())
+                        hr = S_OK;
 				}
             }
 
@@ -417,19 +412,7 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
         }
     }
 
-	LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe");
-	DWORD cbRead = 0;
-	TCHAR chReadBuf[2];
-	TCHAR  lpszWrite[]=L"9";
-	CallNamedPipe(
-	   lpszPipename,							// pipe name
-	   lpszWrite,								// message to server
-	   sizeof(lpszWrite),						// message length
-	   chReadBuf,								// buffer to receive reply
-	   sizeof(chReadBuf),						// size of read buffer
-	   &cbRead,									// number of bytes read
-	   NMPWAIT_NOWAIT);
-
+    MegaInterface::endRequest();
     return S_OK;
 }
 

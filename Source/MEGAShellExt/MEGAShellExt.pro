@@ -25,7 +25,8 @@ HEADERS += \
     ClassFactoryShellExtSynced.h \
     ClassFactoryShellExtPending.h \
     ClassFactoryContextMenuExt.h \
-    ClassFactory.h
+    ClassFactory.h \
+    MegaInterface.h
 
 SOURCES += \
     ShellExt.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
     ClassFactoryShellExtSynced.cpp \
     ClassFactoryShellExtPending.cpp \
     ClassFactoryContextMenuExt.cpp \
-    ClassFactory.cpp
+    ClassFactory.cpp \
+    MegaInterface.cpp
 
 win32:RC_FILE = MEGAShellExt.rc

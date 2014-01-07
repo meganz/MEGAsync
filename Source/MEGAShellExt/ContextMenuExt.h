@@ -70,7 +70,9 @@ private:
 
     // The name of the selected file.
 	//wchar_t m_szSelectedFile[MAX_PATH];
-	std::vector<std::string> m_szSelectedFiles;
+    std::vector<std::string> selectedFiles;
+    std::vector<int> pathStates;
+    std::vector<int> pathTypes;
 
     // The method that handles the "display" verb.
     void OnVerbDisplayFileName(HWND hWnd);
