@@ -60,6 +60,8 @@
 #include <Windows.h>
 #include <DbgHelp.h>
 #include <rpc.h>
+#include <sstream>
+#include <QApplication>
 
 #pragma warning(push)
 // Disable exception handler warnings.
@@ -296,6 +298,17 @@ class ExceptionHandler {
       CONST PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
       CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
       CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam);
+
+  typedef BOOL (WINAPI *StackWalk64_type)(
+          DWORD MachineType,
+          HANDLE hProcess,
+          HANDLE hThread,
+          LPSTACKFRAME64 StackFrame,
+          PVOID ContextRecord,
+          PREAD_PROCESS_MEMORY_ROUTINE64 ReadMemoryRoutine,
+          PFUNCTION_TABLE_ACCESS_ROUTINE64 FunctionTableAccessRoutine,
+          PGET_MODULE_BASE_ROUTINE64 GetModuleBaseRoutine,
+          PTRANSLATE_ADDRESS_ROUTINE64 TranslateAddress);
 
   // Function pointer type for UuidCreate, which is looked up dynamically.
   typedef RPC_STATUS (RPC_ENTRY *UuidCreate_type)(UUID* Uuid);
