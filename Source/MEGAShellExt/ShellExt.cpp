@@ -2,6 +2,9 @@
 #include "resource.h"
 #include <strsafe.h>
 #include <Shlwapi.h>
+
+#include "MegaInterface.h"
+
 #pragma comment(lib, "shlwapi.lib")
 
 extern HINSTANCE g_hInst;
@@ -68,26 +71,7 @@ HRESULT ShellExt::GetPriority(int *pPriority)
 HRESULT ShellExt::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
 {
    (void)dwAttrib;
-
-   TCHAR chReadBuf[2]; 
-   BOOL fSuccess; 
-   DWORD cbRead; 
-   LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGApipe"); 
-   TCHAR  lpszWrite[MAX_PATH+2];
-
-   HRESULT hr = StringCchPrintf(lpszWrite, sizeof lpszWrite, L"P:%s", pwszPath);
-   if (!SUCCEEDED(hr)) return S_FALSE;
-
-   fSuccess = CallNamedPipe( 
-      lpszPipename,							// pipe name 
-      lpszWrite,							// message to server 
-      (lstrlen(lpszWrite)+1)*sizeof(TCHAR), // message length 
-      chReadBuf,							// buffer to receive reply 
-      sizeof(chReadBuf),					// size of read buffer 
-      &cbRead,								// number of bytes read 
-      NMPWAIT_NOWAIT);						// waits
- 
-   if (fSuccess && cbRead>sizeof(TCHAR) && ((int)(chReadBuf[0]-L'0') == id)) 
+   if(MegaInterface::getPathState(pwszPath) == id)
 		return S_OK;
 	return S_FALSE;
 }
