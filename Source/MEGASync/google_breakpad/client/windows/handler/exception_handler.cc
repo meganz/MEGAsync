@@ -903,6 +903,107 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     HANDLE process,
     bool write_requester_stream) {
   bool success = false;
+
+#ifndef CREATE_COMPATIBLE_MINIDUMPS
+  if(!exinfo) return false;
+
+  HANDLE dump_file = CreateFile(next_minidump_path_c_,
+                                GENERIC_WRITE,
+                                0,  // no sharing
+                                NULL,
+                                CREATE_NEW,  // fail if exists
+                                FILE_ATTRIBUTE_NORMAL,
+                                NULL);
+  if (dump_file == INVALID_HANDLE_VALUE) return false;
+
+  std::ostringstream oss;
+  oss << "MEGAprivate ERROR DUMP\n";
+  int frame_number=0;
+  oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
+  oss << "Version code: " << QApplication::applicationVersion().toStdString() << "\n";
+
+  HMODULE module = GetModuleHandle(NULL);
+  char moduleName[256];
+  int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));
+  if(nameSize)
+  {
+    int nameIndex = nameSize-1;
+    while(nameIndex && (moduleName[nameIndex]!='\\')) nameIndex--;
+    if(nameIndex+1<nameSize) nameIndex++;
+    oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
+  }
+  oss << "Base address: " << GetModuleHandle(NULL) << "\n";
+  oss << "Error info:\n";
+  oss << "Unhandled exception 0x" << std::uppercase << std::hex << exinfo->ExceptionRecord->ExceptionCode
+      << " at 0x" << exinfo->ExceptionRecord->ExceptionAddress << "\n";
+
+  if(dbghelp_module_)
+  {
+      StackWalk64_type StackWalk64_ = reinterpret_cast<StackWalk64_type>(
+      GetProcAddress(dbghelp_module_, "StackWalk64"));
+
+      PGET_MODULE_BASE_ROUTINE64 SymGetModuleBase64_ = reinterpret_cast<PGET_MODULE_BASE_ROUTINE64>(
+      GetProcAddress(dbghelp_module_, "SymGetModuleBase64"));
+
+      PFUNCTION_TABLE_ACCESS_ROUTINE64 SymFunctionTableAccess64_ = reinterpret_cast<PFUNCTION_TABLE_ACCESS_ROUTINE64>(
+      GetProcAddress(dbghelp_module_, "SymFunctionTableAccess64"));
+
+      if(StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_)
+      {
+          HANDLE hThread = GetCurrentThread();
+          DWORD machineType;
+          CONTEXT *c = exinfo->ContextRecord;
+          STACKFRAME64 s;
+          s.AddrPC.Mode = s.AddrStack.Mode = s.AddrFrame.Mode = s.AddrBStore.Mode = AddrModeFlat;
+
+          #ifdef _M_IX86
+              machineType   = IMAGE_FILE_MACHINE_I386;
+              s.AddrPC.Offset    = c->Eip;
+              s.AddrFrame.Offset = c->Ebp;
+              s.AddrStack.Offset = c->Esp;
+          #elif _M_X64
+              machineType   = IMAGE_FILE_MACHINE_AMD64;
+              s.AddrPC.Offset    = c->Rip;
+              s.AddrFrame.Offset = c->Rsp;
+              s.AddrStack.Offset = c->Rsp;
+          #elif _M_IA64
+              machineType   = IMAGE_FILE_MACHINE_IA64;
+              s.AddrPC.Offset    = c->StIIP;
+              s.AddrFrame.Offset = c->IntSp;
+              s.AddrBStore.Offset= c->RsBSP;
+              s.AddrStack.Offset = c->IntSp;
+          #else
+              #error "Unsupported platform"
+          #endif
+
+          oss << "Stacktrace:\n";
+          do {
+              if (!StackWalk64_(machineType, process, hThread, &s,
+                                exinfo->ContextRecord, NULL,
+                                SymFunctionTableAccess64_,
+                                SymGetModuleBase64_, NULL))
+              {
+                  oss << "Error getting stacktrace\n";
+                  break;
+              }
+
+              oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << s.AddrPC.Offset << "\n";
+              ++frame_number;
+          } while (s.AddrReturn.Offset != 0);
+      }
+  }
+
+  DWORD dwBytesWritten = 0;
+  bool bErrorFlag = WriteFile(
+          dump_file,           // open file handle
+          oss.str().c_str(),      // start of data to write
+          oss.str().size(),  // number of bytes to write
+          &dwBytesWritten, // number of bytes that were written
+          NULL);            // no overlapped structure
+  CloseHandle(dump_file);
+  return bErrorFlag;
+#endif
+
   if (minidump_write_dump_) {
     HANDLE dump_file = CreateFile(next_minidump_path_c_,
                                   GENERIC_WRITE,
