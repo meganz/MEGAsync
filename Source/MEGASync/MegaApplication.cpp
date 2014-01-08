@@ -93,7 +93,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
-    delete megaApi;
 }
 
 void MegaApplication::initialize()
@@ -341,6 +340,12 @@ void MegaApplication::cleanAll()
     cout << "Cleaning resources" << endl;
     Utils::stopShellDispatcher();
     trayIcon->hide();
+    megaApi->logout();
+    processEvents();
+    megaApi->removeListener(delegateListener);
+    delete megaApi;
+    delete delegateListener;
+    delete preferences;
 }
 
 void MegaApplication::unlink()
@@ -691,6 +696,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         {
             preferences->unlink();
             delete infoDialog;
+            infoDialog = NULL;
             start();
         }
     }
@@ -751,7 +757,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         }
     }
-    case MegaRequest::TYPE_SYNC:
+    case MegaRequest::TYPE_ADD_SYNC:
     {
         if(e->getErrorCode() == MegaError::API_OK)
             break;
@@ -877,11 +883,9 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
-{
-    infoDialog->updateTransfers();
+{    
     //Show information to users
-    if(e->getErrorCode()!= API_OK)
-        showWarningMessage(tr("Temporarily error in transfer: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+    showWarningMessage(tr("Temporarily error in transfer: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
 }
 
 //Called when contacts have been updated in MEGA
@@ -895,76 +899,74 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
     if(!infoDialog) return;
 
+    cout << "Nodes update start" << endl;
     bool externalNodes = 0;
 
     //If this is a full reload, return
 	if(!nodes) return;
 
     //Check all modified nodes
-	for(int i=0; i<nodes->size(); i++)
+    QString localPath;
+    for(int i=0; i<nodes->size(); i++)
 	{
+        localPath.clear();
 		Node *node = nodes->get(i);
-        if(!node->tag && !node->removed && !node->syncdeleted)
-            externalNodes++;
-
-        if(!node->removed && node->tag && !node->syncdeleted)
-		{
-            //If the node has been modified by a local operation...
-
-            cout << "Adding recent upload from nodes_update: " << node->displayname() << "   tag: " << node->tag << endl;
-
+        if(!node->removed && node->tag)
+        {
             //Get the associated local node
-            QString localPath;
-            cout << "Getting:   TAG: " << node->tag << endl;
-			if(node->localnode)
-			{
+            cout << "Node: " << node->displayname() << " TAG: " << node->tag << endl;
+            if(node->localnode)
+            {
                 //If the node has been uploaded by a synced folder
                 //The SDK provides its local path
 
-				cout << "Sync upload" << endl;
-				string localseparator;
-				localseparator.assign((char*)L"\\",sizeof(wchar_t));
-				string path;
-				LocalNode* l = node->localnode;
-				while (l)
-				{
-					path.insert(0,l->localname);
-					if ((l = l->parent)) path.insert(0, localseparator);
-				}
-				path.append("", 1);
-				localPath = QString::fromWCharArray((const wchar_t *)path.data());
-				cout << "Sync path: " << localPath.toStdString() << endl;
-			}
+                cout << "Sync upload" << endl;
+                string localseparator;
+                localseparator.assign((char*)L"\\",sizeof(wchar_t));
+                string path;
+                LocalNode* l = node->localnode;
+                while (l)
+                {
+                    path.insert(0,l->localname);
+                    if ((l = l->parent)) path.insert(0, localseparator);
+                }
+                path.append("", 1);
+                localPath = QString::fromWCharArray((const wchar_t *)path.data());
+                cout << "Sync path: " << localPath.toStdString() << endl;
+            }
             else if((node->type==FILENODE) && uploadLocalPaths.contains(node->tag))
-			{
+            {
                 //If the node has been uploaded by a regular upload,
                 //we recover the path using the tag of the transfer
-				localPath = uploadLocalPaths.value(node->tag);
+                localPath = uploadLocalPaths.value(node->tag);
                 //uploadLocalPaths.remove(node->tag);
-				cout << "Local upload: " << localPath.toStdString() << endl;
-			}
-
-            //If we have the local path, notify the state change in the local file
-            if(!localPath.isNull())
-            {
-                WindowsUtils::notifyItemChange(localPath);
-                if(node->localnode)
-                {
-                    int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();
-
-                    QDir parent = QFileInfo(localPath).dir();
-                    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
-                    {
-                        WindowsUtils::notifyItemChange(parent.absolutePath());
-                        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
-                        parent = QFileInfo(parent.absolutePath()).dir();
-                    }
-                }
-
-                //If the new node is a file, add it to the "recently updated" list
-                if((node->type==FILENODE))
-                    infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
+                cout << "Local upload: " << localPath.toStdString() << endl;
             }
+            else externalNodes++;
+
+        }
+        else externalNodes++;
+
+        //If we have the local path, notify the state change in the local file
+        if(localPath.size())
+        {
+            WindowsUtils::notifyItemChange(localPath);
+            if(node->localnode)
+            {
+                int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();
+
+                QDir parent = QFileInfo(localPath).dir();
+                while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
+                {
+                    WindowsUtils::notifyItemChange(parent.absolutePath());
+                    //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
+                    parent = QFileInfo(parent.absolutePath()).dir();
+                }
+            }
+
+            //If the new node is a file, add it to the "recently updated" list
+            if((node->type==FILENODE))
+                infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
         }
 	}
 
@@ -977,6 +979,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
     }
 
     if(externalNodes) showNotificationMessage(tr("You have new or updated files in your account"));
+
+    cout << "Nodes update end" << endl;
 }
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
@@ -988,6 +992,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
 {
     if(!infoDialog) return;
 
+    infoDialog->updateTransfers();
     indexing = megaApi->isIndexing();
     infoDialog->setIndexing(indexing);
 

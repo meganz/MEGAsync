@@ -273,10 +273,12 @@ class MegaRequest
                 TYPE_SET_ATTR_FILE, TYPE_RETRY_PENDING_CONNECTIONS,
                 TYPE_ADD_CONTACT, TYPE_CREATE_ACCOUNT, TYPE_FAST_CREATE_ACCOUNT,
                 TYPE_CONFIRM_ACCOUNT, TYPE_FAST_CONFIRM_ACCOUNT,
-                TYPE_QUERY_SIGNUP_LINK, TYPE_SYNC, TYPE_PAUSE_TRANSFERS};
+                TYPE_QUERY_SIGNUP_LINK, TYPE_ADD_SYNC, TYPE_REMOVE_SYNC,
+                TYPE_REMOVE_SYNCS, TYPE_PAUSE_TRANSFERS,
+                TYPE_CANCEL_TRANSFER, TYPE_CANCEL_TRANSFERS,
+                TYPE_DELETE };
 
 		MegaRequest(int type, MegaRequestListener *listener = NULL);
-		MegaRequest(MegaTransfer *transfer);
 		MegaRequest(MegaRequest &request);
 		virtual ~MegaRequest();
 
@@ -300,7 +302,7 @@ class MegaRequest
 		int getNumRetry() const;
 		int getNextRetryDelay() const;
         PublicNode *getPublicNode();
-		int getAttrType() const;
+        int getParamType() const;
         bool getFlag() const;
 
 		void setNodeHandle(handle nodeHandle);
@@ -318,11 +320,12 @@ class MegaRequest
         void setPublicNode(PublicNode* publicNode);
 		void setNumDetails(int numDetails);
 		void setFile(const char* file);
-		void setAttrType(int type);
+        void setParamType(int type);
         void setFlag(bool flag);
+        void setTransfer(Transfer *transfer);
 
 		MegaRequestListener *getListener() const;
-		MegaTransfer * getTransfer() const;
+        Transfer * getTransfer() const;
 		AccountDetails * getAccountDetails() const;
 		int getNumDetails() const;
 		
@@ -343,7 +346,7 @@ class MegaRequest
         bool flag;
 		
 		MegaRequestListener *listener;
-		MegaTransfer *transfer;
+        Transfer *transfer;
 		AccountDetails *accountDetails;
 		int numDetails;
         PublicNode* publicNode;
@@ -761,18 +764,18 @@ public:
     //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
 
     bool checkTransfer(Transfer *transfer);
-    void cancelTransfer(MegaTransfer *transfer);
-    void cancelTransfer(Transfer *t);
-    void cancelRegularTransfers(int direction);
+    void cancelTransfer(MegaTransfer *transfer, MegaRequestListener *listener=NULL);
+    void cancelTransfer(Transfer *t, MegaRequestListener *listener=NULL);
+    void cancelRegularTransfers(int direction, MegaRequestListener *listener=NULL);
     bool isRegularTransfer(Transfer *transfer);
     bool isRegularTransfer(MegaTransfer *transfer);
 
     pathstate_t syncPathState(string *path);
     Node *getSyncedNode(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
-    void removeSync(handle nodehandle);
+    void removeSync(handle nodehandle, MegaRequestListener *listener=NULL);
     int getNumActiveSyncs();
-    void stopSyncs();
+    void stopSyncs(MegaRequestListener *listener=NULL);
     int getNumPendingUploads();
     int getNumPendingDownloads();
     int getTotalUploads();
