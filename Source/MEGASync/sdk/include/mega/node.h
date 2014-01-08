@@ -145,12 +145,12 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 
 	// related synced item or NULL
 	LocalNode* localnode;
-
+	
 	// active sync get
 	struct SyncFileGet* syncget;
 
 	// active removal to SyncDebris
-	bool syncdeleted;
+//	bool syncdeleted;
 
 	// source tag
 	int tag;
@@ -185,6 +185,9 @@ struct LocalNode : public File
 
 	// related cloud node, if any
 	Node* node;
+
+	// related pending node creation or NULL
+	NewNode* newnode;
 
 	// FILENODE or FOLDERNODE
 	nodetype type;

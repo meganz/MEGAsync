@@ -1777,39 +1777,21 @@ void CommandFetchNodes::procresult()
 	}
 }
 
-CommandMoveSyncDebris::CommandMoveSyncDebris(MegaClient* client, handle ch, Node* t)
+// no sharekey elements are generated for SyncDebris moves
+CommandMoveSyncDebris::CommandMoveSyncDebris(MegaClient* client, handle ch, handle ct)
 {
 	h = ch;
 
 	cmd("m");
 
 	arg("n",(byte*)&h,MegaClient::NODEHANDLE);
-	arg("t",(byte*)&t->nodehandle,MegaClient::NODEHANDLE);
-
-	client->movedebrisinflight++;
+	arg("t",(byte*)&ct,MegaClient::NODEHANDLE);
 }
 
 void CommandMoveSyncDebris::procresult()
 {
-	bool ok;
-	handlecount_map::iterator it;
-
-	if (client->json.isnumeric()) ok = (error)client->json.getint() == API_OK;
-	else
-	{
-		client->json.storeobject();
-		ok = false;
-	}
-
-	if ((it = client->newsyncdebris.find(h)) != client->newsyncdebris.end())
-	{
-		if (it->second >= 6) ok = true;	// give up
-		else it->second++;
-
-		if (ok) client->newsyncdebris.erase(it);
-	}
-
-	if (!--client->movedebrisinflight) client->movetosyncdebris(NULL);
+	client->json.storeobject();
+	client->movetosyncdebris(NULL);
 }
 
 } // namespace

@@ -386,13 +386,10 @@ public:
 	static const char* const SYNCDEBRISFOLDERNAME;
 
 	// nodes being moved to //bin/SyncDebris with move failcount
-	handlecount_map newsyncdebris;
+	handle_set newsyncdebris;
 
 	// we are adding the //bin/SyncDebris/yyyy-mm-dd subfolder(s)
 	bool syncdebrisadding;
-
-	// number of newsyncdebris nodes being moved at the moment
-	int movedebrisinflight;
 
 	// activity flag
 	bool syncactivity;
@@ -418,18 +415,12 @@ public:
 	// added to a synced folder
 	handle_set syncadded;
 
-	// deleted from a remote synced folder (split by FILENODE/FOLDERNODE)
-	handle_set syncdeleted[2];
-
 	// vanished from a local synced folder
 	localnode_set localsyncnotseen;
 	
 	// maps local fsid to corresponding LocalNode*
 	handlelocalnode_map fsidnode;
 	
-	// overwritten in a sync'ed folder
-	syncidhandle_map syncoverwritten;
-
 	// local nodes that need to be added remotely
 	localnode_vector synccreate;
 
@@ -442,9 +433,6 @@ public:
 
 	// SyncDebris folder addition result
 	void putnodes_syncdebris_result(error,NewNode*);
-
-	// sync id to handle mapping
-	syncidhandle_map syncidhandles;
 
 	// if no sync putnodes operation is in progress, apply the updates stored in syncadded/syncdeleted/syncoverwritten to the remote tree
 	void syncupdate();

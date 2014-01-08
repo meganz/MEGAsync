@@ -33,8 +33,6 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t
 {
 	client = cclient;
 
-	syncdeleted = false;
-
 	tag = 0;
 
 	nodehandle = h;
@@ -553,6 +551,7 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	notseen = 0;
 	remoteq = SYNCREMOTENOTSET;
 	syncxfer = true;
+	newnode = NULL;
 
 	type = ctype;
 	syncid = sync->client->nextsyncid();
@@ -577,8 +576,6 @@ void LocalNode::setnode(Node* cnode)
 {
 	node = cnode;
 	node->localnode = this;
-
-	sync->client->syncidhandles[syncid] = node->nodehandle;
 }
 
 void LocalNode::setnotseen(int newnotseen)
@@ -616,17 +613,13 @@ LocalNode::~LocalNode()
 {
 	setnotseen(0);
 
+	if (newnode) newnode->localnode = NULL;
+
 	// remove from fsidnode map, if present
 	if (fsid_it != sync->client->fsidnode.end()) sync->client->fsidnode.erase(fsid_it);
 
 	sync->localnodes[type]--;
 	if (type == FILENODE && size > 0) sync->localbytes -= size;
-
-	if (sync->state >= SYNC_INITIALSCAN)
-	{
-		// record deletion unless local node already marked as removed
-		if (node && !node->removed) sync->client->syncdeleted[type].insert(syncid);
-	}
 
 	if (type == FOLDERNODE) sync->dirnotify->delnotify(this);
 
@@ -640,8 +633,9 @@ LocalNode::~LocalNode()
 
 	if (node)
 	{
-		if (sync->state >= SYNC_INITIALSCAN) node->syncdeleted = true;
-		node->localnode = NULL;
+		// move associated node to SyncDebris unless the sync is currently shutting down
+		if (sync->state < SYNC_INITIALSCAN) node->localnode = NULL;
+		else sync->client->movetosyncdebris(node);
 	}
 }
 
@@ -697,33 +691,19 @@ void LocalNode::prepare()
 	if (transfer->slot && transfer->slot->file->localname.size()) transfer->slot->file->updatelocalname(&transfer->localfilename);
 }
 
+// complete a sync upload: complete to //bin if a newer node exists (which would have been caused by a race condition)
 void LocalNode::completed(Transfer* t, LocalNode*)
 {
-	if (parent)
+	// complete to rubbish for later retrieval if the parent node does not exist or is newer
+	if (!parent || !parent->node || (node && mtime < node->mtime)) h = t->client->rootnodes[RUBBISHNODE-ROOTNODE];
+	else
 	{
-		if (!t->client->syncdeleted[type].count(syncid))
-		{
-			// if parent node exists, complete directly - otherwise, complete to SyncDebris or rubbish bin for later retrieval
-			syncidhandle_map::iterator it = t->client->syncidhandles.find(parent->syncid);
-
-			if (it != t->client->syncidhandles.end()) h = it->second;	// existing parent: synchronous completion
-			else
-			{
-				Node* p;
-
-				// complete to //bin by default
-				h = t->client->rootnodes[RUBBISHNODE-ROOTNODE];
-
-				if ((p = t->client->nodebyhandle(h)))
-				{
-					// or to //bin/SyncDebris, if it exists
-					if ((p = t->client->childnodebyname(p,MegaClient::SYNCDEBRISFOLDERNAME))) h = p->nodehandle;
-				}
-			}
-
-			File::completed(t,this);
-		}
+		// otherwise, overwrite node if it already exists and complete in its place
+		if (node) sync->client->movetosyncdebris(node);
+		h = parent->node->nodehandle;
 	}
+
+	File::completed(t,this);
 }
 
 } // namespace

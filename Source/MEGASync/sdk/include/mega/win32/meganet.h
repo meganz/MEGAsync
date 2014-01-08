@@ -28,6 +28,8 @@
 
 namespace mega {
 
+extern bool debug;
+
 class WinHttpIO : public HttpIO
 {
 	CRITICAL_SECTION csHTTP;

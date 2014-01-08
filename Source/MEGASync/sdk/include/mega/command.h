@@ -255,7 +255,7 @@ class CommandMoveSyncDebris : public Command
 public:
 	void procresult();
 
-	CommandMoveSyncDebris(MegaClient*, handle, Node*);
+	CommandMoveSyncDebris(MegaClient*, handle, handle);
 };
 
 class CommandSingleKeyCR : public Command
