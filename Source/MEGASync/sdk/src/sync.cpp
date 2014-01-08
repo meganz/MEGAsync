@@ -253,21 +253,64 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 		{
 			if (l)
 			{
-				// has the file been overwritten since the last scan?
-				// (we tolerate overwritten folders, because we do a content scan anyway)
-				if (fa->type == FILENODE && (fa->fsidvalid && l->fsid_it != client->fsidnode.end() && l->fsid != fa->fsid))
+				// mark as present
+				l->setnotseen(0);
+				l->scanseqno = scanseqno;
+	
+				if (fa->type == FILENODE)
 				{
-					// file overwritten: immediate deletion with de-linked corresponding remote node (syncnotseen not needed - can never reappear later)
-					if (l->node) l->node->localnode = NULL;
-					l->node = NULL;
-					delete l;
-					l = NULL;
+					// has the file been overwritten or changed since the last scan?
+					// or did the size or mtime change?
+					if (fa->fsidvalid)
+					{
+						// if fsid has changed, the file was overwritten (FIXME: handle type changes)
+						if (l->fsid != fa->fsid)
+						{
+							handlelocalnode_map::iterator it;
+
+							// was the file overwritten by moving an existing file over it?
+							if ((it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end())
+							{
+								client->app->syncupdate_local_move(this,it->second->name.c_str(),path.c_str());
+								
+								// immediately delete existing LocalNode and replace with moved one
+								delete l;
+
+								// (in case of a move, this synchronously updates l->parent and l->node->parent)
+								it->second->setnameparent(parent,localname ? localpath : &tmppath);
+
+								// unmark possible deletion
+								it->second->setnotseen(0);								
+
+								delete fa;
+								return it->second;
+							}
+							else l->mtime = -1;	// trigger change detection
+						}
+					}
+
+					// no fsid change detected or overwrite with unknown file: 
+					if (fa->mtime != l->mtime || fa->size != l->size)
+					{
+						m_off_t dsize = l->size;
+						if (l->genfingerprint(fa)) localbytes -= dsize-l->size;
+
+						client->app->syncupdate_local_file_change(this,path.c_str());
+
+						// FIXME: add exponential backoff to upload retrigger
+						client->stopxfer(l);
+						client->startxfer(PUT,l);
+
+						client->syncactivity = true;
+						
+						delete fa;
+						return l;
+					}
 				}
 				else
 				{
+					// (we tolerate overwritten folders, because we do a content scan anyway)
 					if (fa->fsidvalid) l->setfsid(fa->fsid);
-					l->setnotseen(0);
-					l->scanseqno = scanseqno;
 				}
 			}
 
@@ -330,7 +373,6 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 
 		if (changed || newnode)
 		{
-
 			client->syncadded.insert(l->syncid);
 			client->syncactivity = true;
 		}
@@ -362,11 +404,13 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 // add or refresh local filesystem item from scan stack, add items to scan stack
 void Sync::procscanq(int q)
 {
-	while (dirnotify->notifyq[q].size())
+	size_t t = dirnotify->notifyq[q].size();
+
+	while (t--)
 	{
 		LocalNode* l = checkpath(dirnotify->notifyq[q].front().localnode,&dirnotify->notifyq[q].front().path);
 		dirnotify->notifyq[q].pop_front();
-		
+
 		// we return control to the application in case a filenode was added
 		// (in order to avoid lengthy blocking episodes due to multiple consecutive fingerprint calculations)
 		if (l && l->type == FILENODE) break;

@@ -289,7 +289,6 @@ void MegaClient::init()
 	me = UNDEF;
 
 	syncadding = 0;
-	movedebrisinflight = 0;
 	syncdebrisadding = false;
 	syncscanfailed = false;
 	syncfslockretry = false;
@@ -682,7 +681,7 @@ void MegaClient::exec()
 	sync_list::iterator it;
 
 	// process active syncs, stop doing so while transient local fs ops are pending
-	if (!syncremoteq[SYNCREMOTEAFFECTED].size() && !syncremoteq[SYNCREMOTEDELETED].size() && (syncs.size() || syncactivity))
+	if (syncfslockretry || (!syncremoteq[SYNCREMOTEAFFECTED].size() && !syncremoteq[SYNCREMOTEDELETED].size() && (syncs.size() || syncactivity)))
 	{
 		bool syncscanning = false;
 		int q = syncfslockretry ? DirNotify::RETRY : DirNotify::DIREVENTS;
@@ -701,11 +700,7 @@ void MegaClient::exec()
 			if (sync->state != SYNC_FAILED)
 			{
 				// process items from the notifyq until depleted
-				if (sync->dirnotify->notifyq[q].size())
-				{
-					sync->procscanq(q);
-					syncactivity = true;
-				}
+				if (sync->dirnotify->notifyq[q].size()) sync->procscanq(q);
 
 				if (sync->dirnotify->notifyq[q].size()) syncscanning = true;
 				else
@@ -719,11 +714,11 @@ void MegaClient::exec()
 				}
 
 				if (sync->dirnotify->notifyq[DirNotify::RETRY].size()) syncfslockretry = true;
-				
+
 				if (q == DirNotify::DIREVENTS) totalpending += sync->dirnotify->notifyq[DirNotify::DIREVENTS].size();
 			}
 		}
-		
+
 		if (q == DirNotify::DIREVENTS)
 		{
 			if (totalpending < 4)
@@ -858,7 +853,7 @@ int MegaClient::wait()
 
 		// sync rescan
 		if (syncscanfailed) syncscanbt.update(ds,&nds);
-		
+
 		// retrying of transient failed read ops
 		if (syncfslockretry) syncfslockretrybt.update(ds,&nds);
 
@@ -2385,8 +2380,12 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 
 				if (source == PUTNODES_SYNC)
 				{
-					// FIXME: add purging of orphaned syncidhandles
-					if ((t == FOLDERNODE || t == FILENODE) && !syncdeleted[t].count(nn[i].syncid)) nn[i].localnode->setnode(n);
+					if (nn[i].localnode)
+					{
+						// overwrites/updates: associate LocalNode with newly created Node
+						nn[i].localnode->setnode(n);
+						nn[i].localnode->newnode = NULL;
+					}
 				}
 
 				// map upload handle to node handle for pending file attributes
@@ -3437,12 +3436,7 @@ void MegaClient::purgenodesusersabortsc()
 	syncs.clear();
 
 	newsyncdebris.clear();
-
 	syncadded.clear();
-	syncdeleted[GET].clear();
-	syncdeleted[PUT].clear();
-	syncoverwritten.clear();
-	syncidhandles.clear();
 
 	for (node_map::iterator it = nodes.begin(); it != nodes.end(); it++) delete it->second;
 	nodes.clear();
@@ -3514,7 +3508,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 	for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 	{
 		// node must be decrypted and name defined to be considered
-		if (app->sync_syncable(*it) && !(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
+		if (app->sync_syncable(*it) && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
 		{
 			// map name to node (use newest, resolve mtime/size clashes deterministically to avoid flapping)
 			npp = &nchildren[&ait->second];
@@ -3693,69 +3687,62 @@ void MegaClient::syncup(LocalNode* l)
 	// check for elements that need to be created, deleted or updated on the remote side
 	for (localnode_map::iterator lit = l->children.begin(); lit != l->children.end(); lit++)
 	{
-		if (!syncdeleted[lit->second->type].count(lit->second->syncid))
+		localname = *lit->first;
+		fsaccess->local2name(&localname);
+		rit = nchildren.find(&localname);
+
+		// local node must be new and not deleted to be considered
+		if (syncadded.count(lit->second->syncid))
 		{
-			localname = *lit->first;
-			fsaccess->local2name(&localname);
-			rit = nchildren.find(&localname);
-
-			// local node must be new and not deleted to be considered
-			if (syncadded.count(lit->second->syncid))
+			// do we have a corresponding remote child?
+			if (rit != nchildren.end())
 			{
-				// do we have a corresponding remote child?
-				if (rit != nchildren.end())
+				// corresponding remote node exists
+				// local: folder, remote: file - ignore
+				// local: file, remote: folder - ignore
+				// local: folder, remote: folder - recurse
+				// local: file, remote: file - overwrite if newer
+				if (lit->second->type != rit->second->type)
 				{
-					// corresponding remote node exists
-					// local: folder, remote: file - ignore
-					// local: file, remote: folder - ignore
-					// local: folder, remote: folder - recurse
-					// local: file, remote: file - overwrite if newer
-					if (lit->second->type != rit->second->type)
-					{
-						// folder/file clash - do nothing rather than attempting to second-guess the user
-						continue;
-					}
-
-					// file on both sides - do not overwrite if local version older or identical
-					if (lit->second->type == FILENODE)
-					{
-						if (lit->second->size == rit->second->size)
-						{
-							// check if file is likely to be identical
-							if (lit->second->mtime < rit->second->mtime)
-							{
-								// do not overwrite more recent remote file
-								continue;
-							}
-
-							if (rit->second->isvalid ? (*lit->second == *(FileFingerprint*)rit->second) : (lit->second->mtime == rit->second->mtime))
-							{
-								// files have the same size and the same mtime (or the same fingerprint, if available): no action needed
-								lit->second->setnode(rit->second);
-								continue;
-							}
-						}
-
-						// overwriting a remote file - queue deletion of existing file
-						syncoverwritten[lit->second->syncid] = rit->second->nodehandle;
-						syncactivity = true;
-					}
-					else
-					{
-						// recurse into directories of equal name
-						lit->second->setnode(rit->second);
-						syncup(lit->second);
-						continue;
-					}
+					// folder/file clash - do nothing rather than attempting to second-guess the user
+					continue;
 				}
 
-				// create remote folder or send file
-				synccreate.push_back(lit->second);
-				syncactivity = true;
+				// file on both sides - do not overwrite if local version older or identical
+				if (lit->second->type == FILENODE)
+				{
+					if (lit->second->size == rit->second->size)
+					{
+						// check if file is likely to be identical
+						if (lit->second->mtime < rit->second->mtime)
+						{
+							// do not overwrite more recent remote file
+							continue;
+						}
+
+						if (rit->second->isvalid ? (*lit->second == *(FileFingerprint*)rit->second) : (lit->second->mtime == rit->second->mtime))
+						{
+							// files have the same size and the same mtime (or the same fingerprint, if available): no action needed
+							lit->second->setnode(rit->second);
+							continue;
+						}
+					}
+				}
+				else
+				{
+					// recurse into directories of equal name
+					lit->second->setnode(rit->second);
+					syncup(lit->second);
+					continue;
+				}
 			}
 
-			if (lit->second->type == FOLDERNODE) syncup(lit->second);
+			// create remote folder or send file
+			synccreate.push_back(lit->second);
+			syncactivity = true;
 		}
+
+		if (lit->second->type == FOLDERNODE) syncup(lit->second);
 	}
 }
 
@@ -3764,7 +3751,7 @@ void MegaClient::syncup(LocalNode* l)
 void MegaClient::syncupdate()
 {
 	// only one outstanding node update at a time
-	if ((!syncadded.size() && !syncdeleted[FILENODE].size() && !syncdeleted[FOLDERNODE].size())) return;
+	if (!syncadded.size()) return;
 
 	// split synccreate[] in separate subtrees and send off to putnodes() for creation on the server
 	unsigned i, start, end;
@@ -3789,6 +3776,9 @@ void MegaClient::syncupdate()
 		{
 			n = NULL;
 			l = synccreate[i];
+
+			// rubbish existing node in case of an overwrite
+			if (l->node) movetosyncdebris(l->node);
 
 			if (l->type == FOLDERNODE || (n = nodebyfingerprint(l)))
 			{
@@ -3851,63 +3841,11 @@ void MegaClient::syncupdate()
 
 	synccreate.clear();
 	syncadded.clear();
-
-	syncidhandle_map::iterator sit;
-
-	// deletions of synced files: move to rubbish
-	for (handle_set::iterator it = syncdeleted[FILENODE].begin(); it != syncdeleted[FILENODE].end(); it++)
-	{
-		if ((sit = syncidhandles.find(*it)) != syncidhandles.end())
-		{
-			if ((n = nodebyhandle(sit->second)))
-			{
-				if (n->type == FILENODE) app->syncupdate_remote_file_deletion(n);
-				else app->syncupdate_remote_folder_deletion(n);
-
-				movetosyncdebris(n);
-			}
-
-			syncidhandles.erase(sit);
-			syncactivity = true;
-		}
-	}
-
-	syncdeleted[FILENODE].clear();
-
-	// deletions that were queued while the putnodes() was still in progress
-	// FIXME: only delete topmost nodes to prevent API_EACCESS noise
-	for (handle_set::iterator it = syncdeleted[FOLDERNODE].begin(); it != syncdeleted[FOLDERNODE].end(); it++)
-	{
-		if ((sit = syncidhandles.find(*it)) != syncidhandles.end())
-		{
-			if ((n = nodebyhandle(sit->second))) unlink(n);
-
-			syncidhandles.erase(sit);
-			syncactivity = true;
-		}
-	}
-
-	syncdeleted[FOLDERNODE].clear();
 }
 
 void MegaClient::putnodes_sync_result(error e, NewNode* nn)
 {
 	delete[] nn;
-
-	if (e == API_OK)
-	{
-		Node* n;
-		syncidhandle_map::iterator sit;
-
-		// overwrites: overwritten node gets moved to rubbish bin
-		for (syncidhandle_map::iterator it = syncoverwritten.begin(); it != syncoverwritten.end(); it++) if (syncidhandles.count(it->first)) if ((n = nodebyhandle(it->second)))
-		{
-			n->localnode = NULL;	// de-link localnode as it might already point to the new node
-			movetosyncdebris(n);
-		}
-
-		syncoverwritten.clear();
-	}
 
 	syncadding--;
 	syncactivity = true;
@@ -3921,10 +3859,11 @@ bool MegaClient::startxfer(direction d, File* f)
 	{
 		if (d == PUT)
 		{
-			if (!f->isvalid)
+			if (!f->isvalid)	// (sync LocalNodes always have this set)
 			{
 				// missing FileFingerprint for local file - generate
 				FileAccess* fa = fsaccess->newfileaccess();
+
 				if (fa->fopen(&f->localname,d == PUT,d == GET)) f->genfingerprint(fa);
 				delete fa;
 			}
@@ -4015,45 +3954,54 @@ Node* MegaClient::nodebyfingerprint(FileFingerprint* fingerprint)
 	return NULL;
 }
 
-// FIXME: create sync subfolder in //bin to hold the sync rubbish
+// move node to //bin, then on to the SyncDebris folder of the day (to prevent dupes)
 void MegaClient::movetosyncdebris(Node* n)
 {
-	if (n) newsyncdebris[n->nodehandle] = 0;	// bit 0 is the "in flight" flag, bits 1+ the retry counter
+	Node* p;
 
-	if ((!n || !syncdebrisadding) && newsyncdebris.size())
+	if (n)
 	{
-		Node* p;
-
-		if ((p = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
+		// detach node from LocalNode
+		if (n->localnode)
 		{
-			// check if we have today's sync debris subfolder in rubbish bin
-			handle h;
-			time_t ts = time(NULL);
-			struct tm* ptm = gmtime(&ts);
-			char buf[32];
+			n->localnode->node = NULL;
+			n->localnode = NULL;
+		}
+	
+		reqs[r].add(new CommandMoveSyncDebris(this,n->nodehandle,rootnodes[RUBBISHNODE-ROOTNODE]));
+	}
+	
+	if ((p = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
+	{
+		// check if we have today's sync debris subfolder in rubbish bin
+		handle h;
+		time_t ts = time(NULL);
+		struct tm* ptm = gmtime(&ts);
+		char buf[32];
 
-			sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
+		sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
 
-			if ((p = childnodebyname(p,SYNCDEBRISFOLDERNAME)))
+		if ((p = childnodebyname(p,SYNCDEBRISFOLDERNAME)))
+		{
+			h = p->nodehandle;
+
+			if ((p = childnodebyname(p,buf)))
 			{
-				h = p->nodehandle;
+				if (n) reqs[r].add(new CommandMoveSyncDebris(this,n->nodehandle,p->nodehandle));
 
-				if ((p = childnodebyname(p,buf)))
-				{
-					for (handlecount_map::iterator it = newsyncdebris.begin(); it != newsyncdebris.end(); it++)
-					{
-						if (!(it->second & 1))
-						{
-							it->second++;
-							reqs[r].add(new CommandMoveSyncDebris(this,it->first,p));
-						}
-					}
+				// move to daily SyncDebris subfolder (no retry)
+				for (handle_set::iterator it = newsyncdebris.begin(); it != newsyncdebris.end(); it++) reqs[r].add(new CommandMoveSyncDebris(this,*it,p->nodehandle));
 
-					return;
-				}
+				newsyncdebris.clear();
+				return;
 			}
-			else h = UNDEF;
+		}
+		else h = UNDEF;
 
+        newsyncdebris.insert(n->nodehandle);
+
+		if (!syncdebrisadding)
+		{
 			// create missing component(s) of the sync debris folder of the day
 			NewNode* nn;
 			SymmCipher tkey;
