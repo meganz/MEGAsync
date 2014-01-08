@@ -768,6 +768,7 @@ public:
     bool isRegularTransfer(MegaTransfer *transfer);
 
     pathstate_t syncPathState(string *path);
+    Node *getSyncedNode(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
     void removeSync(handle nodehandle);
     int getNumActiveSyncs();

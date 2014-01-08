@@ -10,7 +10,8 @@ SOURCES += utils/HTTPServer.cpp utils/Preferences.cpp \
     utils/win32/TrayNotificationReceiver.cpp \
     utils/UpdateTask.cpp \
     utils/EncryptedSettings.cpp \
-    utils/CrashHandler.cpp
+    utils/CrashHandler.cpp \
+    utils/ExportProcessor.cpp
 
 HEADERS  +=  utils/HTTPServer.h utils/Preferences.h \
     utils/LinkProcessor.h \
@@ -20,7 +21,8 @@ HEADERS  +=  utils/HTTPServer.h utils/Preferences.h \
     utils/win32/TrayNotificationReceiver.h \
     utils/UpdateTask.h \
     utils/EncryptedSettings.h \
-    utils/CrashHandler.h
+    utils/CrashHandler.h \
+    utils/ExportProcessor.h
 
 win32 {
     SOURCES += utils/win32/WindowsUtils.cpp utils/win32/ShellDispatcherTask.cpp

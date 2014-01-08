@@ -36,20 +36,27 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 #pragma comment(lib, "shlwapi.lib")
 
-
 extern HINSTANCE g_hInst;
 extern long g_cDllRef;
 
-#define IDM_DISPLAY             0  // The command's identifier offset
+#define IDM_UPLOAD             0  // The command's identifier offset
+#define IDM_GETLINK            1
 
 ContextMenuExt::ContextMenuExt(void) : m_cRef(1), 
-    m_pszMenuText(L"&Upload to MEGA"),
-    m_pszVerb("UploadToMEGA"),
-    m_pwszVerb(L"UploadToMEGA"),
-    m_pszVerbCanonicalName("UploadToMEGA"),
-    m_pwszVerbCanonicalName(L"UploadToMEGA"),
-    m_pszVerbHelpText("Upload to MEGA"),
-    m_pwszVerbHelpText(L"Upload to MEGA")
+    m_pszUploadMenuText(L"&Upload to MEGA"),
+    m_pszUploadVerb("UploadToMEGA"),
+    m_pwszUploadVerb(L"UploadToMEGA"),
+    m_pszUploadVerbCanonicalName("UploadToMEGA"),
+    m_pwszUploadVerbCanonicalName(L"UploadToMEGA"),
+    m_pszUploadVerbHelpText("Upload to MEGA"),
+    m_pwszUploadVerbHelpText(L"Upload to MEGA"),
+    m_pszGetLinkMenuText(L"&Get MEGA link"),
+    m_pszGetLinkVerb("GetMEGALink"),
+    m_pwszGetLinkVerb(L"GetMEGALink"),
+    m_pszGetLinkVerbCanonicalName("GetMEGALink"),
+    m_pwszGetLinkVerbCanonicalName(L"GetMEGALink"),
+    m_pszGetLinkVerbHelpText("Get MEGA link"),
+    m_pwszGetLinkVerbHelpText(L"Get MEGA link")
 {
     InterlockedIncrement(&g_cDllRef);
 
@@ -147,10 +154,22 @@ ContextMenuExt::~ContextMenuExt(void)
 }
 
 
-void ContextMenuExt::OnVerbDisplayFileName(HWND)
+void ContextMenuExt::requestUpload()
 {
     for(unsigned int i=0; i<selectedFiles.size(); i++)
-        MegaInterface::upload((PCWSTR)selectedFiles[i].data());
+    {
+        if((pathStates[i] != MegaInterface::FILE_SYNCED) && (pathTypes[i]!=MegaInterface::TYPE_UNKNOWN))
+            MegaInterface::upload((PCWSTR)selectedFiles[i].data());
+    }
+}
+
+void ContextMenuExt::requestGetLinks()
+{
+    for(unsigned int i=0; i<selectedFiles.size(); i++)
+    {
+        if((pathStates[i] == MegaInterface::FILE_SYNCED) && (pathTypes[i]!=MegaInterface::TYPE_UNKNOWN))
+            MegaInterface::pasteLink((PCWSTR)selectedFiles[i].data());
+    }
 }
 
 
@@ -213,6 +232,8 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
     selectedFiles.clear();
     pathStates.clear();
     pathTypes.clear();
+    syncedFolders = syncedFiles = syncedUnknowns = 0;
+    unsyncedFolders = unsyncedFiles = unsyncedUnknowns = 0;
     if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
     {
         // Get an HDROP handle.
@@ -242,9 +263,22 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
                                     type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
                                                 MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
 
+                                int state = MegaInterface::getPathState((PCWSTR)buffer.data());
                                 selectedFiles.push_back(buffer);
-                                pathStates.push_back(MegaInterface::getPathState((PCWSTR)buffer.data()));
+                                pathStates.push_back(state);
                                 pathTypes.push_back(type);
+                                if(state == MegaInterface::FILE_SYNCED)
+                                {
+                                    if(type == MegaInterface::TYPE_FOLDER) syncedFolders++;
+                                    else if(type == MegaInterface::TYPE_FILE) syncedFiles++;
+                                    else syncedUnknowns++;
+                                }
+                                else
+                                {
+                                    if(type == MegaInterface::TYPE_FOLDER) unsyncedFolders++;
+                                    else if(type == MegaInterface::TYPE_FILE) unsyncedFiles++;
+                                    else unsyncedUnknowns++;
+                                }
                             }
 						}
 					}
@@ -292,24 +326,95 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
     // Learn how to add sub-menu from:
     // http://www.codeproject.com/KB/shell/ctxextsubmenu.aspx
 
-    MENUITEMINFO mii = { sizeof(mii) };
-    mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-    mii.wID = idCmdFirst + IDM_DISPLAY;
-    mii.fType = MFT_STRING;
-    mii.dwTypeData = m_pszMenuText;
-    mii.fState = MFS_ENABLED;
-    mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
-
-    if (!InsertMenuItem(hMenu, indexMenu, TRUE, &mii))
+    int lastItem;
+    if(unsyncedFolders || unsyncedFiles)
     {
-        return HRESULT_FROM_WIN32(GetLastError());
+        WCHAR menuText[128];
+
+        if((unsyncedFolders + unsyncedFiles) == 1)
+        {
+            if(unsyncedFolders)
+                StringCchPrintfW(menuText, 128, L"%s (1 folder)", m_pszUploadMenuText);
+            else
+                StringCchPrintfW(menuText, 128, L"%s (1 file)", m_pszUploadMenuText);
+        }
+        else if(!unsyncedFiles)
+            StringCchPrintfW(menuText, 128, L"%s (%d folders)", m_pszUploadMenuText, unsyncedFolders);
+        else if(!unsyncedFolders)
+            StringCchPrintfW(menuText, 128, L"%s (%d files)", m_pszUploadMenuText, unsyncedFiles);
+        else if(unsyncedFiles == 1)
+        {
+            if(unsyncedFolders == 1)
+                StringCchPrintfW(menuText, 128, L"%s (1 file, 1 folder)", m_pszUploadMenuText);
+            else
+                StringCchPrintfW(menuText, 128, L"%s (1 file, %d folders)", m_pszUploadMenuText, unsyncedFolders);
+        }
+        else if(unsyncedFolders == 1)
+            StringCchPrintfW(menuText, 128, L"%s (%d files, 1 folder)", m_pszUploadMenuText, unsyncedFiles);
+        else
+            StringCchPrintfW(menuText, 128, L"%s (%d files, %d folders)", m_pszUploadMenuText, unsyncedFiles, unsyncedFolders);
+
+        MENUITEMINFO mii = { sizeof(mii) };
+        mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+        mii.wID = idCmdFirst + IDM_UPLOAD;
+        mii.fType = MFT_STRING;
+        mii.dwTypeData = menuText;
+        mii.fState = MFS_ENABLED;
+        mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
+        if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+        {
+            return HRESULT_FROM_WIN32(GetLastError());
+        }
+        lastItem = IDM_UPLOAD;
+    }
+
+    if(syncedFolders || syncedFiles)
+    {
+        WCHAR menuText[128];
+
+        if((syncedFolders + syncedFiles) == 1)
+        {
+            if(syncedFolders)
+                StringCchPrintfW(menuText, 128, L"%s (1 folder)", m_pszGetLinkMenuText);
+            else
+                StringCchPrintfW(menuText, 128, L"%s (1 file)", m_pszGetLinkMenuText);
+        }
+        else if(!syncedFiles)
+            StringCchPrintfW(menuText, 128, L"%s (%d folders)", m_pszGetLinkMenuText, syncedFolders);
+        else if(!syncedFolders)
+            StringCchPrintfW(menuText, 128, L"%s (%d files)", m_pszGetLinkMenuText, syncedFiles);
+        else if(syncedFiles == 1)
+        {
+            if(syncedFolders == 1)
+                StringCchPrintfW(menuText, 128, L"%s (1 file, 1 folder)", m_pszGetLinkMenuText);
+            else
+                StringCchPrintfW(menuText, 128, L"%s (1 file, %d folders)", m_pszGetLinkMenuText, syncedFolders);
+        }
+        else if(syncedFolders == 1)
+            StringCchPrintfW(menuText, 128, L"%s (%d files, 1 folder)", m_pszGetLinkMenuText, syncedFiles);
+        else
+            StringCchPrintfW(menuText, 128, L"%s (%d files, %d folders)", m_pszGetLinkMenuText, syncedFiles, syncedFolders);
+
+
+        MENUITEMINFO mii = { sizeof(mii) };
+        mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+        mii.wID = idCmdFirst + IDM_GETLINK;
+        mii.fType = MFT_STRING;
+        mii.dwTypeData = menuText;
+        mii.fState = MFS_ENABLED;
+        mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
+        if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+        {
+            return HRESULT_FROM_WIN32(GetLastError());
+        }
+        lastItem = IDM_GETLINK;
     }
 
     // Add a separator.
     MENUITEMINFO sep = { sizeof(sep) };
     sep.fMask = MIIM_TYPE;
     sep.fType = MFT_SEPARATOR;
-    if (!InsertMenuItem(hMenu, indexMenu + 1, TRUE, &sep))
+    if (!InsertMenuItem(hMenu, indexMenu, TRUE, &sep))
     {
         return HRESULT_FROM_WIN32(GetLastError());
     }
@@ -317,7 +422,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
     // Return an HRESULT value with the severity set to SEVERITY_SUCCESS. 
     // Set the code value to the offset of the largest command identifier 
     // that was assigned, plus one (1).
-    return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(IDM_DISPLAY + 1));
+    return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(lastItem + 1));
 }
 
 
@@ -362,9 +467,13 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
     if (!fUnicode && HIWORD(pici->lpVerb))
     {
         // Is the verb supported by this context menu extension?
-        if (StrCmpIA(pici->lpVerb, m_pszVerb) == 0)
+        if (!StrCmpIA(pici->lpVerb, m_pszUploadVerb))
         {
-            OnVerbDisplayFileName(pici->hwnd);
+            requestUpload();
+        }
+        else if(!StrCmpIA(pici->lpVerb, m_pszGetLinkVerb))
+        {
+            requestGetLinks();
         }
         else
         {
@@ -380,9 +489,13 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
     else if (fUnicode && HIWORD(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW))
     {
         // Is the verb supported by this context menu extension?
-        if (StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszVerb) == 0)
+        if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszUploadVerb))
         {
-            OnVerbDisplayFileName(pici->hwnd);
+            requestUpload();
+        }
+        else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszGetLinkVerb))
+        {
+            requestGetLinks();
         }
         else
         {
@@ -399,9 +512,13 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
     {
         // Is the command identifier offset supported by this context menu 
         // extension?
-        if (LOWORD(pici->lpVerb) == IDM_DISPLAY)
+        if (LOWORD(pici->lpVerb) == IDM_UPLOAD)
         {
-            OnVerbDisplayFileName(pici->hwnd);
+            requestUpload();
+        }
+        else if (LOWORD(pici->lpVerb) == IDM_GETLINK)
+        {
+            requestGetLinks();
         }
         else
         {
@@ -435,7 +552,7 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
 {
     HRESULT hr = E_INVALIDARG;
 
-    if (idCommand == IDM_DISPLAY)
+    if (idCommand == IDM_UPLOAD)
     {
         switch (uFlags)
         {
@@ -443,7 +560,7 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
             // Only useful for pre-Vista versions of Windows that have a 
             // Status bar.
             hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax, 
-                m_pwszVerbHelpText);
+                m_pwszUploadVerbHelpText);
             break;
 
         case GCS_VERBW:
@@ -451,7 +568,30 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
             // discover the canonical name for the verb passed in through 
             // idCommand.
             hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax, 
-                m_pwszVerbCanonicalName);
+                m_pwszUploadVerbCanonicalName);
+            break;
+
+        default:
+            hr = S_OK;
+        }
+    }
+    else if (idCommand == IDM_GETLINK)
+    {
+        switch (uFlags)
+        {
+        case GCS_HELPTEXTW:
+            // Only useful for pre-Vista versions of Windows that have a
+            // Status bar.
+            hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                m_pwszGetLinkVerbHelpText);
+            break;
+
+        case GCS_VERBW:
+            // GCS_VERBW is an optional feature that enables a caller to
+            // discover the canonical name for the verb passed in through
+            // idCommand.
+            hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                m_pwszGetLinkVerbCanonicalName);
             break;
 
         default:

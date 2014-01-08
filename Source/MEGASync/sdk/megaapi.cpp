@@ -1479,6 +1479,21 @@ pathstate_t MegaApi::syncPathState(string* path)
     return state;
 }
 
+Node *MegaApi::getSyncedNode(string *path)
+{
+    MUTEX_LOCK(sdkMutex);
+    Node *node = NULL;
+    for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (node == NULL); it++)
+    {
+        Sync *sync = (*it);
+        PATHSTATE_SYNCED;
+        LocalNode * localNode = sync->localnodebypath(NULL, path);
+        if(localNode) node = localNode->node;
+    }
+    MUTEX_UNLOCK(sdkMutex);
+    return node;
+}
+
 //void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
 //{ startDownload(nodehandle, localFolder, 1, 0, 0, base64key, listener); }
 

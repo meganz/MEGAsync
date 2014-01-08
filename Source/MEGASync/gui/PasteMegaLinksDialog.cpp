@@ -3,6 +3,7 @@
 
 #include <QClipboard>
 #include <QUrl>
+#include <QMessageBox>
 
 #include<iostream>
 using namespace std;
@@ -36,6 +37,10 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 	links = extractLinks(text);
 	if(links.size()==0)
 	{
+        if(!text.trimmed().size())
+            QMessageBox::warning(this, tr("Warning"), tr("Please, enter one or several MEGA links"));
+        else
+            QMessageBox::warning(this, tr("Warning"), tr("No valid MEGA links found. (Folder links aren't yet supported)"));
 		return;
 	}
 
