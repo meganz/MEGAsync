@@ -3,6 +3,7 @@
 #include "gui/ImportMegaLinksDialog.h"
 #include "utils/Utils.h"
 #include "utils/CrashHandler.h"
+#include "utils/ExportProcessor.h"
 
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -494,6 +495,13 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     return;
 }
 
+void MegaApplication::shellExport(QQueue<QString> newExportQueue)
+{
+    ExportProcessor *processor = new ExportProcessor(megaApi, newExportQueue);
+    connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
+    processor->requestLinks();
+}
+
 void MegaApplication::showUploadDialog()
 {
     uploadFolderSelector->showMinimized();
@@ -525,6 +533,18 @@ void MegaApplication::onLinkImportFinished()
 	LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
 	preferences->setImportFolder(linkProcessor->getImportParentFolder());
     linkProcessor->deleteLater();
+}
+
+void MegaApplication::onRequestLinksFinished()
+{
+    ExportProcessor *exportProcessor = ((ExportProcessor *)QObject::sender());
+    QStringList links = exportProcessor->getValidLinks();
+    if(!links.size()) return;
+    QString linkForClipboard(links.join(QChar::fromAscii('\n')));
+    QApplication::clipboard()->setText(linkForClipboard);
+    if(links.size()==1) showInfoMessage(tr("The link has been copied to the clipboard"));
+    else showInfoMessage(tr("The links have been copied to the clipboard"));
+    exportProcessor->deleteLater();
 }
 
 void MegaApplication::onUpdateCompleted()

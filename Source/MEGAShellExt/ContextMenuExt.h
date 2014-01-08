@@ -73,9 +73,12 @@ private:
     std::vector<std::string> selectedFiles;
     std::vector<int> pathStates;
     std::vector<int> pathTypes;
+    int syncedFolders, syncedFiles, syncedUnknowns;
+    int unsyncedFolders, unsyncedFiles, unsyncedUnknowns;
 
     // The method that handles the "display" verb.
-    void OnVerbDisplayFileName(HWND hWnd);
+    void requestUpload();
+    void requestGetLinks();
     HBITMAP getBitmap(HICON icon);
     HBITMAP getBitmapLegacy(HICON hIcon);
     bool legacyIcon;
@@ -84,15 +87,24 @@ private:
     pBeginBufferedPaint BeginBufferedPaint;
     pEndBufferedPaint EndBufferedPaint;
 
-    PWSTR m_pszMenuText;
     HBITMAP m_hMenuBmp;
     HICON hIcon;
-    PCSTR m_pszVerb;
-    PCWSTR m_pwszVerb;
-    PCSTR m_pszVerbCanonicalName;
-    PCWSTR m_pwszVerbCanonicalName;
-    PCSTR m_pszVerbHelpText;
-    PCWSTR m_pwszVerbHelpText;
+
+    PWSTR m_pszUploadMenuText;
+    PCSTR m_pszUploadVerb;
+    PCWSTR m_pwszUploadVerb;
+    PCSTR m_pszUploadVerbCanonicalName;
+    PCWSTR m_pwszUploadVerbCanonicalName;
+    PCSTR m_pszUploadVerbHelpText;
+    PCWSTR m_pwszUploadVerbHelpText;
+
+    PWSTR m_pszGetLinkMenuText;
+    PCSTR m_pszGetLinkVerb;
+    PCWSTR m_pwszGetLinkVerb;
+    PCSTR m_pszGetLinkVerbCanonicalName;
+    PCWSTR m_pwszGetLinkVerbCanonicalName;
+    PCSTR m_pszGetLinkVerbHelpText;
+    PCWSTR m_pwszGetLinkVerbHelpText;
 };
 
 #endif

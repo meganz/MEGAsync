@@ -52,10 +52,12 @@ class ShellDispatcherTask : public QObject
 	int dispatchPipe();
 	VOID GetAnswerToRequest(LPPIPEINST pipe);
 	QQueue<QString> uploadQueue;
+    QQueue<QString> exportQueue;
     MegaApplication *receiver;
 
  signals:
 	void newUploadQueue(QQueue<QString> uploadQueue);
+    void newExportQueue(QQueue<QString> exportQueue);
 
  public slots:
    void doWork();

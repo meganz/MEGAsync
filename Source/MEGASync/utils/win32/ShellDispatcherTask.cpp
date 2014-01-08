@@ -21,7 +21,8 @@ void ShellDispatcherTask::doWork()
 {
     printf("Shell dispatcher starting...\n");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
-	dispatchPipe();
+    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
+    dispatchPipe();
 }
 
 int ShellDispatcherTask::dispatchPipe()
@@ -340,7 +341,7 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 
     wchar_t c = pipe->chRequest[0];
-   if(((c != L'P') && (c != L'F')) || (lstrlen(pipe->chRequest)<3))
+   if(((c != L'P') && (c != L'F') && (c != L'L')) || (lstrlen(pipe->chRequest)<3))
    {
        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
 	   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
@@ -349,6 +350,12 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 		   emit newUploadQueue(uploadQueue);
 		   uploadQueue.clear();
 	   }
+
+       if(!exportQueue.isEmpty())
+       {
+           emit newExportQueue(exportQueue);
+           exportQueue.clear();
+       }
 	   return;
    }
 
@@ -358,8 +365,20 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
        QFileInfo file(QString::fromWCharArray(path));
        if(file.exists())
        {
-           //cout << "Adding file to queue" << endl;
-           uploadQueue.enqueue(file.absoluteFilePath());
+           cout << "Adding file to upload queue" << endl;
+           uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
+       }
+       wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
+       pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
+       return;
+   }
+   else if(c == L'L')
+   {
+       QFileInfo file(QString::fromWCharArray(path));
+       if(file.exists())
+       {
+           cout << "Adding file to export queue: " << file.baseName().toStdString() << endl;
+           exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
        }
        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
        pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
