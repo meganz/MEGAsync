@@ -116,6 +116,7 @@ int ShellDispatcherTask::dispatchPipe()
          for(int j=0; j < (INSTANCES+1); j++)
             CloseHandle(hEvents[j]);
 
+         delete this;
 		 return 0;
 	  }
 

@@ -148,9 +148,7 @@ void WindowsUtils::stopShellDispatcher()
     if(shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();
-        shellDispatcherThread.quit();
-        shellDispatcherThread.wait();
-        delete shellDispatcherTask;
+        //The task is self destructed when it finishes
         shellDispatcherTask = NULL;
     }
 }

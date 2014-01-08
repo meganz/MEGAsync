@@ -37,7 +37,7 @@ DEALINGS IN THE SOFTWARE.
 #define strncasecmp _strnicmp
 #endif
 
-bool mega::debug = false;
+extern bool mega::debug;
 
 #ifdef USE_FREEIMAGE
 #include <FreeImage.h>
@@ -325,31 +325,6 @@ MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 	else this->accountDetails = NULL;
 }
 
-MegaRequest::MegaRequest(MegaTransfer *transfer)
-{
-	this->type = MegaRequest::TYPE_UPLOAD;
-	this->transfer = transfer;
-	this->listener = NULL;
-	this->nodeHandle = UNDEF;
-	this->link = NULL;
-	this->parentHandle = UNDEF;
-	this->userHandle = NULL;
-	this->name = NULL;
-	this->email = NULL;
-	this->password = NULL;
-	this->newPassword = NULL;
-	this->privateKey = NULL;
-	this->access = NULL;
-	this->numRetry = 0;
-	this->nextRetryDelay = 0;
-	this->accountDetails = NULL;
-	this->publicNode = NULL;
-	this->numDetails = 0;
-	this->file = NULL;
-	this->attrType = 0;
-    this->flag = false;
-}
-
 MegaRequest::MegaRequest(MegaRequest &request)
 {
     this->link = NULL;
@@ -379,10 +354,10 @@ MegaRequest::MegaRequest(MegaRequest &request)
 	this->setNextRetryDelay(request.getNextRetryDelay());
 	this->numDetails = 0;
 	this->setFile(request.getFile());
-	this->setAttrType(request.getAttrType());
+    this->setParamType(request.getParamType());
     this->setPublicNode(request.getPublicNode());
     this->setFlag(request.getFlag());
-	this->transfer = request.getTransfer();
+    this->setTransfer(request.getTransfer());
 	this->listener = request.getListener();
 	this->accountDetails = NULL;
 	if(request.getAccountDetails())
@@ -440,7 +415,7 @@ const char* MegaRequest::getNewPassword() const { return newPassword; }
 const char* MegaRequest::getPrivateKey() const { return privateKey; }
 const char* MegaRequest::getAccess() const { return access; }
 const char* MegaRequest::getFile() const { return file; }
-int MegaRequest::getAttrType() const { return attrType; }
+int MegaRequest::getParamType() const { return attrType; }
 bool MegaRequest::getFlag() const { return flag;}
 int MegaRequest::getNumRetry() const { return numRetry; }
 int MegaRequest::getNextRetryDelay() const { return nextRetryDelay; }
@@ -501,7 +476,7 @@ void MegaRequest::setFile(const char* file)
 	this->file = MegaApi::strdup(file);
 }
 
-void MegaRequest::setAttrType(int type)
+void MegaRequest::setParamType(int type)
 {
     this->attrType = type;
 }
@@ -509,6 +484,11 @@ void MegaRequest::setAttrType(int type)
 void MegaRequest::setFlag(bool flag)
 {
     this->flag = flag;
+}
+
+void MegaRequest::setTransfer(Transfer *transfer)
+{
+    this->transfer = transfer;
 }
 
 void MegaRequest::setPublicNode(PublicNode *publicNode)
@@ -536,20 +516,19 @@ const char *MegaRequest::getRequestString() const
 		case TYPE_FETCH_NODES: return "fetchnodes";
 		case TYPE_ACCOUNT_DETAILS: return "accountdetails";
 		case TYPE_CHANGE_PW: return "changepw";
-		case TYPE_UPLOAD: return "upload";
 		case TYPE_LOGOUT: return "logout";
 		case TYPE_FAST_LOGIN: return "fastlogin";
 		case TYPE_GET_PUBLIC_NODE: return "getpublicnode";
 		case TYPE_GET_ATTR_FILE: return "getattrfile";
         case TYPE_SET_ATTR_FILE: return "setattrfile";
         case TYPE_CREATE_ACCOUNT: return "createaccount";
-        case TYPE_SYNC: return "sync";
+        case TYPE_ADD_SYNC: return "sync";
 	}
 	return "unknown";
 }
 
 MegaRequestListener *MegaRequest::getListener() const { return listener; }
-MegaTransfer *MegaRequest::getTransfer() const { return transfer; }
+Transfer *MegaRequest::getTransfer() const { return transfer; }
 
 const char *MegaRequest::toString() const { return getRequestString(); }
 const char *MegaRequest::__str__() const { return getRequestString(); }
@@ -931,21 +910,11 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
 
 MegaApi::~MegaApi()
 {
-	threadExit = 1;
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_DELETE);
+    requestQueue.push(request);
     waiter->notify();
     JOIN_THREAD(thread);
     DELETE_THREAD(thread);
-	delete client;
-    delete httpio;
-    delete waiter;
-    delete dbAccess;
-    delete fsAccess;
-	if(loginRequest) delete loginRequest;
-    MUTEX_DELETE(listenerMutex);
-    MUTEX_DELETE(transferListenerMutex);
-    MUTEX_DELETE(requestListenerMutex);
-    MUTEX_DELETE(globalListenerMutex);
-    MUTEX_DELETE(sdkMutex);
 }
 
 int MegaApi::isLoggedIn()
@@ -1104,16 +1073,31 @@ void MegaApi::fastConfirmAccount(const char* link, const char *base64pwkey, Mega
 
 void MegaApi::loop()
 {
-	while(!threadExit)
+    while(true)
 	{
+        client->wait();
         MUTEX_LOCK(sdkMutex);
 		sendPendingTransfers();
 		sendPendingRequests();
+        if(threadExit)
+        {
+            MUTEX_UNLOCK(sdkMutex);
+            break;
+        }
 		client->exec();
         MUTEX_UNLOCK(sdkMutex);
-
-		client->wait();
 	}
+
+    delete httpio;
+    delete client;
+    delete waiter;
+    delete fsAccess;
+    if(loginRequest) delete loginRequest;
+    MUTEX_DELETE(listenerMutex);
+    MUTEX_DELETE(transferListenerMutex);
+    MUTEX_DELETE(requestListenerMutex);
+    MUTEX_DELETE(globalListenerMutex);
+    MUTEX_DELETE(sdkMutex);
 }
 
 
@@ -1266,7 +1250,7 @@ void MegaApi::getNodeAttribute(Node* node, int type, char *dstFilePath, MegaRequ
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_GET_ATTR_FILE, listener);
 	request->setFile(dstFilePath);
-	request->setAttrType(type);
+    request->setParamType(type);
 	if(node) request->setNodeHandle(node->nodehandle);
 	requestQueue.push(request);
     waiter->notify();
@@ -1276,7 +1260,7 @@ void MegaApi::setNodeAttribute(Node* node, int type, char *srcFilePath, MegaRequ
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_SET_ATTR_FILE, listener);
 	request->setFile(srcFilePath);
-	request->setAttrType(type);
+    request->setParamType(type);
 	if(node) request->setNodeHandle(node->nodehandle);
 	requestQueue.push(request);
     waiter->notify();
@@ -1394,40 +1378,25 @@ bool MegaApi::checkTransfer(Transfer *transfer)
 
 
 
-void MegaApi::cancelTransfer(MegaTransfer *t)
+void MegaApi::cancelTransfer(MegaTransfer *t, MegaRequestListener *listener)
 {
-    cancelTransfer(t->getTransfer());
+    cancelTransfer(t->getTransfer(), listener);
 }
 
-void MegaApi::cancelTransfer(Transfer *transfer)
+void MegaApi::cancelTransfer(Transfer *transfer, MegaRequestListener *listener)
 {
-    MUTEX_LOCK(sdkMutex);
-    if(!checkTransfer(transfer))
-    {
-        MUTEX_UNLOCK(sdkMutex);
-        return;
-    }
-    file_list files = transfer->files;
-    file_list::iterator iterator = files.begin();
-    while (iterator != files.end())
-    {
-        File *file = *iterator;
-        iterator++;
-        if(!file->syncxfer) client->stopxfer(file);
-    }
-    MUTEX_UNLOCK(sdkMutex);
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_CANCEL_TRANSFER, listener);
+    request->setTransfer(transfer);
+    requestQueue.push(request);
+    waiter->notify();
 }
 
-void MegaApi::cancelRegularTransfers(int direction)
+void MegaApi::cancelRegularTransfers(int direction, MegaRequestListener *listener)
 {
-    MUTEX_LOCK(sdkMutex);
-    for (transfer_map::iterator it = client->transfers[direction].begin() ; it != client->transfers[direction].end() ; )
-    {
-        Transfer *t = it->second;
-        it++;
-        cancelTransfer(t);
-    }
-    MUTEX_UNLOCK(sdkMutex);
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_CANCEL_TRANSFERS, listener);
+    request->setParamType(direction);
+    requestQueue.push(request);
+    waiter->notify();
 }
 
 bool MegaApi::isRegularTransfer(Transfer *transfer)
@@ -1494,48 +1463,21 @@ Node *MegaApi::getSyncedNode(string *path)
     return node;
 }
 
-//void MegaApi::startPublicDownload(handle nodehandle, const char *base64key, const char* localFolder, MegaTransferListener *listener)
-//{ startDownload(nodehandle, localFolder, 1, 0, 0, base64key, listener); }
-
-/*
-void MegaApi::cancelTransfer(MegaTransfer *transfer)
-{
-	if(!transfer) return;
-
-	int td = transfer->getSlot();
-	client->tclose(td);
-	string tmpfilename = transfer->getPath();
-	tmpfilename.append(".tmp");
-	unlink(tmpfilename.c_str());
-	transferMap[transfer->getTag()] = NULL;
-	delete transfer;
-}*/
-
 void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
 {
-    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_SYNC);
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_ADD_SYNC);
     if(megaFolder) request->setNodeHandle(megaFolder->nodehandle);
     request->setFile(localFolder);
     requestQueue.push(request);
     waiter->notify();
 }
 
-void MegaApi::removeSync(handle nodehandle)
+void MegaApi::removeSync(handle nodehandle, MegaRequestListener* listener)
 {
-    MUTEX_LOCK(sdkMutex);
-    sync_list::iterator it = client->syncs.begin();
-    while(it != client->syncs.end())
-    {
-        Sync *sync = (*it);
-        if(sync->localroot.node->nodehandle == nodehandle)
-        {
-            cout << "DELETING SYNC IN MEGAAPI" << endl;
-            delete sync;
-            break;
-        }
-        it++;
-    }
-    MUTEX_UNLOCK(sdkMutex);
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_REMOVE_SYNC, listener);
+    request->setNodeHandle(nodehandle);
+    requestQueue.push(request);
+    waiter->notify();
 }
 
 int MegaApi::getNumActiveSyncs()
@@ -1546,17 +1488,11 @@ int MegaApi::getNumActiveSyncs()
     return num;
 }
 
-void MegaApi::stopSyncs()
+void MegaApi::stopSyncs(MegaRequestListener *listener)
 {
-    MUTEX_LOCK(sdkMutex);
-    sync_list::iterator it = client->syncs.begin();
-    while(it != client->syncs.end())
-    {
-        Sync *sync = (*it);
-        it++;
-        delete sync;
-    }
-    MUTEX_UNLOCK(sdkMutex);
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_REMOVE_SYNCS, listener);
+    requestQueue.push(request);
+    waiter->notify();
 }
 
 int MegaApi::getNumPendingUploads()
@@ -1848,10 +1784,12 @@ void MegaApi::transfer_removed(Transfer *t)
     updateStatics();
     if (t->type == GET) pendingDownloads--;
     else pendingUploads --;
+    fireOnSyncStateChanged(this);
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
 	cout << "transfer_removed" << endl;
-    fireOnTransferTemporaryError(this, transfer, MegaError(API_OK));
+    transferMap.erase(transfer->getTransfer());
+    delete transfer;
 }
 
 void MegaApi::transfer_prepare(Transfer *t)
@@ -2265,7 +2203,7 @@ void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
 
 
 	if((request->getType() != MegaRequest::TYPE_IMPORT_LINK) && (request->getType() != MegaRequest::TYPE_MKDIR) &&
-			(request->getType() != MegaRequest::TYPE_COPY) && (request->getType() != MegaRequest::TYPE_UPLOAD) &&
+            (request->getType() != MegaRequest::TYPE_COPY) &&
 			(request->getType() != MegaRequest::TYPE_IMPORT_NODE))
 		cout << "INCORRECT REQUEST OBJECT (5)";
 
@@ -2274,20 +2212,6 @@ void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
 	Node *n = NULL;
 	if(client->nodenotify.size()) n = client->nodenotify.back();
     if(n) n->applykey();
-
-	if(request->getType() == MegaRequest::TYPE_UPLOAD)
-	{
-		handlepair_set::iterator it;
-		it = client->uhnh.lower_bound(pair<handle,handle>(nn->uploadhandle,0));
-		if (it != client->uhnh.end() && it->first == nn->uploadhandle) h = it->second;
-
-		request->getTransfer()->setNodeHandle(h);
-		fireOnTransferFinish(this, request->getTransfer(), megaError);
-		requestMap.erase(client->restag);
-		delete request;
-		return;
-	}
-
 	if(n) h = n->nodehandle;
 	request->setNodeHandle(h);
 	fireOnRequestFinish(this, request, megaError);
@@ -2669,7 +2593,7 @@ void MegaApi::nodes_updated(Node** n, int count)
 	if(n != NULL) nodeList = new NodeList(n, count);
 
     MUTEX_UNLOCK(sdkMutex);
-	fireOnNodesUpdate(this, nodeList);
+    fireOnNodesUpdate(this, nodeList);
     MUTEX_LOCK(sdkMutex);
 
 	delete nodeList;
@@ -3686,6 +3610,7 @@ bool MegaApi::is_syncable(const char *name)
         if(matcher.exactMatch(QString::fromUtf8(name))) return false;
     }
 
+    cout << "isSyncable " << name << " -> true" << endl;
     return true;
 }
 
@@ -3967,7 +3892,7 @@ void MegaApi::sendPendingRequests()
 		case MegaRequest::TYPE_GET_ATTR_FILE:
 		{
 			const char* dstFilePath = request->getFile();
-			int type = request->getAttrType();
+            int type = request->getParamType();
 			Node *node = client->nodebyhandle(request->getNodeHandle());
 
 			if(!dstFilePath || !node) { e = API_EARGS; break; }
@@ -4039,7 +3964,7 @@ void MegaApi::sendPendingRequests()
 			delete[] c;
 			break;
 		}
-        case MegaRequest::TYPE_SYNC:
+        case MegaRequest::TYPE_ADD_SYNC:
         {
             const char *localPath = request->getFile();
             Node *node = client->nodebyhandle(request->getNodeHandle());
@@ -4083,7 +4008,83 @@ void MegaApi::sendPendingRequests()
             client->pausexfers(GET, pause);
             client->restag = nextTag;
             fireOnRequestFinish(this, request, MegaError(API_OK));
+            break;
         }
+        case MegaRequest::TYPE_CANCEL_TRANSFER:
+        {
+            Transfer *transfer = request->getTransfer();
+            if(!transfer) { e = API_EARGS; break; }
+            if(!checkTransfer(transfer)) { e = API_ENOENT; break; }
+
+            file_list files = transfer->files;
+            file_list::iterator iterator = files.begin();
+            while (iterator != files.end())
+            {
+                File *file = *iterator;
+                iterator++;
+                if(!file->syncxfer) client->stopxfer(file);
+            }
+            client->restag = nextTag;
+            fireOnRequestFinish(this, request, MegaError(API_OK));
+            break;
+        }
+        case MegaRequest::TYPE_CANCEL_TRANSFERS:
+        {
+            int direction = request->getParamType();
+            if((direction != MegaTransfer::TYPE_DOWNLOAD) && (direction != MegaTransfer::TYPE_UPLOAD))
+                { e = API_EARGS; break; }
+
+            for (transfer_map::iterator it = client->transfers[direction].begin() ; it != client->transfers[direction].end() ; )
+            {
+                Transfer *t = it->second;
+                it++;
+                cancelTransfer(t);
+            }
+            client->restag = nextTag;
+            fireOnRequestFinish(this, request, MegaError(API_OK));
+            break;
+        }
+        case MegaRequest::TYPE_REMOVE_SYNCS:
+        {
+            sync_list::iterator it = client->syncs.begin();
+            while(it != client->syncs.end())
+            {
+                Sync *sync = (*it);
+                it++;
+                delete sync;
+            }
+            client->restag = nextTag;
+            fireOnRequestFinish(this, request, MegaError(API_OK));
+            break;
+        }
+        case MegaRequest::TYPE_REMOVE_SYNC:
+        {
+            handle nodehandle = request->getNodeHandle();
+            sync_list::iterator it = client->syncs.begin();
+            while(it != client->syncs.end())
+            {
+                Sync *sync = (*it);
+                if(sync->localroot.node->nodehandle == nodehandle)
+                {
+                    cout << "DELETING SYNC IN MEGAAPI" << endl;
+                    delete sync;
+                    break;
+                }
+                it++;
+            }
+
+            if(it != client->syncs.end())
+            {
+                client->restag = nextTag;
+                fireOnRequestFinish(this, request, MegaError(API_OK));
+            }
+            else e = API_ENOENT;
+            break;
+        }
+        case MegaRequest::TYPE_DELETE:
+            threadExit = 1;
+            client->logout();
+            break;
 		}
 
 		if(e)
