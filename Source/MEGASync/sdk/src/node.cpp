@@ -576,6 +576,8 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 
 void LocalNode::setnode(Node* cnode)
 {
+	if (node && node != cnode) node->localnode = NULL;
+
 	node = cnode;
 	node->localnode = this;
 }
@@ -594,6 +596,7 @@ void LocalNode::setnotseen(int newnotseen)
 	}
 }
 
+// set fsid - assume that an existing assignment of the same fsid is no longer current and revoke
 void LocalNode::setfsid(handle newfsid)
 {
 	if ((fsid_it != sync->client->fsidnode.end()))
@@ -602,13 +605,19 @@ void LocalNode::setfsid(handle newfsid)
 
 		sync->client->fsidnode.erase(fsid_it);
 	}
-	
+
 	fsid = newfsid;
-	
+
 	pair<handlelocalnode_map::iterator,bool> r = sync->client->fsidnode.insert(pair<handle,LocalNode*>(fsid,this));
 
-	// FIXME: alert if inode dupe detected
-	if (r.second) fsid_it = r.first;
+	fsid_it = r.first;
+
+	if (!r.second)
+	{
+		// remove previous fsid assignment (the node is likely about to be deleted)
+		fsid_it->second->fsid_it = sync->client->fsidnode.end();
+		fsid_it->second = this;
+	}
 }
 
 LocalNode::~LocalNode()
