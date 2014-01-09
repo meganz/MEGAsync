@@ -3596,9 +3596,9 @@ void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 					if (rit->second->localnode->parent)
 					{
 						string curpath;
-	
+
 						rit->second->localnode->getlocalpath(&curpath);
-						
+
 						if (fsaccess->renamelocal(&curpath,localpath))
 						{
 							// update LocalNode tree to reflect the move/rename
