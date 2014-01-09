@@ -440,3 +440,8 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
     }
     return QObject::eventFilter(obj, event);
 }
+
+void SetupWizard::on_pushButton_clicked()
+{
+    ui->cAgreeWithTerms->toggle();
+}
