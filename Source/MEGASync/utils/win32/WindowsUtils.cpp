@@ -155,6 +155,18 @@ void WindowsUtils::stopShellDispatcher()
 
 void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
 {
+    QDir syncDir(syncPath);
+    if(!syncDir.exists()) return;
+
+    QString infoTip = QCoreApplication::translate("WindowsUtils", "MEGA synced folder");
+    SHFOLDERCUSTOMSETTINGS fcs = {0};
+    fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
+    fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;
+    fcs.pszIconFile = (LPWSTR)QDir::toNativeSeparators(QApplication::applicationFilePath()).utf16();
+    fcs.iIconIndex = 0;
+    fcs.pszInfoTip = (LPWSTR)infoTip.utf16();
+    SHGetSetFolderCustomSettings(&fcs, syncPath.utf16(), FCS_FORCEWRITE);
+
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
     if(res != S_OK) return;
@@ -187,6 +199,11 @@ void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
 
 void WindowsUtils::syncFolderRemoved(QString syncPath)
 {
+    SHFOLDERCUSTOMSETTINGS fcs = {0};
+    fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
+    fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;
+    SHGetSetFolderCustomSettings(&fcs, syncPath.utf16(), FCS_FORCEWRITE);
+
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
     if(res != S_OK) return;
