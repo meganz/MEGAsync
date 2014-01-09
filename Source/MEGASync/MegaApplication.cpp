@@ -693,13 +693,14 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 	}
     case MegaRequest::TYPE_LOGOUT:
     {
-        if(preferences->logged())
+        if(preferences && preferences->logged())
         {
             preferences->unlink();
             delete infoDialog;
             infoDialog = NULL;
             start();
         }
+        break;
     }
 	case MegaRequest::TYPE_FETCH_NODES:
 	{
@@ -757,23 +758,31 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
             else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         }
+        break;
     }
     case MegaRequest::TYPE_ADD_SYNC:
     {
-        if(e->getErrorCode() == MegaError::API_OK)
-            break;
-
-        //Error adding sync
-        cout << "Error adding sync" << endl;
-        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        if(e->getErrorCode() != MegaError::API_OK)
         {
-            if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)) &&
-                (QString::fromUtf8(request->getFile())==preferences->getLocalFolder(i)))
+            //Error adding sync
+            cout << "Error adding sync" << endl;
+            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
-                preferences->removeSyncedFolder(i);
-                break;
+                if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)) &&
+                    (QString::fromUtf8(request->getFile())==preferences->getLocalFolder(i)))
+                {
+                    preferences->removeSyncedFolder(i);
+                    break;
+                }
             }
         }
+        if(infoDialog) infoDialog->updateSyncsButton();
+        break;
+    }
+    case MegaRequest::TYPE_REMOVE_SYNC:
+    {
+        if(infoDialog) infoDialog->updateSyncsButton();
+        break;
     }
     default:
         break;
