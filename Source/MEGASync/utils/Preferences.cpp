@@ -479,7 +479,6 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long 
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     writeFolders();
-    Utils::syncFolderAdded(localFolder, syncName);
 }
 
 void Preferences::removeSyncedFolder(int num)
