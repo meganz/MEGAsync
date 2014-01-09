@@ -80,6 +80,7 @@ private:
     void loadSyncSettings();
     void loadSettings();
     void saveSettings();
+    void updateAddButton();
 };
 
 #endif // SETTINGSDIALOG_H

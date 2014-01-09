@@ -374,8 +374,7 @@ void SettingsDialog::saveSettings()
             }
 		}
 
-
-
+        updateAddButton();
 		syncsChanged = false;
 	}
 
@@ -415,6 +414,20 @@ void SettingsDialog::saveSettings()
     ui->bApply->setEnabled(false);
 }
 
+void SettingsDialog::updateAddButton()
+{
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        ui->bAdd->setToolTip(tr("You are already syncing your entire account."));
+        ui->bAdd->setEnabled(false);
+    }
+    else
+    {
+        ui->bAdd->setToolTip(QString::fromAscii(""));
+        ui->bAdd->setEnabled(true);
+    }
+}
+
 void SettingsDialog::on_bDelete_clicked()
 {
     cout << "bDelete clicked" << endl;
@@ -432,9 +445,7 @@ void SettingsDialog::on_bDelete_clicked()
 
 	syncsChanged = true;
 	stateChanged();
-
-	//preferences->removeSyncedFolder(index);
-	//loadSyncSettings();
+    updateAddButton();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -456,6 +467,7 @@ void SettingsDialog::loadSyncSettings()
         ui->tSyncs->setItem(i, 1, megaFolder);
         syncNames.append(preferences->getSyncName(i));
     }
+    updateAddButton();
 }
 
 void SettingsDialog::on_bAdd_clicked()
@@ -497,10 +509,7 @@ void SettingsDialog::on_bAdd_clicked()
 
    syncsChanged = true;
    stateChanged();
-
-   //preferences->addSyncedFolder(localFolderPath, megaApi->getNodePath(node), handle);
-   //megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
-   //loadSyncSettings();
+   updateAddButton();
 }
 
 void SettingsDialog::on_bApply_clicked()

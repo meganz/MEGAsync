@@ -93,7 +93,10 @@ void BindFolderDialog::on_buttonBox_accepted()
             }
             else if(megaPath==QString::fromAscii("/") || (p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/')))
             {
-                QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder contains an already synced folder"), QMessageBox::Ok);
+                if(handle == megaApi->getRootNode()->nodehandle)
+                    QMessageBox::warning(this, tr("Error"), tr("Full account syncing is only possible without any selective syncs"), QMessageBox::Ok);
+                else
+                    QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder contains an already synced folder"), QMessageBox::Ok);
                 return;
             }
         }
