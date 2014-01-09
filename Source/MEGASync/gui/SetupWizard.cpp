@@ -278,7 +278,7 @@ void SetupWizard::on_bNext_clicked()
     #if QT_VERSION < 0x050000
         QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromAscii("/MEGAsync"));
     #else
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromAscii("/MEGAsync");
+        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromAscii("/MEGAsync"));
     #endif
 
         defaultFolder.mkpath(QString::fromAscii("."));

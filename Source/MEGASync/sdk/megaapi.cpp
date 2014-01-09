@@ -748,53 +748,53 @@ const char* MegaError::getErrorString(int errorCode)
 		switch(errorCode)
 		{
 		case API_OK:
-			return "No error";
+            return QT_TR_NOOP("No error");
 		case API_EINTERNAL:
-			return "Internal error";
+            return QT_TR_NOOP("Internal error");
 		case API_EARGS:
-			return "Invalid argument";
+            return QT_TR_NOOP("Invalid argument");
 		case API_EAGAIN:
-			return "Request failed, retrying";
+            return QT_TR_NOOP("Request failed, retrying");
 		case API_ERATELIMIT:
-			return "Rate limit exceeded";
+            return QT_TR_NOOP("Rate limit exceeded");
 		case API_EFAILED:
-			return "Failed permanently";
+            return QT_TR_NOOP("Failed permanently");
 		case API_ETOOMANY:
-			return "Too many concurrent connections or transfers";
+            return QT_TR_NOOP("Too many concurrent connections or transfers");
 		case API_ERANGE:
-			return "Out of range";
+            return QT_TR_NOOP("Out of range");
 		case API_EEXPIRED:
-			return "Expired";
+            return QT_TR_NOOP("Expired");
 		case API_ENOENT:
-			return "Not found";
+            return QT_TR_NOOP("Not found");
 		case API_ECIRCULAR:
-			return "Circular linkage detected";
+            return QT_TR_NOOP("Circular linkage detected");
 		case API_EACCESS:
-			return "Access denied";
+            return QT_TR_NOOP("Access denied");
 		case API_EEXIST:
-			return "Already exists";
+            return QT_TR_NOOP("Already exists");
 		case API_EINCOMPLETE:
-			return "Incomplete";
+            return QT_TR_NOOP("Incomplete");
 		case API_EKEY:
-			return "Invalid key/Decryption error";
+            return QT_TR_NOOP("Invalid key/Decryption error");
 		case API_ESID:
-			return "Bad session ID";
+            return QT_TR_NOOP("Bad session ID");
 		case API_EBLOCKED:
-			return "Blocked";
+            return QT_TR_NOOP("Blocked");
 		case API_EOVERQUOTA:
-			return "Over quota";
+            return QT_TR_NOOP("Over quota");
 		case API_ETEMPUNAVAIL:
-			return "Temporarily not available";
+            return QT_TR_NOOP("Temporarily not available");
 		case API_ETOOMANYCONNECTIONS:
-			return "Connection overflow";
+            return QT_TR_NOOP("Connection overflow");
 		case API_EWRITE:
-			return "Write error";
+            return QT_TR_NOOP("Write error");
 		case API_EREAD:
-			return "Read error";
+            return QT_TR_NOOP("Read error");
 		case API_EAPPKEY:
-			return "Invalid application key";
+            return QT_TR_NOOP("Invalid application key");
 		default:
-			return "Unknown error";
+            return QT_TR_NOOP("Unknown error");
 		}
 	}
 	return "HTTP Error"; 
