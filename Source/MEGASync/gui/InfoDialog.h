@@ -31,6 +31,7 @@ public:
     void setPaused(bool paused);
 	void updateDialog();
     void updateTransfers();
+    void updateSyncsButton();
     void setIndexing(bool indexing);
 
 public slots:

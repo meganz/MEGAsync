@@ -77,6 +77,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
             }
         }
     }
+    updateSyncsButton();
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
@@ -213,6 +214,15 @@ void InfoDialog::updateTransfers()
     else finishing = false;
 }
 
+void InfoDialog::updateSyncsButton()
+{
+    int num = preferences->getNumSyncedFolders();
+    if(num == 1 && preferences->getMegaFolderHandle(0)==app->getMegaApi()->getRootNode()->nodehandle)
+        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
+    else
+        ui->bSyncFolder->setText(tr("Syncs"));
+}
+
 void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
@@ -315,6 +325,7 @@ void InfoDialog::addSync()
    Preferences *preferences = app->getPreferences();
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
    app->getMegaApi()->syncFolder(localFolderPath.toUtf8().constData(), node);
+   updateSyncsButton();
 }
 
 void InfoDialog::onTransfer1Cancel(int x, int y)
