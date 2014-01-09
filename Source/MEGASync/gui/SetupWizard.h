@@ -43,6 +43,8 @@ private slots:
 
     void wAdvancedSetup_clicked();
 
+    void on_pushButton_clicked();
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
