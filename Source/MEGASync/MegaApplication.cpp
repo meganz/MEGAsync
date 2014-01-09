@@ -912,7 +912,11 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	{
         localPath.clear();
 		Node *node = nodes->get(i);
-        if(!node->removed && node->tag)
+
+        if(!node->tag && !node->removed && !node->syncdeleted)
+   -            externalNodes++;
+
+        if(!node->removed && node->tag && !node->syncdeleted)
         {
             //Get the associated local node
             cout << "Node: " << node->displayname() << " TAG: " << node->tag << endl;
@@ -943,10 +947,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 //uploadLocalPaths.remove(node->tag);
                 cout << "Local upload: " << localPath.toStdString() << endl;
             }
-            else externalNodes++;
-
         }
-        else externalNodes++;
 
         //If we have the local path, notify the state change in the local file
         if(localPath.size())
