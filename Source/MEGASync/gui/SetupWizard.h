@@ -45,6 +45,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_bFinalLocalFolder_clicked();
+
+    void on_bFinalMegaFolder_clicked();
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 

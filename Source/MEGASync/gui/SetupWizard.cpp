@@ -97,8 +97,8 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 				   ui->bBack->setVisible(false);
 				   ui->bNext->setVisible(false);
 				   ui->bCancel->setText(tr("Finish"));
-				   ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
-				   ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
+                   ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
+                   ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
 				   ui->sPages->setCurrentWidget(ui->pWelcome);
 			   }
 		   }
@@ -239,13 +239,22 @@ void SetupWizard::on_bNext_clicked()
     }
     else if(w == ui->pSetupType)
     {
+
+#if QT_VERSION < 0x050000
+    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#else
+    QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+#endif
+
         if(ui->rAdvancedSetup->isChecked())
         {
+            defaultFolderPath.append(QString::fromAscii("/MEGAsync"));
             ui->eMegaFolder->setText(QString::fromAscii("/MEGAsync"));
             ui->sPages->setCurrentWidget(ui->pAdvanced);
         }
         else
         {
+            defaultFolderPath.append(QString::fromAscii("/MEGA"));
             SizeProcessor sizeProcessor;
             megaApi->processTree(megaApi->getRootNode(), &sizeProcessor);
             long long totalSize = sizeProcessor.getTotalBytes();
@@ -269,24 +278,17 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
-            ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
+            ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
             ui->sPages->setCurrentWidget(ui->pWelcome);
             ui->lFinalMegaFolderIntro->setText(tr("and your MEGA Cloud Drive"));
-            ui->lFinalMegaFolder->hide();
+            ui->bFinalMegaFolder->hide();
         }
 
-    #if QT_VERSION < 0x050000
-        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromAscii("/MEGAsync"));
-    #else
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromAscii("/MEGAsync"));
-    #endif
-
-        defaultFolder.mkpath(QString::fromAscii("."));
-        QString defaultFolderPath = defaultFolder.absolutePath();
-
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
+        QDir defaultFolder(defaultFolderPath);
+        defaultFolder.mkpath(QString::fromAscii("."));
         ui->eLocalFolder->setText(defaultFolderPath);
-        ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
+        ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
     }
     else if(w == ui->pAdvanced)
     {
@@ -323,8 +325,8 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
-            ui->lFinalLocalFolder->setText(ui->eLocalFolder->text());
-            ui->lFinalMegaFolder->setText(ui->eMegaFolder->text());
+            ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
+            ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
             ui->sPages->setCurrentWidget(ui->pWelcome);
         }
     }
@@ -366,8 +368,8 @@ void SetupWizard::on_bCancel_clicked()
         preferences->setEmail(email);
         preferences->setCredentials(emailHash, privatePw);
         QString syncName;
-        if(selectedMegaFolderHandle == megaApi->getRootNode()->nodehandle) syncName = QString::fromAscii("MEGAsync");
-        preferences->addSyncedFolder(ui->lFinalLocalFolder->text(), ui->lFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        if(selectedMegaFolderHandle == megaApi->getRootNode()->nodehandle) syncName = QString::fromAscii("MEGA");
+        preferences->addSyncedFolder(ui->bFinalLocalFolder->text(), ui->bFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
         this->close();
         return;
     }
@@ -444,4 +446,23 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 void SetupWizard::on_pushButton_clicked()
 {
     ui->cAgreeWithTerms->toggle();
+}
+
+void SetupWizard::on_bFinalLocalFolder_clicked()
+{
+    QString localFolderPath = ui->bFinalLocalFolder->text();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
+}
+
+void SetupWizard::on_bFinalMegaFolder_clicked()
+{
+    QString megaFolderPath = ui->bFinalMegaFolder->text();
+    Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+    if(node)
+    {
+        const char *handle = MegaApi::getBase64Handle(node);
+        QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
+        QDesktopServices::openUrl(QUrl(url));
+        delete handle;
+    }
 }
