@@ -150,7 +150,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 	struct SyncFileGet* syncget;
 
 	// active removal to SyncDebris
-//	bool syncdeleted;
+	bool syncdeleted;
 
 	// source tag
 	int tag;

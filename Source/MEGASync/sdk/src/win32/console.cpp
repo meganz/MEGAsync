@@ -22,7 +22,6 @@
 #include "mega.h"
 #include <windows.h>
 #include <conio.h>
-#include "console.h"
 
 #include <io.h>
 #include <fcntl.h>

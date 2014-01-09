@@ -42,6 +42,8 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t
 
 	localnode = NULL;
 	syncget = NULL;
+	
+	syncdeleted = false;
 
 	type = t;
 

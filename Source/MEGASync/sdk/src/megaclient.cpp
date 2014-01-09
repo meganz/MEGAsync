@@ -3508,7 +3508,7 @@ void MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 	for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 	{
 		// node must be decrypted and name defined to be considered
-		if (app->sync_syncable(*it) && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
+		if (app->sync_syncable(*it) && !(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
 		{
 			// map name to node (use newest, resolve mtime/size clashes deterministically to avoid flapping)
 			npp = &nchildren[&ait->second];
@@ -3969,6 +3969,8 @@ void MegaClient::movetosyncdebris(Node* n)
 		}
 	
 		reqs[r].add(new CommandMoveSyncDebris(this,n->nodehandle,rootnodes[RUBBISHNODE-ROOTNODE]));
+		
+		n->syncdeleted = true;
 	}
 	
 	if ((p = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
@@ -3998,7 +4000,7 @@ void MegaClient::movetosyncdebris(Node* n)
 		}
 		else h = UNDEF;
 
-        newsyncdebris.insert(n->nodehandle);
+		if (n) newsyncdebris.insert(n->nodehandle);
 
 		if (!syncdebrisadding)
 		{
