@@ -46,7 +46,8 @@ int main(int argc, char *argv[])
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
     if(now > betaLimitTime)
     {
-        QMessageBox::information(NULL, app.tr("MEGAsync BETA"), app.tr("Thank you for testing MEGAsync.<br>"
+        QMessageBox::information(NULL, QCoreApplication::translate("MegaApplication", "MEGAsync BETA"),
+               QCoreApplication::translate("MegaApplication", "Thank you for testing MEGAsync.<br>"
            "This beta version is no longer current and has expired.<br>"
            "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
         return 0;

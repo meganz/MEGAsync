@@ -464,7 +464,7 @@ border: none;</string>
              </font>
             </property>
             <property name="text">
-             <string>1 of 20 (908 KB/s)</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -507,7 +507,7 @@ border: none;</string>
              </font>
             </property>
             <property name="text">
-             <string>2 of 34 (620 KB/s)</string>
+             <string/>
             </property>
            </widget>
           </item>

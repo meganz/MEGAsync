@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -97,7 +97,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Photoshop_file.psd</string>
+      <string/>
      </property>
     </widget>
    </item>
