@@ -272,7 +272,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 							if ((it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end())
 							{
 								client->app->syncupdate_local_move(this,it->second->name.c_str(),path.c_str());
-								
+
 								// immediately delete existing LocalNode and replace with moved one
 								delete l;
 
@@ -292,6 +292,8 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 					// no fsid change detected or overwrite with unknown file: 
 					if (fa->mtime != l->mtime || fa->size != l->size)
 					{
+						if (fa->fsidvalid && l->fsid != fa->fsid) l->setfsid(fa->fsid);
+
 						m_off_t dsize = l->size;
 						if (l->genfingerprint(fa)) localbytes -= dsize-l->size;
 

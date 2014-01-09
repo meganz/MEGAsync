@@ -76,11 +76,11 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 	WinHttpContext* httpctx = (WinHttpContext*)dwContext;
 	WinHttpIO* httpio = (WinHttpIO*)httpctx->httpio;
 
-    if (!httpctx->req || dwInternetStatus == WINHTTP_CALLBACK_STATUS_HANDLE_CLOSING)
+	if (dwInternetStatus == WINHTTP_CALLBACK_STATUS_HANDLE_CLOSING)
 	{
-        //assert(!httpctx->req);
+		assert(!httpctx->req);
 
-        if(!httpctx->req) delete httpctx;
+		delete httpctx;
 		return;
 	}
 
@@ -279,11 +279,7 @@ void WinHttpIO::cancel(HttpReq* req)
 		req->status = REQ_FAILURE;
 		req->httpiohandle = NULL;
 
-        if (httpctx->hRequest)
-        {
-            WinHttpSetStatusCallback(httpctx->hRequest, NULL, WINHTTP_CALLBACK_FLAG_ALL_NOTIFICATIONS, NULL);
-            WinHttpCloseHandle(httpctx->hRequest);
-        }
+		if (httpctx->hRequest) WinHttpCloseHandle(httpctx->hRequest);
 	}
 }
 
