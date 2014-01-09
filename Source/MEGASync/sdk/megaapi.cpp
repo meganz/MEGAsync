@@ -1088,8 +1088,8 @@ void MegaApi::loop()
         MUTEX_UNLOCK(sdkMutex);
 	}
 
-    delete httpio;
     delete client;
+    delete httpio;
     delete waiter;
     delete fsAccess;
     if(loginRequest) delete loginRequest;
@@ -3980,6 +3980,11 @@ void MegaApi::sendPendingRequests()
             client->fsaccess->path2local(&utf8name, &localname);
 			cout << "Go to addSync" << endl;
             e = client->addsync(&localname,node, -1);
+            if(!e)
+            {
+                client->restag = nextTag;
+                fireOnRequestFinish(this, request, MegaError(API_OK));
+            }
             break;
         }
         case MegaRequest::TYPE_PAUSE_TRANSFERS:

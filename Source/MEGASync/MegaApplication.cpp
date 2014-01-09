@@ -762,18 +762,16 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
     case MegaRequest::TYPE_ADD_SYNC:
     {
-        if(e->getErrorCode() != MegaError::API_OK)
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         {
-            //Error adding sync
-            cout << "Error adding sync" << endl;
-            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+            if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)) &&
+                (QString::fromUtf8(request->getFile())==preferences->getLocalFolder(i)))
             {
-                if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)) &&
-                    (QString::fromUtf8(request->getFile())==preferences->getLocalFolder(i)))
-                {
+                if(e->getErrorCode() != MegaError::API_OK)
                     preferences->removeSyncedFolder(i);
-                    break;
-                }
+                else
+                    Utils::syncFolderAdded(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                break;
             }
         }
         if(infoDialog) infoDialog->updateSyncsButton();
