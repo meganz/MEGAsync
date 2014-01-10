@@ -702,7 +702,7 @@ void LocalNode::completed(Transfer* t, LocalNode*)
 			// if parent node exists, complete directly - otherwise, complete to SyncDebris or rubbish bin for later retrieval
 			syncidhandle_map::iterator it = t->client->syncidhandles.find(parent->syncid);
 
-			if (it != t->client->syncidhandles.end()) h = it->second;	// existing parent: synchronous completioh
+			if (it != t->client->syncidhandles.end()) h = it->second;	// existing parent: synchronous completion
 			else
 			{
 				Node* p;
