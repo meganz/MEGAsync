@@ -11,7 +11,8 @@ SOURCES += utils/HTTPServer.cpp utils/Preferences.cpp \
     utils/UpdateTask.cpp \
     utils/EncryptedSettings.cpp \
     utils/CrashHandler.cpp \
-    utils/ExportProcessor.cpp
+    utils/ExportProcessor.cpp \
+    utils/AsyncFileCopy.cpp
 
 HEADERS  +=  utils/HTTPServer.h utils/Preferences.h \
     utils/LinkProcessor.h \
@@ -22,7 +23,8 @@ HEADERS  +=  utils/HTTPServer.h utils/Preferences.h \
     utils/UpdateTask.h \
     utils/EncryptedSettings.h \
     utils/CrashHandler.h \
-    utils/ExportProcessor.h
+    utils/ExportProcessor.h \
+    utils/AsyncFileCopy.h
 
 win32 {
     SOURCES += utils/win32/WindowsUtils.cpp utils/win32/ShellDispatcherTask.cpp

@@ -9,12 +9,17 @@
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaRequestListener.h"
 
-class MegaUploader : public MegaRequestListener
+class MegaUploader : public QObject, public MegaRequestListener
 {
+    Q_OBJECT
+
 public:
     MegaUploader(MegaApi *megaApi);
     bool upload(QString path, Node *parent);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+
+signals:
+    void startFileCopy();
 
 protected:
     bool upload(QFileInfo info, Node *parent);
