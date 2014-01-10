@@ -634,7 +634,10 @@ void Preferences::logout()
 
 void Preferences::loadExcludedSyncNames()
 {
-    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n"));
+    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    if(excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
+        excludedSyncNames.clear();
+
     int numNames = excludedSyncNames.size();
 
     if((settings->value(lastVersionKey).toInt() < 104) &&
