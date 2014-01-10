@@ -3912,7 +3912,11 @@ void MegaClient::putnodes_sync_result(error e, NewNode* nn)
 		syncidhandle_map::iterator sit;
 
 		// overwrites: overwritten node gets moved to rubbish bin
-		for (syncidhandle_map::iterator it = syncoverwritten.begin(); it != syncoverwritten.end(); it++) if (syncidhandles.count(it->first)) if ((n = nodebyhandle(it->second))) movetosyncdebris(n);
+		for (syncidhandle_map::iterator it = syncoverwritten.begin(); it != syncoverwritten.end(); it++) if (syncidhandles.count(it->first)) if ((n = nodebyhandle(it->second)))
+		{
+			n->localnode = NULL;	// de-link localnode as it might already point to the new node
+			movetosyncdebris(n);
+		}
 
 		syncoverwritten.clear();
 	}
