@@ -602,7 +602,10 @@ void Preferences::setExcludedSyncNames(QStringList names)
     assert(logged());
 
     excludedSyncNames = names;
-    settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
+    if(!excludedSyncNames.size())
+        settings->remove(excludedSyncNamesKey);
+    else
+        settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
     settings->sync();
 }
 

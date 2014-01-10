@@ -76,13 +76,14 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 	WinHttpContext* httpctx = (WinHttpContext*)dwContext;
 	WinHttpIO* httpio = (WinHttpIO*)httpctx->httpio;
 
-    if ((!httpctx->req) || (dwInternetStatus == WINHTTP_CALLBACK_STATUS_HANDLE_CLOSING))
+	if (dwInternetStatus == WINHTTP_CALLBACK_STATUS_HANDLE_CLOSING)
 	{
-        //assert(!httpctx->req);
+		assert(!httpctx->req);
 
-        //delete httpctx;
+		delete httpctx;
 		return;
 	}
+    if(!httpctx->req) return;
 
 	httpio->entercs();
 

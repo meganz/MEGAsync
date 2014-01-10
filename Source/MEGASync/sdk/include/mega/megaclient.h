@@ -125,6 +125,7 @@ public:
 	
 	// active syncs
 	sync_list syncs;
+	bool syncadded;
 
 	// number of parallel connections per transfer (PUT/GET)
 	unsigned char connections[2];

@@ -1904,6 +1904,7 @@ void MegaApi::transfer_limit(Transfer* t)
 
 void MegaApi::transfer_complete(Transfer* tr)
 {
+    cout << "transfer_complete" << endl;
     updateStatics();
     if (tr->type == GET) pendingDownloads--;
     else pendingUploads --;
@@ -1987,7 +1988,7 @@ void MegaApi::syncupdate_state(Sync *sync, syncstate s)
     string path = sync->localroot.localname;
     path.append("", 1);
     WCHAR *windowsPath = (WCHAR *)path.data();
-    SHChangeNotify(SHCNE_ALLEVENTS, SHCNF_PATH, windowsPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
 }
 
 void MegaApi::syncupdate_scanning(bool scanning)
@@ -1999,7 +2000,6 @@ void MegaApi::syncupdate_scanning(bool scanning)
 void MegaApi::syncupdate_stuck(string *s)
 {
 	cout << "syncupdate_stuck: " << s << endl;
-
 }
 
 void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
@@ -2007,15 +2007,6 @@ void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
     //cout << "syncupdate_local_folder_addition: " << s << endl;
     QString localPath = QString::fromUtf8(s);
     WindowsUtils::notifyItemChange(localPath);
-    int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
-
-    QDir parent = QFileInfo(localPath).dir();
-    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
-    {
-        WindowsUtils::notifyItemChange(parent.absolutePath());
-        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
-        parent = QFileInfo(parent.absolutePath()).dir();
-    }
 }
 
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
@@ -2025,18 +2016,7 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 
 void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
 {
-    //cout << "syncupdate_local_file_addition: " << s << endl;
-   /* QString localPath = QString::fromUtf8(s);
-    WindowsUtils::notifyItemChange(localPath);
-    int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
 
-    QDir parent = QFileInfo(localPath).dir();
-    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
-    {
-        WindowsUtils::notifyItemChange(parent.absolutePath());
-        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
-        parent = QFileInfo(parent.absolutePath()).dir();
-    }*/
 }
 
 void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
