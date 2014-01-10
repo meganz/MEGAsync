@@ -651,19 +651,40 @@ void MegaClient::exec()
 		}
 	} while (httpio->doio() || (!pendingcs && reqs[r].cmdspending() && btcs.armed(ds)));
 
-	notifypurge();
-
-	if (syncscanfailed && syncscanbt.armed(ds)) syncscanfailed = false;
-
-	if (syncdownretry && syncdownbt.armed(ds)) syncdownretry = false;
-	
-	if (syncnagleretry && syncnaglebt.armed(ds)) syncnagleretry = false;
-	
-	syncactivity = false;
-
+	// syncops indicates that a sync-relevant tree update may be pending
+	bool syncops = !!nodenotify.size();
 	sync_list::iterator it;
 
-	if (!syncdownretry)
+	if (!syncops)
+	{
+		for (it = syncs.begin(); it != syncs.end(); it++)
+		{
+			if ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size())
+			{
+				syncops = true;
+				break;
+			}
+		}
+	}
+
+	notifypurge();
+
+	// rescan everything
+	if (syncscanfailed && syncscanbt.armed(ds)) syncscanfailed = false;
+
+	// retry syncdown() ops
+	if (syncdownretry && syncdownbt.armed(ds))
+	{
+		syncdownretry = false;
+		syncops = true;
+	}
+	
+	// file change timeouts
+	if (syncnagleretry && syncnaglebt.armed(ds)) syncnagleretry = false;
+
+	syncactivity = false;
+
+	if (!syncdownretry && syncops)
 	{
 		bool success = true;
 		string localpath;
@@ -707,7 +728,11 @@ void MegaClient::exec()
 				if (sync->state != SYNC_FAILED)
 				{
 					// process items from the notifyq until depleted
-					if (sync->dirnotify->notifyq[q].size()) sync->procscanq(q);
+					if (sync->dirnotify->notifyq[q].size())
+					{
+						sync->procscanq(q);
+						syncops = true;
+					}
 
 					if (sync->dirnotify->notifyq[q].size()) syncscanning = true;
 					else if (sync->state == SYNC_INITIALSCAN && q == DirNotify::DIREVENTS) sync->changestate(SYNC_ACTIVE);
@@ -774,6 +799,7 @@ void MegaClient::exec()
 						else app->syncupdate_local_file_deletion((*it)->sync,(*it)->name.c_str());
 
 						delete *it;
+						syncops = true;
 
 						// loop back from the beginning, as the deletion above is potentially recursive
 						it = localsyncnotseen.begin();
@@ -790,10 +816,10 @@ void MegaClient::exec()
 				// rescan full trees in case fs notification is currently unreliable or unavailable
 				if (syncscanbt.armed(ds))
 				{
-					syncscanfailed = false;
-			
 					unsigned totalnodes = 0;
 
+					syncscanfailed = false;
+			
 					for (it = syncs.begin(); it != syncs.end(); it++)
 					{
 						if ((*it)->state == SYNC_ACTIVE && ((*it)->dirnotify->failed || (*it)->dirnotify->error))
@@ -809,18 +835,21 @@ void MegaClient::exec()
 					if (syncscanfailed) syncscanbt.backoff(ds,10+totalnodes/128);
 				}
 
-				// FIXME: only syncup for subtrees that were actually updated to reduce CPU load
-				dstime nds = ~0;
-
-				for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE) syncup(&(*it)->localroot,&nds);
-
-				if (nds+1)
+				if (syncops)
 				{
-					syncnaglebt.backoff(ds,nds-ds);
-					syncnagleretry = true;
-				}
+					// FIXME: only syncup for subtrees that were actually updated to reduce CPU load
+					dstime nds = ~0;
 
-				if (synccreate.size()) syncupdate();
+					for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE) syncup(&(*it)->localroot,&nds);
+
+					if (nds+1)
+					{
+						syncnaglebt.backoff(ds,nds-ds);
+						syncnagleretry = true;
+					}
+
+					if (synccreate.size()) syncupdate();
+				}
 			}
 		}
 	}
