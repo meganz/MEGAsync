@@ -197,6 +197,12 @@ struct LocalNode : public File
 
 	// global sync reference
 	handle syncid;
+	
+	// was actively deleted
+	bool deleted;
+	
+	// timer to delay upload start
+	dstime nagleds;
 
 	// number of iterations since last seen
 	int notseen;
@@ -205,10 +211,11 @@ struct LocalNode : public File
 	localnode_set::iterator notseen_it;
 	
 	// if remoteqset >= 0, own iterator inside MegaClient::syncremoteq[remoteq]
-	syncremote remoteq;
-	localnode_list::iterator remoteq_it;
-	void enqremote(syncremote);
-
+//	syncremote remoteq;
+//	localnode_list::iterator remoteq_it;
+//	void enqremote(syncremote);
+	void bumpnagleds();
+	
 	// build full local path to this node
 	void getlocalpath(string*, bool sdisable = false);
 	void getlocalsubpath(string*);
