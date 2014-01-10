@@ -299,9 +299,8 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 
 						client->app->syncupdate_local_file_change(this,path.c_str());
 
-						// FIXME: add exponential backoff to upload retrigger
 						client->stopxfer(l);
-						client->startxfer(PUT,l);
+						l->bumpnagleds();
 
 						client->syncactivity = true;
 						
@@ -364,7 +363,11 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 				else
 				{
 					if (l->size > 0) localbytes -= l->size;
-					if (l->genfingerprint(fa)) changed = true;
+					if (l->genfingerprint(fa))
+					{
+						changed = true;
+						l->bumpnagleds();
+					}
 					if (l->size > 0) localbytes += l->size;
 					
 					if (newnode) client->app->syncupdate_local_file_addition(this,path.c_str());
@@ -373,11 +376,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 			}
 		}
 
-		if (changed || newnode)
-		{
-			client->syncadded.insert(l->syncid);
-			client->syncactivity = true;
-		}
+		if (changed || newnode) client->syncactivity = true;
 	}
 	else
 	{
