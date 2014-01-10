@@ -140,6 +140,7 @@ void WindowsUtils::startShellDispatcher(MegaApplication *receiver)
     shellDispatcherTask = new ShellDispatcherTask(receiver);
     shellDispatcherTask->moveToThread(&shellDispatcherThread);
     shellDispatcherThread.start();
+    QObject::connect(&shellDispatcherThread, SIGNAL(finished()), shellDispatcherTask, SLOT(deleteLater()));
     QMetaObject::invokeMethod(shellDispatcherTask, "doWork", Qt::QueuedConnection);
 }
 
@@ -148,6 +149,7 @@ void WindowsUtils::stopShellDispatcher()
     if(shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();
+        shellDispatcherThread.quit();
         //The task is self destructed when it finishes
         shellDispatcherTask = NULL;
     }

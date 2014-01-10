@@ -1089,7 +1089,7 @@ void MegaApi::loop()
 	}
 
     delete client;
-    delete httpio;
+    //delete httpio;
     delete waiter;
     delete fsAccess;
     if(loginRequest) delete loginRequest;
