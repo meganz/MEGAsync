@@ -1,6 +1,8 @@
 #include "MegaUploader.h"
+#include <QThread>
+#include "utils/AsyncFileCopy.h"
 
-MegaUploader::MegaUploader(MegaApi *megaApi) : delegateListener(this)
+MegaUploader::MegaUploader(MegaApi *megaApi) : QObject(), delegateListener(this)
 {
     this->megaApi = megaApi;
 }
@@ -12,7 +14,35 @@ bool MegaUploader::upload(QString path, Node *parent)
 
 bool MegaUploader::upload(QFileInfo info, Node *parent)
 {
-    if(info.isFile())
+    if(parent->localnode)
+    {
+        QFile file(info.absoluteFilePath());
+        string localseparator;
+        localseparator.assign((char*)L"\\",sizeof(wchar_t));
+        string path;
+        path.insert(0, localseparator);
+        LocalNode* l = parent->localnode;
+        while (l)
+        {
+            path.insert(0,l->localname);
+            if ((l = l->parent)) path.insert(0, localseparator);
+        }
+        path.append("", 1);
+        QString destPath = QString::fromWCharArray((const wchar_t *)path.data()) + info.fileName();
+
+        QThread *thread = new QThread();
+        AsyncFileCopy *fileCopy = new AsyncFileCopy(info.absoluteFilePath(), destPath);
+        fileCopy->moveToThread(thread);
+        thread->start();
+        connect(this, SIGNAL(startFileCopy()), fileCopy, SLOT(doWork()));
+        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+        connect(thread, SIGNAL(finished()), fileCopy, SLOT(deleteLater()));
+        emit startFileCopy();
+        //file.copy(destPath);
+        return true;
+    }
+
+   if(info.isFile())
     {
         megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
         return true;
