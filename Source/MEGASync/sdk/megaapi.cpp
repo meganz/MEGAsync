@@ -3610,7 +3610,7 @@ bool MegaApi::is_syncable(const char *name)
         if(matcher.exactMatch(QString::fromUtf8(name))) return false;
     }
 
-    cout << "isSyncable " << name << " -> true" << endl;
+//    cout << "isSyncable " << name << " -> true" << endl;
     return true;
 }
 
