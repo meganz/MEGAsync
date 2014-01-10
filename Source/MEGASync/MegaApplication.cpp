@@ -9,7 +9,7 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 105; //1.05
+const int MegaApplication::VERSION_CODE = 106; //1.06
 
 int main(int argc, char *argv[])
 {
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
 
-    QDate betaLimit(2014, 1, 21);
+    QDate betaLimit(2014, 1, 17);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
     if(now > betaLimitTime)
@@ -341,7 +341,6 @@ void MegaApplication::cleanAll()
     cout << "Cleaning resources" << endl;
     Utils::stopShellDispatcher();
     trayIcon->hide();
-    megaApi->logout();
     processEvents();
     megaApi->removeListener(delegateListener);
     delete megaApi;
