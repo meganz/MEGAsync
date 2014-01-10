@@ -56,7 +56,6 @@ int LinkProcessor::size()
 
 void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
-	cout << "Notification received" << endl;
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
         if(e->getErrorCode() != API_OK)  linkNode[currentIndex] = NULL;
@@ -71,7 +70,6 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 				linkSelected[currentIndex] = false;
 		}
 		currentIndex++;
-		cout << "Index updated" << endl;
 		emit onLinkInfoAvailable(currentIndex-1);
 		if(currentIndex==linkList.size())
 			emit onLinkInfoRequestFinish();
@@ -82,7 +80,6 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 	}
 	else if(request->getType() == MegaRequest::TYPE_IMPORT_NODE)
 	{
-		cout << "Node import finished: " << e->getErrorString() << endl;
 		remainingNodes--;
 		if(e->getErrorCode()==MegaError::API_OK) importSuccess++;
 		else importFailed ++;
@@ -94,7 +91,6 @@ void LinkProcessor::requestLinkInfo()
 {
 	for(int i=0; i<linkList.size(); i++)
 	{
-		cout << "Sending request" << endl;
 		megaApi->getPublicNode(linkList[i].toUtf8().constData(), this);
 	}
 }
@@ -133,7 +129,6 @@ void LinkProcessor::downloadLinks(QString localPath)
 	{
 		if(linkNode[i] && linkSelected[i])
 		{
-			cout << "Start public download" << endl;
             megaApi->startPublicDownload(linkNode[i], (localPath+QString::fromAscii("\\")).toUtf8().constData());
 		}
 	}

@@ -337,7 +337,7 @@ void SettingsDialog::saveSettings()
 
             if(j == ui->tSyncs->rowCount())
             {
-                cout << "REMOVING SYNC: " << preferences->getSyncName(i).toStdString() << endl;
+                LOG(QString::fromAscii("REMOVING SYNC: %1").arg(preferences->getSyncName(i)));
                 preferences->removeSyncedFolder(i);
                 megaApi->removeSync(megaHandle);
                 i--;
@@ -364,8 +364,7 @@ void SettingsDialog::saveSettings()
 
             if(j == preferences->getNumSyncedFolders())
             {
-                cout << "ADDING SYNC: " << localFolderPath.toUtf8().constData() << " - " <<
-                        megaFolderPath.toUtf8().constData() << endl;
+                LOG(QString::fromAscii("ADDING SYNC: %1 - %2").arg(localFolderPath).arg(megaFolderPath));
                 preferences->addSyncedFolder(localFolderPath,
                                              megaFolderPath,
                                              node->nodehandle,
@@ -430,16 +429,10 @@ void SettingsDialog::updateAddButton()
 
 void SettingsDialog::on_bDelete_clicked()
 {
-    cout << "bDelete clicked" << endl;
     QList<QTableWidgetSelectionRange> selected = ui->tSyncs->selectedRanges();
-    if(selected.size()==0)
-    {
-        cout << "No items selected" << endl;
-        return;
-    }
-    int index = selected.first().topRow();
-    cout << "Selected index: " << index << endl;
+    if(selected.size()==0) return;
 
+    int index = selected.first().topRow();
 	ui->tSyncs->removeRow(index);
     syncNames.removeAt(index);
 
@@ -604,13 +597,8 @@ void SettingsDialog::on_bAddName_clicked()
 
 void SettingsDialog::on_bDeleteName_clicked()
 {
-    cout << "bDelete clicked" << endl;
     QList<QListWidgetItem *> selected = ui->lExcludedNames->selectedItems();
-    if(selected.size()==0)
-    {
-        cout << "No items selected" << endl;
-        return;
-    }
+    if(selected.size()==0) return;
 
     for(int i=0; i<selected.size(); i++)
        delete selected[i];
