@@ -584,8 +584,20 @@ void SettingsDialog::on_bAddName_clicked()
         return;
     }
 
-    ui->lExcludedNames->addItem(text);
+    for(int i=0; i<ui->lExcludedNames->count(); i++)
+    {
+        if(ui->lExcludedNames->item(i)->text() == text)
+            return;
+        else if(ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive)>0)
+        {
+            ui->lExcludedNames->insertItem(i, text);
+            excludedNamesChanged = true;
+            stateChanged();
+            return;
+        }
+    }
 
+    ui->lExcludedNames->addItem(text);
     excludedNamesChanged = true;
     stateChanged();
 }

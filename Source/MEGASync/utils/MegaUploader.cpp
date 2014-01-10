@@ -2,6 +2,8 @@
 #include <QThread>
 #include "utils/AsyncFileCopy.h"
 
+#include <QMessageBox>
+
 MegaUploader::MegaUploader(MegaApi *megaApi) : QObject(), delegateListener(this)
 {
     this->megaApi = megaApi;
@@ -29,6 +31,15 @@ bool MegaUploader::upload(QFileInfo info, Node *parent)
         }
         path.append("", 1);
         QString destPath = QString::fromWCharArray((const wchar_t *)path.data()) + info.fileName();
+
+        if(QFileInfo(destPath).exists())
+        {
+            int res = QMessageBox::warning(NULL, tr("Warning"), tr("The destination folder is synced and you already have a file \n"
+                                                         "inside it with the same name (%1).\n"
+                                                         "If you continue the upload, the previous file will be overwritten.\n"
+                                                         "Are you sure?").arg(info.fileName()), QMessageBox::Yes, QMessageBox::Cancel);
+            if(res != QMessageBox::Yes) return false;
+        }
 
         QThread *thread = new QThread();
         AsyncFileCopy *fileCopy = new AsyncFileCopy(info.absoluteFilePath(), destPath);

@@ -12,5 +12,7 @@ AsyncFileCopy::AsyncFileCopy(QString srcFile, QString dstFile, QObject *parent) 
 void AsyncFileCopy::doWork()
 {
     QFile file(srcFile);
+    QFile dst(dstFile);
+    dst.remove();
     file.copy(dstFile);
 }

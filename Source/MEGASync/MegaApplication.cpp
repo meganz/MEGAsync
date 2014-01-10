@@ -9,7 +9,7 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 106; //1.06
+const int MegaApplication::VERSION_CODE = 107; //1.07
 
 int main(int argc, char *argv[])
 {
@@ -779,6 +779,8 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
         if(infoDialog) infoDialog->updateSyncsButton();
+        cout << "Sync removed" << endl;
+        onSyncStateChanged(megaApi);
         break;
     }
     default:

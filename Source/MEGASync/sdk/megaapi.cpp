@@ -1980,10 +1980,14 @@ void MegaApi::transfer_complete(Transfer* tr)
 	client->putnodes(uploadtarget,newnode,1);*/
 }
 
-void MegaApi::syncupdate_state(Sync *, syncstate s)
+void MegaApi::syncupdate_state(Sync *sync, syncstate s)
 {
 	cout << "syncupdate_state: " << s << endl;
     fireOnSyncStateChanged(this);
+    string path = sync->localroot.localname;
+    path.append("", 1);
+    WCHAR *windowsPath = (WCHAR *)path.data();
+    SHChangeNotify(SHCNE_ALLEVENTS, SHCNF_PATH, windowsPath, NULL);
 }
 
 void MegaApi::syncupdate_scanning(bool scanning)
@@ -2022,7 +2026,7 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
 {
     //cout << "syncupdate_local_file_addition: " << s << endl;
-    QString localPath = QString::fromUtf8(s);
+   /* QString localPath = QString::fromUtf8(s);
     WindowsUtils::notifyItemChange(localPath);
     int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
 
@@ -2032,7 +2036,7 @@ void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
         WindowsUtils::notifyItemChange(parent.absolutePath());
         //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
         parent = QFileInfo(parent.absolutePath()).dir();
-    }
+    }*/
 }
 
 void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
@@ -4066,6 +4070,7 @@ void MegaApi::sendPendingRequests()
         {
             handle nodehandle = request->getNodeHandle();
             sync_list::iterator it = client->syncs.begin();
+            bool found = false;
             while(it != client->syncs.end())
             {
                 Sync *sync = (*it);
@@ -4073,17 +4078,15 @@ void MegaApi::sendPendingRequests()
                 {
                     cout << "DELETING SYNC IN MEGAAPI" << endl;
                     delete sync;
+                    client->restag = nextTag;
+                    fireOnRequestFinish(this, request, MegaError(API_OK));
+                    found = true;
                     break;
                 }
                 it++;
             }
 
-            if(it != client->syncs.end())
-            {
-                client->restag = nextTag;
-                fireOnRequestFinish(this, request, MegaError(API_OK));
-            }
-            else e = API_ENOENT;
+            if(!found) e = API_ENOENT;
             break;
         }
         case MegaRequest::TYPE_DELETE:
@@ -4118,6 +4121,7 @@ void MegaApi::updateStatics()
 
 bool MegaApi::isIndexing()
 {
+    if(client->syncs.size()==0) return false;
     if(!client || client->syncscanstate) return true;
 
     bool indexing = false;
