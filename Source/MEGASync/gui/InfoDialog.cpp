@@ -163,9 +163,6 @@ void InfoDialog::updateTransfers()
     totalUploads = app->getMegaApi()->getTotalUploads();
     totalDownloads = app->getMegaApi()->getTotalDownloads();
 
-    //cout << "RU: " << remainingUploads << "   RD: " << remainingDownloads << endl;
-    //cout << "TU: " << totalUploads << "   TD: " << totalDownloads << endl;
-
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
 
@@ -412,7 +409,6 @@ void InfoDialog::on_bSyncFolder_clicked()
 
 void InfoDialog::openFolder(QString path)
 {
-	cout << path.toStdString() << endl;
 	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
 
@@ -444,8 +440,6 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 	QDateTime now = QDateTime::currentDateTime();
 	if(lastPopupUpdate.secsTo(now)<1) return;
 	lastPopupUpdate = now;
-
-	cout << "SHOW POPUP " << lastPopupUpdate.secsTo(now) << endl;
 
 	QString operation;
     QString oneFile = tr("one file at %1/s");

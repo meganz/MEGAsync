@@ -19,7 +19,6 @@ boolean WindowsUtils::enableTrayIcon(QString executable)
           (PVOID *) &m_ITrayNotify);
     if(hr != S_OK)
     {
-        cout << "ITrayNotify failed. Trying ITrayNotifyNew..." << endl;
         hr = CoCreateInstance (
           __uuidof (TrayNotify),
           NULL,

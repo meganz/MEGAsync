@@ -1,4 +1,5 @@
 #include "ShellDispatcherTask.h"
+#include "utils/Utils.h"
 
 PIPEINST Pipe[INSTANCES];
 HANDLE hEvents[INSTANCES+1];
@@ -19,7 +20,7 @@ ShellDispatcherTask::~ShellDispatcherTask()
 
 void ShellDispatcherTask::doWork()
 {
-    printf("Shell dispatcher starting...\n");
+    LOG("Shell dispatcher starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
     dispatchPipe();
@@ -36,7 +37,7 @@ int ShellDispatcherTask::dispatchPipe()
 // overlapped ConnectNamedPipe operation is started for
 // each instance.
 
-   cout << "DISPATCHING PIPE..." << endl;
+   LOG("DISPATCHING PIPE...");
    for (i = 0; i < INSTANCES; i++)
    {
 
@@ -109,7 +110,7 @@ int ShellDispatcherTask::dispatchPipe()
 	  i = dwWait - WAIT_OBJECT_0;  // determines which pipe
 	  if (i < 0 || i > (INSTANCES - 1))
 	  {
-         printf("Shell dispatcher closing...\n");
+         LOG("Shell dispatcher closing...");
          for(int j=0; j < INSTANCES; j++)
              CloseHandle(Pipe[j].hPipeInst);
 
@@ -365,7 +366,7 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
        QFileInfo file(QString::fromWCharArray(path));
        if(file.exists())
        {
-           cout << "Adding file to upload queue" << endl;
+           LOG("Adding file to upload queue");
            uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
        }
        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
@@ -377,7 +378,7 @@ VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
        QFileInfo file(QString::fromWCharArray(path));
        if(file.exists())
        {
-           cout << "Adding file to export queue: " << file.baseName().toStdString() << endl;
+           LOG("Adding file to export queue");
            exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
        }
        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);

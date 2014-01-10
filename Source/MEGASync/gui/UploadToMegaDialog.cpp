@@ -1,6 +1,7 @@
 #include "UploadToMegaDialog.h"
 #include "ui_UploadToMegaDialog.h"
 #include "gui/NodeSelector.h"
+#include "utils/Utils.h"
 
 UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
 	QDialog(parent),
@@ -35,7 +36,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, Meg
 	Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
 	if(e->getErrorCode() != MegaError::API_OK || !node)
 	{
-		cout << "ERROR: " << e->getErrorString() << endl;
+        LOG(QString::fromAscii("ERROR: %1").arg(QString::fromAscii(e->getErrorString())));
 		this->reject();
 		return;
 	}
@@ -63,7 +64,6 @@ void UploadToMegaDialog::on_buttonBox_accepted()
 	if(node && node->type!=FILENODE)
 	{
 		selectedHandle = node->nodehandle;
-		cout << "Node valid. Accepting dialog" << endl;
 		accept();
 		return;
 	}
@@ -74,7 +74,7 @@ void UploadToMegaDialog::on_buttonBox_accepted()
 		return;
 	}
 
-	cout << "ERROR: FOLDER NOT FOUND" << endl;
+    LOG("ERROR: FOLDER NOT FOUND");
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
 	return;
 }

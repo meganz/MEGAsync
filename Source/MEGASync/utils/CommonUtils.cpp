@@ -14,6 +14,8 @@ void Instantiate_Template_Methods()
     Utils::getExtensionPixmapSmall(QString::fromAscii(""));
     Utils::getExtensionPixmapMedium(QString::fromAscii(""));
     Utils::createThumbnail(QString::fromAscii(""),0);
+    Utils::log(QString());
+    Utils::log("");
 }
 
 template <class T>
@@ -250,6 +252,18 @@ bool CommonUtils<T>::removeRecursively(QDir dir)
         success = dir.rmdir(dir.absolutePath());
 
     return success;
+}
+
+template <class T>
+void CommonUtils<T>::log(QString message)
+{
+    cout << "LOG: " << message.toUtf8().constData() << endl;
+}
+
+template <class T>
+void CommonUtils<T>::log(const char *message)
+{
+    cout << "LOG: " << message << endl;
 }
 
 template <class T>

@@ -47,7 +47,6 @@ long long NodeSelector::getSelectedFolderHandle()
 
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    cout << "Request finished!" << endl;
 	if(e->getErrorCode() == MegaError::API_OK)
 	{
 		Node *node = megaApi->getNodeByHandle(request->getNodeHandle());

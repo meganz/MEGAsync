@@ -9,6 +9,13 @@
 #include <QPixmap>
 #include <QDir>
 
+//#define SHOW_LOGS
+#ifdef SHOW_LOGS
+    #define LOG(x) Utils::log(x)
+#else
+    #define LOG(X)
+#endif
+
 template <class T>
 class CommonUtils
 {
@@ -42,6 +49,8 @@ public:
     static QByteArray encrypt(QByteArray data, QByteArray key) { return T::encrypt(data, key); }
     static QByteArray decrypt(QByteArray data, QByteArray key) { return T::decrypt(data, key); }
     static QByteArray getLocalStorageKey() { return T::getLocalStorageKey(); }
+    static void log(QString message);
+    static void log(const char *message);
 };
 
 template <class T>

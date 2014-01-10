@@ -33,8 +33,6 @@ SetupWizard::~SetupWizard()
 
 void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *error)
 {
-    cout << "Request finished!" << endl;
-
 	switch(request->getType())
 	{
 		case MegaRequest::TYPE_CREATE_ACCOUNT:

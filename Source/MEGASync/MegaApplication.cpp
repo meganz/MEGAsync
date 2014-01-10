@@ -182,10 +182,10 @@ void MegaApplication::loggedIn()
     startSyncs();
 
     //Try to keep the tray icon always active
-    if(!Utils::enableTrayIcon(QFileInfo( QCoreApplication::applicationFilePath()).fileName()))
-        cout << "Error enabling trayicon" << endl;
+    if(!Utils::enableTrayIcon(QFileInfo(QCoreApplication::applicationFilePath()).fileName()))
+        LOG("Error enabling trayicon");
     else
-        cout << "OK enabling trayicon" << endl;
+        LOG("OK enabling trayicon");
 
     Utils::startShellDispatcher(this);
 
@@ -233,7 +233,7 @@ void MegaApplication::startSyncs()
             continue;
         }
 
-		cout << "Sync " << i << " added." << endl;
+        LOG(QString::fromAscii("Sync  %1 added.").arg(i));
         megaApi->syncFolder(localFolder.toUtf8().constData(), node);
 	}
 }
@@ -338,7 +338,7 @@ void MegaApplication::refreshTrayIcon()
 
 void MegaApplication::cleanAll()
 {
-    cout << "Cleaning resources" << endl;
+    LOG("Cleaning resources");
     Utils::stopShellDispatcher();
     trayIcon->hide();
     processEvents();
@@ -554,7 +554,7 @@ void MegaApplication::onRequestLinksFinished()
 
 void MegaApplication::onUpdateCompleted()
 {
-    cout << "Update completed. Initializing a silent reboot..." << endl;
+    LOG("Update completed. Initializing a silent reboot...");
     reboot = true;
     QTimer::singleShot(10000, this, SLOT(rebootApplication()));
 }
@@ -715,7 +715,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 
             //Problem fetching nodes.
             //This shouldn't happen -> logout
-            cout << "Error fetching nodes" << endl;
+            LOG("Error fetching nodes");
             unlink();
 		}
 
@@ -779,7 +779,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
         if(infoDialog) infoDialog->updateSyncsButton();
-        cout << "Sync removed" << endl;
+        LOG("Sync removed");
         onSyncStateChanged(megaApi);
         break;
     }
@@ -841,7 +841,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //so we save the path of the file to show it later
         if(e->getErrorCode() == MegaError::API_OK)
         {
-            cout << "Putting: " << transfer->getPath() << "   TAG: " << transfer->getTag() << endl;
+            LOG(QString::fromAscii("Putting: %1 TAG: %2").arg(QString::fromUtf8(transfer->getPath())).arg(transfer->getTag()));
             uploadLocalPaths[transfer->getTag()]=QString::fromUtf8(transfer->getPath());
         }
 	}
@@ -908,7 +908,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 {
     if(!infoDialog) return;
 
-    cout << "Nodes update start" << endl;
     bool externalNodes = 0;
 
     //If this is a full reload, return
@@ -927,13 +926,13 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         if(!node->removed && node->tag && !node->syncdeleted)
         {
             //Get the associated local node
-            cout << "Node: " << node->displayname() << " TAG: " << node->tag << endl;
+            LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->displayname())).arg(node->tag));
             if(node->localnode)
             {
                 //If the node has been uploaded by a synced folder
                 //The SDK provides its local path
 
-                cout << "Sync upload" << endl;
+                LOG("Sync upload");
                 string localseparator;
                 localseparator.assign((char*)L"\\",sizeof(wchar_t));
                 string path;
@@ -945,7 +944,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 }
                 path.append("", 1);
                 localPath = QString::fromWCharArray((const wchar_t *)path.data());
-                cout << "Sync path: " << localPath.toStdString() << endl;
+                LOG(QString::fromAscii("Sync path: %1").arg(localPath));
             }
             else if((node->type==FILENODE) && uploadLocalPaths.contains(node->tag))
             {
@@ -953,7 +952,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 //we recover the path using the tag of the transfer
                 localPath = uploadLocalPaths.value(node->tag);
                 //uploadLocalPaths.remove(node->tag);
-                cout << "Local upload: " << localPath.toStdString() << endl;
+                LOG(QString::fromAscii("Local upload: %1").arg(localPath));
             }
         }
 
@@ -969,7 +968,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
                 {
                     WindowsUtils::notifyItemChange(parent.absolutePath());
-                    //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
                     parent = QFileInfo(parent.absolutePath()).dir();
                 }
             }
@@ -989,8 +987,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
     }
 
     if(externalNodes) showNotificationMessage(tr("You have new or updated files in your account"));
-
-    cout << "Nodes update end" << endl;
 }
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
