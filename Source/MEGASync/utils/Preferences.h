@@ -118,6 +118,7 @@ protected:
     void login(QString account);
     void logout();
 
+    void loadExcludedSyncNames();
     void readFolders();
     void writeFolders();
 

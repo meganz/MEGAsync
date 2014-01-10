@@ -557,43 +557,6 @@ long long Preferences::getRecentFileTime(int num)
 QStringList Preferences::getExcludedSyncNames()
 {
     assert(logged());
-
-    if(excludedSyncNames.isEmpty())
-    {
-        excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n"));
-        int numNames = excludedSyncNames.size();
-
-        QMap<QString, QString> strMap;
-        foreach ( QString str, excludedSyncNames ) {
-            strMap.insert( str.toLower(), str );
-        }
-        excludedSyncNames = strMap.values();
-
-        if(numNames != excludedSyncNames.size())
-            setExcludedSyncNames(excludedSyncNames);
-    }
-
-    if(excludedSyncNames.size()==1 && excludedSyncNames[0].isEmpty())
-        excludedSyncNames = QStringList();
-
-    if((settings->value(lastVersionKey).toInt() < 104) &&
-       (MegaApplication::VERSION_CODE > 104) &&
-       (settings->value(lastVersionKey).toInt() != MegaApplication::VERSION_CODE))
-    {
-        excludedSyncNames.insert(0, QString::fromUtf8("Thumbs.db"));
-        excludedSyncNames.insert(0, QString::fromUtf8("desktop.ini"));
-        excludedSyncNames.insert(0, QString::fromUtf8("~*"));
-        excludedSyncNames.insert(0, QString::fromUtf8(".*"));
-
-        QMap<QString, QString> strMap;
-        foreach ( QString str, excludedSyncNames ) {
-            strMap.insert( str.toLower(), str );
-        }
-        excludedSyncNames = strMap.values();
-
-        setExcludedSyncNames(excludedSyncNames);
-    }
-
     return excludedSyncNames;
 }
 
@@ -635,7 +598,9 @@ void Preferences::login(QString account)
     settings->beginGroup(account);
     readFolders();
     readRecentFiles();
-    getExcludedSyncNames();
+
+    loadExcludedSyncNames();
+
     if(settings->value(lastVersionKey).toInt() < MegaApplication::VERSION_CODE)
         settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
     settings->sync();
@@ -665,6 +630,31 @@ void Preferences::logout()
     recentFileHandles.clear();
     recentLocalPaths.clear();
     recentFileTime.clear();
+}
+
+void Preferences::loadExcludedSyncNames()
+{
+    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n"));
+    int numNames = excludedSyncNames.size();
+
+    if((settings->value(lastVersionKey).toInt() < 104) &&
+       (MegaApplication::VERSION_CODE > 104) &&
+       (settings->value(lastVersionKey).toInt() != MegaApplication::VERSION_CODE))
+    {
+        excludedSyncNames.insert(0, QString::fromUtf8("Thumbs.db"));
+        excludedSyncNames.insert(0, QString::fromUtf8("desktop.ini"));
+        excludedSyncNames.insert(0, QString::fromUtf8("~*"));
+        excludedSyncNames.insert(0, QString::fromUtf8(".*"));
+    }
+
+    QMap<QString, QString> strMap;
+    foreach ( QString str, excludedSyncNames ) {
+        strMap.insert( str.toLower(), str );
+    }
+    excludedSyncNames = strMap.values();
+
+    if(numNames != excludedSyncNames.size())
+        setExcludedSyncNames(excludedSyncNames);
 }
 
 void Preferences::readFolders()
