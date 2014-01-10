@@ -23,6 +23,7 @@ void ShellDispatcherTask::doWork()
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
     dispatchPipe();
+    delete this;
 }
 
 int ShellDispatcherTask::dispatchPipe()
@@ -116,7 +117,6 @@ int ShellDispatcherTask::dispatchPipe()
          for(int j=0; j < (INSTANCES+1); j++)
             CloseHandle(hEvents[j]);
 
-         delete this;
 		 return 0;
 	  }
 

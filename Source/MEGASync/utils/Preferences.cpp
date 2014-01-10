@@ -613,7 +613,8 @@ void Preferences::login(QString account)
     readFolders();
     readRecentFiles();
     getExcludedSyncNames();
-    settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
+    //if(settings->value(lastVersionKey).toInt() < MegaApplication::VERSION_CODE)
+        settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
     settings->sync();
 }
 
