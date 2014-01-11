@@ -228,7 +228,7 @@ void MegaApplication::startSyncs()
         if(megaApi->getParentNode(node) == megaApi->getRubbishNode())
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                "because the remote folder is in your Trash folder")
+                                "because the remote folder is in the rubbish bin")
                              .arg(preferences->getSyncName(i)));
             preferences->removeSyncedFolder(i);
             i--;
@@ -907,7 +907,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {    
     //Show information to users
-    showWarningMessage(tr("Temporarily error in transfer: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+    showWarningMessage(tr("Temporary transmission error: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
 }
 
 //Called when contacts have been updated in MEGA

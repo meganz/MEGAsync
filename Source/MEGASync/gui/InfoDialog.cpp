@@ -302,7 +302,7 @@ void InfoDialog::timerUpdate()
         updateTransfers();
 		app->showSyncedIcon();
         megaApi->getAccountDetails();
-        app->showNotificationMessage(tr("All transfers have been finished"));
+        app->showNotificationMessage(tr("All transfers have been completed"));
     }
 }
 
