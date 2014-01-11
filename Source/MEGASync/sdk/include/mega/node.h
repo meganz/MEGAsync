@@ -203,18 +203,13 @@ struct LocalNode : public File
 	
 	// timer to delay upload start
 	dstime nagleds;
+	void bumpnagleds();
 
 	// number of iterations since last seen
 	int notseen;
 	
 	// if delage > 0, own iterator inside MegaClient::localsyncgone
 	localnode_set::iterator notseen_it;
-	
-	// if remoteqset >= 0, own iterator inside MegaClient::syncremoteq[remoteq]
-//	syncremote remoteq;
-//	localnode_list::iterator remoteq_it;
-//	void enqremote(syncremote);
-	void bumpnagleds();
 	
 	// build full local path to this node
 	void getlocalpath(string*, bool sdisable = false);

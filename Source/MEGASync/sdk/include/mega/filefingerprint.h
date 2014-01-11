@@ -27,7 +27,7 @@
 
 namespace mega {
 
-// sparse file fingerprint, including size & mtime
+// sparse file fingerprint, including size and mtime
 struct FileFingerprint
 {
 	m_off_t size;

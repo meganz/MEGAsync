@@ -34,7 +34,7 @@ int Request::cmdspending()
 	return cmds.size();
 }
 
-int Request::get(string* req)
+void Request::get(string* req)
 {
 	// concatenate all command objects, resulting in an API request
 	*req = "[";
@@ -47,8 +47,6 @@ int Request::get(string* req)
 	}
 
 	req->append("]");
-
-	return 1;
 }
 
 void Request::procresult(MegaClient* client)

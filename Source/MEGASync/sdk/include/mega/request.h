@@ -36,7 +36,7 @@ public:
 
 	int cmdspending();
 
-	int get(string*);
+	void get(string*);
 
 	void procresult(MegaClient*);
 

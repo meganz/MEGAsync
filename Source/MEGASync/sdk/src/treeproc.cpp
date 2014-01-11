@@ -137,5 +137,4 @@ void TreeProcSyncStatus::proc(MegaClient* client, Node* n)
 	}
 }
 
-
 } // namespace

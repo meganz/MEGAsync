@@ -30,7 +30,7 @@ namespace mega {
 
 WinConsole::WinConsole()
 {
-	// FIXME: configure for UTF8
+	// FIXME: configure for UTF-8 I/O
 }
 
 WinConsole::~WinConsole()
