@@ -170,7 +170,7 @@ Function .onInit
 
   ${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   strCpy $INSTALLDAY "$2$1$0"
-  strCpy $EXPIRATIONDAY "20140117"
+  strCpy $EXPIRATIONDAY "20140121"
 
   ${if} $INSTALLDAY >= $EXPIRATIONDAY
       MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
