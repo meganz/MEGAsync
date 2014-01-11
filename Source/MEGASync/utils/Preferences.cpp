@@ -58,7 +58,7 @@ const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 const int Preferences::NUM_RECENT_ITEMS             = 3;
 
-Preferences::Preferences()
+Preferences::Preferences() : mutex(QMutex::Recursive)
 {
 #if QT_VERSION < 0x050000
     QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
@@ -80,424 +80,527 @@ Preferences::Preferences()
 
 QString Preferences::email()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(emailKey).toString();
+    QString value = settings->value(emailKey).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setEmail(QString email)
 {
+    mutex.lock();
     login(email);
     settings->setValue(emailKey, email);
     settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::emailHash()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(emailHashKey).toString();
+    QString value = settings->value(emailHashKey).toString();
+    mutex.unlock();
+    return value;
 }
 
 QString Preferences::privatePw()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(privatePwKey).toString();
+    QString value = settings->value(privatePwKey).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setCredentials(QString emailHash, QString privatePw)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(emailHashKey, emailHash);
     settings->setValue(privatePwKey, privatePw);
     settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::totalStorage()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(totalStorageKey).toLongLong();
+    long long value = settings->value(totalStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setTotalStorage(long long value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(totalStorageKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::usedStorage()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(usedStorageKey).toLongLong();
+    long long value = settings->value(usedStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setUsedStorage(long long value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(usedStorageKey, value);
 	settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::totalBandwidth()
 {
+    mutex.lock();
     assert(logged());
-
-	return settings->value(totalBandwidthKey).toLongLong();
+    long long value = settings->value(totalBandwidthKey).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setTotalBandwidth(long long value)
 {
+    mutex.lock();
     assert(logged());
-
 	settings->setValue(totalBandwidthKey, value);
 	settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::usedBandwidth()
 {
+    mutex.lock();
     assert(logged());
-
-	return settings->value(usedBandwidthKey).toLongLong();
+    long long value = settings->value(usedBandwidthKey).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setUsedBandwidth(long long value)
 {
+    mutex.lock();
     assert(logged());
-
 	settings->setValue(usedBandwidthKey, value);
 	settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::accountType()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(accountTypeKey).toInt();
+    int value = settings->value(accountTypeKey).toInt();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setAccountType(int value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(accountTypeKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 bool Preferences::showNotifications()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(showNotificationsKey, defaultShowNotifications).toBool();
+    bool value = settings->value(showNotificationsKey, defaultShowNotifications).toBool();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setShowNotifications(bool value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(showNotificationsKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 bool Preferences::startOnStartup()
 {
-    return settings->value(startOnStartupKey, defaultStartOnStartup).toBool();
+    mutex.lock();
+    bool value = settings->value(startOnStartupKey, defaultStartOnStartup).toBool();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setStartOnStartup(bool value)
 {
+    mutex.lock();
     settings->setValue(startOnStartupKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::language()
 {
-    return settings->value(languageKey, locale->name()).toString();
+    mutex.lock();
+    QString value = settings->value(languageKey, locale->name()).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setLanguage(QString &value)
 {
+    mutex.lock();
     settings->setValue(startOnStartupKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 bool Preferences::updateAutomatically()
 {
-    return settings->value(updateAutomaticallyKey, defaultUpdateAutomatically).toBool();
+    mutex.lock();
+    bool value = settings->value(updateAutomaticallyKey, defaultUpdateAutomatically).toBool();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setUpdateAutomatically(bool value)
 {
+    mutex.lock();
     settings->setValue(updateAutomaticallyKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::uploadLimitKB()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(uploadLimitKBKey, defaultUploadLimitKB).toInt();
+    int value = settings->value(uploadLimitKBKey, defaultUploadLimitKB).toInt();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setUploadLimitKB(int value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(uploadLimitKBKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::proxyType()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyTypeKey, defaultProxyType).toInt();
+    int value = settings->value(proxyTypeKey, defaultProxyType).toInt();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyType(int value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyTypeKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::proxyProtocol()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyProtocolKey, defaultProxyProtocol).toInt();
+    int value = settings->value(proxyProtocolKey, defaultProxyProtocol).toInt();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyProtocol(int value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyProtocolKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::proxyServer()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyServerKey, defaultProxyServer).toString();
+    QString value = settings->value(proxyServerKey, defaultProxyServer).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyServer(const QString &value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyServerKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::proxyPort()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyPortKey, defaultProxyPort).toInt();
+    int value = settings->value(proxyPortKey, defaultProxyPort).toInt();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyPort(int value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyPortKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 bool Preferences::proxyRequiresAuth()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyRequiresAuthKey, defaultProxyRequiresAuth).toBool();
+    bool value = settings->value(proxyRequiresAuthKey, defaultProxyRequiresAuth).toBool();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyRequiresAuth(bool value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyRequiresAuthKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::getProxyUsername()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyUsernameKey, defaultProxyUsername).toString();
+    QString value = settings->value(proxyUsernameKey, defaultProxyUsername).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyUsername(const QString &value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyUsernameKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::getProxyPassword()
 {
+    mutex.lock();
     assert(logged());
-
-    return settings->value(proxyPasswordKey, defaultProxyPassword).toString();
+    QString value = settings->value(proxyPasswordKey, defaultProxyPassword).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setProxyPassword(const QString &value)
 {
+    mutex.lock();
     assert(logged());
-
     settings->setValue(proxyPasswordKey, value);
     settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::lastExecutionTime()
 {
-    return settings->value(lastExecutionTimeKey, 0).toLongLong();
+    mutex.lock();
+    long long value = settings->value(lastExecutionTimeKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setLastExecutionTime(qint64 time)
 {
+    mutex.lock();
     settings->setValue(lastExecutionTimeKey, time);
     settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::downloadFolder()
 {
+    mutex.lock();
     assert(logged());
-
-	return settings->value(downloadFolderKey).toString();
+    QString value = settings->value(downloadFolderKey).toString();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setDownloadFolder(QString value)
 {
+    mutex.lock();
     assert(logged());
-
 	settings->setValue(downloadFolderKey, value);
 	settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::uploadFolder()
 {
+    mutex.lock();
     assert(logged());
-
-	return settings->value(uploadFolderKey).toLongLong();
+    long long value = settings->value(uploadFolderKey).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setUploadFolder(long long value)
 {
+    mutex.lock();
     assert(logged());
-
 	settings->setValue(uploadFolderKey, value);
 	settings->sync();
+    mutex.unlock();
 }
 
 long long Preferences::importFolder()
 {
+    mutex.lock();
     assert(logged());
-
-	return settings->value(importFolderKey).toLongLong();
+    long long value = settings->value(importFolderKey).toLongLong();
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setImportFolder(long long value)
 {
+    mutex.lock();
     assert(logged());
-
 	settings->setValue(importFolderKey, value);
 	settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::getNumSyncedFolders()
 {
+    mutex.lock();
     assert(logged());
-
-    return localFolders.length();
+    int value = localFolders.length();
+    mutex.unlock();
+    return value;
 }
 
 QString Preferences::getSyncName(int num)
 {
+    mutex.lock();
     assert(logged());
-
-    return syncNames.at(num);
+    QString value = syncNames.at(num);
+    mutex.unlock();
+    return value;
 }
 
 QString Preferences::getLocalFolder(int num)
 {
+    mutex.lock();
     assert(logged() && localFolders.size()>num);
-
-    return QDir::toNativeSeparators(localFolders.at(num));
+    QString value = QDir::toNativeSeparators(localFolders.at(num));
+    mutex.unlock();
+    return value;
 }
 
 QString Preferences::getMegaFolder(int num)
 {
+    mutex.lock();
     assert(logged() && syncNames.size()>num);
-
-    return megaFolders.at(num);
+    QString value = megaFolders.at(num);
+    mutex.unlock();
+    return value;
 }
 
 long long Preferences::getMegaFolderHandle(int num)
 {
+    mutex.lock();
     assert(logged() && megaFolderHandles.size()>num);
-
-    return megaFolderHandles.at(num);
+    long long value = megaFolderHandles.at(num);
+    mutex.unlock();
+    return value;
 }
 
 QStringList Preferences::getSyncNames()
 {
-    return syncNames;
+    mutex.lock();
+    QStringList value = syncNames;
+    mutex.unlock();
+    return value;
 }
 
 QStringList Preferences::getMegaFolders()
 {
-    return megaFolders;
+    mutex.lock();
+    QStringList value = megaFolders;
+    mutex.unlock();
+    return value;
 }
 
 QStringList Preferences::getLocalFolders()
 {
-    return localFolders;
+    mutex.lock();
+    QStringList value = localFolders;
+    mutex.unlock();
+    return value;
 }
 
 QList<long long> Preferences::getMegaFolderHandles()
 {
-    return megaFolderHandles;
+    mutex.lock();
+    QList<long long> value = megaFolderHandles;
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName)
 {
+    mutex.lock();
     assert(logged());
-
     if(syncName.isEmpty()) syncName = QFileInfo(localFolder).fileName();
     syncNames.append(syncName);
     localFolders.append(QDir::toNativeSeparators(localFolder));
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     writeFolders();
+    mutex.unlock();
 }
 
 void Preferences::removeSyncedFolder(int num)
 {
+    mutex.lock();
     assert(logged());
-
     Utils::syncFolderRemoved(localFolders[num]);
     syncNames.removeAt(num);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
-
     writeFolders();
+    mutex.unlock();
 }
 
 void Preferences::removeAllFolders()
 {
+    mutex.lock();
     assert(logged());
-
     for(int i=0; i<localFolders.size(); i++)
         Utils::syncFolderRemoved(localFolders[i]);
 
@@ -505,12 +608,13 @@ void Preferences::removeAllFolders()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
-
     writeFolders();
+    mutex.unlock();
 }
 
 void Preferences::addRecentFile(QString fileName, long long fileHandle, QString localPath)
 {
+    mutex.lock();
     assert(logged());
 
     recentFileNames.pop_back();
@@ -524,58 +628,71 @@ void Preferences::addRecentFile(QString fileName, long long fileHandle, QString 
     recentFileTime.insert(0, QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     writeRecentFiles();
+    mutex.unlock();
 }
 
 QString Preferences::getRecentFileName(int num)
 {
+    mutex.lock();
     assert(logged() && recentFileNames.size()>num);
-
-    return recentFileNames[num];
+    QString value = recentFileNames[num];
+    mutex.unlock();
+    return value;
 }
 
 long long Preferences::getRecentFileHandle(int num)
 {
+    mutex.lock();
     assert(logged() && recentFileHandles.size()>num);
-
-    return recentFileHandles[num];
+    long long value = recentFileHandles[num];
+    mutex.unlock();
+    return value;
 }
 
 QString Preferences::getRecentLocalPath(int num)
 {
+    mutex.lock();
     assert(logged() && recentLocalPaths.size()>num);
-
-    return recentLocalPaths[num];
+    QString value = recentLocalPaths[num];
+    mutex.unlock();
+    return value;
 }
 
 long long Preferences::getRecentFileTime(int num)
 {
+    mutex.lock();
     assert(logged() && recentLocalPaths.size()>num);
-
-    return recentFileTime[num];
+    long long value = recentFileTime[num];
+    mutex.unlock();
+    return value;
 }
 
 QStringList Preferences::getExcludedSyncNames()
 {
+    mutex.lock();
     assert(logged());
-    return excludedSyncNames;
+    QStringList value = excludedSyncNames;
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::setExcludedSyncNames(QStringList names)
 {
+    mutex.lock();
     assert(logged());
-
     excludedSyncNames = names;
     if(!excludedSyncNames.size())
         settings->remove(excludedSyncNamesKey);
     else
         settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
     settings->sync();
+    mutex.unlock();
 }
 
 void Preferences::unlink()
 {
+    mutex.lock();
     assert(logged());
-
     settings->remove(emailHashKey);
     settings->remove(privatePwKey);
     settings->endGroup();
@@ -589,38 +706,44 @@ void Preferences::unlink()
     recentFileHandles.clear();
     recentLocalPaths.clear();
     recentFileTime.clear();
+    mutex.unlock();
 }
 
 void Preferences::login(QString account)
 {
+    mutex.lock();
     logout();
     settings->setValue(currentAccountKey, account);
     settings->beginGroup(account);
     readFolders();
     readRecentFiles();
-
     loadExcludedSyncNames();
-
     if(settings->value(lastVersionKey).toInt() < MegaApplication::VERSION_CODE)
         settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
     settings->sync();
+    mutex.unlock();
 }
 
 bool Preferences::logged()
 {
-    if(settings->isGroupEmpty()) return false;
-    return true;
+    mutex.lock();
+    bool value = !settings->isGroupEmpty();
+    mutex.unlock();
+    return value;
 }
 
 bool Preferences::hasEmail(QString email)
 {
+    mutex.lock();
     assert(!logged());
-
-    return settings->containsGroup(email);
+    bool value = settings->containsGroup(email);
+    mutex.unlock();
+    return value;
 }
 
 void Preferences::logout()
 {
+    mutex.lock();
     if(logged()) settings->endGroup();
     syncNames.clear();
     localFolders.clear();
@@ -630,24 +753,24 @@ void Preferences::logout()
     recentFileHandles.clear();
     recentLocalPaths.clear();
     recentFileTime.clear();
+    mutex.unlock();
 }
 
 void Preferences::loadExcludedSyncNames()
 {
+    mutex.lock();
     excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if(excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
         excludedSyncNames.clear();
 
-    int numNames = excludedSyncNames.size();
-
-    if((settings->value(lastVersionKey).toInt() < 104) &&
-       (MegaApplication::VERSION_CODE > 104) &&
-       (settings->value(lastVersionKey).toInt() != MegaApplication::VERSION_CODE))
+    if((settings->value(lastVersionKey).toInt() < 108) &&
+       (MegaApplication::VERSION_CODE >= 108))
     {
-        excludedSyncNames.insert(0, QString::fromUtf8("Thumbs.db"));
-        excludedSyncNames.insert(0, QString::fromUtf8("desktop.ini"));
-        excludedSyncNames.insert(0, QString::fromUtf8("~*"));
-        excludedSyncNames.insert(0, QString::fromUtf8(".*"));
+        excludedSyncNames.clear();
+        excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
+        excludedSyncNames.append(QString::fromUtf8("desktop.ini"));
+        excludedSyncNames.append(QString::fromUtf8("~*"));
+        excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
     QMap<QString, QString> strMap;
@@ -655,15 +778,14 @@ void Preferences::loadExcludedSyncNames()
         strMap.insert( str.toLower(), str );
     }
     excludedSyncNames = strMap.values();
-
-    if(numNames != excludedSyncNames.size())
-        setExcludedSyncNames(excludedSyncNames);
+    setExcludedSyncNames(excludedSyncNames);
+    mutex.unlock();
 }
 
 void Preferences::readFolders()
 {
+    mutex.lock();
     assert(logged());
-
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -681,10 +803,12 @@ void Preferences::readFolders()
         settings->endGroup();
     }
     settings->endGroup();
+    mutex.unlock();
 }
 
 void Preferences::writeFolders()
 {
+    mutex.lock();
     assert(logged());
 
     settings->beginGroup(syncsGroupKey);
@@ -699,14 +823,14 @@ void Preferences::writeFolders()
             settings->endGroup();
         }
     settings->endGroup();
-
     settings->sync();
+    mutex.unlock();
 }
 
 void Preferences::readRecentFiles()
 {
+    mutex.lock();
     assert(logged());
-
     recentFileNames.clear();
     recentFileHandles.clear();
     recentLocalPaths.clear();
@@ -723,12 +847,13 @@ void Preferences::readRecentFiles()
         settings->endGroup();
     }
     settings->endGroup();
+    mutex.unlock();
 }
 
 void Preferences::writeRecentFiles()
 {
+    mutex.lock();
     assert(logged());
-
     settings->beginGroup(recentGroupKey);
     for(int i=0; i<NUM_RECENT_ITEMS; i++)
     {
@@ -740,6 +865,6 @@ void Preferences::writeRecentFiles()
         settings->endGroup();
     }
     settings->endGroup();
-
     settings->sync();
+    mutex.unlock();
 }
