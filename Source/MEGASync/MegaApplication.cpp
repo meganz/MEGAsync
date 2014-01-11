@@ -112,6 +112,19 @@ void MegaApplication::initialize()
     preferences = Preferences::instance();
     delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
+    Utils::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
+
+#ifdef WIN32
+    //Backwards compatibility code
+    QDirIterator di(QDir::currentPath(), QDir::Files | QDir::NoDotAndDotDot);
+    while (di.hasNext()) {
+        di.next();
+        const QFileInfo& fi = di.fileInfo();
+        if(fi.fileName().startsWith(QString::fromAscii(".tmp.")))
+            QFile::remove(di.filePath());
+    }
+#endif
+
     string tmpPath = basePath.toStdString();
     megaApi = new MegaApi(delegateListener, &tmpPath);
     uploader = new MegaUploader(megaApi);
