@@ -46,6 +46,9 @@ struct TransferSlot
 
 	dstime starttime, lastdata;
 
+	// number of consecutive errors
+	unsigned errorcount;
+	
 	// upload result
 	byte ultoken[NewNode::UPLOADTOKENLEN+1];
 

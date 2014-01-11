@@ -36,6 +36,7 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
 	progressreported = 0;
 	progresscompleted = 0;
 	lastdata = 0;
+	errorcount = 0;
 
 	fileattrsmutable = 0;
 
@@ -126,6 +127,8 @@ void TransferSlot::doio(MegaClient* client)
 
 					if (transfer->type == PUT)
 					{
+						errorcount = 0;
+
 						// completed put transfers are signalled through the return of the upload token
 						if (reqs[i]->in.size())
 						{
@@ -148,13 +151,24 @@ void TransferSlot::doio(MegaClient* client)
 					}
 					else
 					{
-						reqs[i]->finalize(file,&transfer->key,&transfer->chunkmacs,transfer->ctriv,0,-1);
-
-						if (progresscompleted == transfer->size)
+						if (reqs[i]->size == reqs[i]->bufpos)
 						{
-							// verify meta MAC
-							if (macsmac(&transfer->chunkmacs) == transfer->metamac) return transfer->complete();
-							else return transfer->failed(API_EKEY);
+							errorcount = 0;
+						
+							reqs[i]->finalize(file,&transfer->key,&transfer->chunkmacs,transfer->ctriv,0,-1);
+
+							if (progresscompleted == transfer->size)
+							{
+								// verify meta MAC
+								if (macsmac(&transfer->chunkmacs) == transfer->metamac) return transfer->complete();
+								else return transfer->failed(API_EKEY);
+							}
+						}
+						else
+						{
+							errorcount++;
+							reqs[i]->status = REQ_PREPARED;
+							break;
 						}
 					}
 
@@ -169,7 +183,11 @@ void TransferSlot::doio(MegaClient* client)
 						// fixed ten-minute retry intervals
 						backoff = 6000;
 					}
-					else reqs[i]->status = REQ_READY;
+					else
+					{
+						errorcount++;
+						reqs[i]->status = REQ_PREPARED;
+					}
 
 				default:;
 			}
@@ -214,7 +232,7 @@ void TransferSlot::doio(MegaClient* client)
 		progress();
 	}
 
-	if (client->waiter->ds-lastdata >= XFERTIMEOUT) return transfer->failed(API_EFAILED);
+	if (client->waiter->ds-lastdata >= XFERTIMEOUT || errorcount > 10) return transfer->failed(API_EFAILED);
 	else
 	{
 		if (!backoff)
