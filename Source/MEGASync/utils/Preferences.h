@@ -5,6 +5,7 @@
 #include <QString>
 #include <QLocale>
 #include <QStringList>
+#include <QMutex>
 
 #include "utils/EncryptedSettings.h"
 
@@ -115,6 +116,7 @@ public:
 
 protected:
 
+    QMutex mutex;
     void login(QString account);
     void logout();
 
