@@ -58,6 +58,14 @@ const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 const int Preferences::NUM_RECENT_ITEMS             = 3;
 
+Preferences *Preferences::preferences = NULL;
+
+Preferences *Preferences::instance()
+{
+    if(!preferences) preferences = new Preferences();
+    return Preferences::preferences;
+}
+
 Preferences::Preferences() : mutex(QMutex::Recursive)
 {
 #if QT_VERSION < 0x050000

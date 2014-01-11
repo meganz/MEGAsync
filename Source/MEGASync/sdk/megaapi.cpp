@@ -3574,7 +3574,7 @@ void MegaApi::sendPendingTransfers()
 
 bool MegaApi::is_syncable(const char *name)
 {
-    QStringList excludedNames = ((MegaApplication *)qApp)->getPreferences()->getExcludedSyncNames();
+    QStringList excludedNames = Preferences::instance()->getExcludedSyncNames();
     for(int i=0; i< excludedNames.size(); i++)
     {
         QRegExp matcher(excludedNames[i], Qt::CaseInsensitive, QRegExp::Wildcard);

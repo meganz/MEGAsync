@@ -57,7 +57,6 @@ public:
 	*/
 
     MegaApi *getMegaApi() { return megaApi; }
-    Preferences *getPreferences() { return preferences; }
 
     void showSyncedIcon();
     void showSyncingIcon();

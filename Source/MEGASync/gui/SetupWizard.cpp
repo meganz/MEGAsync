@@ -20,7 +20,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui->bBack->setVisible(false);
     this->app = app;
     megaApi = app->getMegaApi();
-    preferences = app->getPreferences();
+    preferences = Preferences::instance();
     selectedMegaFolderHandle = UNDEF;
     ui->bNext->setFocus();
 	delegateListener = new QTMegaRequestListener(this);
@@ -347,7 +347,7 @@ void SetupWizard::on_bBack_clicked()
     {
         ui->sPages->setCurrentWidget(ui->pLogin);
         ui->lVerify->hide();
-        app->getMegaApi()->logout();
+        megaApi->logout();
     }
     else if(w == ui->pAdvanced)
     {
@@ -391,7 +391,7 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(app->getMegaApi(), true, true, this);
+    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
 

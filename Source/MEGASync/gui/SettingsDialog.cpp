@@ -18,7 +18,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
 
     this->app = app;
     this->megaApi = app->getMegaApi();
-    this->preferences = app->getPreferences();
+    this->preferences = Preferences::instance();
 	syncsChanged = false;
     excludedNamesChanged = false;
 
@@ -484,7 +484,6 @@ void SettingsDialog::on_bAdd_clicked()
         return;
 
     QString localFolderPath = QDir(dialog->getLocalFolder()).canonicalPath();
-    MegaApi *megaApi = app->getMegaApi();
     long long handle = dialog->getMegaFolder();
     Node *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
