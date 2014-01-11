@@ -882,8 +882,9 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     INIT_MUTEX(globalListenerMutex);
     INIT_RECURSIVE_MUTEX(sdkMutex);
 
+    string cacheFolder("cache/");
+    string localCacheFolder;
 	addListener(listener);
-    basepath=*basePath;
 	maxRetries = 3;
 	loginRequest = NULL;
 	updatingSID = 0;
@@ -899,7 +900,10 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
-    fsAccess->path2local(basePath, &localbasepath);
+    fsAccess->path2local(basePath, &localcachepath);
+    fsAccess->path2local(&cacheFolder, &localCacheFolder);
+    localcachepath.append(localCacheFolder.data(), localCacheFolder.size());
+    fsAccess->mkdirlocal(&localcachepath);
     dbAccess = new MegaDbAccess(basePath);
     client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
 
@@ -1807,7 +1811,7 @@ void MegaApi::transfer_prepare(Transfer *t)
 	if (t->type == GET)
 	{
 		client->fsaccess->tmpnamelocal(&t->localfilename);
-        t->localfilename.insert(0, localbasepath);
+        t->localfilename.insert(0, localcachepath);
 		transfer->setNodeHandle(t->files.front()->h);
 	}
 	else
