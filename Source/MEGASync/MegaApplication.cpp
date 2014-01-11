@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
 
-    QDate betaLimit(2014, 1, 17);
+    QDate betaLimit(2014, 1, 21);
     long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
     long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
     if(now > betaLimitTime)
