@@ -259,6 +259,9 @@ private:
 	// add node to vector and return index
 	unsigned addnode(node_vector*, Node*);
 
+	// add child for consideration in syncup()/syncdown()
+	void addchild(remotenode_map*, string*, Node*, vector<string>*);
+
 	// crypto request response
 	void cr_response(node_vector*, node_vector*, JSON*);
 

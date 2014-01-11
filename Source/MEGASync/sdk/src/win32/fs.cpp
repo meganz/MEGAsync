@@ -247,7 +247,7 @@ void WinFileSystemAccess::local2path(string* local, string* path)
 	path->resize(WideCharToMultiByte(CP_UTF8,0,(wchar_t*)local->data(),local->size()/sizeof(wchar_t),(char*)path->data(),path->size()+1,NULL,NULL));
 }
 
-// use UTF-8 filenames directly, but escape forbidden characters
+//  escape forbidden characters, then convert UTF-8 to Windows 16-bit UNICODE
 void WinFileSystemAccess::name2local(string* filename, const char* badchars)
 {
 	char buf[4];
@@ -273,7 +273,7 @@ void WinFileSystemAccess::name2local(string* filename, const char* badchars)
 	filename->resize(sizeof(wchar_t)*(MultiByteToWideChar(CP_UTF8,0,t.c_str(),-1,(wchar_t*)filename->data(),filename->size()/sizeof(wchar_t)+1)-1));
 }
 
-// unescape escaped forbidden characters
+// convert Windows 16-bit UNICODE to UTF-8, then unescape escaped forbidden characters
 // by replacing occurrences of %xx (x being a lowercase hex digit) with the encoded character
 void WinFileSystemAccess::local2name(string* filename)
 {

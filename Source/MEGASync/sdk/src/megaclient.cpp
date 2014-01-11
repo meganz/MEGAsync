@@ -3528,6 +3528,29 @@ void MegaClient::updateputs()
 	}
 }
 
+// add child to nchildren hash (deterministically prefer newer/larger versions of identical names to avoid flapping)
+// apply standard unescaping, if necessary (use *strings as ephemeral storage space)
+void MegaClient::addchild(remotenode_map* nchildren, string* name, Node* n, vector<string>* strings)
+{
+	Node** npp;
+
+	if (name->find('%')+1)
+	{
+		string tmplocalname;
+
+		// perform one round of unescaping to ensure that the resulting local filename matches
+		fsaccess->path2local(name,&tmplocalname);
+		fsaccess->local2name(&tmplocalname);
+
+		strings->push_back(tmplocalname);
+		name = &strings->back();
+	}
+
+	npp = &(*nchildren)[name];
+
+	if (!*npp || n->mtime > n->mtime || (n->mtime == n->mtime && n->size > n->size) || (n->mtime == n->mtime && n->size == n->size && memcmp(n->crc,n->crc,sizeof n->crc) > 0)) *npp = n;
+}
+
 // downward sync - recursively scan for tree differences and execute them locally
 // this is first called after the local node tree is complete
 // actions taken:
@@ -3542,12 +3565,12 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 	// only use for LocalNodes with a corresponding and properly linked Node
 	if (l->type != FOLDERNODE || !l->node || (l->parent && l->node->parent->localnode != l->parent)) return true;
 
+	vector<string> strings;
 	remotenode_map nchildren;
 	remotenode_map::iterator rit;
 
 	// build array of sync-relevant (in case of clashes, the newest alias wins) remote children by name
 	attr_map::iterator ait;
-	Node** npp;
 
 	string localname;
 
@@ -3555,12 +3578,7 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 	for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 	{
 		// node must be decrypted and name defined to be considered
-		if (app->sync_syncable(*it) && !(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
-		{
-			// map name to node (use newest, resolve mtime/size clashes deterministically to avoid flapping)
-			npp = &nchildren[&ait->second];
-			if (!*npp || (*it)->mtime > (*npp)->mtime || ((*it)->mtime == (*npp)->mtime && (*it)->size > (*npp)->size) || ((*it)->mtime == (*npp)->mtime && (*it)->size == (*npp)->size && memcmp((*it)->crc,(*npp)->crc,sizeof (*it)->crc) > 0)) *npp = *it;
-		}
+		if (app->sync_syncable(*it) && !(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
 	}
 
 	// remove remote items that exist locally from hash, recurse into existing folders
@@ -3714,12 +3732,13 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 void MegaClient::syncup(LocalNode* l, dstime* nds)
 {
 	dstime ds = waiter->ds;
+
+	vector<string> strings;
 	remotenode_map nchildren;
 	remotenode_map::iterator rit;
 
 	// build array of sync-relevant (newest alias wins) remote children by name
 	attr_map::iterator ait;
-	Node** npp;
 
 	// UTF-8 converted local name
 	string localname;
@@ -3732,12 +3751,7 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 		for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 		{
 			// node must be decrypted and name defined to be considered
-			if (!(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end())
-			{
-				// map name to node (use newest, resolve mtime/size clashes deterministically to avoid flapping)
-				npp = &nchildren[&ait->second];
-				if (!*npp || (*it)->mtime > (*npp)->mtime || ((*it)->mtime == (*npp)->mtime && (*it)->size > (*npp)->size) || ((*it)->mtime == (*npp)->mtime && (*it)->size == (*npp)->size && memcmp((*it)->crc,(*npp)->crc,sizeof (*it)->crc) > 0)) *npp = *it;
-			}
+			if (!(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
 		}
 	}
 
