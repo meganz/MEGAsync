@@ -80,6 +80,7 @@ protected:
     QTimer *timer;
     MegaApplication *app;
     Preferences *preferences;
+    MegaApi *megaApi;
     Transfer *transfer1;
     Transfer *transfer2;
     bool finishing;

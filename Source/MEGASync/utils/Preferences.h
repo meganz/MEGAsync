@@ -15,9 +15,16 @@ using namespace std;
 
 class Preferences
 {
-public:
+
+private:
+    static Preferences *preferences;
     Preferences();
 
+public:
+    //NOT thread-safe. Must be called before creating threads.
+    static Preferences *instance();
+
+    //Thread safe functions
     bool logged();
     bool hasEmail(QString email);
     QString email();

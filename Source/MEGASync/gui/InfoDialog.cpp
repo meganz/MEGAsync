@@ -52,8 +52,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
 
+    megaApi = app->getMegaApi();
+
     //Initialize the "recently updated" list with stored values
-    preferences = app->getPreferences();
+    preferences = Preferences::instance();
     if(preferences->getRecentFileHandle(0) != UNDEF)
     {
         ui->wRecent1->setFile(preferences->getRecentFileName(0),
@@ -143,7 +145,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     }
 
     wTransfer->setFileName(fileName);
-    wTransfer->setProgress(completedSize, totalSize, app->getMegaApi()->isRegularTransfer(transfer->getTransfer()));
+    wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer->getTransfer()));
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
@@ -153,15 +155,15 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     RecentFile * recentFile = ((RecentFile *)item->widget());
     ui->recentLayout->insertWidget(0, recentFile);
     recentFile->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
-    app->getPreferences()->addRecentFile(fileName, fileHandle, localPath);
+    preferences->addRecentFile(fileName, fileHandle, localPath);
 }
 
 void InfoDialog::updateTransfers()
 {
-    remainingUploads = app->getMegaApi()->getNumPendingUploads();
-    remainingDownloads = app->getMegaApi()->getNumPendingDownloads();
-    totalUploads = app->getMegaApi()->getTotalUploads();
-    totalDownloads = app->getMegaApi()->getTotalDownloads();
+    remainingUploads = megaApi->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads();
+    totalUploads = megaApi->getTotalUploads();
+    totalDownloads = megaApi->getTotalDownloads();
 
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
@@ -214,7 +216,7 @@ void InfoDialog::updateTransfers()
 void InfoDialog::updateSyncsButton()
 {
     int num = preferences->getNumSyncedFolders();
-    if(num == 1 && preferences->getMegaFolderHandle(0)==app->getMegaApi()->getRootNode()->nodehandle)
+    if(num == 1 && preferences->getMegaFolderHandle(0)==megaApi->getRootNode()->nodehandle)
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
     else
         ui->bSyncFolder->setText(tr("Syncs"));
@@ -279,8 +281,8 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::timerUpdate()
 {
-    remainingDownloads = app->getMegaApi()->getNumPendingDownloads();
-    remainingUploads = app->getMegaApi()->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads();
+    remainingUploads = megaApi->getNumPendingUploads();
 
 	if(!remainingDownloads) ui->wTransfer1->hideTransfer();
 	if(!remainingUploads) ui->wTransfer2->hideTransfer();
@@ -296,10 +298,10 @@ void InfoDialog::timerUpdate()
 		totalDownloadedSize = totalUploadedSize = 0;
 		totalDownloadSize = totalUploadSize = 0;
 		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        app->getMegaApi()->resetTransferCounters();
+        megaApi->resetTransferCounters();
         updateTransfers();
 		app->showSyncedIcon();
-		app->getMegaApi()->getAccountDetails();
+        megaApi->getAccountDetails();
         app->showNotificationMessage(tr("All transfers have been finished"));
     }
 }
@@ -312,16 +314,14 @@ void InfoDialog::addSync()
         return;
 
     QString localFolderPath = QDir(dialog->getLocalFolder()).canonicalPath();
-    MegaApi *megaApi = app->getMegaApi();
     long long handle = dialog->getMegaFolder();
     Node *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
     if(!localFolderPath.length() || !node)
         return;
 
-   Preferences *preferences = app->getPreferences();
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
-   app->getMegaApi()->syncFolder(localFolderPath.toUtf8().constData(), node);
+   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
    updateSyncsButton();
 }
 
@@ -347,22 +347,22 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 
 void InfoDialog::cancelAllUploads()
 {
-    app->getMegaApi()->cancelRegularTransfers(1);
+    megaApi->cancelRegularTransfers(1);
 }
 
 void InfoDialog::cancelAllDownloads()
 {
-    app->getMegaApi()->cancelRegularTransfers(0);
+    megaApi->cancelRegularTransfers(0);
 }
 
 void InfoDialog::cancelCurrentUpload()
 {
-    app->getMegaApi()->cancelTransfer(transfer2);
+    megaApi->cancelTransfer(transfer2);
 }
 
 void InfoDialog::cancelCurrentDownload()
 {
-    app->getMegaApi()->cancelTransfer(transfer1);
+    megaApi->cancelTransfer(transfer1);
 }
 
 
@@ -380,10 +380,9 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-    Preferences *preferences = app->getPreferences();
     int num = preferences->getNumSyncedFolders();
 
-    if(num == 1 && preferences->getMegaFolderHandle(0)==app->getMegaApi()->getRootNode()->nodehandle)
+    if(num == 1 && preferences->getMegaFolderHandle(0)==megaApi->getRootNode()->nodehandle)
     {
         openFolder(preferences->getLocalFolder(0));
     }

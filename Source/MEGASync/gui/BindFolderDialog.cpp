@@ -11,7 +11,7 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     this->app = app;
-    Preferences *preferences = app->getPreferences();
+    Preferences *preferences = Preferences::instance();
     syncNames = preferences->getSyncNames();
     localFolders = preferences->getLocalFolders();
     megaFolderHandles = preferences->getMegaFolderHandles();

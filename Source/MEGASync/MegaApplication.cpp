@@ -109,7 +109,7 @@ void MegaApplication::initialize()
     //Hack to have tooltips with a black background
     QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
 
-    preferences = new Preferences();
+    preferences = Preferences::instance();
     delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
     string tmpPath = basePath.toStdString();
