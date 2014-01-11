@@ -60,7 +60,7 @@ void BindFolderDialog::on_buttonBox_accepted()
     Node *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Please, select one local folder and one MEGA folder"), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         return;
     }
 
@@ -69,12 +69,12 @@ void BindFolderDialog::on_buttonBox_accepted()
         QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
         if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QChar::fromAscii('\\'))))
         {
-            QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             return;
         }
         else if(c.startsWith(localFolderPath) && c[localFolderPath.size()]==QChar::fromAscii('\\'))
         {
-            QMessageBox::warning(this, tr("Error"), tr("The selected local folder contains an already synced folder"), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             return;
         }
     }
@@ -122,8 +122,8 @@ void BindFolderDialog::on_buttonBox_accepted()
 
                 bool ok;
                 QString text = QInputDialog::getText(this, tr("Sync name"),
-                     tr("The name \"%1\" is already in use for another sync.\n"
-                     "Please, enter another name to identify this synced folder:").arg(syncName),
+                     tr("The name \"%1\" is already in use for another sync\n"
+                     "Please enter a different name to identify this synced folder:").arg(syncName),
                      QLineEdit::Normal, syncName, &ok).trimmed();
                 if (!ok && text.isEmpty())
                     return;

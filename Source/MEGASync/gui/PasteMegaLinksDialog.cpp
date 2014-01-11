@@ -38,7 +38,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 	if(links.size()==0)
 	{
         if(!text.trimmed().size())
-            QMessageBox::warning(this, tr("Warning"), tr("Please, enter one or several MEGA links"));
+            QMessageBox::warning(this, tr("Warning"), tr("Enter one or more MEGA file links"));
         else
             QMessageBox::warning(this, tr("Warning"), tr("No valid MEGA links found. (Folder links aren't yet supported)"));
 		return;
