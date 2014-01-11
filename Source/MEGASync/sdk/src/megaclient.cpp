@@ -23,6 +23,8 @@
 
 namespace mega {
 
+bool debug;
+
 // FIXME: recreate filename after sync transfer completes to shortcut in-transfer rename handling
 // FIXME: generate cr element for file imports
 // FIXME: support invite links (including responding to sharekey requests)
@@ -3548,7 +3550,7 @@ void MegaClient::addchild(remotenode_map* nchildren, string* name, Node* n, vect
 
 	npp = &(*nchildren)[name];
 
-	if (!*npp || n->mtime > n->mtime || (n->mtime == n->mtime && n->size > n->size) || (n->mtime == n->mtime && n->size == n->size && memcmp(n->crc,n->crc,sizeof n->crc) > 0)) *npp = n;
+	if (!*npp || n->mtime > (*npp)->mtime || (n->mtime == (*npp)->mtime && n->size > (*npp)->size) || (n->mtime == (*npp)->mtime && n->size == (*npp)->size && memcmp(n->crc,(*npp)->crc,sizeof n->crc) > 0)) *npp = n;
 }
 
 // downward sync - recursively scan for tree differences and execute them locally
@@ -4210,6 +4212,11 @@ void MegaClient::putnodes_syncdebris_result(error e, NewNode* nn)
 	syncdebrisadding = false;
 
 	if (e == API_OK) movetosyncdebris(NULL);
+}
+
+bool MegaClient::toggledebug()
+{
+	return debug = !debug;
 }
 
 } // namespace

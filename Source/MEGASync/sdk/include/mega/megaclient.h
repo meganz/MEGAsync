@@ -36,6 +36,8 @@
 
 namespace mega {
 
+extern bool debug;
+
 class MegaClient
 {
 public:
@@ -186,6 +188,9 @@ public:
 
 	// submit purchased products for payment
 	void purchase_checkout(int);
+	
+	// toggle global debug flag
+	bool toggledebug();
 
 private:
 	// API request queue double buffering:

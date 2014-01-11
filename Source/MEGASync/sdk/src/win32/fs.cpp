@@ -357,6 +357,7 @@ bool WinFileSystemAccess::copylocal(string* oldname, string* newname)
 	return r;
 }
 
+// (unfortunately, SHFileOperationW() does not support UNC paths)
 bool WinFileSystemAccess::rubbishlocal(string* name)
 {
 	name->append("",1);

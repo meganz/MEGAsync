@@ -23,8 +23,6 @@
 
 namespace mega {
 
-extern bool debug;
-
 CurlHttpIO::CurlHttpIO()
 {
 	curl_global_init(CURL_GLOBAL_DEFAULT);

@@ -23,8 +23,6 @@
 
 namespace mega {
 
-bool debug;
-
 WinHttpIO::WinHttpIO()
 {
     // create the session handle using the default settings.
@@ -83,7 +81,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 		delete httpctx;
 		return;
 	}
-    if(!httpctx->req) return;
 
 	httpio->entercs();
 
@@ -247,21 +244,14 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
 					req->status = REQ_INFLIGHT;
 					return;
 				}
-				else if (debug) cout << "WinHTTPSendRequest() failed" << endl;
 			}
-			else if (debug) cout << "WinHttpOpenRequest() failed" << endl;
 		}
-		else
-		{
-			httpctx->hRequest = NULL;
-			if (debug) cout << "WinHttpConnect() failed" << endl;
-		}
+		else httpctx->hRequest = NULL;
 	}
 	else
 	{
 		httpctx->hRequest = NULL;
 		httpctx->hConnect = NULL;
-		if (debug) cout << "WinHttpCrackUrl(" << req->posturl << ") failed" << endl;
 	}
 
 	req->status = REQ_FAILURE;
