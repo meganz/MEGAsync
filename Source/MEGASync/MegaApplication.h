@@ -35,7 +35,8 @@ public:
     void initialize();
 
     static const int VERSION_CODE;
-
+    static QString applicationFilePath();
+    static QString applicationDirPath();
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
     virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
@@ -127,6 +128,8 @@ protected:
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     QTimer *refreshTimer;
+    static QString appPath;
+    static QString appDirPath;
 
     //TODO: Enable autoUpdate again in the next release
     //QThread updateThread;

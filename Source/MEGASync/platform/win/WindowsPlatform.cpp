@@ -97,7 +97,7 @@ bool WindowsPlatform::startOnStartup(bool value)
         WCHAR wDescription[]=L"Start MEGAsync";
         WCHAR *wStartupPath = (WCHAR *)startupPath.utf16();
 
-        QString exec = QCoreApplication::applicationFilePath();
+        QString exec = MegaApplication::applicationFilePath();
 		exec = QDir::toNativeSeparators(exec);
         WCHAR *wExecPath = (WCHAR *)exec.utf16();
 
@@ -163,7 +163,7 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
     fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;
-    fcs.pszIconFile = (LPWSTR)QDir::toNativeSeparators(QApplication::applicationFilePath()).utf16();
+    fcs.pszIconFile = (LPWSTR)MegaApplication::applicationFilePath().utf16();
     fcs.iIconIndex = 0;
     fcs.pszInfoTip = (LPWSTR)infoTip.utf16();
     SHGetSetFolderCustomSettings(&fcs, syncPath.utf16(), FCS_FORCEWRITE);
@@ -187,7 +187,7 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     syncPath = QDir::toNativeSeparators(syncPath);
     WCHAR *wSyncPath = (WCHAR *)syncPath.utf16();
 
-    QString exec = QCoreApplication::applicationFilePath();
+    QString exec = MegaApplication::applicationFilePath();
     exec = QDir::toNativeSeparators(exec);
     WCHAR *wExecPath = (WCHAR *)exec.utf16();
     res = CreateLink(wSyncPath, wLinkPath, wDescription, wExecPath);

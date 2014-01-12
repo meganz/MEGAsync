@@ -1,3 +1,4 @@
+#include "MegaApplication.h"
 #include "UpdateTask.h"
 #include "control/Utilities.h"
 #include <iostream>
@@ -54,7 +55,7 @@ void UpdateTask::doWork()
 
     int len;
 
-    QString basePath = QCoreApplication::applicationDirPath() + QDir::separator();
+    QString basePath = MegaApplication::applicationDirPath() + QDir::separator();
     appFolder = QDir(basePath);
     updateFolder = QDir(basePath + UPDATE_FOLDER_NAME);
     m_WebCtrl = new QNetworkAccessManager();

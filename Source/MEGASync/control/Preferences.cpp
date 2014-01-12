@@ -1,7 +1,6 @@
 #include "Preferences.h"
 #include "platform/Platform.h"
 
-#include <QApplication>
 #include <QDesktopServices>
 #include <assert.h>
 
