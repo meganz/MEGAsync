@@ -86,6 +86,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
     uploadSpeed = downloadSpeed = 0;
+    exportOps = 0;
     infoDialog = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
@@ -519,6 +520,7 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     ExportProcessor *processor = new ExportProcessor(megaApi, newExportQueue);
     connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
     processor->requestLinks();
+    exportOps++;
 }
 
 void MegaApplication::showUploadDialog()
@@ -564,6 +566,7 @@ void MegaApplication::onRequestLinksFinished()
     if(links.size()==1) showInfoMessage(tr("The link has been copied to the clipboard"));
     else showInfoMessage(tr("The links have been copied to the clipboard"));
     exportProcessor->deleteLater();
+    exportOps--;
 }
 
 void MegaApplication::onUpdateCompleted()
@@ -676,7 +679,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     switch (request->getType()) {
 	case MegaRequest::TYPE_EXPORT:
 	{
-		if(e->getErrorCode() == MegaError::API_OK)
+        if(!exportOps && e->getErrorCode() == MegaError::API_OK)
 		{
             //A public link has been created, put it in the clipboard and inform users
             QString linkForClipboard(QString::fromUtf8(request->getLink()));

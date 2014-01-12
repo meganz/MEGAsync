@@ -121,6 +121,7 @@ protected:
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
 	long long uploadSpeed, downloadSpeed;
+    int exportOps;
     syncstate syncState;
 	QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;

@@ -8,14 +8,15 @@ WCHAR MegaInterface::OP_UPLOAD      = L'F'; //File-Folder upload
 WCHAR MegaInterface::OP_LINK        = L'L'; //paste Link
 WCHAR MegaInterface::OP_SHARE       = L'S'; //Share folder
 WCHAR MegaInterface::OP_SEND        = L'C'; //Copy to user
+WCHAR MegaInterface::OP_STRING      = L'T'; //Get Translated String
 
-int MegaInterface::sendRequest(WCHAR type, PCWSTR filePath, PCWSTR response, int responseLen)
+int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen)
 {
     BOOL success;
     DWORD readed = 0;
-    int requestLen = lstrlen(filePath)+3;
-    LPWSTR request = new wchar_t[requestLen];
-    StringCchPrintfW(request, requestLen, L"%c:%s", type, filePath);
+    int requestLen = lstrlen(content)+3;
+    LPWSTR request = new WCHAR[requestLen];
+    StringCchPrintfW(request, requestLen, L"%c:%s", type, content);
     success = CallNamedPipeW(
        MegaInterface::MEGA_PIPE,			// pipe name
        (LPVOID)request,                     // message to server
@@ -36,6 +37,19 @@ MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath)
     if(cbRead>sizeof(WCHAR))
         return ((MegaInterface::FileState)(chReadBuf[0]-L'0'));
     return MegaInterface::FILE_NOTFOUND;
+}
+
+LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)
+{
+    WCHAR request[64];
+    StringCchPrintfW(request, sizeof(request), L"%d:%d:%d", stringID, numFiles, numFolders);
+
+    LPWSTR chReadBuf = new WCHAR[128];
+    int cbRead = sendRequest(MegaInterface::OP_STRING, request, chReadBuf, 128*sizeof(WCHAR));
+    if(cbRead>sizeof(WCHAR))
+        return chReadBuf;
+    delete chReadBuf;
+    return NULL;
 }
 
 bool MegaInterface::upload(PCWSTR path)
