@@ -35,10 +35,9 @@ class WinHttpIO : public HttpIO
 	CRITICAL_SECTION csHTTP;
 	HANDLE hWakeupEvent;
 
-	protected:
+protected:
 	WinWaiter* waiter;
 	HINTERNET hSession;
-	bool completion;
 
 public:
 	static const unsigned HTTP_POST_CHUNK_SIZE = 16384;

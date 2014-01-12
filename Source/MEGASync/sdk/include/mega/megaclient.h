@@ -278,6 +278,9 @@ private:
 
 	// converts UTF-8 to 32-bit word array
 	static char* str_to_a32(const char*, int*);
+	
+	// last successful interaction with the Internet
+	dstime noinetds;
 
 public:
 	// application callbacks
