@@ -89,14 +89,12 @@ void TreeProcSyncStatus::proc(MegaClient* client, Node* n)
 	{
 		if (n->type == FILENODE)
 		{
-			// SYNCING > PENDING > SYNCED
-			if (n->syncget) state = PATHSTATE_SYNCING;
-			else if (state == PATHSTATE_SYNCED) state = PATHSTATE_PENDING;
-		}
-		else
-		{
-			// missing local folders are subject to immediate creation, so always show SYNCING
-			state = PATHSTATE_SYNCING;
+			// SYNCING > PENDING > SYNCED, but we ignore nodes with no associated GET transfer (might be dupes or filtered)
+			if (n->syncget && n->syncget->transfer)
+			{
+				if (n->syncget->transfer->slot) state = PATHSTATE_SYNCING;
+				else if (state == PATHSTATE_SYNCED) state = PATHSTATE_PENDING;
+			}
 		}
 	}
 	else
