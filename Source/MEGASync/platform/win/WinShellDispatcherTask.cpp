@@ -1,5 +1,5 @@
-#include "ShellDispatcherTask.h"
-#include "utils/Utils.h"
+#include "WinShellDispatcherTask.h"
+#include "control/Utilities.h"
 
 PIPEINST Pipe[INSTANCES];
 HANDLE hEvents[INSTANCES+1];
@@ -9,16 +9,16 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
 
-ShellDispatcherTask::ShellDispatcherTask(MegaApplication *receiver) : QObject()
+WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QObject()
 {
     this->receiver = receiver;
 }
 
-ShellDispatcherTask::~ShellDispatcherTask()
+WinShellDispatcherTask::~WinShellDispatcherTask()
 {
 }
 
-void ShellDispatcherTask::doWork()
+void WinShellDispatcherTask::doWork()
 {
     LOG("Shell dispatcher starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
@@ -26,7 +26,7 @@ void ShellDispatcherTask::doWork()
     dispatchPipe();
 }
 
-int ShellDispatcherTask::dispatchPipe()
+int WinShellDispatcherTask::dispatchPipe()
 {
    DWORD i, dwWait, cbRet, dwErr;
    BOOL fSuccess;
@@ -258,7 +258,7 @@ int ShellDispatcherTask::dispatchPipe()
    return 0;
 }
 
-void ShellDispatcherTask::exitTask()
+void WinShellDispatcherTask::exitTask()
 {
     SetEvent(hEvents[INSTANCES]);
 }
@@ -337,7 +337,7 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
 #define RESPONSE_PENDING    TEXT("1")
 #define RESPONSE_SYNCING    TEXT("2")
 
-VOID ShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
+VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
 

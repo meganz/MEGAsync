@@ -1,7 +1,7 @@
 #include "BindFolderDialog.h"
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
-#include "utils/Utils.h"
+#include "control/Utilities.h"
 #include <QInputDialog>
 
 BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
@@ -102,7 +102,7 @@ void BindFolderDialog::on_buttonBox_accepted()
         }
     }
 
-   if(!Utils::verifySyncedFolderLimits(localFolderPath))
+   if(!Utilities::verifySyncedFolderLimits(localFolderPath))
    {
        QMessageBox::warning(this, tr("Warning"), tr("Local folder too large (this beta is limited to %1 folders or %2 files.\n"
             "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)

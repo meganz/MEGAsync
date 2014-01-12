@@ -6,7 +6,8 @@
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
 #include "ui_SettingsDialog.h"
-#include <utils/Utils.h>
+#include "control/Utilities.h"
+#include "platform/Platform.h"
 
 SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -218,9 +219,9 @@ void SettingsDialog::loadSettings()
 	{
 		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
 		ui->pStorage->setValue(percentage);
-        ui->lStorage->setText(Utils::getSizeString(preferences->usedStorage()) + QString::fromAscii(" (") +
+        ui->lStorage->setText(Utilities::getSizeString(preferences->usedStorage()) + QString::fromAscii(" (") +
               QString::number(percentage) + tr("%) of ") +
-              Utils::getSizeString(preferences->totalStorage()) + tr(" used"));
+              Utilities::getSizeString(preferences->totalStorage()) + tr(" used"));
 	}
     switch(preferences->accountType())
     {
@@ -265,9 +266,9 @@ void SettingsDialog::loadSettings()
 	{
 		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
 		ui->pUsedBandwidth->setValue(bandwidthPercentage);
-        ui->lBandwidth->setText(Utils::getSizeString(preferences->usedBandwidth()) + QString::fromAscii(" (") +
+        ui->lBandwidth->setText(Utilities::getSizeString(preferences->usedBandwidth()) + QString::fromAscii(" (") +
             QString::number(bandwidthPercentage) + tr("%) of ") +
-            Utils::getSizeString(preferences->totalBandwidth()) + tr(" used"));
+            Utilities::getSizeString(preferences->totalBandwidth()) + tr(" used"));
 	}
 
     //Proxies
@@ -306,7 +307,7 @@ void SettingsDialog::saveSettings()
     //preferences->setUpdateAutomatically(updateAutomatically);
 
     //bool startOnStartup = ui->cStartOnStartup->isChecked();
-    //Utils::startOnStartup(startOnStartup);
+    //Platform::startOnStartup(startOnStartup);
     //preferences->setStartOnStartup(startOnStartup);
 
     //Account

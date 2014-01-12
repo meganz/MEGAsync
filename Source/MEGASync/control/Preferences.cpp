@@ -1,7 +1,9 @@
 #include "Preferences.h"
-#include "Utils.h"
+#include "platform/Platform.h"
 
 #include <QApplication>
+#include <QDesktopServices>
+#include <assert.h>
 
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 1000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 200;
@@ -596,7 +598,7 @@ void Preferences::removeSyncedFolder(int num)
 {
     mutex.lock();
     assert(logged());
-    Utils::syncFolderRemoved(localFolders[num]);
+    Platform::syncFolderRemoved(localFolders[num]);
     syncNames.removeAt(num);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
@@ -610,7 +612,7 @@ void Preferences::removeAllFolders()
     mutex.lock();
     assert(logged());
     for(int i=0; i<localFolders.size(); i++)
-        Utils::syncFolderRemoved(localFolders[i]);
+        Platform::syncFolderRemoved(localFolders[i]);
 
     syncNames.clear();
     localFolders.clear();

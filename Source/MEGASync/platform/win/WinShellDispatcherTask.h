@@ -1,12 +1,12 @@
-#ifndef SHELLDISPATCHERTASK_H
-#define SHELLDISPATCHERTASK_H
+#ifndef WINSHELLDISPATCHERTASK_H
+#define WINSHELLDISPATCHERTASK_H
 
 #include <QString>
 #include <QThread>
 
 #include "MegaApplication.h"
 #include "sdk/megaapi.h"
-#include "utils/Preferences.h"
+#include "control/Preferences.h"
 
 #include <windows.h>
 #include <winbase.h>
@@ -39,13 +39,13 @@ typedef struct
    BOOL fPendingIO;
 } PIPEINST, *LPPIPEINST;
 
-class ShellDispatcherTask : public QObject
+class WinShellDispatcherTask : public QObject
 {
     Q_OBJECT
 
  public:
-    ShellDispatcherTask(MegaApplication *receiver);
-    virtual ~ShellDispatcherTask();
+    WinShellDispatcherTask(MegaApplication *receiver);
+    virtual ~WinShellDispatcherTask();
     void exitTask();
 
  protected:

@@ -1,25 +1,15 @@
-#include "CommonUtils.h"
-#include "Utils.h"
+#include "Utilities.h"
+#include "control/Preferences.h"
 
 #include <QImageReader>
+#include <QDirIterator>
+#include <iostream>
 
-//This force the compiler to instantiate the necessary methods
-//and allows having the implementation of this class in this separate .cpp file
-//This function doesn't need to be called, it's only to make the linker happy
-void Instantiate_Template_Methods()
-{
-    Utils::getSizeString(0);
-    Utils::verifySyncedFolderLimits(QString::fromAscii(""));
-    Utils::removeRecursively(QDir());
-    Utils::getExtensionPixmapSmall(QString::fromAscii(""));
-    Utils::getExtensionPixmapMedium(QString::fromAscii(""));
-    Utils::createThumbnail(QString::fromAscii(""),0);
-    Utils::log(QString());
-    Utils::log("");
-}
+using namespace std;
 
-template <class T>
-void CommonUtils<T>::initializeExtensions()
+QHash<QString, QString> Utilities::extensionIcons;
+
+void Utilities::initializeExtensions()
 {
     extensionIcons[QString::fromAscii("3ds")] = extensionIcons[QString::fromAscii("3dm")]  = extensionIcons[QString::fromAscii("max")] =
                             extensionIcons[QString::fromAscii("obj")]  = QString::fromAscii("3D.png");
@@ -154,8 +144,7 @@ void CommonUtils<T>::initializeExtensions()
                             extensionIcons[QString::fromAscii("wps")] = QString::fromAscii("word.png");
 }
 
-template <class T>
-void CommonUtils<T>::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
+void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
 {
     QFileInfo baseDir(path);
     if(!baseDir.exists() || !baseDir.isDir()) return;
@@ -177,8 +166,7 @@ void CommonUtils<T>::countFilesAndFolders(QString path, long *numFiles, long *nu
     }
 }
 
-template <class T>
-QPixmap CommonUtils<T>::getExtensionPixmap(QString fileName, QString prefix)
+QPixmap Utilities::getExtensionPixmap(QString fileName, QString prefix)
 {
     if(extensionIcons.isEmpty()) initializeExtensions();
 
@@ -189,20 +177,17 @@ QPixmap CommonUtils<T>::getExtensionPixmap(QString fileName, QString prefix)
         return QPixmap(prefix + QString::fromAscii("generic.png"));
 }
 
-template <class T>
-QPixmap CommonUtils<T>::getExtensionPixmapSmall(QString fileName)
+QPixmap Utilities::getExtensionPixmapSmall(QString fileName)
 {
     return getExtensionPixmap(fileName, QString::fromAscii("://images/small_"));
 }
 
-template <class T>
-QPixmap CommonUtils<T>::getExtensionPixmapMedium(QString fileName)
+QPixmap Utilities::getExtensionPixmapMedium(QString fileName)
 {
     return getExtensionPixmap(fileName, QString::fromAscii("://images/drag_"));
 }
 
-template <class T>
-QImage CommonUtils<T>::createThumbnail(QString imagePath, int size)
+QImage Utilities::createThumbnail(QString imagePath, int size)
 {
     if(QImageReader::imageFormat(imagePath).isEmpty()) return QImage();
 
@@ -226,8 +211,7 @@ QImage CommonUtils<T>::createThumbnail(QString imagePath, int size)
             .copy((w-size)/2,(h-size)/3,size,size);
 }
 
-template <class T>
-bool CommonUtils<T>::removeRecursively(QDir dir)
+bool Utilities::removeRecursively(QDir dir)
 {
     if (!dir.exists())
         return true;
@@ -254,20 +238,17 @@ bool CommonUtils<T>::removeRecursively(QDir dir)
     return success;
 }
 
-template <class T>
-void CommonUtils<T>::log(QString message)
+void Utilities::log(QString message)
 {
     cout << "LOG: " << message.toUtf8().constData() << endl;
 }
 
-template <class T>
-void CommonUtils<T>::log(const char *message)
+void Utilities::log(const char *message)
 {
     cout << "LOG: " << message << endl;
 }
 
-template <class T>
-bool CommonUtils<T>::verifySyncedFolderLimits(QString path)
+bool Utilities::verifySyncedFolderLimits(QString path)
 {
     long numFiles = 0;
     long numFolders = 0;
@@ -283,8 +264,7 @@ bool CommonUtils<T>::verifySyncedFolderLimits(QString path)
     return true;
 }
 
-template <class T>
-QString CommonUtils<T>::getSizeString(unsigned long long bytes)
+QString Utilities::getSizeString(unsigned long long bytes)
 {
     unsigned long long KB = 1024;
     unsigned long long MB = 1024 * KB;
@@ -305,5 +285,3 @@ QString CommonUtils<T>::getSizeString(unsigned long long bytes)
 
     return QString::number(bytes) + QString::fromAscii(" bytes");
 }
-
-

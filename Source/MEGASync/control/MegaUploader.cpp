@@ -1,6 +1,6 @@
 #include "MegaUploader.h"
 #include <QThread>
-#include "utils/AsyncFileCopy.h"
+#include "control/AsyncFileCopy.h"
 
 #include <QMessageBox>
 

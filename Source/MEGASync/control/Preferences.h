@@ -7,7 +7,7 @@
 #include <QStringList>
 #include <QMutex>
 
-#include "utils/EncryptedSettings.h"
+#include "control/EncryptedSettings.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
 

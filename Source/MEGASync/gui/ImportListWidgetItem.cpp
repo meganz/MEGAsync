@@ -1,6 +1,6 @@
 #include "ImportListWidgetItem.h"
 #include "ui_ImportListWidgetItem.h"
-#include "utils/Utils.h"
+#include "control/Utilities.h"
 
 #include <QFileInfo>
 
@@ -36,9 +36,9 @@ void ImportListWidgetItem::setData(QString fileName, linkstatus status, long lon
 
 void ImportListWidgetItem::updateGui()
 {
-    if(fileSize) ui->lName->setText(fileName + QString::fromAscii(" (") + Utils::getSizeString(fileSize) + QString::fromAscii(")"));
+    if(fileSize) ui->lName->setText(fileName + QString::fromAscii(" (") + Utilities::getSizeString(fileSize) + QString::fromAscii(")"));
 	else ui->lName->setText(fileName);
-    ui->lImage->setPixmap(Utils::getExtensionPixmapSmall(fileName));
+    ui->lImage->setPixmap(Utilities::getExtensionPixmapSmall(fileName));
 
 	switch(status)
 	{
