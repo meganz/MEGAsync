@@ -4106,10 +4106,33 @@ char* MegaApi::stringToArray(string &buffer)
 
 void MegaApi::updateStatics()
 {
+    transfer_map::iterator it;
+    transfer_map::iterator end;
+    int downloadCount = 0;
+    int uploadCount = 0;
+
     MUTEX_LOCK(sdkMutex);
-    pendingDownloads = client->transfers[0].size();
-    pendingUploads = client->transfers[1].size();
+    it = client->transfers[0].begin();
+    end = client->transfers[0].end();
+    while(it != end)
+    {
+        Transfer *transfer = it->second;
+        if(transfer->failcount<2) downloadCount++;
+        it++;
+    }
+
+    it = client->transfers[1].begin();
+    end = client->transfers[1].end();
+    while(it != end)
+    {
+        Transfer *transfer = it->second;
+        if(transfer->failcount<2) uploadCount++;
+        it++;
+    }
     MUTEX_UNLOCK(sdkMutex);
+
+    pendingDownloads = downloadCount;
+    pendingUploads = uploadCount;
 }
 
 bool MegaApi::isIndexing()
