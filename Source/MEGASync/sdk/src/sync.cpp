@@ -367,6 +367,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 					{
 						changed = true;
 						l->bumpnagleds();
+						l->deleted = 0;
 					}
 					if (l->size > 0) localbytes += l->size;
 					

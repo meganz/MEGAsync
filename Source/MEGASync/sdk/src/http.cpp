@@ -24,6 +24,29 @@
 
 namespace mega {
 
+HttpIO::HttpIO()
+{
+	noinetds = 0;
+	inetback = false;
+}
+
+// signal Internet status - if the Internet was down for more than one minute, set the inetback flag to trigger a reconnect
+void HttpIO::inetstatus(bool up, dstime ds)
+{
+	if (up)
+	{
+		if (noinetds && ds-noinetds > 600) inetback = true;
+		noinetds = 0;
+	}
+	else if (!noinetds) noinetds = ds;
+}
+
+// returns true once if an outage just ended
+bool HttpIO::inetisback()
+{
+	return inetback ? !(inetback = false) : false;
+}
+
 void HttpReq::post(MegaClient* client, const char* data, unsigned len)
 {
 	httpio = client->httpio;

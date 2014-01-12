@@ -32,8 +32,8 @@ WinHttpIO::WinHttpIO()
 	EnterCriticalSection(&csHTTP);
 
 	hWakeupEvent = CreateEvent(NULL,FALSE,FALSE,NULL);
-
-	completion = false;
+	
+	waiter = NULL;
 }
 
 WinHttpIO::~WinHttpIO()
@@ -60,12 +60,12 @@ void WinHttpIO::leavecs()
 }
 
 // ensure wakeup from WinHttpIO events
-void WinHttpIO::addevents(Waiter* w, int flags)
+void WinHttpIO::addevents(Waiter* cwaiter, int flags)
 {
-	WinWaiter* pw = (WinWaiter*)w;
+	waiter = (WinWaiter*)cwaiter;
 
-    pw->addhandle(hWakeupEvent,flags);
-	pw->pcsHTTP = &csHTTP;
+    waiter->addhandle(hWakeupEvent,flags);
+	waiter->pcsHTTP = &csHTTP;
 }
 
 // handle WinHTTP callbacks (which can be in a worker thread context)
@@ -153,12 +153,15 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 						httpio->cancel(req);
 						httpio->httpevent();
 					}
+					else if (httpio->waiter && httpio->noinetds) httpio->inetstatus(true,httpio->waiter->getdstime());					
 				}
 			}
 			break;
 
-		case WINHTTP_CALLBACK_STATUS_SECURE_FAILURE:
 		case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
+			if (httpio->waiter) httpio->inetstatus(false,httpio->waiter->getdstime());
+			// fall through
+		case WINHTTP_CALLBACK_STATUS_SECURE_FAILURE:
 			httpio->cancel(req);
 			httpio->httpevent();
 			break;
@@ -186,7 +189,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 					httpio->httpevent();
 				}
 			}
-			break;
 	}
 
 	httpio->leavecs();
@@ -283,12 +285,7 @@ m_off_t WinHttpIO::postpos(void* handle)
 // process events
 bool WinHttpIO::doio()
 {
-	bool done;
-
-	done = completion;
-	completion = false;
-
-	return done;
+	return false;
 }
 
 } // namespace

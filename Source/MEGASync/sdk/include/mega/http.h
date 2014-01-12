@@ -42,6 +42,13 @@ struct HttpIO : public EventTrigger
 	// execute I/O operations
 	virtual bool doio(void) = 0;
 
+	// track Internet connectivity issues
+	dstime noinetds;
+	bool inetback;
+	void inetstatus(bool, dstime);
+	bool inetisback();
+
+	HttpIO();
 	virtual ~HttpIO() { }
 };
 
