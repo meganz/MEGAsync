@@ -1,6 +1,6 @@
-#include "TrayNotificationReceiver.h"
+#include "WinTrayReceiver.h"
 
-TrayNotificationReceiver::TrayNotificationReceiver(ITrayNotify *m_ITrayNotify, QString &executable)
+WinTrayReceiver::WinTrayReceiver(ITrayNotify *m_ITrayNotify, QString &executable)
 {
     this->m_ITrayNotify = m_ITrayNotify;
     this->m_ITrayNotifyNew = NULL;
@@ -8,7 +8,7 @@ TrayNotificationReceiver::TrayNotificationReceiver(ITrayNotify *m_ITrayNotify, Q
     m_cRef = 0;
 }
 
-TrayNotificationReceiver::TrayNotificationReceiver(ITrayNotifyNew *m_ITrayNotifyNew, QString &executable)
+WinTrayReceiver::WinTrayReceiver(ITrayNotifyNew *m_ITrayNotifyNew, QString &executable)
 {
     this->m_ITrayNotifyNew = m_ITrayNotifyNew;
     this->m_ITrayNotify = NULL;
@@ -16,14 +16,14 @@ TrayNotificationReceiver::TrayNotificationReceiver(ITrayNotifyNew *m_ITrayNotify
     m_cRef = 0;
 }
 
-boolean TrayNotificationReceiver::start()
+boolean WinTrayReceiver::start()
 {
     if(m_ITrayNotify) return m_ITrayNotify->RegisterCallback (this);
     else if(m_ITrayNotifyNew) return m_ITrayNotifyNew->RegisterCallback (this, &id);
     return false;
 }
 
-void TrayNotificationReceiver::stop()
+void WinTrayReceiver::stop()
 {
     if(m_ITrayNotify)
     {
@@ -38,12 +38,12 @@ void TrayNotificationReceiver::stop()
     }
 }
 
-TrayNotificationReceiver::~TrayNotificationReceiver()
+WinTrayReceiver::~WinTrayReceiver()
 {
     stop();
 }
 
-HRESULT __stdcall TrayNotificationReceiver::QueryInterface(REFIID riid, PVOID *ppv)
+HRESULT __stdcall WinTrayReceiver::QueryInterface(REFIID riid, PVOID *ppv)
 {
     if (ppv == NULL) return E_POINTER;
 
@@ -58,13 +58,13 @@ HRESULT __stdcall TrayNotificationReceiver::QueryInterface(REFIID riid, PVOID *p
     return S_OK;
 }
 
-ULONG __stdcall TrayNotificationReceiver::AddRef(VOID)
+ULONG __stdcall WinTrayReceiver::AddRef(VOID)
 {
     InterlockedIncrement(&m_cRef);
     return m_cRef;
 }
 
-ULONG __stdcall TrayNotificationReceiver::Release(VOID)
+ULONG __stdcall WinTrayReceiver::Release(VOID)
 {
     ULONG ulRefCount = InterlockedDecrement(&m_cRef);
     if (m_cRef == 0)
@@ -73,7 +73,7 @@ ULONG __stdcall TrayNotificationReceiver::Release(VOID)
 }
 
 
-HRESULT __stdcall TrayNotificationReceiver::Notify (ULONG Event,
+HRESULT __stdcall WinTrayReceiver::Notify (ULONG Event,
                           NOTIFYITEM *NotifyItem)
 {
     if((m_ITrayNotify == NULL) && (m_ITrayNotifyNew==NULL)) return S_OK;

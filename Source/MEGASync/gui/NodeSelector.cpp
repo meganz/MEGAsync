@@ -2,8 +2,7 @@
 #include "ui_NodeSelector.h"
 
 #include <QMessageBox>
-#include "sdk/SizeProcessor.h"
-#include "utils/Utils.h"
+#include "control/Utilities.h"
 
 NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent) :
     QDialog(parent),
@@ -132,14 +131,12 @@ void NodeSelector::on_bOk_clicked()
 
     if(sizeWarning)
     {
-        SizeProcessor sizeProcessor;
-        megaApi->processTree(megaApi->getNodeByHandle(selectedFolder), &sizeProcessor);
-        long long totalSize = sizeProcessor.getTotalBytes();
+        long long totalSize = megaApi->getSize(megaApi->getNodeByHandle(selectedFolder));
         if(totalSize > 2147483648)
         {
             int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in this folder.\n"
                                                          "Are you sure you want to sync it?")
-                                                        .arg(Utils::getSizeString(totalSize)),
+                                                        .arg(Utilities::getSizeString(totalSize)),
                                  QMessageBox::Yes, QMessageBox::No);
             if(res != QMessageBox::Yes)
             {

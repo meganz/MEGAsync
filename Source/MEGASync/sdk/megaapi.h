@@ -32,7 +32,6 @@ typedef int64_t m_off_t;
 #include "mega/crypto/cryptopp.h"
 #include "mega/megaclient.h"
 
-#define USE_SQLITE
 #include "mega/db/sqlite.h"
 
 #ifdef WIN32
@@ -526,6 +525,15 @@ class SearchTreeProcessor : public TreeProcessor
 	vector<Node *> results;
 };
 
+class SizeProcessor : public TreeProcessor
+{
+    long long totalBytes;
+public:
+    SizeProcessor();
+    virtual int processNode(Node* node);
+    long long getTotalBytes();
+};
+
 //Separate listeners for requests, transfers and global events
 //It could be useful for some applications
 
@@ -799,6 +807,7 @@ public:
 	const char *getAccess(Node* node);
 	bool processTree(Node* node, TreeProcessor* processor, bool recursive = 1);
 	NodeList* search(Node* node, const char* searchString, bool recursive = 1);
+    long long getSize(Node *node);
     static const char *getBase64Handle(Node *node);
 
 	MegaError checkAccess(Node* node, const char *level);

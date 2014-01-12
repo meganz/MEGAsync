@@ -1,5 +1,5 @@
 #include "UpdateTask.h"
-#include "utils/Utils.h"
+#include "control/Utilities.h"
 #include <iostream>
 
 using namespace std;
@@ -100,7 +100,7 @@ void UpdateTask::initialCleanup()
     for(int i=0; i<subdirs.size(); i++)
     {
         if(subdirs[i].startsWith(BACKUP_FOLDER_NAME))
-            Utils::removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
+            Utilities::removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
     }
 
     //Initialize update info
@@ -117,7 +117,7 @@ void UpdateTask::finalCleanup()
     QApplication::setApplicationVersion(QString::number(updateVersion));
 
     //Remove the update folder
-    Utils::removeRecursively(QDir(updateFolder));
+    Utilities::removeRecursively(QDir(updateFolder));
     emit updateCompleted();
 }
 

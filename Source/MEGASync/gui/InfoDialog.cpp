@@ -11,7 +11,7 @@
 #include "ActiveTransfer.h"
 #include "RecentFile.h"
 #include "ui_InfoDialog.h"
-
+#include "control/Utilities.h"
 #include "MegaApplication.h"
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
@@ -117,11 +117,11 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 	int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
 	QString used(QString::number(percentage));
-    used += tr("% of ") + Utils::getSizeString(totalBytes);
+    used += tr("% of ") + Utilities::getSizeString(totalBytes);
 	ui->lPercentageUsed->setText(used);
 
     QString usage(tr("Usage: "));
-    usage += Utils::getSizeString(usedBytes);
+    usage += Utilities::getSizeString(usedBytes);
     ui->lTotalUsed->setText(usage);
 }
 
@@ -173,7 +173,7 @@ void InfoDialog::updateTransfers()
         QString pattern(tr("%1 of %2"));
         QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
 
-        if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utils::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
+        if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utilities::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
         else downloadString += tr(" (paused)");
 
         ui->lDownloads->setText(downloadString);
@@ -191,7 +191,7 @@ void InfoDialog::updateTransfers()
         QString pattern(tr("%1 of %2"));
         QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
 
-        if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utils::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
+        if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utilities::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
         else uploadString += tr(" (paused)");
 
         ui->lUploads->setText(uploadString);
@@ -455,18 +455,18 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 		if(!totalDownloads) return;
 		operation = tr("Downloading ");
 		long long remainingBytes = totalDownloadSize-totalDownloadedSize;
-        remainingSize = Utils::getSizeString(remainingBytes);
+        remainingSize = Utilities::getSizeString(remainingBytes);
         if(totalDownloads == 1)
         {
             if(downloadSpeed>0)
-                xOfxFiles = oneFile.arg(Utils::getSizeString(downloadSpeed));
+                xOfxFiles = oneFile.arg(Utilities::getSizeString(downloadSpeed));
             else
                 xOfxFiles = oneFilePaused;
         }
         else
         {
             if(downloadSpeed>0)
-                xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utils::getSizeString(downloadSpeed));
+                xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
             else
                 xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
         }
@@ -478,19 +478,19 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 
 		operation = tr("Uploading ");
 		long long remainingBytes = totalUploadSize-totalUploadedSize;
-        remainingSize = Utils::getSizeString(totalUploadSize-totalUploadedSize);
+        remainingSize = Utilities::getSizeString(totalUploadSize-totalUploadedSize);
 
         if(totalUploads == 1)
         {
             if(uploadSpeed>0)
-                xOfxFiles = oneFile.arg(Utils::getSizeString(uploadSpeed));
+                xOfxFiles = oneFile.arg(Utilities::getSizeString(uploadSpeed));
             else
                 xOfxFiles = oneFilePaused;
         }
         else
         {
             if(uploadSpeed>0)
-                xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utils::getSizeString(uploadSpeed));
+                xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
             else
                 xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);
         }

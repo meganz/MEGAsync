@@ -1,9 +1,10 @@
 #include "MegaApplication.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
-#include "utils/Utils.h"
-#include "utils/CrashHandler.h"
-#include "utils/ExportProcessor.h"
+#include "control/Utilities.h"
+#include "control/CrashHandler.h"
+#include "control/ExportProcessor.h"
+#include "platform/Platform.h"
 
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -112,7 +113,7 @@ void MegaApplication::initialize()
     preferences = Preferences::instance();
     delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
-    Utils::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
+    Utilities::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
 
 #ifdef WIN32
     //Backwards compatibility code
@@ -139,7 +140,7 @@ void MegaApplication::initialize()
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
     //Apply the "Start on startup" configuration
-    //Utils::startOnStartup(preferences->startOnStartup());
+    //Platform::startOnStartup(preferences->startOnStartup());
 
     preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
     startUpdateTask();
@@ -195,12 +196,12 @@ void MegaApplication::loggedIn()
     startSyncs();
 
     //Try to keep the tray icon always active
-    if(!Utils::enableTrayIcon(QFileInfo(QCoreApplication::applicationFilePath()).fileName()))
+    if(!Platform::enableTrayIcon(QFileInfo(QCoreApplication::applicationFilePath()).fileName()))
         LOG("Error enabling trayicon");
     else
         LOG("OK enabling trayicon");
 
-    Utils::startShellDispatcher(this);
+    Platform::startShellDispatcher(this);
 
     //Start the HTTP server
 	httpServer = new HTTPServer(2973, NULL);
@@ -276,7 +277,7 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 	while(!uploadQueue.isEmpty())
 	{
 		QString filePath = uploadQueue.dequeue();
-        if(!Utils::verifySyncedFolderLimits(filePath))
+        if(!Utilities::verifySyncedFolderLimits(filePath))
         {
             //If a folder can't be uploaded, save its name
             notUploaded.append(QFileInfo(filePath).fileName());
@@ -311,7 +312,7 @@ void MegaApplication::rebootApplication()
         return;
 
     stopUpdateTask();
-    Utils::stopShellDispatcher();
+    Platform::stopShellDispatcher();
 
     QString app = QApplication::applicationFilePath();
     QStringList args = QStringList();
@@ -328,7 +329,7 @@ void MegaApplication::exitApplication()
     {
         stopSyncs();
         stopUpdateTask();
-        Utils::stopShellDispatcher();
+        Platform::stopShellDispatcher();
         trayIcon->hide();
         QApplication::exit();
     }
@@ -352,7 +353,7 @@ void MegaApplication::refreshTrayIcon()
 void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
-    Utils::stopShellDispatcher();
+    Platform::stopShellDispatcher();
     trayIcon->hide();
     processEvents();
     megaApi->removeListener(delegateListener);
@@ -367,7 +368,7 @@ void MegaApplication::unlink()
     delete httpServer;
     httpServer = NULL;
     stopSyncs();
-    Utils::stopShellDispatcher();
+    Platform::stopShellDispatcher();
     megaApi->logout();
 }  
 
@@ -782,7 +783,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                 if(e->getErrorCode() != MegaError::API_OK)
                     preferences->removeSyncedFolder(i);
                 else
-                    Utils::syncFolderAdded(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    Platform::syncFolderAdded(preferences->getLocalFolder(i), preferences->getSyncName(i));
                 break;
             }
         }
@@ -972,7 +973,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         //If we have the local path, notify the state change in the local file
         if(localPath.size())
         {
-            WindowsUtils::notifyItemChange(localPath);
+            Platform::notifyItemChange(localPath);
             if(node->localnode)
             {
                 int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();
@@ -980,7 +981,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 QDir parent = QFileInfo(localPath).dir();
                 while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
                 {
-                    WindowsUtils::notifyItemChange(parent.absolutePath());
+                    Platform::notifyItemChange(parent.absolutePath());
                     parent = QFileInfo(parent.absolutePath()).dir();
                 }
             }

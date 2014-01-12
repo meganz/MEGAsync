@@ -1,11 +1,11 @@
 #include "EncryptedSettings.h"
-#include "utils/Utils.h"
+#include "platform/Platform.h"
 
 EncryptedSettings::EncryptedSettings(QString file) :
     QSettings(file, QSettings::IniFormat)
 {
     QByteArray fixedSeed("$JY/X?o=h·&%v/M(");
-    QByteArray localKey = Utils::getLocalStorageKey();
+    QByteArray localKey = Platform::getLocalStorageKey();
     QByteArray xLocalKey = XOR(fixedSeed, localKey);
     QByteArray hLocalKey = QCryptographicHash::hash(xLocalKey, QCryptographicHash::Sha1);
     encryptionKey = hLocalKey;
@@ -81,7 +81,7 @@ QString EncryptedSettings::encrypt(const QString key, const QString value) const
     QByteArray k = hash(key).toAscii();
     QByteArray xValue = XOR(k, value.toUtf8());
     QByteArray xKey = XOR(k, group().toAscii());
-    QByteArray xEncrypted = XOR(k, Utils::encrypt(xValue, xKey));
+    QByteArray xEncrypted = XOR(k, Platform::encrypt(xValue, xKey));
     return QString::fromAscii(xEncrypted.toBase64());
 }
 
@@ -92,7 +92,7 @@ QString EncryptedSettings::decrypt(const QString key, const QString value) const
     QByteArray k = hash(key).toAscii();
     QByteArray xValue = XOR(k, QByteArray::fromBase64(value.toAscii()));
     QByteArray xKey = XOR(k, group().toAscii());
-    QByteArray xDecrypted = XOR(k, Utils::decrypt(xValue, xKey));
+    QByteArray xDecrypted = XOR(k, Platform::decrypt(xValue, xKey));
     return QString::fromUtf8(xDecrypted);
 }
 

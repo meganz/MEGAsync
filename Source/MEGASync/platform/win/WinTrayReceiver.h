@@ -1,5 +1,5 @@
-#ifndef TRAYNOTIFICATIONRECEIVER_H
-#define TRAYNOTIFICATIONRECEIVER_H
+#ifndef WINTRAYRECEIVER_H
+#define WINTRAYRECEIVER_H
 
 #include <QString>
 
@@ -68,7 +68,7 @@ class TrayNotify : public ITrayNotify {};
 class TrayNotifyNew : public ITrayNotifyNew {};
 /*  ************************************************************************  */
 
-class TrayNotificationReceiver : public INotificationCB
+class WinTrayReceiver : public INotificationCB
 {
 protected:
     ITrayNotify *m_ITrayNotify;
@@ -78,11 +78,11 @@ protected:
     unsigned long id;
 
 public:
-    TrayNotificationReceiver(ITrayNotify *m_ITrayNotify, QString &executable);
-    TrayNotificationReceiver(ITrayNotifyNew *m_ITrayNotifyNew, QString &executable);
+    WinTrayReceiver(ITrayNotify *m_ITrayNotify, QString &executable);
+    WinTrayReceiver(ITrayNotifyNew *m_ITrayNotifyNew, QString &executable);
     boolean start();
     void stop();
-    ~TrayNotificationReceiver();
+    ~WinTrayReceiver();
 
     /*	INotificationCB methods  */
     HRESULT __stdcall QueryInterface(REFIID riid, PVOID *ppv);

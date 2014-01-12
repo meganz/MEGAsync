@@ -2,8 +2,7 @@
 #include "ui_SetupWizard.h"
 
 #include "MegaApplication.h"
-#include "utils/Utils.h"
-#include "sdk/SizeProcessor.h"
+#include "control/Utilities.h"
 
 SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -253,14 +252,12 @@ void SetupWizard::on_bNext_clicked()
         else
         {
             defaultFolderPath.append(QString::fromAscii("/MEGA"));
-            SizeProcessor sizeProcessor;
-            megaApi->processTree(megaApi->getRootNode(), &sizeProcessor);
-            long long totalSize = sizeProcessor.getTotalBytes();
+            long long totalSize = megaApi->getSize(megaApi->getRootNode());
             if(totalSize > 2147483648)
             {
                 int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in your Cloud Drive.\n"
                                                              "Are you sure you want to sync your entire Cloud Drive?")
-                                                            .arg(Utils::getSizeString(totalSize)),
+                                                            .arg(Utilities::getSizeString(totalSize)),
                                      QMessageBox::Yes, QMessageBox::No);
                 if(res != QMessageBox::Yes)
                 {
@@ -303,7 +300,7 @@ void SetupWizard::on_bNext_clicked()
         }
 
         QString localFolderPath = ui->eLocalFolder->text();
-        if(!Utils::verifySyncedFolderLimits(localFolderPath))
+        if(!Utilities::verifySyncedFolderLimits(localFolderPath))
         {
             QMessageBox::warning(this, tr("Warning"), tr("Local folder too large (this beta is limited to %1 folders or %2 files.\n"
                  "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)

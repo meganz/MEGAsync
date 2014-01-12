@@ -15,17 +15,16 @@
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
-#include "utils/Preferences.h"
-#include "utils/HTTPServer.h"
-#include "utils/ShellDispatcherListener.h"
-#include "utils/MegaUploader.h"
-#include "utils/UpdateTask.h"
+#include "control/Preferences.h"
+#include "control/HTTPServer.h"
+#include "control/MegaUploader.h"
+#include "control/UpdateTask.h"
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-class MegaApplication : public QApplication, public MegaListener, public ShellDispatcherListener
+class MegaApplication : public QApplication, public MegaListener
 {
     Q_OBJECT
 

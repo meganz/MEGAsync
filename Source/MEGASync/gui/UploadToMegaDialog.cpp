@@ -1,7 +1,7 @@
 #include "UploadToMegaDialog.h"
 #include "ui_UploadToMegaDialog.h"
 #include "gui/NodeSelector.h"
-#include "utils/Utils.h"
+#include "control/Utilities.h"
 
 UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
 	QDialog(parent),

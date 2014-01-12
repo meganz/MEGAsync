@@ -1,8 +1,5 @@
-#ifndef WINDOWSUTILS_H
-#define WINDOWSUTILS_H
-
-#include "utils/win32/ShellDispatcherTask.h"
-#include "utils/win32/TrayNotificationReceiver.h"
+#ifndef LINUXPLATFORM_H
+#define LINUXPLATFORM_H
 
 #include <QApplication>
 #include <QString>
@@ -13,17 +10,11 @@
 #include <QDir>
 #include <QProcess>
 
-class ShellDispatcherTask;
-class WindowsUtils
+class LinuxPlatform
 {
 
 private:
-    WindowsUtils() {}
-
-    static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR pszIconfile=NULL, int iIconindex=0);
-    static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
-    static ShellDispatcherTask *shellDispatcherTask;
-    static QThread shellDispatcherThread;
+    LinuxPlatform() {}
 
 public:
 
@@ -41,4 +32,4 @@ public:
     static QByteArray getLocalStorageKey();
 };
 
-#endif // WINDOWSUTILS_H
+#endif // LINUXPLATFORM_H

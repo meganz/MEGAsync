@@ -1,6 +1,8 @@
 #include "RecentFile.h"
 #include "ui_RecentFile.h"
 #include "MegaApplication.h"
+#include "control/Utilities.h"
+#include "platform/Platform.h"
 
 #include <QImageReader>
 
@@ -42,11 +44,11 @@ void RecentFile::updateWidget()
         QFontMetrics fm = QFontMetrics(f);
         ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 
-        QImage image = Utils::createThumbnail(localPath, 120);
+        QImage image = Utilities::createThumbnail(localPath, 120);
         if(!image.isNull())
             ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
         else
-            ui->lFileType->setPixmap(Utils::getExtensionPixmapMedium(fileName));
+            ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
     }
 
@@ -121,7 +123,7 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::showInFolder()
 {
-	WindowsUtils::showInFolder(localPath);
+    Platform::showInFolder(localPath);
 }
 
 void RecentFile::openFile()

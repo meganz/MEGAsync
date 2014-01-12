@@ -1,10 +1,10 @@
-#include "WindowsUtils.h"
-#include "utils/Utils.h"
+#include "WindowsPlatform.h"
+#include <Shlobj.h>
 
-ShellDispatcherTask* WindowsUtils::shellDispatcherTask = NULL;
-QThread WindowsUtils::shellDispatcherThread;
+WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
+QThread WindowsPlatform::shellDispatcherThread;
 
-boolean WindowsUtils::enableTrayIcon(QString executable)
+bool WindowsPlatform::enableTrayIcon(QString executable)
 {
     HRESULT hr;
     ITrayNotify *m_ITrayNotify;
@@ -28,9 +28,9 @@ boolean WindowsUtils::enableTrayIcon(QString executable)
         if(hr != S_OK) return false;
     }
 
-    TrayNotificationReceiver *receiver = NULL;
-    if(m_ITrayNotify) receiver = new TrayNotificationReceiver(m_ITrayNotify, executable);
-    else receiver = new TrayNotificationReceiver(m_ITrayNotifyNew, executable);
+    WinTrayReceiver *receiver = NULL;
+    if(m_ITrayNotify) receiver = new WinTrayReceiver(m_ITrayNotify, executable);
+    else receiver = new WinTrayReceiver(m_ITrayNotifyNew, executable);
 
     hr = receiver->start();
     if(hr != S_OK) return false;
@@ -38,14 +38,14 @@ boolean WindowsUtils::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsUtils::notifyItemChange(QString path)
+void WindowsPlatform::notifyItemChange(QString path)
 {
     WCHAR *windowsPath = (WCHAR *)path.utf16();
 	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
-HRESULT WindowsUtils::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc,
+HRESULT WindowsPlatform::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc,
                                  LPCWSTR pszIconfile, int iIconindex)
 {
     HRESULT hres;
@@ -81,7 +81,7 @@ HRESULT WindowsUtils::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCW
     return hres;
 }
 
-bool WindowsUtils::startOnStartup(bool value)
+bool WindowsPlatform::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_STARTUP, NULL, 0, path);
@@ -113,7 +113,7 @@ bool WindowsUtils::startOnStartup(bool value)
     }
 }
 
-bool WindowsUtils::isStartOnStartupActive()
+bool WindowsPlatform::isStartOnStartupActive()
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_STARTUP, NULL, 0, path);
@@ -126,7 +126,7 @@ bool WindowsUtils::isStartOnStartupActive()
     return false;
 }
 
-void WindowsUtils::showInFolder(QString pathIn)
+void WindowsPlatform::showInFolder(QString pathIn)
 {
     QString param;
     param = QLatin1String("/select,");
@@ -134,16 +134,16 @@ void WindowsUtils::showInFolder(QString pathIn)
     QProcess::startDetached(QString::fromAscii("explorer ") + param);
 }
 
-void WindowsUtils::startShellDispatcher(MegaApplication *receiver)
+void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    shellDispatcherTask = new ShellDispatcherTask(receiver);
+    shellDispatcherTask = new WinShellDispatcherTask(receiver);
     shellDispatcherTask->moveToThread(&shellDispatcherThread);
     shellDispatcherThread.start();
     QObject::connect(&shellDispatcherThread, SIGNAL(finished()), shellDispatcherTask, SLOT(deleteLater()));
     QMetaObject::invokeMethod(shellDispatcherTask, "doWork", Qt::QueuedConnection);
 }
 
-void WindowsUtils::stopShellDispatcher()
+void WindowsPlatform::stopShellDispatcher()
 {
     if(shellDispatcherTask)
     {
@@ -154,12 +154,12 @@ void WindowsUtils::stopShellDispatcher()
     }
 }
 
-void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
+void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
     QDir syncDir(syncPath);
     if(!syncDir.exists()) return;
 
-    QString infoTip = QCoreApplication::translate("WindowsUtils", "MEGA synced folder");
+    QString infoTip = QCoreApplication::translate("WindowsPlatform", "MEGA synced folder");
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
     fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;
@@ -198,7 +198,7 @@ void WindowsUtils::syncFolderAdded(QString syncPath, QString syncName)
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
 }
 
-void WindowsUtils::syncFolderRemoved(QString syncPath)
+void WindowsPlatform::syncFolderRemoved(QString syncPath)
 {
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
@@ -226,7 +226,7 @@ void WindowsUtils::syncFolderRemoved(QString syncPath)
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
 }
 
-QByteArray WindowsUtils::encrypt(QByteArray data, QByteArray key)
+QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
     DATA_BLOB dataOut;
@@ -245,7 +245,7 @@ QByteArray WindowsUtils::encrypt(QByteArray data, QByteArray key)
     return result;
 }
 
-QByteArray WindowsUtils::decrypt(QByteArray data, QByteArray key)
+QByteArray WindowsPlatform::decrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
     DATA_BLOB dataOut;
@@ -264,7 +264,7 @@ QByteArray WindowsUtils::decrypt(QByteArray data, QByteArray key)
     return result;
 }
 
-QByteArray WindowsUtils::getLocalStorageKey()
+QByteArray WindowsPlatform::getLocalStorageKey()
 {
     HANDLE hToken = NULL;
     if(!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))

@@ -28,7 +28,8 @@ DEALINGS IN THE SOFTWARE.
 #define USE_VARARGS
 #define PREFER_STDARG
 #include "megaapi.h"
-#include "utils/Utils.h"
+#include "platform/Platform.h"
+#include "control/Utilities.h"
 
 #ifdef _WIN32
 #define snprintf _snprintf
@@ -154,7 +155,7 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 #elif USE_QT
 
     QString filePath = QString::fromWCharArray((wchar_t *)filename->data());
-    QImage image = Utils::createThumbnail(filePath, size);
+    QImage image = Utilities::createThumbnail(filePath, size);
     if(image.isNull()) return;
     QByteArray ba;
     QBuffer buffer(&ba);
@@ -1740,6 +1741,19 @@ NodeList* MegaApi::search(Node* node, const char* searchString, bool recursive)
     return nodeList;
 }
 
+long long MegaApi::getSize(Node *node)
+{
+    if(!node) return 0;
+
+    MUTEX_LOCK(sdkMutex);
+    SizeProcessor sizeProcessor;
+    processTree(node, &sizeProcessor);
+    long long result = sizeProcessor.getTotalBytes();
+    MUTEX_UNLOCK(sdkMutex);
+
+    return result;
+}
+
 const char *MegaApi::getBase64Handle(Node *node)
 {
     char *base64Handle = new char[12];
@@ -1763,6 +1777,23 @@ int SearchTreeProcessor::processNode(Node* node)
 vector<Node *> &SearchTreeProcessor::getResults()
 {
 	return results;
+}
+
+SizeProcessor::SizeProcessor()
+{
+    totalBytes=0;
+}
+
+
+int SizeProcessor::processNode(Node *node)
+{
+    totalBytes += node->size;
+    return true;
+}
+
+long long SizeProcessor::getTotalBytes()
+{
+    return totalBytes;
 }
 
 void MegaApi::transfer_added(Transfer *t)
@@ -1871,7 +1902,7 @@ void MegaApi::transfer_update(Transfer *tr)
         if(transfer->getTransferredBytes())
         {
             fireOnTransferUpdate(this, transfer);
-            //WindowsUtils::notifyItemChange(QString::fromUtf8(transfer->getPath()));
+            //Platform::notifyItemChange(QString::fromUtf8(transfer->getPath()));
         }
 	}
 }
@@ -2002,7 +2033,7 @@ void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
 {
     LOG("syncupdate_local_folder_addition");
     QString localPath = QString::fromUtf8(s);
-    WindowsUtils::notifyItemChange(localPath);
+    Platform::notifyItemChange(localPath);
 }
 
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
@@ -2029,13 +2060,13 @@ void MegaApi::syncupdate_put(Sync *sync, const char *s)
 {
     LOG("syncupdate_put");
     QString localPath = QString::fromUtf8(s);
-    WindowsUtils::notifyItemChange(localPath);
+    Platform::notifyItemChange(localPath);
     int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
 
     QDir parent = QFileInfo(localPath).dir();
     while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
     {
-        WindowsUtils::notifyItemChange(parent.absolutePath());
+        Platform::notifyItemChange(parent.absolutePath());
         //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
         parent = QFileInfo(parent.absolutePath()).dir();
     }

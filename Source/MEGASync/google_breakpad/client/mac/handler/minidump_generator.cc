@@ -57,8 +57,8 @@
 #include "common/mac/macho_id.h"
 #include "common/mac/string_utilities.h"
 
-using MacStringUtils::ConvertToString;
-using MacStringUtils::IntegerValueAtIndex;
+using MacStringUtilities::ConvertToString;
+using MacStringUtilities::IntegerValueAtIndex;
 
 namespace google_breakpad {
 
