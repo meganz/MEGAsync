@@ -35,6 +35,7 @@ public:
     void initialize();
 
     static const int VERSION_CODE;
+    static const QString VERSION_STRING;
     static QString applicationFilePath();
     static QString applicationDirPath();
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
