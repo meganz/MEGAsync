@@ -272,65 +272,70 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>MegaApplication</name>
     <message>
-        <location filename="MegaApplication.cpp" line="50"/>
+        <location filename="MegaApplication.cpp" line="54"/>
         <source>MEGAsync BETA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="51"/>
+        <location filename="MegaApplication.cpp" line="55"/>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="184"/>
-        <location filename="MegaApplication.cpp" line="185"/>
+        <location filename="MegaApplication.cpp" line="172"/>
+        <source>Logging in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MegaApplication.cpp" line="201"/>
+        <location filename="MegaApplication.cpp" line="202"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="222"/>
+        <location filename="MegaApplication.cpp" line="239"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="232"/>
+        <location filename="MegaApplication.cpp" line="249"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="243"/>
+        <location filename="MegaApplication.cpp" line="260"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="273"/>
+        <location filename="MegaApplication.cpp" line="290"/>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="295"/>
+        <location filename="MegaApplication.cpp" line="312"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="302"/>
+        <location filename="MegaApplication.cpp" line="319"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="327"/>
-        <location filename="MegaApplication.h" line="63"/>
-        <location filename="MegaApplication.h" line="64"/>
+        <location filename="MegaApplication.cpp" line="344"/>
         <location filename="MegaApplication.h" line="65"/>
         <location filename="MegaApplication.h" line="66"/>
+        <location filename="MegaApplication.h" line="67"/>
+        <location filename="MegaApplication.h" line="68"/>
         <source>MEGAsync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="328"/>
+        <location filename="MegaApplication.cpp" line="345"/>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
@@ -338,68 +343,96 @@ Exit anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="346"/>
+        <location filename="MegaApplication.cpp" line="363"/>
         <source>About MEGAsync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="346"/>
+        <location filename="MegaApplication.cpp" line="363"/>
         <source>MEGAsync version code %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="566"/>
-        <location filename="MegaApplication.cpp" line="687"/>
+        <location filename="MegaApplication.cpp" line="583"/>
+        <location filename="MegaApplication.cpp" line="705"/>
         <source>The link has been copied to the clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="567"/>
+        <location filename="MegaApplication.cpp" line="584"/>
         <source>The links have been copied to the clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="587"/>
+        <location filename="MegaApplication.cpp" line="604"/>
         <source>Logging in...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="641"/>
+        <location filename="MegaApplication.cpp" line="658"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="643"/>
+        <location filename="MegaApplication.cpp" line="660"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="645"/>
+        <location filename="MegaApplication.cpp" line="662"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="647"/>
+        <location filename="MegaApplication.cpp" line="664"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="649"/>
+        <location filename="MegaApplication.cpp" line="666"/>
         <source>Resume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="651"/>
+        <location filename="MegaApplication.cpp" line="668"/>
         <source>Import links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="914"/>
+        <location filename="MegaApplication.cpp" line="685"/>
+        <location filename="MegaApplication.cpp" line="800"/>
+        <location filename="MegaApplication.cpp" line="1062"/>
+        <location filename="MegaApplication.cpp" line="1101"/>
+        <source>Up to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MegaApplication.cpp" line="783"/>
+        <location filename="MegaApplication.cpp" line="1051"/>
+        <source>Paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MegaApplication.cpp" line="794"/>
+        <location filename="MegaApplication.cpp" line="1056"/>
+        <location filename="MegaApplication.cpp" line="1109"/>
+        <source>Scanning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MegaApplication.cpp" line="795"/>
+        <location filename="MegaApplication.cpp" line="1057"/>
+        <location filename="MegaApplication.cpp" line="1110"/>
+        <source>Syncing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="MegaApplication.cpp" line="940"/>
         <source>Temporary transmission error: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="MegaApplication.cpp" line="1006"/>
+        <location filename="MegaApplication.cpp" line="1032"/>
         <source>You have new or updated files in your account</source>
         <translation type="unfinished"></translation>
     </message>

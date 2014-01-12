@@ -10,7 +10,9 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 108; //1.08
+const int MegaApplication::VERSION_CODE = 108;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.8");
+
 QString MegaApplication::appPath = NULL;
 QString MegaApplication::appDirPath = NULL;
 
@@ -167,6 +169,7 @@ void MegaApplication::start()
     indexing = false;
 
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->setContextMenu(NULL);
     trayIcon->show();
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
@@ -678,7 +681,8 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(exitAction);
 
     trayIcon->setContextMenu(trayMenu);
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));    
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
 }
 
 //Called when a request is about to start
@@ -776,6 +780,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         if(paused)
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
             trayMenu->removeAction(pauseAction);
             trayMenu->insertAction(importLinksAction, resumeAction);
         }
@@ -784,9 +789,16 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
             if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+            {
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+                if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
+                else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
+            }
             else
+            {
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+                trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+            }
         }
         break;
     }
@@ -1034,11 +1046,21 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
     infoDialog->setIndexing(indexing);
 
     if(paused)
+    {
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
+    }
     else if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+    {
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+        if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
+        else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
+    }
     else
+    {
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+    }
 }
 
 //TODO: Manage sync callbacks here
@@ -1076,6 +1098,7 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 void MegaApplication::showSyncedIcon()
 {
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
 	trayMenu->removeAction(resumeAction);
 	trayMenu->insertAction(importLinksAction, pauseAction);
 }
@@ -1083,6 +1106,8 @@ void MegaApplication::showSyncedIcon()
 void MegaApplication::showSyncingIcon()
 {
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+    if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
+    else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
     trayMenu->removeAction(resumeAction);
 	trayMenu->insertAction(importLinksAction, pauseAction);
 }
