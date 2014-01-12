@@ -116,13 +116,10 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 {
 	int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
-	QString used(QString::number(percentage));
-    used += tr("% of ") + Utilities::getSizeString(totalBytes);
+    QString used = tr("%1% of %2").arg(QString::number(percentage))
+            .arg(Utilities::getSizeString(totalBytes));
 	ui->lPercentageUsed->setText(used);
-
-    QString usage(tr("Usage: "));
-    usage += Utilities::getSizeString(usedBytes);
-    ui->lTotalUsed->setText(usage);
+    ui->lTotalUsed->setText(tr("Usage: %1").arg(Utilities::getSizeString(usedBytes)));
 }
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
@@ -170,11 +167,12 @@ void InfoDialog::updateTransfers()
 
     if(remainingDownloads)
     {
-        QString pattern(tr("%1 of %2"));
-        QString downloadString = pattern.arg(currentDownload).arg(totalDownloads);
+        QString pattern(tr("%1 of %2 (%3/s)"));
+        QString pausedPattern(tr("%1 of %2 (paused)"));
+        QString downloadString;
 
-        if(downloadSpeed > 0) downloadString += QString::fromAscii(" (") + Utilities::getSizeString(downloadSpeed) + QString::fromAscii("/s)");
-        else downloadString += tr(" (paused)");
+        if(downloadSpeed >= 0)  downloadString = pattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
+        else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
 
         ui->lDownloads->setText(downloadString);
         ui->bDownloads->show();
@@ -188,11 +186,12 @@ void InfoDialog::updateTransfers()
 
     if(remainingUploads)
     {
-        QString pattern(tr("%1 of %2"));
-        QString uploadString = pattern.arg(currentUpload).arg(totalUploads);
+        QString pattern(tr("%1 of %2 (%3/s)"));
+        QString pausedPattern(tr("%1 of %2 (paused)"));
+        QString uploadString;
 
-        if(uploadSpeed > 0) uploadString += QString::fromAscii(" (") + Utilities::getSizeString(uploadSpeed) + QString::fromAscii("/s)");
-        else uploadString += tr(" (paused)");
+        if(uploadSpeed >= 0) uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+        else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
 
         ui->lUploads->setText(uploadString);
         ui->bUploads->show();
@@ -458,14 +457,14 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
         remainingSize = Utilities::getSizeString(remainingBytes);
         if(totalDownloads == 1)
         {
-            if(downloadSpeed>0)
+            if(downloadSpeed>=0)
                 xOfxFiles = oneFile.arg(Utilities::getSizeString(downloadSpeed));
             else
                 xOfxFiles = oneFilePaused;
         }
         else
         {
-            if(downloadSpeed>0)
+            if(downloadSpeed>=0)
                 xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
             else
                 xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
@@ -482,14 +481,14 @@ void InfoDialog::showPopup(QPoint globalpos, bool download)
 
         if(totalUploads == 1)
         {
-            if(uploadSpeed>0)
+            if(uploadSpeed>=0)
                 xOfxFiles = oneFile.arg(Utilities::getSizeString(uploadSpeed));
             else
                 xOfxFiles = oneFilePaused;
         }
         else
         {
-            if(uploadSpeed>0)
+            if(uploadSpeed>=0)
                 xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
             else
                 xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);

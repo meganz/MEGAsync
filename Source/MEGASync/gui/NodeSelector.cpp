@@ -91,7 +91,7 @@ void NodeSelector::on_bNewFolder_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("New folder"),
-                                         tr("Please, enter the new folder name:"), QLineEdit::Normal,
+                                         tr("Enter the new folder name:"), QLineEdit::Normal,
                                          QString::fromAscii(""), &ok);
 
     text = text.trimmed();
@@ -125,7 +125,7 @@ void NodeSelector::on_bOk_clicked()
     if(!rootAllowed && (selectedFolder == megaApi->getRootNode()->nodehandle))
     {
         QMessageBox::warning(this, tr("Error"), tr("The root folder can't be synced.\n"
-                                                 "Please, select a subfolder"), QMessageBox::Ok);
+                                                 "Please, select a subfolder."), QMessageBox::Ok);
         return;
     }
 
