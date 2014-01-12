@@ -393,9 +393,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             else if(numFolders > 1) sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
 
             QString fullString;
-            if(numFiles && numFolders) fullString = QString::fromAscii("%1 (%2, %3)").arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            else if(numFiles && !numFolders) fullString = QString::fromAscii("%1 (%2)").arg(actionString).arg(sNumFiles);
-            else if(!numFiles && numFolders) fullString = QString::fromAscii("%1 (%2)").arg(actionString).arg(sNumFolders);
+            if(numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)").arg(actionString).arg(sNumFiles).arg(sNumFolders);
+            else if(numFiles && !numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFiles);
+            else if(!numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFolders);
 
             wcscpy_s( pipe->chReply, BUFSIZE, fullString.utf16());
             break;

@@ -13,6 +13,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     ui->wAdvancedSetup->installEventFilter(this);
     ui->wTypicalSetup->installEventFilter(this);
+    ui->lTermsLink->installEventFilter(this);
     ui->rTypicalSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->rAdvancedSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
 
@@ -433,12 +434,12 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
     {
         if(obj == ui->wTypicalSetup) wTypicalSetup_clicked();
         else if(obj == ui->wAdvancedSetup) wAdvancedSetup_clicked();
-        return true;
+        else if(obj == ui->lTermsLink) lTermsLink_clicked();
     }
     return QObject::eventFilter(obj, event);
 }
 
-void SetupWizard::on_pushButton_clicked()
+void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
 }

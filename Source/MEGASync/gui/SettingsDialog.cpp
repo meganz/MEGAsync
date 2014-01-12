@@ -219,9 +219,10 @@ void SettingsDialog::loadSettings()
 	{
 		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
 		ui->pStorage->setValue(percentage);
-        ui->lStorage->setText(Utilities::getSizeString(preferences->usedStorage()) + QString::fromAscii(" (") +
-              QString::number(percentage) + tr("%) of ") +
-              Utilities::getSizeString(preferences->totalStorage()) + tr(" used"));
+        ui->lStorage->setText(tr("%1 (%2%) of %3 used")
+              .arg(Utilities::getSizeString(preferences->usedStorage()))
+              .arg(QString::number(percentage))
+              .arg(Utilities::getSizeString(preferences->totalStorage())));
 	}
     switch(preferences->accountType())
     {
@@ -266,9 +267,10 @@ void SettingsDialog::loadSettings()
 	{
 		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
 		ui->pUsedBandwidth->setValue(bandwidthPercentage);
-        ui->lBandwidth->setText(Utilities::getSizeString(preferences->usedBandwidth()) + QString::fromAscii(" (") +
-            QString::number(bandwidthPercentage) + tr("%) of ") +
-            Utilities::getSizeString(preferences->totalBandwidth()) + tr(" used"));
+        ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                .arg(QString::number(bandwidthPercentage))
+                .arg(Utilities::getSizeString(preferences->totalBandwidth())));
 	}
 
     //Proxies
@@ -564,7 +566,7 @@ void SettingsDialog::on_bAddName_clicked()
 {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Excluded name"),
-                                         tr("Please, enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"), QLineEdit::Normal,
+                                         tr("Enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"), QLineEdit::Normal,
                                          QString::fromAscii(""), &ok);
 
     text = text.trimmed();

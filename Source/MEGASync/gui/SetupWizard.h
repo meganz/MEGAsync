@@ -43,7 +43,7 @@ private slots:
 
     void wAdvancedSetup_clicked();
 
-    void on_pushButton_clicked();
+    void lTermsLink_clicked();
 
     void on_bFinalLocalFolder_clicked();
 

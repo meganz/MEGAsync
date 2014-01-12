@@ -249,7 +249,7 @@ margin-left: 100px;
           <item row="4" column="1">
            <layout class="QHBoxLayout" name="hAcceptTerms">
             <property name="spacing">
-             <number>0</number>
+             <number>5</number>
             </property>
             <item>
              <widget class="QCheckBox" name="cAgreeWithTerms">
@@ -259,23 +259,9 @@ margin-left: 100px;
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
-              <property name="styleSheet">
-               <string notr="true">border: none;
-margin-left: 5px;</string>
-              </property>
-              <property name="text">
-               <string>I agree with the MEGA </string>
-              </property>
-              <property name="flat">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QLabel" name="lTermsLink">
               <property name="text">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Terms of Service&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
               </property>
               <property name="textFormat">
                <enum>Qt::RichText</enum>
