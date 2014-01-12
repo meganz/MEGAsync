@@ -927,15 +927,20 @@ int MegaClient::wait()
 	return r;
 }
 
-
-// reset all backoff timers
+// reset all backoff timers and transfer retry counters
 bool MegaClient::abortbackoff()
 {
 	bool r = false;
 	dstime ds = waiter->getdstime();
 
-	for (transfer_map::iterator it = transfers[GET].begin(); it != transfers[GET].end(); it++) if (it->second->bt.arm(ds)) r = true;
-	for (transfer_map::iterator it = transfers[PUT].begin(); it != transfers[PUT].end(); it++) if (it->second->bt.arm(ds)) r = true;
+	for (int d = GET; d == GET || d == PUT; d += PUT-GET)
+	{
+		for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); it++)
+		{
+			it->second->failcount = 0;
+			if (it->second->bt.arm(ds)) r = true;
+		}
+	}
 
 	if (btcs.arm(ds)) r = true;
 
@@ -3762,6 +3767,8 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 	{
 		LocalNode* ll = lit->second;
 		
+		if (ll->deleted) continue;
+		
 		localname = *lit->first;
 		fsaccess->local2name(&localname);
 		rit = nchildren.find(&localname);
@@ -4015,11 +4022,11 @@ void MegaClient::stopxfer(File* f)
 {
 	if (f->transfer)
 	{
-		// last file for this transfer removed
 		app->transfer_removed(f->transfer);
 
 		f->transfer->files.erase(f->file_it);
 
+		// last file for this transfer removed? shut down transfer.
 		if (!f->transfer->files.size()) delete f->transfer;
 
 		f->transfer = NULL;
@@ -4084,7 +4091,7 @@ void MegaClient::movetosyncdebris(Node* n)
 	
 	if ((p = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
 	{
-		// check if we have today's sync debris subfolder in rubbish bin
+		// check if we already have today's sync debris subfolder in rubbish bin
 		handle h;
 		time_t ts = time(NULL);
 		struct tm* ptm = gmtime(&ts);
