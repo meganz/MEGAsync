@@ -3,7 +3,6 @@
 #include <QtCore/QProcess>
 #include <QtCore/QCoreApplication>
 #include <QString>
-#include <QApplication>
 #include "MegaApplication.h"
 
 #if defined(Q_OS_MAC)
@@ -57,7 +56,7 @@ bool DumpCallback(const char* _dump_dir,const char* _minidump_id,void *context, 
     Q_UNUSED(exinfo);
 #endif
     qDebug("BreakpadQt crash");
-    //QString app = QApplication::applicationFilePath();
+    //QString app = MegaApplication::applicationFilePath();
     //QStringList args = QStringList();
     //args.append(QString::fromAscii("/reboot"));
     //QProcess::startDetached(app, args);

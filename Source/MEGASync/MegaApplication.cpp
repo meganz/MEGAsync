@@ -11,6 +11,8 @@
 #include <QSharedMemory>
 
 const int MegaApplication::VERSION_CODE = 108; //1.08
+QString MegaApplication::appPath = NULL;
+QString MegaApplication::appDirPath = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -67,6 +69,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
     setApplicationName(QString::fromAscii("MEGAsync"));
     setApplicationVersion(QString::number(VERSION_CODE));
+    appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
+    appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
     //Set the working directory
 #if QT_VERSION < 0x050000
@@ -147,6 +151,16 @@ void MegaApplication::initialize()
     startUpdateTask();
 }
 
+QString MegaApplication::applicationFilePath()
+{
+    return appPath;
+}
+
+QString MegaApplication::applicationDirPath()
+{
+    return appDirPath;
+}
+
 void MegaApplication::start()
 {
     paused = false;
@@ -197,7 +211,7 @@ void MegaApplication::loggedIn()
     startSyncs();
 
     //Try to keep the tray icon always active
-    if(!Platform::enableTrayIcon(QFileInfo(QCoreApplication::applicationFilePath()).fileName()))
+    if(!Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName()))
         LOG("Error enabling trayicon");
     else
         LOG("OK enabling trayicon");
@@ -315,7 +329,7 @@ void MegaApplication::rebootApplication()
     stopUpdateTask();
     Platform::stopShellDispatcher();
 
-    QString app = QApplication::applicationFilePath();
+    QString app = MegaApplication::applicationFilePath();
     QStringList args = QStringList();
     args.append(QString::fromAscii("/reboot"));
     QProcess::startDetached(app, args);
