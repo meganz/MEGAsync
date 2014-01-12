@@ -329,31 +329,8 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
     int lastItem;
     if(unsyncedFolders || unsyncedFiles)
     {
-        WCHAR menuText[128];
-
-        if((unsyncedFolders + unsyncedFiles) == 1)
-        {
-            if(unsyncedFolders)
-                StringCchPrintfW(menuText, 128, L"%s (1 folder)", m_pszUploadMenuText);
-            else
-                StringCchPrintfW(menuText, 128, L"%s (1 file)", m_pszUploadMenuText);
-        }
-        else if(!unsyncedFiles)
-            StringCchPrintfW(menuText, 128, L"%s (%d folders)", m_pszUploadMenuText, unsyncedFolders);
-        else if(!unsyncedFolders)
-            StringCchPrintfW(menuText, 128, L"%s (%d files)", m_pszUploadMenuText, unsyncedFiles);
-        else if(unsyncedFiles == 1)
-        {
-            if(unsyncedFolders == 1)
-                StringCchPrintfW(menuText, 128, L"%s (1 file, 1 folder)", m_pszUploadMenuText);
-            else
-                StringCchPrintfW(menuText, 128, L"%s (1 file, %d folders)", m_pszUploadMenuText, unsyncedFolders);
-        }
-        else if(unsyncedFolders == 1)
-            StringCchPrintfW(menuText, 128, L"%s (%d files, 1 folder)", m_pszUploadMenuText, unsyncedFiles);
-        else
-            StringCchPrintfW(menuText, 128, L"%s (%d files, %d folders)", m_pszUploadMenuText, unsyncedFiles, unsyncedFolders);
-
+        LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+        if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
         MENUITEMINFO mii = { sizeof(mii) };
         mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
         mii.wID = idCmdFirst + IDM_UPLOAD;
@@ -363,39 +340,17 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
         if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
         {
+            delete menuText;
             return HRESULT_FROM_WIN32(GetLastError());
         }
+        delete menuText;
         lastItem = IDM_UPLOAD;
     }
 
     if(syncedFolders || syncedFiles)
     {
-        WCHAR menuText[128];
-
-        if((syncedFolders + syncedFiles) == 1)
-        {
-            if(syncedFolders)
-                StringCchPrintfW(menuText, 128, L"%s (1 folder)", m_pszGetLinkMenuText);
-            else
-                StringCchPrintfW(menuText, 128, L"%s (1 file)", m_pszGetLinkMenuText);
-        }
-        else if(!syncedFiles)
-            StringCchPrintfW(menuText, 128, L"%s (%d folders)", m_pszGetLinkMenuText, syncedFolders);
-        else if(!syncedFolders)
-            StringCchPrintfW(menuText, 128, L"%s (%d files)", m_pszGetLinkMenuText, syncedFiles);
-        else if(syncedFiles == 1)
-        {
-            if(syncedFolders == 1)
-                StringCchPrintfW(menuText, 128, L"%s (1 file, 1 folder)", m_pszGetLinkMenuText);
-            else
-                StringCchPrintfW(menuText, 128, L"%s (1 file, %d folders)", m_pszGetLinkMenuText, syncedFolders);
-        }
-        else if(syncedFolders == 1)
-            StringCchPrintfW(menuText, 128, L"%s (%d files, 1 folder)", m_pszGetLinkMenuText, syncedFiles);
-        else
-            StringCchPrintfW(menuText, 128, L"%s (%d files, %d folders)", m_pszGetLinkMenuText, syncedFiles, syncedFolders);
-
-
+        LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK, syncedFiles, syncedFolders);
+        if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
         MENUITEMINFO mii = { sizeof(mii) };
         mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
         mii.wID = idCmdFirst + IDM_GETLINK;
@@ -405,8 +360,10 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
         if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
         {
+            delete menuText;
             return HRESULT_FROM_WIN32(GetLastError());
         }
+        delete menuText;
         lastItem = IDM_GETLINK;
     }
 

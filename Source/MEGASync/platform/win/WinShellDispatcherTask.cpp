@@ -9,6 +9,13 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
 
+typedef enum {
+       STRING_UPLOAD = 0,
+       STRING_GETLINK = 1,
+       STRING_SHARE = 2,
+       STRING_SEND = 3
+} StringID;
+
 WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QObject()
 {
     this->receiver = receiver;
@@ -339,72 +346,123 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
 
 VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
-   //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
-
+    //wprintf( TEXT("[%d] %s\n"), pipe->hPipeInst, pipe->chRequest);
+    wcscpy_s(pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
     wchar_t c = pipe->chRequest[0];
-   if(((c != L'P') && (c != L'F') && (c != L'L')) || (lstrlen(pipe->chRequest)<3))
-   {
-       wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
-	   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
-	   if(!uploadQueue.isEmpty())
-	   {
-		   emit newUploadQueue(uploadQueue);
-		   uploadQueue.clear();
-	   }
+    wchar_t *content =  pipe->chRequest+2;
+    switch(c)
+    {
+        case L'T':
+        {
+            if(lstrlen(pipe->chRequest)<3) break;
 
-       if(!exportQueue.isEmpty())
-       {
-           emit newExportQueue(exportQueue);
-           exportQueue.clear();
-       }
-	   return;
-   }
+            bool ok;
+            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii(':'));
+            if(parameters.size() != 3) break;
 
-   wchar_t *path =  pipe->chRequest+2;
-   if(c == L'F')
-   {
-       QFileInfo file(QString::fromWCharArray(path));
-       if(file.exists())
-       {
-           LOG("Adding file to upload queue");
-           uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
-       }
-       wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
-       pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
-       return;
-   }
-   else if(c == L'L')
-   {
-       QFileInfo file(QString::fromWCharArray(path));
-       if(file.exists())
-       {
-           LOG("Adding file to export queue");
-           exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
-       }
-       wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT);
-       pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
-       return;
-   }
+            int stringId    = parameters[0].toInt(&ok);
+            if(!ok) break;
+            int numFiles    = parameters[1].toInt(&ok);
+            if(!ok) break;
+            int numFolders  = parameters[2].toInt(&ok);
+            if(!ok) break;
 
-   MegaApplication *app = (MegaApplication *)qApp;
-   MegaApi *megaApi = app->getMegaApi();
-   string tmpPath((const char*)path, lstrlen(path)*sizeof(wchar_t));
-   pathstate_t state = megaApi->syncPathState(&tmpPath);
-   switch(state)
-   {
-       case PATHSTATE_SYNCED:
-           wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
-           break;
-        case PATHSTATE_SYNCING:
-            wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
+            QString actionString;
+            switch(stringId)
+            {
+                case STRING_UPLOAD:
+                    actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
+                    break;
+                case STRING_GETLINK:
+                    actionString = QCoreApplication::translate("ShellExtension", "Get MEGA link");
+                    break;
+                case STRING_SHARE:
+                    actionString = QCoreApplication::translate("ShellExtension", "Share with a MEGA user");
+                    break;
+                case STRING_SEND:
+                    actionString = QCoreApplication::translate("ShellExtension", "Send to a MEGA user");
+                    break;
+            }
+
+            QString sNumFiles;
+            if(numFiles == 1) sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
+            else if(numFiles > 1) sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files").arg(numFiles);
+
+            QString sNumFolders;
+            if(numFolders == 1) sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
+            else if(numFolders > 1) sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
+
+            QString fullString;
+            if(numFiles && numFolders) fullString = QString::fromAscii("%1 (%2, %3)").arg(actionString).arg(sNumFiles).arg(sNumFolders);
+            else if(numFiles && !numFolders) fullString = QString::fromAscii("%1 (%2)").arg(actionString).arg(sNumFiles);
+            else if(!numFiles && numFolders) fullString = QString::fromAscii("%1 (%2)").arg(actionString).arg(sNumFolders);
+
+            wcscpy_s( pipe->chReply, BUFSIZE, fullString.utf16());
             break;
-       case PATHSTATE_PENDING:
-            wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
+        }
+        case L'F':
+        {
+            if(lstrlen(pipe->chRequest)<3) break;
+            QFileInfo file(QString::fromWCharArray(content));
+            if(file.exists())
+            {
+                LOG("Adding file to upload queue");
+                uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
+            }
             break;
-        case PATHSTATE_NOTFOUND:
-        default:
-            //cout << "Not found" << endl;
-            wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
-   }
-   pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(TCHAR);
+        }
+        case L'L':
+        {
+            if(lstrlen(pipe->chRequest)<3) break;
+            QFileInfo file(QString::fromWCharArray(content));
+            if(file.exists())
+            {
+                LOG("Adding file to export queue");
+                exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
+            }
+            break;
+        }
+        case L'P':
+        {
+            if(lstrlen(pipe->chRequest)<3) break;
+            MegaApplication *app = (MegaApplication *)qApp;
+            MegaApi *megaApi = app->getMegaApi();
+            string tmpPath((const char*)content, lstrlen(content)*sizeof(wchar_t));
+            pathstate_t state = megaApi->syncPathState(&tmpPath);
+            switch(state)
+            {
+                case PATHSTATE_SYNCED:
+                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
+                    break;
+                 case PATHSTATE_SYNCING:
+                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
+                     break;
+                case PATHSTATE_PENDING:
+                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
+                     break;
+                 case PATHSTATE_NOTFOUND:
+                 default:
+                     //cout << "Not found" << endl;
+                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
+            }
+            break;
+        }
+        case L'E':
+        {
+            if(!uploadQueue.isEmpty())
+            {
+                emit newUploadQueue(uploadQueue);
+                uploadQueue.clear();
+            }
+
+            if(!exportQueue.isEmpty())
+            {
+                emit newExportQueue(exportQueue);
+                exportQueue.clear();
+            }
+        }
+        case L'I':
+        default:;
+    }
+    pipe->cbToWrite = (lstrlen(pipe->chReply)+1)*sizeof(WCHAR);
 }

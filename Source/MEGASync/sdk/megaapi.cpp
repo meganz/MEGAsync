@@ -2229,7 +2229,6 @@ void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
 void MegaApi::share_result(error e)
 {
 	MegaError megaError(e);
-	cout << "Share creation/modification request failed (" << megaError.getErrorString() << ")" << endl;
 
     if(requestMap.find(client->restag) == requestMap.end()) return;
     MegaRequest* request = requestMap.at(client->restag);
@@ -2248,9 +2247,6 @@ void MegaApi::share_result(int, error e)
 {
 	MegaError megaError(e);
 	if (e) cout << "Share creation/modification failed (" << megaError.getErrorString() << ")" << endl;
-	else cout << "Share creation/modification succeeded" << endl;
-
-	cout << "First share tag: " << client->restag << endl;
 
 	//The other callback will be called at the end of the request
 	//MegaRequest *request = requestQueue.front();
@@ -2424,8 +2420,6 @@ void MegaApi::exportnode_result(handle h, handle ph)
 
 	if ((n = client->nodebyhandle(h)))
 	{
-		cout << "Exported node finished" << endl;
-
 		char node[9];
 		char key[FILENODEKEYLENGTH*4/3+3];
 
