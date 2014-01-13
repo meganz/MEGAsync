@@ -70,7 +70,13 @@ public:
 	// notified nodes originating from this sync bear this tag
 	int tag;
 
-	Sync(MegaClient*, string*, Node*, int = 0);
+	// debris path component relative to the base path
+	string debris, localdebris;
+
+	// move file or folder to localdebris
+	bool movetolocaldebris(string* localpath);
+	
+	Sync(MegaClient*, string*, const char*, string*, Node*, int = 0);
 	~Sync();
 };
 

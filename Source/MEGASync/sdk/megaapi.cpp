@@ -889,8 +889,6 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     INIT_MUTEX(globalListenerMutex);
     INIT_RECURSIVE_MUTEX(sdkMutex);
 
-    string cacheFolder("cache/");
-    string localCacheFolder;
 	addListener(listener);
 	maxRetries = 3;
 	loginRequest = NULL;
@@ -907,10 +905,6 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
-    fsAccess->path2local(basePath, &localcachepath);
-    fsAccess->path2local(&cacheFolder, &localCacheFolder);
-    localcachepath.append(localCacheFolder.data(), localCacheFolder.size());
-    fsAccess->mkdirlocal(&localcachepath);
     dbAccess = new MegaDbAccess(basePath);
     client = new MegaClient(this, waiter, httpio, fsAccess, NULL, "FhMgXbqb");
 
@@ -1302,7 +1296,15 @@ void MegaApi::setUploadLimit(int bpslimit)
 void MegaApi::startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD, listener);
-	transfer->setPath(localPath);
+    if(localPath)
+    {
+        string path(localPath);
+#ifdef WIN32
+        if(path.compare(0, 4, "\\\\?\\"))
+            path.insert(0, "\\\\?\\");
+#endif
+        transfer->setPath(path.data());
+    }
 	if(parent) transfer->setParentHandle(parent->nodehandle);
 	transfer->setNumConnections(connections);
 	transfer->setMaxSpeed(maxSpeed);
@@ -1326,9 +1328,19 @@ void MegaApi::startDownload(handle nodehandle, const char* target, int connectio
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_DOWNLOAD, listener);
 
-	int c = target[strlen(target)-1];
-	if((c=='/') || (c == '\\')) transfer->setParentPath(target);
-	else transfer->setPath(target);
+    if(target)
+    {
+#ifdef WIN32
+        string path(target);
+        if(path.compare(0, 4, "\\\\?\\"))
+            path.insert(0, "\\\\?\\");
+        target = path.data();
+#endif
+
+        int c = target[strlen(target)-1];
+        if((c=='/') || (c == '\\')) transfer->setParentPath(target);
+        else transfer->setPath(target);
+    }
 
 	transfer->setNodeHandle(nodehandle);
 	transfer->setBase64Key(base64key);
@@ -1353,7 +1365,16 @@ void MegaApi::startDownload(Node* node, const char* localFolder, MegaTransferLis
 void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, MegaTransferListener *listener)
 {
 	MegaTransfer* transfer = new MegaTransfer(MegaTransfer::TYPE_DOWNLOAD, listener);
-	transfer->setParentPath(localFolder);
+    if(localFolder)
+    {
+        string path(localFolder);
+#ifdef WIN32
+        if(path.compare(0, 4, "\\\\?\\"))
+            path.insert(0, "\\\\?\\");
+#endif
+        transfer->setParentPath(path.data());
+    }
+
     transfer->setNodeHandle(node->getHandle());
     transfer->setPublicNode(node);
 	transferQueue.push(transfer);
@@ -1838,18 +1859,20 @@ void MegaApi::transfer_prepare(Transfer *t)
     updateStatics();
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
-	string path;
-	fsAccess->local2path(&(t->localfilename), &path);
-	transfer->setPath(path.c_str());
-	transfer->setTotalBytes(t->size);
 
-    LOG("transfer_prepare");;
-
+    LOG("transfer_prepare");
 	if (t->type == GET)
 	{
-		client->fsaccess->tmpnamelocal(&t->localfilename);
-        t->localfilename.insert(0, localcachepath);
-		transfer->setNodeHandle(t->files.front()->h);
+        if((!t->localfilename.size()) || (t->tag>0))
+        {
+            if(!t->localfilename.size())
+                t->localfilename = t->files.front()->localname;
+
+            string suffix(".mega");
+            fsAccess->name2local(&suffix);
+            t->localfilename.append(suffix);
+            transfer->setNodeHandle(t->files.front()->h);
+        }
 	}
 	else
 	{
@@ -1877,6 +1900,11 @@ void MegaApi::transfer_prepare(Transfer *t)
 			}
 		}
 	}
+
+    string path;
+    fsAccess->local2path(&(t->files.front()->localname), &path);
+    transfer->setPath(path.c_str());
+    transfer->setTotalBytes(t->size);
 }
 
 void MegaApi::transfer_update(Transfer *tr)
@@ -3982,7 +4010,7 @@ void MegaApi::sendPendingRequests()
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
             LOG("addSync");
-            e = client->addsync(&localname,node, -1);
+            e = client->addsync(&localname, "Rubbish", NULL, node, -1);
             if(!e)
             {
                 client->restag = nextTag;

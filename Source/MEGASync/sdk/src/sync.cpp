@@ -28,7 +28,7 @@ namespace mega {
 
 // new Syncs are automatically inserted into the session's syncs list
 // a full read of the subtree is initiated
-Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode, int ctag)
+Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris, string* clocaldebris, Node* remotenode, int ctag)
 {
 	client = cclient;
 	tag = ctag;
@@ -39,7 +39,23 @@ Sync::Sync(MegaClient* cclient, string* crootpath, Node* remotenode, int ctag)
 
 	state = SYNC_INITIALSCAN;
 
-	dirnotify = client->fsaccess->newdirnotify(crootpath);
+	if (cdebris)
+	{
+		debris = cdebris;
+		client->fsaccess->path2local(&debris,&localdebris);
+
+		dirnotify = client->fsaccess->newdirnotify(crootpath,&localdebris);
+
+		localdebris.insert(0,client->fsaccess->localseparator);
+		localdebris.insert(0,*crootpath);
+	}
+	else
+	{
+		localdebris = *clocaldebris;
+
+		// FIXME: pass last segment of localebris
+		dirnotify = client->fsaccess->newdirnotify(crootpath,&localdebris);
+	}
 
 	localroot.init(this,FOLDERNODE,NULL,crootpath,crootpath);
 	localroot.setnode(remotenode);
@@ -133,6 +149,8 @@ LocalNode* Sync::localnodebypath(LocalNode* l, string* localpath, LocalNode** pa
 // determine sync state of path (path must start with the sync prefix)
 pathstate_t Sync::pathstate(string* localpath)
 {
+	if (*localpath == localdebris) return PATHSTATE_DEBRIS;
+
 	LocalNode* l = localnodebypath(NULL,localpath);
 
 	if (!l) return PATHSTATE_NOTFOUND;
@@ -179,9 +197,13 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 				if (t) localpath->append(client->fsaccess->localseparator);
 				localpath->append(localname);
 
-				// new or existing record: place scan result in notification queue
-				dirnotify->notify(DirNotify::DIREVENTS,NULL,localpath->data(),localpath->size());
-				
+				// skip the sync's debris folder
+				if (localpath->size() < localdebris.size() || memcmp(localpath->data(),localdebris.data(),localdebris.size()) || (localpath->size() != localdebris.size() && memcmp(localpath->data()+localdebris.size(),client->fsaccess->localseparator.data(),client->fsaccess->localseparator.size())))
+				{
+					// new or existing record: place scan result in notification queue
+					dirnotify->notify(DirNotify::DIREVENTS,NULL,localpath->data(),localpath->size());
+				}
+
 				localpath->resize(t);
 			}
 		}
@@ -363,14 +385,17 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 				else
 				{
 					if (l->size > 0) localbytes -= l->size;
+
 					if (l->genfingerprint(fa))
 					{
+
 						changed = true;
 						l->bumpnagleds();
 						l->deleted = 0;
 					}
+
 					if (l->size > 0) localbytes += l->size;
-					
+
 					if (newnode) client->app->syncupdate_local_file_addition(this,path.c_str());
 					else if (changed) client->app->syncupdate_local_file_change(this,path.c_str());
 				}
@@ -420,6 +445,46 @@ void Sync::procscanq(int q)
 
 	if (dirnotify->notifyq[q].size()) client->syncactivity = true;
 	else if (!dirnotify->notifyq[!q].size()) scanseqno++;	// all queues empty: new scan sweep begins
+}
+
+bool Sync::movetolocaldebris(string* localpath)
+{
+	size_t t = localdebris.size();
+	char buf[32];
+	time_t ts = time(NULL);
+	struct tm* ptm = localtime(&ts);
+	string day, localday;
+
+	for (int i = -3; i < 100; i++)
+	{
+		if (i == -2 || i > 95) client->fsaccess->mkdirlocal(&localdebris);
+	
+		sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
+		if (i >= 0) sprintf(strchr(buf,0)," %02d.%02d.%02d.%02d",ptm->tm_hour,ptm->tm_min,ptm->tm_sec,i);
+
+		day = buf;
+		client->fsaccess->path2local(&day,&localday);
+		
+		localdebris.append(client->fsaccess->localseparator);
+		localdebris.append(localday);
+		
+		if (i > -3) client->fsaccess->mkdirlocal(&localdebris,true);
+
+		localdebris.append(client->fsaccess->localseparator);
+		localdebris.append(*localpath,client->fsaccess->lastpartlocal(localpath),string::npos);
+
+		if (client->fsaccess->renamelocal(localpath,&localdebris,false))
+		{
+			localdebris.resize(t);
+			return true;
+		}
+
+		localdebris.resize(t);
+
+		if (client->fsaccess->transient_error) return false;
+	}
+	
+	return false;
 }
 
 } // namespace

@@ -163,7 +163,7 @@ public:
 	error exportnode(Node*, int);
 
 	// add sync
-	error addsync(string*, Node*, int);
+	error addsync(string*, const char*, string*, Node*, int);
 
 	// close all open HTTP connections
 	void disconnect();

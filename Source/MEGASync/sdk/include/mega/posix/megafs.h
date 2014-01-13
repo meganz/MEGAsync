@@ -54,9 +54,9 @@ public:
 
 	FileAccess* newfileaccess();
 	DirAccess* newdiraccess();
-	DirNotify* newdirnotify(string*);
+	DirNotify* newdirnotify(string*, string*);
 
-	void tmpnamelocal(string*, string* = NULL);
+	void tmpnamelocal(string*);
 
 	void local2path(string*, string*);
 	void path2local(string*, string*);
@@ -66,14 +66,15 @@ public:
 
 	bool getsname(string*, string*);
 
-	bool renamelocal(string*, string*);
+	bool renamelocal(string*, string*, bool);
 	bool copylocal(string*, string*);
 	bool rubbishlocal(string*);
 	bool unlinklocal(string*);
 	bool rmdirlocal(string*);
-	bool mkdirlocal(string*);
+	bool mkdirlocal(string*, bool);
 	bool setmtimelocal(string*, time_t);
 	bool chdirlocal(string*);
+	size_t lastpartlocal(string*);
 
 	void addevents(Waiter*, int);
 	int checkevents(Waiter*);
@@ -114,7 +115,7 @@ public:
 	void addnotify(LocalNode*, string*);
 	void delnotify(LocalNode*);
 
-	PosixDirNotify(string*);
+	PosixDirNotify(string*, string*);
 };
 
 } // namespace

@@ -880,7 +880,6 @@ protected:
 	long long updateSIDtime;
 	int threadExit;
     dstime pausetime;
-    string localcachepath;
 	handle cwd;
 	void loop();
 	

@@ -30,9 +30,10 @@ bool FileSystemAccess::islchex(char c)
 }
 
 // default DirNotify: no notification available
-DirNotify::DirNotify(string* clocalbasepath)
+DirNotify::DirNotify(string* clocalbasepath, string* cignore)
 {
 	localbasepath = *clocalbasepath;
+	ignore = *cignore;
 	
 	failed = true;
 	error = false;
@@ -46,9 +47,9 @@ void DirNotify::notify(notifyqueue q, LocalNode* l, const char* localpath, size_
 	notifyq[q].back().path.assign(localpath,len);
 }
 
-DirNotify* FileSystemAccess::newdirnotify(string* localpath)
+DirNotify* FileSystemAccess::newdirnotify(string* localpath, string* ignore)
 {
-	return new DirNotify(localpath);
+	return new DirNotify(localpath,ignore);
 }
 
 // open file for reading

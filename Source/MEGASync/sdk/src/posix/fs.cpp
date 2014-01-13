@@ -151,6 +151,7 @@ void PosixFileSystemAccess::addevents(Waiter* w, int flags)
 }
 
 // read all pending inotify events and queue them for processing
+// FIXME: ignore sync-specific debris folder
 int PosixFileSystemAccess::checkevents(Waiter* w)
 {
 	PosixWaiter* pw = (PosixWaiter*)w;
@@ -194,9 +195,13 @@ int PosixFileSystemAccess::checkevents(Waiter* w)
 #endif
 
 // generate unique local filename in the same fs as relatedpath
-void PosixFileSystemAccess::tmpnamelocal(string* filename, string* relatedpath)
+void PosixFileSystemAccess::tmpnamelocal(string* localname)
 {
-	*filename = tmpnam(NULL);
+	static unsigned tmpindex;
+	char buf[128];
+
+	sprintf(buf,".getxfer.%lu.%u.mega",getpid(),tmpindex++);
+	*localname = buf;
 }
 
 void PosixFileSystemAccess::path2local(string* local, string* path)
@@ -249,7 +254,7 @@ bool PosixFileSystemAccess::getsname(string*, string*)
 	return false;
 }
 
-bool PosixFileSystemAccess::renamelocal(string* oldname, string* newname)
+bool PosixFileSystemAccess::renamelocal(string* oldname, string* newname, bool)
 {
 	return !rename(oldname->c_str(),newname->c_str());
 }
@@ -300,7 +305,7 @@ bool PosixFileSystemAccess::rmdirlocal(string* name)
 	return !rmdir(name->c_str());
 }
 
-bool PosixFileSystemAccess::mkdirlocal(string* name)
+bool PosixFileSystemAccess::mkdirlocal(string* name, bool)
 {
 	bool r = !mkdir(name->c_str(),0700);
 
@@ -321,7 +326,16 @@ bool PosixFileSystemAccess::chdirlocal(string* name)
 	return !chdir(name->c_str());
 }
 
-PosixDirNotify::PosixDirNotify(string* localbasepath) : DirNotify(localbasepath)
+size_t PosixFileSystemAccess::lastpartlocal(string* localname)
+{
+	const char* ptr = localname->data();
+
+	if ((ptr = strrchr(ptr,'/'))) return ptr-localname->data();
+	
+	return 0;
+}
+
+PosixDirNotify::PosixDirNotify(string* localbasepath, string* ignore) : DirNotify(localbasepath,ignore)
 {
 }
 
@@ -355,9 +369,9 @@ DirAccess* PosixFileSystemAccess::newdiraccess()
 	return new PosixDirAccess();
 }
 
-DirNotify* PosixFileSystemAccess::newdirnotify(string* localpath)
+DirNotify* PosixFileSystemAccess::newdirnotify(string* localpath, string* ignore)
 {
-	PosixDirNotify* dirnotify = new PosixDirNotify(localpath);
+	PosixDirNotify* dirnotify = new PosixDirNotify(localpath,ignore);
 
 	dirnotify->fsaccess = this;
 

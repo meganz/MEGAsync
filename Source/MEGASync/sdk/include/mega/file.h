@@ -84,6 +84,9 @@ struct SyncFileGet : public File
 	Sync* sync;
 	Node* n;
 	
+	// set sync-specific temp filename
+	void prepare();
+	
 	// update localname (may have changed due to renames/moves of the synced files)
 	void updatelocalname();
 
