@@ -25,6 +25,9 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 SOURCES += MegaApplication.cpp
 HEADERS += MegaApplication.h
 
+TRANSLATIONS    = gui/translations/MEGASyncStrings_es.ts
+CODECFORTR = UTF-8
+
 win32 {
     RC_FILE = icon.rc
 }

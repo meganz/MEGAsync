@@ -6,6 +6,7 @@
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
 
+#include <QTranslator>
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QSharedMemory>
@@ -19,6 +20,10 @@ QString MegaApplication::appDirPath = NULL;
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
+    QString locale = QLocale::system().name();
+    QTranslator translator;
+    translator.load(QString::fromAscii("://translations/MEGASyncStrings_") + locale);
+    app.installTranslator(&translator);
 
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QDir crashDir(crashPath);
