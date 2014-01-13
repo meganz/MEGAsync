@@ -494,7 +494,7 @@ Exit anyway?</source>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="772"/>
         <source>Circular linkage detected</source>
-        <translation>[$1666]</translation>
+        <translation>[$139]</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="774"/>
