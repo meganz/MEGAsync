@@ -295,7 +295,7 @@ typedef map<handle,char> handlecount_map;
 // maps FileFingerprints to node
 typedef multiset<FileFingerprint*, FileFingerprintCmp> fingerprint_set;
 
-typedef enum { PATHSTATE_NOTFOUND, PATHSTATE_SYNCED, PATHSTATE_SYNCING, PATHSTATE_PENDING } pathstate_t;
+typedef enum { PATHSTATE_NOTFOUND, PATHSTATE_SYNCED, PATHSTATE_SYNCING, PATHSTATE_PENDING, PATHSTATE_DEBRIS } pathstate_t;
 
 struct Notification
 {

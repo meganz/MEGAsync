@@ -1036,7 +1036,9 @@ bool MegaClient::dispatch(direction d)
 				if (!k) return false;
 			}
 
-			// set localname
+			nextit->second->localfilename.clear();
+
+			// set file localnames (ultimate target) and one transfer-wide temp localname
 			for (file_list::iterator it = nextit->second->files.begin(); !nextit->second->localfilename.size() && it != nextit->second->files.end(); it++) (*it)->prepare();
 
 			// app-side transfer preparations (populate localname, create thumbnail...)
@@ -3654,7 +3656,7 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 			stopxfers(ll);
 
 			// attempt deletion and re-queue for retry in case of a transient failure
-			if (fsaccess->rubbishlocal(localpath)) delete lit++->second;
+			if (l->sync->movetolocaldebris(localpath)) delete lit++->second;
 			else if (success && fsaccess->transient_error)
 			{
 				success = false;
@@ -4105,7 +4107,7 @@ void MegaClient::movetosyncdebris(Node* n)
 		// check if we already have today's sync debris subfolder in rubbish bin
 		handle h;
 		time_t ts = time(NULL);
-		struct tm* ptm = gmtime(&ts);
+		struct tm* ptm = localtime(&ts);
 		char buf[32];
 
 		sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
@@ -4169,9 +4171,9 @@ void MegaClient::movetosyncdebris(Node* n)
 // check sync path, add sync if folder
 // disallow nested syncs (there is only one LocalNode pointer per node), return EEXIST otherwise
 // (FIXME: perform same check for local paths!)
-error MegaClient::addsync(string* rootpath, Node* remotenode, int tag)
+error MegaClient::addsync(string* rootpath, const char* debris, string* localdebris, Node* remotenode, int tag)
 {
-	// cannot sync root node (why not?)
+	// cannot sync files, rubbish bins or inboxes
 	if (remotenode->type != FOLDERNODE && remotenode->type != ROOTNODE) return API_EACCESS;
 
 	Node* n;
@@ -4203,7 +4205,7 @@ error MegaClient::addsync(string* rootpath, Node* remotenode, int tag)
 	{
 		if (fa->type == FOLDERNODE)
 		{
-			Sync* sync = new Sync(this,rootpath,remotenode,tag);
+			Sync* sync = new Sync(this,rootpath,debris,localdebris,remotenode,tag);
 			
 			if (sync->scan(rootpath,fa)) e = API_OK;
 			else
@@ -4219,7 +4221,7 @@ error MegaClient::addsync(string* rootpath, Node* remotenode, int tag)
 	else e = fa->retry ? API_ETEMPUNAVAIL : API_ENOENT;
 
 	delete fa;
-
+	
 	return e;
 }
 
