@@ -6,9 +6,8 @@
 #include <QPixmap>
 #include <QDir>
 
-//#define SHOW_LOGS
 #ifdef SHOW_LOGS
-    #define LOG(x) Utils::log(x)
+    #define LOG(x) Utilities::log(x)
 #else
     #define LOG(X)
 #endif

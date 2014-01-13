@@ -13,6 +13,8 @@
 
 const int MegaApplication::VERSION_CODE = 108;
 const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.8");
+const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
+const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 QString MegaApplication::appPath = NULL;
 QString MegaApplication::appDirPath = NULL;
@@ -20,11 +22,6 @@ QString MegaApplication::appDirPath = NULL;
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
-    QString locale = QLocale::system().name();
-    QTranslator translator;
-    translator.load(QString::fromAscii("://translations/MEGASyncStrings_") + locale);
-    app.installTranslator(&translator);
-
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QDir crashDir(crashPath);
     if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
@@ -103,6 +100,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsDialog = NULL;
     uploadFolderSelector = NULL;
     reboot = false;
+    translator = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -123,6 +121,9 @@ void MegaApplication::initialize()
     QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
 
     preferences = Preferences::instance();
+    QString language = preferences->language();
+    changeLanguage(language);
+
     delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
     Utilities::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
@@ -168,6 +169,47 @@ QString MegaApplication::applicationDirPath()
     return appDirPath;
 }
 
+void MegaApplication::changeLanguage(QString languageCode)
+{
+    if(translator)
+    {
+        removeTranslator(translator);
+        delete translator;
+        translator = NULL;
+    }
+
+    QTranslator *newTranslator = new QTranslator();
+    if(newTranslator->load(MegaApplication::TRANSLATION_FOLDER + MegaApplication::TRANSLATION_PREFIX + languageCode))
+    {
+        installTranslator(newTranslator);
+        translator = newTranslator;
+    }
+    else delete newTranslator;
+
+    updateTrayIcon();
+}
+
+void MegaApplication::updateTrayIcon()
+{
+    if(!trayIcon) return;
+    if(paused)
+    {
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
+    }
+    else if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+    {
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+        if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
+        else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
+    }
+    else
+    {
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+    }
+}
+
 void MegaApplication::start()
 {
     paused = false;
@@ -201,6 +243,9 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {    
+    QString language = preferences->language();
+    changeLanguage(language);
+
     //Show the tray icon
     createTrayIcon();
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
@@ -1049,23 +1094,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
     infoDialog->updateTransfers();
     indexing = megaApi->isIndexing();
     infoDialog->setIndexing(indexing);
-
-    if(paused)
-    {
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
-    }
-    else if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
-    {
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-        if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
-        else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
-    }
-    else
-    {
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
-    }
+    updateTrayIcon();
 }
 
 //TODO: Manage sync callbacks here

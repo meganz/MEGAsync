@@ -58,23 +58,32 @@ void UploadToMegaDialog::on_bChange_clicked()
     ui->eFolderPath->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }
 
-void UploadToMegaDialog::on_buttonBox_accepted()
+void UploadToMegaDialog::changeEvent(QEvent *event)
 {
-	Node *node = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
-	if(node && node->type!=FILENODE)
-	{
-		selectedHandle = node->nodehandle;
-		accept();
-		return;
-	}
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
+}
+
+void UploadToMegaDialog::on_bOK_clicked()
+{
+    Node *node = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
+    if(node && node->type!=FILENODE)
+    {
+        selectedHandle = node->nodehandle;
+        accept();
+        return;
+    }
 
     if(!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
-	{
+    {
         megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), megaApi->getRootNode(), delegateListener);
-		return;
-	}
+        return;
+    }
 
     LOG("ERROR: FOLDER NOT FOUND");
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
-	return;
+    return;
 }

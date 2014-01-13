@@ -39,6 +39,9 @@ protected:
 public slots:
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 
+protected:
+    void changeEvent(QEvent * event);
+
 private slots:
     void on_tMegaFolders_itemSelectionChanged();
     void on_bNewFolder_clicked();

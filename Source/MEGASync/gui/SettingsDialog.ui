@@ -373,7 +373,7 @@ margin-top: 6px;
         <item>
          <widget class="QPushButton" name="bOk">
           <property name="text">
-           <string>Ok</string>
+           <string>OK</string>
           </property>
          </widget>
         </item>

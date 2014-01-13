@@ -50,3 +50,7 @@ FORMS    += gui/SettingsDialog.ui \
 RESOURCES += gui/Resources.qrc
 
 INCLUDEPATH += $$PWD
+
+debug {
+    DEFINES += SHOW_LOGS
+}

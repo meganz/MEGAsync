@@ -1,16 +1,3 @@
-debug_and_release {
-    CONFIG -= debug_and_release
-    CONFIG += debug_and_release
-}
-CONFIG(debug, debug|release) {
-    CONFIG -= debug release
-    CONFIG += debug
-}
-CONFIG(release, debug|release) {
-    CONFIG -= debug release
-    CONFIG += release
-}
-
 SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/backofftimer.cpp \
     $$PWD/src/base64.cpp \

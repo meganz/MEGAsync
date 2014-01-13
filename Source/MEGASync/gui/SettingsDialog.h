@@ -68,6 +68,9 @@ private slots:
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
 
+protected:
+    void changeEvent(QEvent * event);
+
 private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
@@ -76,6 +79,7 @@ private:
 	bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;
+    QStringList languageCodes;
 
     void loadSyncSettings();
     void loadSettings();

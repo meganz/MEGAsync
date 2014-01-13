@@ -52,7 +52,7 @@ QString BindFolderDialog::getSyncName()
     return syncName;
 }
 
-void BindFolderDialog::on_buttonBox_accepted()
+void BindFolderDialog::on_bOK_clicked()
 {
     QString localFolderPath = QDir::toNativeSeparators(QDir(ui->wBinder->selectedLocalFolder()).canonicalPath());
     MegaApi *megaApi = app->getMegaApi();
@@ -134,4 +134,13 @@ void BindFolderDialog::on_buttonBox_accepted()
    }while(repeated);
 
    accept();
+}
+
+void BindFolderDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
 }

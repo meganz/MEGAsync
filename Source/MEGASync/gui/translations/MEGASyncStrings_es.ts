@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="es" sourcelanguage="en">
+<defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>BindFolderDialog</name>
     <message>
         <location filename="../BindFolderDialog.ui" line="14"/>
         <source>Add synchronized folder</source>
         <translation>Añadir carpeta sincronizada</translation>
+    </message>
+    <message>
+        <location filename="../BindFolderDialog.ui" line="42"/>
+        <source>OK</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <location filename="../BindFolderDialog.ui" line="49"/>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
@@ -98,17 +109,17 @@ Please enter a different name to identify this synced folder:</source>
         <translation>Descargar a mi ordenador</translation>
     </message>
     <message>
-        <location filename="../ImportMegaLinksDialog.ui" line="139"/>
+        <location filename="../ImportMegaLinksDialog.ui" line="142"/>
         <source>Import to my cloud drive</source>
         <translation>Importar a mi cuenta de MEGA</translation>
     </message>
     <message>
-        <location filename="../ImportMegaLinksDialog.ui" line="231"/>
+        <location filename="../ImportMegaLinksDialog.ui" line="234"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../ImportMegaLinksDialog.ui" line="238"/>
+        <location filename="../ImportMegaLinksDialog.ui" line="241"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -143,8 +154,8 @@ Please enter a different name to identify this synced folder:</source>
     <name>InfoDialog</name>
     <message>
         <location filename="../InfoDialog.ui" line="340"/>
-        <location filename="../InfoDialog.cpp" line="228"/>
-        <location filename="../InfoDialog.cpp" line="271"/>
+        <location filename="../InfoDialog.cpp" line="231"/>
+        <location filename="../InfoDialog.cpp" line="274"/>
         <source>MEGAsync is up to date</source>
         <translation>MEGAsync está actualizado</translation>
     </message>
@@ -160,9 +171,9 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="749"/>
-        <location filename="../InfoDialog.cpp" line="221"/>
+        <location filename="../InfoDialog.cpp" line="224"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Carpetas</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
@@ -170,101 +181,101 @@ Please enter a different name to identify this synced folder:</source>
         <translation>MEGA.co.nz</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="119"/>
+        <location filename="../InfoDialog.cpp" line="122"/>
         <source>%1% of %2</source>
         <translation>%1% of %2</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="122"/>
+        <location filename="../InfoDialog.cpp" line="125"/>
         <source>Usage: %1</source>
         <translation>Uso: %1</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="170"/>
-        <location filename="../InfoDialog.cpp" line="189"/>
+        <location filename="../InfoDialog.cpp" line="173"/>
+        <location filename="../InfoDialog.cpp" line="192"/>
         <source>%1 of %2 (%3/s)</source>
         <translation>%1 de %2 (%3/s)</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="171"/>
-        <location filename="../InfoDialog.cpp" line="190"/>
+        <location filename="../InfoDialog.cpp" line="174"/>
+        <location filename="../InfoDialog.cpp" line="193"/>
         <source>%1 of %2 (paused)</source>
         <translation>%1 de %2 (en pausa)</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="227"/>
-        <location filename="../InfoDialog.cpp" line="266"/>
+        <location filename="../InfoDialog.cpp" line="230"/>
+        <location filename="../InfoDialog.cpp" line="269"/>
         <source>File transfers paused</source>
         <translation>Transferencias de archivos en pausa</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="229"/>
-        <location filename="../InfoDialog.cpp" line="272"/>
+        <location filename="../InfoDialog.cpp" line="232"/>
+        <location filename="../InfoDialog.cpp" line="275"/>
         <source>MEGAsync is scanning</source>
         <translation>MEGAsync está escaneando</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="304"/>
+        <location filename="../InfoDialog.cpp" line="307"/>
         <source>All transfers have been completed</source>
         <translation>Todas las transferencias de archivos se han completado</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="330"/>
+        <location filename="../InfoDialog.cpp" line="333"/>
         <source>Cancel all downloads</source>
         <translation>Cancelar todas las descargas</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="331"/>
+        <location filename="../InfoDialog.cpp" line="334"/>
         <source>Cancel download</source>
         <translation>Cancelar descarga</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="340"/>
+        <location filename="../InfoDialog.cpp" line="343"/>
         <source>Cancel all uploads</source>
         <translation>Cancelar todas las subidas</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="341"/>
+        <location filename="../InfoDialog.cpp" line="344"/>
         <source>Cancel upload</source>
         <translation>Cancelar subida</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="392"/>
+        <location filename="../InfoDialog.cpp" line="395"/>
         <source>Add Sync</source>
         <translation>Añadir syncronización</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="443"/>
+        <location filename="../InfoDialog.cpp" line="446"/>
         <source>one file at %1/s</source>
         <translation>un archivo a %1/s </translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="444"/>
+        <location filename="../InfoDialog.cpp" line="447"/>
         <source>one file (paused)</source>
         <translation>un archivo (en pausa)</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="445"/>
+        <location filename="../InfoDialog.cpp" line="448"/>
         <source>%1 of %2 files at %3/s</source>
         <translation>%1 de %2 archivos a %3/s</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="446"/>
+        <location filename="../InfoDialog.cpp" line="449"/>
         <source>%1 of %2 files (paused)</source>
         <translation>%1 de %2 archivos (en pausa)</translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="447"/>
+        <location filename="../InfoDialog.cpp" line="450"/>
         <source>Total Remaining: </source>
         <translation>Tamaño restante: </translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="455"/>
+        <location filename="../InfoDialog.cpp" line="458"/>
         <source>Downloading </source>
         <translation>Descargando </translation>
     </message>
     <message>
-        <location filename="../InfoDialog.cpp" line="478"/>
+        <location filename="../InfoDialog.cpp" line="481"/>
         <source>Uploading </source>
         <translation>Subiendo </translation>
     </message>
@@ -272,73 +283,73 @@ Please enter a different name to identify this synced folder:</source>
 <context>
     <name>MegaApplication</name>
     <message>
-        <location filename="../../MegaApplication.cpp" line="58"/>
+        <location filename="../../MegaApplication.cpp" line="56"/>
         <source>MEGAsync BETA</source>
         <translation>MEGAsync BETA</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="59"/>
+        <location filename="../../MegaApplication.cpp" line="57"/>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
         <translation>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="176"/>
+        <location filename="../../MegaApplication.cpp" line="219"/>
         <source>Logging in</source>
         <translation>Accediendo a la cuenta</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="205"/>
-        <location filename="../../MegaApplication.cpp" line="206"/>
+        <location filename="../../MegaApplication.cpp" line="251"/>
+        <location filename="../../MegaApplication.cpp" line="252"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translation>MEGAsync está activo. Haz clic aquí para abrir la ventana de información.</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="243"/>
+        <location filename="../../MegaApplication.cpp" line="289"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
         <translation>Tu sincronización &quot;%1&quot; se ha desactivado
 porque la carpeta remota no existe</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="253"/>
+        <location filename="../../MegaApplication.cpp" line="299"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
         <translation>Tu sincronización &quot;%1&quot; se ha desactivado
 porque la carpeta remota está en la papelera </translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="264"/>
+        <location filename="../../MegaApplication.cpp" line="310"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
         <translation>Tu sincronización &quot;%1&quot; se ha desactivado
 porque la carpeta local no existe</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="294"/>
+        <location filename="../../MegaApplication.cpp" line="340"/>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translation>Error: La carpeta de destino no existe. La subida ha sido cancelada</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="316"/>
+        <location filename="../../MegaApplication.cpp" line="362"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation>La carpeta (%1) no se subió porque contiene demasiados archivos o carpetas  (esta versión está limitada a %2 carpetas o %3 archivos.</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="323"/>
+        <location filename="../../MegaApplication.cpp" line="369"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation>%1 carpetas no se subieron porque contienen demasiados archivos o carpetas  (esta versión está limitada a %2 carpetas o %3 archivos.</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="348"/>
-        <location filename="../../MegaApplication.h" line="65"/>
-        <location filename="../../MegaApplication.h" line="66"/>
-        <location filename="../../MegaApplication.h" line="67"/>
-        <location filename="../../MegaApplication.h" line="68"/>
+        <location filename="../../MegaApplication.cpp" line="394"/>
+        <location filename="../../MegaApplication.h" line="70"/>
+        <location filename="../../MegaApplication.h" line="71"/>
+        <location filename="../../MegaApplication.h" line="72"/>
+        <location filename="../../MegaApplication.h" line="73"/>
         <source>MEGAsync</source>
         <translation>MEGAsync</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="349"/>
+        <location filename="../../MegaApplication.cpp" line="395"/>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
@@ -349,96 +360,96 @@ Los borrados de archivos mientras la aplicación no se está ejecutando no se pr
 ¿Quieres salir de todas formas?</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="367"/>
+        <location filename="../../MegaApplication.cpp" line="413"/>
         <source>About MEGAsync</source>
         <translation>Acerca de MEGAsync</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="367"/>
+        <location filename="../../MegaApplication.cpp" line="413"/>
         <source>MEGAsync version code %1</source>
         <translation>MEGAsync código de versión %1 </translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="587"/>
-        <location filename="../../MegaApplication.cpp" line="709"/>
+        <location filename="../../MegaApplication.cpp" line="633"/>
+        <location filename="../../MegaApplication.cpp" line="755"/>
         <source>The link has been copied to the clipboard</source>
         <translation>El enlace se ha copiado al portapapeles</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="588"/>
+        <location filename="../../MegaApplication.cpp" line="634"/>
         <source>The links have been copied to the clipboard</source>
         <translation>Los enlaces se han copiado al portapapeles</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="608"/>
+        <location filename="../../MegaApplication.cpp" line="654"/>
         <source>Logging in...</source>
         <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="662"/>
+        <location filename="../../MegaApplication.cpp" line="708"/>
         <source>Exit</source>
         <translation>Salir</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="664"/>
+        <location filename="../../MegaApplication.cpp" line="710"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="666"/>
+        <location filename="../../MegaApplication.cpp" line="712"/>
         <source>Settings</source>
         <translation>Ajustes</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="668"/>
+        <location filename="../../MegaApplication.cpp" line="714"/>
         <source>Pause</source>
         <translation>Pausar transferencias</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="670"/>
+        <location filename="../../MegaApplication.cpp" line="716"/>
         <source>Resume</source>
         <translation>Reanudar transferencias</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="672"/>
+        <location filename="../../MegaApplication.cpp" line="718"/>
         <source>Import links</source>
         <translation>Importar enlaces</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="689"/>
-        <location filename="../../MegaApplication.cpp" line="804"/>
-        <location filename="../../MegaApplication.cpp" line="1066"/>
-        <location filename="../../MegaApplication.cpp" line="1105"/>
+        <location filename="../../MegaApplication.cpp" line="209"/>
+        <location filename="../../MegaApplication.cpp" line="735"/>
+        <location filename="../../MegaApplication.cpp" line="850"/>
+        <location filename="../../MegaApplication.cpp" line="1135"/>
         <source>Up to date</source>
         <translation>Actualizado</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="787"/>
-        <location filename="../../MegaApplication.cpp" line="1055"/>
+        <location filename="../../MegaApplication.cpp" line="198"/>
+        <location filename="../../MegaApplication.cpp" line="833"/>
         <source>Paused</source>
         <translation>En pausa</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="798"/>
-        <location filename="../../MegaApplication.cpp" line="1060"/>
-        <location filename="../../MegaApplication.cpp" line="1113"/>
+        <location filename="../../MegaApplication.cpp" line="203"/>
+        <location filename="../../MegaApplication.cpp" line="844"/>
+        <location filename="../../MegaApplication.cpp" line="1143"/>
         <source>Scanning</source>
         <translation>Escaneando</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="799"/>
-        <location filename="../../MegaApplication.cpp" line="1061"/>
-        <location filename="../../MegaApplication.cpp" line="1114"/>
+        <location filename="../../MegaApplication.cpp" line="204"/>
+        <location filename="../../MegaApplication.cpp" line="845"/>
+        <location filename="../../MegaApplication.cpp" line="1144"/>
         <source>Syncing</source>
         <translation>Sincronizando</translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="944"/>
+        <location filename="../../MegaApplication.cpp" line="990"/>
         <source>Temporary transmission error: </source>
         <translation>Error temporal en la transmisión: </translation>
     </message>
     <message>
-        <location filename="../../MegaApplication.cpp" line="1036"/>
+        <location filename="../../MegaApplication.cpp" line="1082"/>
         <source>You have new or updated files in your account</source>
         <translation>Tienes archivos nuevos o actualizados en tu cuenta</translation>
     </message>
@@ -604,13 +615,13 @@ Si continúas la subida, el archivo previo se sobreescribirá
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="93"/>
-        <location filename="../NodeSelector.cpp" line="93"/>
+        <location filename="../NodeSelector.cpp" line="108"/>
         <source>New folder</source>
         <translation>Nueva carpeta</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
-        <source>Ok</source>
+        <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
@@ -619,33 +630,33 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../NodeSelector.cpp" line="32"/>
+        <location filename="../NodeSelector.cpp" line="34"/>
         <source>Cloud Drive</source>
         <translation>Mi Disco</translation>
     </message>
     <message>
-        <location filename="../NodeSelector.cpp" line="94"/>
+        <location filename="../NodeSelector.cpp" line="109"/>
         <source>Enter the new folder name:</source>
         <translation>Introduce el nombre de la carpeta nueva:</translation>
     </message>
     <message>
-        <location filename="../NodeSelector.cpp" line="127"/>
+        <location filename="../NodeSelector.cpp" line="142"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../NodeSelector.cpp" line="127"/>
+        <location filename="../NodeSelector.cpp" line="142"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translation>No se puede sincronizar la cuenta completa. Por favor, selecciona una carpeta.</translation>
     </message>
     <message>
-        <location filename="../NodeSelector.cpp" line="137"/>
+        <location filename="../NodeSelector.cpp" line="152"/>
         <source>Warning</source>
         <translation>Atención</translation>
     </message>
     <message>
-        <location filename="../NodeSelector.cpp" line="137"/>
+        <location filename="../NodeSelector.cpp" line="152"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
         <translation>Tienes %1 en esta carpeta.
@@ -811,7 +822,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
-        <source>Ok</source>
+        <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
@@ -856,13 +867,13 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="559"/>
-        <location filename="../SettingsDialog.cpp" line="231"/>
+        <location filename="../SettingsDialog.cpp" line="264"/>
         <source>FREE</source>
         <translation>GRATIS</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="579"/>
-        <location filename="../SettingsDialog.cpp" line="517"/>
+        <location filename="../SettingsDialog.cpp" line="556"/>
         <source>Logout</source>
         <translation>Cerrar sesión</translation>
     </message>
@@ -1005,72 +1016,72 @@ Are you sure you want to sync it?</source>
         <translation>Contraseña:</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="216"/>
-        <location filename="../SettingsDialog.cpp" line="264"/>
+        <location filename="../SettingsDialog.cpp" line="249"/>
+        <location filename="../SettingsDialog.cpp" line="297"/>
         <source>Data temporarily unavailable</source>
         <translation>Datos temporalmente no disponibles</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="222"/>
-        <location filename="../SettingsDialog.cpp" line="270"/>
+        <location filename="../SettingsDialog.cpp" line="255"/>
+        <location filename="../SettingsDialog.cpp" line="303"/>
         <source>%1 (%2%) of %3 used</source>
         <translation>Usados %1 (%2%) de %3</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="235"/>
+        <location filename="../SettingsDialog.cpp" line="268"/>
         <source>PRO I</source>
         <translation>PRO I</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="239"/>
+        <location filename="../SettingsDialog.cpp" line="272"/>
         <source>PRO II</source>
         <translation>PRO II</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="243"/>
+        <location filename="../SettingsDialog.cpp" line="276"/>
         <source>PRO III</source>
         <translation>PRO III</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="248"/>
-        <location filename="../SettingsDialog.cpp" line="317"/>
+        <location filename="../SettingsDialog.cpp" line="281"/>
+        <location filename="../SettingsDialog.cpp" line="356"/>
         <source>/MEGAsync Uploads</source>
         <translation>/MEGAsync Uploads</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="398"/>
+        <location filename="../SettingsDialog.cpp" line="437"/>
         <source>Warning</source>
         <translation>Atención</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="423"/>
+        <location filename="../SettingsDialog.cpp" line="462"/>
         <source>You are already syncing your entire account.</source>
         <translation>Ya estás sincronizando tu cuenta completa.</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="518"/>
+        <location filename="../SettingsDialog.cpp" line="557"/>
         <source>Synchronization will stop working.</source>
         <translation>La sincronización dejará de funcionar.</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="518"/>
+        <location filename="../SettingsDialog.cpp" line="557"/>
         <source>Are you sure?</source>
         <translation>¿Estás seguro?</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="568"/>
+        <location filename="../SettingsDialog.cpp" line="607"/>
         <source>Excluded name</source>
         <translation>Nombre excluído</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="569"/>
+        <location filename="../SettingsDialog.cpp" line="608"/>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translation>Introduce un nombre para excluirlo de la sincronización.
 (los comodines * y ? están permitidos):</translation>
     </message>
     <message>
-        <location filename="../SettingsDialog.cpp" line="578"/>
+        <location filename="../SettingsDialog.cpp" line="617"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -1425,29 +1436,39 @@ Please, select another folder.</source>
         <translation>Subir a MEGA</translation>
     </message>
     <message>
-        <location filename="../UploadToMegaDialog.ui" line="32"/>
+        <location filename="../UploadToMegaDialog.ui" line="47"/>
         <source>Please, select the upload folder for your files:</source>
         <translation>Por favor, selecciona la carpeta de destino para tus archivos:</translation>
     </message>
     <message>
-        <location filename="../UploadToMegaDialog.ui" line="45"/>
+        <location filename="../UploadToMegaDialog.ui" line="60"/>
         <source>MEGA folder:</source>
         <translation>Carpeta en MEGA:</translation>
     </message>
     <message>
-        <location filename="../UploadToMegaDialog.ui" line="88"/>
+        <location filename="../UploadToMegaDialog.ui" line="106"/>
         <source>Always upload to this destination</source>
         <translation>Siempre subir a esta carpeta</translation>
     </message>
     <message>
+        <location filename="../UploadToMegaDialog.ui" line="138"/>
+        <source>OK</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <location filename="../UploadToMegaDialog.ui" line="145"/>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
         <location filename="../UploadToMegaDialog.cpp" line="14"/>
-        <location filename="../UploadToMegaDialog.cpp" line="71"/>
-        <location filename="../UploadToMegaDialog.cpp" line="78"/>
+        <location filename="../UploadToMegaDialog.cpp" line="80"/>
+        <location filename="../UploadToMegaDialog.cpp" line="87"/>
         <source>/MEGAsync Uploads</source>
         <translation>/MEGAsync Uploads</translation>
     </message>
     <message>
-        <location filename="../UploadToMegaDialog.cpp" line="73"/>
+        <location filename="../UploadToMegaDialog.cpp" line="82"/>
         <source>MEGAsync Uploads</source>
         <translation>MEGAsync Uploads</translation>
     </message>

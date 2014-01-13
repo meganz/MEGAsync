@@ -19,6 +19,9 @@ public:
 private slots:
 	void on_bSubmit_clicked();
 
+protected:
+    void changeEvent(QEvent * event);
+
 private:
 	Ui::PasteMegaLinksDialog *ui;
 	QStringList links;
