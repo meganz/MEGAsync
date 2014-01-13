@@ -137,5 +137,6 @@
         <file>images/advanced_32.png</file>
         <file>images/preferences_mega_logo.png</file>
         <file>images/tray_cancel_ico.png</file>
+        <file>translations/MEGASyncStrings_es.qm</file>
     </qresource>
 </RCC>

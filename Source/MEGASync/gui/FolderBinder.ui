@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
+    <width>463</width>
     <height>98</height>
    </rect>
   </property>
@@ -25,68 +25,22 @@
    </property>
    <item row="0" column="0">
     <widget class="QWidget" name="wAdvancedConfigForm" native="true">
-     <layout class="QFormLayout" name="formLayout_2">
-      <property name="leftMargin">
-       <number>0</number>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
       </property>
-      <property name="rightMargin">
-       <number>0</number>
+      <property name="formAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="lLocalFolder">
-        <property name="text">
-         <string>Local folder:</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="lMegaFolder">
         <property name="text">
          <string>MEGA folder:</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+        </property>
        </widget>
-      </item>
-      <item row="0" column="1">
-       <layout class="QHBoxLayout" name="hMegaFolder">
-        <item>
-         <widget class="QLineEdit" name="eLocalFolder">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bLocalFolder">
-          <property name="styleSheet">
-           <string notr="true">margin: 4px;
-border: none;
-</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="Resources.qrc">
-            <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
       <item row="2" column="1">
        <layout class="QHBoxLayout" name="hLocalFolder">
@@ -115,6 +69,58 @@ border: none;</string>
           <property name="icon">
            <iconset resource="Resources.qrc">
             <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lLocalFolder">
+        <property name="text">
+         <string>Local folder:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="hMegaFolder">
+        <item>
+         <widget class="QLineEdit" name="eLocalFolder">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bLocalFolder">
+          <property name="styleSheet">
+           <string notr="true">margin: 4px;
+border: none;
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="Resources.qrc">
+            <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
           </property>
           <property name="iconSize">
            <size>
