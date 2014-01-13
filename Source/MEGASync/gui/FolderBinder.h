@@ -31,6 +31,9 @@ private slots:
 
     void on_bMegaFolder_clicked();
 
+protected:
+    void changeEvent(QEvent * event);
+
 private:
     Ui::FolderBinder *ui;
     MegaApplication *app;

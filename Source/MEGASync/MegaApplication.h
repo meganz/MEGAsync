@@ -36,8 +36,13 @@ public:
 
     static const int VERSION_CODE;
     static const QString VERSION_STRING;
+    static const QString TRANSLATION_FOLDER;
+    static const QString TRANSLATION_PREFIX;
     static QString applicationFilePath();
     static QString applicationDirPath();
+    void changeLanguage(QString languageCode);
+    void updateTrayIcon();
+
     virtual void onRequestStart(MegaApi* api, MegaRequest *request);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
     virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
@@ -129,6 +134,8 @@ protected:
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     QTimer *refreshTimer;
+    QTranslator *translator;
+
     static QString appPath;
     static QString appDirPath;
 

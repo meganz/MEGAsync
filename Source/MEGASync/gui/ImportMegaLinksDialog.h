@@ -35,6 +35,9 @@ public slots:
 	void onLinkInfoRequestFinish();
 	void onLinkStateChanged(int id, int state);
 
+protected:
+    void changeEvent(QEvent * event);
+
 private:
 	Ui::ImportMegaLinksDialog *ui;
 	MegaApi *megaApi;

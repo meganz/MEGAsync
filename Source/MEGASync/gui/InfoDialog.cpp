@@ -35,6 +35,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	currentDownload = 0;
 	totalUploads = 0;
 	totalDownloads = 0;
+    totalBytes = usedBytes = 0;
 	totalDownloadedSize = totalUploadedSize = 0;
 	totalDownloadSize = totalUploadSize = 0;
 	remainingUploads = remainingDownloads = 0;
@@ -114,6 +115,8 @@ void InfoDialog::startAnimation()
 
 void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 {
+    this->totalBytes = totalBytes;
+    this->usedBytes = usedBytes;
 	int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
     QString used = tr("%1% of %2").arg(QString::number(percentage))
@@ -558,4 +561,17 @@ void InfoDialog::onOverlayClicked()
 {
     ui->bPause->setChecked(false);
     on_bPause_clicked();
+}
+
+void InfoDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        if(totalBytes) setUsage(totalBytes, usedBytes);
+        updateSyncsButton();
+        updateTransfers();
+        updateRecentFiles();
+    }
+    QDialog::changeEvent(event);
 }

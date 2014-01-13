@@ -135,8 +135,6 @@ protected:
     void writeRecentFiles();
 
     EncryptedSettings *settings;
-    QLocale *locale;
-
     QStringList syncNames;
     QStringList megaFolders;
     QStringList localFolders;

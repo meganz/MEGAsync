@@ -23,8 +23,10 @@ public:
 
 private slots:
 	void on_bChange_clicked();
+    void on_bOK_clicked();
 
-	void on_buttonBox_accepted();
+protected:
+    void changeEvent(QEvent * event);
 
 private:
 	Ui::UploadToMegaDialog *ui;

@@ -28,7 +28,10 @@ public:
     QString getSyncName();
 
 private slots:
-    void on_buttonBox_accepted();
+    void on_bOK_clicked();
+
+protected:
+    void changeEvent(QEvent * event);
 
 private:
     Ui::BindFolderDialog *ui;

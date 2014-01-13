@@ -54,3 +54,12 @@ void FolderBinder::on_bMegaFolder_clicked()
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }
+
+void FolderBinder::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}

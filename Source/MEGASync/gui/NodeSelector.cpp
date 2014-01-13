@@ -26,8 +26,10 @@ NodeSelector::~NodeSelector()
 
 void NodeSelector::nodesReady()
 {
-    ui->tMegaFolders->clear();
     Node *rootNode = megaApi->getRootNode();
+    if(!rootNode) return;
+
+    ui->tMegaFolders->clear();
     QTreeWidgetItem *root = new QTreeWidgetItem();
     root->setText(0, tr("Cloud Drive"));
     root->setIcon(0, folderIcon);
@@ -37,6 +39,8 @@ void NodeSelector::nodesReady()
     ui->tMegaFolders->addTopLevelItem(root);
     ui->tMegaFolders->setCurrentItem(root);
     ui->tMegaFolders->expandToDepth(0);
+    selectedItem = root;
+    selectedFolder = selectedItem->data(0, Qt::UserRole).toULongLong();
 }
 
 long long NodeSelector::getSelectedFolderHandle()
@@ -58,7 +62,17 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 		ui->tMegaFolders->setCurrentItem(item);
 		ui->tMegaFolders->update();
 	}
-	ui->tMegaFolders->setEnabled(true);
+    ui->tMegaFolders->setEnabled(true);
+}
+
+void NodeSelector::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        nodesReady();
+    }
+    QDialog::changeEvent(event);
 }
 
 void NodeSelector::addChildren(QTreeWidgetItem *parentItem, Node *parentNode)
@@ -83,6 +97,7 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, Node *parentNode)
 
 void NodeSelector::on_tMegaFolders_itemSelectionChanged()
 {
+    if(!ui->tMegaFolders->selectedItems().size()) return;
     selectedItem =  ui->tMegaFolders->selectedItems().at(0);
     selectedFolder = selectedItem->data(0, Qt::UserRole).toULongLong();
 }

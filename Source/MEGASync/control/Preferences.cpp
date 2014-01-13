@@ -79,9 +79,7 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
     dir.mkpath(QString::fromAscii("."));
     QString settingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg"));
 
-
     settings = new EncryptedSettings(settingsFile);
-    locale = new QLocale();
 
     QString currentAccount = settings->value(currentAccountKey).toString();
     if(currentAccount.size()) login(currentAccount);
@@ -260,7 +258,7 @@ void Preferences::setStartOnStartup(bool value)
 QString Preferences::language()
 {
     mutex.lock();
-    QString value = settings->value(languageKey, locale->name()).toString();
+    QString value = settings->value(languageKey, QLocale::system().name()).toString();
     mutex.unlock();
     return value;
 }
@@ -268,7 +266,7 @@ QString Preferences::language()
 void Preferences::setLanguage(QString &value)
 {
     mutex.lock();
-    settings->setValue(startOnStartupKey, value);
+    settings->setValue(languageKey, value);
     settings->sync();
     mutex.unlock();
 }

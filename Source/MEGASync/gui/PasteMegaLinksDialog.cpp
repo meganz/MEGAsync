@@ -44,7 +44,15 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 		return;
 	}
 
-	accept();
+    accept();
+}
+
+void PasteMegaLinksDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+
+    QDialog::changeEvent(event);
 }
 
 QStringList PasteMegaLinksDialog::extractLinks(QString text)

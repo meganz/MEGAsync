@@ -72,6 +72,9 @@ private:
     bool indexing;
 
 protected:
+    void changeEvent(QEvent * event);
+
+protected:
 	bool eventFilter(QObject *obj, QEvent *ev);
 	void showPopup(QPoint globalpos, bool download);
 	void updateRecentFiles();
@@ -84,6 +87,8 @@ protected:
     Transfer *transfer1;
     Transfer *transfer2;
     bool finishing;
+    m_off_t totalBytes;
+    m_off_t usedBytes;
 };
 
 #endif // INFODIALOG_H

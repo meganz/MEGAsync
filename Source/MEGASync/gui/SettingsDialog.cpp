@@ -2,6 +2,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QRect>
+#include <QTranslator>
 
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
@@ -208,6 +209,38 @@ void SettingsDialog::loadSettings()
 
     //ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
+    //Language
+    ui->cLanguage->clear();
+    languageCodes.clear();
+    QString fullPrefix = MegaApplication::TRANSLATION_FOLDER+MegaApplication::TRANSLATION_PREFIX;
+    QDirIterator it(MegaApplication::TRANSLATION_FOLDER);
+    QStringList languages;
+    languages.append(QString::fromAscii("English"));
+    languageCodes.append(QString::fromAscii("en"));
+    int currentIndex = 0;
+    QString currentLanguage = preferences->language();
+    while (it.hasNext())
+    {
+        QString file = it.next();
+        if(file.startsWith(fullPrefix))
+        {
+            int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
+            if((extensionIndex-fullPrefix.size()) <= 0) continue;
+            QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
+            QLocale::Language language = QLocale(languageCode).language();
+            QString languageString = QLocale::languageToString(language);
+            if(!languageString.isEmpty())
+            {
+                if(currentLanguage.startsWith(languageCode))
+                    currentIndex = languages.size();
+                languages.append(languageString);
+                languageCodes.append(languageCode);
+            }
+        }
+    }
+    ui->cLanguage->addItems(languages);
+    ui->cLanguage->setCurrentIndex(currentIndex);
+
     //Account
     ui->lEmail->setText(preferences->email());
 	if(preferences->totalStorage()==0)
@@ -285,10 +318,10 @@ void SettingsDialog::loadSettings()
     ui->eProxyPassword->setText(preferences->getProxyPassword());*/
 
     //Advanced
+    ui->lExcludedNames->clear();
     QStringList excludedNames = preferences->getExcludedSyncNames();
     for(int i=0; i<excludedNames.size(); i++)
         ui->lExcludedNames->addItem(excludedNames[i]);
-
 
     ui->bApply->setEnabled(false);
     this->update();
@@ -311,6 +344,12 @@ void SettingsDialog::saveSettings()
     //bool startOnStartup = ui->cStartOnStartup->isChecked();
     //Platform::startOnStartup(startOnStartup);
     //preferences->setStartOnStartup(startOnStartup);
+
+    //Language
+    int currentIndex = ui->cLanguage->currentIndex();
+    QString selectedLanguageCode = languageCodes[currentIndex];
+    preferences->setLanguage(selectedLanguageCode);
+    app->changeLanguage(selectedLanguageCode);
 
     //Account
     Node *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
@@ -607,4 +646,14 @@ void SettingsDialog::on_bDeleteName_clicked()
 
     excludedNamesChanged = true;
     stateChanged();
+}
+
+void SettingsDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        loadSettings();
+    }
+    QDialog::changeEvent(event);
 }

@@ -65,6 +65,16 @@
 Please enter a different name to identify this synced folder:</source>
         <translation>[$1588] [$1589]</translation>
     </message>
+    <message>
+	<location filename="gui/BindFolderDialog.ui" line="42"/>
+	<source>OK</source>
+	<translation>[$1814]</translation>
+    </message>
+    <message>
+	<location filename="gui/BindFolderDialog.ui" line="49"/>
+	<source>Cancel</source>
+	<translation>[$1815]</translation>
+    </message>
 </context>
 <context>
     <name>FolderBinder</name>
@@ -606,7 +616,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
-        <source>Ok</source>
+	<source>OK</source>
         <translation>[$1685]</translation>
     </message>
     <message>
@@ -807,7 +817,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
-        <source>Ok</source>
+	<source>OK</source>
         <translation>[$1685]</translation>
     </message>
     <message>
@@ -1446,6 +1456,16 @@ Please, select another folder.</source>
         <location filename="../UploadToMegaDialog.cpp" line="73"/>
         <source>MEGAsync Uploads</source>
         <translation>MEGAsync Uploads</translation>
+    </message>
+    <message>
+	<location filename="gui/UploadToMegaDialog.ui" line="138"/>
+	<source>OK</source>
+	<translation>[$1816]</translation>
+    </message>
+    <message>
+	<location filename="gui/UploadToMegaDialog.ui" line="145"/>
+	<source>Cancel</source>
+	<translation>[$1817]</translation>
     </message>
 </context>
 <context>

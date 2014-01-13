@@ -183,5 +183,14 @@ void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 
 void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
 {
-	linkProcessor->setSelected(id, state);
+    linkProcessor->setSelected(id, state);
+}
+
+void ImportMegaLinksDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
 }

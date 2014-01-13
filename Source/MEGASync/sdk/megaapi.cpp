@@ -877,6 +877,12 @@ void *MegaApi::threadEntryPoint(void *param)
 
 MegaApi::MegaApi(MegaListener *listener, string *basePath)
 {
+#ifdef SHOW_LOGS
+    debug = true;
+#else
+    debug = false;
+#endif
+
     INIT_MUTEX(listenerMutex);
     INIT_MUTEX(transferListenerMutex);
     INIT_MUTEX(requestListenerMutex);
