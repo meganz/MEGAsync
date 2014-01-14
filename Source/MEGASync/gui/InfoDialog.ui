@@ -169,7 +169,7 @@ color: rgb(102, 102, 102);
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>16</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -191,14 +191,14 @@ color: rgb(102, 102, 102);
        <widget class="QCheckBox" name="bPause">
         <property name="minimumSize">
          <size>
-          <width>40</width>
-          <height>40</height>
+          <width>32</width>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>40</width>
-          <height>40</height>
+          <width>32</width>
+          <height>36</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -244,8 +244,8 @@ color: rgb(102, 102, 102);
         </property>
         <property name="maximumSize">
          <size>
-          <width>40</width>
-          <height>40</height>
+          <width>32</width>
+          <height>36</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -256,8 +256,8 @@ border: none;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>://images/tray_preferences_ico.png</normaloff>://images/tray_preferences_ico.png</iconset>
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
