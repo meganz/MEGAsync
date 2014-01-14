@@ -243,8 +243,8 @@ private:
 	// determine if more transfers fit in the pipeline
 	bool moretransfers(direction);
 
-	// time at which next deferred transfer retry kicks in
-	dstime nexttransferretry(direction d, dstime dsmin);
+	// update time at which next deferred transfer retry kicks in
+	void nexttransferretry(direction d, dstime* dsmin, dstime ds);
 
 	// fetch state serialize from local cache
 	bool fetchsc(DbTable*);

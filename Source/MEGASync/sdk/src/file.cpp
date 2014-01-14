@@ -150,17 +150,49 @@ void SyncFileGet::prepare()
 {
 	if (!transfer->localfilename.size())
 	{
-		string tmpname;
+		int i;
+		string tmpname, lockname;
 
-		transfer->localfilename = sync->localdebris;
-		sync->client->fsaccess->mkdirlocal(&transfer->localfilename,true);
-		transfer->localfilename.append(sync->client->fsaccess->localseparator);
-		
-		tmpname = "TMP";
+		tmpname = "tmp";
 		sync->client->fsaccess->name2local(&tmpname);
-        //transfer->localfilename.append(sync->client->fsaccess->localseparator);
-		transfer->localfilename.append(tmpname);
-		sync->client->fsaccess->mkdirlocal(&transfer->localfilename);
+
+		if (!sync->tmpfa)
+		{
+			sync->tmpfa = sync->client->fsaccess->newfileaccess();
+
+			for (i = 3; i--; )
+			{
+				transfer->localfilename = sync->localdebris;
+				sync->client->fsaccess->mkdirlocal(&transfer->localfilename,true);
+
+				transfer->localfilename.append(sync->client->fsaccess->localseparator);
+				transfer->localfilename.append(tmpname);
+				sync->client->fsaccess->mkdirlocal(&transfer->localfilename);
+				
+				// lock it
+				transfer->localfilename.append(sync->client->fsaccess->localseparator);
+				lockname = "lock";
+				sync->client->fsaccess->name2local(&lockname);
+				transfer->localfilename.append(lockname);
+
+				if (sync->tmpfa->fopen(&transfer->localfilename,false,true)) break;
+			}
+
+			// if we failed to create the tmp dir three times in a row, fall back to the sync's root
+			if (i < 0)
+			{
+				delete sync->tmpfa;
+				sync->tmpfa = NULL;
+			}
+		}
+		
+		if (sync->tmpfa)
+		{
+			transfer->localfilename = sync->localdebris;
+			transfer->localfilename.append(sync->client->fsaccess->localseparator);
+			transfer->localfilename.append(tmpname);
+		}
+		else transfer->localfilename = sync->localroot.localname;
 
 		sync->client->fsaccess->tmpnamelocal(&tmpname);
 		transfer->localfilename.append(sync->client->fsaccess->localseparator);

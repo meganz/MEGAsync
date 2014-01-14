@@ -703,7 +703,7 @@ void MegaClient::exec()
 
 	// halt all syncing while the local filesystem is pending a lock-blocked operation
 	// FIXME: indicate by callback
-	if (!syncdownretry)
+	if (!syncdownretry && !syncadding)
 	{
 		// process active syncs, stop doing so while transient local fs ops are pending
 		if (syncs.size() || syncactivity)
@@ -805,7 +805,7 @@ void MegaClient::exec()
 			}
 
 			// delete locally missing nodes unless a putnodes operation is in progress that may be still be referencing them
-			if (!synccreate.size() && !syncadding)
+			if (!synccreate.size())
 			{
 				for (localnode_set::iterator it = localsyncnotseen.begin(); it != localsyncnotseen.end(); )
 				{
@@ -826,7 +826,7 @@ void MegaClient::exec()
 			}
 
 			// process filesystem notifications for active syncs unless node addition currently in flight
-			if (!syncscanning && !syncadding)
+			if (!syncscanning)
 			{
 				string localname;
 
@@ -886,9 +886,11 @@ int MegaClient::wait()
 	else
 	{
 		// next retry of a failed transfer
-		nds = nexttransferretry(PUT,~(dstime)0);
-		nds = nexttransferretry(GET,nds);
-
+		nds = ~(dstime)0;
+	
+		nexttransferretry(PUT,&nds,ds);
+		nexttransferretry(GET,&nds,ds);
+		
 		// retry failed client-server requests
 		if (!pendingcs) btcs.update(ds,&nds);
 
@@ -916,7 +918,7 @@ int MegaClient::wait()
 
 	// immediate action required?
 	if (!nds) return Waiter::NEEDEXEC;
-	
+
 	// nds is either MAX_INT (== no pending events) or > ds
 	if (nds+1) nds -= ds;
 
@@ -1117,15 +1119,13 @@ void MegaClient::freeq(direction d)
 	for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); ) delete (it++)->second;
 }
 
-// time at which next undispatched transfer retry occurs
-dstime MegaClient::nexttransferretry(direction d, dstime dsmin)
+// determine next scheduled transfer retry
+void MegaClient::nexttransferretry(direction d, dstime* dsmin, dstime ds)
 {
 	for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); it++)
 	{
-		if (!it->second->slot && it->second->bt.nextset() && it->second->bt.nextset() < dsmin) dsmin = it->second->bt.nextset();
+		if (!it->second->slot && it->second->bt.nextset() && it->second->bt.nextset() >= ds && it->second->bt.nextset() < *dsmin) *dsmin = it->second->bt.nextset();
 	}
-
-	return dsmin;
 }
 
 // disconnect all HTTP connections (slows down operations, but is semantically neutral)
@@ -3597,7 +3597,7 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 	// build child hash - nameclash resolution: use newest/largest version
 	for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 	{
-		// node must be decrypted and name defined to be considered
+		// node must be syncable, alive, decrypted and have its name defined to be considered
 		if (app->sync_syncable(*it) && !(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
 	}
 
@@ -3652,15 +3652,34 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 		}
 		else if (rubbish && ll->deleted)	// no corresponding remote node: delete local item
 		{
-			// recursively cancel all dangling transfers before deletion
-			stopxfers(ll);
-
-			// attempt deletion and re-queue for retry in case of a transient failure
-			if (l->sync->movetolocaldebris(localpath)) delete lit++->second;
-			else if (success && fsaccess->transient_error)
+			if (ll->type == FILENODE)
 			{
-				success = false;
-				lit++;
+				// only delete the file if it is unchanged
+				string tmplocalpath;
+				
+				ll->getlocalpath(&tmplocalpath);
+				
+				FileAccess* fa = fsaccess->newfileaccess();
+
+				if (fa->fopen(&tmplocalpath,true,false))
+				{
+					FileFingerprint fp;
+					fp.genfingerprint(fa);
+					if (!(fp == *(FileFingerprint*)ll)) ll->deleted = false;
+				}
+				
+				delete fa;
+			}
+	
+			if (ll->deleted)
+			{
+				// attempt deletion and re-queue for retry in case of a transient failure
+				if (l->sync->movetolocaldebris(localpath)) delete lit++->second;
+				else if (success && fsaccess->transient_error)
+				{
+					success = false;
+					lit++;
+				}
 			}
 		}
 		else lit++;
@@ -3770,8 +3789,8 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 		// corresponding remote node present: build child hash - nameclash resolution: use newest version
 		for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 		{
-			// node must be decrypted and name defined to be considered
-			if (!(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
+			// node must be alive, decrypted and name defined to be considered
+			if (!(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
 		}
 	}
 
@@ -3902,9 +3921,6 @@ void MegaClient::syncupdate()
 			n = NULL;
 			l = synccreate[i];
 
-			// rubbish existing node in case of an overwrite
-			if (l->node) movetosyncdebris(l->node);
-
 			if (l->type == FOLDERNODE || (n = nodebyfingerprint(l)))
 			{
 				// create remote folder or copy file if it already exists
@@ -3917,6 +3933,9 @@ void MegaClient::syncupdate()
 
 				if (n)
 				{
+					// overwriting an existing remote node? send it to SyncDebris.
+					if (l->node) movetosyncdebris(l->node);
+
 					// this is a file - copy, use original key & attributes
 					// FIXME: move instead of creating a copy if it is in rubbish to reduce node creation load
 					nnp->clienttimestamp = l->mtime;
@@ -3944,6 +3963,7 @@ void MegaClient::syncupdate()
 			}
 			else if (l->type == FILENODE)
 			{
+				// the overwrite will happen upon PUT completion
 				string tmppath, tmplocalpath;
 
 				startxfer(PUT,l);

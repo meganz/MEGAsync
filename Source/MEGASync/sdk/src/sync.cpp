@@ -33,6 +33,8 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris, string* 
 	client = cclient;
 	tag = ctag;
 
+	tmpfa = NULL;
+	
 	localbytes = 0;
 	localnodes[FILENODE] = 0;
 	localnodes[FOLDERNODE] = 0;
@@ -65,6 +67,9 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris, string* 
 
 Sync::~Sync()
 {
+	// unlock tmp folder
+	delete tmpfa;
+
 	// prevent remote mass deletion while rootlocal destructor runs
 	state = SYNC_CANCELED;
 
@@ -317,12 +322,14 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 						if (fa->fsidvalid && l->fsid != fa->fsid) l->setfsid(fa->fsid);
 
 						m_off_t dsize = l->size;
+
 						if (l->genfingerprint(fa)) localbytes -= dsize-l->size;
 
 						client->app->syncupdate_local_file_change(this,path.c_str());
 
 						client->stopxfer(l);
 						l->bumpnagleds();
+						l->deleted = false;
 
 						client->syncactivity = true;
 						
@@ -388,7 +395,6 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 
 					if (l->genfingerprint(fa))
 					{
-
 						changed = true;
 						l->bumpnagleds();
 						l->deleted = 0;
