@@ -73,6 +73,9 @@ public:
 	// debris path component relative to the base path
 	string debris, localdebris;
 
+	// permanent lock on the debris/tmp folder
+	FileAccess* tmpfa;
+	
 	// move file or folder to localdebris
 	bool movetolocaldebris(string* localpath);
 	

@@ -90,7 +90,7 @@ bool WinFileAccess::sysstat(time_t* mtime, m_off_t* size)
 
 bool WinFileAccess::sysopen()
 {
-	hFile = CreateFileW((LPCWSTR)localname.data(),GENERIC_READ,FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,NULL,OPEN_EXISTING,0,NULL);
+	hFile = CreateFileW((LPCWSTR)localname.data(),GENERIC_READ,FILE_SHARE_WRITE | FILE_SHARE_READ,NULL,OPEN_EXISTING,0,NULL);
 
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
