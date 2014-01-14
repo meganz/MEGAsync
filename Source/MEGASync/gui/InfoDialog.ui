@@ -180,7 +180,7 @@ color: rgb(102, 102, 102);
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/images/preferences_mega_logo.png</pixmap>
+         <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
