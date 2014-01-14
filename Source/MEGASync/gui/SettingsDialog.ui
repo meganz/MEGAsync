@@ -308,7 +308,7 @@ margin-top: 6px;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap>://images/preferences_mega_logo.png</pixmap>
+        <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
