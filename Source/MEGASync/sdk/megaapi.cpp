@@ -1300,7 +1300,7 @@ void MegaApi::startUpload(const char* localPath, Node* parent, int connections, 
     {
         string path(localPath);
 #ifdef WIN32
-        if(path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
             path.insert(0, "\\\\?\\");
 #endif
         transfer->setPath(path.data());
@@ -1332,7 +1332,7 @@ void MegaApi::startDownload(handle nodehandle, const char* target, int connectio
     {
 #ifdef WIN32
         string path(target);
-        if(path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
             path.insert(0, "\\\\?\\");
         target = path.data();
 #endif
@@ -1369,7 +1369,7 @@ void MegaApi::startPublicDownload(PublicNode* node, const char* localFolder, Meg
     {
         string path(localFolder);
 #ifdef WIN32
-        if(path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
             path.insert(0, "\\\\?\\");
 #endif
         transfer->setParentPath(path.data());
@@ -1461,6 +1461,14 @@ bool MegaApi::isRegularTransfer(MegaTransfer *transfer)
 
 pathstate_t MegaApi::syncPathState(string* path)
 {
+#ifdef WIN32
+    string prefix("\\\\?\\");
+    string localPrefix;
+    fsAccess->path2local(&prefix, &localPrefix);
+    if(path->size()<8 || memcmp(path->data(), localPrefix.data(), 8))
+        path->insert(0, localPrefix);
+#endif
+
     MUTEX_LOCK(sdkMutex);
     pathstate_t state = PATHSTATE_NOTFOUND;
     for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (state == PATHSTATE_NOTFOUND); it++)
@@ -1499,7 +1507,15 @@ void MegaApi::syncFolder(const char *localFolder, Node *megaFolder)
 {
     MegaRequest *request = new MegaRequest(MegaRequest::TYPE_ADD_SYNC);
     if(megaFolder) request->setNodeHandle(megaFolder->nodehandle);
-    request->setFile(localFolder);
+    if(localFolder)
+    {
+        string path(localFolder);
+#ifdef WIN32
+        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
+            path.insert(0, "\\\\?\\");
+#endif
+        request->setFile(path.data());
+    }
     requestQueue.push(request);
     waiter->notify();
 }
@@ -1915,7 +1931,16 @@ void MegaApi::transfer_update(Transfer *tr)
 
     LOG("transfer_update");
 	if(tr->slot)
-	{				
+    {
+#ifdef WIN32
+        if(!tr->slot->progressreported)
+        {
+            tr->localfilename.append("",1);
+            DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
+            SetFileAttributesW((LPCWSTR)tr->localfilename.data(),a | FILE_ATTRIBUTE_HIDDEN);
+            tr->localfilename.resize(tr->localfilename.size()-1);
+        }
+#endif
 		transfer->setTime(tr->slot->lastdata);
         if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
@@ -1927,17 +1952,13 @@ void MegaApi::transfer_update(Transfer *tr)
         transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->ds-transfer->getStartTime()+1));
 		transfer->setUpdateTime(waiter->getdstime());
 
-        string th;
-        if (tr->type == GET) th = "TD ";
-        else th = "TU ";
+        //string th;
+        //if (tr->type == GET) th = "TD ";
+        //else th = "TU ";
         //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
         //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
 
-        if(transfer->getTransferredBytes())
-        {
-            fireOnTransferUpdate(this, transfer);
-            //Platform::notifyItemChange(QString::fromUtf8(transfer->getPath()));
-        }
+        fireOnTransferUpdate(this, transfer);
 	}
 }
 
@@ -1950,6 +1971,7 @@ void MegaApi::transfer_failed(Transfer* tr, error e)
 
 	if(tr->slot) transfer->setTime(tr->slot->lastdata);
 
+    LOG("transfer_failed");;
     //cout << "TD " << transfer->getFileName() << ": Download failed (" << megaError.getErrorString() << ")" << endl;
     fireOnTransferTemporaryError(this, transfer, megaError);
 }
@@ -1984,62 +2006,20 @@ void MegaApi::transfer_complete(Transfer* tr)
 	string tmpPath;
 	fsAccess->local2path(&tr->localfilename, &tmpPath);
     //cout << "transfer_complete: TMP: " << tmpPath << "   FINAL: " << transfer->getFileName() << endl;
-	fireOnTransferFinish(this, transfer, MegaError(API_OK));
 
-    /*MegaTransfer* transfer = transferMap[client->ft[td].tag];
-	if(!transfer) return;
+#ifdef WIN32
+    if(tr->tag > 0)
+    {
+        string finalUtf8(transfer->getPath());
+        string final;
+        fsAccess->path2local(&finalUtf8, &final);
+        final.append("",1);
+        DWORD a = GetFileAttributesW((LPCWSTR) final.data());
+        SetFileAttributesW((LPCWSTR)final.data(),a & ~FILE_ATTRIBUTE_HIDDEN);
+    }
+#endif
 
-	transfer->setTime(client->httpio->ds);
-
-	Node* n;
-
-	//cout << "TD " << td << ": Upload complete" << endl;
-
-	handle uploadtarget = transfer->getParentHandle();
-	if (!(n = client->nodebyhandle(uploadtarget)))
-	{
-		cout << "Upload target folder inaccessible" << endl;
-		fireOnTransferFinish(this, transfer, MegaError(API_EACCESS));
-		return;
-	}
-
-	string uploadfilename(transfer->getFileName());
-	NewNode *newnode = new NewNode[1];
-
-	// build new node
-	newnode->source = NEW_UPLOAD;
-
-	//TODO: Check this
-	if(!ulhandle) ulhandle = client->uploadhandle(td);
-
-	// upload handle required to retrieve pending file attributes	
-	newnode->uploadhandle = ulhandle;
-
-	// reference to uploaded file
-	memcpy(newnode->uploadtoken,ultoken,sizeof newnode->uploadtoken);
-
-	// file's crypto key
-	newnode->nodekey.assign((char*)filekey,Node::FILENODEKEYLENGTH);
-	newnode->mtime = newnode->ctime = time(NULL);
-	newnode->type = FILENODE;
-	newnode->parenthandle = UNDEF;
-
-	AttrMap attrs;
-
-	MegaClient::unescapefilename(&uploadfilename);
-
-	attrs.map['n'] = uploadfilename;
-	attrs.getjson(&uploadfilename);
-
-	client->makeattr(key,&newnode->attrstring,uploadfilename.c_str());
-	client->tclose(td);
-
-
-	MegaRequest *request = new MegaRequest(transfer);
-	requestMap[client->nextreqtag()]=request;
-
-	//TODO: Send files to users
-	client->putnodes(uploadtarget,newnode,1);*/
+    fireOnTransferFinish(this, transfer, MegaError(API_OK));
 }
 
 void MegaApi::syncupdate_state(Sync *sync, syncstate s)
