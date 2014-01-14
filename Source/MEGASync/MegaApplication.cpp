@@ -856,8 +856,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     {
         for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         {
-            if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)) &&
-                (QString::fromUtf8(request->getFile())==preferences->getLocalFolder(i)))
+            if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
             {
                 if(e->getErrorCode() != MegaError::API_OK)
                     preferences->removeSyncedFolder(i);

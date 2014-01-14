@@ -158,7 +158,7 @@ void SyncFileGet::prepare()
 		
 		tmpname = "TMP";
 		sync->client->fsaccess->name2local(&tmpname);
-		transfer->localfilename.append(sync->client->fsaccess->localseparator);
+        //transfer->localfilename.append(sync->client->fsaccess->localseparator);
 		transfer->localfilename.append(tmpname);
 		sync->client->fsaccess->mkdirlocal(&transfer->localfilename);
 

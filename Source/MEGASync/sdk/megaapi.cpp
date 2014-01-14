@@ -1879,7 +1879,7 @@ void MegaApi::transfer_prepare(Transfer *t)
     LOG("transfer_prepare");
 	if (t->type == GET)
 	{
-        if((!t->localfilename.size()) || (t->tag>0))
+        if((!t->localfilename.size()) || (!t->files.front()->syncxfer))
         {
             if(!t->localfilename.size())
                 t->localfilename = t->files.front()->localname;
@@ -1933,7 +1933,7 @@ void MegaApi::transfer_update(Transfer *tr)
 	if(tr->slot)
     {
 #ifdef WIN32
-        if(!tr->slot->progressreported)
+        if(!!tr->files.front()->syncxfer && !tr->slot->progressreported)
         {
             tr->localfilename.append("",1);
             DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
@@ -2008,7 +2008,7 @@ void MegaApi::transfer_complete(Transfer* tr)
     //cout << "transfer_complete: TMP: " << tmpPath << "   FINAL: " << transfer->getFileName() << endl;
 
 #ifdef WIN32
-    if(tr->tag > 0)
+    if(!tr->files.front()->syncxfer)
     {
         string finalUtf8(transfer->getPath());
         string final;
