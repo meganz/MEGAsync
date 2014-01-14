@@ -1933,7 +1933,7 @@ void MegaApi::transfer_update(Transfer *tr)
 	if(tr->slot)
     {
 #ifdef WIN32
-        if(!!tr->files.front()->syncxfer && !tr->slot->progressreported)
+        if(!tr->files.front()->syncxfer && !tr->slot->progressreported)
         {
             tr->localfilename.append("",1);
             DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
@@ -1958,7 +1958,7 @@ void MegaApi::transfer_update(Transfer *tr)
         //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
         //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
 
-        fireOnTransferUpdate(this, transfer);
+        if(tr->slot->progressreported) fireOnTransferUpdate(this, transfer);
 	}
 }
 
