@@ -345,6 +345,7 @@ void SetupWizard::on_bBack_clicked()
     {
         ui->sPages->setCurrentWidget(ui->pLogin);
         ui->lVerify->hide();
+        wTypicalSetup_clicked();
         megaApi->logout();
     }
     else if(w == ui->pAdvanced)
@@ -403,13 +404,12 @@ void SetupWizard::on_bMegaFolder_clicked()
 void SetupWizard::wTypicalSetup_clicked()
 {
     ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
-                                     "#wTypicalSetup {background: rgb(250,240,240);"
-                                     "border: 1px solid red;"
+                                     "#wTypicalSetup {background: rgb(242,242,242);"
+                                     "border: 2px solid rgb(217, 217, 217);"
                                      "border-radius: 10px;}"));
     ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
-                                     "#wAdvancedSetup {background: rgb(240,240,240);"
-                                     "border: none;"
-                                     "border-radius: 10px;}"));
+                                     "#wAdvancedSetup {background: transparent;"
+                                     "border: none;}"));
     ui->rTypicalSetup->setChecked(true);
     ui->rAdvancedSetup->setChecked(false);
 }
@@ -417,13 +417,12 @@ void SetupWizard::wTypicalSetup_clicked()
 void SetupWizard::wAdvancedSetup_clicked()
 {
     ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
-                                     "#wTypicalSetup { background: rgb(240,240,240); "
-                                     "border: none; "
-                                     "border-radius: 10px; } "));
+                                     "#wTypicalSetup {background: transparent;"
+                                     "border: none;}"));
     ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
-                                     "#wAdvancedSetup { background: rgb(250,240,240); "
-                                     "border: 1px solid red; "
-                                     "border-radius: 10px; } "));
+                                     "#wAdvancedSetup {background: rgb(242,242,242);"
+                                     "border: 2px solid rgb(217, 217, 217);"
+                                     "border-radius: 10px;}"));
     ui->rTypicalSetup->setChecked(false);
     ui->rAdvancedSetup->setChecked(true);
 }

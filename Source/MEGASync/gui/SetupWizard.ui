@@ -44,21 +44,17 @@
 
 #wTypicalSetup
 {
-	background: rgb(250,240,240);
-	border: 1px solid red;
+	background: rgb(242,242,242);
+	border: 2px solid rgb(217, 217, 217);
 	border-radius: 10px;
 }
 
 #wAdvancedSetup
 {
-	background: rgb(240,240,240);
-	border-radius: 10px;
+	background: transparent;
 }
 
-#lTypical,#lAdvanced
-{
-margin-left: 100px;
-}
+
 
 </string>
   </property>
@@ -437,7 +433,7 @@ margin-left: 100px;
            <number>80</number>
           </property>
           <property name="bottomMargin">
-           <number>100</number>
+           <number>120</number>
           </property>
           <item>
            <widget class="QLabel" name="lProgress">
@@ -477,16 +473,16 @@ margin-left: 100px;
      <widget class="QWidget" name="pSetupType">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <property name="spacing">
-        <number>30</number>
+        <number>40</number>
        </property>
        <property name="leftMargin">
-        <number>50</number>
+        <number>40</number>
        </property>
        <property name="topMargin">
         <number>25</number>
        </property>
        <property name="rightMargin">
-        <number>50</number>
+        <number>40</number>
        </property>
        <item>
         <widget class="QLabel" name="lSetupType">
@@ -522,53 +518,17 @@ margin-left: 100px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>90</height>
+           <height>70</height>
           </size>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <property name="leftMargin">
-           <number>15</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lTypical">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string> Sync your entire cloud drive</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-            <property name="margin">
-             <number>0</number>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>70</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
+          <item>
            <widget class="QRadioButton" name="rTypicalSetup">
             <property name="maximumSize">
              <size>
@@ -587,11 +547,11 @@ margin-left: 100px;
              <string notr="true">border: none;</string>
             </property>
             <property name="text">
-             <string>Full account sync</string>
+             <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/full_sync.png</normaloff>:/images/full_sync.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -604,6 +564,64 @@ margin-left: 100px;
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QWidget" name="widget_3" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>48</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_11">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#333333;&quot;&gt;Full account sync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lTypical">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; color:#666666;&quot;&gt;Sync your entire cloud drive&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -612,26 +630,17 @@ margin-left: 100px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>90</height>
+           <height>70</height>
           </size>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <property name="leftMargin">
-           <number>15</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item row="1" column="0">
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>70</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+          <item>
            <widget class="QRadioButton" name="rAdvancedSetup">
             <property name="maximumSize">
              <size>
@@ -650,11 +659,11 @@ margin-left: 100px;
              <string notr="true">border: none;</string>
             </property>
             <property name="text">
-             <string>Selective sync</string>
+             <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>://images/app_48.png</normaloff>://images/app_48.png</iconset>
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/selective.png</normaloff>:/images/selective.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -664,27 +673,75 @@ margin-left: 100px;
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lAdvanced">
+          <item>
+           <widget class="QWidget" name="widget_2" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>48</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>48</height>
              </size>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>10</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string> Sync specific folders in your cloud drive</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lAdvanced">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#333333;&quot;&gt;Selective sync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#666666;&quot;&gt;Sync specific folders in your cloud drive&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -1050,7 +1107,9 @@ margin-left: 100px;
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>rAdvancedSetup</sender>

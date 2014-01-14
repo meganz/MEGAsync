@@ -102,7 +102,6 @@
         <file>images/small_web_data.png</file>
         <file>images/small_web_lang.png</file>
         <file>images/small_word.png</file>
-        <file>images/syncs_32.png</file>
         <file>images/transferProgress.png</file>
         <file>images/tray_download_ico.png</file>
         <file>images/tray_folder_ico.png</file>
@@ -137,5 +136,8 @@
         <file>images/tray_cancel_ico.png</file>
         <file>translations/MEGASyncStrings_es.qm</file>
         <file>images/mega_logo.png</file>
+        <file>images/syncs_32.png</file>
+        <file>images/selective.png</file>
+        <file>images/full_sync.png</file>
     </qresource>
 </RCC>
