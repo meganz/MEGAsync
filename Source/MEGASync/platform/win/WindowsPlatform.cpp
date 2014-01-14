@@ -159,12 +159,16 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     QDir syncDir(syncPath);
     if(!syncDir.exists()) return;
 
+    DWORD dwVersion = GetVersion();
+    DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
+    int iconIndex = (dwMajorVersion<6) ? 2 : 3;
+
     QString infoTip = QCoreApplication::translate("WindowsPlatform", "MEGA synced folder");
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
     fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;
     fcs.pszIconFile = (LPWSTR)MegaApplication::applicationFilePath().utf16();
-    fcs.iIconIndex = 0;
+    fcs.iIconIndex = iconIndex;
     fcs.pszInfoTip = (LPWSTR)infoTip.utf16();
     SHGetSetFolderCustomSettings(&fcs, syncPath.utf16(), FCS_FORCEWRITE);
 
