@@ -315,7 +315,7 @@ void InfoDialog::addSync()
     if(result != QDialog::Accepted)
         return;
 
-    QString localFolderPath = QDir(dialog->getLocalFolder()).canonicalPath();
+    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     long long handle = dialog->getMegaFolder();
     Node *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
