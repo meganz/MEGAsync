@@ -1879,6 +1879,7 @@ void MegaApi::transfer_prepare(Transfer *t)
     LOG("transfer_prepare");
 	if (t->type == GET)
 	{
+        transfer->setNodeHandle(t->files.front()->h);
         if((!t->localfilename.size()) || (!t->files.front()->syncxfer))
         {
             if(!t->localfilename.size())
@@ -1887,7 +1888,6 @@ void MegaApi::transfer_prepare(Transfer *t)
             string suffix(".mega");
             fsAccess->name2local(&suffix);
             t->localfilename.append(suffix);
-            transfer->setNodeHandle(t->files.front()->h);
         }
 	}
 	else
