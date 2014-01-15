@@ -104,7 +104,7 @@ protected:
     void createTrayIcon();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
-	void startSyncs();
+    void startSyncs();
 	void stopSyncs();
 	void processUploadQueue(handle nodeHandle);
 

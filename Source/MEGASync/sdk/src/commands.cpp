@@ -1764,6 +1764,7 @@ void CommandFetchNodes::procresult()
 
 				client->mergenewshares(0);
 				client->applykeys();
+				client->syncsup = false;
 				client->app->fetchnodes_result(API_OK);
 				client->initsc();
 

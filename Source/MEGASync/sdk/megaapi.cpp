@@ -2204,7 +2204,41 @@ void MegaApi::fetchnodes_result(error e)
 
 	if((request->getType() != MegaRequest::TYPE_FETCH_NODES) && (request->getType() != MegaRequest::TYPE_FOLDER_ACCESS))
 		cout << "INCORRECT REQUEST OBJECT (4)";
-	fireOnRequestFinish(this, request, megaError);
+
+    fireOnRequestFinish(this, request, megaError);
+
+    Preferences *preferences = Preferences::instance();
+    if(preferences->logged() && !client->syncs.size())
+    {
+        //Start syncs
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        {
+            Node *node = getNodeByHandle(preferences->getMegaFolderHandle(i));
+            QString localFolder = preferences->getLocalFolder(i);
+            MegaRequest *syncRequest = new MegaRequest(MegaRequest::TYPE_ADD_SYNC);
+            if(node) syncRequest->setNodeHandle(node->nodehandle);
+            syncRequest->setFile(localFolder.toUtf8().constData());
+            client->restag = client->nextreqtag();
+            requestMap[client->restag]=syncRequest;
+
+            if(!node)
+            {
+                fireOnRequestFinish(this, syncRequest, MegaError(API_ENOENT));
+                continue;
+            }
+
+            string localname;
+            string utf8name(localFolder.toUtf8().constData());
+    #ifdef WIN32
+            if((utf8name.size()<4) || utf8name.compare(0, 4, "\\\\?\\"))
+                utf8name.insert(0, "\\\\?\\");
+    #endif
+            client->fsaccess->path2local(&utf8name, &localname);
+            LOG("addSync");
+            error syncError = client->addsync(&localname, "Rubbish", NULL, node, -1);
+            fireOnRequestFinish(this, syncRequest, MegaError(syncError));
+        }
+    }
 }
 
 void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
