@@ -678,10 +678,11 @@ color: rgb(102, 102, 102);</string>
           <height>50</height>
          </size>
         </property>
+        <zorder>wRecent3</zorder>
        </widget>
       </item>
       <item>
-       <widget class="RecentFile" name="wRecent3" native="true">
+       <widget class="RecentFile" name="wRecent2" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -694,10 +695,11 @@ color: rgb(102, 102, 102);</string>
           <height>50</height>
          </size>
         </property>
+        <zorder>wRecent3</zorder>
        </widget>
       </item>
       <item>
-       <widget class="RecentFile" name="wRecent2" native="true">
+       <widget class="RecentFile" name="wRecent3" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>

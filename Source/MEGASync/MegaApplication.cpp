@@ -944,7 +944,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         //Show the transfer in the "recently updated" list
         if(e->getErrorCode() == MegaError::API_OK)
-            infoDialog->addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), QString::fromUtf8(transfer->getPath()));
+        {
+            QString localPath = QString::fromUtf8(transfer->getPath());
+            #ifdef WIN32
+                if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+            #endif
+            infoDialog->addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
+        }
 	}
 	else
 	{
@@ -1091,7 +1097,12 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
             //If the new node is a file, add it to the "recently updated" list
             if((node->type==FILENODE))
+            {
+                #ifdef WIN32
+                    if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+                #endif
                 infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
+            }
         }
 	}
 
