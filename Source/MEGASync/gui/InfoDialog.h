@@ -75,7 +75,7 @@ protected:
     void changeEvent(QEvent * event);
 
 protected:
-	bool eventFilter(QObject *obj, QEvent *ev);
+    //bool eventFilter(QObject *obj, QEvent *ev);
 	void showPopup(QPoint globalpos, bool download);
 	void updateRecentFiles();
 

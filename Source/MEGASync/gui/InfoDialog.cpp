@@ -6,7 +6,7 @@
 #include <QHelpEvent>
 #include <QToolTip>
 #include <QSignalMapper>
-
+#include <QVBoxLayout>
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
 #include "RecentFile.h"
@@ -21,8 +21,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->setupUi(this);
 
     //Install event filters to show custom tooltips
-	ui->bDownloads->installEventFilter(this);
-	ui->bUploads->installEventFilter(this);
+    //ui->bDownloads->installEventFilter(this);
+    //ui->bUploads->installEventFilter(this);
 
     //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
@@ -40,9 +40,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	totalDownloadSize = totalUploadSize = 0;
 	remainingUploads = remainingDownloads = 0;
     ui->lDownloads->setText(QString::fromAscii(""));
-	ui->bUploads->hide();
     ui->lUploads->setText(QString::fromAscii(""));
-	ui->bUploads->hide();
+    //ui->bUploads->hide();
+    //ui->bUploads->hide();
     finishing = false;
     indexing = false;
     transfer1 = NULL;
@@ -151,9 +151,10 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
 {
-    QLayoutItem *item = ui->recentLayout->itemAt(2);
+    QVBoxLayout *recentLayout = (QVBoxLayout *)ui->wRecentLayout->layout();
+    QLayoutItem *item = recentLayout->itemAt(2);
     RecentFile * recentFile = ((RecentFile *)item->widget());
-    ui->recentLayout->insertWidget(0, recentFile);
+    recentLayout->insertWidget(0, recentFile);
     recentFile->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
     preferences->addRecentFile(fileName, fileHandle, localPath);
 }
@@ -170,6 +171,9 @@ void InfoDialog::updateTransfers()
 
     if(remainingDownloads)
     {
+        ui->wDownloadDesc->show();
+        QString fullPattern = QString::fromAscii("<span style=\"color: rgb(120, 178, 66); \">%1</span>%2");
+        QString operation = tr("Downloading ");
         QString pattern(tr("%1 of %2 (%3/s)"));
         QString pausedPattern(tr("%1 of %2 (paused)"));
         QString downloadString;
@@ -177,18 +181,41 @@ void InfoDialog::updateTransfers()
         if(downloadSpeed >= 0)  downloadString = pattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
         else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
 
-        ui->lDownloads->setText(downloadString);
-        ui->bDownloads->show();
+        ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
+
+        long long remainingBytes = totalDownloadSize-totalDownloadedSize;
+        int totalRemainingSeconds = (downloadSpeed>0) ? remainingBytes/downloadSpeed : 0;
+        int remainingHours = totalRemainingSeconds/3600;
+        int remainingMinutes = (totalRemainingSeconds%3600)/60;
+        int remainingSeconds =  (totalRemainingSeconds%60);
+        QString remainingTime;
+        if(totalRemainingSeconds)
+        {
+            remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
+                .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
+                .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+        }
+        else
+        {
+            remainingTime = QString::fromAscii("--:--:--");
+        }
+
+        ui->lRemainingTimeD->setText(remainingTime);
+        //ui->bDownloads->show();
     }
     else
     {
         ui->wTransfer1->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
-        ui->bDownloads->hide();
+        //ui->bDownloads->hide();
+        ui->wDownloadDesc->hide();
     }
 
     if(remainingUploads)
     {
+        ui->wUploadDesc->show();
+        QString fullPattern = QString::fromAscii("<span style=\"color: rgb(119, 185, 217); \">%1</span>%2");
+        QString operation = tr("Uploading ");
         QString pattern(tr("%1 of %2 (%3/s)"));
         QString pausedPattern(tr("%1 of %2 (paused)"));
         QString uploadString;
@@ -196,19 +223,41 @@ void InfoDialog::updateTransfers()
         if(uploadSpeed >= 0) uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
         else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
 
-        ui->lUploads->setText(uploadString);
-        ui->bUploads->show();
+        ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
+
+        long long remainingBytes = totalUploadSize-totalUploadedSize;
+        int totalRemainingSeconds = (uploadSpeed>0) ? remainingBytes/uploadSpeed : 0;
+        int remainingHours = totalRemainingSeconds/3600;
+        int remainingMinutes = (totalRemainingSeconds%3600)/60;
+        int remainingSeconds =  (totalRemainingSeconds%60);
+        QString remainingTime;
+        if(totalRemainingSeconds)
+        {
+            remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
+                .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
+                .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+        }
+        else
+        {
+            remainingTime = QString::fromAscii("--:--:--");
+        }
+
+        ui->lRemainingTimeU->setText(remainingTime);
+
+        //ui->bUploads->show();
     }
     else
     {
         ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
-        ui->bUploads->hide();
+        //ui->bUploads->hide();
+        ui->wUploadDesc->hide();
     }
-    if(ui->bDownloads->underMouse())
-        showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)),true);
-    else if(ui->bUploads->underMouse())
-        showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+
+    //if(ui->bDownloads->underMouse())
+    //    showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)),true);
+    //else if(ui->bUploads->underMouse())
+    //    showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 
     if((ui->sActiveTransfers->currentWidget() != ui->pUpdated) && !remainingDownloads && !remainingUploads)
         this->startAnimation();
@@ -243,20 +292,20 @@ void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long tot
 {
 	this->totalDownloadedSize = totalDownloadedSize;
 	this->totalUploadedSize = totalUploadedSize;
-	if(ui->bDownloads->underMouse())
-		showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
-	else if(ui->bUploads->underMouse())
-		showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+    //if(ui->bDownloads->underMouse())
+    //	showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
+    //else if(ui->bUploads->underMouse())
+    //	showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 }
 
 void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize)
 {
 	this->totalDownloadSize = totalDownloadSize;
 	this->totalUploadSize = totalUploadSize;
-	if(ui->bDownloads->underMouse())
-		showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
-	else if(ui->bUploads->underMouse())
-        showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
+    //if(ui->bDownloads->underMouse())
+    //	showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
+    //else if(ui->bUploads->underMouse())
+    //    showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 }
 
 void InfoDialog::setPaused(bool paused)
@@ -413,6 +462,7 @@ void InfoDialog::openFolder(QString path)
 	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
 
+/*
 bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
 {
 	if (event->type() != QEvent::ToolTip) return false;
@@ -433,6 +483,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
 	showPopup(globalpos, download);
     return true;
 }
+*/
 
 void InfoDialog::showPopup(QPoint globalpos, bool download)
 {
