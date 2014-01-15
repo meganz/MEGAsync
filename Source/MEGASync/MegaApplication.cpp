@@ -231,6 +231,7 @@ void MegaApplication::start()
         if(!preferences->logged())
             ::exit(0);
         loggedIn();
+        startSyncs();
     }
 	else
 	{
@@ -260,9 +261,6 @@ void MegaApplication::loggedIn()
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
 
-    //Start the Sync feature
-    startSyncs();
-
     //Try to keep the tray icon always active
     if(!Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName()))
         LOG("Error enabling trayicon");
@@ -272,7 +270,7 @@ void MegaApplication::loggedIn()
     Platform::startShellDispatcher(this);
 
     //Start the HTTP server
-	httpServer = new HTTPServer(2973, NULL);
+    //httpServer = new HTTPServer(2973, NULL);
 }
 
 void MegaApplication::startSyncs()
@@ -433,8 +431,8 @@ void MegaApplication::cleanAll()
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
-    delete httpServer;
-    httpServer = NULL;
+    //delete httpServer;
+    //httpServer = NULL;
     stopSyncs();
     Platform::stopShellDispatcher();
     megaApi->logout();
@@ -854,12 +852,39 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
     case MegaRequest::TYPE_ADD_SYNC:
     {
-        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        LOG("Sync added!");
+        for(int i=preferences->getNumSyncedFolders()-1; i>=0; i--)
         {
             if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
             {
                 if(e->getErrorCode() != MegaError::API_OK)
+                {
+                    if(e->getErrorCode() == MegaError::API_ENOENT)
+                    {
+                        QString localFolder = preferences->getLocalFolder(i);
+                        Node *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                        if(!node)
+                        {
+                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                                "because the remote folder doesn't exist")
+                                             .arg(preferences->getSyncName(i)));
+                        }
+                        else if(megaApi->getParentNode(node) == megaApi->getRubbishNode())
+                        {
+                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                                "because the remote folder is in the rubbish bin")
+                                             .arg(preferences->getSyncName(i)));
+                        }
+                        else if(!QFileInfo(localFolder).isDir())
+                        {
+                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                                "because the local folder doesn't exist")
+                                             .arg(preferences->getSyncName(i)));
+                        }
+                    }
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i));
                     preferences->removeSyncedFolder(i);
+                }
                 else
                     Platform::syncFolderAdded(preferences->getLocalFolder(i), preferences->getSyncName(i));
                 break;
@@ -1083,7 +1108,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
 {
-    megaApi->fetchNodes();
+    //megaApi->fetchNodes();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *api)

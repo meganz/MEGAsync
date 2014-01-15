@@ -299,6 +299,7 @@ void MegaClient::init()
 	syncfslockretry = false;
 	syncdownretry = false;
 	syncnagleretry = false;
+	syncsup = true;
 
 	xferpaused[PUT] = false;
 	xferpaused[GET] = false;
@@ -580,6 +581,9 @@ void MegaClient::exec()
 				}
 				else
 				{
+					// do not process the result until all preconfigured syncs are up and running
+					if (!syncsup && pendingsc->status == REQ_SUCCESS) break;
+
 					// pendingsc is a server-client API request
 					switch (pendingsc->status)
 					{
@@ -668,11 +672,19 @@ void MegaClient::exec()
 
 	if (syncadded) syncadded = false;
 
+	if (!syncsup)
+	{
+		// set syncsup if there are no initializing syncs
+		for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_INITIALSCAN) break;
+	
+		if (it == syncs.end()) syncsup = true;
+	}
+
 	if (!syncops)
 	{
 		for (it = syncs.begin(); it != syncs.end(); it++)
 		{
-			if ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size())
+			if (((*it)->state == SYNC_INITIALSCAN || (*it)->state == SYNC_ACTIVE) && ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size()))
 			{
 				syncops = true;
 				break;
@@ -719,7 +731,7 @@ void MegaClient::exec()
 			{
 				Sync* sync = *it;
 
-				if (sync->state != SYNC_FAILED)
+				if (sync->state == SYNC_INITIALSCAN || sync->state == SYNC_ACTIVE)
 				{
 					// process items from the notifyq until depleted
 					if (sync->dirnotify->notifyq[q].size())
@@ -3480,6 +3492,7 @@ void MegaClient::fetchnodes()
 
 		restag = reqtag;
 
+		syncsup = false;
 		app->fetchnodes_result(API_OK);
 		app->nodes_updated(NULL,nodes.size());
 
@@ -4201,7 +4214,7 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
 	// any active syncs below?
 	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++)
 	{
-		if ((*it)->state != SYNC_FAILED)
+		if ((*it)->state == SYNC_INITIALSCAN || (*it)->state == SYNC_ACTIVE)
 		{
 			n = (*it)->localroot.node;
 			
@@ -4215,7 +4228,7 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
 	n = remotenode;
 	
 	do {
-		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state != SYNC_FAILED && n == (*it)->localroot.node) return API_EEXIST;
+		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++) if (((*it)->state == SYNC_INITIALSCAN || (*it)->state == SYNC_ACTIVE) && n == (*it)->localroot.node) return API_EEXIST;
 	} while ((n = n->parent));
 	
 	FileAccess* fa = fsaccess->newfileaccess();

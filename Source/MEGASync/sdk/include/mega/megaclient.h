@@ -128,6 +128,9 @@ public:
 	// active syncs
 	sync_list syncs;
 	bool syncadded;
+	
+	// indicates whether all startup syncs have been fully scanned
+	bool syncsup;
 
 	// number of parallel connections per transfer (PUT/GET)
 	unsigned char connections[2];
