@@ -655,13 +655,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
     if(reason == QSystemTrayIcon::Trigger)
     {
-        //If the information dialog is visible, hide it
-		if(infoDialog->isVisible())
-		{
-			infoDialog->hide();
-			return;
-		}
-
         //If the information dialog isn't visible:
         //Update it
         infoDialog->updateDialog();
