@@ -7,28 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>500</height>
+    <height>545</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>500</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
-    <height>500</height>
+    <width>404</width>
+    <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QToolTip { color: #fff; background-color: black; border: none; }
-
-#InfoDialog
+   <string notr="true">#InfoDialog
 {
 background: white;
 border: 2px solid rgb(100, 100, 100);
@@ -36,40 +34,25 @@ border: 2px solid rgb(100, 100, 100);
 
 #wHeader
 {
-margin-left: 1px;
-margin-right: 1px;
+margin-left: 2px;
+margin-right: 2px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
-#wRecent1
+#wRecent1, #wRecent2, #wRecent3
 {
-margin-left: 1px;
-margin-right: 1px;
+margin-left: 2px;
+margin-right: 2px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
-#wRecent2
-{
-margin-left: 1px;
-margin-right: 1px;
-border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
-}
-
-#wRecent3
-{
-margin-left: 1px;
-margin-right: 1px;
-border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
-}
 
 #wUsage
 {
-margin-left: 1px;
-margin-right: 1px;
+margin-left: 2px;
+margin-right: 2px;
 border: 0px;
 border-bottom: 2px solid rgb(217, 217, 217);
 }
@@ -77,10 +60,10 @@ border-bottom: 2px solid rgb(217, 217, 217);
 #lRecentlyUpdated
 {
 padding-left: 14px;
-background: rgb(241, 240, 240);
-color:  rgb(166, 166, 166);
-border-left: 1px solid rgb(100, 100, 100);
-border-right: 1px solid rgb(100, 100, 100);
+background: rgb(178, 178, 178);
+color:  rgb(255, 255, 255);
+border-left: 2px solid rgb(100, 100, 100);
+border-right: 2px solid rgb(100, 100, 100);
 }
 
 #lSyncUpdated
@@ -92,15 +75,15 @@ color:  rgb(166, 166, 166);
 {
 background: rgb(242, 242, 242);
 border-bottom: 2px solid rgb(100, 100, 100);
-border-left: 1px solid rgb(100, 100, 100);
-border-right: 1px solid rgb(100, 100, 100);
+border-left: 2px solid rgb(100, 100, 100);
+border-right: 2px solid rgb(100, 100, 100);
 }
 
 #sActiveTransfers
 {
 border: 0px;
-margin-left: 1px;
-margin-right: 1px;
+margin-left: 2px;
+margin-right: 2px;
 padding: 0px;
 }
 
@@ -129,22 +112,23 @@ color: rgb(102, 102, 102);
 color: rgb(102, 102, 102);
 }
 
+#wDescriptions
+{
+	border-top: 2px solid rgb(241, 240, 240);
+}
 </string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0,0">
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>1</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>1</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -191,13 +175,13 @@ color: rgb(102, 102, 102);
        <widget class="QCheckBox" name="bPause">
         <property name="minimumSize">
          <size>
-          <width>32</width>
+          <width>36</width>
           <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>32</width>
+          <width>36</width>
           <height>36</height>
          </size>
         </property>
@@ -278,19 +262,31 @@ border: none;</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>160</height>
+       <height>200</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>160</height>
+       <height>200</height>
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pUpdated">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>200</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>200</height>
+       </size>
+      </property>
       <layout class="QGridLayout" name="gridLayout">
        <property name="leftMargin">
         <number>2</number>
@@ -347,6 +343,18 @@ border: none;</string>
       </layout>
      </widget>
      <widget class="QWidget" name="pUpdating">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>200</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>200</height>
+       </size>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
@@ -380,7 +388,7 @@ border: none;</string>
             <property name="minimumSize">
              <size>
               <width>400</width>
-              <height>20</height>
+              <height>60</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -396,7 +404,7 @@ border: none;</string>
             <property name="minimumSize">
              <size>
               <width>400</width>
-              <height>20</height>
+              <height>60</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -411,104 +419,195 @@ border: none;</string>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_6" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0,1">
+        <widget class="QWidget" name="wDescriptions" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
-           <widget class="QPushButton" name="bDownloads">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin: 4px;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>://images/tray_download_ico.png</normaloff>://images/tray_download_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
+           <widget class="QWidget" name="wUploadDesc" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0,0">
+             <property name="leftMargin">
+              <number>16</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lUploads">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(102, 102, 102);</string>
+               </property>
+               <property name="text">
+                <string>uploading</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="Resources.qrc">:/images/upload_timer_ico.png</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lRemainingTimeU">
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-right: 8px;
+color: rgb(102, 102, 102);</string>
+               </property>
+               <property name="text">
+                <string>--:--:--</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lDownloads">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bUploads">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">margin: 4px;
-border: none;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>://images/tray_upload_ico.png</normaloff>://images/tray_upload_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lUploads">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
+           <widget class="QWidget" name="wDownloadDesc" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0">
+             <property name="leftMargin">
+              <number>17</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lDownloads">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(102, 102, 102);</string>
+               </property>
+               <property name="text">
+                <string>downloading</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="Resources.qrc">:/images/download_timer_ico.png</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lRemainingTimeD">
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-right: 8px;
+color: rgb(102, 102, 102);</string>
+               </property>
+               <property name="text">
+                <string>00:00:00</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -548,65 +647,76 @@ border: none;</string>
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="recentLayout">
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="RecentFile" name="wRecent1" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>50</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="RecentFile" name="wRecent2" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="RecentFile" name="wRecent3" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>50</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="wRecentLayout" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="RecentFile" name="wRecent1" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>50</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="RecentFile" name="wRecent3" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>50</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="RecentFile" name="wRecent2" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QWidget" name="wUsage" native="true">

@@ -139,5 +139,7 @@
         <file>images/syncs_32.png</file>
         <file>images/selective.png</file>
         <file>images/full_sync.png</file>
+        <file>images/download_timer_ico.png</file>
+        <file>images/upload_timer_ico.png</file>
     </qresource>
 </RCC>

@@ -670,7 +670,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
         //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
         QRect screenGeometry = QApplication::desktop()->availableGeometry();
-		infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 500 - 2);
+        infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
 
         //Show the dialog
         megaApi->updateStatics();
