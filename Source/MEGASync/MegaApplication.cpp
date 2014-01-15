@@ -1018,6 +1018,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 {    
     //Show information to users
     showWarningMessage(tr("Temporary transmission error: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+    onSyncStateChanged(megaApi);
 }
 
 //Called when contacts have been updated in MEGA
