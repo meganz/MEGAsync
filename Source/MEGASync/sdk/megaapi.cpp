@@ -1965,6 +1965,9 @@ void MegaApi::transfer_update(Transfer *tr)
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
     updateStatics();
+    if (tr->type == GET) pendingDownloads--;
+    else pendingUploads --;
+
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaError megaError(e);
     MegaTransfer* transfer = transferMap.at(tr);
