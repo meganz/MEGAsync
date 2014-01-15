@@ -475,7 +475,7 @@ border: none;</string>
                 <string notr="true">color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
-                <string>uploading</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -520,7 +520,7 @@ border: none;</string>
 color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
-                <string>--:--:--</string>
+                <string/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -554,7 +554,7 @@ color: rgb(102, 102, 102);</string>
                 <string notr="true">color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
-                <string>downloading</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -600,7 +600,7 @@ color: rgb(102, 102, 102);</string>
 color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
-                <string>00:00:00</string>
+                <string/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
