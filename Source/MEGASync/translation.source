@@ -147,6 +147,18 @@ Please enter a different name to identify this synced folder:</source>
         <source>Not found</source>
         <translation>[$1601]</translation>
     </message>
+     <message>
+            <source>You are about to import this file to a synced folder.
+    If you enable downloading, the file will be duplicated on your computer.
+    Are you sure?</source>
+            <translation>[$1822]</translation>
+        </message>
+        <message>
+            <source>You are about to import these files to a synced folder.
+    If you enable downloading, the files will be duplicated on your computer.
+    Are you sure?</source>
+            <translation>[$1823]</translation>
+    </message>
 </context>
 <context>
     <name>InfoDialog</name>
@@ -1474,6 +1486,25 @@ Please, select another folder.</source>
         <location filename="../../platform/win/WindowsPlatform.cpp" line="162"/>
         <source>MEGA synced folder</source>
         <translation>[$1813]</translation>
+    </message>
+</context>
+<context>
+    <name>QDialogButtonBox</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation>[$1818]</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation>[$1819]</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>[$1820]</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>[$1821]</translation>
     </message>
 </context>
 </TS>

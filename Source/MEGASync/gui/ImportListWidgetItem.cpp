@@ -36,8 +36,13 @@ void ImportListWidgetItem::setData(QString fileName, linkstatus status, long lon
 
 void ImportListWidgetItem::updateGui()
 {
-    if(fileSize) ui->lName->setText(fileName + QString::fromAscii(" (") + Utilities::getSizeString(fileSize) + QString::fromAscii(")"));
-	else ui->lName->setText(fileName);
+    QString name;
+    if(fileSize) name = fileName + QString::fromAscii(" (") + Utilities::getSizeString(fileSize) + QString::fromAscii(")");
+    else name = fileName;
+
+    QFont f = ui->lName->font();
+    QFontMetrics fm = QFontMetrics(f);
+    ui->lName->setText(fm.elidedText(name, Qt::ElideMiddle,ui->lName->width()));
     ui->lImage->setPixmap(Utilities::getExtensionPixmapSmall(fileName));
 
 	switch(status)

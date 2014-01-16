@@ -113,6 +113,11 @@ void MegaApplication::initialize()
 
     setQuitOnLastWindowClosed(false);
 
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&No");
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&OK");
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&Cancel");
+
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
