@@ -54,6 +54,9 @@ class WinShellDispatcherTask : public QObject
 	QQueue<QString> uploadQueue;
     QQueue<QString> exportQueue;
     MegaApplication *receiver;
+    QString lastPath;
+    pathstate_t lastState;
+    int numHits;
 
  signals:
 	void newUploadQueue(QQueue<QString> uploadQueue);

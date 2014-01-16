@@ -921,9 +921,6 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //Send statics to the information dialog
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
     infoDialog->updateTransfers();
-
-    //Update the state of the tray icon
-    if(!paused) showSyncingIcon();
 }
 
 //Called when there is a temporal problem in a request
@@ -1085,7 +1082,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
             if(node->localnode)
             {
                 int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();
-
                 QDir parent = QFileInfo(localPath).dir();
                 while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
                 {

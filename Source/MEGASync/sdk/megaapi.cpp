@@ -1965,8 +1965,6 @@ void MegaApi::transfer_update(Transfer *tr)
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
     updateStatics();
-    if (tr->type == GET) pendingDownloads--;
-    else pendingUploads --;
 
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaError megaError(e);
@@ -4168,7 +4166,7 @@ void MegaApi::updateStatics()
     while(it != end)
     {
         Transfer *transfer = it->second;
-        if(transfer->failcount<2) downloadCount++;
+        if(transfer->failcount<2 && transfer->size) downloadCount++;
         it++;
     }
 
@@ -4177,7 +4175,7 @@ void MegaApi::updateStatics()
     while(it != end)
     {
         Transfer *transfer = it->second;
-        if(transfer->failcount<2) uploadCount++;
+        if(transfer->failcount<2 && transfer->size) uploadCount++;
         it++;
     }
     MUTEX_UNLOCK(sdkMutex);
