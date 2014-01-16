@@ -6,6 +6,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileDialog>
+#include <QMessageBox>
 
 ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, QWidget *parent) :
 	QDialog(parent),
@@ -61,6 +62,17 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     if(testNode) ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(testNode)));
     else ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
 
+    while(testNode)
+    {
+        if(testNode->localnode)
+        {
+            ui->cDownload->setChecked(false);
+            this->on_cDownload_clicked();
+            break;
+        }
+        testNode = testNode->parent;
+    }
+
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
 	connect(linkProcessor, SIGNAL(onLinkInfoRequestFinish()), this, SLOT(onLinkInfoRequestFinish()));
 
@@ -95,6 +107,40 @@ QString ImportMegaLinksDialog::getDownloadPath()
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
 {
+    if(ui->cImport->isChecked() && ui->cDownload->isChecked())
+    {
+        QString importFolder = ui->eMegaFolder->text();
+        Node *nImportFolder = megaApi->getNodeByPath(importFolder.toUtf8().constData());
+        while(nImportFolder)
+        {
+            if(nImportFolder->localnode)
+            {
+                int result;
+                if(linkProcessor->size()==1)
+                {
+                    result = QMessageBox::warning(this, tr("Warning"),
+                        tr("You are about to import this file to a synced folder.\n"
+                            "If you enable downloading, the file will be duplicated on your computer.\n"
+                            "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
+                }
+                else
+                {
+                    result = QMessageBox::warning(this, tr("Warning"),
+                        tr("You are about to import these files to a synced folder.\n"
+                            "If you enable downloading, the files will be duplicated on your computer.\n"
+                            "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
+                }
+                if(result != QMessageBox::Yes)
+                {
+                    ui->cDownload->setChecked(false);
+                    return;
+                }
+                break;
+            }
+            nImportFolder = nImportFolder->parent;
+        }
+    }
+
 	if(finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
 		ui->bOk->setEnabled(true);
 	else
