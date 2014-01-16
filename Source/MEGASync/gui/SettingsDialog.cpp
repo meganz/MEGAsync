@@ -525,7 +525,7 @@ void SettingsDialog::on_bAdd_clicked()
     if(result != QDialog::Accepted)
         return;
 
-    QString localFolderPath = QDir(dialog->getLocalFolder()).canonicalPath();
+    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     long long handle = dialog->getMegaFolder();
     Node *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)

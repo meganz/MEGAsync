@@ -1958,7 +1958,21 @@ void MegaApi::transfer_update(Transfer *tr)
         //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
         //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
 
-        if(tr->slot->progressreported) fireOnTransferUpdate(this, transfer);
+        if(tr->slot->progressreported)
+            fireOnTransferUpdate(this, transfer);
+        else
+        {
+            if(!tr->files.front()->syncxfer)
+            {
+                QString localPath = QString::fromUtf8(transfer->getPath());
+                QDir parent = QFileInfo(localPath).dir();
+                while(!parent.isRoot())
+                {
+                    Platform::notifyItemChange(parent.absolutePath());
+                    parent = QFileInfo(parent.absolutePath()).dir();
+                }
+            }
+        }
 	}
 }
 

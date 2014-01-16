@@ -880,15 +880,23 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                                              .arg(preferences->getSyncName(i)));
                         }
                     }
+                    LOG("Sync error! Removed");
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i));
                     preferences->removeSyncedFolder(i);
                 }
                 else
+                {
+                    LOG("Sync notified!");
                     Platform::syncFolderAdded(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                }
                 break;
             }
         }
-        if(infoDialog) infoDialog->updateSyncsButton();
+        if(infoDialog)
+        {
+            LOG("Sync commited! Updating GUI");
+            infoDialog->updateSyncsButton();
+        }
         break;
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
