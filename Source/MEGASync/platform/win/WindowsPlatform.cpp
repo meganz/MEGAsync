@@ -43,7 +43,7 @@ void WindowsPlatform::notifyItemChange(QString path)
     if(path.startsWith(QString::fromAscii("\\\\?\\"))) path = path.mid(4);
     if(path.length()>=MAX_PATH) return;
     WCHAR *windowsPath = (WCHAR *)path.utf16();
-	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, windowsPath, NULL);
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
@@ -198,10 +198,10 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     WCHAR *wExecPath = (WCHAR *)exec.utf16();
     res = CreateLink(wSyncPath, wLinkPath, wDescription, wExecPath);
 
-    SHChangeNotify(SHCNE_CREATE, SHCNF_PATH, wLinkPath, NULL);
+    SHChangeNotify(SHCNE_CREATE, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinkPath, NULL);
 
     WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
-    SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinksPath, NULL);
 }
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath)
@@ -226,10 +226,10 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath)
     QFile::remove(linkPath);
 
     WCHAR *wLinkPath = (WCHAR *)linkPath.utf16();
-    SHChangeNotify(SHCNE_DELETE, SHCNF_PATH, wLinkPath, NULL);
+    SHChangeNotify(SHCNE_DELETE, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinkPath, NULL);
 
     WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
-    SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH, wLinksPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinksPath, NULL);
 }
 
 QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)

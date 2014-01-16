@@ -2030,7 +2030,10 @@ void MegaApi::syncupdate_state(Sync *sync, syncstate s)
     string path = sync->localroot.localname;
     path.append("", 1);
     WCHAR *windowsPath = (WCHAR *)path.data();
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
+    QString qPath = QString::fromWCharArray(windowsPath);
+    if(qPath.startsWith(QString::fromAscii("\\\\?\\"))) qPath = qPath.mid(4);
+    if(qPath.length()>=MAX_PATH) return;
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, qPath.utf16(), NULL);
 }
 
 void MegaApi::syncupdate_scanning(bool scanning)

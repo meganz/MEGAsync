@@ -160,7 +160,7 @@ void TransferSlot::doio(MegaClient* client)
 							if (progresscompleted == transfer->size)
 							{
 								// verify meta MAC
-								if (macsmac(&transfer->chunkmacs) == transfer->metamac) return transfer->complete();
+								if (!progresscompleted || macsmac(&transfer->chunkmacs) == transfer->metamac) return transfer->complete();
 								else return transfer->failed(API_EKEY);
 							}
 						}
