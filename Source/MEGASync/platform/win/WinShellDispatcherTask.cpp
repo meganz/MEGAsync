@@ -425,24 +425,41 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         case L'P':
         {
             if(lstrlen(pipe->chRequest)<3) break;
-            MegaApplication *app = (MegaApplication *)qApp;
-            MegaApi *megaApi = app->getMegaApi();
-            string tmpPath((const char*)content, lstrlen(content)*sizeof(wchar_t));
-            pathstate_t state = megaApi->syncPathState(&tmpPath);
+            pathstate_t state;
+            QString temp = QString::fromWCharArray(content);
+            if((temp == lastPath) && (numHits < 3))
+            {
+                state = lastState;
+                numHits++;
+            }
+            else
+            {
+                MegaApplication *app = (MegaApplication *)qApp;
+                MegaApi *megaApi = app->getMegaApi();
+                string tmpPath((const char*)content, temp.size()*sizeof(wchar_t));
+                state = megaApi->syncPathState(&tmpPath);
+                lastState = state;
+                lastPath = temp;
+                numHits=1;
+            }
+
             switch(state)
             {
                 case PATHSTATE_SYNCED:
+                    //cout << "Synced: " << lastPath.toStdString() << endl;
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
                  case PATHSTATE_SYNCING:
+                     //cout << "Syncing: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
                 case PATHSTATE_PENDING:
+                     //cout << "Pending: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
                  case PATHSTATE_NOTFOUND:
                  default:
-                     //cout << "Not found" << endl;
+                     //cout << "Not found: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }
             break;

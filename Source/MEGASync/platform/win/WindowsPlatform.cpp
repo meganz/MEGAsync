@@ -40,6 +40,8 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
 
 void WindowsPlatform::notifyItemChange(QString path)
 {
+    if(path.startsWith(QString::fromAscii("\\\\?\\"))) path = path.mid(4);
+    if(path.length()>=MAX_PATH) return;
     WCHAR *windowsPath = (WCHAR *)path.utf16();
 	SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
 }
