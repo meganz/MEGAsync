@@ -456,6 +456,19 @@ bool Node::setparent(Node* p)
 
 	child_it = parent->children.insert(parent->children.end(),this);
 
+	// if the new location is not synced, cancel all GET transfers
+	while (p)
+	{
+		if (p->localnode) break;
+		p = p->parent;
+	}
+	
+	if (!p)
+	{
+		TreeProcDelSyncGet tdsg;
+		client->proctree(this,&tdsg);
+	}
+	
 	return true;
 }
 
