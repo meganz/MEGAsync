@@ -1470,19 +1470,31 @@ treestate_t MegaApi::syncPathState(string* path)
         path->insert(0, localPrefix);
 #endif
 
+    treestate_t state = TREESTATE_NONE;
     MUTEX_LOCK(sdkMutex);
     for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
     {
         Sync *sync = (*it);
+        if(path->size()<sync->localroot.localname.size()) continue;
+        if(path->size()==sync->localroot.localname.size())
+        {
+            if(!memcmp(path->data(), sync->localroot.localname.data(), path->size()))
+            {
+                state = sync->localroot.ts;
+                break;
+            }
+            else continue;
+        }
+
         LocalNode* l = sync->localnodebypath(NULL,path);
         if(l)
         {
-            MUTEX_UNLOCK(sdkMutex);
-            return l->ts;
+            state = l->ts;
+            break;
         }
     }
     MUTEX_UNLOCK(sdkMutex);
-    return TREESTATE_NONE;
+    return state;
 }
 
 
