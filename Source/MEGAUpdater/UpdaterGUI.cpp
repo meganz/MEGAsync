@@ -14,7 +14,7 @@
 
 using namespace mega;
 
-const QString UpdaterGUI::BASE_UPDATE_URL = QString::fromAscii("http://g.static.mega.co.nz/upd/wsync/");
+const QString UpdaterGUI::BASE_UPDATE_URL = QString::fromAscii("http://www.pycusoft.com/sync/");
 const QString UpdaterGUI::VERSION = QString::fromAscii("110");
 
 UpdaterGUI::UpdaterGUI(QWidget *parent) :
@@ -186,7 +186,7 @@ void UpdaterGUI::on_bGenerateUpdate_clicked()
         SIGNATURES.append(QString::fromAscii(buf));
         delete buf;
 
-        QString downloadURL = BASE_UPDATE_URL + QFileInfo(finalSourcePaths[i]).fileName();
+        QString downloadURL = BASE_UPDATE_URL + QFileInfo(dstPaths[i]).fileName();
         updateFileSignatureGenerator.add((const byte *)downloadURL.toAscii().constData(), downloadURL.toAscii().size());
         QString targetPath = dstPaths[i];
         updateFileSignatureGenerator.add((const byte *)targetPath.toAscii().constData(), targetPath.toAscii().size());
@@ -208,9 +208,9 @@ void UpdaterGUI::on_bGenerateUpdate_clicked()
     out << UPDATE_FILE_SIGNATURE << endl;
     for(int i=0; i<SIGNATURES.size(); i++)
     {
-        out << BASE_UPDATE_URL << QFileInfo(finalSourcePaths[i]).fileName() << endl;
+        out << BASE_UPDATE_URL << QFileInfo(dstPaths[i]).fileName() << endl;
         out << dstPaths[i] << endl;
-        out << SIGNATURES[i];
+        out << SIGNATURES[i] << endl;
     }
 
     file.close();

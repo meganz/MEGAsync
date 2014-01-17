@@ -11,8 +11,8 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 108;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.8");
+const int MegaApplication::VERSION_CODE = 109;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.9");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -161,7 +161,6 @@ void MegaApplication::initialize()
     //Platform::startOnStartup(preferences->startOnStartup());
 
     preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
-    startUpdateTask();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -249,6 +248,8 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {    
+    startUpdateTask();
+
     QString language = preferences->language();
     changeLanguage(language);
 
@@ -478,22 +479,20 @@ void MegaApplication::startUpdateTask()
 {
     if(!preferences->updateAutomatically()) return;
 
-    //TODO: Enable autoUpdate again in the next release
-    //if(!updateThread.isRunning())
-    //{
-    //    updateTask.moveToThread(&updateThread);
-    //    updateThread.start();
-    //    connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()), Qt::UniqueConnection);
-    //    connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
-    //    emit startUpdaterThread();
-    //}
+    if(!updateThread.isRunning())
+    {
+        updateTask.moveToThread(&updateThread);
+        updateThread.start();
+        connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()), Qt::UniqueConnection);
+        connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
+        emit startUpdaterThread();
+    }
 }
 
 void MegaApplication::stopUpdateTask()
 {
-    //TODO: Enable autoUpdate again in the next release
-    //if(updateThread.isRunning())
-    //    updateThread.quit();
+    if(updateThread.isRunning())
+        updateThread.quit();
 }
 
 void MegaApplication::pauseSync()

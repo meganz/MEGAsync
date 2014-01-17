@@ -204,9 +204,9 @@ void SettingsDialog::loadSettings()
     //General
     ui->cShowNotifications->setChecked(preferences->showNotifications());
 
-    //TODO: Enable autoUpdate again in the next release
-    //ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+    ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
 
+    //TODO: Enable startOnStartup again in the next release
     //ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
     //Language
@@ -332,15 +332,15 @@ void SettingsDialog::saveSettings()
     //General
     preferences->setShowNotifications(ui->cShowNotifications->isChecked());
 
-    //TODO: Enable autoUpdate again in the next release
-    //bool updateAutomatically = ui->cAutoUpdate->isChecked();
-    //if(updateAutomatically != preferences->updateAutomatically())
-    //{
-    //    if(updateAutomatically) app->startUpdateTask();
-    //    else app->stopUpdateTask();
-    //}
-    //preferences->setUpdateAutomatically(updateAutomatically);
+    bool updateAutomatically = ui->cAutoUpdate->isChecked();
+    if(updateAutomatically != preferences->updateAutomatically())
+    {
+        if(updateAutomatically) app->startUpdateTask();
+        else app->stopUpdateTask();
+    }
+    preferences->setUpdateAutomatically(updateAutomatically);
 
+    //TODO: Enable startOnStartup
     //bool startOnStartup = ui->cStartOnStartup->isChecked();
     //Platform::startOnStartup(startOnStartup);
     //preferences->setStartOnStartup(startOnStartup);
