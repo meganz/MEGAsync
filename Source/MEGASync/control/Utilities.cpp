@@ -248,6 +248,11 @@ void Utilities::log(const char *message)
     cout << "LOG: " << message << endl;
 }
 
+void Utilities::log(std::ostream *message)
+{
+    cout << "LOG: " << message << endl;
+}
+
 bool Utilities::verifySyncedFolderLimits(QString path)
 {
     long numFiles = 0;

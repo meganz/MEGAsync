@@ -45,16 +45,11 @@ protected:
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;
-
    AsymmCipher asymkey;
-   AsymmCipher privkey;
-
    QNetworkAccessManager *m_WebCtrl;
    HashSignature *signatureChecker;
-   HashSignature *signatureGenerator;
    char signature[256];
    int updateVersion;
-
    int currentFile;
    QDir updateFolder;
    QDir backupFolder;
@@ -66,7 +61,6 @@ protected:
    static const QString UPDATE_FOLDER_NAME;
    static const QString BACKUP_FOLDER_NAME;
    static const char PUBLIC_KEY[];
-   static const char PRIVATE_KEY[];
 
 signals:
    void updateCompleted();
