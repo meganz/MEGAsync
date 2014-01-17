@@ -37,7 +37,7 @@ struct NodeCore
 	handle parenthandle;
 
 	// node type
-	nodetype type;
+	nodetype_t type;
 
 	// full folder/file key, symmetrically or asymmetrically encrypted
 	string nodekey;
@@ -54,7 +54,7 @@ struct NewNode : public NodeCore
 {
 	static const int UPLOADTOKENLEN = 27;
 
-	newnodesource source;
+	newnodesource_t source;
 
 	handle uploadhandle;
 	byte uploadtoken[UPLOADTOKENLEN];
@@ -161,7 +161,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 	bool serialize(string*);
 	static Node* unserialize(MegaClient*, string*, node_vector*);
 
-	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype, m_off_t, handle, const char*, time_t, time_t);
+	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype_t, m_off_t, handle, const char*, time_t, time_t);
 	~Node();
 };
 
@@ -190,27 +190,33 @@ struct LocalNode : public File
 	NewNode* newnode;
 
 	// FILENODE or FOLDERNODE
-	nodetype type;
-
+	nodetype_t type;
+	
 	// detection of deleted filesystem records
 	int scanseqno;
 
+	// number of iterations since last seen
+	int notseen;
+	
 	// global sync reference
 	handle syncid;
 	
 	// was actively deleted
 	bool deleted;
 	
+	// current subtree sync state: current and displayed
+	treestate_t ts, dts;
+
+	// update sync state all the way to the root node
+	void treestate(treestate_t = TREESTATE_NONE);
+	
 	// timer to delay upload start
 	dstime nagleds;
 	void bumpnagleds();
 
-	// number of iterations since last seen
-	int notseen;
-	
 	// if delage > 0, own iterator inside MegaClient::localsyncgone
 	localnode_set::iterator notseen_it;
-	
+
 	// build full local path to this node
 	void getlocalpath(string*, bool sdisable = false);
 	void getlocalsubpath(string*);
@@ -232,7 +238,7 @@ struct LocalNode : public File
 
 	void setnameparent(LocalNode*, string*);
 	
-	void init(Sync*, nodetype, LocalNode*, string*, string*);
+	void init(Sync*, nodetype_t, LocalNode*, string*, string*);
 
 	~LocalNode();
 };

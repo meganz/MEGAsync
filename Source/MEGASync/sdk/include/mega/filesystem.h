@@ -47,7 +47,7 @@ struct FileAccess
 	bool fsidvalid;
 
 	// type of opened path
-	nodetype type;
+	nodetype_t type;
 
 	// if the open failed, retry indicates a potentially transient reason
 	bool retry;
@@ -93,7 +93,7 @@ struct DirAccess
 	virtual bool dopen(string*, FileAccess*, bool) = 0;
 
 	// get next record
-	virtual bool dnext(string*, nodetype* = NULL) = 0;
+	virtual bool dnext(string*, nodetype_t* = NULL) = 0;
 
 	virtual ~DirAccess() { }
 };

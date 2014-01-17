@@ -203,11 +203,8 @@ void SettingsDialog::loadSettings()
 {
     //General
     ui->cShowNotifications->setChecked(preferences->showNotifications());
-
     ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
-
-    //TODO: Enable startOnStartup again in the next release
-    //ui->cStartOnStartup->setChecked(preferences->startOnStartup());
+    ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
     //Language
     ui->cLanguage->clear();
@@ -340,10 +337,9 @@ void SettingsDialog::saveSettings()
     }
     preferences->setUpdateAutomatically(updateAutomatically);
 
-    //TODO: Enable startOnStartup
-    //bool startOnStartup = ui->cStartOnStartup->isChecked();
-    //Platform::startOnStartup(startOnStartup);
-    //preferences->setStartOnStartup(startOnStartup);
+    bool startOnStartup = ui->cStartOnStartup->isChecked();
+    Platform::startOnStartup(startOnStartup);
+    preferences->setStartOnStartup(startOnStartup);
 
     //Language
     int currentIndex = ui->cLanguage->currentIndex();

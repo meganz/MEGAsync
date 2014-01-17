@@ -42,7 +42,7 @@ struct User : public Cachable
 	AttrMap attrs;
 
 	// visibility status
-	visibility show;
+	visibility_t show;
 
 	// shares by this user
 	handle_set sharing;
@@ -57,7 +57,7 @@ struct User : public Cachable
 	// actions to take after arrival of the public key
 	deque<class PubKeyAction*> pkrs;
 
-	void set(visibility, time_t);
+	void set(visibility_t, time_t);
 
 	bool serialize(string*);
 	static User* unserialize(class MegaClient*, string*);

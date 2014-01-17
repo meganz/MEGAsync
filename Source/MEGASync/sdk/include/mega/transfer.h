@@ -31,7 +31,7 @@ namespace mega {
 struct Transfer : public FileFingerprint
 {
 	// PUT or GET
-	direction type;
+	direction_t type;
 
 	// transfer slot this transfer is active in (can be NULL if still queued)
 	TransferSlot* slot;
@@ -76,7 +76,7 @@ struct Transfer : public FileFingerprint
 	// backlink to base
 	MegaClient* client;
 	int tag;
-	Transfer(MegaClient*, direction);
+	Transfer(MegaClient*, direction_t);
 	virtual ~Transfer();
 };
 

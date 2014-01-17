@@ -55,11 +55,11 @@ struct HttpIO : public EventTrigger
 // outgoing HTTP request
 struct HttpReq
 {
-	reqstatus status;
+	reqstatus_t status;
 
 	int httpstatus;
 
-	contenttype type;
+	contenttype_t type;
 
 	string posturl;
 
@@ -78,7 +78,7 @@ struct HttpReq
 	HttpIO* httpio;
 
 	// set url and content type for subsequent requests
-	void setreq(const char*, contenttype);
+	void setreq(const char*, contenttype_t);
 
 	// post request to the network
 	void post(MegaClient*, const char* = NULL, unsigned = 0);

@@ -129,7 +129,7 @@ protected:
 	long long totalDownloadedSize, totalUploadedSize;
 	long long uploadSpeed, downloadSpeed;
     int exportOps;
-    syncstate syncState;
+    syncstate_t syncState;
 	QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;

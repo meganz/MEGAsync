@@ -34,7 +34,7 @@ struct PosixDirAccess : public DirAccess
 	unsigned globindex;
 
 	bool dopen(string*, FileAccess*, bool);
-	bool dnext(string*, nodetype* = NULL);
+	bool dnext(string*, nodetype_t* = NULL);
 
 	PosixDirAccess();
 	virtual ~PosixDirAccess();

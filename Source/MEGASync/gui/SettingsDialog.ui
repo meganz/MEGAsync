@@ -434,7 +434,7 @@ margin-top: 6px;
           <item>
            <widget class="QCheckBox" name="cStartOnStartup">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Start on startup</string>
@@ -444,7 +444,7 @@ margin-top: 6px;
           <item>
            <widget class="QCheckBox" name="cAutoUpdate">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Update automatically</string>

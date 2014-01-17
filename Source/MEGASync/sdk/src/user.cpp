@@ -61,7 +61,7 @@ User* User::unserialize(MegaClient* client, string* d)
 {
 	handle uh;
 	time_t ts;
-	visibility v;
+	visibility_t v;
 	unsigned char l;
 	string m;
 	User* u;
@@ -69,7 +69,7 @@ User* User::unserialize(MegaClient* client, string* d)
 	const char* end = ptr+d->size();
 	int i;
 
-	if (ptr+sizeof(handle)+sizeof(time_t)+sizeof(visibility)+2 > end) return NULL;
+	if (ptr+sizeof(handle)+sizeof(time_t)+sizeof(visibility_t)+2 > end) return NULL;
 
 	uh = *(handle*)ptr;
 	ptr += sizeof uh;
@@ -77,7 +77,7 @@ User* User::unserialize(MegaClient* client, string* d)
 	ts = *(time_t*)ptr;
 	ptr += sizeof ts;
 
-	v = *(visibility*)ptr;
+	v = *(visibility_t*)ptr;
 	ptr += sizeof v;
 
 	l = *ptr++;
@@ -100,7 +100,7 @@ User* User::unserialize(MegaClient* client, string* d)
 }
 
 // update user attributes
-void User::set(visibility v, time_t ct)
+void User::set(visibility_t v, time_t ct)
 {
 	show = v;
 	ctime = ct;

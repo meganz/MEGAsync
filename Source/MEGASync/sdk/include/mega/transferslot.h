@@ -34,7 +34,7 @@ struct TransferSlot
 	struct Transfer* transfer;
 
 	// associated source/destination file
-	FileAccess* file;
+	FileAccess* fa;
 
 	// command in flight to obtain temporary URL
 	Command* pendingcmd;

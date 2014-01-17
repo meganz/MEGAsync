@@ -331,7 +331,7 @@ size_t PosixFileSystemAccess::lastpartlocal(string* localname)
 	const char* ptr = localname->data();
 
 	if ((ptr = strrchr(ptr,'/'))) return ptr-localname->data();
-	
+
 	return 0;
 }
 
@@ -405,7 +405,7 @@ bool PosixDirAccess::dopen(string* path, FileAccess* f, bool doglob)
 	return dp != NULL;
 }
 
-bool PosixDirAccess::dnext(string* name, nodetype* type)
+bool PosixDirAccess::dnext(string* name, nodetype_t* type)
 {
 	if (globbing)
 	{

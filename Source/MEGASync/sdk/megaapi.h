@@ -778,7 +778,7 @@ public:
     bool isRegularTransfer(Transfer *transfer);
     bool isRegularTransfer(MegaTransfer *transfer);
 
-    pathstate_t syncPathState(string *path);
+    treestate_t syncPathState(string *path);
     Node *getSyncedNode(string *path);
     void syncFolder(const char *localFolder, Node *megaFolder);
     void removeSync(handle nodehandle, MegaRequestListener *listener=NULL);
@@ -920,7 +920,7 @@ protected:
 
 
 	virtual void fetchnodes_result(error);
-	virtual void putnodes_result(error, targettype, NewNode*);
+    virtual void putnodes_result(error, targettype_t, NewNode*);
 
     // share update result
 	virtual void share_result(error);
@@ -967,7 +967,7 @@ protected:
     virtual void transfer_complete(Transfer*);
 
 	// sync status updates and events
-	virtual void syncupdate_state(Sync*, syncstate);
+    virtual void syncupdate_state(Sync*, syncstate_t);
     virtual void syncupdate_scanning(bool scanning);
 	virtual void syncupdate_stuck(string*);
 	virtual void syncupdate_local_folder_addition(Sync*, const char*);
@@ -982,7 +982,7 @@ protected:
 	virtual void syncupdate_remote_folder_deletion(Node*);
 	virtual void syncupdate_remote_copy(Sync*, const char*);
 	virtual void syncupdate_remote_move(string*, string*);
-
+    virtual void syncupdate_treestate(LocalNode*);
 	virtual bool sync_syncable(Node*);
     virtual bool sync_syncable(const char*name, string*, string*);
 

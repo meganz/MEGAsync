@@ -25,15 +25,14 @@ namespace mega {
 
 bool debug;
 
-// FIXME: recreate filename after sync transfer completes to shortcut in-transfer rename handling
 // FIXME: generate cr element for file imports
 // FIXME: support invite links (including responding to sharekey requests)
-// FIXME: Sync: recognize folder renames and use setattr() instead of potentially huge delete/putnodes sequences
 // FIXME: instead of copying nodes, move if the source is in the rubbish to reduce node creation load on the servers
 // FIXME: support filesystems with timestamp granularity > 1 s (FAT)?
 // FIXME: set folder timestamps
 // FIXME: prevent synced folder from being moved into another synced folder
-// FIXME: replace move with copy/delete if cross-device or source locked
+// FIXME: treestate semantics
+// FIXME: disallow ~Sync triggerd by the application, implement delsync() instead
 
 // root URL for API access
 const char* const MegaClient::APIURL = "https://g.api.mega.co.nz/";
@@ -431,52 +430,55 @@ void MegaClient::exec()
 			reqs[r].add(*curfa);
 		}
 
-		// file attribute fetching (handled in parallel on a per-cluster basis)
-		fafc_map::iterator it;
-
-		for (it = fafcs.begin(); it != fafcs.end(); )
+		if (fafcs.size())
 		{
-			// is this request currently in flight?
-			switch (it->second->req.status)
+			// file attribute fetching (handled in parallel on a per-cluster basis)
+			fafc_map::iterator it;
+
+			for (it = fafcs.begin(); it != fafcs.end(); )
 			{
-				case REQ_READY:
-				case REQ_INFLIGHT:
-					// implement timeout?
-					break;
-
-				case REQ_SUCCESS:
-					it->second->parse(this,it->first,&it->second->req.in);
-					it->second->bt.reset();
-					break;
-
-				case REQ_FAILURE:
-					faf_failed(it->first);
-					it->second->bt.backoff(ds);
-
-				default:;
-			}
-
-			if (it->second->req.status != REQ_INFLIGHT && it->second->bt.armed(ds))
-			{
-				// no request in flight, but ready for next request - check for remaining fetches for this cluster
-				faf_map::iterator itf;
-
-				for (itf = fafs.begin(); itf != fafs.end(); itf++) if (itf->second->fac == it->first) break;
-
-				if (itf != fafs.end())
+				// is this request currently in flight?
+				switch (it->second->req.status)
 				{
-					// pending fetches present - dispatch
-					reqs[r].add(new CommandGetFA(it->first,it->second->fahref));
-					it->second->req.status = REQ_INFLIGHT;
-					it++;
+					case REQ_READY:
+					case REQ_INFLIGHT:
+						// implement timeout?
+						break;
+
+					case REQ_SUCCESS:
+						it->second->parse(this,it->first,&it->second->req.in);
+						it->second->bt.reset();
+						break;
+
+					case REQ_FAILURE:
+						faf_failed(it->first);
+						it->second->bt.backoff(ds);
+
+					default:;
 				}
-				else
+
+				if (it->second->req.status != REQ_INFLIGHT && it->second->bt.armed(ds))
 				{
-					delete it->second;
-					fafcs.erase(it++);
+					// no request in flight, but ready for next request - check for remaining fetches for this cluster
+					faf_map::iterator itf;
+
+					for (itf = fafs.begin(); itf != fafs.end(); itf++) if (itf->second->fac == it->first) break;
+
+					if (itf != fafs.end())
+					{
+						// pending fetches present - dispatch
+						reqs[r].add(new CommandGetFA(it->first,it->second->fahref));
+						it->second->req.status = REQ_INFLIGHT;
+						it++;
+					}
+					else
+					{
+						delete it->second;
+						fafcs.erase(it++);
+					}
 				}
+				else it++;
 			}
-			else it++;
 		}
 
 		// handle API client-server requests
@@ -664,224 +666,224 @@ void MegaClient::exec()
 			if (xferpaused[(*it)->transfer->type]) it++;
 			else (*it++)->doio(this);
 		}
-	} while (httpio->doio() || (!pendingcs && reqs[r].cmdspending() && btcs.armed(ds)));
 
-	// syncops indicates that a sync-relevant tree update may be pending
-	bool syncops = syncadded;
-	sync_list::iterator it;
+		// syncops indicates that a sync-relevant tree update may be pending
+		bool syncops = syncadded;
+		sync_list::iterator it;
 
-	if (syncadded) syncadded = false;
+		if (syncadded) syncadded = false;
 
-	if (!syncsup)
-	{
-		// set syncsup if there are no initializing syncs
-		for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_INITIALSCAN) break;
-	
-		if (it == syncs.end()) syncsup = true;
-	}
-
-	if (!syncops)
-	{
-		for (it = syncs.begin(); it != syncs.end(); it++)
+		if (!syncsup)
 		{
-			if (((*it)->state == SYNC_INITIALSCAN || (*it)->state == SYNC_ACTIVE) && ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size()))
-			{
-				syncops = true;
-				break;
-			}
+			// set syncsup if there are no initializing syncs
+			for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_INITIALSCAN) break;
+		
+			if (it == syncs.end()) syncsup = true;
 		}
-	}
 
-	notifypurge();
-
-	// rescan everything
-	if (syncscanfailed && syncscanbt.armed(ds)) syncscanfailed = false;
-
-	// retry syncdown() ops
-	if (syncdownretry && syncdownbt.armed(ds))
-	{
-		syncdownretry = false;
-		syncops = true;
-	}
-	
-	// file change timeouts
-	if (syncnagleretry && syncnaglebt.armed(ds))
-	{
-		syncnagleretry = false;
-		syncops = true;
-	}
-
-	syncactivity = false;
-
-	// halt all syncing while the local filesystem is pending a lock-blocked operation
-	// FIXME: indicate by callback
-	if (!syncdownretry && !syncadding)
-	{
-		// process active syncs, stop doing so while transient local fs ops are pending
-		if (syncs.size() || syncactivity)
+		if (!syncops)
 		{
-			bool syncscanning = false;
-			int q = syncfslockretry ? DirNotify::RETRY : DirNotify::DIREVENTS;
-
-			syncfslockretry = false;
-			unsigned totalpending = 0;
-
-			// process pending notifyqs
 			for (it = syncs.begin(); it != syncs.end(); it++)
 			{
-				Sync* sync = *it;
-
-				if (sync->state == SYNC_INITIALSCAN || sync->state == SYNC_ACTIVE)
+				if (((*it)->state == SYNC_INITIALSCAN || (*it)->state == SYNC_ACTIVE) && ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size()))
 				{
-					// process items from the notifyq until depleted
-					if (sync->dirnotify->notifyq[q].size())
-					{
-						sync->procscanq(q);
-						syncops = true;
-					}
-
-					if (sync->dirnotify->notifyq[q].size()) syncscanning = true;
-					else if (sync->state == SYNC_INITIALSCAN && q == DirNotify::DIREVENTS) sync->changestate(SYNC_ACTIVE);
-
-					if (!syncfslockretry && sync->dirnotify->notifyq[DirNotify::RETRY].size()) syncfslockretry = true;
-
-					if (q == DirNotify::DIREVENTS) totalpending += sync->dirnotify->notifyq[DirNotify::DIREVENTS].size();
+					syncops = true;
+					break;
 				}
 			}
+		}
 
-			if (syncops)
+		notifypurge();
+
+		// rescan everything
+		if (syncscanfailed && syncscanbt.armed(ds)) syncscanfailed = false;
+
+		// retry syncdown() ops
+		if (syncdownretry && syncdownbt.armed(ds))
+		{
+			syncdownretry = false;
+			syncops = true;
+		}
+		
+		// file change timeouts
+		if (syncnagleretry && syncnaglebt.armed(ds))
+		{
+			syncnagleretry = false;
+			syncops = true;
+		}
+
+		syncactivity = false;
+
+		// halt all syncing while the local filesystem is pending a lock-blocked operation
+		// FIXME: indicate by callback
+		if (!syncdownretry && !syncadding)
+		{
+			// process active syncs, stop doing so while transient local fs ops are pending
+			if (syncs.size() || syncactivity)
 			{
-				bool success = true;
-				string localpath;
-				
+				bool syncscanning = false;
+				int q = syncfslockretry ? DirNotify::RETRY : DirNotify::DIREVENTS;
+
+				syncfslockretry = false;
+				unsigned totalpending = 0;
+
+				// process pending notifyqs
 				for (it = syncs.begin(); it != syncs.end(); it++)
 				{
-					// make sure that the remote synced folder still exists
-					if (!(*it)->localroot.node) (*it)->changestate(SYNC_FAILED);
-					else
-					{
-						localpath = (*it)->localroot.localname;
-						if ((*it)->state == SYNC_ACTIVE && !syncdown(&(*it)->localroot,&localpath,true) && success) success = false;
-					}
-				}
-				
-				if (!success)
-				{
-					syncdownretry = true;
-					syncdownbt.backoff(ds,50);
-				}
-			}
+					Sync* sync = *it;
 
-			if (q == DirNotify::DIREVENTS)
-			{
-				if (totalpending < 4)
-				{
-					if (syncscanstate)
+					if (sync->state == SYNC_INITIALSCAN || sync->state == SYNC_ACTIVE)
 					{
-						app->syncupdate_scanning(false);
-						syncscanstate = false;
-					}
-				}
-				else if (totalpending > 10)
-				{
-					if (!syncscanstate)
-					{
-						app->syncupdate_scanning(true);
-						syncscanstate = true;
-					}
-				}
-			}
-
-			// set retry interval for locked filesystem items once all pending items were processed
-			if (syncfslockretry) syncfslockretrybt.backoff(ds,2);
-
-			// do we have pending deletions? (don't process while we're still retrying failed fs locks or completing local ops!)
-			if (localsyncnotseen.size() && !syncfslockretry)
-			{
-				// if all scanqs are complete, execute pending remote deletions
-				for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size()) break;
-
-				if (it == syncs.end())
-				{
-					for (localnode_set::iterator it = localsyncnotseen.begin(); it != localsyncnotseen.end(); it++)
-					{
-						// we skip missing files once to cater for possible move races (may have reappeared in a section already scanned)
-						if ((*it)->notseen < 2 && (*it)->scanseqno != (*it)->sync->scanseqno)
+						// process items from the notifyq until depleted
+						if (sync->dirnotify->notifyq[q].size())
 						{
-							(*it)->scanseqno = (*it)->sync->scanseqno;
-							(*it)->setnotseen((*it)->notseen+1);
-							syncactivity = true;
+							sync->procscanq(q);
+							syncops = true;
 						}
+
+						if (sync->dirnotify->notifyq[q].size()) syncscanning = true;
+						else if (sync->state == SYNC_INITIALSCAN && q == DirNotify::DIREVENTS) sync->changestate(SYNC_ACTIVE);
+
+						if (!syncfslockretry && sync->dirnotify->notifyq[DirNotify::RETRY].size()) syncfslockretry = true;
+
+						if (q == DirNotify::DIREVENTS) totalpending += sync->dirnotify->notifyq[DirNotify::DIREVENTS].size();
 					}
-				}
-			}
-
-			// delete locally missing nodes unless a putnodes operation is in progress that may be still be referencing them
-			if (!synccreate.size())
-			{
-				for (localnode_set::iterator it = localsyncnotseen.begin(); it != localsyncnotseen.end(); )
-				{
-					if ((*it)->notseen > 1)
-					{
-						// missed for 2 rounds: delete remotely
-						if ((*it)->type == FOLDERNODE) app->syncupdate_local_folder_deletion((*it)->sync,(*it)->name.c_str());
-						else app->syncupdate_local_file_deletion((*it)->sync,(*it)->name.c_str());
-
-						delete *it;
-						syncops = true;
-
-						// loop back from the beginning, as the deletion above is potentially recursive
-						it = localsyncnotseen.begin();
-					}
-					else it++;
-				}
-			}
-
-			// process filesystem notifications for active syncs unless node addition currently in flight
-			if (!syncscanning)
-			{
-				string localname;
-
-				// rescan full trees in case fs notification is currently unreliable or unavailable
-				if (syncscanbt.armed(ds))
-				{
-					unsigned totalnodes = 0;
-
-					syncscanfailed = false;
-			
-					for (it = syncs.begin(); it != syncs.end(); it++)
-					{
-						if ((*it)->state == SYNC_ACTIVE && ((*it)->dirnotify->failed || (*it)->dirnotify->error))
-						{
-							(*it)->dirnotify->notify(DirNotify::DIREVENTS,NULL,"",0);
-							totalnodes += (*it)->localnodes[FILENODE]+(*it)->localnodes[FOLDERNODE];
-							syncscanfailed = true;
-							(*it)->dirnotify->error = false;
-						}
-					}
-
-					// limit rescan rate (interval depends on total tree size)
-					if (syncscanfailed) syncscanbt.backoff(ds,10+totalnodes/128);
 				}
 
 				if (syncops)
 				{
-					// FIXME: only syncup for subtrees that were actually updated to reduce CPU load
-					dstime nds = ~0;
-
-					for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE) syncup(&(*it)->localroot,&nds);
-
-					if (nds+1)
+					bool success = true;
+					string localpath;
+					
+					for (it = syncs.begin(); it != syncs.end(); it++)
 					{
-						syncnaglebt.backoff(ds,nds-ds);
-						syncnagleretry = true;
+						// make sure that the remote synced folder still exists
+						if (!(*it)->localroot.node) (*it)->changestate(SYNC_FAILED);
+						else
+						{
+							localpath = (*it)->localroot.localname;
+							if ((*it)->state == SYNC_ACTIVE && !syncdown(&(*it)->localroot,&localpath,true) && success) success = false;
+						}
+					}
+					
+					if (!success)
+					{
+						syncdownretry = true;
+						syncdownbt.backoff(ds,50);
+					}
+				}
+
+				if (q == DirNotify::DIREVENTS)
+				{
+					if (totalpending < 4)
+					{
+						if (syncscanstate)
+						{
+							app->syncupdate_scanning(false);
+							syncscanstate = false;
+						}
+					}
+					else if (totalpending > 10)
+					{
+						if (!syncscanstate)
+						{
+							app->syncupdate_scanning(true);
+							syncscanstate = true;
+						}
+					}
+				}
+
+				// set retry interval for locked filesystem items once all pending items were processed
+				if (syncfslockretry) syncfslockretrybt.backoff(ds,2);
+
+				// do we have pending deletions? (don't process while we're still retrying failed fs locks or completing local ops!)
+				if (localsyncnotseen.size() && !syncfslockretry)
+				{
+					// if all scanqs are complete, execute pending remote deletions
+					for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->dirnotify->notifyq[DirNotify::DIREVENTS].size() || (*it)->dirnotify->notifyq[DirNotify::RETRY].size()) break;
+
+					if (it == syncs.end())
+					{
+						for (localnode_set::iterator it = localsyncnotseen.begin(); it != localsyncnotseen.end(); it++)
+						{
+							// we skip missing files once to cater for possible move races (may have reappeared in a section already scanned)
+							if ((*it)->notseen < 2 && (*it)->scanseqno != (*it)->sync->scanseqno)
+							{
+								(*it)->scanseqno = (*it)->sync->scanseqno;
+								(*it)->setnotseen((*it)->notseen+1);
+								syncactivity = true;
+							}
+						}
+					}
+				}
+
+				// delete locally missing nodes unless a putnodes operation is in progress that may be still be referencing them
+				if (!synccreate.size())
+				{
+					for (localnode_set::iterator it = localsyncnotseen.begin(); it != localsyncnotseen.end(); )
+					{
+						if ((*it)->notseen > 1)
+						{
+							// missed for 2 rounds: delete remotely
+							if ((*it)->type == FOLDERNODE) app->syncupdate_local_folder_deletion((*it)->sync,(*it)->name.c_str());
+							else app->syncupdate_local_file_deletion((*it)->sync,(*it)->name.c_str());
+
+							delete *it;
+							syncops = true;
+
+							// loop back from the beginning, as the deletion above is potentially recursive
+							it = localsyncnotseen.begin();
+						}
+						else it++;
+					}
+				}
+
+				// process filesystem notifications for active syncs unless node addition currently in flight
+				if (!syncscanning)
+				{
+					string localname;
+
+					// rescan full trees in case fs notification is currently unreliable or unavailable
+					if (syncscanbt.armed(ds))
+					{
+						unsigned totalnodes = 0;
+
+						syncscanfailed = false;
+				
+						for (it = syncs.begin(); it != syncs.end(); it++)
+						{
+							if ((*it)->state == SYNC_ACTIVE && ((*it)->dirnotify->failed || (*it)->dirnotify->error))
+							{
+								(*it)->dirnotify->notify(DirNotify::DIREVENTS,NULL,"",0);
+								totalnodes += (*it)->localnodes[FILENODE]+(*it)->localnodes[FOLDERNODE];
+								syncscanfailed = true;
+								(*it)->dirnotify->error = false;
+							}
+						}
+
+						// limit rescan rate (interval depends on total tree size)
+						if (syncscanfailed) syncscanbt.backoff(ds,10+totalnodes/128);
 					}
 
-					if (synccreate.size()) syncupdate();
+					if (syncops)
+					{
+						// FIXME: only syncup for subtrees that were actually updated to reduce CPU load
+						dstime nds = ~0;
+
+						for (it = syncs.begin(); it != syncs.end(); it++) if ((*it)->state == SYNC_ACTIVE) syncup(&(*it)->localroot,&nds);
+
+						if (nds+1)
+						{
+							syncnaglebt.backoff(ds,nds-ds);
+							syncnagleretry = true;
+						}
+
+						if (synccreate.size()) syncupdate();
+					}
 				}
 			}
 		}
-	}
+	} while (httpio->doio() || (!pendingcs && reqs[r].cmdspending() && btcs.armed(ds)));
 }
 
 // get next event time from all subsystems, then invoke the waiter if needed
@@ -980,7 +982,7 @@ bool MegaClient::abortbackoff()
 
 // this will dispatch the next queued transfer unless one is already in progress and force isn't set
 // returns true if dispatch occurred, false otherwise
-bool MegaClient::dispatch(direction d)
+bool MegaClient::dispatch(direction_t d)
 {
 	// do we have any transfer tslots available?
 	if (!slotavail()) return false;
@@ -1066,7 +1068,7 @@ bool MegaClient::dispatch(direction d)
 			ts = new TransferSlot(nextit->second);
 
 			// try to open file (PUT transfers: open in nonblocking mode)
-			if (d == PUT ? ts->file->fopen(&nextit->second->localfilename) : ts->file->fopen(&nextit->second->localfilename,false,true))
+			if (d == PUT ? ts->fa->fopen(&nextit->second->localfilename) : ts->fa->fopen(&nextit->second->localfilename,false,true))
 			{
 				handle h = UNDEF;
 				bool hprivate;
@@ -1076,7 +1078,7 @@ bool MegaClient::dispatch(direction d)
 				// always (re)start upload from scratch
 				if (d == PUT)
 				{
-					nextit->second->size = ts->file->size;
+					nextit->second->size = ts->fa->size;
 					nextit->second->chunkmacs.clear();
 				}
 				else
@@ -1126,17 +1128,18 @@ handle MegaClient::getuploadhandle()
 }
 
 // clear transfer queue
-void MegaClient::freeq(direction d)
+void MegaClient::freeq(direction_t d)
 {
 	for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); ) delete (it++)->second;
 }
 
 // determine next scheduled transfer retry
-void MegaClient::nexttransferretry(direction d, dstime* dsmin, dstime ds)
+// FIXME: make this an ordered set and only check the first element instead of scanning the full map!
+void MegaClient::nexttransferretry(direction_t d, dstime* dsmin, dstime ds)
 {
 	for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); it++)
 	{
-		if (!it->second->slot && it->second->bt.nextset() && it->second->bt.nextset() >= ds && it->second->bt.nextset() < *dsmin) *dsmin = it->second->bt.nextset();
+		if ((!it->second->slot || !it->second->slot->fa) && it->second->bt.nextset() && it->second->bt.nextset() >= ds && it->second->bt.nextset() < *dsmin) *dsmin = it->second->bt.nextset();
 	}
 }
 
@@ -1499,7 +1502,7 @@ bool MegaClient::slotavail()
 
 // returns 1 if more transfers of the requested type can be dispatched (back-to-back overlap pipelining)
 // FIXME: support overlapped partial reads (and support partial reads in the first place)
-bool MegaClient::moretransfers(direction d)
+bool MegaClient::moretransfers(direction_t d)
 {
 	m_off_t c = 0, r = 0;
 	dstime t = 0;
@@ -1536,7 +1539,7 @@ bool MegaClient::moretransfers(direction d)
 	return false;
 }
 
-void MegaClient::dispatchmore(direction d)
+void MegaClient::dispatchmore(direction_t d)
 {
 	// keep pipeline full by dispatching additional queued transfers, if appropriate and available
 	while (moretransfers(d) && dispatch(d));
@@ -1667,7 +1670,7 @@ bool MegaClient::sc_shares()
 	byte ha[SymmCipher::BLOCKSIZE];
 	byte sharekey[SymmCipher::BLOCKSIZE];
 	int have_ha = 0;
-	accesslevel r = ACCESS_UNKNOWN;
+	accesslevel_t r = ACCESS_UNKNOWN;
 	time_t ts = 0;
 	int outbound;
 
@@ -1696,7 +1699,7 @@ bool MegaClient::sc_shares()
 				break;
 
 			case 'r':	// share access level
-				r = (accesslevel)jsonsc.getint();
+				r = (accesslevel_t)jsonsc.getint();
 				break;
 
 			case MAKENAMEID2('t','s'):	// share timestamp
@@ -2045,7 +2048,6 @@ error MegaClient::setattr(Node* n, const char** newattr)
 	return API_OK;
 }
 
-
 // send new nodes to API for processing
 void MegaClient::putnodes(handle h, NewNode* newnodes, int numnodes)
 {
@@ -2065,7 +2067,7 @@ void MegaClient::putnodes(const char* user, NewNode* newnodes, int numnodes)
 }
 
 // returns 1 if node has accesslevel a or better, 0 otherwise
-int MegaClient::checkaccess(Node* n, accesslevel a)
+int MegaClient::checkaccess(Node* n, accesslevel_t a)
 {
 	// folder link access is always read-only - ignore login status during initial tree fetch
 	if (a < OWNERPRELOGIN && !loggedin()) return a == RDONLY;
@@ -2293,7 +2295,7 @@ uint64_t MegaClient::stringhash64(string* s, SymmCipher* c)
 }
 
 // read and add/verify node array
-int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, int tag)
+int MegaClient::readnodes(JSON* j, int notify, putsource_t source, NewNode* nn, int tag)
 {
 	if (!j->enterarray()) return 0;
 
@@ -2305,12 +2307,12 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 	{
 		handle h = UNDEF, ph = UNDEF;
 		handle u = 0, su = UNDEF;
-		nodetype t = TYPE_UNKNOWN;
+		nodetype_t t = TYPE_UNKNOWN;
 		const char* a = NULL;
 		const char* k = NULL;
 		const char* fa = NULL;
 		const char *sk = NULL;
-		accesslevel rl = ACCESS_UNKNOWN;
+		accesslevel_t rl = ACCESS_UNKNOWN;
 		m_off_t s = ~(m_off_t)0;
 		time_t ts = -1, tmd = 0, sts = -1;
 		nameid name;
@@ -2332,7 +2334,7 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 					break;
 
 				case 't':	// type
-					t = (nodetype)j->getint();
+					t = (nodetype_t)j->getint();
 					break;
 
 				case 'a':	// attributes
@@ -2361,7 +2363,7 @@ int MegaClient::readnodes(JSON* j, int notify, putsource source, NewNode* nn, in
 
 					// inbound share attributes
 				case 'r':	// share access level
-					rl = (accesslevel)j->getint();
+					rl = (accesslevel_t)j->getint();
 					break;
 
 				case MAKENAMEID2('s','k'):	// share key
@@ -2588,7 +2590,7 @@ void MegaClient::readoutshareelement(JSON* j)
 {
 	handle h = UNDEF;
 	handle uh = UNDEF;
-	accesslevel r = ACCESS_UNKNOWN;
+	accesslevel_t r = ACCESS_UNKNOWN;
 	time_t ts = 0;
 
 	for (;;)
@@ -2604,7 +2606,7 @@ void MegaClient::readoutshareelement(JSON* j)
 				break;
 
 			case 'r':			// access
-				r = (accesslevel)j->getint();
+				r = (accesslevel_t)j->getint();
 				break;
 
 			case MAKENAMEID2('t','s'):		// timestamp
@@ -2669,7 +2671,7 @@ bool MegaClient::readusers(JSON* j)
 	while (j->enterobject())
 	{
 		handle uh = 0;
-		visibility v = VISIBILITY_UNKNOWN;	// new share objects do not override existing visibility
+		visibility_t v = VISIBILITY_UNKNOWN;	// new share objects do not override existing visibility
 		time_t ts = 0;
 		const char* m = NULL;
 		nameid name;
@@ -2683,7 +2685,7 @@ bool MegaClient::readusers(JSON* j)
 					break;
 
 				case 'c': 	// visibility
-					v = (visibility)j->getint();
+					v = (visibility_t)j->getint();
 					break;
 
 				case 'm':	// attributes
@@ -2921,7 +2923,7 @@ void MegaClient::queuepubkeyreq(User* u, PubKeyAction* pka)
 
 // if user has a known public key, complete instantly
 // otherwise, queue and request public key if not already pending
-void MegaClient::setshare(Node* n, const char* user, accesslevel a)
+void MegaClient::setshare(Node* n, const char* user, accesslevel_t a)
 {
 	queuepubkeyreq(finduser(user,1),new PubKeyActionCreateShare(n->nodehandle,a,reqtag));
 }
@@ -2951,7 +2953,7 @@ void MegaClient::purchase_checkout(int gateway)
 }
 
 // add new contact (by e-mail address)
-error MegaClient::invite(const char* email, visibility show)
+error MegaClient::invite(const char* email, visibility_t show)
 {
 	if (!strchr(email,'@')) return API_EARGS;
 
@@ -3322,7 +3324,7 @@ error MegaClient::openfilelink(const char* link, int op)
 	return API_EARGS;
 }
 
-sessiontype MegaClient::loggedin()
+sessiontype_t MegaClient::loggedin()
 {
 	if (ISUNDEF(me)) return NOTLOGGEDIN;
 
@@ -3687,12 +3689,20 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 			if (ll->deleted)
 			{
 				// attempt deletion and re-queue for retry in case of a transient failure
-				if (l->sync->movetolocaldebris(localpath)) delete lit++->second;
+				ll->treestate(TREESTATE_SYNCING);
+
+				if (l->sync->movetolocaldebris(localpath))
+				{
+					delete lit++->second;
+					l->treestate();
+				}
 				else if (success && fsaccess->transient_error)
 				{
 					success = false;
 					lit++;
 				}
+				
+				
 			}
 		}
 		else lit++;
@@ -3723,12 +3733,16 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 
 						rit->second->localnode->getlocalpath(&curpath);
 
+						rit->second->localnode->treestate(TREESTATE_SYNCING);
+
 						if (fsaccess->renamelocal(&curpath,localpath))
 						{
 							// update LocalNode tree to reflect the move/rename
 							rit->second->localnode->setnameparent(l,localpath);
 							updateputs();	// update filenames so that PUT transfers can continue seamlessly
 							syncactivity = true;
+
+							rit->second->localnode->treestate(TREESTATE_SYNCED);
 						}
 						else if (success && fsaccess->transient_error) success = false;	// schedule retry
 					}
@@ -3848,6 +3862,7 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 					{
 						// files have the same size and the same mtime (or the same fingerprint, if available): no action needed
 						ll->setnode(rit->second);
+						ll->treestate(TREESTATE_SYNCED);
 						continue;
 					}
 				}
@@ -3934,6 +3949,8 @@ void MegaClient::syncupdate()
 			n = NULL;
 			l = synccreate[i];
 
+			l->treestate(TREESTATE_PENDING);
+
 			if (l->type == FOLDERNODE || (n = nodebyfingerprint(l)))
 			{
 				// create remote folder or copy file if it already exists
@@ -4015,7 +4032,7 @@ void MegaClient::putnodes_sync_result(error e, NewNode* nn)
 
 // inject file into transfer subsystem
 // if file's fingerprint is not valid, it will be obtained from the local file (PUT) or the file's key (GET)
-bool MegaClient::startxfer(direction d, File* f)
+bool MegaClient::startxfer(direction_t d, File* f)
 {
 	if (!f->transfer)
 	{
@@ -4080,7 +4097,7 @@ void MegaClient::stopxfer(File* f)
 }
 
 // pause/unpause transfers
-void MegaClient::pausexfers(direction d, bool pause, bool hard)
+void MegaClient::pausexfers(direction_t d, bool pause, bool hard)
 {
 	xferpaused[d] = pause;
 
@@ -4254,7 +4271,7 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
 	else e = fa->retry ? API_ETEMPUNAVAIL : API_ENOENT;
 
 	delete fa;
-	
+
 	return e;
 }
 
