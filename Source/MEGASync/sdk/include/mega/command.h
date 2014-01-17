@@ -187,7 +187,7 @@ class CommandUserRequest : public Command
 public:
 	void procresult();
 
-	CommandUserRequest(MegaClient*, const char*, visibility);
+	CommandUserRequest(MegaClient*, const char*, visibility_t);
 };
 
 // set user attributes
@@ -323,13 +323,13 @@ public:
 class CommandPutNodes : public Command
 {
 	NewNode* nn;
-	targettype type;
-	putsource source;
+	targettype_t type;
+	putsource_t source;
 
 public:
 	void procresult();
 
-	CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, putsource = PUTNODES_APP);
+	CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, putsource_t = PUTNODES_APP);
 };
 
 class CommandSetAttr : public Command
@@ -346,14 +346,14 @@ class CommandSetShare : public Command
 {
 	handle sh;
 	User* user;
-	accesslevel access;
+	accesslevel_t access;
 
 	bool procuserresult(MegaClient*);
 
 public:
 	void procresult();
 
-	CommandSetShare(MegaClient*, Node*, User*, accesslevel, int);
+	CommandSetShare(MegaClient*, Node*, User*, accesslevel_t, int);
 };
 
 class CommandGetUserQuota : public Command

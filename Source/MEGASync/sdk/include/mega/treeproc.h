@@ -91,15 +91,6 @@ public:
 	void proc(MegaClient*, Node*);
 };
 
-class TreeProcSyncStatus : public TreeProc
-{
-public:
-	pathstate_t state;
-
-	void proc(MegaClient*, Node*);
-	TreeProcSyncStatus();
-};
-
 } // namespace
 
 #endif

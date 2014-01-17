@@ -11,8 +11,8 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 109;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.9");
+const int MegaApplication::VERSION_CODE = 110;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.10");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -157,9 +157,6 @@ void MegaApplication::initialize()
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
-    //Apply the "Start on startup" configuration
-    //Platform::startOnStartup(preferences->startOnStartup());
-
     preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
 }
 
@@ -248,6 +245,9 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {    
+    //Apply the "Start on startup" configuration
+    Platform::startOnStartup(preferences->startOnStartup());
+
     startUpdateTask();
 
     QString language = preferences->language();
@@ -1047,9 +1047,9 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 		Node *node = nodes->get(i);
 
         if(!node->tag && !node->removed && !node->syncdeleted)
-   -            externalNodes++;
+            externalNodes++;
 
-        if(!node->removed && node->tag && !node->syncdeleted)
+        if(!node->removed && node->tag && !node->syncdeleted && (node->type==FILENODE))
         {
             //Get the associated local node
             LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->displayname())).arg(node->tag));
@@ -1057,7 +1057,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
             {
                 //If the node has been uploaded by a synced folder
                 //The SDK provides its local path
-
                 LOG("Sync upload");
                 string localseparator;
                 localseparator.assign((char*)L"\\",sizeof(wchar_t));
@@ -1072,33 +1071,17 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 localPath = QString::fromWCharArray((const wchar_t *)path.data());
                 LOG(QString::fromAscii("Sync path: %1").arg(localPath));
             }
-            else if((node->type==FILENODE) && uploadLocalPaths.contains(node->tag))
+            else if(uploadLocalPaths.contains(node->tag))
             {
                 //If the node has been uploaded by a regular upload,
                 //we recover the path using the tag of the transfer
                 localPath = uploadLocalPaths.value(node->tag);
-                //uploadLocalPaths.remove(node->tag);
+                uploadLocalPaths.remove(node->tag);
                 LOG(QString::fromAscii("Local upload: %1").arg(localPath));
             }
-        }
 
-        //If we have the local path, notify the state change in the local file
-        if(localPath.size())
-        {
-            Platform::notifyItemChange(localPath);
-            if(node->localnode)
-            {
-                int basePathSize = QString::fromWCharArray((wchar_t *)node->localnode->sync->localroot.localname.data()).size();
-                QDir parent = QFileInfo(localPath).dir();
-                while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
-                {
-                    Platform::notifyItemChange(parent.absolutePath());
-                    parent = QFileInfo(parent.absolutePath()).dir();
-                }
-            }
-
-            //If the new node is a file, add it to the "recently updated" list
-            if((node->type==FILENODE))
+            //If we have the local path, notify the state change in the local file
+            if(localPath.size())
             {
                 #ifdef WIN32
                     if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);

@@ -35,10 +35,10 @@ public:
 	LocalNode localroot;
 
 	// current state
-	syncstate state;
+	syncstate_t state;
 
 	// change state, signal to application
-	void changestate(syncstate);
+	void changestate(syncstate_t);
 
 	// sync-wide directory notification provider
 	DirNotify* dirnotify;
@@ -57,9 +57,6 @@ public:
 	
 	// scan items in specified path and add as children of the specified LocalNode
 	bool scan(string*, FileAccess*);
-
-	// determine status of a given path
-	pathstate_t pathstate(string*);
 
 	// own position in session sync list
 	sync_list::iterator sync_it;

@@ -31,17 +31,17 @@ namespace mega {
 // share credentials
 struct Share
 {
-	accesslevel access;
+	accesslevel_t access;
 	User* user;
 	time_t ts;
 
 	void removeshare(handle);
-	void update(accesslevel, time_t);
+	void update(accesslevel_t, time_t);
 
 	void serialize(string*);
 	static bool unserialize(MegaClient*, int, handle, const byte*, const char**, const char*);
 
-	Share(User*, accesslevel, time_t);
+	Share(User*, accesslevel_t, time_t);
 };
 
 // new share credentials (will be merged into node as soon as it appears)
@@ -50,7 +50,7 @@ struct NewShare
 	handle h;
 	int outgoing;
 	handle peer;
-	accesslevel access;
+	accesslevel_t access;
 	time_t ts;
 
 	bool have_key, have_auth;
@@ -58,7 +58,7 @@ struct NewShare
 	byte key[SymmCipher::BLOCKSIZE];
 	byte auth[SymmCipher::BLOCKSIZE];
 
-	NewShare(handle, int, handle, accesslevel, time_t, const byte*, const byte* = NULL);
+	NewShare(handle, int, handle, accesslevel_t, time_t, const byte*, const byte* = NULL);
 };
 
 } // namespace

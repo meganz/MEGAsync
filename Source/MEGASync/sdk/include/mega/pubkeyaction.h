@@ -42,12 +42,12 @@ public:
 class PubKeyActionCreateShare : public PubKeyAction
 {
 	handle h;	// node to create share on
-	accesslevel a;	// desired access level
+	accesslevel_t a;	// desired access level
 
 public:
 	void proc(MegaClient*, User*);
 
-	PubKeyActionCreateShare(handle, accesslevel, int);
+	PubKeyActionCreateShare(handle, accesslevel_t, int);
 };
 
 class PubKeyActionSendShareKey : public PubKeyAction

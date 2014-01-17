@@ -21,6 +21,7 @@
 
 #include "mega/node.h"
 #include "mega/megaclient.h"
+#include "mega/megaapp.h"
 #include "mega/share.h"
 #include "mega/base64.h"
 #include "mega/sync.h"
@@ -29,7 +30,7 @@
 
 namespace mega {
 
-Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype t, m_off_t s, handle u, const char* fa, time_t ts, time_t tm)
+Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype_t t, m_off_t s, handle u, const char* fa, time_t ts, time_t tm)
 {
 	client = cclient;
 
@@ -111,7 +112,7 @@ Node::~Node()
 Node* Node::unserialize(MegaClient* client, string* d, node_vector* dp)
 {
 	handle h, ph;
-	nodetype t;
+	nodetype_t t;
 	m_off_t s;
 	handle u;
 	const byte* k = NULL;
@@ -130,7 +131,7 @@ Node* Node::unserialize(MegaClient* client, string* d, node_vector* dp)
 	s = *(m_off_t*)ptr;
 	ptr += sizeof s;
 
-	if (s < 0 && s >= -MAILNODE) t = (nodetype)-s;
+	if (s < 0 && s >= -MAILNODE) t = (nodetype_t)-s;
 	else t = FILENODE;
 
 	h = 0;
@@ -456,17 +457,21 @@ bool Node::setparent(Node* p)
 
 	child_it = parent->children.insert(parent->children.end(),this);
 
-	// if the new location is not synced, cancel all GET transfers
-	while (p)
+	// if we are moving an entire sync, don't cancel GET transfers
+	if (!localnode || localnode->parent)
 	{
-		if (p->localnode) break;
-		p = p->parent;
-	}
+		// if the new location is not synced, cancel all GET transfers
+		while (p)
+		{
+			if (p->localnode) break;
+			p = p->parent;
+		}
 	
-	if (!p)
-	{
-		TreeProcDelSyncGet tdsg;
-		client->proctree(this,&tdsg);
+		if (!p)
+		{
+			TreeProcDelSyncGet tdsg;
+			client->proctree(this,&tdsg);
+		}
 	}
 	
 	return true;
@@ -538,6 +543,7 @@ void LocalNode::setnameparent(LocalNode* newparent, string* newlocalpath)
 	{
 		if (newparent != parent)
 		{
+			if (parent) parent->treestate();	
 			parent = newparent;
 
 			if (!newnode && node && parent->node)
@@ -550,6 +556,7 @@ void LocalNode::setnameparent(LocalNode* newparent, string* newlocalpath)
 		// (we don't construct a UTF-8 or sname for the root path)
 		parent->children[&localname] = this;
 		if (sync->client->fsaccess->getsname(newlocalpath,&slocalname)) parent->schildren[&slocalname] = this;
+		parent->treestate();
 	}
 }
 
@@ -560,7 +567,7 @@ void LocalNode::bumpnagleds()
 }
 
 // initialize fresh LocalNode object - must be called exactly once
-void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* clocalpath, string* cfullpath)
+void LocalNode::init(Sync* csync, nodetype_t ctype, LocalNode* cparent, string* clocalpath, string* cfullpath)
 {
 	sync = csync;
 	parent = NULL;
@@ -569,6 +576,8 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	deleted = false;
 	syncxfer = true;
 	newnode = NULL;
+
+	ts = dts = TREESTATE_NONE;
 
 	type = ctype;
 	syncid = sync->client->nextsyncid();
@@ -591,9 +600,43 @@ void LocalNode::init(Sync* csync, nodetype ctype, LocalNode* cparent, string* cl
 	sync->localnodes[type]++;
 }
 
+// update treestates back to the root LocalNode, inform app about changes
+void LocalNode::treestate(treestate_t newts)
+{
+	if (newts != TREESTATE_NONE) ts = newts;
+
+	if (ts != dts)
+	{
+		sync->client->app->syncupdate_treestate(this);
+		dts = ts;
+	}
+
+	if (parent)
+	{
+		parent->ts = TREESTATE_SYNCED;
+
+		for (localnode_map::iterator it = parent->children.begin(); it != parent->children.end(); it++)
+		{
+			if (it->second->ts == TREESTATE_SYNCING)
+			{
+				parent->ts = TREESTATE_SYNCING;
+				break;
+			}
+			
+			if (it->second->ts == TREESTATE_PENDING && parent->ts == TREESTATE_SYNCED) parent->ts = TREESTATE_PENDING;
+		}
+
+		parent->treestate();
+	}
+}
+
 void LocalNode::setnode(Node* cnode)
 {
-	if (node && node != cnode) node->localnode = NULL;
+	if (node && node != cnode && node->localnode)
+	{
+		node->localnode->treestate();
+		node->localnode = NULL;
+	}
 
 	deleted = false;
 
@@ -715,7 +758,9 @@ void LocalNode::prepare()
 	getlocalpath(&transfer->localfilename,true);
 
 	// is this transfer in progress? update file's filename.
-	if (transfer->slot && transfer->slot->file->localname.size()) transfer->slot->file->updatelocalname(&transfer->localfilename);
+	if (transfer->slot && transfer->slot->fa->localname.size()) transfer->slot->fa->updatelocalname(&transfer->localfilename);
+	
+	treestate(TREESTATE_SYNCING);
 }
 
 // complete a sync upload: complete to //bin if a newer node exists (which would have been caused by a race condition)

@@ -50,7 +50,7 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
 
 	reqs = new HttpReqXfer*[connections]();
 
-	file = transfer->client->fsaccess->newfileaccess();
+	fa = transfer->client->fsaccess->newfileaccess();
 
 	slots_it = transfer->client->tslots.end();
 }
@@ -64,10 +64,9 @@ TransferSlot::~TransferSlot()
 
 	if (pendingcmd) pendingcmd->cancel();
 
-	if (file)
+	if (fa)
 	{
-		delete file;
-
+		delete fa;
 		if (transfer->type == GET && transfer->localfilename.size()) transfer->client->fsaccess->unlinklocal(&transfer->localfilename);
 	}
 
@@ -105,6 +104,13 @@ int64_t TransferSlot::macsmac(chunkmac_map* macs)
 // file transfer state machine
 void TransferSlot::doio(MegaClient* client)
 {
+	if (!fa)
+	{
+cout << "Retrying completion..." << endl;
+		// this is a pending completion
+		return transfer->complete();
+	}
+
 	if (!tempurl.size()) return;
 
 	time_t backoff = 0;
@@ -155,7 +161,7 @@ void TransferSlot::doio(MegaClient* client)
 						{
 							errorcount = 0;
 						
-							reqs[i]->finalize(file,&transfer->key,&transfer->chunkmacs,transfer->ctriv,0,-1);
+							reqs[i]->finalize(fa,&transfer->key,&transfer->chunkmacs,transfer->ctriv,0,-1);
 
 							if (progresscompleted == transfer->size)
 							{
@@ -203,14 +209,14 @@ void TransferSlot::doio(MegaClient* client)
 			{
 				if (!reqs[i]) reqs[i] = transfer->type == PUT ? (HttpReqXfer*)new HttpReqUL() : (HttpReqXfer*)new HttpReqDL();
 
-				if (reqs[i]->prepare(file,tempurl.c_str(),&transfer->key,&transfer->chunkmacs,transfer->ctriv,transfer->pos,npos))
+				if (reqs[i]->prepare(fa,tempurl.c_str(),&transfer->key,&transfer->chunkmacs,transfer->ctriv,transfer->pos,npos))
 				{
 					reqs[i]->status = REQ_PREPARED;
 					transfer->pos = npos;
 				}
 				else
 				{
-					if (!file->retry) return transfer->failed(API_EREAD);
+					if (!fa->retry) return transfer->failed(API_EREAD);
 
 					// retry the read shortly
 					backoff = 2;

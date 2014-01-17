@@ -79,7 +79,7 @@ HttpReq::~HttpReq()
 	delete[] buf;
 }
 
-void HttpReq::setreq(const char* u, contenttype t)
+void HttpReq::setreq(const char* u, contenttype_t t)
 {
 	posturl = u;
 	type = t;

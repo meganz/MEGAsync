@@ -425,7 +425,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         case L'P':
         {
             if(lstrlen(pipe->chRequest)<3) break;
-            pathstate_t state;
+            treestate_t state;
             QString temp = QString::fromWCharArray(content);
             if((temp == lastPath) && (numHits < 3))
             {
@@ -445,19 +445,19 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             switch(state)
             {
-                case PATHSTATE_SYNCED:
+                case TREESTATE_SYNCED:
                     //cout << "Synced: " << lastPath.toStdString() << endl;
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
-                 case PATHSTATE_SYNCING:
+                 case TREESTATE_SYNCING:
                      //cout << "Syncing: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
-                case PATHSTATE_PENDING:
+                case TREESTATE_PENDING:
                      //cout << "Pending: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
-                 case PATHSTATE_NOTFOUND:
+                 case TREESTATE_NONE:
                  default:
                      //cout << "Not found: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );

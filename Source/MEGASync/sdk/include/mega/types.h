@@ -77,18 +77,14 @@ struct Waiter;
 #define THUMBNAIL120X120 0
 
 // HttpReq states
-typedef enum { REQ_READY, REQ_PREPARED, REQ_INFLIGHT, REQ_SUCCESS, REQ_FAILURE, REQ_DONE } reqstatus;
+typedef enum { REQ_READY, REQ_PREPARED, REQ_INFLIGHT, REQ_SUCCESS, REQ_FAILURE, REQ_DONE } reqstatus_t;
 
-typedef enum { SHARE, SHAREOWNERKEY, OUTSHARE } sharereadmode;
+typedef enum { USER_HANDLE, NODE_HANDLE } targettype_t;
 
-typedef enum { USER_HANDLE, NODE_HANDLE } targettype;
-
-typedef enum { REQ_BINARY, REQ_JSON } contenttype;
-
-typedef enum { UPLOAD, DOWNLOAD } transfertype;
+typedef enum { REQ_BINARY, REQ_JSON } contenttype_t;
 
 // new node source types
-typedef enum { NEW_NODE, NEW_PUBLIC, NEW_UPLOAD } newnodesource;
+typedef enum { NEW_NODE, NEW_PUBLIC, NEW_UPLOAD } newnodesource_t;
 
 // file chunk MAC
 struct ChunkMAC
@@ -127,7 +123,7 @@ typedef enum {
 } error;
 
 // returned by loggedin()
-typedef enum { NOTLOGGEDIN, EPHEMERALACCOUNT, CONFIRMEDACCOUNT, FULLACCOUNT } sessiontype;
+typedef enum { NOTLOGGEDIN, EPHEMERALACCOUNT, CONFIRMEDACCOUNT, FULLACCOUNT } sessiontype_t;
 
 // node/user handles are 8-11 base64 characters, case sensitive, and thus fit in a 64-bit int
 typedef uint64_t handle;
@@ -148,7 +144,7 @@ typedef list<struct File*> file_list;
 // INCOMING - inbox
 // RUBBISH - rubbish bin
 // MAIL - mail message
-typedef enum { TYPE_UNKNOWN = -1, FILENODE = 0, FOLDERNODE, ROOTNODE, INCOMINGNODE, RUBBISHNODE, MAILNODE } nodetype;
+typedef enum { TYPE_UNKNOWN = -1, FILENODE = 0, FOLDERNODE, ROOTNODE, INCOMINGNODE, RUBBISHNODE, MAILNODE } nodetype_t;
 
 // node type key lengths
 const int FILENODEKEYLENGTH = 32;
@@ -177,23 +173,21 @@ typedef uint64_t nameid;
 // RDWR - cannot rename or delete
 // FULL - all operations that do not require ownership permitted
 // OWNER - node is in caller's ROOT, INCOMING or RUBBISH trees
-typedef enum { ACCESS_UNKNOWN = -1, RDONLY = 0, RDWR, FULL, OWNER, OWNERPRELOGIN } accesslevel;
+typedef enum { ACCESS_UNKNOWN = -1, RDONLY = 0, RDWR, FULL, OWNER, OWNERPRELOGIN } accesslevel_t;
 
 typedef vector<struct Node*> node_vector;
 
 // contact visibility:
 // HIDDEN - not shown
 // VISIBLE - shown
-typedef enum { VISIBILITY_UNKNOWN = -1, HIDDEN = 0, VISIBLE, ME } visibility;
+typedef enum { VISIBILITY_UNKNOWN = -1, HIDDEN = 0, VISIBLE, ME } visibility_t;
 
-typedef enum { PUTNODES_APP, PUTNODES_SYNC, PUTNODES_SYNCDEBRIS } putsource;
+typedef enum { PUTNODES_APP, PUTNODES_SYNC, PUTNODES_SYNCDEBRIS } putsource_t;
 
 // maps handle-index pairs to file attribute handle
 typedef map<pair<handle,fatype>,pair<handle,int> > fa_map;
 
-typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate;
-
-typedef enum { SYNCREMOTENOTSET = -1, SYNCREMOTEAFFECTED = 0, SYNCREMOTEDELETED, SYNCREMOTENUM } syncremote;
+typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate_t;
 
 typedef vector<LocalNode*> localnode_vector;
 
@@ -269,7 +263,7 @@ typedef map<handle,FileAttributeFetch*> faf_map;
 typedef map<int,FileAttributeFetchChannel*> fafc_map;
 
 // transfer type
-typedef enum { GET, PUT } direction;
+typedef enum { GET, PUT } direction_t;
 
 typedef set<pair<int,handle> > fareq_set;
 
@@ -295,7 +289,7 @@ typedef map<handle,char> handlecount_map;
 // maps FileFingerprints to node
 typedef multiset<FileFingerprint*, FileFingerprintCmp> fingerprint_set;
 
-typedef enum { PATHSTATE_NOTFOUND, PATHSTATE_SYNCED, PATHSTATE_SYNCING, PATHSTATE_PENDING, PATHSTATE_DEBRIS } pathstate_t;
+typedef enum { TREESTATE_NONE, TREESTATE_SYNCED, TREESTATE_PENDING, TREESTATE_SYNCING } treestate_t;
 
 struct Notification
 {

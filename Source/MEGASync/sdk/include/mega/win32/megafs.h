@@ -33,7 +33,7 @@ struct WinDirAccess : public DirAccess
 
 public:
 	bool dopen(string*, FileAccess*, bool);
-	bool dnext(string*, nodetype* = NULL);
+	bool dnext(string*, nodetype_t* = NULL);
 
 	WinDirAccess();
 	virtual ~WinDirAccess();

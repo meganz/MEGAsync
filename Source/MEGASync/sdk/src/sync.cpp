@@ -82,7 +82,7 @@ Sync::~Sync()
 	client->syncactivity = true;
 }
 
-void Sync::changestate(syncstate newstate)
+void Sync::changestate(syncstate_t newstate)
 {
 	if (newstate != state)
 	{
@@ -149,26 +149,6 @@ LocalNode* Sync::localnodebypath(LocalNode* l, string* localpath, LocalNode** pa
 		}
 		else nptr += separatorlen;
 	}
-}
-
-// determine sync state of path (path must start with the sync prefix)
-pathstate_t Sync::pathstate(string* localpath)
-{
-	if (*localpath == localdebris) return PATHSTATE_DEBRIS;
-
-	LocalNode* l = localnodebypath(NULL,localpath);
-
-	if (!l) return PATHSTATE_NOTFOUND;
-
-	if (l->node)
-	{
-		TreeProcSyncStatus tpss;
-		client->proctree(l->node,&tpss);
-		return tpss.state;
-	}
-
-	if (l->transfer && l->transfer->slot) return PATHSTATE_SYNCING;
-	return PATHSTATE_PENDING;
 }
 
 // scan localpath, add or update child nodes, call recursively for folder nodes

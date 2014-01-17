@@ -82,7 +82,7 @@ public:
 	void login(const char*, const byte*, bool = false);
 
 	// check if logged in
-	sessiontype loggedin();
+	sessiontype_t loggedin();
 
 	// set folder link: node, key
 	error folderaccess(const char*, const char*);
@@ -106,7 +106,7 @@ public:
 	void makeattr(SymmCipher*, string*, const char*, int = -1);
 
 	// check node access level
-	int checkaccess(Node*, accesslevel);
+	int checkaccess(Node*, accesslevel_t);
 
 	// check if a move operation would succeed
 	error checkmove(Node*, Node*);
@@ -118,9 +118,9 @@ public:
 	error rename(Node*, Node*);
 
 	// start/stop/pause file transfer
-	bool startxfer(direction, File*);
+	bool startxfer(direction_t, File*);
 	void stopxfer(File* f);
-	void pausexfers(direction, bool, bool = false);
+	void pausexfers(direction_t, bool, bool = false);
 
 	// pause flags
 	bool xferpaused[2];
@@ -157,10 +157,10 @@ public:
 	void getua(User*, const char* = NULL, int = 0);
 
 	// add new contact (by e-mail address)
-	error invite(const char*, visibility = VISIBLE);
+	error invite(const char*, visibility_t = VISIBLE);
 
 	// add/remove/update outgoing share
-	void setshare(Node*, const char*, accesslevel);
+	void setshare(Node*, const char*, accesslevel_t);
 
 	// export node link or remove existing exported link for this node
 	error exportnode(Node*, int);
@@ -244,10 +244,10 @@ private:
 	static const unsigned MAXTRANSFERS = 8;
 
 	// determine if more transfers fit in the pipeline
-	bool moretransfers(direction);
+	bool moretransfers(direction_t);
 
 	// update time at which next deferred transfer retry kicks in
-	void nexttransferretry(direction d, dstime* dsmin, dstime ds);
+	void nexttransferretry(direction_t d, dstime* dsmin, dstime ds);
 
 	// fetch state serialize from local cache
 	bool fetchsc(DbTable*);
@@ -472,13 +472,13 @@ public:
 	bool slotavail();
 
 	// dispatch as many queued transfers as possible
-	void dispatchmore(direction);
+	void dispatchmore(direction_t);
 
 	// transfer queue dispatch/retry handling
-	bool dispatch(direction);
+	bool dispatch(direction_t);
 
-	void defer(direction, int td, int = 0);
-	void freeq(direction);
+	void defer(direction_t, int td, int = 0);
+	void freeq(direction_t);
 
 	dstime transferretrydelay();
 
@@ -495,7 +495,7 @@ public:
 	void faf_failed(int);
 
 	// process object arrays by the API server
-	int readnodes(JSON*, int, putsource = PUTNODES_APP, NewNode* = NULL, int = 0);
+	int readnodes(JSON*, int, putsource_t = PUTNODES_APP, NewNode* = NULL, int = 0);
 
 	void readok(JSON*);
 	void readokelement(JSON*);

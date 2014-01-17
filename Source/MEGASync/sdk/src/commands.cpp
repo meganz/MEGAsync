@@ -163,7 +163,7 @@ CommandPutFile::CommandPutFile(TransferSlot* ctslot, int ms)
 	tslot = ctslot;
 
 	cmd("u");
-	arg("s",tslot->file->size);
+	arg("s",tslot->fa->size);
 	arg("ms",ms);
 }
 
@@ -400,7 +400,7 @@ void CommandSetAttr::procresult()
 }
 
 // (the result is not processed directly - we rely on the server-client response)
-CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* userhandle, NewNode* newnodes, int numnodes, int ctag, putsource csource)
+CommandPutNodes::CommandPutNodes(MegaClient* client, handle th, const char* userhandle, NewNode* newnodes, int numnodes, int ctag, putsource_t csource)
 {
 	byte key[FILENODEKEYLENGTH];
 	int i;
@@ -715,7 +715,7 @@ CommandShareKeyUpdate::CommandShareKeyUpdate(MegaClient* client, handle_vector* 
 }
 
 // add/remove share; include node share keys if new share
-CommandSetShare::CommandSetShare(MegaClient* client, Node* n, User* u, accesslevel a, int newshare)
+CommandSetShare::CommandSetShare(MegaClient* client, Node* n, User* u, accesslevel_t a, int newshare)
 {
 	byte auth[SymmCipher::BLOCKSIZE];
 	byte key[SymmCipher::KEYLENGTH];
@@ -958,7 +958,7 @@ void CommandPurchaseCheckout::procresult()
 	client->app->checkout_result(response.c_str());
 }
 
-CommandUserRequest::CommandUserRequest(MegaClient* client, const char* m, visibility show)
+CommandUserRequest::CommandUserRequest(MegaClient* client, const char* m, visibility_t show)
 {
 	cmd("ur");
 	arg("u",m);

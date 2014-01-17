@@ -75,7 +75,7 @@ struct MegaApp
 	virtual void fetchnodes_result(error) { }
 
 	// node addition has failed
-	virtual void putnodes_result(error, targettype, NewNode*) { }
+	virtual void putnodes_result(error, targettype_t, NewNode*) { }
 
 	// share update result
 	virtual void share_result(error) { }
@@ -123,7 +123,7 @@ struct MegaApp
 	virtual void transfer_complete(Transfer*) { }
 
 	// sync status updates and events
-	virtual void syncupdate_state(Sync*, syncstate) { }
+	virtual void syncupdate_state(Sync*, syncstate_t) { }
 	virtual void syncupdate_scanning(bool) { }
 	virtual void syncupdate_local_folder_addition(Sync*, const char*) { }
 	virtual void syncupdate_local_folder_deletion(Sync*, const char*) { }
@@ -139,6 +139,7 @@ struct MegaApp
 	virtual void syncupdate_remote_folder_deletion(Node*) { }
 	virtual void syncupdate_remote_copy(Sync*, const char*) { }
 	virtual void syncupdate_remote_move(string*, string*) { }
+	virtual void syncupdate_treestate(LocalNode*) { }
 
 	// sync filename filter
 	virtual bool sync_syncable(Node*) { return true; }

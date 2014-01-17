@@ -1459,7 +1459,8 @@ bool MegaApi::isRegularTransfer(MegaTransfer *transfer)
     return isRegularTransfer(transfer->getTransfer());
 }
 
-pathstate_t MegaApi::syncPathState(string* path)
+
+treestate_t MegaApi::syncPathState(string* path)
 {
 #ifdef WIN32
     string prefix("\\\\?\\");
@@ -1470,23 +1471,20 @@ pathstate_t MegaApi::syncPathState(string* path)
 #endif
 
     MUTEX_LOCK(sdkMutex);
-    pathstate_t state = PATHSTATE_NOTFOUND;
-    for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (state == PATHSTATE_NOTFOUND); it++)
+    for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
     {
         Sync *sync = (*it);
-        if((sync->localroot.localname.size() == path->size()) &&
-           (!memcmp(sync->localroot.localname.data(), path->data(), path->size())))
+        LocalNode* l = sync->localnodebypath(NULL,path);
+        if(l)
         {
-            if(sync->state == SYNC_FAILED)
-                state = PATHSTATE_PENDING;
-            else
-                state = PATHSTATE_SYNCED;
+            MUTEX_UNLOCK(sdkMutex);
+            return l->ts;
         }
-        else state = sync->pathstate(path);
     }
     MUTEX_UNLOCK(sdkMutex);
-    return state;
+    return TREESTATE_NONE;
 }
+
 
 Node *MegaApi::getSyncedNode(string *path)
 {
@@ -1495,7 +1493,6 @@ Node *MegaApi::getSyncedNode(string *path)
     for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (node == NULL); it++)
     {
         Sync *sync = (*it);
-        PATHSTATE_SYNCED;
         LocalNode * localNode = sync->localnodebypath(NULL, path);
         if(localNode) node = localNode->node;
     }
@@ -1701,7 +1698,7 @@ const char *MegaApi::getAccess(Node* node)
 	}
 
 	Node *n = node;
-	accesslevel a = FULL;
+    accesslevel_t a = FULL;
 	while (n)
 	{
 		if (n->inshare) { a = n->inshare->access; break; }
@@ -1960,19 +1957,6 @@ void MegaApi::transfer_update(Transfer *tr)
 
         if(tr->slot->progressreported)
             fireOnTransferUpdate(this, transfer);
-        else
-        {
-            if(!tr->files.front()->syncxfer)
-            {
-                QString localPath = QString::fromUtf8(transfer->getPath());
-                QDir parent = QFileInfo(localPath).dir();
-                while(!parent.isRoot())
-                {
-                    Platform::notifyItemChange(parent.absolutePath());
-                    parent = QFileInfo(parent.absolutePath()).dir();
-                }
-            }
-        }
 	}
 }
 
@@ -2037,17 +2021,10 @@ void MegaApi::transfer_complete(Transfer* tr)
     fireOnTransferFinish(this, transfer, MegaError(API_OK));
 }
 
-void MegaApi::syncupdate_state(Sync *sync, syncstate s)
+void MegaApi::syncupdate_state(Sync *sync, syncstate_t s)
 {
     LOG("syncupdate_state");
     fireOnSyncStateChanged(this);
-    string path = sync->localroot.localname;
-    path.append("", 1);
-    WCHAR *windowsPath = (WCHAR *)path.data();
-    QString qPath = QString::fromWCharArray(windowsPath);
-    if(qPath.startsWith(QString::fromAscii("\\\\?\\"))) qPath = qPath.mid(4);
-    if(qPath.length()>=MAX_PATH) return;
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, qPath.utf16(), NULL);
 }
 
 void MegaApi::syncupdate_scanning(bool scanning)
@@ -2064,8 +2041,6 @@ void MegaApi::syncupdate_stuck(string *s)
 void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
 {
     LOG("syncupdate_local_folder_addition");
-    QString localPath = QString::fromUtf8(s);
-    Platform::notifyItemChange(localPath);
 }
 
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
@@ -2091,17 +2066,6 @@ void MegaApi::syncupdate_get(Sync *, const char *s)
 void MegaApi::syncupdate_put(Sync *sync, const char *s)
 {
     LOG("syncupdate_put");
-    QString localPath = QString::fromUtf8(s);
-    Platform::notifyItemChange(localPath);
-    int basePathSize = QString::fromWCharArray((wchar_t *)sync->localroot.localname.data()).size();
-
-    QDir parent = QFileInfo(localPath).dir();
-    while(!parent.isRoot() && parent.absolutePath().size() >= basePathSize)
-    {
-        Platform::notifyItemChange(parent.absolutePath());
-        //cout << "Notified: " << parent.absolutePath().toStdString() << endl;
-        parent = QFileInfo(parent.absolutePath()).dir();
-    }
 }
 
 void MegaApi::syncupdate_remote_file_addition(Node *)
@@ -2135,6 +2099,22 @@ void MegaApi::syncupdate_remote_copy(Sync *, const char *s)
 void MegaApi::syncupdate_remote_move(string *a, string *b)
 {
     LOG("syncupdate_remote_move");
+}
+
+void MegaApi::syncupdate_treestate(LocalNode *l)
+{
+    LOG("syncupdate_treestate");
+    string localseparator;
+    localseparator.assign((char*)L"\\",sizeof(wchar_t));
+    string path;
+    while (l)
+    {
+        path.insert(0,l->localname);
+        if ((l = l->parent)) path.insert(0, localseparator);
+    }
+    path.append("", 1);
+    QString localPath = QString::fromWCharArray((const wchar_t *)path.data());
+    Platform::notifyItemChange(localPath);
 }
 
 bool MegaApi::sync_syncable(Node *node)
@@ -2259,14 +2239,14 @@ void MegaApi::fetchnodes_result(error e)
     }
 }
 
-void MegaApi::putnodes_result(error e, targettype t, NewNode* nn)
+void MegaApi::putnodes_result(error e, targettype_t t, NewNode* nn)
 {
 	MegaError megaError(e);
 	if (t == USER_HANDLE)
 	{
 		delete[] nn;	// free array allocated by the app
 		if (!e) cout << "Success." << endl;
-		return; //TODO: Check this
+        return;
 	}
 
 	if(e) cout << "Node addition failed (" << megaError.getErrorString() << ")" << endl;
@@ -3188,7 +3168,7 @@ MegaError MegaApi::checkAccess(Node* node, const char *level)
 		return MegaError(API_EINTERNAL);
 	}
 
-	accesslevel a = OWNER;
+    accesslevel_t a = OWNER;
 	if(level == NULL) a = RDONLY;
 	else if (!strcmp(level,"r") || !strcmp(level,"ro")) a = RDONLY;
 	else if (!strcmp(level,"rw")) a = RDWR;
@@ -3807,7 +3787,7 @@ void MegaApi::sendPendingRequests()
 			const char* access = request->getAccess();
 			if(!node || !email || !access) { e = API_EARGS; break; }
 
-			accesslevel a = ACCESS_UNKNOWN;
+            accesslevel_t a = ACCESS_UNKNOWN;
 			if(access == NULL) a = RDONLY;
 			else if (!strcmp(access,"r") || !strcmp(access,"ro")) a = RDONLY;
 			else if (!strcmp(access,"rw")) a = RDWR;

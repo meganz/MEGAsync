@@ -26,7 +26,7 @@
 
 namespace mega {
 
-Transfer::Transfer(MegaClient* cclient, direction ctype)
+Transfer::Transfer(MegaClient* cclient, direction_t ctype)
 {
 	type = ctype;
 	client = cclient;
@@ -66,11 +66,13 @@ void Transfer::failed(error e)
 // transfer completion: copy received file locally, set timestamp(s), verify fingerprint, notify app, notify files
 void Transfer::complete()
 {
+	if (slot->fa) client->app->transfer_complete(this);
+
 	if (type == GET)
 	{
 		// disconnect temp file from slot...
-		delete slot->file;
-		slot->file = NULL;
+		delete slot->fa;
+		slot->fa = NULL;
 
 		// FIXME: multiple overwrite race conditions below (make all copies from already open file!)
 		
@@ -113,43 +115,80 @@ void Transfer::complete()
 		// in case they have changed during the upload
 		for (file_list::iterator it = files.begin(); it != files.end(); it++) (*it)->updatelocalname();
 
-		string* renamedto = NULL;
+		string tmplocalname;
+		bool transient_error, success;
 
-		// rename file to one of its final target locations
-		for (file_list::iterator it = files.begin(); it != files.end(); it++)
+		// place file in all target locations - use up to one renames, copy operations for the rest
+		// remove and complete successfully completed files
+		for (file_list::iterator it = files.begin(); it != files.end(); )
 		{
-			if (client->fsaccess->renamelocal(&localfilename,&(*it)->localname))
+			transient_error = false;
+			success = false;
+
+			if (!tmplocalname.size())
 			{
-				renamedto = &(*it)->localname;
-				break;
+				if (client->fsaccess->renamelocal(&localfilename,&(*it)->localname))
+				{
+					tmplocalname = (*it)->localname;
+					success = true;
+				}
+				else
+				{
+					if (client->fsaccess->transient_error) transient_error = true;
+				}
 			}
+
+			if (!success)
+			{
+				if (client->fsaccess->copylocal(tmplocalname.size() ? &tmplocalname : &localfilename,&(*it)->localname))
+				{
+					success = true;
+				}
+				else
+				{
+					if (client->fsaccess->transient_error) transient_error = true;
+				}
+			}
+
+			if (success || !transient_error)
+			{
+				if (success)
+				{
+					(*it)->transfer = NULL;		// prevent deletion of associated Transfer object in completed()
+					(*it)->completed(this,NULL);
+				}
+
+				if (success || !(*it)->failed(API_EAGAIN)) files.erase(it++);
+				else it++;
+			}
+			else it++;
 		}
 
-		// copy to the other remaining target locations
-		for (file_list::iterator it = files.begin(); it != files.end(); it++)
-		{
-			if (renamedto != &(*it)->localname) client->fsaccess->copylocal(renamedto ? renamedto : &localfilename,&(*it)->localname);
-		}
-
-		if (!renamedto) client->fsaccess->unlinklocal(&localfilename);
+		if (!tmplocalname.size() && !files.size()) client->fsaccess->unlinklocal(&localfilename);
 	}
 	else
 	{
 		// files must not change during a PUT transfer
-		if (genfingerprint(slot->file,true)) return failed(API_EREAD);
-	}
+		if (genfingerprint(slot->fa,true)) return failed(API_EREAD);
 
-	client->app->transfer_complete(this);
-
-	// notify all files and give them an opportunity to self-destruct
-	for (file_list::iterator it = files.begin(); it != files.end(); )
-	{
-		(*it)->transfer = NULL;		// prevent deletion of associated Transfer object in completed()
-		(*it)->completed(this,NULL);
-		files.erase(it++);
+		// notify all files and give them an opportunity to self-destruct
+		for (file_list::iterator it = files.begin(); it != files.end(); )
+		{
+			(*it)->transfer = NULL;		// prevent deletion of associated Transfer object in completed()
+			(*it)->completed(this,NULL);
+			files.erase(it++);
+		}
 	}
 
 	if (!files.size()) delete this;
+	else
+	{
+		// some files are still pending completion, close fa and set retry timer
+		delete slot->fa;
+		slot->fa = NULL;
+
+		bt.backoff(client->waiter->ds,11);
+	}
 }
 
 } // namespace
