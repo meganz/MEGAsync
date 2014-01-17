@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<TS version="2.0" language="th" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
         <location filename="../BindFolderDialog.ui" line="14"/>
         <source>Add synchronized folder</source>
-        <translation>Añadir carpeta sincronizada</translation>
+        <translation>เพิ่มโฟลเดอร์ซิงโครไนซ์</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
@@ -16,54 +16,54 @@
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source></source>
-        <translation>Error</translation>
+        <translation>ผิดพลาด</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta local y una carpeta MEGA</translation>
+        <translation>กรุณาเลือกโฟลเดอร์ภายในและโฟลเดอร์ของ MEGA</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="72"/>
         <source>The selected local folder is already synced</source>
-        <translation>La carpeta local seleccionada ya se está sincronizando</translation>
+        <translation>โฟลเดอร์ภายในที่เลือกมีการซิงค์แล้ว</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="77"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>Una carpeta sincronizada no puede encontrarse dentro de otra carpeta que ya se está sincronizando</translation>
+        <translation>โฟลเดอร์ที่ Sync แล้ว ไม่สามารถจะอยู่ในโฟลเดอร์ที่ซิงค์ได้อีก</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="91"/>
         <source>The selected MEGA folder is already synced</source>
-        <translation>La carpeta MEGA seleccionada ya se está sincronizando</translation>
+        <translation>โฟลเดอร์ MEGA ที่เลือกถูก Sync แล้ว</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>La sincronización completa de tu cuenta es posible solo cuando no existen sincronizaciones selectivas</translation>
+        <translation>การ Sync บัญชีเต็มรูปแบบ จะทำได้ทันที โดยไม่ต้องมีการเลือกการซิงค์ใดๆ</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>La carpeta local es demasiado grande (esta versión está limitada a %1 carpetas o %2 archivos). Por favor, selecciona otra carpeta.</translation>
+        <translation>โฟลเดอร์ภายในมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่%1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
         <source>Sync name</source>
-        <translation>Nombre de la sincronización</translation>
+        <translation>ชื่อ Sync</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>El nombre \&quot;%1\&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar está carpeta sincronizada:</translation>
+        <translation>ชื่อ \&quot;%1\&quot; มีอยู่แล้วในการใช้งาน จากการ Sync ที่อื่น กรุณากรอกชื่อให้แตกต่างกัน สำหรับการระบุโฟลเดอร์ที่จะ Sync นี้</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -81,17 +81,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../FolderBinder.ui" line="92"/>
         <source>Local folder:</source>
-        <translation>Carpeta local</translation>
+        <translation>โฟลเดอร์ภายใน:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.ui" line="38"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>โฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.cpp" line="33"/>
         <source>Select local folder</source>
-        <translation>Elegir carpeta local</translation>
+        <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="32"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>นำเข้าลิงก์</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="66"/>
         <source>Download to my computer</source>
-        <translation>Descargar a mi ordenador</translation>
+        <translation>ดาวน์โหลดลงในคอมพิวเตอร์ของฉัน</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="139"/>
         <source>Import to my cloud drive</source>
-        <translation>Importar a mi disco en la nube </translation>
+        <translation>นำเข้าสู่ Cloud Drive ของฉัน</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="231"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>ตกลง</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="238"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="49"/>
@@ -135,17 +135,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="120"/>
         <source>Select local folder</source>
-        <translation>Seleccionar carpeta local</translation>
+        <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="155"/>
         <source>Decryption error</source>
-        <translation>Error de desencriptado </translation>
+        <translation>ข้อผิดพลาดในการถอดรหัส</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="171"/>
         <source>Not found</source>
-        <translation>No encontrado</translation>
+        <translation>ไม่พบข้อมูล</translation>
     </message>
      <message>
             <source>You are about to import this file to a synced folder.
@@ -167,127 +167,127 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="228"/>
         <location filename="../InfoDialog.cpp" line="271"/>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync ya está actualizado</translation>
+        <translation>MEGAsync ล่าสุดแล้วในขณะนี้</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="543"/>
         <source>RECENTLY UPDATED</source>
-        <translation>RECIENTEMENTE ACTUALIZADO </translation>
+        <translation>อัปเดตเมื่อเร็วๆ นี้</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="669"/>
         <source>Usage: Data temporarily unavailable</source>
-        <translation>Uso de datos: Datos no disponibles temporalmente</translation>
+        <translation>การใช้งาน: ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="749"/>
         <location filename="../InfoDialog.cpp" line="221"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Syncs</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
         <source>MEGA website</source>
-        <translation>Sitio web MEGA</translation>
+        <translation>เว็บไซต์ MEGA</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
         <source>%1 of %2</source>
-        <translation>%1 de %2</translation>
+        <translation>%1 จาก %2</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
         <source>Usage: %1</source>
-        <translation>Uso: %1</translation>
+        <translation>การใช้งาน: %1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>%1 de %2 (%3/seg)</translation>
+        <translation>%1 จาก %2 (%3/s)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>%1 de %2 (en pausa)</translation>
+        <translation>%1 จาก%2 (พักชั่วคราว)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
         <location filename="../InfoDialog.cpp" line="266"/>
         <source>File transfers paused</source>
-        <translation>Transferencias de archivos en pausa</translation>
+        <translation>การถ่ายโอนไฟล์ถูกพักชั่วคราว</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="229"/>
         <location filename="../InfoDialog.cpp" line="272"/>
         <source>MEGAsync is scanning</source>
-        <translation>MEGAsync está escaneando</translation>
+        <translation>MEGAsync กำลังสแกน</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="304"/>
         <source>All transfers have been completed</source>
-        <translation>Se han completado todas las transferencias</translation>
+        <translation>การถ่ายโอนทั้งหมดเสร็จเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="330"/>
         <source>Cancel all downloads</source>
-        <translation>Cancelar todas las descargas</translation>
+        <translation>ยกเลิกดาวน์โหลดทั้งหมด</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="331"/>
         <source>Cancel download</source>
-        <translation>Cancelar descarga</translation>
+        <translation>ยกเลิกดาวน์โหลด</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="340"/>
         <source>Cancel all uploads</source>
-        <translation>Cancelar todas las subidas</translation>
+        <translation>ยกเลิกอัปโหลดทั้งหมด</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="341"/>
         <source>Cancel upload</source>
-        <translation>Cancelar subida</translation>
+        <translation>ยกเลิกอัปโหลด</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
         <source>Add Sync</source>
-        <translation>Añadir Sincronización</translation>
+        <translation>เพิ่ม Sync</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
         <source>one file at %1/s</source>
-        <translation>un archivo a %1/sec</translation>
+        <translation>หนึ่งไฟล์ความเร็วจะอยู่ที่ %1/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="444"/>
         <source>one file (paused)</source>
-        <translation>un archivo (en pausa)</translation>
+        <translation>หนึ่งไฟล์ (พักชั่วคราว)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 de %2 archivos a %3/sec</translation>
+        <translation>%1 จาก %2 ไฟล์ความเร็วจะอยู่ที่ %3/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 de %2 archivos (en pausa)</translation>
+        <translation>%1 จาก %2 ไฟล์ (พักชั่วคราว)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="447"/>
         <source>Total Remaining: </source>
-        <translation>Total Restante: </translation>
+        <translation>รวมที่เหลืออยู่: </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="455"/>
         <source>Downloading </source>
-        <translation>Descargando </translation>
+        <translation>กำลังดาวน์โหลด </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
-        <translation>Subiendo </translation>
+        <translation>กำลังอัปโหลด </translation>
     </message>
 </context>
 <context>
@@ -305,46 +305,46 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="176"/>
         <source>Logging in</source>
-        <translation>Iniciando sesión</translation>
+        <translation>กำลังเข้าสู่ระบบ</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="205"/>
         <location filename="../../MegaApplication.cpp" line="206"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync ahora se está ejecutando. Clic aquí para abrir la ventana de estado.</translation>
+        <translation>MEGAsync กำลังทำงาน คลิกที่นี่ เพื่อเปิดหน้าต่างแสดงสถานะ</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota no existe</translation>
+        <translation>Sync ของคุณ \&quot;%1\&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation>Sync ของคุณ \&quot;%1\&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta local no existe</translation>
+        <translation>Sync ของคุณ \&quot;%1\&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ภายในไม่มีอยู่</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
-        <source>Error: Invalid destination folder. La subida ha sido cancelada</source>
-        <translation>Error: Carpeta de destino no válida. </translation>
+        <source>Error: Invalid destination folder. การอัพโหลดถูกยกเลิกแล้ว</source>
+        <translation>ผิดพลาด: โฟลเดอร์ปลายทางไม่ถูกต้อง </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>No se ha subido la carpeta (%1) porque es demasiado grande (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation>โฟลเดอร์ (%1) ไม่ได้ถูกอัปโหลด เนื่องจากมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %2 โฟลเดอร์หรือ %3 ไฟล์)</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>No se han subido (%1) carpetas porque son demasiado grandes (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation>%1 โฟลเดอร์ไม่ได้ถูกอัปโหลด เนื่องจากมีขนาดใหญ่เกินไป (เวอร์ชันเบต้านี้ ถูกจำกัดไว้ที่ %2 โฟลเดอร์หรือ %3 ไฟล์)</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -361,66 +361,66 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>La sincronización se detendrá.
-La eliminación de archivos/carpetas cuando la sincronización está detenida no se propaga en el servidor.
+        <translation>การซิงโครไนซ์จะถูกหยุดไว้
+การลบขณะที่ยังไม่ได้มีการทำงานใดๆ จะไม่ถูกเผยแพร่
 
-¿Salir de todas formas?</translation>
+จบการทำงานหรือไม่</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>About MEGAsync</source>
-        <translation>Sobre MEGAsync</translation>
+        <translation>เกี่ยวกับ MEGAsync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>MEGAsync version code %1</source>
-        <translation>Código de la versión de MEGAsync: %1</translation>
+        <translation>MEGAsync รหัสเวอร์ชัน %1</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>El enlace se ha copiado al portapapeles</translation>
+        <translation>ลิงก์ได้ถูกคัดลอกไปยังคลิปบอร์ดแล้ว</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
         <source>The links have been copied to the clipboard</source>
-        <translation>Los enlaces se han copiado al portapapeles</translation>
+        <translation>ลิงก์ทั้งหมดได้ถูกคัดลอกไปยังคลิปบอร์ดแล้ว</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="608"/>
         <source>Logging in...</source>
-        <translation>Iniciando sesión...</translation>
+        <translation>กำลังเข้าสู่ระบบ...</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="662"/>
         <source>Exit</source>
-        <translation>Salir</translation>
+        <translation>จบการทำงาน</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="664"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>เกี่ยวกับ</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="666"/>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation>ตั้งค่า</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="668"/>
         <source>Pause</source>
-        <translation>Pausa</translation>
+        <translation>พัก</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="670"/>
         <source>Resume</source>
-        <translation>Reanudar</translation>
+        <translation>ต่อ</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="672"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>นำเข้าลิงก์</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="689"/>
@@ -428,37 +428,37 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
         <location filename="../../MegaApplication.cpp" line="1066"/>
         <location filename="../../MegaApplication.cpp" line="1105"/>
         <source>Up to date</source>
-        <translation>Actualizado</translation>
+        <translation>ล่าสุดแล้ว</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="787"/>
         <location filename="../../MegaApplication.cpp" line="1055"/>
         <source>Paused</source>
-        <translation>En pausa</translation>
+        <translation>พักแล้ว</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="798"/>
         <location filename="../../MegaApplication.cpp" line="1060"/>
         <location filename="../../MegaApplication.cpp" line="1113"/>
         <source>Scanning</source>
-        <translation>Escaneando</translation>
+        <translation>กำลังสแกน</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="799"/>
         <location filename="../../MegaApplication.cpp" line="1061"/>
         <location filename="../../MegaApplication.cpp" line="1114"/>
         <source>Syncing</source>
-        <translation>Sincronizando</translation>
+        <translation>กำลัง Sync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="944"/>
         <source>Temporary transmission error: </source>
-        <translation>Error temporal de transmisión: </translation>
+        <translation>ผิดพลาดในการส่งชั่วคราว: </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
-        <translation>Tienes en tu cuenta archivos nuevos o actualizados</translation>
+        <translation>คุณมีไฟล์ใหม่หรือมีการอัปเดตในบัญชีของคุณ</translation>
     </message>
 </context>
 <context>
@@ -466,122 +466,122 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../sdk/megaapi.cpp" line="752"/>
         <source>No error</source>
-        <translation>Ningún error</translation>
+        <translation>ไม่มีข้อผิดพลาด</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="754"/>
         <source>Internal error</source>
-        <translation>Error interno</translation>
+        <translation>ผิดพลาดภายใน</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="756"/>
         <source>Invalid argument</source>
-        <translation>Argumento no válido </translation>
+        <translation>อาร์กิวเมนต์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="758"/>
         <source>Request failed, retrying</source>
-        <translation>Petición fallida, reintentando</translation>
+        <translation>การร้องขอล้มเหลว กำลังลองใหม่</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="760"/>
         <source>Rate limit exceeded</source>
-        <translation>Se ha superado el limite</translation>
+        <translation>เกินจำกัดการให้คะแนนแล้ว</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="762"/>
         <source>Failed permanently</source>
-        <translation>Fallo permanente</translation>
+        <translation>ล้มเหลวอย่างถาวร</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="764"/>
         <source>Too many concurrent connections or transfers</source>
-        <translation>Demasiadas conexiones o transferencias simultáneas</translation>
+        <translation>มีการเชื่อมต่อหรือถ่ายโอนพร้อมกันมากเกินไป</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="766"/>
         <source>Out of range</source>
-        <translation>Fuera de alcance</translation>
+        <translation>Out of range</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="768"/>
         <source>Expired</source>
-        <translation>Caducado</translation>
+        <translation>หมดอายุแล้ว</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="770"/>
         <source>Not found</source>
-        <translation>No encontrado</translation>
+        <translation>ไม่พบข้อมูลใดๆ</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="772"/>
         <source>Circular linkage detected</source>
-        <translation>Error cíclico</translation>
+        <translation>รอบของข้อผิดพลาด (Circular error)</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="774"/>
         <source>Access denied</source>
-        <translation>Acceso denegado</translation>
+        <translation>การเข้าถึงถูกปฏิเสธ</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="776"/>
         <source>Already exists</source>
-        <translation>Ya existe</translation>
+        <translation>มีอยู่แล้ว</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="778"/>
         <source>Incomplete</source>
-        <translation>Incompleto</translation>
+        <translation>ไม่สมบูรณ์</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="780"/>
         <source>Invalid key/Decryption error</source>
-        <translation>Clave incorrecta/Error de desencriptado</translation>
+        <translation>คีย์ผิดพลาด/การถอดรหัสไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>Identificador de sesión erróneo</translation>
+        <translation>ID เซสชั่นไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>
         <source>Blocked</source>
-        <translation>Bloqueado</translation>
+        <translation>บล็อกแล้ว</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="786"/>
         <source>Over quota</source>
-        <translation> Cuota superada</translation>
+        <translation>เกินโควต้า</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="788"/>
         <source>Temporarily not available</source>
-        <translation>No disponible temporalmente</translation>
+        <translation>ไม่สามารถใช้ได้ชั่วคราว</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="790"/>
         <source>Connection overflow</source>
-        <translation>Desbordamiento de conexión </translation>
+        <translation>การเชื่อมต่อมากเกินไป</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>Error de  escritura</translation>
+        <translation>การเขียนผิดพลาด</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
         <source>Read error</source>
-        <translation>Error de lectura</translation>
+        <translation>การอ่านผิดพลาด</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>Clave de aplicación no válida</translation>
+        <translation>คีย์แอปพลิเคชันไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
         <source>Unknown error</source>
-        <translation>Error desconocido</translation>
+        <translation>ข้อผิดพลาดที่ไม่รู้จัก</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
@@ -608,66 +608,66 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="17"/>
         <source>Folder Selection</source>
-        <translation>Selección de Carpetas</translation>
+        <translation>เลือกโฟลเดอร์</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="38"/>
         <source>Select a MEGA folder:</source>
-        <translation>Selecciona una carpeta MEGA</translation>
+        <translation>เลือกโฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="66"/>
         <source>Retrieving folders...</source>
-        <translation>Recuperando lista de carpetas...</translation>
+        <translation>กำลังรับรายการโฟลเดอร์...</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="93"/>
         <location filename="../NodeSelector.cpp" line="93"/>
         <source>New folder</source>
-        <translation>Nueva carpeta</translation>
+        <translation>โฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
 	<source>OK</source>
-        <translation>Aceptar</translation>
+        <translation>ตกลง</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="107"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="32"/>
         <source>Cloud Drive</source>
-        <translation>Disco en la Nube</translation>
+        <translation>Cloud Drive</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="94"/>
         <source>Enter the new folder name:</source>
-        <translation>Escribe el nombre de la nueva carpeta</translation>
+        <translation>กรอกชื่อโฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>ผิดพลาด</translation>
     </message>
       <message>
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Clave de aplicación no válida Error desconocido</translation>
+        <translation>คีย์แอปพลิเคชันไม่ถูกต้อง ข้อผิดพลาดที่ไม่รู้จัก</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>Tienes %1 en esta carpeta
-Estás seguro que quieres sincronizarlo?</translation>
+        <translation>คุณมี %1 ในโฟลเดอร์นี้
+คุณแน่ใจว่าต้องการ Sync หรือไม่</translation>
     </message>
 </context>
 <context>
@@ -675,38 +675,38 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="26"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>นำเข้าลิงก์</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="35"/>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Escribe uno o varios enlaces de archivos MEGA</translation>
+        <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือหลายรายการ</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
         <source>Submit</source>
-        <translation>Enviar</translation>
+        <translation>ส่ง</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="87"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <source>Enter one or more MEGA file links</source>
-        <translation>Escribe uno o más enlaces de archivos MEGA</translation>
+        <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือมากกว่า</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Se han encontrado enlaces no válidos. (enlaces a carpetas no disponibles de momento)</translation>
+        <translation>ไม่พบลิงก์ MEGA ที่ถูกต้อง (ลิงก์โฟลเดอร์ยังไม่สนับสนุน)</translation>
     </message>
 </context>
 <context>
@@ -715,79 +715,79 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>Hace %1 horas</translation>
+        <translation>%1 ชั่วโมงที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>รับลิงก์ MEGA</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="58"/>
         <source>just now</source>
-        <translation>justo ahora</translation>
+        <translation>เมื่อสักครู่นี้</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>Hace %1 segundos</translation>
+        <translation>%1 วินาทีที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
         <source>1 minute ago</source>
-        <translation>Hace un minuto</translation>
+        <translation>1 นาทีที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>Hace %1 minutos</translation>
+        <translation>%1 นาทีที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
         <source>1 hour ago</source>
-        <translation>Hace una hora</translation>
+        <translation>1 ชั่วโมงที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="81"/>
         <source>1 day ago</source>
-        <translation>Hace un día</translation>
+        <translation>1 วันที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>Hace %1 días</translation>
+        <translation>%1 วันที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
         <source>1 month ago</source>
-        <translation>Hace un mes</translation>
+        <translation>1 เดือนที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>Hace %1 meses</translation>
+        <translation>%1 เดือนที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
         <source>1 year ago</source>
-        <translation>Hace un año</translation>
+        <translation>1 ปีที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>Hace %1 años</translation>
+        <translation>%1 ปีที่ผ่านมา</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
         <location filename="../RecentFile.cpp" line="119"/>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation>เปิด</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="112"/>
         <location filename="../RecentFile.cpp" line="120"/>
         <source>Show in folder</source>
-        <translation>Ver carpeta contenedora</translation>
+        <translation>แสดงในโฟลเดอร์</translation>
     </message>
 </context>
 <context>
@@ -795,72 +795,72 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="32"/>
         <source>Settings - MEGAsync</source>
-        <translation>Ajustes - MEGAsync</translation>
+        <translation>ตั้งค่า - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="119"/>
         <source>General</source>
-        <translation>General</translation>
+        <translation>ทั่วไป</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="157"/>
         <source>Account</source>
-        <translation>Cuenta</translation>
+        <translation>บัญชี</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="192"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Syncs</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
         <source>Bandwidth</source>
-        <translation>Ancho de banda</translation>
+        <translation>แบนด์วิดธ์</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="262"/>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>ขั้นสูง</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="356"/>
         <source>Help</source>
-        <translation>Ayuda</translation>
+        <translation>ช่วยเหลือ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
 	<source>OK</source>
-        <translation>Aceptar</translation>
+        <translation>ตกลง</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="383"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="393"/>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>นำไปใช้</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="430"/>
         <source>Show notifications</source>
-        <translation>Mostrar notificaciones</translation>
+        <translation>แสดงการแจ้งเตือน</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Iniciar con el sistema</translation>
+        <translation>เริ่มทันทีเมื่อเริ่มต้นระบบ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
         <source>Update automatically</source>
-        <translation>Actualizar automáticamente </translation>
+        <translation>อัปเดตโดยอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="460"/>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation>ภาษา</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="473"/>
@@ -870,72 +870,72 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="501"/>
         <source>Details</source>
-        <translation>Detalles</translation>
+        <translation>รายละเอียด</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="559"/>
         <location filename="../SettingsDialog.cpp" line="231"/>
         <source>FREE</source>
-        <translation>GRATIS</translation>
+        <translation>ฟรี</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="579"/>
         <location filename="../SettingsDialog.cpp" line="517"/>
         <source>Logout</source>
-        <translation>Cerrar sesión</translation>
+        <translation>ออกจากระบบ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="602"/>
         <source>Storage space</source>
-        <translation> Uso de espacio en disco</translation>
+        <translation>พื้นที่เก็บข้อมูล</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="650"/>
         <location filename="../SettingsDialog.ui" line="973"/>
         <source>Upgrade</source>
-        <translation>Actualiza a Pro</translation>
+        <translation>อัปเกรด</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="680"/>
         <source>Synced folders</source>
-        <translation>Carpetas sincronizadas</translation>
+        <translation>Sync โฟลเดอร์แล้ว</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="698"/>
         <location filename="../SettingsDialog.ui" line="1092"/>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation>ลบ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="705"/>
         <location filename="../SettingsDialog.ui" line="1085"/>
         <source>Add</source>
-        <translation>Añadir</translation>
+        <translation>เพิ่ม</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="806"/>
         <source>Local Folder</source>
-        <translation>Carpetas locales</translation>
+        <translation>โฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="811"/>
         <source>MEGA folder</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>โฟลเดอร์ MEGA</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="826"/>
         <source>Upload rate limit</source>
-        <translation>Limite de velocidad de las subidas</translation>
+        <translation>จำกัดอัตราการอัปโหลด</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="838"/>
         <source>Don&apos;t limit</source>
-        <translation>Sin limite</translation>
+        <translation>ไม่ต้องจำกัด</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="848"/>
         <source>Limit to:</source>
-        <translation>Limitar a:</translation>
+        <translation>จำกัดที่:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="892"/>
@@ -945,62 +945,62 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="915"/>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>อัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>aproximadamente 90% del ancho de banda</translation>
+        <translation>ประมาณ 90% ของแบนด์วิดธ์ที่มีอยู่</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
         <source>Bandwidth quota</source>
-        <translation>Cuota del ancho de banda</translation>
+        <translation>โควต้าแบนด์วิดธ์</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Las limitaciones de las subidas son determinadas por el servidor y se aplicarán cuando se inician nuevas subidas</translation>
+        <translation>การจำกัดอัปโหลด เป็นอัตราต่อการอัปโหลดและเซิร์ฟเวอร์จะใช้ทันที เมื่อเริ่มต้นการอัปโหลดใหม่</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Carpeta de subidas desde el Explorador de Windows</translation>
+        <translation>โฟลเดอร์สำหรับอัปโหลดจาก Windows Explorer</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
         <source>Excluded file names</source>
-        <translation>Nombres de archivos excluidos</translation>
+        <translation>ชื่อไฟล์ที่ได้รับการยกเว้น</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1143"/>
         <source>Proxy Settings</source>
-        <translation>Ajustes de proxy</translation>
+        <translation>การตั้งค่าพร็อกซี่</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1150"/>
         <source>No proxy</source>
-        <translation>Sin proxy</translation>
+        <translation>ไม่มีพร็อกซี่</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1157"/>
         <source>Auto-detect</source>
-        <translation>Auto-detectar</translation>
+        <translation>ตรวจจับอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1167"/>
         <source>Proxy</source>
-        <translation>Proxy</translation>
+        <translation>พร็อกซี่</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1174"/>
         <source>Proxy type:</source>
-        <translation>Tipo de proxy:</translation>
+        <translation>ประเภทพร็อกซี่:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1194"/>
         <source>Server:</source>
-        <translation>Servidor:</translation>
+        <translation>เซิร์ฟเวอร์:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1232"/>
@@ -1010,29 +1010,29 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1264"/>
         <source>Proxy server requires a password</source>
-        <translation>El servidor proxy requiere contraseña</translation>
+        <translation>พร็อกซี่เซิร์ฟเวอร์ต้องใช้รหัสผ่าน</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>Usuario:</translation>
+        <translation>ชื่อผู้ใช้:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="216"/>
         <location filename="../SettingsDialog.cpp" line="264"/>
         <source>Data temporarily unavailable</source>
-        <translation>Datos no disponibles temporalmente</translation>
+        <translation>ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>%1 (%2%) de %3 en uso</translation>
+        <translation>ใช้ไปแล้ว %1 (%2%) จาก %3</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
@@ -1058,39 +1058,39 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="398"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
         <source>You are already syncing your entire account.</source>
-        <translation>Ya estás sincronizando toda tu cuenta.</translation>
+        <translation>คุณมีการ Sync ทั้งบัญชีของคุณอยู่แล้ว</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Synchronization will stop working.</source>
-        <translation>La sincronización se detendrá.</translation>
+        <translation>การซิงโครไนซ์จะหยุดทำงาน</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Are you sure?</source>
-        <translation>¿Estás seguro?</translation>
+        <translation>คุณแน่ใจหรือไม่</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="568"/>
         <source>Excluded name</source>
-        <translation>Nombre excluido</translation>
+        <translation>ชื่อที่ยกเว้น</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="569"/>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>Escribe un nombre para excluirlo de la sincronización.
-(comodines * y ? permitidos):</translation>
+        <translation>กรอกชื่อที่จะยกเว้นการซิงโคร์ไนซ์
+(อนุญาตให้ใช้สัญลักษณ์ * และ ? ได้):</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>ผิดพลาด</translation>
     </message>
 </context>
 <context>
@@ -1098,146 +1098,146 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="32"/>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>Asistente de Instalación - MEGAsync</translation>
+        <translation>ตัวช่วยสร้างการติดตั้ง - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="119"/>
         <source>I have a MEGA account</source>
-        <translation>Tengo una cuenta MEGA</translation>
+        <translation>ฉันมีบัญชี MEGA แล้ว</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="129"/>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>No tengo una cuenta MEGA</translation>
+        <translation>ฉันยังไม่มีมีบัญชี MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="185"/>
         <source>Create a new MEGA account</source>
-        <translation>Crear una nueva cuenta MEGA</translation>
+        <translation>สร้างบัญชี MEGA ใหม่</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="204"/>
         <source>Name:</source>
-        <translation>Tu nombre:</translation>
+        <translation>ชื่อ:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="214"/>
         <location filename="../SetupWizard.ui" line="369"/>
         <source>Email:</source>
-        <translation>Tu correo electrónico:</translation>
+        <translation>อีเมล:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="224"/>
         <location filename="../SetupWizard.ui" line="379"/>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="238"/>
         <source>Repeat password:</source>
-        <translation>Repetir la contraseña:</translation>
+        <translation>รหัสผ่านอีกครั้ง:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Acepto los  &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Términos del Servicio&lt;/a&gt; de MEGA</translation>
+        <translation>ฉันเห็นด้วยกับ &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;ข้อกำหนดในการบริการ&lt;/a&gt; ของ MEGA </translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
         <source>Login to your MEGA account</source>
-        <translation>Iniciar sesión en tu cuenta MEGA</translation>
+        <translation>เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="416"/>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Por favor, verifica tu cuenta usando el enlace de confirmación que hemos enviado al correo electrónico usado durante el registro</translation>
+        <translation>กรุณาตรวจสอบบัญชีของคุณ โดยใช้ลิงก์ในการยืนยันว่า เราได้ส่งไปยังบัญชีอีเมลของคุณแล้ว</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
         <source>Logging in ...</source>
-        <translation>Iniciando sesión...</translation>
+        <translation>กำลังเข้าสู่ระบบ...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
         <source>Choose install type</source>
-        <translation>Elegir el tipo de instalación</translation>
+        <translation>เลือกประเภทการติดตั้ง</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
         <source> Sync your entire cloud drive</source>
-        <translation>Sincroniza todo de tu disco en la nube</translation>
+        <translation>Sync ใน Cloud Drive ของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
         <source>Full account sync</source>
-        <translation>Sincronizar toda la cuenta</translation>
+        <translation>Sync ในบัญชีทั้งหมด</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="653"/>
         <location filename="../SetupWizard.ui" line="738"/>
         <source>Selective sync</source>
-        <translation>Sincronización selectiva</translation>
+        <translation>เลือกรายการที่จะ Sync</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="683"/>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>Sincroniza carpetas especificas de tu disco en la nube</translation>
+        <translation>Sync โฟลเดอร์ที่ระบุไว้ใน Cloud Drive ของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="755"/>
         <source>The following folders will be automatically synchronized:</source>
-        <translation>Las siguientes carpetas serán sincronizadas automáticamente:</translation>
+        <translation>โฟลเดอร์เหล่านี้ จะถูกซิงโครไนซ์โดยอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="771"/>
         <source>Local folder:</source>
-        <translation>Carpetas locales:</translation>
+        <translation>โฟลเดอร์ภายใน:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="778"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA:</translation>
+        <translation>โฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="797"/>
         <location filename="../SetupWizard.ui" line="818"/>
         <source>Change</source>
-        <translation>Cambiar</translation>
+        <translation>เปลี่ยน</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="887"/>
         <source>Welcome to MEGA</source>
-        <translation>Bienvenido a MEGA</translation>
+        <translation>ยินดีต้อนรับสู่ MEGA จ้า</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="910"/>
         <source>Your local folder:</source>
-        <translation>Tu carpeta local:</translation>
+        <translation>โฟลเดอร์ภายในของคุณ:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="934"/>
         <source>and your MEGA folder:</source>
-        <translation>y tu carpeta MEGA:</translation>
+        <translation>และโฟลเดอร์ MEGA ของคุณ:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="957"/>
         <source>will be automatically synchronized.</source>
-        <translation>serán actualizadas automáticamente.</translation>
+        <translation>จะถูกซิงโครไนซ์โดยอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1012"/>
         <source>Back</source>
-        <translation>Atrás</translation>
+        <translation>กลับ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1019"/>
         <source>Next</source>
-        <translation>Siguiente</translation>
+        <translation>ต่อไป</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1026"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
@@ -1262,82 +1262,82 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>El usuario ya existe</translation>
+        <translation>มีผู้ใช้งานอยู่แล้ว</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
         <source>Fetching file list...</source>
-        <translation>Obteniendo lista de archivos...</translation>
+        <translation>กำลังดึงรายชื่อไฟล์...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Incorrect email and/or password.</source>
-        <translation>Correo y/o contraseña incorrectos.</translation>
+        <translation>อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Have you verified your account?</source>
-        <translation>¿Has verificado tu cuenta?</translation>
+        <translation>คุณได้ผ่านการยืนยันบัญชีของคุณหรือยัง</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="90"/>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>La carpeta MEGA no existe</translation>
+        <translation>โฟลเดอร์ MEGA ไม่มีอยู่</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="97"/>
         <location filename="../SetupWizard.cpp" line="275"/>
         <location filename="../SetupWizard.cpp" line="322"/>
         <source>Finish</source>
-        <translation>Finalizar</translation>
+        <translation>เสร็จสิ้น</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="157"/>
         <location filename="../SetupWizard.cpp" line="195"/>
         <source>Please, enter your e-mail address</source>
-        <translation>Por favor, escribe la dirección de tu correo</translation>
+        <translation>กรุณากรอกที่อยู่อีเมลของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="163"/>
         <location filename="../SetupWizard.cpp" line="201"/>
         <source>Please, enter a valid e-mail address</source>
-        <translation>Por favor, escribe una dirección de correo válida</translation>
+        <translation>กรุณากรอกที่อยู่อีเมลให้ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="169"/>
         <location filename="../SetupWizard.cpp" line="207"/>
         <source>Please, enter your password</source>
-        <translation>Por favor, escribe tu contraseña</translation>
+        <translation>กรุณากรอกรหัสผ่านของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="175"/>
-        <source>Iniciando sesión...</source>
+        <source>กำลังเข้าสู่ระบบ...</source>
         <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="189"/>
         <source>Please, enter your name</source>
-        <translation>Por favor, escribe tu nombre</translation>
+        <translation>กรุณากรอกชื่อของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="213"/>
         <source>Please, enter a stronger password</source>
-        <translation>Por favor, escribe una contraseña más segura</translation>
+        <translation>กรุณากรอกรหัสผ่านที่คาดเดาได้ยากกว่านี้</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="219"/>
         <source>The entered passwords don&apos;t match</source>
-        <translation>Las contraseñas escritas no coinciden</translation>
+        <translation>รหัสผ่านที่กรอกไม่ตรงกัน</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>
         <source>You have to accept our terms of service</source>
-        <translation>Debes aceptar los Términos del Servicio</translation>
+        <translation>คุณต้องยอมรับข้อกำหนดในการบริการของเราก่อน</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="233"/>
         <source>Creating account...</source>
-        <translation>Creando cuenta...</translation>
+        <translation>กำลังสร้างบัญชี...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
@@ -1345,29 +1345,29 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../SetupWizard.cpp" line="299"/>
         <location filename="../SetupWizard.cpp" line="306"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>คำเตือน</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>Tienes %1 en tu Disco en la Nube
-¿Estás seguro que quieres sincronizar todo tu Disco en la Nube?</translation>
+        <translation>คุณมี %1 ใน Cloud Drive ของคุณ
+คุณแน่ใจว่าต้องการ Sync ใน Cloud Drive ทั้งหมดของคุณหรือไม่</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="279"/>
         <source>and your MEGA Cloud Drive</source>
-        <translation>y tu Disco en la Nube de MEGA</translation>
+        <translation>และ Cloud Drive MEGA ของคุณ</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="293"/>
         <source>Please, select a local folder</source>
-        <translation>Por favor, selecciona una carpeta local</translation>
+        <translation>กรุณาเลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="299"/>
         <source>Please select a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta MEGA</translation>
+        <translation>กรุณาเลือกโฟลเดอร์ของ MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="306"/>
@@ -1378,7 +1378,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../SetupWizard.cpp" line="378"/>
         <source>Select local folder</source>
-        <translation>Seleccionar carpeta local</translation>
+        <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
 </context>
 <context>
@@ -1386,42 +1386,42 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="374"/>
         <source>Upload to MEGA</source>
-        <translation>Subir a MEGA</translation>
+        <translation>อัปโหลดไปยัง MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>รับลิงก์ MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="380"/>
         <source>Share with a MEGA user</source>
-        <translation>Compartir con un usuario MEGA</translation>
+        <translation>แชร์ไปยังผู้ใช้ MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="383"/>
         <source>Send to a MEGA user</source>
-        <translation>Enviar a un usuario MEGA</translation>
+        <translation>ส่งไปยังผู้ใช้ MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="388"/>
         <source>1 file</source>
-        <translation>1 archivo</translation>
+        <translation>1 ไฟล์</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>%1 archivos</translation>
+        <translation>%1 ไฟล์</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>
         <source>1 folder</source>
-        <translation>1 carpeta</translation>
+        <translation>1 โฟลเดอร์</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="393"/>
         <source>%1 folders</source>
-        <translation>%1 carpetas</translation>
+        <translation>%1 โฟลเดอร์</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="396"/>
@@ -1440,22 +1440,22 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="26"/>
         <source>Upload to MEGA</source>
-        <translation>Subir a MEGA</translation>
+        <translation>อัปโหลดไปยัง MEGA</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="32"/>
         <source>Please, select the upload folder for your files:</source>
-        <translation>Por favor, selecciona la carpeta para la subida de archivos:</translation>
+        <translation>กรุณาเลือกโฟลเดอร์สำหรับการอัปโหลดไฟล์ของคุณ</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="45"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>โฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="88"/>
         <source>Always upload to this destination</source>
-        <translation>Siempre subir a esta carpeta de destino</translation>
+        <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.cpp" line="14"/>
@@ -1485,7 +1485,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WindowsPlatform.cpp" line="162"/>
         <source>MEGA synced folder</source>
-        <translation>Carpeta MEGA sincronizada</translation>
+        <translation>Sync โฟลเดอร์ MEGA แล้ว</translation>
     </message>
 </context>
 <context>
