@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<TS version="2.0" language="hu" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
         <location filename="../BindFolderDialog.ui" line="14"/>
         <source>Add synchronized folder</source>
-        <translation>[$1577]</translation>
+        <translation>Szinkronizált mappa hozzáadása</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
@@ -16,54 +16,54 @@
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source></source>
-        <translation>[$1578]</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>[$1579]</translation>
+        <translation>Kérem válasszon egy helyi és egy MEGA mappát</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="72"/>
         <source>The selected local folder is already synced</source>
-        <translation>[$1580]</translation>
+        <translation>A kiválasztott helyi mappa már szinkronizálva van</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="77"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>[$1581]</translation>
+        <translation>Egy szinkronizált mappa nem lehet egy másikon belül</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="91"/>
         <source>The selected MEGA folder is already synced</source>
-        <translation>[$1582]</translation>
+        <translation>A kiválasztott MEGA mappa már szinkronizálva van</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>[$1584]</translation>
+        <translation>A teljes fiók szinkronizálás csakis bármiféle szelektív szinkronizálás nélkül lehetséges</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Warning</source>
-        <translation>[$1585]</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>[$1586]</translation>
+        <translation>A helyi mappa túl nagy (ez a verzió %1 mappára és %2 fájlra van korlátozva). Kérem válasszon másik mappát.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
         <source>Sync name</source>
-        <translation>[$1587]</translation>
+        <translation>Szinkronnév</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>[$1588] [$1589]</translation>
+        <translation>A(z) \&quot;%1\&quot; név már használatban van egy másik szinkronhoz Kérem írjon be egy másik nevet ezen szinkronizált mappa azonosításához:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -81,17 +81,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../FolderBinder.ui" line="92"/>
         <source>Local folder:</source>
-        <translation>[$1590]</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.ui" line="38"/>
         <source>MEGA folder:</source>
-        <translation>[$1591]</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.cpp" line="33"/>
         <source>Select local folder</source>
-        <translation>[$1592]</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="32"/>
         <source>Import links</source>
-        <translation>[$1593]</translation>
+        <translation>Linkek importálása</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="66"/>
         <source>Download to my computer</source>
-        <translation>[$1594]</translation>
+        <translation>Letöltés a számítógépemre</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="139"/>
         <source>Import to my cloud drive</source>
-        <translation>[$1595]</translation>
+        <translation>Importálás a felhőmeghajtómba</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="231"/>
         <source>OK</source>
-        <translation>[$1596]</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="238"/>
         <source>Cancel</source>
-        <translation>[$1597]</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="49"/>
@@ -135,17 +135,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="120"/>
         <source>Select local folder</source>
-        <translation>[$1599]</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="155"/>
         <source>Decryption error</source>
-        <translation>[$1600]</translation>
+        <translation>Visszafejtési hiba</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="171"/>
         <source>Not found</source>
-        <translation>[$1601]</translation>
+        <translation>Nem található</translation>
     </message>
      <message>
             <source>You are about to import this file to a synced folder.
@@ -167,127 +167,127 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="228"/>
         <location filename="../InfoDialog.cpp" line="271"/>
         <source>MEGAsync is up to date</source>
-        <translation>[$1602]</translation>
+        <translation>A MEGAsync napra kész</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="543"/>
         <source>RECENTLY UPDATED</source>
-        <translation>[$1603]</translation>
+        <translation>NEMRÉGIBEN FRISSÍTVE</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="669"/>
         <source>Usage: Data temporarily unavailable</source>
-        <translation>[$1604]</translation>
+        <translation>Használat: Az adatok átmenetileg nem elérhetők</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="749"/>
         <location filename="../InfoDialog.cpp" line="221"/>
         <source>Syncs</source>
-        <translation>[$1605]</translation>
+        <translation>Szinkronok</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
         <source>MEGA website</source>
-        <translation>[$1606]</translation>
+        <translation>MEGA weboldal</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
         <source>%1 of %2</source>
-        <translation>[$1607]</translation>
+        <translation>%2 db-ból %1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
         <source>Usage: %1</source>
-        <translation>[$1608]</translation>
+        <translation>használat: %1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>[$1609]</translation>
+        <translation>%2 db-ból %1 (%3/s)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>[$1610]</translation>
+        <translation>%2 db-ból %1 (megállítva)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
         <location filename="../InfoDialog.cpp" line="266"/>
         <source>File transfers paused</source>
-        <translation>[$1611]</translation>
+        <translation>Fájlátvitelek megállítva</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="229"/>
         <location filename="../InfoDialog.cpp" line="272"/>
         <source>MEGAsync is scanning</source>
-        <translation>[$1612]</translation>
+        <translation>A MEGAsync épp vizsgál</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="304"/>
         <source>All transfers have been completed</source>
-        <translation>[$1613]</translation>
+        <translation>Minden átvitel befejeződött</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="330"/>
         <source>Cancel all downloads</source>
-        <translation>[$1614]</translation>
+        <translation>Minden letöltés megszakítása</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="331"/>
         <source>Cancel download</source>
-        <translation>[$1615]</translation>
+        <translation>Letöltés megszakítása</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="340"/>
         <source>Cancel all uploads</source>
-        <translation>[$1616]</translation>
+        <translation>Minden feltöltés megszakítása</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="341"/>
         <source>Cancel upload</source>
-        <translation>[$1617]</translation>
+        <translation>Feltöltés megszakítása</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
         <source>Add Sync</source>
-        <translation>[$1618]</translation>
+        <translation>Szinkron hozzáadása</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
         <source>one file at %1/s</source>
-        <translation>[$1619]</translation>
+        <translation>egy fájl %1/s-mal</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="444"/>
         <source>one file (paused)</source>
-        <translation>[$1620]</translation>
+        <translation>egy fájl (megállítva)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>[$1621]</translation>
+        <translation>%2 db-ból %1 %3/s-mal</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
         <source>%1 of %2 files (paused)</source>
-        <translation>[$1622]</translation>
+        <translation>%2 fájlból %1 (megállítva)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="447"/>
         <source>Total Remaining: </source>
-        <translation>[$1623] </translation>
+        <translation>Összes hátralévő: </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="455"/>
         <source>Downloading </source>
-        <translation>[$1624] </translation>
+        <translation>Letöltés </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
-        <translation>[$1625] </translation>
+        <translation>Feltöltés </translation>
     </message>
 </context>
 <context>
@@ -295,7 +295,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="58"/>
         <source>MEGAsync BETA</source>
-        <translation>[$1626]</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="59"/>
@@ -305,46 +305,46 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="176"/>
         <source>Logging in</source>
-        <translation>[$1627]</translation>
+        <translation>Bejelentkezés</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="205"/>
         <location filename="../../MegaApplication.cpp" line="206"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>[$1628] [$1629]</translation>
+        <translation>A MEGAszinkron most már fut. Kattintson ide az állapotjelző ablak megynitásához</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>[$1630]</translation>
+        <translation>Az Ön \&quot;%1\&quot; szinkronja letiltásra került, mivel a távoli mappa nem létezik</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>[$1631]</translation>
+        <translation>Az Ön \&quot;%1\&quot; szinkronja letiltásra került, mivel a távoli mappa a szemetesládában van</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>[$1632]</translation>
+        <translation>Az Ön \&quot;%1\&quot; szinkronja letiltásra került, mivel a helyi mappa nem létezik</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
-        <source>Error: Invalid destination folder. [$1634]</source>
-        <translation>[$1633] </translation>
+        <source>Error: Invalid destination folder. A feltöltés megszakításra került</source>
+        <translation>Hiba: Érvénytelen célmappa. </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>[$1635]</translation>
+        <translation>A(z) (%1) mappa nem lett feltöltve, mivel túlzottan nagy (ez a verzió %2 mappára és %3 fájlra van korlátozva).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>[$1636]</translation>
+        <translation>%1 mappa nem lett feltöltve, mivel túlzottan nagyok (ez a béta %2 mappára és %3 fájlra van korlátozva).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -353,7 +353,7 @@ because the local folder doesn&apos;t exist</source>
         <location filename="../../MegaApplication.h" line="67"/>
         <location filename="../../MegaApplication.h" line="68"/>
         <source>MEGAsync</source>
-        <translation>[$1626]</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="349"/>
@@ -361,66 +361,66 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>[$1637]
-[$1638]
+        <translation>A szinkronizáció le fog állni.
+Az olyan törlések, melyek azalatt esnek meg, míg nem fut, nem lesznek tovább terjesztve.
 
-[$1639]</translation>
+Akkor is kilép?</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>About MEGAsync</source>
-        <translation>[$1640]</translation>
+        <translation>A MEGAsync névjegye</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>MEGAsync version code %1</source>
-        <translation>[$1641]</translation>
+        <translation>MEGAsync verzió kód %1</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>[$1642]</translation>
+        <translation>A link másolásra került a vágólapra</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
         <source>The links have been copied to the clipboard</source>
-        <translation>[$1643]</translation>
+        <translation>A linkek másolásra került a vágólapra</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="608"/>
         <source>Logging in...</source>
-        <translation>[$1627]...</translation>
+        <translation>Bejelentkezés...</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="662"/>
         <source>Exit</source>
-        <translation>[$1644]</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="664"/>
         <source>About</source>
-        <translation>[$1645]</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="666"/>
         <source>Settings</source>
-        <translation>[$1646]</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="668"/>
         <source>Pause</source>
-        <translation>[$1647]</translation>
+        <translation>Megállítás</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="670"/>
         <source>Resume</source>
-        <translation>[$1649]</translation>
+        <translation>Folytatás</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="672"/>
         <source>Import links</source>
-        <translation>[$1593]</translation>
+        <translation>Linkek importálása</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="689"/>
@@ -428,37 +428,37 @@ Exit anyway?</source>
         <location filename="../../MegaApplication.cpp" line="1066"/>
         <location filename="../../MegaApplication.cpp" line="1105"/>
         <source>Up to date</source>
-        <translation>[$1650]</translation>
+        <translation>Naprakész</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="787"/>
         <location filename="../../MegaApplication.cpp" line="1055"/>
         <source>Paused</source>
-        <translation>[$1651]</translation>
+        <translation>Megállítva</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="798"/>
         <location filename="../../MegaApplication.cpp" line="1060"/>
         <location filename="../../MegaApplication.cpp" line="1113"/>
         <source>Scanning</source>
-        <translation>[$1652]</translation>
+        <translation>Vizsgálat</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="799"/>
         <location filename="../../MegaApplication.cpp" line="1061"/>
         <location filename="../../MegaApplication.cpp" line="1114"/>
         <source>Syncing</source>
-        <translation>[$1653]</translation>
+        <translation>Szinkronizálás</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="944"/>
         <source>Temporary transmission error: </source>
-        <translation>[$1654] </translation>
+        <translation>Átmeneti továbbítási hiba: </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
-        <translation>[$1655]</translation>
+        <translation>Önnek új vagy frissített fájljai vannak a fiókjában</translation>
     </message>
 </context>
 <context>
@@ -466,122 +466,122 @@ Exit anyway?</source>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="752"/>
         <source>No error</source>
-        <translation>[$1656]</translation>
+        <translation>Nincs hiba</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="754"/>
         <source>Internal error</source>
-        <translation>[$1657]</translation>
+        <translation>Belső hiba</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="756"/>
         <source>Invalid argument</source>
-        <translation>[$1658]</translation>
+        <translation>Érvénytelen paraméter</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="758"/>
         <source>Request failed, retrying</source>
-        <translation>[$1659]</translation>
+        <translation>Sikertelen kérelem, újrapróbálkozás</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="760"/>
         <source>Rate limit exceeded</source>
-        <translation>[$1660]</translation>
+        <translation>Arány korlát meghaladva</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="762"/>
         <source>Failed permanently</source>
-        <translation>[$1661]</translation>
+        <translation>Végérvényesen sikertelen</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="764"/>
         <source>Too many concurrent connections or transfers</source>
-        <translation>[$1662]</translation>
+        <translation>Túl sok az egyidejű kapcsolat vagy átvitel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="766"/>
         <source>Out of range</source>
-        <translation>[$1663]</translation>
+        <translation>Hatótávon kívül esik</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="768"/>
         <source>Expired</source>
-        <translation>[$1664]</translation>
+        <translation>Lejárt</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="770"/>
         <source>Not found</source>
-        <translation>[$1665]</translation>
+        <translation>Nem található</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="772"/>
         <source>Circular linkage detected</source>
-        <translation>[$139]</translation>
+        <translation>Körkörös hiba</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="774"/>
         <source>Access denied</source>
-        <translation>[$1667]</translation>
+        <translation>Hozzáférés megtagadva</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="776"/>
         <source>Already exists</source>
-        <translation>[$1668]</translation>
+        <translation>Már létezik</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="778"/>
         <source>Incomplete</source>
-        <translation>[$1669]</translation>
+        <translation>Befejezetlen</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="780"/>
         <source>Invalid key/Decryption error</source>
-        <translation>[$1670]</translation>
+        <translation>Érvénytelen kulcs/Visszafejtési hiba</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>[$1671]</translation>
+        <translation>Rossz munkamenet ID</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>
         <source>Blocked</source>
-        <translation>[$1672]</translation>
+        <translation>Blokkolva</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="786"/>
         <source>Over quota</source>
-        <translation>[$1673]</translation>
+        <translation>Kontingens túllépve</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="788"/>
         <source>Temporarily not available</source>
-        <translation>[$1674]</translation>
+        <translation>Átmenetileg nem elérhető</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="790"/>
         <source>Connection overflow</source>
-        <translation>[$1675]</translation>
+        <translation>Kapcsolati túlcsordulás</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>[$1676]</translation>
+        <translation>Írási hiba</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
         <source>Read error</source>
-        <translation>[$1677]</translation>
+        <translation>Olvasási hiba</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>[$1678]</translation>
+        <translation>Érvénytelen alkalmazás kulcs</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
         <source>Unknown error</source>
-        <translation>[$1679]</translation>
+        <translation>Ismeretlen hiba</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ Exit anyway?</source>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
         <source>Warning</source>
-        <translation>[$1680]</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
@@ -608,66 +608,66 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="17"/>
         <source>Folder Selection</source>
-        <translation>[$1681]</translation>
+        <translation>Mappa kiválasztása</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="38"/>
         <source>Select a MEGA folder:</source>
-        <translation>[$1682]</translation>
+        <translation>MEGA mappa kiválasztása:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="66"/>
         <source>Retrieving folders...</source>
-        <translation>[$1683]...</translation>
+        <translation>Mappák visszakeresése...</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="93"/>
         <location filename="../NodeSelector.cpp" line="93"/>
         <source>New folder</source>
-        <translation>[$1684]</translation>
+        <translation>Új mappa</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
 	<source>OK</source>
-        <translation>[$1685]</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="107"/>
         <source>Cancel</source>
-        <translation>[$1686]</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="32"/>
         <source>Cloud Drive</source>
-        <translation>[$1687]</translation>
+        <translation>Felhőmeghajtó</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="94"/>
         <source>Enter the new folder name:</source>
-        <translation>[$1688]</translation>
+        <translation>Írja be az új mappanevet:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>Error</source>
-        <translation>[$1578]</translation>
+        <translation>Hiba</translation>
     </message>
       <message>
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>[$1678] [$1679]</translation>
+        <translation>Érvénytelen alkalmazás kulcs Ismeretlen hiba</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>Warning</source>
-        <translation>[$1680]</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>[$1691]
-[$1692]</translation>
+        <translation>Önnek %1 van ebben a mappában.
+Biztosan szeretné szinkronizálni?</translation>
     </message>
 </context>
 <context>
@@ -675,38 +675,38 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="26"/>
         <source>Import links</source>
-        <translation>[$1593]</translation>
+        <translation>Linkek importálása</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="35"/>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>[$1693]</translation>
+        <translation>Írjon be egy vagy többféle MEGA fájl linket</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
         <source>Submit</source>
-        <translation>[$1694]</translation>
+        <translation>Beküldés</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="87"/>
         <source>Cancel</source>
-        <translation>[$1686]</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>Warning</source>
-        <translation>[$1680]</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <source>Enter one or more MEGA file links</source>
-        <translation>[$1695]</translation>
+        <translation>Írjon be egy vagy több MEGA fájl linket</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>[$1696]</translation>
+        <translation>Nem találhatók érvényes MEGA linkek. (A mappa linkek még nem támogatottak)</translation>
     </message>
 </context>
 <context>
@@ -715,79 +715,79 @@ Are you sure you want to sync it?</source>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>[$1697]</translation>
+        <translation>%1 órával ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
         <source>Get MEGA link</source>
-        <translation>[$1698]</translation>
+        <translation>MEGA link megszerzése</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="58"/>
         <source>just now</source>
-        <translation>[$1699]</translation>
+        <translation>az imént</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>[$1700]</translation>
+        <translation>%1 másodperccel ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
         <source>1 minute ago</source>
-        <translation>[$1701]</translation>
+        <translation>1 perccel ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>[$1702]</translation>
+        <translation>%1 perccel ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
         <source>1 hour ago</source>
-        <translation>[$1703]</translation>
+        <translation>1 órával ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="81"/>
         <source>1 day ago</source>
-        <translation>[$1704]</translation>
+        <translation>1 nappal ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>[$1705]</translation>
+        <translation>%1 nappal ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
         <source>1 month ago</source>
-        <translation>[$1706]</translation>
+        <translation>1 hónappal ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>[$1707]</translation>
+        <translation>%1 hónappal ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
         <source>1 year ago</source>
-        <translation>[$1708]</translation>
+        <translation>1 évvel ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>[$1709]</translation>
+        <translation>%1 évvel ezelőtt</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
         <location filename="../RecentFile.cpp" line="119"/>
         <source>Open</source>
-        <translation>[$1710]</translation>
+        <translation>Megnyitás</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="112"/>
         <location filename="../RecentFile.cpp" line="120"/>
         <source>Show in folder</source>
-        <translation>[$1711]</translation>
+        <translation>Megjelenítés a tartalmazó mappában</translation>
     </message>
 </context>
 <context>
@@ -795,72 +795,72 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="32"/>
         <source>Settings - MEGAsync</source>
-        <translation>[$1646] - [$1626]</translation>
+        <translation>Beállítások - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="119"/>
         <source>General</source>
-        <translation>[$1712]</translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="157"/>
         <source>Account</source>
-        <translation>[$1713]</translation>
+        <translation>Fiók</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="192"/>
         <source>Syncs</source>
-        <translation>[$1714]</translation>
+        <translation>Szinkron</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
         <source>Bandwidth</source>
-        <translation>[$1715]</translation>
+        <translation>Sávszélesség</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="262"/>
         <source>Advanced</source>
-        <translation>[$1716]</translation>
+        <translation>Haladó</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="356"/>
         <source>Help</source>
-        <translation>[$1717]</translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
 	<source>OK</source>
-        <translation>[$1685]</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="383"/>
         <source>Cancel</source>
-        <translation>[$1718]</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="393"/>
         <source>Apply</source>
-        <translation>[$1719]</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="430"/>
         <source>Show notifications</source>
-        <translation>[$1720]</translation>
+        <translation>Értesítések megjelenítése</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>[$1721]</translation>
+        <translation>Induljon rendszerindításkor</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
         <source>Update automatically</source>
-        <translation>[$1722]</translation>
+        <translation>Frissítés automatikusan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="460"/>
         <source>Language</source>
-        <translation>[$1723]</translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="473"/>
@@ -870,72 +870,72 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="501"/>
         <source>Details</source>
-        <translation>[$1724]</translation>
+        <translation>Részletek</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="559"/>
         <location filename="../SettingsDialog.cpp" line="231"/>
         <source>FREE</source>
-        <translation>[$1725]</translation>
+        <translation>INGYENES</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="579"/>
         <location filename="../SettingsDialog.cpp" line="517"/>
         <source>Logout</source>
-        <translation>[$1726]</translation>
+        <translation>Kijelentkezés</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="602"/>
         <source>Storage space</source>
-        <translation>[$1727]</translation>
+        <translation>Tárterület</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="650"/>
         <location filename="../SettingsDialog.ui" line="973"/>
         <source>Upgrade</source>
-        <translation>[$1728]</translation>
+        <translation>Bővítés</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="680"/>
         <source>Synced folders</source>
-        <translation>[$1729]</translation>
+        <translation>Sznkronizált mappák</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="698"/>
         <location filename="../SettingsDialog.ui" line="1092"/>
         <source>Delete</source>
-        <translation>[$1730]</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="705"/>
         <location filename="../SettingsDialog.ui" line="1085"/>
         <source>Add</source>
-        <translation>[$1731]</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="806"/>
         <source>Local Folder</source>
-        <translation>[$1732]</translation>
+        <translation>Helyi mappa</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="811"/>
         <source>MEGA folder</source>
-        <translation>[$1733]</translation>
+        <translation>MEGA mappa</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="826"/>
         <source>Upload rate limit</source>
-        <translation>[$1734]</translation>
+        <translation>Feltöltési arány korlát</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="838"/>
         <source>Don&apos;t limit</source>
-        <translation>[$1735]</translation>
+        <translation>Ne korlátozódjon</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="848"/>
         <source>Limit to:</source>
-        <translation>[$1736]</translation>
+        <translation>Lekorlátozás:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="892"/>
@@ -945,62 +945,62 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="915"/>
         <source>Auto</source>
-        <translation>[$1737]</translation>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>[$1738]</translation>
+        <translation>a rendelkezésre álló sávszélesség körülbelül 90%-a</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
         <source>Bandwidth quota</source>
-        <translation>[$1739]</translation>
+        <translation>Sávszélességi kontingens</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>[$1740]</translation>
+        <translation>A feltöltési korlátozások feltöltő szerverenként vannak, és új feltöltés indításakor alkalmazódnak</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>[$1741]</translation>
+        <translation>Mappa a feltöltések részére a Windows Intézőből</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
         <source>Excluded file names</source>
-        <translation>[$1742]</translation>
+        <translation>Kizárt fájlnevek</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1143"/>
         <source>Proxy Settings</source>
-        <translation>[$1743]</translation>
+        <translation>Proxy beállítások</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1150"/>
         <source>No proxy</source>
-        <translation>[$1744]</translation>
+        <translation>Nincs proxy</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1157"/>
         <source>Auto-detect</source>
-        <translation>[$1745]</translation>
+        <translation>Önészlelés</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1167"/>
         <source>Proxy</source>
-        <translation>[$1746]</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1174"/>
         <source>Proxy type:</source>
-        <translation>[$1747]</translation>
+        <translation>Proxy típusa:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1194"/>
         <source>Server:</source>
-        <translation>[$1748]</translation>
+        <translation>Szerver</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1232"/>
@@ -1010,29 +1010,29 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="1264"/>
         <source>Proxy server requires a password</source>
-        <translation>[$1749]</translation>
+        <translation>A proxy szerver jelszót igényel</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>[$1750]</translation>
+        <translation>Felhasználónév:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
         <source>Password:</source>
-        <translation>[$1751]</translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="216"/>
         <location filename="../SettingsDialog.cpp" line="264"/>
         <source>Data temporarily unavailable</source>
-        <translation>[$1752]</translation>
+        <translation>Az adatok átmenetileg nem elérhetők</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>[$1753]</translation>
+        <translation>A(z) %3-ból %1 (%2%) használt</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
@@ -1058,39 +1058,39 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.cpp" line="398"/>
         <source>Warning</source>
-        <translation>[$1680]</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
         <source>You are already syncing your entire account.</source>
-        <translation>[$1754]</translation>
+        <translation>Ön ár szinkronizálja az egész fiókját</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Synchronization will stop working.</source>
-        <translation>[$1755]</translation>
+        <translation>A szinkronizáció működése leáll.</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Are you sure?</source>
-        <translation>[$1756]</translation>
+        <translation>Biztos benne?</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="568"/>
         <source>Excluded name</source>
-        <translation>[$1757]</translation>
+        <translation>Kizárt név</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="569"/>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>[$1758]
-[$1759]</translation>
+        <translation>Írjon be egy kizárandó nevet a szinkronizációból.
+(a * és a ? helyettesítő karakterek megengedettek):</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
-        <translation>[$1578]</translation>
+        <translation>Hiba</translation>
     </message>
 </context>
 <context>
@@ -1098,146 +1098,146 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="32"/>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>[$1760] - [$1626]</translation>
+        <translation>Telepítő varázsló - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="119"/>
         <source>I have a MEGA account</source>
-        <translation>[$1761]</translation>
+        <translation>Van MEGA fiókom</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="129"/>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>[$1762]</translation>
+        <translation>Nincs MEGA fiókom</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="185"/>
         <source>Create a new MEGA account</source>
-        <translation>[$1763]</translation>
+        <translation>Új MEGA fiók létrehozása</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="204"/>
         <source>Name:</source>
-        <translation>[$1764]</translation>
+        <translation>Név:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="214"/>
         <location filename="../SetupWizard.ui" line="369"/>
         <source>Email:</source>
-        <translation>[$1765]</translation>
+        <translation>Email:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="224"/>
         <location filename="../SetupWizard.ui" line="379"/>
         <source>Password:</source>
-        <translation>[$1766]</translation>
+        <translation>Jelszó:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="238"/>
         <source>Repeat password:</source>
-        <translation>[$1767]</translation>
+        <translation>Jelszó ismét:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>[$208]</translation>
+        <translation>Egyetértek a MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Általános felhasználási feltételeivel&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
         <source>Login to your MEGA account</source>
-        <translation>[$1768]</translation>
+        <translation>Jelentkezzen be MEGA fiókjába</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="416"/>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>[$1769]</translation>
+        <translation>Kérem igazolja fiókját a megerősítő link használatával, amit elküldtünk az Ön email fiókjára</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
         <source>Logging in ...</source>
-        <translation>[$1627]...</translation>
+        <translation>Bejelentkezés...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
         <source>Choose install type</source>
-        <translation>[$1770]</translation>
+        <translation>Telepítés típusának kiválasztása</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
         <source> Sync your entire cloud drive</source>
-        <translation>[$1772]</translation>
+        <translation>Az egész felhőmeghajtó szinkronizálása</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
         <source>Full account sync</source>
-        <translation>[$1771]</translation>
+        <translation>Teljes fiók szinkronizálás</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="653"/>
         <location filename="../SetupWizard.ui" line="738"/>
         <source>Selective sync</source>
-        <translation>[$1773]</translation>
+        <translation>Szelektív szinkron</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="683"/>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>[$1774]</translation>
+        <translation>A felhőmeghajtóban megadott mappák szinkronizálása</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="755"/>
         <source>The following folders will be automatically synchronized:</source>
-        <translation>[$1775]</translation>
+        <translation>A következő mappák automatikusan szinkronizálva lesznek:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="771"/>
         <source>Local folder:</source>
-        <translation>[$1732]:</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="778"/>
         <source>MEGA folder:</source>
-        <translation>[$1733]:</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="797"/>
         <location filename="../SetupWizard.ui" line="818"/>
         <source>Change</source>
-        <translation>[$1776]</translation>
+        <translation>Módosítás</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="887"/>
         <source>Welcome to MEGA</source>
-        <translation>[$1777]</translation>
+        <translation>Üdvözli Önt a MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="910"/>
         <source>Your local folder:</source>
-        <translation>[$1778]</translation>
+        <translation>Az Ön helyi mappája:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="934"/>
         <source>and your MEGA folder:</source>
-        <translation>[$1779]</translation>
+        <translation>és MEGA mappája:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="957"/>
         <source>will be automatically synchronized.</source>
-        <translation>[$1780]</translation>
+        <translation>automatikusan szinkronizálva lesznek.</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1012"/>
         <source>Back</source>
-        <translation>[$1781]</translation>
+        <translation>Vissza</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1019"/>
         <source>Next</source>
-        <translation>[$1782]</translation>
+        <translation>Tovább</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1026"/>
         <source>Cancel</source>
-        <translation>[$1718]</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
@@ -1262,82 +1262,82 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>[$1783]</translation>
+        <translation>A felhasználó már létezik</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
         <source>Fetching file list...</source>
-        <translation>[$1784]...</translation>
+        <translation>Fájllista kiolvasása...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Incorrect email and/or password.</source>
-        <translation>[$1785]</translation>
+        <translation>helytelen email és/vagy jelszó.</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Have you verified your account?</source>
-        <translation>[$1786]</translation>
+        <translation>Igazolta már a fiókját?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="90"/>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>[$1787]</translation>
+        <translation>A MEGA mappa nem létezik</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="97"/>
         <location filename="../SetupWizard.cpp" line="275"/>
         <location filename="../SetupWizard.cpp" line="322"/>
         <source>Finish</source>
-        <translation>[$1788]</translation>
+        <translation>Befejezés</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="157"/>
         <location filename="../SetupWizard.cpp" line="195"/>
         <source>Please, enter your e-mail address</source>
-        <translation>[$1789]</translation>
+        <translation>Kérem írja be e-mail címét</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="163"/>
         <location filename="../SetupWizard.cpp" line="201"/>
         <source>Please, enter a valid e-mail address</source>
-        <translation>[$1790]</translation>
+        <translation>Kérem érvényes e-mail címet írjon be</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="169"/>
         <location filename="../SetupWizard.cpp" line="207"/>
         <source>Please, enter your password</source>
-        <translation>[$1791]</translation>
+        <translation>kérem írja be jelszavát</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="175"/>
-        <source>[$1627]...</source>
+        <source>Bejelentkezés...</source>
         <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="189"/>
         <source>Please, enter your name</source>
-        <translation>[$1792]</translation>
+        <translation>Kérem írja be a nevét</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="213"/>
         <source>Please, enter a stronger password</source>
-        <translation>[$1793]</translation>
+        <translation>Kérem írjon be erősebb jelszót</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="219"/>
         <source>The entered passwords don&apos;t match</source>
-        <translation>[$1794]</translation>
+        <translation>A beírt jelszavak nem egyeznek</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>
         <source>You have to accept our terms of service</source>
-        <translation>[$1795]</translation>
+        <translation>El kell fogadnia általános szolgáltatási feltételeinket</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="233"/>
         <source>Creating account...</source>
-        <translation>[$1796]...</translation>
+        <translation>Fiók létrehozása...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
@@ -1345,29 +1345,29 @@ Are you sure you want to sync it?</source>
         <location filename="../SetupWizard.cpp" line="299"/>
         <location filename="../SetupWizard.cpp" line="306"/>
         <source>Warning</source>
-        <translation>[$1680]</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>[$1797]
-[$1798]</translation>
+        <translation>Önnek %1 van a Felhőmeghajtóján
+Biztosan szeretné szinkronizálni az egész Felhőmeghajtóját?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="279"/>
         <source>and your MEGA Cloud Drive</source>
-        <translation>[$1799]</translation>
+        <translation>és MEGA Felhőmeghajtóját</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="293"/>
         <source>Please, select a local folder</source>
-        <translation>[$1800]</translation>
+        <translation>Kérem válasszon egy helyi mappát</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="299"/>
         <source>Please select a MEGA folder</source>
-        <translation>[$1801]</translation>
+        <translation>Kérem válasszon MEGA mappát</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="306"/>
@@ -1378,7 +1378,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../SetupWizard.cpp" line="378"/>
         <source>Select local folder</source>
-        <translation>[$1802]</translation>
+        <translation>Válasszon helyi mappát</translation>
     </message>
 </context>
 <context>
@@ -1386,42 +1386,42 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="374"/>
         <source>Upload to MEGA</source>
-        <translation>[$1803]</translation>
+        <translation>Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
         <source>Get MEGA link</source>
-        <translation>[$1698]</translation>
+        <translation>MEGA link megszerzése</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="380"/>
         <source>Share with a MEGA user</source>
-        <translation>[$1804]</translation>
+        <translation>megosztás egy MEGA felhasználóval</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="383"/>
         <source>Send to a MEGA user</source>
-        <translation>[$1805]</translation>
+        <translation>Elküldés egy MEGA felhasználónak</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="388"/>
         <source>1 file</source>
-        <translation>[$1806]</translation>
+        <translation>1 fájl</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>[$1807]</translation>
+        <translation>%1 fájl</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>
         <source>1 folder</source>
-        <translation>[$1808]</translation>
+        <translation>1 mappa</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="393"/>
         <source>%1 folders</source>
-        <translation>[$1809]</translation>
+        <translation>%1 mappa</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="396"/>
@@ -1440,22 +1440,22 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="26"/>
         <source>Upload to MEGA</source>
-        <translation>[$1803]</translation>
+        <translation>Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="32"/>
         <source>Please, select the upload folder for your files:</source>
-        <translation>[$1811]</translation>
+        <translation>kérem válassza ki a feltöltési mappát fájljainak:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="45"/>
         <source>MEGA folder:</source>
-        <translation>[$1591]</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="88"/>
         <source>Always upload to this destination</source>
-        <translation>[$1812]</translation>
+        <translation>Feltöltés mindig erre a célhelyre</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.cpp" line="14"/>
@@ -1485,7 +1485,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WindowsPlatform.cpp" line="162"/>
         <source>MEGA synced folder</source>
-        <translation>[$1813]</translation>
+        <translation>MEGA szinkronizált mappa</translation>
     </message>
 </context>
 <context>

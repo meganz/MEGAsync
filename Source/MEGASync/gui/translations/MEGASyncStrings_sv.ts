@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<TS version="2.0" language="sv" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
         <location filename="../BindFolderDialog.ui" line="14"/>
         <source>Add synchronized folder</source>
-        <translation>Añadir carpeta sincronizada</translation>
+        <translation>Lägg till synkroniserad mapp</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
@@ -16,54 +16,54 @@
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source></source>
-        <translation>Error</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta local y una carpeta MEGA</translation>
+        <translation>Vänligen välj en lokal mapp och en MEGA-mapp</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="72"/>
         <source>The selected local folder is already synced</source>
-        <translation>La carpeta local seleccionada ya se está sincronizando</translation>
+        <translation>Den valda mappen är redan synkroniserad</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="77"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>Una carpeta sincronizada no puede encontrarse dentro de otra carpeta que ya se está sincronizando</translation>
+        <translation>En synkroniserad mapp kan inte finnas i en annan synkroniserad mapp</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="91"/>
         <source>The selected MEGA folder is already synced</source>
-        <translation>La carpeta MEGA seleccionada ya se está sincronizando</translation>
+        <translation>Den valda MEGA-mappen är redan synkroniserad</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>La sincronización completa de tu cuenta es posible solo cuando no existen sincronizaciones selectivas</translation>
+        <translation>Fullständig synkronisering av kontot är endast möjlig utan aktiverade delsynkroniseringar</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>La carpeta local es demasiado grande (esta versión está limitada a %1 carpetas o %2 archivos). Por favor, selecciona otra carpeta.</translation>
+        <translation>Den lokala mappen är för stor (denna version är begränsad till %1 mappar eller %2 filer. Vänligen, ange en annan mapp.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
         <source>Sync name</source>
-        <translation>Nombre de la sincronización</translation>
+        <translation>Namn på synkroniseringen</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>El nombre \&quot;%1\&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar está carpeta sincronizada:</translation>
+        <translation>Namnet \&quot;%1\&quot; används redan för en annan synkronisering Vänligen ange ett annat namn för att synkronisera denna mapp:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -81,17 +81,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../FolderBinder.ui" line="92"/>
         <source>Local folder:</source>
-        <translation>Carpeta local</translation>
+        <translation>Lokal mapp:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.ui" line="38"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>MEGA-mapp:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.cpp" line="33"/>
         <source>Select local folder</source>
-        <translation>Elegir carpeta local</translation>
+        <translation>Välj lokal mapp</translation>
     </message>
 </context>
 <context>
@@ -99,17 +99,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="32"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>Importera länkar</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="66"/>
         <source>Download to my computer</source>
-        <translation>Descargar a mi ordenador</translation>
+        <translation>Ladda ned till min dator</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="139"/>
         <source>Import to my cloud drive</source>
-        <translation>Importar a mi disco en la nube </translation>
+        <translation>Importera till min molnlagring</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="231"/>
@@ -119,7 +119,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="238"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="49"/>
@@ -135,17 +135,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="120"/>
         <source>Select local folder</source>
-        <translation>Seleccionar carpeta local</translation>
+        <translation>Välj lokal mapp</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="155"/>
         <source>Decryption error</source>
-        <translation>Error de desencriptado </translation>
+        <translation>Fel vid dekryptering</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="171"/>
         <source>Not found</source>
-        <translation>No encontrado</translation>
+        <translation>Ej hittad</translation>
     </message>
      <message>
             <source>You are about to import this file to a synced folder.
@@ -167,127 +167,127 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="228"/>
         <location filename="../InfoDialog.cpp" line="271"/>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync ya está actualizado</translation>
+        <translation>MEGAsync är uppdaterad</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="543"/>
         <source>RECENTLY UPDATED</source>
-        <translation>RECIENTEMENTE ACTUALIZADO </translation>
+        <translation>NYLIGEN UPPDATERAD</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="669"/>
         <source>Usage: Data temporarily unavailable</source>
-        <translation>Uso de datos: Datos no disponibles temporalmente</translation>
+        <translation>Data är temporärt otillgängliga</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="749"/>
         <location filename="../InfoDialog.cpp" line="221"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Synkroniseringar</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
         <source>MEGA website</source>
-        <translation>Sitio web MEGA</translation>
+        <translation>MEGAs webbsida</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
         <source>%1 of %2</source>
-        <translation>%1 de %2</translation>
+        <translation>%1 av %2</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
         <source>Usage: %1</source>
-        <translation>Uso: %1</translation>
+        <translation>Använt: %1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>%1 de %2 (%3/seg)</translation>
+        <translation>%1 av %2 (%3/s)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>%1 de %2 (en pausa)</translation>
+        <translation>%1 av %2 (pausad)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
         <location filename="../InfoDialog.cpp" line="266"/>
         <source>File transfers paused</source>
-        <translation>Transferencias de archivos en pausa</translation>
+        <translation>Filöverföringen är pausad</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="229"/>
         <location filename="../InfoDialog.cpp" line="272"/>
         <source>MEGAsync is scanning</source>
-        <translation>MEGAsync está escaneando</translation>
+        <translation>MEGAsync söker</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="304"/>
         <source>All transfers have been completed</source>
-        <translation>Se han completado todas las transferencias</translation>
+        <translation>Alla överföringar är avslutade</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="330"/>
         <source>Cancel all downloads</source>
-        <translation>Cancelar todas las descargas</translation>
+        <translation>Avbryt alla nedladdningar</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="331"/>
         <source>Cancel download</source>
-        <translation>Cancelar descarga</translation>
+        <translation>Avbryt nedladdning</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="340"/>
         <source>Cancel all uploads</source>
-        <translation>Cancelar todas las subidas</translation>
+        <translation>Avbryt alla uppladdningar</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="341"/>
         <source>Cancel upload</source>
-        <translation>Cancelar subida</translation>
+        <translation>Avbryt uppladdning</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
         <source>Add Sync</source>
-        <translation>Añadir Sincronización</translation>
+        <translation>Lägg till synkronisering</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
         <source>one file at %1/s</source>
-        <translation>un archivo a %1/sec</translation>
+        <translation>en fil %1/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="444"/>
         <source>one file (paused)</source>
-        <translation>un archivo (en pausa)</translation>
+        <translation>en fil (pausad)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 de %2 archivos a %3/sec</translation>
+        <translation>%1 av %2 filer %3/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 de %2 archivos (en pausa)</translation>
+        <translation>%1 av %2 filer (pausad)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="447"/>
         <source>Total Remaining: </source>
-        <translation>Total Restante: </translation>
+        <translation>Totalt återstår: </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="455"/>
         <source>Downloading </source>
-        <translation>Descargando </translation>
+        <translation>Laddar ned </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
-        <translation>Subiendo </translation>
+        <translation>Laddar upp </translation>
     </message>
 </context>
 <context>
@@ -305,46 +305,46 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="176"/>
         <source>Logging in</source>
-        <translation>Iniciando sesión</translation>
+        <translation>Loggar in</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="205"/>
         <location filename="../../MegaApplication.cpp" line="206"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync ahora se está ejecutando. Clic aquí para abrir la ventana de estado.</translation>
+        <translation>MEGAsync körs nu. Klicka här för att öppna statusfönstret.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota no existe</translation>
+        <translation>Din synkronisering \&quot;%1\&quot; har avaktiverats därför att fjärrmappen inte existerar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation>Din synkronisering \&quot;%1\&quot; har avaktiverats därför att fjärrmappen är i papperskorken.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta local no existe</translation>
+        <translation>Din synkronisering \&quot;%1\&quot; har avaktiverats därför att den lokala mappen inte existerar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
-        <source>Error: Invalid destination folder. La subida ha sido cancelada</source>
-        <translation>Error: Carpeta de destino no válida. </translation>
+        <source>Error: Invalid destination folder. Uppladdningen har avbrutits</source>
+        <translation>Fel: Felaktig målmapp. </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>No se ha subido la carpeta (%1) porque es demasiado grande (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation>Mappen (%1) laddades inte upp därför att den  är för stor (denna version är begränsad till %2 mappar eller %3 filer).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>No se han subido (%1) carpetas porque son demasiado grandes (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation>(%1) mappar laddades inte upp därför att den  är för stor (denna betaversion är begränsad till %2 mappar eller %3 filer).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -361,66 +361,66 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>La sincronización se detendrá.
-La eliminación de archivos/carpetas cuando la sincronización está detenida no se propaga en el servidor.
+        <translation>Synkroniseringen kommer att avbrytas.
+Borttagningar som inträffar när klienten inte körs kommer inte att utföras.
 
-¿Salir de todas formas?</translation>
+Avsluta ändå?</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>About MEGAsync</source>
-        <translation>Sobre MEGAsync</translation>
+        <translation>Om MEGAsync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>MEGAsync version code %1</source>
-        <translation>Código de la versión de MEGAsync: %1</translation>
+        <translation>MEGAsync version %1</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>El enlace se ha copiado al portapapeles</translation>
+        <translation>Länken har kopierats till klippbordet</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
         <source>The links have been copied to the clipboard</source>
-        <translation>Los enlaces se han copiado al portapapeles</translation>
+        <translation>Denna länk har kopierats till klippbordet</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="608"/>
         <source>Logging in...</source>
-        <translation>Iniciando sesión...</translation>
+        <translation>Loggar in...</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="662"/>
         <source>Exit</source>
-        <translation>Salir</translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="664"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="666"/>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="668"/>
         <source>Pause</source>
-        <translation>Pausa</translation>
+        <translation>Paus</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="670"/>
         <source>Resume</source>
-        <translation>Reanudar</translation>
+        <translation>Återuppta</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="672"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>Importera länkar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="689"/>
@@ -428,37 +428,37 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
         <location filename="../../MegaApplication.cpp" line="1066"/>
         <location filename="../../MegaApplication.cpp" line="1105"/>
         <source>Up to date</source>
-        <translation>Actualizado</translation>
+        <translation>Uppdaterade</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="787"/>
         <location filename="../../MegaApplication.cpp" line="1055"/>
         <source>Paused</source>
-        <translation>En pausa</translation>
+        <translation>Pausad</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="798"/>
         <location filename="../../MegaApplication.cpp" line="1060"/>
         <location filename="../../MegaApplication.cpp" line="1113"/>
         <source>Scanning</source>
-        <translation>Escaneando</translation>
+        <translation>Söker</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="799"/>
         <location filename="../../MegaApplication.cpp" line="1061"/>
         <location filename="../../MegaApplication.cpp" line="1114"/>
         <source>Syncing</source>
-        <translation>Sincronizando</translation>
+        <translation>Synkroniserar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="944"/>
         <source>Temporary transmission error: </source>
-        <translation>Error temporal de transmisión: </translation>
+        <translation>Tillfälligt överföringsfel: </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
-        <translation>Tienes en tu cuenta archivos nuevos o actualizados</translation>
+        <translation>Du har nya eller uppdaterade filer på ditt konto</translation>
     </message>
 </context>
 <context>
@@ -466,122 +466,122 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../sdk/megaapi.cpp" line="752"/>
         <source>No error</source>
-        <translation>Ningún error</translation>
+        <translation>Inga fel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="754"/>
         <source>Internal error</source>
-        <translation>Error interno</translation>
+        <translation>Internt fel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="756"/>
         <source>Invalid argument</source>
-        <translation>Argumento no válido </translation>
+        <translation>Ogiltigt argument</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="758"/>
         <source>Request failed, retrying</source>
-        <translation>Petición fallida, reintentando</translation>
+        <translation>Begäran misslyckades, försöker igen</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="760"/>
         <source>Rate limit exceeded</source>
-        <translation>Se ha superado el limite</translation>
+        <translation>Hastighetsbegränsning överskriden</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="762"/>
         <source>Failed permanently</source>
-        <translation>Fallo permanente</translation>
+        <translation>Misslyckades slutgiltigt</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="764"/>
         <source>Too many concurrent connections or transfers</source>
-        <translation>Demasiadas conexiones o transferencias simultáneas</translation>
+        <translation>För många samtidiga anslutningar</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="766"/>
         <source>Out of range</source>
-        <translation>Fuera de alcance</translation>
+        <translation>Utom räckvidd</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="768"/>
         <source>Expired</source>
-        <translation>Caducado</translation>
+        <translation>Upphört</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="770"/>
         <source>Not found</source>
-        <translation>No encontrado</translation>
+        <translation>Ej hittad</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="772"/>
         <source>Circular linkage detected</source>
-        <translation>Error cíclico</translation>
+        <translation>Cirkulärt fel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="774"/>
         <source>Access denied</source>
-        <translation>Acceso denegado</translation>
+        <translation>Åtkomst nekad</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="776"/>
         <source>Already exists</source>
-        <translation>Ya existe</translation>
+        <translation>Finns redan</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="778"/>
         <source>Incomplete</source>
-        <translation>Incompleto</translation>
+        <translation>Ej komplett</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="780"/>
         <source>Invalid key/Decryption error</source>
-        <translation>Clave incorrecta/Error de desencriptado</translation>
+        <translation>Ogiltig nyckel / dekrypteringsfel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>Identificador de sesión erróneo</translation>
+        <translation>Ogiltigt sessions-ID</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>
         <source>Blocked</source>
-        <translation>Bloqueado</translation>
+        <translation>Blockerad</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="786"/>
         <source>Over quota</source>
-        <translation> Cuota superada</translation>
+        <translation>Överskriden kvot</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="788"/>
         <source>Temporarily not available</source>
-        <translation>No disponible temporalmente</translation>
+        <translation>Temporärt ej tillgänglig</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="790"/>
         <source>Connection overflow</source>
-        <translation>Desbordamiento de conexión </translation>
+        <translation>Överföring misslyckades</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>Error de  escritura</translation>
+        <translation>Skrivfel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
         <source>Read error</source>
-        <translation>Error de lectura</translation>
+        <translation>Läsfel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>Clave de aplicación no válida</translation>
+        <translation>Ogiltig applikationsnyckel</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
         <source>Unknown error</source>
-        <translation>Error desconocido</translation>
+        <translation>Okänt fel</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
@@ -608,66 +608,66 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="17"/>
         <source>Folder Selection</source>
-        <translation>Selección de Carpetas</translation>
+        <translation>Mappval</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="38"/>
         <source>Select a MEGA folder:</source>
-        <translation>Selecciona una carpeta MEGA</translation>
+        <translation>Välj en MEGA-mapp:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="66"/>
         <source>Retrieving folders...</source>
-        <translation>Recuperando lista de carpetas...</translation>
+        <translation>Hämtar mappar...</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="93"/>
         <location filename="../NodeSelector.cpp" line="93"/>
         <source>New folder</source>
-        <translation>Nueva carpeta</translation>
+        <translation>Ny mapp</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
 	<source>OK</source>
-        <translation>Aceptar</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="107"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="32"/>
         <source>Cloud Drive</source>
-        <translation>Disco en la Nube</translation>
+        <translation>Molnlagring</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="94"/>
         <source>Enter the new folder name:</source>
-        <translation>Escribe el nombre de la nueva carpeta</translation>
+        <translation>Ange nytt mappnamn:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Fel</translation>
     </message>
       <message>
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Clave de aplicación no válida Error desconocido</translation>
+        <translation>Ogiltig applikationsnyckel Okänt fel</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>Tienes %1 en esta carpeta
-Estás seguro que quieres sincronizarlo?</translation>
+        <translation>Du har %1 i denna mapp.
+Är du säker på att du vill synkronisera?</translation>
     </message>
 </context>
 <context>
@@ -675,38 +675,38 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="26"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>Importera länkar</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="35"/>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Escribe uno o varios enlaces de archivos MEGA</translation>
+        <translation>Ange en eller flera MEGA-länkar</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
         <source>Submit</source>
-        <translation>Enviar</translation>
+        <translation>Skicka</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="87"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <source>Enter one or more MEGA file links</source>
-        <translation>Escribe uno o más enlaces de archivos MEGA</translation>
+        <translation>Ange en eller flera MEGA-fillänkar</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Se han encontrado enlaces no válidos. (enlaces a carpetas no disponibles de momento)</translation>
+        <translation>Ingen giltig MEGA-länk hittad. (mapplänkar stöds inte än)</translation>
     </message>
 </context>
 <context>
@@ -715,79 +715,79 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>Hace %1 horas</translation>
+        <translation>%1 timmar sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>Skapa en MEGA-länk</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="58"/>
         <source>just now</source>
-        <translation>justo ahora</translation>
+        <translation>nyss</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>Hace %1 segundos</translation>
+        <translation>%1 sekunder sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
         <source>1 minute ago</source>
-        <translation>Hace un minuto</translation>
+        <translation>en minut sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>Hace %1 minutos</translation>
+        <translation>%1 minuter sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
         <source>1 hour ago</source>
-        <translation>Hace una hora</translation>
+        <translation>en timme sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="81"/>
         <source>1 day ago</source>
-        <translation>Hace un día</translation>
+        <translation>en dag sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>Hace %1 días</translation>
+        <translation>%1 dagar sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
         <source>1 month ago</source>
-        <translation>Hace un mes</translation>
+        <translation>en månad sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>Hace %1 meses</translation>
+        <translation>%1 månader sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
         <source>1 year ago</source>
-        <translation>Hace un año</translation>
+        <translation>ett år sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>Hace %1 años</translation>
+        <translation>%1 år sedan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
         <location filename="../RecentFile.cpp" line="119"/>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation>Öppen</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="112"/>
         <location filename="../RecentFile.cpp" line="120"/>
         <source>Show in folder</source>
-        <translation>Ver carpeta contenedora</translation>
+        <translation>Visa i mapp</translation>
     </message>
 </context>
 <context>
@@ -795,72 +795,72 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="32"/>
         <source>Settings - MEGAsync</source>
-        <translation>Ajustes - MEGAsync</translation>
+        <translation>Inställningar - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="119"/>
         <source>General</source>
-        <translation>General</translation>
+        <translation>Generell</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="157"/>
         <source>Account</source>
-        <translation>Cuenta</translation>
+        <translation>Konto</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="192"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Synkroniseringar</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
         <source>Bandwidth</source>
-        <translation>Ancho de banda</translation>
+        <translation>Bandbredd</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="262"/>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>Avancerad</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="356"/>
         <source>Help</source>
-        <translation>Ayuda</translation>
+        <translation>Hjälp</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
 	<source>OK</source>
-        <translation>Aceptar</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="383"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="393"/>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>Använd</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="430"/>
         <source>Show notifications</source>
-        <translation>Mostrar notificaciones</translation>
+        <translation>Visa noteringar</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Iniciar con el sistema</translation>
+        <translation>Starta vid uppstart</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
         <source>Update automatically</source>
-        <translation>Actualizar automáticamente </translation>
+        <translation>Uppdatera automatiskt</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="460"/>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="473"/>
@@ -870,72 +870,72 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="501"/>
         <source>Details</source>
-        <translation>Detalles</translation>
+        <translation>Detaljer</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="559"/>
         <location filename="../SettingsDialog.cpp" line="231"/>
         <source>FREE</source>
-        <translation>GRATIS</translation>
+        <translation>FRI</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="579"/>
         <location filename="../SettingsDialog.cpp" line="517"/>
         <source>Logout</source>
-        <translation>Cerrar sesión</translation>
+        <translation>Logga ut</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="602"/>
         <source>Storage space</source>
-        <translation> Uso de espacio en disco</translation>
+        <translation>Lagringsutrymme</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="650"/>
         <location filename="../SettingsDialog.ui" line="973"/>
         <source>Upgrade</source>
-        <translation>Actualiza a Pro</translation>
+        <translation>Uppgradera</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="680"/>
         <source>Synced folders</source>
-        <translation>Carpetas sincronizadas</translation>
+        <translation>Synkroniserade mappar</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="698"/>
         <location filename="../SettingsDialog.ui" line="1092"/>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation>Radera</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="705"/>
         <location filename="../SettingsDialog.ui" line="1085"/>
         <source>Add</source>
-        <translation>Añadir</translation>
+        <translation>Lägg till</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="806"/>
         <source>Local Folder</source>
-        <translation>Carpetas locales</translation>
+        <translation>Lokal mapp</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="811"/>
         <source>MEGA folder</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>MEGA-mapp</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="826"/>
         <source>Upload rate limit</source>
-        <translation>Limite de velocidad de las subidas</translation>
+        <translation>Hastighetsbegränsning vid uppladdning</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="838"/>
         <source>Don&apos;t limit</source>
-        <translation>Sin limite</translation>
+        <translation>Ingen begränsning</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="848"/>
         <source>Limit to:</source>
-        <translation>Limitar a:</translation>
+        <translation>Begränsa till</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="892"/>
@@ -945,47 +945,47 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="915"/>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>Automatisk</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>aproximadamente 90% del ancho de banda</translation>
+        <translation>runt 90% av tillgänglig bandbredd</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
         <source>Bandwidth quota</source>
-        <translation>Cuota del ancho de banda</translation>
+        <translation>Bandbredd kvot</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Las limitaciones de las subidas son determinadas por el servidor y se aplicarán cuando se inician nuevas subidas</translation>
+        <translation>Uppladdningsgräns gäller per server, och gäller när ny uppladdning startas</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Carpeta de subidas desde el Explorador de Windows</translation>
+        <translation>Mapp för uppladdningar från Windows Explorer</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
         <source>Excluded file names</source>
-        <translation>Nombres de archivos excluidos</translation>
+        <translation>Exkluderade filnamn</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1143"/>
         <source>Proxy Settings</source>
-        <translation>Ajustes de proxy</translation>
+        <translation>Proxyinställningar</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1150"/>
         <source>No proxy</source>
-        <translation>Sin proxy</translation>
+        <translation>Ingen proxy</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1157"/>
         <source>Auto-detect</source>
-        <translation>Auto-detectar</translation>
+        <translation>Automatisk identifiering</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1167"/>
@@ -995,12 +995,12 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1174"/>
         <source>Proxy type:</source>
-        <translation>Tipo de proxy:</translation>
+        <translation>Proxy typ:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1194"/>
         <source>Server:</source>
-        <translation>Servidor:</translation>
+        <translation>Server:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1232"/>
@@ -1010,29 +1010,29 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1264"/>
         <source>Proxy server requires a password</source>
-        <translation>El servidor proxy requiere contraseña</translation>
+        <translation>Proxyservern kräver ett lösenord</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>Usuario:</translation>
+        <translation>Användarnamn:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>Lösenord:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="216"/>
         <location filename="../SettingsDialog.cpp" line="264"/>
         <source>Data temporarily unavailable</source>
-        <translation>Datos no disponibles temporalmente</translation>
+        <translation>Data tillfälligt otillgängliga</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>%1 (%2%) de %3 en uso</translation>
+        <translation>%1 (%2%) av %3 använda</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
@@ -1058,39 +1058,39 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="398"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
         <source>You are already syncing your entire account.</source>
-        <translation>Ya estás sincronizando toda tu cuenta.</translation>
+        <translation>Du synkroniserar redan hela kontot</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Synchronization will stop working.</source>
-        <translation>La sincronización se detendrá.</translation>
+        <translation>Synkroniseringen kommer att sluta fungera</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Are you sure?</source>
-        <translation>¿Estás seguro?</translation>
+        <translation>Är du säker?</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="568"/>
         <source>Excluded name</source>
-        <translation>Nombre excluido</translation>
+        <translation>Exkluderat namn</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="569"/>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>Escribe un nombre para excluirlo de la sincronización.
-(comodines * y ? permitidos):</translation>
+        <translation>Ange ett namn att exkludera från synkronisering.
+(mönstermatchning * och ? är tillåtna):</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Fel</translation>
     </message>
 </context>
 <context>
@@ -1098,146 +1098,146 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="32"/>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>Asistente de Instalación - MEGAsync</translation>
+        <translation>Installationsguide - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="119"/>
         <source>I have a MEGA account</source>
-        <translation>Tengo una cuenta MEGA</translation>
+        <translation>Jag har ett MEGA-konto</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="129"/>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>No tengo una cuenta MEGA</translation>
+        <translation>Jag har inte ett MEGA-konto</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="185"/>
         <source>Create a new MEGA account</source>
-        <translation>Crear una nueva cuenta MEGA</translation>
+        <translation>Skapa ett nytt MEGA-konto</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="204"/>
         <source>Name:</source>
-        <translation>Tu nombre:</translation>
+        <translation>Namn:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="214"/>
         <location filename="../SetupWizard.ui" line="369"/>
         <source>Email:</source>
-        <translation>Tu correo electrónico:</translation>
+        <translation>E-post:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="224"/>
         <location filename="../SetupWizard.ui" line="379"/>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>Lösenord:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="238"/>
         <source>Repeat password:</source>
-        <translation>Repetir la contraseña:</translation>
+        <translation>Ange lösenord igen:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Acepto los  &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Términos del Servicio&lt;/a&gt; de MEGA</translation>
+        <translation>Jag accepterar MEGA\&apos;s &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Användarvillkor&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
         <source>Login to your MEGA account</source>
-        <translation>Iniciar sesión en tu cuenta MEGA</translation>
+        <translation>Logga in till ditt MEGA-konto</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="416"/>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Por favor, verifica tu cuenta usando el enlace de confirmación que hemos enviado al correo electrónico usado durante el registro</translation>
+        <translation>Vänligen verifiera ditt konto med hjälp av verifieringslänken som vi skickat till din e-postadress</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
         <source>Logging in ...</source>
-        <translation>Iniciando sesión...</translation>
+        <translation>Loggar in...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
         <source>Choose install type</source>
-        <translation>Elegir el tipo de instalación</translation>
+        <translation>Välj installationstyp</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
         <source> Sync your entire cloud drive</source>
-        <translation>Sincroniza todo de tu disco en la nube</translation>
+        <translation>Synkronisera hela molnlagringen</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
         <source>Full account sync</source>
-        <translation>Sincronizar toda la cuenta</translation>
+        <translation>Fullständig synkronisering av kontot</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="653"/>
         <location filename="../SetupWizard.ui" line="738"/>
         <source>Selective sync</source>
-        <translation>Sincronización selectiva</translation>
+        <translation>Selektiv synkronisering</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="683"/>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>Sincroniza carpetas especificas de tu disco en la nube</translation>
+        <translation>Synkronisera specifika mappar på din molnlagring</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="755"/>
         <source>The following folders will be automatically synchronized:</source>
-        <translation>Las siguientes carpetas serán sincronizadas automáticamente:</translation>
+        <translation>Följande mappar kommer att synkroniseras automatiskt:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="771"/>
         <source>Local folder:</source>
-        <translation>Carpetas locales:</translation>
+        <translation>Lokal mapp:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="778"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA:</translation>
+        <translation>MEGA-mapp:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="797"/>
         <location filename="../SetupWizard.ui" line="818"/>
         <source>Change</source>
-        <translation>Cambiar</translation>
+        <translation>Ändra</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="887"/>
         <source>Welcome to MEGA</source>
-        <translation>Bienvenido a MEGA</translation>
+        <translation>Välkommen till MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="910"/>
         <source>Your local folder:</source>
-        <translation>Tu carpeta local:</translation>
+        <translation>Välj din lokala mapp:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="934"/>
         <source>and your MEGA folder:</source>
-        <translation>y tu carpeta MEGA:</translation>
+        <translation>och din MEGA-mapp:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="957"/>
         <source>will be automatically synchronized.</source>
-        <translation>serán actualizadas automáticamente.</translation>
+        <translation>som kommer att synkroniseras automatiskt</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1012"/>
         <source>Back</source>
-        <translation>Atrás</translation>
+        <translation>Tillbaka</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1019"/>
         <source>Next</source>
-        <translation>Siguiente</translation>
+        <translation>Nästa</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1026"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
@@ -1262,82 +1262,82 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>El usuario ya existe</translation>
+        <translation>Användaren existerar redan</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
         <source>Fetching file list...</source>
-        <translation>Obteniendo lista de archivos...</translation>
+        <translation>Hämtar fillistan...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Incorrect email and/or password.</source>
-        <translation>Correo y/o contraseña incorrectos.</translation>
+        <translation>Användarnamnet och e-postadressen stämmer inte</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Have you verified your account?</source>
-        <translation>¿Has verificado tu cuenta?</translation>
+        <translation>Har du verifierat ditt konto?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="90"/>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>La carpeta MEGA no existe</translation>
+        <translation>MEGA-mappen existerar inte</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="97"/>
         <location filename="../SetupWizard.cpp" line="275"/>
         <location filename="../SetupWizard.cpp" line="322"/>
         <source>Finish</source>
-        <translation>Finalizar</translation>
+        <translation>Slutför</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="157"/>
         <location filename="../SetupWizard.cpp" line="195"/>
         <source>Please, enter your e-mail address</source>
-        <translation>Por favor, escribe la dirección de tu correo</translation>
+        <translation>Vänligen ange din e-postadress</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="163"/>
         <location filename="../SetupWizard.cpp" line="201"/>
         <source>Please, enter a valid e-mail address</source>
-        <translation>Por favor, escribe una dirección de correo válida</translation>
+        <translation>Vänligen mata in en korrekt e-postadress</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="169"/>
         <location filename="../SetupWizard.cpp" line="207"/>
         <source>Please, enter your password</source>
-        <translation>Por favor, escribe tu contraseña</translation>
+        <translation>Ange ditt lösenord</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="175"/>
-        <source>Iniciando sesión...</source>
+        <source>Loggar in...</source>
         <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="189"/>
         <source>Please, enter your name</source>
-        <translation>Por favor, escribe tu nombre</translation>
+        <translation>Ange ditt namn</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="213"/>
         <source>Please, enter a stronger password</source>
-        <translation>Por favor, escribe una contraseña más segura</translation>
+        <translation>Ange ett starkare lösenord</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="219"/>
         <source>The entered passwords don&apos;t match</source>
-        <translation>Las contraseñas escritas no coinciden</translation>
+        <translation>De två angivna lösenorden stämmer inte överens</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>
         <source>You have to accept our terms of service</source>
-        <translation>Debes aceptar los Términos del Servicio</translation>
+        <translation>Du måste acceptera våra användarvillkor</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="233"/>
         <source>Creating account...</source>
-        <translation>Creando cuenta...</translation>
+        <translation>Skapa konto...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
@@ -1345,29 +1345,29 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../SetupWizard.cpp" line="299"/>
         <location filename="../SetupWizard.cpp" line="306"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>Tienes %1 en tu Disco en la Nube
-¿Estás seguro que quieres sincronizar todo tu Disco en la Nube?</translation>
+        <translation>Du har %1 på din molnlagringstjänst.
+Är du säker på att du vill synkronisera hela din molnlagring?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="279"/>
         <source>and your MEGA Cloud Drive</source>
-        <translation>y tu Disco en la Nube de MEGA</translation>
+        <translation>och din MEGA-molnlagring</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="293"/>
         <source>Please, select a local folder</source>
-        <translation>Por favor, selecciona una carpeta local</translation>
+        <translation>Vänligen ange en lokal mapp</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="299"/>
         <source>Please select a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta MEGA</translation>
+        <translation>Vänligen ange en MEGA-mapp</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="306"/>
@@ -1378,7 +1378,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../SetupWizard.cpp" line="378"/>
         <source>Select local folder</source>
-        <translation>Seleccionar carpeta local</translation>
+        <translation>Välj en lokal mapp</translation>
     </message>
 </context>
 <context>
@@ -1386,42 +1386,42 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="374"/>
         <source>Upload to MEGA</source>
-        <translation>Subir a MEGA</translation>
+        <translation>Ladda upp till MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>Skapa en MEGA-länk</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="380"/>
         <source>Share with a MEGA user</source>
-        <translation>Compartir con un usuario MEGA</translation>
+        <translation>Dela med en MEGA-användare</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="383"/>
         <source>Send to a MEGA user</source>
-        <translation>Enviar a un usuario MEGA</translation>
+        <translation>Skicka till en MEGA-användare</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="388"/>
         <source>1 file</source>
-        <translation>1 archivo</translation>
+        <translation>en fil</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>%1 archivos</translation>
+        <translation>%1 filer</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>
         <source>1 folder</source>
-        <translation>1 carpeta</translation>
+        <translation>en folder</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="393"/>
         <source>%1 folders</source>
-        <translation>%1 carpetas</translation>
+        <translation>%1 foldrar</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="396"/>
@@ -1440,22 +1440,22 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="26"/>
         <source>Upload to MEGA</source>
-        <translation>Subir a MEGA</translation>
+        <translation>Ladda upp till MEGA</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="32"/>
         <source>Please, select the upload folder for your files:</source>
-        <translation>Por favor, selecciona la carpeta para la subida de archivos:</translation>
+        <translation>Var vänlig ange en mapp att att ladda upp dina filer till:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="45"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>MEGA-mapp:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="88"/>
         <source>Always upload to this destination</source>
-        <translation>Siempre subir a esta carpeta de destino</translation>
+        <translation>Ladda alltid upp hit</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.cpp" line="14"/>
@@ -1485,7 +1485,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WindowsPlatform.cpp" line="162"/>
         <source>MEGA synced folder</source>
-        <translation>Carpeta MEGA sincronizada</translation>
+        <translation>Synkroniserad MEGA-mapp</translation>
     </message>
 </context>
 <context>

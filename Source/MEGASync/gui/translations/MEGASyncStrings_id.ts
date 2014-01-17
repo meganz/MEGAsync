@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<TS version="2.0" language="id" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
         <location filename="../BindFolderDialog.ui" line="14"/>
         <source>Add synchronized folder</source>
-        <translation>Añadir carpeta sincronizada</translation>
+        <translation>Tambahkan folder yang telah disinkronisasikan</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
@@ -21,49 +21,49 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta local y una carpeta MEGA</translation>
+        <translation>Harap pilih folder lokal dan folder MEGA</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="72"/>
         <source>The selected local folder is already synced</source>
-        <translation>La carpeta local seleccionada ya se está sincronizando</translation>
+        <translation>Folder lokal terpilih telah disinkronisasikan</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="77"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>Una carpeta sincronizada no puede encontrarse dentro de otra carpeta que ya se está sincronizando</translation>
+        <translation>Folder yang telah disinkronisasikan tidak dapat berada didalam folder lain yang juga telah disinkronisasikan</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="91"/>
         <source>The selected MEGA folder is already synced</source>
-        <translation>La carpeta MEGA seleccionada ya se está sincronizando</translation>
+        <translation>Folder MEGA yang telah terpilih sudah disinkronisasikan</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>La sincronización completa de tu cuenta es posible solo cuando no existen sincronizaciones selectivas</translation>
+        <translation>Sync akun secara menyeluruh hanya mungkin tanpa adanya sync selektif</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>La carpeta local es demasiado grande (esta versión está limitada a %1 carpetas o %2 archivos). Por favor, selecciona otra carpeta.</translation>
+        <translation>Folder lokal terlalu besar (versi ini dibatasi sampai %1 folder atau %2 file. Harap pilih folder yang lain.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
         <source>Sync name</source>
-        <translation>Nombre de la sincronización</translation>
+        <translation>Sync nama</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>El nombre \&quot;%1\&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar está carpeta sincronizada:</translation>
+        <translation>Nama \&quot;%1\&quot; telah terpakai untuk sync yang lain Harap masukkan nama lain untuk meng-identifikasi folder berikut yang telah disinkronisasikan:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -81,17 +81,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../FolderBinder.ui" line="92"/>
         <source>Local folder:</source>
-        <translation>Carpeta local</translation>
+        <translation>Folder lokal:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.ui" line="38"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>Folder MEGA:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.cpp" line="33"/>
         <source>Select local folder</source>
-        <translation>Elegir carpeta local</translation>
+        <translation>Pilih folder lokal</translation>
     </message>
 </context>
 <context>
@@ -99,17 +99,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="32"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>Import link</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="66"/>
         <source>Download to my computer</source>
-        <translation>Descargar a mi ordenador</translation>
+        <translation>Download ke komputer saya</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="139"/>
         <source>Import to my cloud drive</source>
-        <translation>Importar a mi disco en la nube </translation>
+        <translation>Import ke cloud drive saya</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="231"/>
@@ -119,7 +119,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="238"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="49"/>
@@ -135,17 +135,17 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="120"/>
         <source>Select local folder</source>
-        <translation>Seleccionar carpeta local</translation>
+        <translation>Pilih folder lokal</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="155"/>
         <source>Decryption error</source>
-        <translation>Error de desencriptado </translation>
+        <translation>Decryption error</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="171"/>
         <source>Not found</source>
-        <translation>No encontrado</translation>
+        <translation>Tidak dapat ditemukan</translation>
     </message>
      <message>
             <source>You are about to import this file to a synced folder.
@@ -167,127 +167,127 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="228"/>
         <location filename="../InfoDialog.cpp" line="271"/>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync ya está actualizado</translation>
+        <translation>MEGAsync sudah versi terbaru</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="543"/>
         <source>RECENTLY UPDATED</source>
-        <translation>RECIENTEMENTE ACTUALIZADO </translation>
+        <translation>BARU SAJA DIPERBARUI</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="669"/>
         <source>Usage: Data temporarily unavailable</source>
-        <translation>Uso de datos: Datos no disponibles temporalmente</translation>
+        <translation>Pemakaian: Data untuk sementara tidak tersedia</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="749"/>
         <location filename="../InfoDialog.cpp" line="221"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Syncs</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
         <source>MEGA website</source>
-        <translation>Sitio web MEGA</translation>
+        <translation>MEGA websie</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
         <source>%1 of %2</source>
-        <translation>%1 de %2</translation>
+        <translation>%1 dari %2</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
         <source>Usage: %1</source>
-        <translation>Uso: %1</translation>
+        <translation>Pemakaian: %1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>%1 de %2 (%3/seg)</translation>
+        <translation>%1 dari %2 (%3/s)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>%1 de %2 (en pausa)</translation>
+        <translation>%1 dari %2 (paused)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
         <location filename="../InfoDialog.cpp" line="266"/>
         <source>File transfers paused</source>
-        <translation>Transferencias de archivos en pausa</translation>
+        <translation>Transfer file dihentikan sementara</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="229"/>
         <location filename="../InfoDialog.cpp" line="272"/>
         <source>MEGAsync is scanning</source>
-        <translation>MEGAsync está escaneando</translation>
+        <translation>MEGAsync sedang men-scan</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="304"/>
         <source>All transfers have been completed</source>
-        <translation>Se han completado todas las transferencias</translation>
+        <translation>Semua transfer telah terselesaikan</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="330"/>
         <source>Cancel all downloads</source>
-        <translation>Cancelar todas las descargas</translation>
+        <translation>Batalkan seluruh download</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="331"/>
         <source>Cancel download</source>
-        <translation>Cancelar descarga</translation>
+        <translation>Batalkan download</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="340"/>
         <source>Cancel all uploads</source>
-        <translation>Cancelar todas las subidas</translation>
+        <translation>Batalkan seluruh upload</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="341"/>
         <source>Cancel upload</source>
-        <translation>Cancelar subida</translation>
+        <translation>Batalkan upload</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
         <source>Add Sync</source>
-        <translation>Añadir Sincronización</translation>
+        <translation>Tambah Sync</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
         <source>one file at %1/s</source>
-        <translation>un archivo a %1/sec</translation>
+        <translation>satu file dengan kecepatan %1/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="444"/>
         <source>one file (paused)</source>
-        <translation>un archivo (en pausa)</translation>
+        <translation>satu file (paused)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 de %2 archivos a %3/sec</translation>
+        <translation>%1 dari %2 file  dengan kecepatan %3/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 de %2 archivos (en pausa)</translation>
+        <translation>%1 dari %2 file (paused)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="447"/>
         <source>Total Remaining: </source>
-        <translation>Total Restante: </translation>
+        <translation>Total Tersisa: </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="455"/>
         <source>Downloading </source>
-        <translation>Descargando </translation>
+        <translation>Downloading </translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
-        <translation>Subiendo </translation>
+        <translation>Uploading </translation>
     </message>
 </context>
 <context>
@@ -305,46 +305,46 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="176"/>
         <source>Logging in</source>
-        <translation>Iniciando sesión</translation>
+        <translation>Sedang memasukan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="205"/>
         <location filename="../../MegaApplication.cpp" line="206"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync ahora se está ejecutando. Clic aquí para abrir la ventana de estado.</translation>
+        <translation>MEGAsync sekarang sedang berjalan. Klik disini untuk membuka jendela status</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota no existe</translation>
+        <translation>Sync \&quot;%1\&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation>Sync \&quot;%1\&quot; anda telah dinon-aktifkan karena remote folder di dalam Sampah</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta local no existe</translation>
+        <translation>Sync \&quot;%1\&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
-        <source>Error: Invalid destination folder. La subida ha sido cancelada</source>
-        <translation>Error: Carpeta de destino no válida. </translation>
+        <source>Error: Invalid destination folder. Upload telah dibatalkan</source>
+        <translation>Error: Folder tujuan salah. </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>No se ha subido la carpeta (%1) porque es demasiado grande (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation>Folder (%1) tidak dapat di upload karena terlalu besar (versi ini dibatasi sampai %2 folder atau %3file).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>No se han subido (%1) carpetas porque son demasiado grandes (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation>%1 folder tidak diupload karena terlalu besar (beta ini dibatasi sampai %2 folder atau %3 file.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -361,66 +361,66 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>La sincronización se detendrá.
-La eliminación de archivos/carpetas cuando la sincronización está detenida no se propaga en el servidor.
+        <translation>Synchronization akan berhenti.
+Penghapusan yang terjadi yang tidak berhasil tidak akan disebarkan.
 
-¿Salir de todas formas?</translation>
+Tetap ingin keluar?</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>About MEGAsync</source>
-        <translation>Sobre MEGAsync</translation>
+        <translation>Tentang MEGAsync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>MEGAsync version code %1</source>
-        <translation>Código de la versión de MEGAsync: %1</translation>
+        <translation>MEGAsync kode versi %1</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>El enlace se ha copiado al portapapeles</translation>
+        <translation>Link telah disalin ke clipboard</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
         <source>The links have been copied to the clipboard</source>
-        <translation>Los enlaces se han copiado al portapapeles</translation>
+        <translation>Link telah disalin ke clipboard</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="608"/>
         <source>Logging in...</source>
-        <translation>Iniciando sesión...</translation>
+        <translation>Sedang memasukan...</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="662"/>
         <source>Exit</source>
-        <translation>Salir</translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="664"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="666"/>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="668"/>
         <source>Pause</source>
-        <translation>Pausa</translation>
+        <translation>Hentikan sementara</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="670"/>
         <source>Resume</source>
-        <translation>Reanudar</translation>
+        <translation>Lanjutkan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="672"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>Import link</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="689"/>
@@ -428,37 +428,37 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
         <location filename="../../MegaApplication.cpp" line="1066"/>
         <location filename="../../MegaApplication.cpp" line="1105"/>
         <source>Up to date</source>
-        <translation>Actualizado</translation>
+        <translation>Terkini</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="787"/>
         <location filename="../../MegaApplication.cpp" line="1055"/>
         <source>Paused</source>
-        <translation>En pausa</translation>
+        <translation>Berhenti sementara</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="798"/>
         <location filename="../../MegaApplication.cpp" line="1060"/>
         <location filename="../../MegaApplication.cpp" line="1113"/>
         <source>Scanning</source>
-        <translation>Escaneando</translation>
+        <translation>Memindai</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="799"/>
         <location filename="../../MegaApplication.cpp" line="1061"/>
         <location filename="../../MegaApplication.cpp" line="1114"/>
         <source>Syncing</source>
-        <translation>Sincronizando</translation>
+        <translation>Mensinkronisasikan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="944"/>
         <source>Temporary transmission error: </source>
-        <translation>Error temporal de transmisión: </translation>
+        <translation>Transmission error sementara: </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
-        <translation>Tienes en tu cuenta archivos nuevos o actualizados</translation>
+        <translation>Anda memiliki file baru atau yang telah diperbarui dalam akun anda</translation>
     </message>
 </context>
 <context>
@@ -466,122 +466,122 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../sdk/megaapi.cpp" line="752"/>
         <source>No error</source>
-        <translation>Ningún error</translation>
+        <translation>Tidak ada error</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="754"/>
         <source>Internal error</source>
-        <translation>Error interno</translation>
+        <translation>Internal error</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="756"/>
         <source>Invalid argument</source>
-        <translation>Argumento no válido </translation>
+        <translation>Argumen salah</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="758"/>
         <source>Request failed, retrying</source>
-        <translation>Petición fallida, reintentando</translation>
+        <translation>Request gagal, mencoba kembali</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="760"/>
         <source>Rate limit exceeded</source>
-        <translation>Se ha superado el limite</translation>
+        <translation>Rate limit telah terlampaui</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="762"/>
         <source>Failed permanently</source>
-        <translation>Fallo permanente</translation>
+        <translation>Gagal permanen</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="764"/>
         <source>Too many concurrent connections or transfers</source>
-        <translation>Demasiadas conexiones o transferencias simultáneas</translation>
+        <translation>Terlalu banyak hubungan atau transfer pada waktu yang sama</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="766"/>
         <source>Out of range</source>
-        <translation>Fuera de alcance</translation>
+        <translation>Diluar jangkauan</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="768"/>
         <source>Expired</source>
-        <translation>Caducado</translation>
+        <translation>Kadarluarsa</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="770"/>
         <source>Not found</source>
-        <translation>No encontrado</translation>
+        <translation>Tidak dapat ditemukan</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="772"/>
         <source>Circular linkage detected</source>
-        <translation>Error cíclico</translation>
+        <translation>Kesalahan Sirkular</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="774"/>
         <source>Access denied</source>
-        <translation>Acceso denegado</translation>
+        <translation>Akses ditolak</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="776"/>
         <source>Already exists</source>
-        <translation>Ya existe</translation>
+        <translation>Sudah ada</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="778"/>
         <source>Incomplete</source>
-        <translation>Incompleto</translation>
+        <translation>Tidak selesai</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="780"/>
         <source>Invalid key/Decryption error</source>
-        <translation>Clave incorrecta/Error de desencriptado</translation>
+        <translation>Key salah/ Decryption error</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>Identificador de sesión erróneo</translation>
+        <translation>Sesi ID buruk</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>
         <source>Blocked</source>
-        <translation>Bloqueado</translation>
+        <translation>Terblokir</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="786"/>
         <source>Over quota</source>
-        <translation> Cuota superada</translation>
+        <translation>Quota terlebihi</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="788"/>
         <source>Temporarily not available</source>
-        <translation>No disponible temporalmente</translation>
+        <translation>Sementara tidak tersedia</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="790"/>
         <source>Connection overflow</source>
-        <translation>Desbordamiento de conexión </translation>
+        <translation>Kebanjiran koneksi</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>Error de  escritura</translation>
+        <translation>Penulisan bermasalah</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
         <source>Read error</source>
-        <translation>Error de lectura</translation>
+        <translation>Baca bermasalah</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>Clave de aplicación no válida</translation>
+        <translation>Application key salah</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
         <source>Unknown error</source>
-        <translation>Error desconocido</translation>
+        <translation>Error tidak diketahui</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
@@ -608,43 +608,43 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="17"/>
         <source>Folder Selection</source>
-        <translation>Selección de Carpetas</translation>
+        <translation>Pemilihan folder</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="38"/>
         <source>Select a MEGA folder:</source>
-        <translation>Selecciona una carpeta MEGA</translation>
+        <translation>Pilih folder MEGA:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="66"/>
         <source>Retrieving folders...</source>
-        <translation>Recuperando lista de carpetas...</translation>
+        <translation>Mengambil folder...</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="93"/>
         <location filename="../NodeSelector.cpp" line="93"/>
         <source>New folder</source>
-        <translation>Nueva carpeta</translation>
+        <translation>Folder baru</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
 	<source>OK</source>
-        <translation>Aceptar</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="107"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="32"/>
         <source>Cloud Drive</source>
-        <translation>Disco en la Nube</translation>
+        <translation>Cloud Drive</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="94"/>
         <source>Enter the new folder name:</source>
-        <translation>Escribe el nombre de la nueva carpeta</translation>
+        <translation>Masukkan nama folder baru:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="127"/>
@@ -655,19 +655,19 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Clave de aplicación no válida Error desconocido</translation>
+        <translation>Application key salah Error tidak diketahui</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>Tienes %1 en esta carpeta
-Estás seguro que quieres sincronizarlo?</translation>
+        <translation>Anda memiliki %1 dalam folder ini.
+Apakah anda yakin ingin mensinkronisasikan?</translation>
     </message>
 </context>
 <context>
@@ -675,38 +675,38 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="26"/>
         <source>Import links</source>
-        <translation>Importar enlaces</translation>
+        <translation>Import link</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="35"/>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Escribe uno o varios enlaces de archivos MEGA</translation>
+        <translation>Masukkan satu atau beberapa link file MEGA</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
         <source>Submit</source>
-        <translation>Enviar</translation>
+        <translation>Submit</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="87"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <source>Enter one or more MEGA file links</source>
-        <translation>Escribe uno o más enlaces de archivos MEGA</translation>
+        <translation>Masukkan satu atau beberapa link file MEGA</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Se han encontrado enlaces no válidos. (enlaces a carpetas no disponibles de momento)</translation>
+        <translation>Tidak ada link MEGA valid ditemukan. (link folder belum didukung)</translation>
     </message>
 </context>
 <context>
@@ -715,79 +715,79 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>Hace %1 horas</translation>
+        <translation>%1 jam yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>Dapatkan link MEGA</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="58"/>
         <source>just now</source>
-        <translation>justo ahora</translation>
+        <translation>sekarang</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>Hace %1 segundos</translation>
+        <translation>%1 detik yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
         <source>1 minute ago</source>
-        <translation>Hace un minuto</translation>
+        <translation>1 menit yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>Hace %1 minutos</translation>
+        <translation>%1 menit yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
         <source>1 hour ago</source>
-        <translation>Hace una hora</translation>
+        <translation>1 jam yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="81"/>
         <source>1 day ago</source>
-        <translation>Hace un día</translation>
+        <translation>1 hari yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>Hace %1 días</translation>
+        <translation>%1 hari yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
         <source>1 month ago</source>
-        <translation>Hace un mes</translation>
+        <translation>1 bulan yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>Hace %1 meses</translation>
+        <translation>%1 bulan yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
         <source>1 year ago</source>
-        <translation>Hace un año</translation>
+        <translation>1 tahun yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>Hace %1 años</translation>
+        <translation>%1 tahun yang lalu</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
         <location filename="../RecentFile.cpp" line="119"/>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation>Bukan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="112"/>
         <location filename="../RecentFile.cpp" line="120"/>
         <source>Show in folder</source>
-        <translation>Ver carpeta contenedora</translation>
+        <translation>Tunjukkan di folder</translation>
     </message>
 </context>
 <context>
@@ -795,72 +795,72 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="32"/>
         <source>Settings - MEGAsync</source>
-        <translation>Ajustes - MEGAsync</translation>
+        <translation>Pengaturan - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="119"/>
         <source>General</source>
-        <translation>General</translation>
+        <translation>Umum</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="157"/>
         <source>Account</source>
-        <translation>Cuenta</translation>
+        <translation>Akun</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="192"/>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Syncs</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
         <source>Bandwidth</source>
-        <translation>Ancho de banda</translation>
+        <translation>Bandwidth</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="262"/>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>Lanjutan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="356"/>
         <source>Help</source>
-        <translation>Ayuda</translation>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
 	<source>OK</source>
-        <translation>Aceptar</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="383"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="393"/>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>Terapkan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="430"/>
         <source>Show notifications</source>
-        <translation>Mostrar notificaciones</translation>
+        <translation>Tampilkan pemberitahuan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Iniciar con el sistema</translation>
+        <translation>Aktifkan pada saat memulai</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
         <source>Update automatically</source>
-        <translation>Actualizar automáticamente </translation>
+        <translation>Update otomatis</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="460"/>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation>Bahasa</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="473"/>
@@ -870,7 +870,7 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="501"/>
         <source>Details</source>
-        <translation>Detalles</translation>
+        <translation>Detil</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="559"/>
@@ -882,60 +882,60 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../SettingsDialog.ui" line="579"/>
         <location filename="../SettingsDialog.cpp" line="517"/>
         <source>Logout</source>
-        <translation>Cerrar sesión</translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="602"/>
         <source>Storage space</source>
-        <translation> Uso de espacio en disco</translation>
+        <translation>Tempat penyimpanan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="650"/>
         <location filename="../SettingsDialog.ui" line="973"/>
         <source>Upgrade</source>
-        <translation>Actualiza a Pro</translation>
+        <translation>Upgrade</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="680"/>
         <source>Synced folders</source>
-        <translation>Carpetas sincronizadas</translation>
+        <translation>Folder yang telah disinkronisasikan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="698"/>
         <location filename="../SettingsDialog.ui" line="1092"/>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="705"/>
         <location filename="../SettingsDialog.ui" line="1085"/>
         <source>Add</source>
-        <translation>Añadir</translation>
+        <translation>Tambah</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="806"/>
         <source>Local Folder</source>
-        <translation>Carpetas locales</translation>
+        <translation>Folder lokal</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="811"/>
         <source>MEGA folder</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>Folder MEGA</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="826"/>
         <source>Upload rate limit</source>
-        <translation>Limite de velocidad de las subidas</translation>
+        <translation>Batas kecepatan upload</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="838"/>
         <source>Don&apos;t limit</source>
-        <translation>Sin limite</translation>
+        <translation>Jangan batasi</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="848"/>
         <source>Limit to:</source>
-        <translation>Limitar a:</translation>
+        <translation>Bataskan sampai:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="892"/>
@@ -945,47 +945,47 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="915"/>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>Otomatis</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>aproximadamente 90% del ancho de banda</translation>
+        <translation>sekitar 90% dari bandwidth yang tersedia</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
         <source>Bandwidth quota</source>
-        <translation>Cuota del ancho de banda</translation>
+        <translation>Kuota bandwidth</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Las limitaciones de las subidas son determinadas por el servidor y se aplicarán cuando se inician nuevas subidas</translation>
+        <translation>Batas upload adalah per upload server dan diterapkan pada saat memulai upload baru</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Carpeta de subidas desde el Explorador de Windows</translation>
+        <translation>Folder untuk upload dari Windows Explorer</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
         <source>Excluded file names</source>
-        <translation>Nombres de archivos excluidos</translation>
+        <translation>Nama file yang disingkirkan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1143"/>
         <source>Proxy Settings</source>
-        <translation>Ajustes de proxy</translation>
+        <translation>Pengaturan Proxy</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1150"/>
         <source>No proxy</source>
-        <translation>Sin proxy</translation>
+        <translation>Tanpa proxy</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1157"/>
         <source>Auto-detect</source>
-        <translation>Auto-detectar</translation>
+        <translation>Deteksi otomatis</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1167"/>
@@ -995,12 +995,12 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1174"/>
         <source>Proxy type:</source>
-        <translation>Tipo de proxy:</translation>
+        <translation>Tipe proxy:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1194"/>
         <source>Server:</source>
-        <translation>Servidor:</translation>
+        <translation>Server:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1232"/>
@@ -1010,29 +1010,29 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1264"/>
         <source>Proxy server requires a password</source>
-        <translation>El servidor proxy requiere contraseña</translation>
+        <translation>Proxy server membutuhkan password</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>Usuario:</translation>
+        <translation>Nama pengguna:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="216"/>
         <location filename="../SettingsDialog.cpp" line="264"/>
         <source>Data temporarily unavailable</source>
-        <translation>Datos no disponibles temporalmente</translation>
+        <translation>Data sementara tidak tersedia</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>%1 (%2%) de %3 en uso</translation>
+        <translation>%1 (%2%) dari %3 terpakai</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
@@ -1058,34 +1058,34 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="398"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
         <source>You are already syncing your entire account.</source>
-        <translation>Ya estás sincronizando toda tu cuenta.</translation>
+        <translation>Anda telah mensinkronisasikan seluruh akun anda.</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Synchronization will stop working.</source>
-        <translation>La sincronización se detendrá.</translation>
+        <translation>Sinkronisasi akan berhenti.</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Are you sure?</source>
-        <translation>¿Estás seguro?</translation>
+        <translation>Apakah anda yakin?</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="568"/>
         <source>Excluded name</source>
-        <translation>Nombre excluido</translation>
+        <translation>Nama yang disingkirkan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="569"/>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>Escribe un nombre para excluirlo de la sincronización.
-(comodines * y ? permitidos):</translation>
+        <translation>Masukkan nama untuk disingkirkan dari sinkronisasi.
+(* dan ? yang tidak terduga diizinkan):</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="578"/>
@@ -1098,146 +1098,146 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="32"/>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>Asistente de Instalación - MEGAsync</translation>
+        <translation>Pengaturan Wizard - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="119"/>
         <source>I have a MEGA account</source>
-        <translation>Tengo una cuenta MEGA</translation>
+        <translation>Saya sudah punya akun MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="129"/>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>No tengo una cuenta MEGA</translation>
+        <translation>Saya tidak punya akun MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="185"/>
         <source>Create a new MEGA account</source>
-        <translation>Crear una nueva cuenta MEGA</translation>
+        <translation>Buat akun MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="204"/>
         <source>Name:</source>
-        <translation>Tu nombre:</translation>
+        <translation>Nama:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="214"/>
         <location filename="../SetupWizard.ui" line="369"/>
         <source>Email:</source>
-        <translation>Tu correo electrónico:</translation>
+        <translation>Email:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="224"/>
         <location filename="../SetupWizard.ui" line="379"/>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="238"/>
         <source>Repeat password:</source>
-        <translation>Repetir la contraseña:</translation>
+        <translation>Ulangi password:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Acepto los  &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Términos del Servicio&lt;/a&gt; de MEGA</translation>
+        <translation>Saya setuju dengan &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Peraturan Pelayanan&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
         <source>Login to your MEGA account</source>
-        <translation>Iniciar sesión en tu cuenta MEGA</translation>
+        <translation>Masuk ke akun MEGA anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="416"/>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Por favor, verifica tu cuenta usando el enlace de confirmación que hemos enviado al correo electrónico usado durante el registro</translation>
+        <translation>Harap verifikasi akun anda dengan link konfirmasi yang telah kami kirim ke email anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
         <source>Logging in ...</source>
-        <translation>Iniciando sesión...</translation>
+        <translation>Sedang memasukan...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
         <source>Choose install type</source>
-        <translation>Elegir el tipo de instalación</translation>
+        <translation>Pilih tipe peng-install an</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
         <source> Sync your entire cloud drive</source>
-        <translation>Sincroniza todo de tu disco en la nube</translation>
+        <translation>Sinkronisasikan seluruh cloud drive anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
         <source>Full account sync</source>
-        <translation>Sincronizar toda la cuenta</translation>
+        <translation>Sync akun menyeluruh</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="653"/>
         <location filename="../SetupWizard.ui" line="738"/>
         <source>Selective sync</source>
-        <translation>Sincronización selectiva</translation>
+        <translation>Sync selektif</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="683"/>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>Sincroniza carpetas especificas de tu disco en la nube</translation>
+        <translation>Sync folder tertentu dalam cloud drive anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="755"/>
         <source>The following folders will be automatically synchronized:</source>
-        <translation>Las siguientes carpetas serán sincronizadas automáticamente:</translation>
+        <translation>Folder berikut akan secara otomatis disinkronisasikan:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="771"/>
         <source>Local folder:</source>
-        <translation>Carpetas locales:</translation>
+        <translation>Folder lokal:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="778"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA:</translation>
+        <translation>Folder MEGA:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="797"/>
         <location filename="../SetupWizard.ui" line="818"/>
         <source>Change</source>
-        <translation>Cambiar</translation>
+        <translation>Ganti</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="887"/>
         <source>Welcome to MEGA</source>
-        <translation>Bienvenido a MEGA</translation>
+        <translation>Selamat datang di MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="910"/>
         <source>Your local folder:</source>
-        <translation>Tu carpeta local:</translation>
+        <translation>Folder lokal anda:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="934"/>
         <source>and your MEGA folder:</source>
-        <translation>y tu carpeta MEGA:</translation>
+        <translation>dan folder MEGA anda:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="957"/>
         <source>will be automatically synchronized.</source>
-        <translation>serán actualizadas automáticamente.</translation>
+        <translation>akan secara otomatis disinkronisasikan.</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1012"/>
         <source>Back</source>
-        <translation>Atrás</translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1019"/>
         <source>Next</source>
-        <translation>Siguiente</translation>
+        <translation>Berikut</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="1026"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
@@ -1262,82 +1262,82 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>El usuario ya existe</translation>
+        <translation>Pengguna sudah terdaftar</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
         <source>Fetching file list...</source>
-        <translation>Obteniendo lista de archivos...</translation>
+        <translation>Sedang mengambil list file...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Incorrect email and/or password.</source>
-        <translation>Correo y/o contraseña incorrectos.</translation>
+        <translation>email dan/atau password salah.</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="72"/>
         <source>Have you verified your account?</source>
-        <translation>¿Has verificado tu cuenta?</translation>
+        <translation>Sudahkah anda memverifikasi akun anda?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="90"/>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>La carpeta MEGA no existe</translation>
+        <translation>Folder MEGA tidak ditemukan</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="97"/>
         <location filename="../SetupWizard.cpp" line="275"/>
         <location filename="../SetupWizard.cpp" line="322"/>
         <source>Finish</source>
-        <translation>Finalizar</translation>
+        <translation>Selesai</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="157"/>
         <location filename="../SetupWizard.cpp" line="195"/>
         <source>Please, enter your e-mail address</source>
-        <translation>Por favor, escribe la dirección de tu correo</translation>
+        <translation>Harap masukkan alamat e-mail anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="163"/>
         <location filename="../SetupWizard.cpp" line="201"/>
         <source>Please, enter a valid e-mail address</source>
-        <translation>Por favor, escribe una dirección de correo válida</translation>
+        <translation>Harap masukkan alamat e-mail yang valid</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="169"/>
         <location filename="../SetupWizard.cpp" line="207"/>
         <source>Please, enter your password</source>
-        <translation>Por favor, escribe tu contraseña</translation>
+        <translation>Harap masukkan password anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="175"/>
-        <source>Iniciando sesión...</source>
+        <source>Sedang memasukan...</source>
         <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="189"/>
         <source>Please, enter your name</source>
-        <translation>Por favor, escribe tu nombre</translation>
+        <translation>Harap masukkan nama anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="213"/>
         <source>Please, enter a stronger password</source>
-        <translation>Por favor, escribe una contraseña más segura</translation>
+        <translation>Harap masukkan password yang lebih kuat</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="219"/>
         <source>The entered passwords don&apos;t match</source>
-        <translation>Las contraseñas escritas no coinciden</translation>
+        <translation>Password tidak sama</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>
         <source>You have to accept our terms of service</source>
-        <translation>Debes aceptar los Términos del Servicio</translation>
+        <translation>Anda harus menerima persyaratan layanan kami</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="233"/>
         <source>Creating account...</source>
-        <translation>Creando cuenta...</translation>
+        <translation>Sedang membuat akun...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
@@ -1345,29 +1345,29 @@ Estás seguro que quieres sincronizarlo?</translation>
         <location filename="../SetupWizard.cpp" line="299"/>
         <location filename="../SetupWizard.cpp" line="306"/>
         <source>Warning</source>
-        <translation>Advertencia</translation>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>Tienes %1 en tu Disco en la Nube
-¿Estás seguro que quieres sincronizar todo tu Disco en la Nube?</translation>
+        <translation>Anda memiliki %1 di Cloud Drive
+Apakah anda yakin ingin mensinkronisasikan seluruh Cloud Drive anda?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="279"/>
         <source>and your MEGA Cloud Drive</source>
-        <translation>y tu Disco en la Nube de MEGA</translation>
+        <translation>dan Cloud Drive MEGA anda</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="293"/>
         <source>Please, select a local folder</source>
-        <translation>Por favor, selecciona una carpeta local</translation>
+        <translation>Harap pilih folder lokal</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="299"/>
         <source>Please select a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta MEGA</translation>
+        <translation>Harap pilih folder MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="306"/>
@@ -1378,7 +1378,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../SetupWizard.cpp" line="378"/>
         <source>Select local folder</source>
-        <translation>Seleccionar carpeta local</translation>
+        <translation>Pilih folder lokal</translation>
     </message>
 </context>
 <context>
@@ -1386,42 +1386,42 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="374"/>
         <source>Upload to MEGA</source>
-        <translation>Subir a MEGA</translation>
+        <translation>Upload ke MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>Dapatkan link MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="380"/>
         <source>Share with a MEGA user</source>
-        <translation>Compartir con un usuario MEGA</translation>
+        <translation>Bagikan dengan pengguna MEGA </translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="383"/>
         <source>Send to a MEGA user</source>
-        <translation>Enviar a un usuario MEGA</translation>
+        <translation>Kirim ke pengguna MEGA</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="388"/>
         <source>1 file</source>
-        <translation>1 archivo</translation>
+        <translation>1 file</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>%1 archivos</translation>
+        <translation>%1 file</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>
         <source>1 folder</source>
-        <translation>1 carpeta</translation>
+        <translation>1 folder</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="393"/>
         <source>%1 folders</source>
-        <translation>%1 carpetas</translation>
+        <translation>%1 folder</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="396"/>
@@ -1440,22 +1440,22 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="26"/>
         <source>Upload to MEGA</source>
-        <translation>Subir a MEGA</translation>
+        <translation>Upload ke MEGA</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="32"/>
         <source>Please, select the upload folder for your files:</source>
-        <translation>Por favor, selecciona la carpeta para la subida de archivos:</translation>
+        <translation>Harap pilih folder upload untuk file anda:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="45"/>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>Folder MEGA:</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="88"/>
         <source>Always upload to this destination</source>
-        <translation>Siempre subir a esta carpeta de destino</translation>
+        <translation>Selalu upload ke tujuan ini</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.cpp" line="14"/>
@@ -1485,7 +1485,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WindowsPlatform.cpp" line="162"/>
         <source>MEGA synced folder</source>
-        <translation>Carpeta MEGA sincronizada</translation>
+        <translation>Folder MEGA tersinkronisasi</translation>
     </message>
 </context>
 <context>
