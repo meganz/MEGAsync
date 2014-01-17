@@ -2,7 +2,7 @@
 #define QTMEGALISTENER_H
 
 #include<QObject>
-#include <sdk/megaapi.h>
+#include "megaapi.h"
 
 class QTMegaListener : public QObject, public MegaListener
 {
