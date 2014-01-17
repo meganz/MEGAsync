@@ -139,9 +139,8 @@ protected:
     static QString appPath;
     static QString appDirPath;
 
-    //TODO: Enable autoUpdate again in the next release
-    //QThread updateThread;
-    //UpdateTask updateTask;
+    QThread updateThread;
+    UpdateTask updateTask;
 
     bool reboot;
     bool syncActive;
