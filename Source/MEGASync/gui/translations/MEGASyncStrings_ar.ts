@@ -257,7 +257,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
         <source>one file at %1/s</source>
-        <translation>ملف واحد في ٪1/ث</translation>
+        <translation>ملف واحد في %1/ث</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="444"/>
@@ -1351,7 +1351,7 @@ Are you sure you want to sync it?</source>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>لديك ٪1 في  السحابة.
+        <translation>لديك %1 في  السحابة.
 هل أنت متأكد أنك تريد مزامنة سحابتك</translation>
     </message>
     <message>
