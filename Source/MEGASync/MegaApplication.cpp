@@ -927,7 +927,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
     //Send statics to the information dialog
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
-    infoDialog->updateTransfers();
+    onSyncStateChanged(megaApi);
 }
 
 //Called when there is a temporal problem in a request
