@@ -68,12 +68,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
 	<source>OK</source>
-	<translation>[$1814]</translation>
+	<translation>Tamam</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="49"/>
 	<source>Cancel</source>
-	<translation>[$1815]</translation>
+	<translation>İptal Et</translation>
     </message>
 </context>
 <context>
@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>[$1822]</translation>
+            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>[$1823]</translation>
+            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
     </message>
 </context>
 <context>
@@ -1472,12 +1472,12 @@ Please, select another folder.</source>
     <message>
 	<location filename="gui/UploadToMegaDialog.ui" line="138"/>
 	<source>OK</source>
-	<translation>[$1816]</translation>
+	<translation>Tamam</translation>
     </message>
     <message>
 	<location filename="gui/UploadToMegaDialog.ui" line="145"/>
 	<source>Cancel</source>
-	<translation>[$1817]</translation>
+	<translation>İptal Et</translation>
     </message>
 </context>
 <context>
@@ -1492,19 +1492,19 @@ Please, select another folder.</source>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>[$1818]</translation>
+        <translation>&amp;Evet</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>[$1819]</translation>
+        <translation>&amp;Hayır</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>[$1820]</translation>
+        <translation>&amp;Tamam</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>[$1821]</translation>
+        <translation>&amp;İptal Et</translation>
     </message>
 </context>
 </TS>
