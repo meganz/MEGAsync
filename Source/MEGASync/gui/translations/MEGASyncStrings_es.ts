@@ -566,7 +566,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>Error de  escritura</translation>
+        <translation>Error de escritura</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
@@ -706,7 +706,7 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Se han encontrado enlaces no válidos. (enlaces a carpetas no disponibles de momento)</translation>
+        <translation>Se han encontrado enlaces no válidos. (enlaces a carpetas no disponibles de momento)</translation>
     </message>
 </context>
 <context>
