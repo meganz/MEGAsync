@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>El nombre \&quot;%1\&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar está carpeta sincronizada:</translation>
+        <translation>El nombre &quot;%1&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar está carpeta sincronizada:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota no existe</translation>
+        <translation>Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota no existe</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation>Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Tu sincronización \&quot;%1\&quot; ha sido desactivada porque la carpeta local no existe</translation>
+        <translation>Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta local no existe</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

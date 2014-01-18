@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>\&quot;%1\&quot;という名は別のシンクに使われています。 このシンク・フォルダを識別するために別の名前を付けて下さい。</translation>
+        <translation>&quot;%1&quot;という名は別のシンクに使われています。 このシンク・フォルダを識別するために別の名前を付けて下さい。</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>リモート・フォルダが存在しないため、あなたのシンク\&quot;%1\&quot;は解除されました。</translation>
+        <translation>リモート・フォルダが存在しないため、あなたのシンク&quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>リモート・フォルダがゴミ箱内にあるため、あなたのシンク\&quot;%1\&quot;は解除されました。</translation>
+        <translation>リモート・フォルダがゴミ箱内にあるため、あなたのシンク&quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>ローカル・フォルダが存在しないため、あなたのシンク\&quot;%1\&quot;は解除されました。</translation>
+        <translation>ローカル・フォルダが存在しないため、あなたのシンク&quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Namnet \&quot;%1\&quot; används redan för en annan synkronisering Vänligen ange ett annat namn för att synkronisera denna mapp:</translation>
+        <translation>Namnet &quot;%1&quot; används redan för en annan synkronisering Vänligen ange ett annat namn för att synkronisera denna mapp:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Din synkronisering \&quot;%1\&quot; har avaktiverats därför att fjärrmappen inte existerar</translation>
+        <translation>Din synkronisering &quot;%1&quot; har avaktiverats därför att fjärrmappen inte existerar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Din synkronisering \&quot;%1\&quot; har avaktiverats därför att fjärrmappen är i papperskorken.</translation>
+        <translation>Din synkronisering &quot;%1&quot; har avaktiverats därför att fjärrmappen är i papperskorken.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Din synkronisering \&quot;%1\&quot; har avaktiverats därför att den lokala mappen inte existerar</translation>
+        <translation>Din synkronisering &quot;%1&quot; har avaktiverats därför att den lokala mappen inte existerar</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -1140,7 +1140,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Jag accepterar MEGA\&apos;s &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Användarvillkor&lt;/a&gt;</translation>
+        <translation>Jag accepterar MEGA&apos;s &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Användarvillkor&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>

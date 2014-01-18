@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Ваша синхронизация \&quot;%1\&quot; была отключена так как удалённая папка не существует</translation>
+        <translation>Ваша синхронизация &quot;%1&quot; была отключена так как удалённая папка не существует</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Ваша синхронизация \&quot;%1\&quot; была отключена так как удалённая папка находиться в Корзине</translation>
+        <translation>Ваша синхронизация &quot;%1&quot; была отключена так как удалённая папка находиться в Корзине</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Ваша синхронизация \&quot;%1\&quot; была отключена так как локальная папка не существует</translation>
+        <translation>Ваша синхронизация &quot;%1&quot; была отключена так как локальная папка не существует</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

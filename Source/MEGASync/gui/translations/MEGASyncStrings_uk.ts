@@ -104,7 +104,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="66"/>
         <source>Download to my computer</source>
-        <translation>Завантажити на комп\&apos;ютер</translation>
+        <translation>Завантажити на комп&apos;ютер</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="139"/>
@@ -496,7 +496,7 @@ Exit anyway?</source>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="764"/>
         <source>Too many concurrent connections or transfers</source>
-        <translation>Забагато одночасних з\&apos;єднань або передач</translation>
+        <translation>Забагато одночасних з&apos;єднань або передач</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="766"/>
@@ -561,7 +561,7 @@ Exit anyway?</source>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="790"/>
         <source>Connection overflow</source>
-        <translation>Переповнення з\&apos;єднання</translation>
+        <translation>Переповнення з&apos;єднання</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
@@ -1015,7 +1015,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>Ім\&apos;я користувача:</translation>
+        <translation>Ім&apos;я користувача:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
@@ -1118,7 +1118,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="204"/>
         <source>Name:</source>
-        <translation>Ім\&apos;я</translation>
+        <translation>Ім&apos;я</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="214"/>
@@ -1317,7 +1317,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.cpp" line="189"/>
         <source>Please, enter your name</source>
-        <translation>Будь ласка, введіть своє ім\&apos;я</translation>
+        <translation>Будь ласка, введіть своє ім&apos;я</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="213"/>

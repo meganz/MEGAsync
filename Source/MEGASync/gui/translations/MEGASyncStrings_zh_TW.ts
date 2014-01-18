@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>名稱 \&quot;%1\&quot; 已被其他同步資料夾選用 請輸入一個不同的名稱來辨識這個同步資料夾:</translation>
+        <translation>名稱 &quot;%1&quot; 已被其他同步資料夾選用 請輸入一個不同的名稱來辨識這個同步資料夾:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>因遠端資料夾不存在，您的同步 \&quot;%1\&quot; 已被停用。</translation>
+        <translation>因遠端資料夾不存在，您的同步 &quot;%1&quot; 已被停用。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>因遠端資料夾已於垃圾夾內，您的同步 \&quot;%1\&quot; 已被停用。</translation>
+        <translation>因遠端資料夾已於垃圾夾內，您的同步 &quot;%1&quot; 已被停用。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>因本機資料夾不存在，您的同步 \&quot;%1\&quot; 已被停用。</translation>
+        <translation>因本機資料夾不存在，您的同步 &quot;%1&quot; 已被停用。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

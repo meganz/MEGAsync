@@ -42,7 +42,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>La synchronisation intégrale de votre compte ne peut être activée s\&apos;il existe un ou plusieurs dossiers déjà synchronisés.</translation>
+        <translation>La synchronisation intégrale de votre compte ne peut être activée s&apos;il existe un ou plusieurs dossiers déjà synchronisés.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Le nom \&quot;%1\&quot; est déjà utilisé pour une autre synchronisation Veuillez entrer un nom différent pour identifier le dossier synchronisé :</translation>
+        <translation>Le nom &quot;%1&quot; est déjà utilisé pour une autre synchronisation Veuillez entrer un nom différent pour identifier le dossier synchronisé :</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -247,7 +247,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="341"/>
         <source>Cancel upload</source>
-        <translation>Annuler l\&apos;upload</translation>
+        <translation>Annuler l&apos;upload</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
@@ -317,34 +317,34 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Votre synchronisation \&quot;%1\&quot; a été désactivée car le dossier en ligne n\&apos;existe pas.</translation>
+        <translation>Votre synchronisation &quot;%1&quot; a été désactivée car le dossier en ligne n&apos;existe pas.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Votre synchronisation \&quot;%1\&quot; a été désactivée car le dossier sur cloud MEGA est dans la corbeille</translation>
+        <translation>Votre synchronisation &quot;%1&quot; a été désactivée car le dossier sur cloud MEGA est dans la corbeille</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Votre synchronisation \&quot;%1\&quot; a été désactivée car le dossier local n\&apos;existe pas</translation>
+        <translation>Votre synchronisation &quot;%1&quot; a été désactivée car le dossier local n&apos;existe pas</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
-        <source>Error: Invalid destination folder. L\&apos;upload a été annulé</source>
+        <source>Error: Invalid destination folder. L&apos;upload a été annulé</source>
         <translation>Erreur : dossier de destination invalide. </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>Le dossier (%1) n\&apos;a pas été uploadé car il est trop volumineux (cette version est limitée à %2 dossiers ou %3 fichiers.)</translation>
+        <translation>Le dossier (%1) n&apos;a pas été uploadé car il est trop volumineux (cette version est limitée à %2 dossiers ou %3 fichiers.)</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>%1 dossiers n\&apos;ont pas été uploadés car  ils sont trop volumineux (cette beta est limitée à %2 dossiers ou %3 fichiers).</translation>
+        <translation>%1 dossiers n&apos;ont pas été uploadés car  ils sont trop volumineux (cette beta est limitée à %2 dossiers ou %3 fichiers).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -361,8 +361,8 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>La synchronisation va s\&apos;arrêter.
-Les opérations de suppression ne seront pas répercutées sur votre cloud MEGA si MegaSync n\&apos;est pas actif.
+        <translation>La synchronisation va s&apos;arrêter.
+Les opérations de suppression ne seront pas répercutées sur votre cloud MEGA si MegaSync n&apos;est pas actif.
 
 Quitter quand même ?</translation>
     </message>
@@ -466,7 +466,7 @@ Quitter quand même ?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="752"/>
         <source>No error</source>
-        <translation>Pas d\&apos;erreur</translation>
+        <translation>Pas d&apos;erreur</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="754"/>
@@ -566,7 +566,7 @@ Quitter quand même ?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>Erreur d\&apos;écriture</translation>
+        <translation>Erreur d&apos;écriture</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
@@ -576,7 +576,7 @@ Quitter quand même ?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>Clé d\&apos;application invalide</translation>
+        <translation>Clé d&apos;application invalide</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
@@ -655,7 +655,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Clé d\&apos;application invalide Erreur inconnue</translation>
+        <translation>Clé d&apos;application invalide Erreur inconnue</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
@@ -850,7 +850,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Lancer au démarrage de l\&apos;ordinateur</translation>
+        <translation>Lancer au démarrage de l&apos;ordinateur</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
@@ -925,7 +925,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="826"/>
         <source>Upload rate limit</source>
-        <translation>Limite d\&apos;upload</translation>
+        <translation>Limite d&apos;upload</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="838"/>
@@ -960,12 +960,12 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Les limites d\&apos;upload sont entendues par serveur d\&apos;upload et appliquées lors du démarrage de nouveaux uploads</translation>
+        <translation>Les limites d&apos;upload sont entendues par serveur d&apos;upload et appliquées lors du démarrage de nouveaux uploads</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Dossier par défaut dans lequel sont placés automatiquement tout fichier ou dossier uploadé via le menu contextuel de l\&apos;Explorateur de Fichiers Windows</translation>
+        <translation>Dossier par défaut dans lequel sont placés automatiquement tout fichier ou dossier uploadé via le menu contextuel de l&apos;Explorateur de Fichiers Windows</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
@@ -1015,7 +1015,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>Nom d\&apos;utilisateur :</translation>
+        <translation>Nom d&apos;utilisateur :</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
@@ -1063,12 +1063,12 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
         <source>You are already syncing your entire account.</source>
-        <translation>La synchronisation de l\&apos;intégralité de votre compte est déjà active.</translation>
+        <translation>La synchronisation de l&apos;intégralité de votre compte est déjà active.</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Synchronization will stop working.</source>
-        <translation>Les synchronisations vont s\&apos;arrêter.</translation>
+        <translation>Les synchronisations vont s&apos;arrêter.</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
@@ -1098,17 +1098,17 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="32"/>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>Assistant d\&apos;Installation - MEGAsync</translation>
+        <translation>Assistant d&apos;Installation - MEGAsync</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="119"/>
         <source>I have a MEGA account</source>
-        <translation>J\&apos;ai un compte MEGA</translation>
+        <translation>J&apos;ai un compte MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="129"/>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>Je n\&apos;ai pas de compte MEGA</translation>
+        <translation>Je n&apos;ai pas de compte MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="185"/>
@@ -1140,7 +1140,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>J\&apos;accepte les &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Conditions d\&apos;Utilisation&lt;/a&gt; de MEGA</translation>
+        <translation>J&apos;accepte les &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Conditions d&apos;Utilisation&lt;/a&gt; de MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
@@ -1160,17 +1160,17 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
         <source>Choose install type</source>
-        <translation>Choisissez le type d\&apos;installation</translation>
+        <translation>Choisissez le type d&apos;installation</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
         <source> Sync your entire cloud drive</source>
-        <translation>Synchroniser l\&apos;intégralité de votre espace de stockage</translation>
+        <translation>Synchroniser l&apos;intégralité de votre espace de stockage</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
         <source>Full account sync</source>
-        <translation>Synchronisation de l\&apos;intégralité du compte</translation>
+        <translation>Synchronisation de l&apos;intégralité du compte</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="653"/>
@@ -1262,7 +1262,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>L\&apos;utilisateur exist déjà</translation>
+        <translation>L&apos;utilisateur exist déjà</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
@@ -1282,7 +1282,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.cpp" line="90"/>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>Le dossier MEGA n\&apos;existe pas</translation>
+        <translation>Le dossier MEGA n&apos;existe pas</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="97"/>
@@ -1332,7 +1332,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>
         <source>You have to accept our terms of service</source>
-        <translation>Vous devez accepter nos conditions d\&apos;utilisation</translation>
+        <translation>Vous devez accepter nos conditions d&apos;utilisation</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="233"/>
@@ -1445,7 +1445,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="32"/>
         <source>Please, select the upload folder for your files:</source>
-        <translation>Veuillez sélectionner le dossier d\&apos;upload pour vos fichiers :</translation>
+        <translation>Veuillez sélectionner le dossier d&apos;upload pour vos fichiers :</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="45"/>

@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Nama \&quot;%1\&quot; telah digunakan untuk penyegerak yang lain Sila masukkan nama yang lain untuk mengenal pasti folder segerak ini:</translation>
+        <translation>Nama &quot;%1&quot; telah digunakan untuk penyegerak yang lain Sila masukkan nama yang lain untuk mengenal pasti folder segerak ini:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Segerak anda \&quot;%1\&quot; telah dimatikan kerana folder jauh tidak wujud</translation>
+        <translation>Segerak anda &quot;%1&quot; telah dimatikan kerana folder jauh tidak wujud</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Segerak anda \&quot;%1\&quot; telah dimatikan kerana folder jauh di dalam tong sampah</translation>
+        <translation>Segerak anda &quot;%1&quot; telah dimatikan kerana folder jauh di dalam tong sampah</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Segerak anda \&quot;%1\&quot; telah dimatikan kerana folder tempatan tidak wujud</translation>
+        <translation>Segerak anda &quot;%1&quot; telah dimatikan kerana folder tempatan tidak wujud</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -930,7 +930,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="838"/>
         <source>Don&apos;t limit</source>
-        <translation>Don\&apos;t limit</translation>
+        <translation>Don&apos;t limit</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="848"/>
@@ -1108,7 +1108,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="129"/>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>I don\&apos;t have a MEGA account</translation>
+        <translation>I don&apos;t have a MEGA account</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="185"/>
@@ -1282,7 +1282,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="90"/>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>MEGA folder doesn\&apos;t exist</translation>
+        <translation>MEGA folder doesn&apos;t exist</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="97"/>
@@ -1327,7 +1327,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="219"/>
         <source>The entered passwords don&apos;t match</source>
-        <translation>The entered passwords don\&apos;t match</translation>
+        <translation>The entered passwords don&apos;t match</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>

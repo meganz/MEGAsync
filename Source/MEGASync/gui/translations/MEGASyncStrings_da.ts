@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Navnet \&quot;%1\&quot; er allerede brugt til en anden synkronisering Indtast et andet navn til identifikation af denne synkroniserede mappe:</translation>
+        <translation>Navnet &quot;%1&quot; er allerede brugt til en anden synkronisering Indtast et andet navn til identifikation af denne synkroniserede mappe:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -183,7 +183,7 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.ui" line="749"/>
         <location filename="../InfoDialog.cpp" line="221"/>
         <source>Syncs</source>
-        <translation>Synk\&apos;er</translation>
+        <translation>Synk&apos;er</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Din synk \&quot;%1\&quot; er blevet deaktiveret fordi fjernmappen ikke findes</translation>
+        <translation>Din synk &quot;%1&quot; er blevet deaktiveret fordi fjernmappen ikke findes</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Din synk \&quot;%1\&quot; er blevet deaktiveret fordi fjernmappen er lagt i papirkurven</translation>
+        <translation>Din synk &quot;%1&quot; er blevet deaktiveret fordi fjernmappen er lagt i papirkurven</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Din synk \&quot;%1\&quot; er blevet deaktiveret fordi den lokale mappe ikke findes</translation>
+        <translation>Din synk &quot;%1&quot; er blevet deaktiveret fordi den lokale mappe ikke findes</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -541,7 +541,7 @@ Afbryd alligevel?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>Fejl i sessions-ID\&apos;et</translation>
+        <translation>Fejl i sessions-ID&apos;et</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>

@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>O nome \&quot;%1\&quot; já está em uso para outra sincronização Por favor introduza outro nome para identificar esta pasta sincronizada:</translation>
+        <translation>O nome &quot;%1&quot; já está em uso para outra sincronização Por favor introduza outro nome para identificar esta pasta sincronizada:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>A sua sincronização \&quot;%1\&quot; foi inválida porque a pasta remota não existe</translation>
+        <translation>A sua sincronização &quot;%1&quot; foi inválida porque a pasta remota não existe</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>A sua sincronização \&quot;%1\&quot; foi inválida porque a sua pasta remota está no Lixo</translation>
+        <translation>A sua sincronização &quot;%1&quot; foi inválida porque a sua pasta remota está no Lixo</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>A sua sincronização \&quot;%1\&quot; foi inválida porque a sua pasta local não exsite</translation>
+        <translation>A sua sincronização &quot;%1&quot; foi inválida porque a sua pasta local não exsite</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

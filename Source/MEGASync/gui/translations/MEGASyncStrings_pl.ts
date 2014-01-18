@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Nazwa \&quot;%1\&quot; jest już w użyciu Wprowadź inną nazwę w celu łatwiejszej identyfikacji:</translation>
+        <translation>Nazwa &quot;%1&quot; jest już w użyciu Wprowadź inną nazwę w celu łatwiejszej identyfikacji:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Synchronizacja \&quot;%1\&quot; została zablokowana, ponieważ zdalny katalog nie istnieje</translation>
+        <translation>Synchronizacja &quot;%1&quot; została zablokowana, ponieważ zdalny katalog nie istnieje</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Synchronizacja \&quot;%1\&quot; została zablokowana, ponieważ zdalny katalog znajduje się w koszu</translation>
+        <translation>Synchronizacja &quot;%1&quot; została zablokowana, ponieważ zdalny katalog znajduje się w koszu</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Synchronizacja \&quot;%1\&quot; została zablokowana, ponieważ lokalny katalog nie istnieje</translation>
+        <translation>Synchronizacja &quot;%1&quot; została zablokowana, ponieważ lokalny katalog nie istnieje</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Názov \&quot;%1\&quot; už existuje pre inú synchronizáciu Prosím zadajte iné meno pre identifikáciu synchronizovaného priečinku:</translation>
+        <translation>Názov &quot;%1&quot; už existuje pre inú synchronizáciu Prosím zadajte iné meno pre identifikáciu synchronizovaného priečinku:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Vaša synchronizácia \&quot;%1\&quot; bola zablokovaná pretože vzdialený priečinok neexistuje</translation>
+        <translation>Vaša synchronizácia &quot;%1&quot; bola zablokovaná pretože vzdialený priečinok neexistuje</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Vaša synchronizácia \&quot;%1\&quot; bola zablokovaná pretože vzdialený priečinok sa nachádza v koši</translation>
+        <translation>Vaša synchronizácia &quot;%1&quot; bola zablokovaná pretože vzdialený priečinok sa nachádza v koši</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Vaša synchronizácia \&quot;%1\&quot; bola zablokovaná pretože lokálny priečinok neexistuje</translation>
+        <translation>Vaša synchronizácia &quot;%1&quot; bola zablokovaná pretože lokálny priečinok neexistuje</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
