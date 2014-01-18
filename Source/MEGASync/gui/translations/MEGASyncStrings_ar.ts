@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>اسم &quot;٪ 1&quot; هو بالفعل مستخدم في مزامنة اخري الرجاء إدخال اسم مختلف لتحديد مزامنة هذا المجلد:</translation>
+        <translation>اسم &quot;%1&quot; هو بالفعل مستخدم في مزامنة اخري الرجاء إدخال اسم مختلف لتحديد مزامنة هذا المجلد:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
