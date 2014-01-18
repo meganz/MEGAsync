@@ -53,6 +53,7 @@ RequestExecutionLevel user
 var ICONS_GROUP
 var INSTALLDAY
 var EXPIRATIONDAY
+var USERNAME
 
 ; Installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -168,6 +169,9 @@ FunctionEnd
 
 Function .onInit
 
+  System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
+  strCpy $USERNAME $0
+
   ${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   strCpy $INSTALLDAY "$2$1$0"
   strCpy $EXPIRATIONDAY "20140121"
@@ -210,7 +214,7 @@ currentuser:
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
 
 modeselected:
-
+  
   StrCpy $INSTDIR "$1\MEGAsync"
 
   ;SetRebootFlag true
@@ -307,24 +311,55 @@ modeselected:
   
   ;x86_32 files
   File "${SRCDIR_MEGASYNC_X32}\QtCore4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\QtCore4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\QtCore4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   File "${SRCDIR_MEGASYNC_X32}\QtGui4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\QtGui4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\QtGui4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   File "${SRCDIR_MEGASYNC_X32}\QtNetwork4.dll"
-  ;File /oname=ShellExtX32.dll "${SRCDIR_MEGASHELLEXT_X32}\MegaShellExt.dll"
+  AccessControl::SetFileOwner "$INSTDIR\QtNetwork4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\QtNetwork4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
   SetOutPath "$INSTDIR\imageformats"
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qgif4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qico4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qico4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qjpeg4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qmng4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qsvg4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
+
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qtga4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtga4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtga4.dll" "$USERNAME" "GenericRead + GenericWrite"
+
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qtiff4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
           
   SetOutPath "$INSTDIR"
   SetOverwrite on
   AllowSkipFiles off
   File "${SRCDIR_MEGASYNC_X32}\MEGAsync.exe"
-  
+  AccessControl::SetFileOwner "$INSTDIR\MEGAsync.exe" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\MEGAsync.exe" "$USERNAME" "GenericRead + GenericWrite"
+    
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
 
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
@@ -342,6 +377,9 @@ modeselected:
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
 
+  AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   ${If} ${RunningX64}
         IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
                 GetTempFileName $0
@@ -359,6 +397,9 @@ modeselected:
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
+        
+        AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
+        AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
   ${EndIf}
 
   ${UAC.CallFunctionAsUser} RunExplorer
@@ -395,6 +436,11 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
+  
+  AccessControl::SetFileOwner "$INSTDIR\MEGA Website.url" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\MEGA Website.url" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\uninst.exe" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\uninst.exe" "$USERNAME" "GenericRead + GenericWrite"
 SectionEnd
 
 Function un.onInit
