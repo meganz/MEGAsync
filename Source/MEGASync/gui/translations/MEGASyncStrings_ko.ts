@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>\&quot;%1\&quot;은 이미 다른 동기화에서 사용중입니다 이 동기화된 폴더를 식별할 다른 이름을 입력하세요:</translation>
+        <translation>&quot;%1&quot;은 이미 다른 동기화에서 사용중입니다 이 동기화된 폴더를 식별할 다른 이름을 입력하세요:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>원격 폴더가 존재하지 않아서 동기화 \&quot;%1\&quot;이 비활성화 되었습니다.</translation>
+        <translation>원격 폴더가 존재하지 않아서 동기화 &quot;%1&quot;이 비활성화 되었습니다.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>원격 폴더가 휴지통에 있어서 동기화 \&quot;%1\&quot;이 비활성화 되었습니다.</translation>
+        <translation>원격 폴더가 휴지통에 있어서 동기화 &quot;%1&quot;이 비활성화 되었습니다.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>로컬 폴더가 존재하지 않아서 동기화 \&quot;%1\&quot;이 비활성화 되었습니다.</translation>
+        <translation>로컬 폴더가 존재하지 않아서 동기화 &quot;%1&quot;이 비활성화 되었습니다.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

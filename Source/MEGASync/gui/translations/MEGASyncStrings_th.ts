@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>ชื่อ \&quot;%1\&quot; มีอยู่แล้วในการใช้งาน จากการ Sync ที่อื่น กรุณากรอกชื่อให้แตกต่างกัน สำหรับการระบุโฟลเดอร์ที่จะ Sync นี้</translation>
+        <translation>ชื่อ &quot;%1&quot; มีอยู่แล้วในการใช้งาน จากการ Sync ที่อื่น กรุณากรอกชื่อให้แตกต่างกัน สำหรับการระบุโฟลเดอร์ที่จะ Sync นี้</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Sync ของคุณ \&quot;%1\&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
+        <translation>Sync ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Sync ของคุณ \&quot;%1\&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+        <translation>Sync ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Sync ของคุณ \&quot;%1\&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ภายในไม่มีอยู่</translation>
+        <translation>Sync ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ภายในไม่มีอยู่</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

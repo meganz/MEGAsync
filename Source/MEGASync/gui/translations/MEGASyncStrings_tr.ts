@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>\&quot;%1\&quot; ismi başka bir senkronizasyon için zaten kullanılmış Bu senkronize klasörü tanımlamak için farklı bir isim kullanın:</translation>
+        <translation>&quot;%1&quot; ismi başka bir senkronizasyon için zaten kullanılmış Bu senkronize klasörü tanımlamak için farklı bir isim kullanın:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>\&quot;%1\&quot; senkronizasyonu uzak klasör olmadığı için devre dışı bırakıldı</translation>
+        <translation>&quot;%1&quot; senkronizasyonu uzak klasör olmadığı için devre dışı bırakıldı</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>\&quot;%1\&quot; senkronizasyonu uzak klasör çöp kutusunda olduğu için devre dışı bırakıldı</translation>
+        <translation>&quot;%1&quot; senkronizasyonu uzak klasör çöp kutusunda olduğu için devre dışı bırakıldı</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>\&quot;%1\&quot; senkronizasyonu, yerel klasör olmadığı için devre dışı bırakıldı</translation>
+        <translation>&quot;%1&quot; senkronizasyonu, yerel klasör olmadığı için devre dışı bırakıldı</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -950,7 +950,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>mevcut bant genişliğinin yaklaşık %90\&apos;ı</translation>
+        <translation>mevcut bant genişliğinin yaklaşık %90&apos;ı</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
@@ -965,7 +965,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Windows Gezgini\&apos;nden yüklemeler için klasör</translation>
+        <translation>Windows Gezgini&apos;nden yüklemeler için klasör</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
@@ -1140,7 +1140,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Hizmet Koşulları&lt;/a&gt;\&apos;nı kabul ediyorum</translation>
+        <translation>MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Hizmet Koşulları&lt;/a&gt;&apos;nı kabul ediyorum</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
@@ -1207,7 +1207,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="887"/>
         <source>Welcome to MEGA</source>
-        <translation>MEGA\&apos;ya hoş geldiniz</translation>
+        <translation>MEGA&apos;ya hoş geldiniz</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="910"/>
@@ -1386,7 +1386,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="374"/>
         <source>Upload to MEGA</source>
-        <translation>MEGA\&apos;ya yükle</translation>
+        <translation>MEGA&apos;ya yükle</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
@@ -1440,7 +1440,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="26"/>
         <source>Upload to MEGA</source>
-        <translation>MEGA\&apos;ya yükle</translation>
+        <translation>MEGA&apos;ya yükle</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="32"/>

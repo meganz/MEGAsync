@@ -32,7 +32,7 @@
         <location filename="../BindFolderDialog.cpp" line="77"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>Una cartella sincronizzata non può essere all\&apos;interno di un\&apos;altra cartella sincronizzata</translation>
+        <translation>Una cartella sincronizzata non può essere all&apos;interno di un&apos;altra cartella sincronizzata</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="91"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>La sincronizzazione completa dell\&apos;account è possibile solamente senza selezioni già sincronizzate</translation>
+        <translation>La sincronizzazione completa dell&apos;account è possibile solamente senza selezioni già sincronizzate</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>Cartella locale troppo grande (questa versione è limitata all\&apos;1% di cartelle o 2% di files. Seleziona un\&apos;altra cartella.</translation>
+        <translation>Cartella locale troppo grande (questa versione è limitata all&apos;1% di cartelle o 2% di files. Seleziona un&apos;altra cartella.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Il nome \&quot;%1\&quot; è già in uso per un\&apos;altra sincronizzazione Inserisci un nome diverso per identificare questa cartella sincronizzata:</translation>
+        <translation>Il nome &quot;%1&quot; è già in uso per un&apos;altra sincronizzazione Inserisci un nome diverso per identificare questa cartella sincronizzata:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>La tua sincronizzazione \&quot;%1\&quot; è stata disattivata perché la cartella remota non esiste</translation>
+        <translation>La tua sincronizzazione &quot;%1&quot; è stata disattivata perché la cartella remota non esiste</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>La tua sincronizzazione \&quot;%1\&quot; è stata disattivata perché la cartella remota è nel cestino</translation>
+        <translation>La tua sincronizzazione &quot;%1&quot; è stata disattivata perché la cartella remota è nel cestino</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>La tua sincronizzazione \&quot;%1\&quot; è stata disattivata perché la cartella locale non esiste</translation>
+        <translation>La tua sincronizzazione &quot;%1&quot; è stata disattivata perché la cartella locale non esiste</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -850,7 +850,7 @@ Sei sicuro di voler sincronizzare?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Apri all\&apos;avvio</translation>
+        <translation>Apri all&apos;avvio</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
@@ -1063,7 +1063,7 @@ Sei sicuro di voler sincronizzare?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
         <source>You are already syncing your entire account.</source>
-        <translation>Stai già sincronizzando l\&apos;intero account.</translation>
+        <translation>Stai già sincronizzando l&apos;intero account.</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
@@ -1140,7 +1140,7 @@ Sei sicuro di voler sincronizzare?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Sono d\&apos;accordo con i &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Termini di Servizio&lt;/a&gt; di MEGA</translation>
+        <translation>Sono d&apos;accordo con i &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Termini di Servizio&lt;/a&gt; di MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
@@ -1165,7 +1165,7 @@ Sei sicuro di voler sincronizzare?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
         <source> Sync your entire cloud drive</source>
-        <translation>Sincronizzazione dell\&apos;intero cloud drive</translation>
+        <translation>Sincronizzazione dell&apos;intero cloud drive</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
@@ -1262,7 +1262,7 @@ Sei sicuro di voler sincronizzare?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>L\&apos;utente esiste già</translation>
+        <translation>L&apos;utente esiste già</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
@@ -1352,7 +1352,7 @@ Sei sicuro di voler sincronizzare?</translation>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
         <translation>Hai %1 nel tuo Cloud Drive.
-Sei sicuro di voler sincronizzare l\&apos;intero Cloud Drive?</translation>
+Sei sicuro di voler sincronizzare l&apos;intero Cloud Drive?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="279"/>

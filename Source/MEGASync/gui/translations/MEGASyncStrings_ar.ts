@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>اسم \&quot;٪ 1\&quot; هو بالفعل مستخدم في مزامنة اخري الرجاء إدخال اسم مختلف لتحديد مزامنة هذا المجلد:</translation>
+        <translation>اسم &quot;٪ 1&quot; هو بالفعل مستخدم في مزامنة اخري الرجاء إدخال اسم مختلف لتحديد مزامنة هذا المجلد:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>تم تعطيل المزامنة \&quot;%1\&quot; بسبب عدم وجود المجلد البعيد</translation>
+        <translation>تم تعطيل المزامنة &quot;%1&quot; بسبب عدم وجود المجلد البعيد</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>تم تعطيل المزامنة \&quot;%1\&quot; بسبب  وجود المجلد البعيد في سلة المهملات</translation>
+        <translation>تم تعطيل المزامنة &quot;%1&quot; بسبب  وجود المجلد البعيد في سلة المهملات</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>تم تعطيل المزامنة \&quot;%1\&quot; بسبب  عدد وجود المجلد المحلي</translation>
+        <translation>تم تعطيل المزامنة &quot;%1&quot; بسبب  عدد وجود المجلد المحلي</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

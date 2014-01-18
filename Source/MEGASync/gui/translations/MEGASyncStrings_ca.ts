@@ -32,7 +32,7 @@
         <location filename="../BindFolderDialog.cpp" line="77"/>
         <location filename="../BindFolderDialog.cpp" line="99"/>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>Una carpeta sincronitzada no es pot trobar dins d\&apos;una altra també sincronitzada</translation>
+        <translation>Una carpeta sincronitzada no es pot trobar dins d&apos;una altra també sincronitzada</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="91"/>
@@ -63,12 +63,12 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>El nom \&quot;%1\&quot; ja s\&apos;està fent servir en una altra sincronització Si us plau, introdueix un nom diferent per identificar aquesta carpeta sincronitzada:</translation>
+        <translation>El nom &quot;%1&quot; ja s&apos;està fent servir en una altra sincronització Si us plau, introdueix un nom diferent per identificar aquesta carpeta sincronitzada:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
 	<source>OK</source>
-	<translation>D\&apos;acord</translation>
+	<translation>D&apos;acord</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="49"/>
@@ -114,7 +114,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="231"/>
         <source>OK</source>
-        <translation>D\&apos;ACORD</translation>
+        <translation>D&apos;ACORD</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="238"/>
@@ -227,7 +227,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="304"/>
         <source>All transfers have been completed</source>
-        <translation>Totes les transferències s\&apos;han completat</translation>
+        <translation>Totes les transferències s&apos;han completat</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="330"/>
@@ -311,40 +311,40 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="205"/>
         <location filename="../../MegaApplication.cpp" line="206"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync està treballant. Fés clic per obrir la finestra d\&apos;estat.</translation>
+        <translation>MEGAsync està treballant. Fés clic per obrir la finestra d&apos;estat.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>La teva sincronització \&quot;%1\&quot; s\&apos;ha desactivat perquè la carpeta remota no existeix</translation>
+        <translation>La teva sincronització &quot;%1&quot; s&apos;ha desactivat perquè la carpeta remota no existeix</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>La teva sincronització \&quot;%1\&quot; s\&apos;ha desactivat perquè la carpeta remota està a la paperera</translation>
+        <translation>La teva sincronització &quot;%1&quot; s&apos;ha desactivat perquè la carpeta remota està a la paperera</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>La teva sincronització \&quot;%1\&quot; s\&apos;ha desactivat perquè la carpeta local no existeix</translation>
+        <translation>La teva sincronització &quot;%1&quot; s&apos;ha desactivat perquè la carpeta local no existeix</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
-        <source>Error: Invalid destination folder. La pujada s\&apos;ha cancel·lat</source>
+        <source>Error: Invalid destination folder. La pujada s&apos;ha cancel·lat</source>
         <translation>Error: Carpeta de destí invàlida. </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>La carpeta (%1) no s\&apos;ha pujat perquè és massa gran (aquesta versió està limitada a %2 carpetes o %3 fitxers).</translation>
+        <translation>La carpeta (%1) no s&apos;ha pujat perquè és massa gran (aquesta versió està limitada a %2 carpetes o %3 fitxers).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>%1 carpetes no s\&apos;han pujat perquè són massa grans (aquesta beta està limitada a %2 carpetes o %3 fitxers).</translation>
+        <translation>%1 carpetes no s&apos;han pujat perquè són massa grans (aquesta beta està limitada a %2 carpetes o %3 fitxers).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -380,12 +380,12 @@ Sortir de totes maneres?</translation>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>L\&apos;enllaç s\&apos;ha copiat al portapapers</translation>
+        <translation>L&apos;enllaç s&apos;ha copiat al portapapers</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
         <source>The links have been copied to the clipboard</source>
-        <translation>Els enllaços s\&apos;han copiat al portapapers</translation>
+        <translation>Els enllaços s&apos;han copiat al portapapers</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="608"/>
@@ -566,7 +566,7 @@ Sortir de totes maneres?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="792"/>
         <source>Write error</source>
-        <translation>Error d\&apos;escriptura</translation>
+        <translation>Error d&apos;escriptura</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="794"/>
@@ -576,7 +576,7 @@ Sortir de totes maneres?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>Clau d\&apos;aplicació invàlida</translation>
+        <translation>Clau d&apos;aplicació invàlida</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
@@ -629,7 +629,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
 	<source>OK</source>
-        <translation>D\&apos;ACORD</translation>
+        <translation>D&apos;ACORD</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="107"/>
@@ -655,7 +655,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Clau d\&apos;aplicació invàlida Error desconegut</translation>
+        <translation>Clau d&apos;aplicació invàlida Error desconegut</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
@@ -706,7 +706,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>No s\&apos;han trobat enllaços vàlids de MEGA. (Els enllaços de carpeta encara no són compatibles.)</translation>
+        <translation>No s&apos;han trobat enllaços vàlids de MEGA. (Els enllaços de carpeta encara no són compatibles.)</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
 	<source>OK</source>
-        <translation>D\&apos;ACORD</translation>
+        <translation>D&apos;ACORD</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="383"/>
@@ -850,7 +850,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Inicia en arrencar l\&apos;ordinador</translation>
+        <translation>Inicia en arrencar l&apos;ordinador</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
@@ -887,7 +887,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="602"/>
         <source>Storage space</source>
-        <translation>Espai d\&apos;emmagatzematge</translation>
+        <translation>Espai d&apos;emmagatzematge</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="650"/>
@@ -950,17 +950,17 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>aproximadament un 90% de l\&apos;ample de banda disponible</translation>
+        <translation>aproximadament un 90% de l&apos;ample de banda disponible</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
         <source>Bandwidth quota</source>
-        <translation>Quota d\&apos;ample de banda</translation>
+        <translation>Quota d&apos;ample de banda</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Els límits de pujada són per servidor de pujada i s\&apos;apliquen quan es comença una nova pujada</translation>
+        <translation>Els límits de pujada són per servidor de pujada i s&apos;apliquen quan es comença una nova pujada</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
@@ -1015,7 +1015,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1271"/>
         <source>Username:</source>
-        <translation>Nom d\&apos;usuari:</translation>
+        <translation>Nom d&apos;usuari:</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1278"/>
@@ -1073,7 +1073,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="518"/>
         <source>Are you sure?</source>
-        <translation>N\&apos;estàs segur?</translation>
+        <translation>N&apos;estàs segur?</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="568"/>
@@ -1140,7 +1140,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="264"/>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Estic d\&apos;acord amb les &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Condicions de Servei&lt;/a&gt; de MEGA</translation>
+        <translation>Estic d&apos;acord amb les &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Condicions de Servei&lt;/a&gt; de MEGA</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="344"/>
@@ -1150,7 +1150,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="416"/>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Si us plau, confirma el teu compte fent servir l\&apos;enllaç que t\&apos;hem enviat al teu correu electrònic</translation>
+        <translation>Si us plau, confirma el teu compte fent servir l&apos;enllaç que t&apos;hem enviat al teu correu electrònic</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
@@ -1160,7 +1160,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
         <source>Choose install type</source>
-        <translation>Tria el tipus d\&apos;instal·lació</translation>
+        <translation>Tria el tipus d&apos;instal·lació</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="561"/>
@@ -1262,7 +1262,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
         <source>User already exists</source>
-        <translation>L\&apos;usuari ja existeix</translation>
+        <translation>L&apos;usuari ja existeix</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="64"/>
@@ -1332,7 +1332,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     <message>
         <location filename="../SetupWizard.cpp" line="225"/>
         <source>You have to accept our terms of service</source>
-        <translation>Has d\&apos;acceptar les condicions de servei</translation>
+        <translation>Has d&apos;acceptar les condicions de servei</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="233"/>
@@ -1472,7 +1472,7 @@ Please, select another folder.</source>
     <message>
 	<location filename="gui/UploadToMegaDialog.ui" line="138"/>
 	<source>OK</source>
-	<translation>D\&apos;acord</translation>
+	<translation>D&apos;acord</translation>
     </message>
     <message>
 	<location filename="gui/UploadToMegaDialog.ui" line="145"/>
@@ -1500,7 +1500,7 @@ Please, select another folder.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;D\&apos;acord</translation>
+        <translation>&amp;D&apos;acord</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>

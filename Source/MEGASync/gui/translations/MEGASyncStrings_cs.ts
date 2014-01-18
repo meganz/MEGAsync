@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Název \&quot;%1\&quot; je již použit pro jinou synchronizaci Zadejte rozdílný název pro identifikaci této synchronizované složky:</translation>
+        <translation>Název &quot;%1&quot; je již použit pro jinou synchronizaci Zadejte rozdílný název pro identifikaci této synchronizované složky:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Chystáte se importovat tento soubor do synchronizované složky. Pokud povolíte stahování, soubor bude ve vašem počítači zduplikován. Opravdu?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Chystáte se importovat tyto soubory do synchronizované složky. Pokud povolíte stahování, soubory budou ve vašem počítači zduplikovány. Opravdu?</translation>
     </message>
 </context>
 <context>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Vaše synchronizace \&quot;%1\&quot; byla zakázána, protože vzdálená složka neexistuje</translation>
+        <translation>Vaše synchronizace &quot;%1&quot; byla zakázána, protože vzdálená složka neexistuje</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Vaše synchronizace \&quot;%1\&quot; byla zakázána, protože vzdálená složka je v koši</translation>
+        <translation>Vaše synchronizace &quot;%1&quot; byla zakázána, protože vzdálená složka je v koši</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Vaše synchronizace \&quot;%1\&quot; byla zakázána, protože místní složka neexistuje</translation>
+        <translation>Vaše synchronizace &quot;%1&quot; byla zakázána, protože místní složka neexistuje</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

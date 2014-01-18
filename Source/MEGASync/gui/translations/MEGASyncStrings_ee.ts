@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Nimi \&quot;%1\&quot; on juba teises sünkroniseerimises kasutusel Sünkroniseeritud kausta tuvastamiseks sisestage teine nimi:</translation>
+        <translation>Nimi &quot;%1&quot; on juba teises sünkroniseerimises kasutusel Sünkroniseeritud kausta tuvastamiseks sisestage teine nimi:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Teie sünkroniseering \&quot;%1\&quot; on keelatud, kuna eemalolevat kausta pole olemas</translation>
+        <translation>Teie sünkroniseering &quot;%1&quot; on keelatud, kuna eemalolevat kausta pole olemas</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Teie sünkroniseering \&quot;%1\&quot; on keelatud, kuna eemalolevat kaust asub prügikastis</translation>
+        <translation>Teie sünkroniseering &quot;%1&quot; on keelatud, kuna eemalolevat kaust asub prügikastis</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Teie sünkroniseering \&quot;%1\&quot; on keelatud, kuna kohalikku kausta pole olemas</translation>
+        <translation>Teie sünkroniseering &quot;%1&quot; on keelatud, kuna kohalikku kausta pole olemas</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

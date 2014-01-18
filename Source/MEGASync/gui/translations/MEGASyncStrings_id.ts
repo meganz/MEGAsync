@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Nama \&quot;%1\&quot; telah terpakai untuk sync yang lain Harap masukkan nama lain untuk meng-identifikasi folder berikut yang telah disinkronisasikan:</translation>
+        <translation>Nama &quot;%1&quot; telah terpakai untuk sync yang lain Harap masukkan nama lain untuk meng-identifikasi folder berikut yang telah disinkronisasikan:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Sync \&quot;%1\&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
+        <translation>Sync &quot;%1&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Sync \&quot;%1\&quot; anda telah dinon-aktifkan karena remote folder di dalam Sampah</translation>
+        <translation>Sync &quot;%1&quot; anda telah dinon-aktifkan karena remote folder di dalam Sampah</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Sync \&quot;%1\&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
+        <translation>Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>A(z) \&quot;%1\&quot; név már használatban van egy másik szinkronhoz Kérem írjon be egy másik nevet ezen szinkronizált mappa azonosításához:</translation>
+        <translation>A(z) &quot;%1&quot; név már használatban van egy másik szinkronhoz Kérem írjon be egy másik nevet ezen szinkronizált mappa azonosításához:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Az Ön \&quot;%1\&quot; szinkronja letiltásra került, mivel a távoli mappa nem létezik</translation>
+        <translation>Az Ön &quot;%1&quot; szinkronja letiltásra került, mivel a távoli mappa nem létezik</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Az Ön \&quot;%1\&quot; szinkronja letiltásra került, mivel a távoli mappa a szemetesládában van</translation>
+        <translation>Az Ön &quot;%1&quot; szinkronja letiltásra került, mivel a távoli mappa a szemetesládában van</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Az Ön \&quot;%1\&quot; szinkronja letiltásra került, mivel a helyi mappa nem létezik</translation>
+        <translation>Az Ön &quot;%1&quot; szinkronja letiltásra került, mivel a helyi mappa nem létezik</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Synkronointisi \&quot;%1\&quot; on poiskytketty koska etäkansiota ei ole olemassa </translation>
+        <translation>Synkronointisi &quot;%1&quot; on poiskytketty koska etäkansiota ei ole olemassa </translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Synkronointisi \&quot;%1\&quot; on poiskytketty koska etäkansio on roskakorissa</translation>
+        <translation>Synkronointisi &quot;%1&quot; on poiskytketty koska etäkansio on roskakorissa</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Synkronointisi \&quot;%1\&quot; on poiskytketty koska etäkansiota ei ole olemassa</translation>
+        <translation>Synkronointisi &quot;%1&quot; on poiskytketty koska etäkansiota ei ole olemassa</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

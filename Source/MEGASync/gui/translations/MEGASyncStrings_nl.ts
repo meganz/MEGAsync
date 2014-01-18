@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>De naam \&quot;%1\&quot; is al in gebruik voor een andere synchronisatie Vul een andere naam in om deze gesynchroniseerde map te identificeren</translation>
+        <translation>De naam &quot;%1&quot; is al in gebruik voor een andere synchronisatie Vul een andere naam in om deze gesynchroniseerde map te identificeren</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Je synchronisatie \&quot;%1\&quot; is gestopt omdat de externe map niet bestaat</translation>
+        <translation>Je synchronisatie &quot;%1&quot; is gestopt omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Je synchronisatie \&quot;%1\&quot; is gestopt omdat de externe map in de prullenbak zit</translation>
+        <translation>Je synchronisatie &quot;%1&quot; is gestopt omdat de externe map in de prullenbak zit</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Je synchronisatie \&quot;%1\&quot; is gestopt omdat de lokale map niet bestaat</translation>
+        <translation>Je synchronisatie &quot;%1&quot; is gestopt omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>

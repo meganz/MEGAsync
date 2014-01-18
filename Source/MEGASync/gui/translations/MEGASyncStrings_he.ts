@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>השם \&quot;%1\&quot; כבר נמצא בשימוש בסנכרון אחר אנא בחר שם שונה בכדי לזהות את התיקייה המסונכרנת הזו:</translation>
+        <translation>השם &quot;%1&quot; כבר נמצא בשימוש בסנכרון אחר אנא בחר שם שונה בכדי לזהות את התיקייה המסונכרנת הזו:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>הסנכרון \&quot;%1\&quot; בוטל מאחר ותיקיית היעד איננה קיימת.</translation>
+        <translation>הסנכרון &quot;%1&quot; בוטל מאחר ותיקיית היעד איננה קיימת.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>הסנכרון \&quot;%1\&quot; בוטל מאחר ותיקיית היעד נמצאת בסל המחזור.</translation>
+        <translation>הסנכרון &quot;%1&quot; בוטל מאחר ותיקיית היעד נמצאת בסל המחזור.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>הסנכרון \&quot;%1\&quot; בוטל מאחר והתיקייה המקומית איננה קיימת.</translation>
+        <translation>הסנכרון &quot;%1&quot; בוטל מאחר והתיקייה המקומית איננה קיימת.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -1124,7 +1124,7 @@ Are you sure you want to sync it?</source>
         <location filename="../SetupWizard.ui" line="214"/>
         <location filename="../SetupWizard.ui" line="369"/>
         <source>Email:</source>
-        <translation>דוא\&quot;ל:</translation>
+        <translation>דוא&quot;ל:</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="224"/>
@@ -1150,7 +1150,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SetupWizard.ui" line="416"/>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>אנא ודא את החשבון שלך על ידי שימוש בקישור האימות ששלחנו לתיבת הדוא\&quot;ל שלך</translation>
+        <translation>אנא ודא את החשבון שלך על ידי שימוש בקישור האימות ששלחנו לתיבת הדוא&quot;ל שלך</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
@@ -1295,13 +1295,13 @@ Are you sure you want to sync it?</source>
         <location filename="../SetupWizard.cpp" line="157"/>
         <location filename="../SetupWizard.cpp" line="195"/>
         <source>Please, enter your e-mail address</source>
-        <translation>אנא הכנס את כתובת הדוא\&quot;ל שלך</translation>
+        <translation>אנא הכנס את כתובת הדוא&quot;ל שלך</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="163"/>
         <location filename="../SetupWizard.cpp" line="201"/>
         <source>Please, enter a valid e-mail address</source>
-        <translation>אנא הכנס כתובת דוא\&quot;ל תקינה</translation>
+        <translation>אנא הכנס כתובת דוא&quot;ל תקינה</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="169"/>
