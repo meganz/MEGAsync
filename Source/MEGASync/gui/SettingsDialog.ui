@@ -9,19 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>428</width>
+    <width>455</width>
     <height>453</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>428</width>
+    <width>455</width>
     <height>453</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>430</width>
+    <width>455</width>
     <height>453</height>
    </size>
   </property>
@@ -102,13 +102,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bGeneral">
         <property name="minimumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
@@ -143,13 +143,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
@@ -178,13 +178,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bSyncs">
         <property name="minimumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
@@ -213,13 +213,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bBandwidth">
         <property name="minimumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
@@ -248,13 +248,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bAdvanced">
         <property name="minimumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>85</width>
+          <width>90</width>
           <height>60</height>
          </size>
         </property>
@@ -291,13 +291,13 @@ margin-top: 6px;
       <widget class="QLabel" name="lHeader">
        <property name="minimumSize">
         <size>
-         <width>428</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>428</width>
+         <width>16777215</width>
          <height>16777215</height>
         </size>
        </property>
@@ -764,13 +764,13 @@ margin-top: 6px;
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>190</number>
+             <number>202</number>
             </attribute>
             <attribute name="horizontalHeaderHighlightSections">
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>190</number>
+             <number>202</number>
             </attribute>
             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
              <bool>false</bool>
@@ -994,6 +994,12 @@ margin-top: 6px;
        </item>
        <item>
         <widget class="QLabel" name="label">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <italic>true</italic>
@@ -1001,6 +1007,9 @@ margin-top: 6px;
          </property>
          <property name="text">
           <string>Upload limits are per upload server and are applied when starting new uploads</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
          <property name="margin">
           <number>10</number>
