@@ -21,7 +21,6 @@ public:
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
     ~InfoDialog();
 
-    void startAnimation();
 	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
     void setTransfer(MegaTransfer *transfer);
 	void addRecentFile(QString fileName, long long fileHandle, QString localPath);
@@ -35,7 +34,6 @@ public:
     void setIndexing(bool indexing);
 
 public slots:
-   void timerUpdate();
    void addSync();
    void onTransfer1Cancel(int x, int y);
    void onTransfer2Cancel(int x, int y);
@@ -62,6 +60,8 @@ private:
 
 	long long downloadSpeed;
 	long long uploadSpeed;
+    long long uploadStartTime;
+    long long downloadStartTime;
 	int currentUpload;
 	int currentDownload;
 	int totalUploads;
@@ -86,7 +86,6 @@ protected:
     MegaApi *megaApi;
     Transfer *transfer1;
     Transfer *transfer2;
-    bool finishing;
     m_off_t totalBytes;
     m_off_t usedBytes;
 };
