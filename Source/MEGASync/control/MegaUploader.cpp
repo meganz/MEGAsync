@@ -18,7 +18,6 @@ bool MegaUploader::upload(QFileInfo info, Node *parent)
 {
     if(parent->localnode)
     {
-        QFile file(info.absoluteFilePath());
         string localseparator;
         localseparator.assign((char*)L"\\",sizeof(wchar_t));
         string path;
@@ -31,6 +30,10 @@ bool MegaUploader::upload(QFileInfo info, Node *parent)
         }
         path.append("", 1);
         QString destPath = QString::fromWCharArray((const wchar_t *)path.data()) + info.fileName();
+
+#ifdef WIN32
+        if(destPath.startsWith(QString::fromAscii("\\\\?\\"))) destPath = destPath.mid(4);
+#endif
 
         if(QFileInfo(destPath).exists())
         {
@@ -49,7 +52,6 @@ bool MegaUploader::upload(QFileInfo info, Node *parent)
         connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
         connect(thread, SIGNAL(finished()), fileCopy, SLOT(deleteLater()));
         emit startFileCopy();
-        //file.copy(destPath);
         return true;
     }
 
