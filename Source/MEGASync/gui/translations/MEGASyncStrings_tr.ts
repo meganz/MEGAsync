@@ -950,7 +950,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>mevcut bant genişliğinin yaklaşık %90&apos;ı</translation>
+        <translation>mevcut bant genişliğinin yaklaşık 90%&apos;ı</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>

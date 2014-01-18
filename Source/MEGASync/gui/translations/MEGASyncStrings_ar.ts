@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>مجلد محلي كبير جدا (هذه نسخة تم تحديدها الي %1 مجلدات او 2% ملفاتم. الرجاء تحديد مجلد آخر.</translation>
+        <translation>مجلد محلي كبير جدا (هذه نسخة تم تحديدها الي %1 مجلدات او %2 ملفاتم. الرجاء تحديد مجلد آخر.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
@@ -193,7 +193,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
         <source>%1 of %2</source>
-        <translation>1% من %2</translation>
+        <translation>%1 من %2</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
@@ -204,13 +204,13 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>1% من %2 (%3/ث)</translation>
+        <translation>%1 من %2 (%3/ث)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>1% من %2 (ايقاف)</translation>
+        <translation>%1 من %2 (ايقاف)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
@@ -267,12 +267,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>1% من %2 ملفات في %3/ث</translation>
+        <translation>%1 من %2 ملفات في %3/ث</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
         <source>%1 of %2 files (paused)</source>
-        <translation>1% من %2 ملفات (متوقفة)</translation>
+        <translation>%1 من %2 ملفات (متوقفة)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="447"/>
@@ -344,7 +344,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>1% المجلدات لم يتم رفعها بسبب انها كبيرة جدا (النسخة التجريبية تم تحديدها الي %2 او %3 ملفات.</translation>
+        <translation>%1 المجلدات لم يتم رفعها بسبب انها كبيرة جدا (النسخة التجريبية تم تحديدها الي %2 او %3 ملفات.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -715,7 +715,7 @@ Are you sure you want to sync it?</source>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>1% منذ ساعة</translation>
+        <translation>%1 منذ ساعة</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
@@ -730,7 +730,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>1% منذ ثانية</translation>
+        <translation>%1 منذ ثانية</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
@@ -740,7 +740,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>1% منذ دقيقة</translation>
+        <translation>%1 منذ دقيقة</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
@@ -755,7 +755,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>1% منذ يوم</translation>
+        <translation>%1 منذ يوم</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
@@ -765,7 +765,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>1% منذ شهر</translation>
+        <translation>%1 منذ شهر</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
@@ -775,7 +775,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>1% منذ عام</translation>
+        <translation>%1 منذ عام</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
@@ -1032,7 +1032,7 @@ Are you sure you want to sync it?</source>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>1% (%2%) من %3 مستخدم</translation>
+        <translation>%1 (%2%) من %3 مستخدم</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
@@ -1411,7 +1411,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>1% ملفات</translation>
+        <translation>%1 ملفات</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>
@@ -1421,7 +1421,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="393"/>
         <source>%1 folders</source>
-        <translation>1% مجلدات</translation>
+        <translation>%1 مجلدات</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="396"/>
