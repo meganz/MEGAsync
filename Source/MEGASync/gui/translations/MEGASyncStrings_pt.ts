@@ -339,7 +339,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>A pasta (%1) não foi carregada porque é demasiado grande (esta versão está limitada a %2 pastas e %2 ficheiros).</translation>
+        <translation>A pasta (%1) não foi carregada porque é demasiado grande (esta versão está limitada a %2 pastas e %3 ficheiros).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>

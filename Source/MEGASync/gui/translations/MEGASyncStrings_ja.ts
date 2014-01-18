@@ -666,7 +666,7 @@ Please, select a subfolder.</source>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>このフォルダには%!入っています。
+        <translation>このフォルダには%1入っています。
 これをシンクするんですか？</translation>
     </message>
 </context>
@@ -1351,7 +1351,7 @@ Are you sure you want to sync it?</source>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>あなたのクラウド・ドライブには%!あります。
+        <translation>あなたのクラウド・ドライブには%1あります。
 あなたのクラウド・ドライブ全体をシンクするのですか？</translation>
     </message>
     <message>

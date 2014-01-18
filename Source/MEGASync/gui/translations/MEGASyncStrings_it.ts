@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>Cartella locale troppo grande (questa versione è limitata all&apos;1% di cartelle o 2% di files. Seleziona un&apos;altra cartella.</translation>
+        <translation>Cartella locale troppo grande (questa versione è limitata all&apos;%1 di cartelle o %2 di files. Seleziona un&apos;altra cartella.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
@@ -344,7 +344,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>%1 cartelle non sono state caricate perché sono troppo grandi (questa beta è limitata al 2% di cartelle o %3 files).</translation>
+        <translation>%1 cartelle non sono state caricate perché sono troppo grandi (questa beta è limitata al %2 di cartelle o %3 files).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>

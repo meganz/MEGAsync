@@ -1032,7 +1032,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>%3 alanın %1 (%%2) kulanıldı</translation>
+        <translation>%3 alanın %1 (%2%) kulanıldı</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
