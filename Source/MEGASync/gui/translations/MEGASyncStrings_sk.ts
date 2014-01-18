@@ -267,7 +267,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>1% z %2 súborov %3/s</translation>
+        <translation>%1 z %2 súborov %3/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
@@ -374,7 +374,7 @@ Odísť aj tak?</translation>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>MEGAsync version code %1</source>
-        <translation>Kód verzie MEGAsync</translation>
+        <translation>Kód verzie MEGAsync %1</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="587"/>
@@ -1411,7 +1411,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>1% súborov</translation>
+        <translation>%1 súborov</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>

@@ -198,7 +198,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
         <source>Usage: %1</source>
-        <translation>Użyta pamięć:</translation>
+        <translation>Użyta pamięć: %1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="170"/>

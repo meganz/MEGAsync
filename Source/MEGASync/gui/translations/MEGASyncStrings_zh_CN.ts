@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>本地文件夹过大（这个版本被限制为％1的文件夹或％2文件。请选择另一个文件夹。</translation>
+        <translation>本地文件夹过大（这个版本被限制为%1的文件夹或%2文件。请选择另一个文件夹。</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>名为“％1”已在使用中的另一个同步 请输入一个不同的名称来识别这个同步文件夹：</translation>
+        <translation>名为“%1”已在使用中的另一个同步 请输入一个不同的名称来识别这个同步文件夹：</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -198,19 +198,19 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
         <source>Usage: %1</source>
-        <translation>用法：％1</translation>
+        <translation>用法：%1</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>％1-％2（％3/秒）</translation>
+        <translation>%1-%2（%3/秒）</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>％1-％2（暂停）</translation>
+        <translation>%1-%2（暂停）</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
@@ -257,7 +257,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
         <source>one file at %1/s</source>
-        <translation>在％1/ s的一个文件</translation>
+        <translation>在%1/ s的一个文件</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="444"/>
@@ -267,7 +267,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>％1-2%的文件夹在3%/s</translation>
+        <translation>%1-2%的文件夹在3%/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
@@ -317,19 +317,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>您同步“％1”已被禁用，因为在远程文件夹不存在</translation>
+        <translation>您同步“%1”已被禁用，因为在远程文件夹不存在</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>您同步“％1”已被禁用，因为在远程文件夹是在垃圾桶</translation>
+        <translation>您同步“%1”已被禁用，因为在远程文件夹是在垃圾桶</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>您同步“％1”已被禁用，因为在远程文件夹不存在</translation>
+        <translation>您同步“%1”已被禁用，因为在远程文件夹不存在</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -339,12 +339,12 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>该文件夹（％1）没有上传，因为它太大（这个版本被限制为％2个文件夹或％3个文件</translation>
+        <translation>该文件夹（%1）没有上传，因为它太大（这个版本被限制为%2个文件夹或%3个文件</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>％1文件夹没有上载，因为它们太大（此测试版只限于％2个文件夹或％3个文件。</translation>
+        <translation>%1文件夹没有上载，因为它们太大（此测试版只限于%2个文件夹或%3个文件。</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -374,7 +374,7 @@ Exit anyway?</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
         <source>MEGAsync version code %1</source>
-        <translation>MEGAsync版本代码为1％</translation>
+        <translation>MEGAsync版本代码为%1</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="587"/>
@@ -1411,7 +1411,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="389"/>
         <source>%1 files</source>
-        <translation>％1的文件</translation>
+        <translation>%1的文件</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="392"/>
@@ -1421,7 +1421,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="393"/>
         <source>%1 folders</source>
-        <translation>％1的文件夹</translation>
+        <translation>%1的文件夹</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="396"/>

@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>Pasta local é muito grande (esta versão é limitada a %1 pastas ou %1 arquivos). Por favor selecione outra pasta.</translation>
+        <translation>Pasta local é muito grande (esta versão é limitada a %1 pastas ou %2 arquivos). Por favor selecione outra pasta.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
