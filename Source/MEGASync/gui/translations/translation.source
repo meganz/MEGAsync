@@ -192,7 +192,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
-        <source>%1% of %2</source>
+        <source>%1 of %2</source>
         <translation>[$1607]</translation>
     </message>
     <message>
