@@ -267,7 +267,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="445"/>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1-2%的文件夹在3%/s</translation>
+        <translation>%1-%2的文件夹在%3/s</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="446"/>
@@ -666,7 +666,7 @@ Please, select a subfolder.</source>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>你有1%在文件夹中
+        <translation>你有%1在文件夹中
 你确定想同步么</translation>
     </message>
 </context>
@@ -715,7 +715,7 @@ Are you sure you want to sync it?</source>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>1%小时前</translation>
+        <translation>%1小时前</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
@@ -730,7 +730,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>1%秒前</translation>
+        <translation>%1秒前</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
@@ -740,7 +740,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>1%分前</translation>
+        <translation>%1分前</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
@@ -755,7 +755,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>1%天前</translation>
+        <translation>%1天前</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
@@ -765,7 +765,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>1%月前</translation>
+        <translation>%1月前</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
@@ -775,7 +775,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>1%年前</translation>
+        <translation>%1年前</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
@@ -1351,7 +1351,7 @@ Are you sure you want to sync it?</source>
         <location filename="../SetupWizard.cpp" line="259"/>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>你有1%在你的云盘里
+        <translation>你有%1在你的云盘里
 您确定要同步您的整个云驱动器？</translation>
     </message>
     <message>
