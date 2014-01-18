@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Estàs a punt d&apos;importar aquest fitxer a una carpeta sincronitzada. Si permets la descàrrega el fitxer estarà duplicat al teu ordinador. N&apos;estàs segur?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Estàs a punt d&apos;importar aquests fitxers a una carpeta sincronitzada. Si permets la descàrrega els fitxers estaran duplicats al teu ordinador. N&apos;estàs segur?</translation>
     </message>
 </context>
 <context>
@@ -288,6 +288,10 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
         <translation>Pujant </translation>
+    </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
     </message>
 </context>
 <context>
@@ -459,6 +463,10 @@ Sortir de totes maneres?</translation>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
         <translation>Tens fitxers nous o actualitzats al teu compte</translation>
+    </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
     </message>
 </context>
 <context>
@@ -1091,6 +1099,10 @@ Estàs segur que ho vols sincronitzar?</translation>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Error</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Transferències</translation>
     </message>
 </context>
 <context>

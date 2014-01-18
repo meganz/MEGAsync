@@ -216,7 +216,7 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="227"/>
         <location filename="../InfoDialog.cpp" line="266"/>
         <source>File transfers paused</source>
-        <translation>Передачи файлов  на паузе</translation>
+        <translation>Передача файлов на паузе</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="229"/>
@@ -289,6 +289,10 @@ Please enter a different name to identify this synced folder:</source>
         <source>Uploading </source>
         <translation>Закачивание </translation>
     </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
+    </message>
 </context>
 <context>
     <name>MegaApplication</name>
@@ -323,13 +327,13 @@ because the remote folder doesn&apos;t exist</source>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Ваша синхронизация &quot;%1&quot; была отключена так как удалённая папка находиться в Корзине</translation>
+        <translation>Ваша синхронизация &quot;%1&quot; была отключена, так как удалённая папка находится в Корзине</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Ваша синхронизация &quot;%1&quot; была отключена так как локальная папка не существует</translation>
+        <translation>Ваша синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -364,7 +368,7 @@ Exit anyway?</source>
         <translation>Синхронизация будет остановлена.
 Удаления, которые происходят пока программа не запущена, не будут распространяться.
 
-Точно выйти?</translation>
+Вы уверены, что хотите закрыть приложение?</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="367"/>
@@ -380,7 +384,7 @@ Exit anyway?</source>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>Ссылка была скопирована в буфер об�</translation>
+        <translation>Ссылка была скопирована в буфер обмена</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
@@ -459,6 +463,10 @@ Exit anyway?</source>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
         <translation>Присутствуют новые или обновлённые файлы на Вашей учётной записи</translation>
+    </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
     </message>
 </context>
 <context>
@@ -815,7 +823,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
         <source>Bandwidth</source>
-        <translation>Пропускная способность</translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="262"/>
@@ -950,7 +958,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>примерно 90% от доступной пропускной способности</translation>
+        <translation>примерно 90% от доступной скорости</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>
@@ -1085,12 +1093,16 @@ Are you sure you want to sync it?</source>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translation>Введите имя, которое исключить из синхронизации
-(групповые символы * и ? допускаются)</translation>
+(допускаются групповые символы * и ?)</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Ошибка</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Трансферы</translation>
     </message>
 </context>
 <context>

@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Chystáte sa importovať tento súbor do synchronizovaného priečinku. Ak povolíte sťahovanie, súbor sa vám zduplikuje do počítaču. Ste si istý?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Chystáte sa importovať tieto súbory do synchronizovaného priečinku. Ak povolíte sťahovanie, tieto súbory sa vám zduplikujú do počítaču. Ste si istý?</translation>
     </message>
 </context>
 <context>
@@ -288,6 +288,10 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
         <translation>Nahrávanie </translation>
+    </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
     </message>
 </context>
 <context>
@@ -459,6 +463,10 @@ Odísť aj tak?</translation>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
         <translation>Na vašom účte sa nachádzajú novšie alebo aktualizované súbory</translation>
+    </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
     </message>
 </context>
 <context>
@@ -1091,6 +1099,10 @@ Ste si istý, že to chcete synchronizovať?</translation>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Chyba</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Prenosy</translation>
     </message>
 </context>
 <context>

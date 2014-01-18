@@ -289,6 +289,10 @@ Please enter a different name to identify this synced folder:</source>
         <source>Uploading </source>
         <translation>Uploade </translation>
     </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
+    </message>
 </context>
 <context>
     <name>MegaApplication</name>
@@ -459,6 +463,10 @@ Trotzdem beenden?</translation>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
         <translation>Sie haben neue oder aktualisierte Dateien in Ihrem Account</translation>
+    </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
     </message>
 </context>
 <context>
@@ -1091,6 +1099,10 @@ Sind Sie sicher, dass Sie ihn synchronisieren möchten?</translation>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Fehler</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Transfers</translation>
     </message>
 </context>
 <context>
