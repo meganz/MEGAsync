@@ -788,7 +788,6 @@ public:
     int getNumPendingDownloads();
     int getTotalUploads();
     int getTotalDownloads();
-    void resetTransferCounters();
     void updateStatics();
     bool isIndexing();
 

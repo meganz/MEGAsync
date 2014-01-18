@@ -1572,11 +1572,6 @@ int MegaApi::getTotalDownloads()
     return totalDownloads;
 }
 
-void MegaApi::resetTransferCounters()
-{
-    totalDownloads = totalUploads = 0;
-}
-
 Node *MegaApi::getRootNode()
 {
     MUTEX_LOCK(sdkMutex);
