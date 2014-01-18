@@ -39,11 +39,12 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	totalDownloadedSize = totalUploadedSize = 0;
 	totalDownloadSize = totalUploadSize = 0;
 	remainingUploads = remainingDownloads = 0;
+    uploadStartTime = 0;
+    downloadStartTime = 0;
     ui->lDownloads->setText(QString::fromAscii(""));
     ui->lUploads->setText(QString::fromAscii(""));
     //ui->bUploads->hide();
     //ui->bUploads->hide();
-    finishing = false;
     indexing = false;
     transfer1 = NULL;
     transfer2 = NULL;
@@ -106,20 +107,13 @@ InfoDialog::~InfoDialog()
     delete ui;
 }
 
-void InfoDialog::startAnimation()
-{
-    if(finishing) return;
-    finishing = true;
-	QTimer::singleShot(3000, this, SLOT(timerUpdate()));
-}
-
 void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 {
     this->totalBytes = totalBytes;
     this->usedBytes = usedBytes;
 	int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
-    QString used = tr("%1% of %2").arg(QString::number(percentage))
+    QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(totalBytes));
 	ui->lPercentageUsed->setText(used);
     ui->lTotalUsed->setText(tr("Usage: %1").arg(Utilities::getSizeString(usedBytes)));
@@ -137,11 +131,13 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     {
         wTransfer = ui->wTransfer1;
         transfer1 = transfer->getTransfer();
+        if(!downloadStartTime) downloadStartTime = QDateTime::currentMSecsSinceEpoch();
     }
     else
     {
         wTransfer = ui->wTransfer2;
         transfer2 = transfer->getTransfer();
+        if(!uploadStartTime) uploadStartTime = QDateTime::currentMSecsSinceEpoch();
     }
 
     wTransfer->setFileName(fileName);
@@ -209,6 +205,12 @@ void InfoDialog::updateTransfers()
         ui->lDownloads->setText(QString::fromAscii(""));
         //ui->bDownloads->hide();
         ui->wDownloadDesc->hide();
+        downloadStartTime = 0;
+        downloadSpeed = 0;
+        currentDownload = 0;
+        totalDownloads = 0;
+        totalDownloadedSize = 0;
+        totalDownloadSize = 0;
     }
 
     if(remainingUploads)
@@ -252,6 +254,12 @@ void InfoDialog::updateTransfers()
         ui->lUploads->setText(QString::fromAscii(""));
         //ui->bUploads->hide();
         ui->wUploadDesc->hide();
+        uploadStartTime = 0;
+        uploadSpeed = 0;
+        currentUpload = 0;
+        totalUploads = 0;
+        totalUploadedSize = 0;
+        totalUploadSize = 0;
     }
 
     //if(ui->bDownloads->underMouse())
@@ -260,8 +268,11 @@ void InfoDialog::updateTransfers()
     //    showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 
     if((ui->sActiveTransfers->currentWidget() != ui->pUpdated) && !remainingDownloads && !remainingUploads)
-        this->startAnimation();
-    else finishing = false;
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        megaApi->getAccountDetails();
+        app->showNotificationMessage(tr("All transfers have been completed"));
+    }
 }
 
 void InfoDialog::updateSyncsButton()
@@ -328,33 +339,6 @@ void InfoDialog::setPaused(bool paused)
 void InfoDialog::updateDialog()
 {
     updateRecentFiles();
-}
-
-void InfoDialog::timerUpdate()
-{
-    remainingDownloads = megaApi->getNumPendingDownloads();
-    remainingUploads = megaApi->getNumPendingUploads();
-
-	if(!remainingDownloads) ui->wTransfer1->hideTransfer();
-	if(!remainingUploads) ui->wTransfer2->hideTransfer();
-
-	if(!remainingDownloads && !remainingUploads)
-	{
-		downloadSpeed = 0;
-		uploadSpeed = 0;
-		currentUpload = 0;
-		currentDownload = 0;
-		totalUploads = 0;
-		totalDownloads = 0;
-		totalDownloadedSize = totalUploadedSize = 0;
-		totalDownloadSize = totalUploadSize = 0;
-		ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        megaApi->resetTransferCounters();
-        updateTransfers();
-		app->showSyncedIcon();
-        megaApi->getAccountDetails();
-        app->showNotificationMessage(tr("All transfers have been completed"));
-    }
 }
 
 void InfoDialog::addSync()

@@ -224,8 +224,16 @@ void SettingsDialog::loadSettings()
             int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
             if((extensionIndex-fullPrefix.size()) <= 0) continue;
             QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
-            QLocale::Language language = QLocale(languageCode).language();
+            QLocale locale(languageCode);
+            QLocale::Language language = locale.language();
             QString languageString = QLocale::languageToString(language);
+            if(languageCode.size()>3)
+            {
+                languageString.append(QString::fromAscii(" ("))
+                        .append(locale.countryToString(locale.country()))
+                        .append(QString::fromAscii(")"));
+            }
+
             if(!languageString.isEmpty())
             {
                 if(currentLanguage.startsWith(languageCode))
