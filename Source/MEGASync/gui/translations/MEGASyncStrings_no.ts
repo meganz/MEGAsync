@@ -6,7 +6,7 @@
     <message>
         <location filename="../BindFolderDialog.ui" line="14"/>
         <source>Add synchronized folder</source>
-        <translation>Add synchronized folder</translation>
+        <translation>Legg til mappe for synkronisering</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="63"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="97"/>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>Full account syncing is only possible without any selective syncs</translation>
+        <translation>Du kan kun velge å synkronisere hele kontoen din dersom du ikke synkroniserer andre undermapper</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>The name &quot;%1&quot; is already in use for another sync Please enter a different name to identify this synced folder:</translation>
+        <translation>Navnet &quot;%1&quot; er allerede i bruk for å beskrive en annen synkronisering Vennligst velg et annet navn for synkroniseringen:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -140,7 +140,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="155"/>
         <source>Decryption error</source>
-        <translation>Decryption error</translation>
+        <translation>Feil med dekryptering</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="171"/>
@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Er du sikker?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Er du sikker?</translation>
     </message>
 </context>
 <context>
@@ -183,7 +183,7 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.ui" line="749"/>
         <location filename="../InfoDialog.cpp" line="221"/>
         <source>Syncs</source>
-        <translation>Syncs</translation>
+        <translation>Synk</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
@@ -252,7 +252,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
         <source>Add Sync</source>
-        <translation>Add Sync</translation>
+        <translation>Legg til synkronisering</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="443"/>
@@ -289,6 +289,10 @@ Please enter a different name to identify this synced folder:</source>
         <source>Uploading </source>
         <translation>Laster opp </translation>
     </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
+    </message>
 </context>
 <context>
     <name>MegaApplication</name>
@@ -317,19 +321,19 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../../MegaApplication.cpp" line="243"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</translation>
+        <translation>Synkroniseringen &quot;%1&quot; har blitt deaktivert på grunn av en manglende mappe</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</translation>
+        <translation>Synkroniseringen &quot;%1&quot; har blitt deaktivert fordi mottakermappen er i papirkurven</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Your sync &quot;%1&quot; has been disabledbecause the local folder doesn&apos;t exist</translation>
+        <translation>Synkroniseringen &quot;%1&quot; har blitt deaktivert fordi den lokale mappen ikke eksisterer</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -344,7 +348,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files).</translation>
+        <translation>%1 folders weren&apos;t uploaded because they are too large (this version is limited to %2 folders or %3 files).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -460,6 +464,10 @@ Avslutt uansett?</translation>
         <source>You have new or updated files in your account</source>
         <translation>Du har nye eller oppdaterte filer i din konto</translation>
     </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -541,7 +549,7 @@ Avslutt uansett?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>Bad session ID</translation>
+        <translation>Ugyldig sesjon</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>
@@ -685,7 +693,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
         <source>Submit</source>
-        <translation>Submit</translation>
+        <translation>Send</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="87"/>
@@ -720,7 +728,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
         <source>Get MEGA link</source>
-        <translation>Get MEGA link</translation>
+        <translation>Hent MEGA-lenke</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="58"/>
@@ -840,12 +848,12 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="393"/>
         <source>Apply</source>
-        <translation>Apply</translation>
+        <translation>Bruk</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="430"/>
         <source>Show notifications</source>
-        <translation>Show notifications</translation>
+        <translation>Vis varslinger</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
@@ -965,7 +973,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Folder for uploads from Windows Explorer</translation>
+        <translation>Mappe for opplastinger fra Windows Explorer</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
@@ -1078,7 +1086,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="568"/>
         <source>Excluded name</source>
-        <translation>Excluded name</translation>
+        <translation>Ekskludèr disse filnavnene</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="569"/>
@@ -1091,6 +1099,10 @@ Er du sikker på at du ønsker å synkronisere?</translation>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Feil</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Overføringer</translation>
     </message>
 </context>
 <context>
@@ -1170,7 +1182,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="590"/>
         <source>Full account sync</source>
-        <translation>Full account sync</translation>
+        <translation>Synkroniser alt</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="653"/>
@@ -1391,7 +1403,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
         <source>Get MEGA link</source>
-        <translation>Get MEGA link</translation>
+        <translation>Hent MEGA-lenke</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="380"/>

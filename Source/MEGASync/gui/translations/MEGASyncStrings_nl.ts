@@ -172,7 +172,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.ui" line="543"/>
         <source>RECENTLY UPDATED</source>
-        <translation>RECENT GEÜPDATET</translation>
+        <translation>RECENT BIJGEWERKT</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="669"/>
@@ -288,6 +288,10 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
         <translation>Aan het uploaden </translation>
+    </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
     </message>
 </context>
 <context>
@@ -459,6 +463,10 @@ Toch sluiten?</translation>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
         <translation>Je hebt nieuwe of geüpdatete bestanden in je account </translation>
+    </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
     </message>
 </context>
 <context>
@@ -1091,6 +1099,10 @@ Weet je zeker dat je het wil synchroniseren?</translation>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Fout</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Overdrachten</translation>
     </message>
 </context>
 <context>

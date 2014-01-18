@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Vous êtes sur le point d&apos;importer ce fichier dans un dossier synchronisé. Si vous activez le téléchargement, ce fichier sera dupliqué sur votre ordinateur. Êtes-vous sûr ?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Vous êtes sur le point d&apos;importer ces fichier dans un dossier synchronisé. Si vous activez le téléchargement, ces fichiers seront dupliqués sur votre ordinateur. Êtes-vous sûr ?</translation>
     </message>
 </context>
 <context>
@@ -288,6 +288,10 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="478"/>
         <source>Uploading </source>
         <translation>Upload </translation>
+    </message>
+    <message>
+	<source>MEGAsync is waiting</source>
+	<translation>MEGAsync is waiting</translation>
     </message>
 </context>
 <context>
@@ -459,6 +463,10 @@ Quitter quand même ?</translation>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
         <translation>Vous avez de nouveaux fichiers ou des fichiers modifiés dans votre compte</translation>
+    </message>
+    <message>
+	<source>MEGAsync has been updated</source>
+	<translation>MEGAsync has been updated</translation>
     </message>
 </context>
 <context>
@@ -1091,6 +1099,10 @@ Are you sure you want to sync it?</source>
         <location filename="../SettingsDialog.cpp" line="578"/>
         <source>Error</source>
         <translation>Erreur</translation>
+    </message>
+    <message>
+	<source>Transfers</source>
+	<translation>Transferts</translation>
     </message>
 </context>
 <context>
