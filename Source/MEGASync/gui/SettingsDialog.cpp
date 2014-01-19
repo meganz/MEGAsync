@@ -451,7 +451,7 @@ void SettingsDialog::saveSettings()
             excludedNames.append(ui->lExcludedNames->item(i)->text());
         preferences->setExcludedSyncNames(excludedNames);
 
-        QMessageBox::information(this, tr("Warning"), QString::fromUtf8("The new excluded file names will be taken into account\n"
+        QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
                                                                         "when the application starts again."), QMessageBox::Ok);
         excludedNamesChanged = false;
     }

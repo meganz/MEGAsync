@@ -468,6 +468,10 @@ Exit anyway?</source>
 	<source>MEGAsync has been updated</source>
 	<translation>[$1819]</translation>
     </message>
+    <message>
+	<source>Waiting</source>
+	<translation>Waiting</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1103,6 +1107,12 @@ Are you sure you want to sync it?</source>
     <message>
 	<source>Transfers</source>
 	<translation>[$1346]</translation>
+    </message>
+    <message>
+	<source>The new excluded file names will be taken into account
+when the application starts again.</source>
+	<translation>The new excluded file names will be taken into account
+when the application starts again.</translation>
     </message>
 </context>
 <context>
