@@ -4,7 +4,7 @@ RequestExecutionLevel user
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "MEGAsync"
-!define PRODUCT_VERSION "1.0 BETA"
+!define PRODUCT_VERSION "1.0"
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.co.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
@@ -172,14 +172,14 @@ Function .onInit
   System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
   strCpy $USERNAME $0
 
-  ${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
-  strCpy $INSTALLDAY "$2$1$0"
-  strCpy $EXPIRATIONDAY "20140121"
+  ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
+  ;strCpy $INSTALLDAY "$2$1$0"
+  ;strCpy $EXPIRATIONDAY "20140121"
 
-  ${if} $INSTALLDAY >= $EXPIRATIONDAY
-      MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
-      abort
-  ${EndIf}
+  ;${if} $INSTALLDAY >= $EXPIRATIONDAY
+  ;    MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
+  ;    abort
+  ;${EndIf}
 
   UAC::RunElevated
   ${Switch} $0
@@ -198,8 +198,9 @@ Function .onInit
     Quit
   ${EndSwitch}
   
-MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
-  !insertmacro MUI_UNGETLANGUAGE
+  ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
+  ;!insertmacro MUI_UNGETLANGUAGE
+  !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
 Section "Principal" SEC01

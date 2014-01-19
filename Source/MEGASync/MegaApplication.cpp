@@ -48,17 +48,17 @@ int main(int argc, char *argv[])
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
 
-    QDate betaLimit(2014, 1, 21);
-    long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
-    long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
-    if(now > betaLimitTime)
-    {
-        QMessageBox::information(NULL, QCoreApplication::translate("MegaApplication", "MEGAsync BETA"),
-               QCoreApplication::translate("MegaApplication", "Thank you for testing MEGAsync.<br>"
-           "This beta version is no longer current and has expired.<br>"
-           "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
-        return 0;
-    }
+    //QDate betaLimit(2014, 1, 21);
+    //long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    //long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
+    //if(now > betaLimitTime)
+    //{
+    //    QMessageBox::information(NULL, QCoreApplication::translate("MegaApplication", "MEGAsync BETA"),
+    //           QCoreApplication::translate("MegaApplication", "Thank you for testing MEGAsync.<br>"
+    //       "This beta version is no longer current and has expired.<br>"
+    //       "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
+    //    return 0;
+    //}
 
     app.initialize();
     app.start();
@@ -108,6 +108,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     resumeAction = NULL;
     importLinksAction = NULL;
     trayMenu = NULL;
+    waiting = false;
 }
 
 MegaApplication::~MegaApplication()
@@ -205,10 +206,11 @@ void MegaApplication::updateTrayIcon()
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
     }
-    else if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+    else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
     {
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
         if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
+        else if(waiting) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting"));
         else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
     }
     else
@@ -1133,6 +1135,8 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
 
     infoDialog->updateTransfers();
     indexing = megaApi->isIndexing();
+    waiting = megaApi->isIndexing();
+    infoDialog->setWaiting(waiting);
     infoDialog->setIndexing(indexing);
     updateTrayIcon();
 }

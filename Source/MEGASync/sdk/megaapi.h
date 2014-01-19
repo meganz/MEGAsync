@@ -794,6 +794,7 @@ public:
     void resetTotalUploads();
     void updateStatics();
     bool isIndexing();
+    bool isWaiting();
 
 
 	//Filesystem
@@ -870,6 +871,7 @@ protected:
 	set<MegaTransferListener *> transferListeners;
 	set<MegaGlobalListener *> globalListeners;
 	set<MegaListener *> listeners;
+    bool waiting;
 
     DECLARE_MUTEX(listenerMutex);
     DECLARE_MUTEX(transferListenerMutex);
