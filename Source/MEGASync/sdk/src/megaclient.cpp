@@ -3779,6 +3779,8 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 							fsaccess->local2path(localpath,&localname);
 							app->syncupdate_get(l->sync,localname.c_str());
 
+                            //rit->second->localnode->treestate(TREESTATE_PENDING);
+
 							rit->second->syncget = new SyncFileGet(l->sync,rit->second,localpath);
 							startxfer(GET,rit->second->syncget);
 							syncactivity = true;
@@ -3883,6 +3885,7 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 					{
 						// files have the same size and the same mtime (or the same fingerprint, if available): no action needed
 						ll->setnode(rit->second);
+						ll->treestate(TREESTATE_SYNCED);
 						continue;
 					}
 				}
