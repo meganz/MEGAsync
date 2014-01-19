@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>बहुत बड़ी स्थानीय फ़ोल्डर (इस संस्करण किसी अन्य फ़ोल्डर का चयन करें % 1 फ़ोल्डर या % 2 फाइलें. तक सीमित है.</translation>
+        <translation>बहुत बड़ी स्थानीय फ़ोल्डर (इस संस्करण किसी अन्य फ़ोल्डर का चयन करें %1 फ़ोल्डर या %2 फाइलें. तक सीमित है.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
@@ -63,7 +63,7 @@
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>नाम &quot;% 1&quot; एक और सिंक के लिए पहले से उपयोग में है इस सिंक फ़ोल्डर की पहचान करने के लिए एक अलग नाम दर्ज करें:</translation>
+        <translation>नाम &quot;%1&quot; एक और सिंक के लिए पहले से उपयोग में है इस सिंक फ़ोल्डर की पहचान करने के लिए एक अलग नाम दर्ज करें:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>आप एक सिंक किए गए फ़ोल्डर में इस फाइल को आयात करने के बारे में हैं. आप डाउनलोड करने के लिए सक्षम है, तो फ़ाइल आपके कंप्यूटर पर दोहराया जा जाएगा क्या आपको यकीन है?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>आप एक सिंक किए गए फ़ोल्डर में इन फ़ाइलों को आयात करने के बारे में हैं. आप डाउनलोड करने के लिए सक्षम हैं, फ़ाइलों को अपने कंप्यूटर पर दोहराया जा जाएगा. क्या आपको यकीन है?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>मेगा सिंक इंतज़ार कर रही है</translation>
     </message>
 </context>
 <context>
@@ -333,7 +333,7 @@ because the remote folder is in the rubbish bin</source>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>अपने सिंक &quot;% 1&quot; निष्क्रिय कर दिया गयास्थानीय फ़ोल्डर मौजूद नहीं है क्योंकि</translation>
+        <translation>अपने सिंक &quot;%1&quot; निष्क्रिय कर दिया गयास्थानीय फ़ोल्डर मौजूद नहीं है क्योंकि</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -466,7 +466,7 @@ Exit anyway?</source>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>मेगा सिंक अद्यतन किया गया है</translation>
     </message>
 </context>
 <context>

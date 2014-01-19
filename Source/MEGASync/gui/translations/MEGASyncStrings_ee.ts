@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsünk on ootel</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Välju niikuinii?</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsünk on uuendatud</translation>
     </message>
 </context>
 <context>

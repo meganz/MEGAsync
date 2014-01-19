@@ -958,7 +958,7 @@ Ziur zaude sinkronizatu nahi duzula?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="925"/>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>Bandazabalera erabilgarriko %90-ko ingurukoa</translation>
+        <translation>Bandazabalera erabilgarriko 90%-ko ingurukoa</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="935"/>

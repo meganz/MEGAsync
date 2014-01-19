@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>당신은 이 파일을 동기화된 폴더로 들여오려고 합니다. 만약 다운로드를 활성화하면, 파일이 컴퓨터에서 분리가 될 것입니다. 확실하십니까?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>당신은 이 파일들을 동기화된 폴더로 들여오려고 합니다. 만약 다운로드를 활성화하면, 파일이 컴퓨터에서 분리가 될 것입니다. 확실하십니까?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>메가싱크가 대기중입니다</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Exit anyway?</source>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>메가싱크가 업데이트되었습니다</translation>
     </message>
 </context>
 <context>

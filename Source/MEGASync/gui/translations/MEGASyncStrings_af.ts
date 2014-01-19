@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Jy is op die punt om hierdie lêer na &apos;n gesinkroniseerde gids in te voer. As jy aflaaiing in staat stel, sal die lêer gedupliseer word op jou rekenaar. Is jy seker?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Jy is op die punt om hierdie lêers na &apos;n gesinkroniseerde gids in te voer. As jy aflaaiing in staat stel, sal die lêers gedupliseer word op jou rekenaar. Is jy seker?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync wag</translation>
     </message>
 </context>
 <context>
@@ -327,13 +327,13 @@ because the remote folder doesn&apos;t exist</source>
         <location filename="../../MegaApplication.cpp" line="253"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Jou sync &quot;% 1&quot; is gedeaktiveer omdat die afgeleë gids  in die vullisblik is</translation>
+        <translation>Jou sync &quot;%1&quot; is gedeaktiveer omdat die afgeleë gids  in die vullisblik is</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="264"/>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Jou sync &quot;% 1&quot; is gedeaktiveer omdat die plaaslike gids nie bestaan ​​nie</translation>
+        <translation>Jou sync &quot;%1&quot; is gedeaktiveer omdat die plaaslike gids nie bestaan ​​nie</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="294"/>
@@ -343,12 +343,12 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>Die gids (% 1) is nie opgelaai, want dit is te groot (hierdie weergawe is beperk tot% 2 gidse of% 3 lêers).</translation>
+        <translation>Die gids (%1) is nie opgelaai, want dit is te groot (hierdie weergawe is beperk tot%2 gidse of %3 lêers).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>% 1 gidse is nie opgelaai want hulle is te groot (hierdie beta is beperk tot% 2 gidse of% 3 lêers).</translation>
+        <translation>%1 gidse is nie opgelaai want hulle is te groot (hierdie beta is beperk tot%2 gidse of %3 lêers).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -466,7 +466,7 @@ Verlaat in elk geval?</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync is opgedateer</translation>
     </message>
 </context>
 <context>

@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Masz zamiar zaimportować ten plik do zsynchronizowanego folderu. Jeśli włączysz pobieranie, plik zostanie powielony na komputerze. Czy na pewno?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Masz zamiar zaimportować te pliki do zsynchronizowanego folderu. Jeśli włączysz pobieranie, pliki zostanią powielone na komputerze. Czy na pewno?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync oczekuje</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Wyjść?</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync został zaktualizowany</translation>
     </message>
 </context>
 <context>

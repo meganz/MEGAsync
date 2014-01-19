@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>Το MEGAsync περιμένει</translation>
     </message>
 </context>
 <context>
@@ -343,7 +343,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>Ο φάκελος (% 1) δεν φορτώθηκε επειδή είναι πολύ μεγάλος (η έκδοση αυτή περιορίζεται σε %2 φακέλους ή %3 αρχεία).</translation>
+        <translation>Ο φάκελος (%1) δεν φορτώθηκε επειδή είναι πολύ μεγάλος (η έκδοση αυτή περιορίζεται σε %2 φακέλους ή %3 αρχεία).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
@@ -466,7 +466,7 @@ Exit anyway?</source>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>Το MEGAsync έχει ενημερωθεί</translation>
     </message>
 </context>
 <context>
