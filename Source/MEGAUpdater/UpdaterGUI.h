@@ -35,8 +35,10 @@ private:
     QStringList dstPaths;
     QStringList updateFiles;
     QStringList finalSourcePaths;
-    char PUBLIC_KEY[2048];
-    char PRIVATE_KEY[2048];
+
+    //A lot of space to store big keys in Base64
+    char PUBLIC_KEY[4096];
+    char PRIVATE_KEY[4096];
 
     static const QString VERSION;
     static const QString BASE_UPDATE_URL;
