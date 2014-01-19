@@ -15,7 +15,7 @@
 using namespace mega;
 
 const QString UpdaterGUI::BASE_UPDATE_URL = QString::fromAscii("http://g.static.mega.co.nz/upd/wsync/");
-const QString UpdaterGUI::VERSION = QString::fromAscii("110");
+const QString UpdaterGUI::VERSION = QString::fromAscii("112");
 
 UpdaterGUI::UpdaterGUI(QWidget *parent) :
     QMainWindow(parent),
@@ -37,19 +37,20 @@ UpdaterGUI::UpdaterGUI(QWidget *parent) :
     dstPaths.append(QString::fromUtf8("imageformats/qtga4.dll"));
     dstPaths.append(QString::fromUtf8("imageformats/qtiff4.dll"));
 
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/MEGAsync.exe"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGAShellExt/release/MEGAShellExt.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x64/MEGAShellExt/release/MEGAShellExt.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/QtCore4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/QtGui4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/QtNetwork4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qgif4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qico4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qjpeg4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qmng4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qsvg4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qtga4.dll"));
-    updateFiles.append(QString::fromUtf8("Release_x32/MEGASync/release/imageformats/qtiff4.dll"));
+    updateFiles.append(QString::fromUtf8("MEGAsync.exe"));
+        updateFiles.append(QString::fromUtf8("ShellExtX32.dll"));
+        updateFiles.append(QString::fromUtf8("ShellExtX64.dll"));
+        updateFiles.append(QString::fromUtf8("QtCore4.dll"));
+        updateFiles.append(QString::fromUtf8("QtGui4.dll"));
+        updateFiles.append(QString::fromUtf8("QtNetwork4.dll"));
+        updateFiles.append(QString::fromUtf8("qgif4.dll"));
+        updateFiles.append(QString::fromUtf8("qico4.dll"));
+        updateFiles.append(QString::fromUtf8("qjpeg4.dll"));
+       updateFiles.append(QString::fromUtf8("qmng4.dll"));
+        updateFiles.append(QString::fromUtf8("qsvg4.dll"));
+        updateFiles.append(QString::fromUtf8("qtga4.dll"));
+        updateFiles.append(QString::fromUtf8("qtiff4.dll"));
+
 
     if(verifySourcePath(QApplication::applicationDirPath()))
         ui->eUpdateFolder->setText(QDir::toNativeSeparators(QApplication::applicationDirPath()));
@@ -144,18 +145,15 @@ void UpdaterGUI::on_bGenerateUpdate_clicked()
         return;
     }
 
-    QString path =  QFileDialog::getExistingDirectory(this, tr("Select a folder to put the update file"),
-                                                      QApplication::applicationDirPath(),
-                                                      QFileDialog::ShowDirsOnly
-                                                      | QFileDialog::DontResolveSymlinks);
+    QString path = ui->eUpdateFolder->text();
     if(!path.length()) return;
-    path.append(QDir::separator()).append(tr("update.txt"));
+    path.append(QDir::separator()).append(tr("v.txt"));
 
 
     QStringList SIGNATURES;
     QString UPDATE_FILE_SIGNATURE;
 
-    char signature[256];
+    char signature[512];
     HashSignature updateFileSignatureGenerator(new Hash());
     HashSignature signatureGenerator(new Hash());
     int len = strlen(PRIVATE_KEY)/4*3+3;

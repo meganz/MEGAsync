@@ -10,7 +10,7 @@ const unsigned int UpdateTask::RETRY_INTERVAL_SECS = 7200;
 const QString UpdateTask::UPDATE_CHECK_URL = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
 const QString UpdateTask::UPDATE_FOLDER_NAME = QString::fromAscii("update");
 const QString UpdateTask::BACKUP_FOLDER_NAME = QString::fromAscii("backup");
-const char UpdateTask::PUBLIC_KEY[] = "CACe_GbhzspMk6X5FcO29fDNzXEL-A5Lsd4o9KIeEG0uoCDvlDmr8djRpItL3GuhsjUMzPUyf2wLqlFs9Mu3SgJ-CdyTQUQ4bEDvYjqa8yfS_cWcVM2KvYhVT8X-JpHRtVGYfycmlzKEA2klqS3n3BwJgXL8vjFYUo34bsvUEEW6Q727phbd6M-2YxaGX9FXtU4Aqq0vzEhhmunVrFlEAtVaR0LhOHXJUucoUePufupGFFLEYEb-njzD7-9x3LuMMn25s7ZHFk4L_fvuZZtalu142QLblkp_rWm0iyM0ztfVs18qBl4J9WR6hVw6W2sHsKp6sBipELf1_owpCtLeFOMFAAUR";
+const char UpdateTask::PUBLIC_KEY[] = "EADaHmzyxHyPnOe6iMheQBeSnxvmBKICoOpO2v56e9oaEoHE-wUWD9gB0z3ANmGU3jrvjLmEAEVZA0o_PeQIdAq92qEvooFCF0fXwYwGWZvcGUKcZgNbDKm0fWk_yQpLgB1_00WBtWca7ubmFLjMYnzeKdn827HYxOAmIgYVnzaAkKty7NCea4xU7sMuLqgIn_Cj9w50cTXHwbNrvc9_M3L0Ng1T_ZKJF7Om6yetRtSuYSHZUJaYi8uXPLCMLeCZ-uUo3rfOKmhhlqenXEO7D7xvaonvVJVAlvwAnjI8ByG6_hj_8Drgzp9J7mE0OD0s9XV9GtyjYgyMBMmcCbNJQSzpKOCFuDS1KUZQ1bWht7Gpo0cful1gO4f46thXiaJFbCk2eDWmHs_HhUsGmDOK5pmjwmMq73eWfxmGX8h3OC2S3xrWlMon5Wgg_5SAgGpE04PV_gs83weDM3qUgAEjImJ5xuaMB1OY1q4yo2ErShCMp0Wp814h3rigqYItvflyK8ogs2a-aCb3rvRUjQSZkO26OE0sgT84p8qRyc57N-8I6WgJZgfI4-8nGaUQw0kBnc7izaNLnvHnVA5iN8q-D4HwFujmXqTWq_iSBSEJ91Z-Qx0-dqn801s7mHApJ0a6-7vdU_ZdB_ah52YdE_dP3bfLNNYp6A92Vz1-b8Nc7iZmTQAFEQ";
 
 UpdateTask::UpdateTask(QObject *parent) :
     QObject(parent)
@@ -95,7 +95,7 @@ void UpdateTask::downloadFile(QString url)
 
 QString UpdateTask::readNextLine(QNetworkReply *reply)
 {
-    char line[512];
+    char line[4096];
     int len = reply->readLine(line, sizeof(line));
     if((len <= 0) || (len >= (sizeof(line)-1)))
         return QString();
@@ -306,7 +306,7 @@ bool UpdateTask::alreadyDownloaded(QString relativePath, QString fileSignature)
 bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
 {
     HashSignature tmpHash(new Hash());
-    char tmpSignature[256];
+    char tmpSignature[512];
     if(Base64::atob(fileSignature.toAscii().constData(), (byte *)tmpSignature, sizeof(tmpSignature)) != sizeof(tmpSignature))
         return false;
 
