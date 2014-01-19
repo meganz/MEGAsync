@@ -1583,6 +1583,16 @@ int MegaApi::getTotalDownloads()
     return totalDownloads;
 }
 
+void MegaApi::resetTotalDownloads()
+{
+    totalDownloads = 0;
+}
+
+void MegaApi::resetTotalUploads()
+{
+    totalUploads = 0;
+}
+
 Node *MegaApi::getRootNode()
 {
     MUTEX_LOCK(sdkMutex);
@@ -2143,6 +2153,11 @@ bool MegaApi::sync_syncable(Node *node)
 bool MegaApi::sync_syncable(const char *name, string *, string *)
 {
     return is_syncable(name);
+}
+
+void MegaApi::syncupdate_local_lockretry(bool)
+{
+
 }
 
 
@@ -4117,7 +4132,7 @@ void MegaApi::sendPendingRequests()
             {
                 Sync *sync = (*it);
                 it++;
-                delete sync;
+                client->delsync(sync);
             }
             client->restag = nextTag;
             fireOnRequestFinish(this, request, MegaError(API_OK));
@@ -4134,7 +4149,7 @@ void MegaApi::sendPendingRequests()
                 if(sync->localroot.node->nodehandle == nodehandle)
                 {
                     LOG("DELETING SYNC IN MEGAAPI");
-                    delete sync;
+                    client->delsync(sync);
                     client->restag = nextTag;
                     fireOnRequestFinish(this, request, MegaError(API_OK));
                     found = true;

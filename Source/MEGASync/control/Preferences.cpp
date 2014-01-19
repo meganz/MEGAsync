@@ -4,8 +4,8 @@
 #include <QDesktopServices>
 #include <assert.h>
 
-const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 1000;
-const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 200;
+const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 10000;
+const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 500;
 
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
@@ -275,6 +275,11 @@ bool Preferences::updateAutomatically()
 {
     mutex.lock();
     bool value = settings->value(updateAutomaticallyKey, defaultUpdateAutomatically).toBool();
+    if(value && !QFileInfo(MegaApplication::applicationFilePath()).isWritable())
+    {
+        this->setUpdateAutomatically(false);
+        value = false;
+    }
     mutex.unlock();
     return value;
 }
