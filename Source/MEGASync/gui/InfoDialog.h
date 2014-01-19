@@ -32,6 +32,7 @@ public:
     void updateTransfers();
     void updateSyncsButton();
     void setIndexing(bool indexing);
+    void setWaiting(bool waiting);
 
 public slots:
    void addSync();
@@ -70,6 +71,7 @@ private:
 	long long totalDownloadSize, totalUploadSize;
 	int remainingUploads, remainingDownloads;
     bool indexing;
+    bool waiting;
 
 protected:
     void changeEvent(QEvent * event);

@@ -145,6 +145,7 @@ protected:
     bool syncActive;
     bool paused;
     bool indexing;
+    bool waiting;
 };
 
 #endif // MEGAAPPLICATION_H

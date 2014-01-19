@@ -46,6 +46,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //ui->bUploads->hide();
     //ui->bUploads->hide();
     indexing = false;
+    waiting = false;
     transfer1 = NULL;
     transfer2 = NULL;
 
@@ -290,8 +291,14 @@ void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
     if(ui->bPause->isChecked()) ui->lSyncUpdated->setText(tr("File transfers paused"));
-    else if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
-    else ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+    else if(indexing) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+    else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+    else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+}
+
+void InfoDialog::setWaiting(bool waiting)
+{
+    this->waiting = waiting;
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)

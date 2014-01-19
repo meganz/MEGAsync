@@ -912,6 +912,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     totalUploads = 0;
     totalDownloads = 0;
     client = NULL;
+    waiting = false;
 
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
@@ -2155,9 +2156,10 @@ bool MegaApi::sync_syncable(const char *name, string *, string *)
     return is_syncable(name);
 }
 
-void MegaApi::syncupdate_local_lockretry(bool)
+void MegaApi::syncupdate_local_lockretry(bool waiting)
 {
-
+    this->waiting = waiting;
+    this->fireOnSyncStateChanged(this);
 }
 
 
@@ -4234,6 +4236,11 @@ bool MegaApi::isIndexing()
     }
     MUTEX_UNLOCK(sdkMutex);
     return indexing;
+}
+
+bool MegaApi::isWaiting()
+{
+    return waiting;
 }
 
 char* MegaApi::strdup(const char* buffer)
