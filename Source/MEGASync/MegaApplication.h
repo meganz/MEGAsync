@@ -127,6 +127,8 @@ protected:
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
 	long long uploadSpeed, downloadSpeed;
+    long long lastStartedDownload;
+    long long lastStartedUpload;
     int exportOps;
     syncstate_t syncState;
 	QTMegaListener *delegateListener;

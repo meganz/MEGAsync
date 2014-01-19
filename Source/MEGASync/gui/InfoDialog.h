@@ -33,6 +33,7 @@ public:
     void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
+    void increaseUsedStorage(long long bytes);
 
 public slots:
    void addSync();

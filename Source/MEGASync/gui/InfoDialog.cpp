@@ -326,6 +326,12 @@ void InfoDialog::setWaiting(bool waiting)
     this->waiting = waiting;
 }
 
+void InfoDialog::increaseUsedStorage(long long bytes)
+{
+    this->usedBytes+=bytes;
+    this->setUsage(totalBytes, usedBytes);
+}
+
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
 {
 	this->downloadSpeed = downloadSpeed;
