@@ -238,7 +238,7 @@ void SettingsDialog::loadSettings()
             }
         }
     }
-    for(int i=0; i<languageCodes.size(); i++)
+    for(int i=languageCodes.size()-1; i>=0; i--)
     {
         if(currentLanguage.startsWith(languageCodes[i]))
         {
