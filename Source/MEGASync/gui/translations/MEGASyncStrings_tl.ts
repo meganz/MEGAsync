@@ -91,7 +91,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../FolderBinder.cpp" line="33"/>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Pumili ng local folder</translation>
     </message>
 </context>
 <context>
@@ -99,27 +99,27 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="32"/>
         <source>Import links</source>
-        <translation>Import links</translation>
+        <translation>Mahahalagang links</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="66"/>
         <source>Download to my computer</source>
-        <translation>Download to my computer</translation>
+        <translation>I-download sa aking computer</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="139"/>
         <source>Import to my cloud drive</source>
-        <translation>Import to my cloud drive</translation>
+        <translation>Ilagay sa aking cloud drive</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="231"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>SIGE</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.ui" line="238"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Wag na</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="49"/>
@@ -135,29 +135,29 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="120"/>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Pumili ng local folder</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="155"/>
         <source>Decryption error</source>
-        <translation>Decryption error</translation>
+        <translation>Error sa pagdedecrypt</translation>
     </message>
     <message>
         <location filename="../ImportMegaLinksDialog.cpp" line="171"/>
         <source>Not found</source>
-        <translation>Not found</translation>
+        <translation>Hindi nakita</translation>
     </message>
      <message>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Sigurado ka ba?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Ikaw ay maglalagay ng files sa isang synced folder. Kung pinayagan mo ang downloading, ang files ay maduduplicated sa computer mo. Sigurado ka ba?</translation>
     </message>
 </context>
 <context>
@@ -167,12 +167,12 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="228"/>
         <location filename="../InfoDialog.cpp" line="271"/>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync is up to date</translation>
+        <translation>Ang MEGAsync ay up to date</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="543"/>
         <source>RECENTLY UPDATED</source>
-        <translation>RECENTLY UPDATED</translation>
+        <translation>NGAYON LAMANG</translation>
     </message>
     <message>
         <location filename="../InfoDialog.ui" line="669"/>
@@ -188,12 +188,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../InfoDialog.ui" line="802"/>
         <source>MEGA website</source>
-        <translation>MEGA website</translation>
+        <translation>Website ng MEGA</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="119"/>
         <source>%1 of %2</source>
-        <translation>%1 of %2</translation>
+        <translation>%1 ng %2</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="122"/>
@@ -204,50 +204,50 @@ Please enter a different name to identify this synced folder:</source>
         <location filename="../InfoDialog.cpp" line="170"/>
         <location filename="../InfoDialog.cpp" line="189"/>
         <source>%1 of %2 (%3/s)</source>
-        <translation>%1 of %2 (%3/s)</translation>
+        <translation>%1 ng %2 (%3/s)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="171"/>
         <location filename="../InfoDialog.cpp" line="190"/>
         <source>%1 of %2 (paused)</source>
-        <translation>%1 of %2 (paused)</translation>
+        <translation>%1 ng %2 (itinigil)</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="227"/>
         <location filename="../InfoDialog.cpp" line="266"/>
         <source>File transfers paused</source>
-        <translation>File transfers paused</translation>
+        <translation>Itinigil panandalian</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="229"/>
         <location filename="../InfoDialog.cpp" line="272"/>
         <source>MEGAsync is scanning</source>
-        <translation>MEGAsync is scanning</translation>
+        <translation>Ang MEGAsync ay nag-isiscan</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="304"/>
         <source>All transfers have been completed</source>
-        <translation>All transfers have been completed</translation>
+        <translation>Lahat ng pagpapasa ay natapos na</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="330"/>
         <source>Cancel all downloads</source>
-        <translation>Cancel all downloads</translation>
+        <translation>Itigil lahat ng download</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="331"/>
         <source>Cancel download</source>
-        <translation>Cancel download</translation>
+        <translation>Itigil ang pagdodownload</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="340"/>
         <source>Cancel all uploads</source>
-        <translation>Cancel all uploads</translation>
+        <translation>Itigil lahat ng pagpapasa</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="341"/>
         <source>Cancel upload</source>
-        <translation>Cancel upload</translation>
+        <translation>Itigil ang pagpapasa</translation>
     </message>
     <message>
         <location filename="../InfoDialog.cpp" line="392"/>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>Naghihintay ang MEGAsync</translation>
     </message>
 </context>
 <context>
@@ -309,13 +309,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="176"/>
         <source>Logging in</source>
-        <translation>Logging in</translation>
+        <translation>Naglolog-in</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="205"/>
         <location filename="../../MegaApplication.cpp" line="206"/>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync is now running. Click here to open the status window.</translation>
+        <translation>Tumatakbo na ang MEGAsync I-click dito para magbukas ang status window</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="243"/>
@@ -384,27 +384,27 @@ Exit anyway?</translation>
         <location filename="../../MegaApplication.cpp" line="587"/>
         <location filename="../../MegaApplication.cpp" line="709"/>
         <source>The link has been copied to the clipboard</source>
-        <translation>The link has been copied to the clipboard</translation>
+        <translation>Ang link ay nagaya na sa clipboard</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="588"/>
         <source>The links have been copied to the clipboard</source>
-        <translation>The links have been copied to the clipboard</translation>
+        <translation>Ang mga links ay nagaya na sa clipboard</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="608"/>
         <source>Logging in...</source>
-        <translation>Logging in...</translation>
+        <translation>Naglolog-in...</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="662"/>
         <source>Exit</source>
-        <translation>Exit</translation>
+        <translation>Umalis</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="664"/>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Tungkol</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="666"/>
@@ -414,17 +414,17 @@ Exit anyway?</translation>
     <message>
         <location filename="../../MegaApplication.cpp" line="668"/>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation>Itigil</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="670"/>
         <source>Resume</source>
-        <translation>Resume</translation>
+        <translation>I-resume</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="672"/>
         <source>Import links</source>
-        <translation>Import links</translation>
+        <translation>Mahahalagang links</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="689"/>
@@ -438,21 +438,21 @@ Exit anyway?</translation>
         <location filename="../../MegaApplication.cpp" line="787"/>
         <location filename="../../MegaApplication.cpp" line="1055"/>
         <source>Paused</source>
-        <translation>Paused</translation>
+        <translation>Itinigil</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="798"/>
         <location filename="../../MegaApplication.cpp" line="1060"/>
         <location filename="../../MegaApplication.cpp" line="1113"/>
         <source>Scanning</source>
-        <translation>Scanning</translation>
+        <translation>I-iscan</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="799"/>
         <location filename="../../MegaApplication.cpp" line="1061"/>
         <location filename="../../MegaApplication.cpp" line="1114"/>
         <source>Syncing</source>
-        <translation>Syncing</translation>
+        <translation>Sini-sync</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="944"/>
@@ -462,11 +462,11 @@ Exit anyway?</translation>
     <message>
         <location filename="../../MegaApplication.cpp" line="1036"/>
         <source>You have new or updated files in your account</source>
-        <translation>You have new or updated files in your account</translation>
+        <translation>Mayroon kang bago o updated na files sa account mo</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>Na-update na ang MEGAsync</translation>
     </message>
 </context>
 <context>
@@ -534,37 +534,37 @@ Exit anyway?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="776"/>
         <source>Already exists</source>
-        <translation>Already exists</translation>
+        <translation>Meron na</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="778"/>
         <source>Incomplete</source>
-        <translation>Incomplete</translation>
+        <translation>Di natapos</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="780"/>
         <source>Invalid key/Decryption error</source>
-        <translation>Invalid key/Decryption error</translation>
+        <translation>Maling key/Error sa pagdedecrypt</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
         <source>Bad session ID</source>
-        <translation>Bad session ID</translation>
+        <translation>Maling session ID</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="784"/>
         <source>Blocked</source>
-        <translation>Blocked</translation>
+        <translation>Hinarangan</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="786"/>
         <source>Over quota</source>
-        <translation>Over quota</translation>
+        <translation>Lagpas na sa quota</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="788"/>
         <source>Temporarily not available</source>
-        <translation>Temporarily not available</translation>
+        <translation>Hindi muna available</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="790"/>
@@ -584,12 +584,12 @@ Exit anyway?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="796"/>
         <source>Invalid application key</source>
-        <translation>Invalid application key</translation>
+        <translation>Maling application key</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="798"/>
         <source>Unknown error</source>
-        <translation>Unknown error</translation>
+        <translation>Di matukoy na error</translation>
     </message>
 </context>
 <context>
@@ -597,7 +597,7 @@ Exit anyway?</translation>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Babala</translation>
     </message>
     <message>
         <location filename="../../control/MegaUploader.cpp" line="37"/>
@@ -616,33 +616,33 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="17"/>
         <source>Folder Selection</source>
-        <translation>Folder Selection</translation>
+        <translation>Pagpili ng Folder</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="38"/>
         <source>Select a MEGA folder:</source>
-        <translation>Select a MEGA folder:</translation>
+        <translation>Pumili ng MEGA folder:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="66"/>
         <source>Retrieving folders...</source>
-        <translation>Retrieving folders...</translation>
+        <translation>Kinukuha ang folders...</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="93"/>
         <location filename="../NodeSelector.cpp" line="93"/>
         <source>New folder</source>
-        <translation>New folder</translation>
+        <translation>Bagong folder</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="100"/>
 	<source>OK</source>
-        <translation>OK</translation>
+        <translation>SIGE</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="107"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Wag na</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="32"/>
@@ -652,7 +652,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.cpp" line="94"/>
         <source>Enter the new folder name:</source>
-        <translation>Enter the new folder name:</translation>
+        <translation>Ilagay ang bagong pangalan ng folder:</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="127"/>
@@ -663,19 +663,19 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <location filename="../NodeSelector.cpp" line="127"/>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Invalid application key Unknown error</translation>
+        <translation>Maling application key Di matukoy na error</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Babala</translation>
     </message>
     <message>
         <location filename="../NodeSelector.cpp" line="137"/>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>You have %1 in this folder.
-Are you sure you want to sync it?</translation>
+        <translation>Ikaw ay may %1 sa folder na ito.
+Gusto mo nga bang i-sync ito?</translation>
     </message>
 </context>
 <context>
@@ -683,38 +683,38 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="26"/>
         <source>Import links</source>
-        <translation>Import links</translation>
+        <translation>Mahahalagang links</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="35"/>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Enter one or multiple MEGA file links</translation>
+        <translation>I-enter ang isa o maramihang MEGA file links</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
         <source>Submit</source>
-        <translation>Submit</translation>
+        <translation>Ibigay</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="87"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Wag na</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Babala</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <source>Enter one or more MEGA file links</source>
-        <translation>Enter one or more MEGA file links</translation>
+        <translation>Maglagay ng isa o maraming MEGA file links</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>No valid MEGA links found. (folder links are not yet supported)</translation>
+        <translation>Walng valid na MEGA links na nakita. (ang folder links ay hindi pa suportado)</translation>
     </message>
 </context>
 <context>
@@ -723,79 +723,79 @@ Are you sure you want to sync it?</translation>
         <location filename="../RecentFile.ui" line="142"/>
         <location filename="../RecentFile.cpp" line="75"/>
         <source>%1 hours ago</source>
-        <translation>%1 hours ago</translation>
+        <translation>%1 oras ang nakalipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.ui" line="164"/>
         <source>Get MEGA link</source>
-        <translation>Get MEGA link</translation>
+        <translation>Kumuha ng MEGA link</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="58"/>
         <source>just now</source>
-        <translation>just now</translation>
+        <translation>ngayon lang</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="60"/>
         <source>%1 seconds ago</source>
-        <translation>%1 seconds ago</translation>
+        <translation>%1 segundong nakalipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="65"/>
         <source>1 minute ago</source>
-        <translation>1 minute ago</translation>
+        <translation>isang minuto ang nakalipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="67"/>
         <source>%1 minutes ago</source>
-        <translation>%1 minutes ago</translation>
+        <translation>%1 minutong nakalipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="73"/>
         <source>1 hour ago</source>
-        <translation>1 hour ago</translation>
+        <translation>isang oras kanina lamang</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="81"/>
         <source>1 day ago</source>
-        <translation>1 day ago</translation>
+        <translation>isang araw ang nakalipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="83"/>
         <source>%1 days ago</source>
-        <translation>%1 days ago</translation>
+        <translation>%1 araw na ang lumipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="89"/>
         <source>1 month ago</source>
-        <translation>1 month ago</translation>
+        <translation>isang buwan ang lumipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="91"/>
         <source>%1 months ago</source>
-        <translation>%1 months ago</translation>
+        <translation>%1 buwan na ang lumipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="97"/>
         <source>1 year ago</source>
-        <translation>1 year ago</translation>
+        <translation>1 taon ang lumipas</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="99"/>
         <source>%1 years ago</source>
-        <translation>%1 years ago</translation>
+        <translation>%1 taon na ang nagdaan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="111"/>
         <location filename="../RecentFile.cpp" line="119"/>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>Buksan</translation>
     </message>
     <message>
         <location filename="../RecentFile.cpp" line="112"/>
         <location filename="../RecentFile.cpp" line="120"/>
         <source>Show in folder</source>
-        <translation>Show in folder</translation>
+        <translation>Ipakita sa folder</translation>
     </message>
 </context>
 <context>
@@ -808,7 +808,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="119"/>
         <source>General</source>
-        <translation>General</translation>
+        <translation>Panglahatan</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="157"/>
@@ -833,42 +833,42 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="356"/>
         <source>Help</source>
-        <translation>Help</translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="376"/>
 	<source>OK</source>
-        <translation>OK</translation>
+        <translation>SIGE</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="383"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Itigil</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="393"/>
         <source>Apply</source>
-        <translation>Apply</translation>
+        <translation>Ilagay</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="430"/>
         <source>Show notifications</source>
-        <translation>Show notifications</translation>
+        <translation>Ipakita ang mga abiso</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="440"/>
         <source>Start on startup</source>
-        <translation>Start on startup</translation>
+        <translation>Simulan sa pagbubukas</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="450"/>
         <source>Update automatically</source>
-        <translation>Update automatically</translation>
+        <translation>I-update kaagad</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="460"/>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>Lengwahe</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="473"/>
@@ -878,30 +878,30 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="501"/>
         <source>Details</source>
-        <translation>Details</translation>
+        <translation>Detalye</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="559"/>
         <location filename="../SettingsDialog.cpp" line="231"/>
         <source>FREE</source>
-        <translation>FREE</translation>
+        <translation>LIBRE</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="579"/>
         <location filename="../SettingsDialog.cpp" line="517"/>
         <source>Logout</source>
-        <translation>Logout</translation>
+        <translation>Maglogut</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="602"/>
         <source>Storage space</source>
-        <translation>Storage space</translation>
+        <translation>Bakanteng storage</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="650"/>
         <location filename="../SettingsDialog.ui" line="973"/>
         <source>Upgrade</source>
-        <translation>Upgrade</translation>
+        <translation>I-upgrade</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="680"/>
@@ -1066,7 +1066,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SettingsDialog.cpp" line="398"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Babala</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="423"/>
@@ -1167,7 +1167,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="452"/>
         <source>Logging in ...</source>
-        <translation>Logging in...</translation>
+        <translation>Naglolog-in...</translation>
     </message>
     <message>
         <location filename="../SetupWizard.ui" line="513"/>
@@ -1249,7 +1249,7 @@ Are you sure you want to sync it?</translation>
     <message>
         <location filename="../SetupWizard.ui" line="1026"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Itigil</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="50"/>
@@ -1323,7 +1323,7 @@ Are you sure you want to sync it?</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="175"/>
-        <source>Logging in...</source>
+        <source>Naglolog-in...</source>
         <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
@@ -1357,7 +1357,7 @@ Are you sure you want to sync it?</translation>
         <location filename="../SetupWizard.cpp" line="299"/>
         <location filename="../SetupWizard.cpp" line="306"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Babala</translation>
     </message>
     <message>
         <location filename="../SetupWizard.cpp" line="259"/>
@@ -1403,7 +1403,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="377"/>
         <source>Get MEGA link</source>
-        <translation>Get MEGA link</translation>
+        <translation>Kumuha ng MEGA link</translation>
     </message>
     <message>
         <location filename="../../platform/win/WinShellDispatcherTask.cpp" line="380"/>
@@ -1467,7 +1467,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../UploadToMegaDialog.ui" line="88"/>
         <source>Always upload to this destination</source>
-        <translation>Always upload to this destination</translation>
+        <translation>Laging ilagay dito</translation>
     </message>
     <message>
         <location filename="../UploadToMegaDialog.cpp" line="14"/>

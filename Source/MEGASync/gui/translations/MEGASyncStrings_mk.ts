@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>МЕГАсинхноризација е на чекање</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Exit anyway?</source>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>МЕГАсинхноризација е обновена</translation>
     </message>
 </context>
 <context>

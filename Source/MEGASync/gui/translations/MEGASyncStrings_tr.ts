@@ -818,7 +818,7 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="192"/>
         <source>Syncs</source>
-        <translation>Senkronize klasörler</translation>
+        <translation>Senkronizeler</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>

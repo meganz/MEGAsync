@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Vas a importar este archivo a una carpeta sincronizada. Si activas la descarga, el archivo se duplicará en tu ordenador. ¿Estás seguro?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Vas a importar estos archivos a una carpeta sincronizada. Si activas la descarga, los archivos se duplicarán en tu ordenador. ¿Estás seguro?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync está en espera</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync ha sido actualizado</translation>
     </message>
 </context>
 <context>

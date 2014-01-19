@@ -808,7 +808,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="119"/>
         <source>General</source>
-        <translation>ჩვეულებრივი (General)</translation>
+        <translation>ჩვეულებრივი</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="157"/>
@@ -823,7 +823,7 @@ Are you sure you want to sync it?</source>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
         <source>Bandwidth</source>
-        <translation>ტრაფიკი (Bandwidth)</translation>
+        <translation>ტრაფიკი</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="262"/>
