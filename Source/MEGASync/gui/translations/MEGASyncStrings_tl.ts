@@ -47,7 +47,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Babala</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
@@ -57,13 +57,13 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
         <source>Sync name</source>
-        <translation>Sync name</translation>
+        <translation>Pangalan ng sync</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="125"/>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>The name &quot;%1&quot; is already in use for another sync Please enter a different name to identify this synced folder:</translation>
+        <translation>The name &quot;%1&quot; is already in use for another sync Pakilagyan ng ibang pangalan upang mapansin ang synced folder na ito:</translation>
     </message>
     <message>
 	<location filename="gui/BindFolderDialog.ui" line="42"/>
@@ -81,7 +81,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <location filename="../FolderBinder.ui" line="92"/>
         <source>Local folder:</source>
-        <translation>Local folder:</translation>
+        <translation>Lokal na folder:</translation>
     </message>
     <message>
         <location filename="../FolderBinder.ui" line="38"/>

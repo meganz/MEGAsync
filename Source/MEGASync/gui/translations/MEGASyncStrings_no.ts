@@ -343,12 +343,12 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this version is limited to %2 folders or %3 files).</translation>
+        <translation>Mappen (%1) ble ikke lastet opp fordi den er for stor (denne versjonen er begrenset til %2 mapper eller %3 filer).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are too large (this version is limited to %2 folders or %3 files).</translation>
+        <translation>%1 mapper ble ikke lastet opp fordi de er for store (denne versjonen er begrenset til %2 mapper eller %3 filer).</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="348"/>
@@ -494,22 +494,22 @@ Avslutt uansett?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="760"/>
         <source>Rate limit exceeded</source>
-        <translation>Rate limit exceeded</translation>
+        <translation>Frekvensgrensen din er nådd</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="762"/>
         <source>Failed permanently</source>
-        <translation>Failed permanently</translation>
+        <translation>Overføring mislykkes</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="764"/>
         <source>Too many concurrent connections or transfers</source>
-        <translation>Too many concurrent connections or transfers</translation>
+        <translation>For mange forbindelser eller samtidige overføringer</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="766"/>
         <source>Out of range</source>
-        <translation>Out of range</translation>
+        <translation>Utenfor rekkevidde</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="768"/>
@@ -544,7 +544,7 @@ Avslutt uansett?</translation>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="780"/>
         <source>Invalid key/Decryption error</source>
-        <translation>Invalid key/Decryption error</translation>
+        <translation>Ugyldig nøkkel/dekrypteringsfeil</translation>
     </message>
     <message>
         <location filename="../../sdk/megaapi.cpp" line="782"/>
@@ -616,7 +616,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
     <message>
         <location filename="../NodeSelector.ui" line="17"/>
         <source>Folder Selection</source>
-        <translation>Folder Selection</translation>
+        <translation>Mappevelger</translation>
     </message>
     <message>
         <location filename="../NodeSelector.ui" line="38"/>
@@ -688,7 +688,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="35"/>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Enter one or multiple MEGA file links</translation>
+        <translation>Skriv inn en eller flere MEGA-lenker</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.ui" line="80"/>
@@ -709,12 +709,12 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="41"/>
         <source>Enter one or more MEGA file links</source>
-        <translation>Enter one or more MEGA file links</translation>
+        <translation>Skriv inn en eller flere MEGA-lenker</translation>
     </message>
     <message>
         <location filename="../PasteMegaLinksDialog.cpp" line="43"/>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>No valid MEGA links found. (folder links are not yet supported)</translation>
+        <translation>Ingen gyldige MEGA-lenker ble funnet (husk at MEGA-lenker for mapper ikke er støttet enda)</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1060"/>
         <source>Excluded file names</source>
-        <translation>Excluded file names</translation>
+        <translation>Ekskluderte filnavn</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1143"/>

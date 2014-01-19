@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Anda akan meng-import file ke folder yang telah disinkronisasikan. Jika anda mengaktifkan download, file tersebut akan terduplikasi pada komputer anda Anda yakin?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Anda akan meng-import beberapa file ke folder yang telah disinkronisasikan. Jika anda mengaktifkan download, file-file tersebut akan terduplikasi pada komputer anda Anda yakin?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync sedang menunggu</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Tetap ingin keluar?</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync telah diupdate</translation>
     </message>
 </context>
 <context>

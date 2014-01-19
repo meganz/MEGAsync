@@ -343,7 +343,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>Aplankas (%) nebuvo įkeltas, nes jis yra per didelis (ši versija riboja iki %2 aplankų ir %3 failų.</translation>
+        <translation>Aplankas (%1) nebuvo įkeltas, nes jis yra per didelis (ši versija riboja iki %2 aplankų ir %3 failų.</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>

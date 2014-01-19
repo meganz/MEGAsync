@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>您將把這個檔案匯入至同步資料夾。如您啟用下載，這個檔案將複製至您的電腦。 您確定嗎?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>您將把這些檔案匯入至同步資料夾。如您啟用下載，這些檔案將複製至您的電腦。 您確定嗎?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync 正在等待</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Exit anyway?</source>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync 已經更新</translation>
     </message>
 </context>
 <context>

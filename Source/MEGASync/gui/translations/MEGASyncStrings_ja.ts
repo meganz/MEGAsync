@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>このファイルはシンクされたフォルダにインポートされます。このままダウンロードすると、ファイルはあなたのパソコンにも作られます。 いいですね。</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>これらのファイルはシンクされたフォルダにインポートされます。このままダウンロードすると、ファイルはあなたのパソコンにも作られます。 いいですね。</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAシンク待機中</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Exit anyway?</source>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAシンクは更新されました。</translation>
     </message>
 </context>
 <context>

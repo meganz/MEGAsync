@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>kei te whanga a MEGA whakarite</translation>
     </message>
 </context>
 <context>
@@ -343,7 +343,7 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <location filename="../../MegaApplication.cpp" line="316"/>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>ko te kopaki (%) kaore i ihotia na te mea he tino nui rawa. ( ko te momo e whakawhaitihia ana ki te kopaki %2, ranei, ki te konae %3</translation>
+        <translation>ko te kopaki (%1) kaore i ihotia na te mea he tino nui rawa. ( ko te momo e whakawhaitihia ana ki te kopaki %2, ranei, ki te konae %3</translation>
     </message>
     <message>
         <location filename="../../MegaApplication.cpp" line="323"/>
@@ -466,7 +466,7 @@ e puta ahakoa</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>kua whakahoungia a MEGA whakarite</translation>
     </message>
 </context>
 <context>

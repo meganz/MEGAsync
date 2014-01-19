@@ -52,7 +52,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="107"/>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>Lokālā mape ir pārāk liela (šī versija ir ierobežota līdz %1  mapēm vai %1 failiem. Lūdzu izvēlaties citu mapi.</translation>
+        <translation>Lokālā mape ir pārāk liela (šī versija ir ierobežota līdz %1  mapēm vai %2 failiem. Lūdzu izvēlaties citu mapi.</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+            <translation>Jūs vēlaties importēt šo failu uz sinhronizācijas mapi.  Ja aktivizēsiet lejupielādi, tad šis fails tiks dublēts arī tavā datorā.  Vai esat pārliecināts?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+            <translation>Jūs vēlaties importēt šo failus uz sinhronizācijas mapi.  Ja aktivizēsiet lejupielādi, tad šie faili tiks dublēti arī tavā datorā.  Vai esat pārliecināts?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync pašreiz uzgaida</translation>
     </message>
 </context>
 <context>
@@ -466,7 +466,7 @@ Vienalga iziet?</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync tika atjaunots</translation>
     </message>
 </context>
 <context>
