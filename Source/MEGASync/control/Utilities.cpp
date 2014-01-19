@@ -8,6 +8,7 @@
 using namespace std;
 
 QHash<QString, QString> Utilities::extensionIcons;
+QHash<QString, QString> Utilities::languageNames;
 
 void Utilities::initializeExtensions()
 {
@@ -175,6 +176,60 @@ QPixmap Utilities::getExtensionPixmap(QString fileName, QString prefix)
         return QPixmap(QString(extensionIcons[f.suffix().toLower()]).insert(0, prefix));
     else
         return QPixmap(prefix + QString::fromAscii("generic.png"));
+}
+
+QString Utilities::languageCodeToString(QString code)
+{
+    if(languageNames.isEmpty())
+    {
+        languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
+        languageNames[QString::fromAscii("zh_CN")] = QString::fromUtf8("简体中文");
+        languageNames[QString::fromAscii("zh_TW")] = QString::fromUtf8("中文繁體");
+        languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
+        languageNames[QString::fromAscii("es")] = QString::fromUtf8("Español");
+        languageNames[QString::fromAscii("fr")] = QString::fromUtf8("Français");
+        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");
+        languageNames[QString::fromAscii("it")] = QString::fromUtf8("Italiano");
+        languageNames[QString::fromAscii("pt_BR")] = QString::fromUtf8("Português Brasil");
+        languageNames[QString::fromAscii("mi")] = QString::fromUtf8("Māori");
+        languageNames[QString::fromAscii("vn")] = QString::fromUtf8("Tiếng Việt");
+        languageNames[QString::fromAscii("nl")] = QString::fromUtf8("Nederlands");
+        languageNames[QString::fromAscii("ko")] = QString::fromUtf8("한국어");
+        languageNames[QString::fromAscii("ar")] = QString::fromUtf8("العربية");
+        languageNames[QString::fromAscii("ja")] = QString::fromUtf8("日本語");
+        languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
+        languageNames[QString::fromAscii("he")] = QString::fromUtf8("עברית");
+        languageNames[QString::fromAscii("pl")] = QString::fromUtf8("Polski");
+        languageNames[QString::fromAscii("ca")] = QString::fromUtf8("Català");
+        languageNames[QString::fromAscii("eu")] = QString::fromUtf8("Euskara");
+        languageNames[QString::fromAscii("sk")] = QString::fromUtf8("Slovenský");
+        languageNames[QString::fromAscii("af")] = QString::fromUtf8("Afrikaans");
+        languageNames[QString::fromAscii("ro")] = QString::fromUtf8("Română");
+        languageNames[QString::fromAscii("fi")] = QString::fromUtf8("Suomi");
+        languageNames[QString::fromAscii("no")] = QString::fromUtf8("Norsk");
+        languageNames[QString::fromAscii("sv")] = QString::fromUtf8("Svenska");
+        languageNames[QString::fromAscii("bs")] = QString::fromUtf8("Bosanski");
+        languageNames[QString::fromAscii("hu")] = QString::fromUtf8("Magyar");
+        languageNames[QString::fromAscii("da")] = QString::fromUtf8("Dansk");
+        languageNames[QString::fromAscii("sl")] = QString::fromUtf8("Slovenščina");
+        languageNames[QString::fromAscii("tr")] = QString::fromUtf8("Türkçe");
+        languageNames[QString::fromAscii("id")] = QString::fromUtf8("Bahasa Indonesia");
+        languageNames[QString::fromAscii("hr")] = QString::fromUtf8("Hrvatski");
+        languageNames[QString::fromAscii("el")] = QString::fromUtf8("ελληνικά");
+        languageNames[QString::fromAscii("uk")] = QString::fromUtf8("Українська");
+        languageNames[QString::fromAscii("lt")] = QString::fromUtf8("Lietuvos");
+        languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย");
+        languageNames[QString::fromAscii("lv")] = QString::fromUtf8("Latviešu");
+        languageNames[QString::fromAscii("bg")] = QString::fromUtf8("български");
+        languageNames[QString::fromAscii("mk")] = QString::fromUtf8("македонски");
+        languageNames[QString::fromAscii("hi")] = QString::fromUtf8("हिंदी");
+        languageNames[QString::fromAscii("ee")] = QString::fromUtf8("Eesti");
+        languageNames[QString::fromAscii("ms")] = QString::fromUtf8("Bahasa Malaysia");
+        languageNames[QString::fromAscii("cy")] = QString::fromUtf8("Cymraeg");
+        languageNames[QString::fromAscii("tl")] = QString::fromUtf8("Tagalog");
+        languageNames[QString::fromAscii("ka")] = QString::fromUtf8("ქართული");
+    }
+    return languageNames.value(code);
 }
 
 QPixmap Utilities::getExtensionPixmapSmall(QString fileName)

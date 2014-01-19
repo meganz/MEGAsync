@@ -268,9 +268,6 @@ void MegaApplication::loggedIn()
 
     infoDialog = new InfoDialog(this);
 
-    //Get account details
-    megaApi->getAccountDetails();
-
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
 
