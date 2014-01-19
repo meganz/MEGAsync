@@ -5,9 +5,9 @@
 
 using namespace std;
 
-const unsigned int UpdateTask::INITIAL_DELAY_SECS = 30;
+const unsigned int UpdateTask::INITIAL_DELAY_SECS = 60;
 const unsigned int UpdateTask::RETRY_INTERVAL_SECS = 7200;
-const QString UpdateTask::UPDATE_CHECK_URL = QString::fromUtf8("http://www.pycusoft.com/update.txt");
+const QString UpdateTask::UPDATE_CHECK_URL = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
 const QString UpdateTask::UPDATE_FOLDER_NAME = QString::fromAscii("update");
 const QString UpdateTask::BACKUP_FOLDER_NAME = QString::fromAscii("backup");
 const char UpdateTask::PUBLIC_KEY[] = "CACe_GbhzspMk6X5FcO29fDNzXEL-A5Lsd4o9KIeEG0uoCDvlDmr8djRpItL3GuhsjUMzPUyf2wLqlFs9Mu3SgJ-CdyTQUQ4bEDvYjqa8yfS_cWcVM2KvYhVT8X-JpHRtVGYfycmlzKEA2klqS3n3BwJgXL8vjFYUo34bsvUEEW6Q727phbd6M-2YxaGX9FXtU4Aqq0vzEhhmunVrFlEAtVaR0LhOHXJUucoUePufupGFFLEYEb-njzD7-9x3LuMMn25s7ZHFk4L_fvuZZtalu142QLblkp_rWm0iyM0ztfVs18qBl4J9WR6hVw6W2sHsKp6sBipELf1_owpCtLeFOMFAAUR";
@@ -35,7 +35,7 @@ void UpdateTask::doWork()
     m_WebCtrl = new QNetworkAccessManager();
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
 
-    int len = sizeof(PUBLIC_KEY)/4*3+3;
+    int len = strlen(PUBLIC_KEY)/4*3+3;
     string pubks;
     pubks.resize(len);
     pubks.resize(Base64::atob(PUBLIC_KEY, (byte *)pubks.data(), len));

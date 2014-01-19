@@ -14,7 +14,7 @@
 
 using namespace mega;
 
-const QString UpdaterGUI::BASE_UPDATE_URL = QString::fromAscii("http://www.pycusoft.com/sync/");
+const QString UpdaterGUI::BASE_UPDATE_URL = QString::fromAscii("http://g.static.mega.co.nz/upd/wsync/");
 const QString UpdaterGUI::VERSION = QString::fromAscii("110");
 
 UpdaterGUI::UpdaterGUI(QWidget *parent) :
@@ -103,7 +103,7 @@ void UpdaterGUI::on_bGenerateKey_clicked()
     string privks;
 
     AsymmCipher asymkey;
-    asymkey.genkeypair(asymkey.key,pubk,2048);
+    asymkey.genkeypair(asymkey.key,pubk,4096);
     AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
     AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
 
