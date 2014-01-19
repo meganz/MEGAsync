@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Вы уверены?</translation>
+            <translation>Вы собираетесь импортировать этот файл в синхронизированную папку. Если Вы разрешили скачку, то файл будет дублирован на Вашем компьютере. Вы уверены?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Вы уверены?</translation>
+            <translation>Вы собираетесь импортировать эти файлы в синхронизированную папку. Если Вы разрешили скачку, то файлы будут дублированы на Вашем компьютере. Вы уверены?</translation>
     </message>
 </context>
 <context>

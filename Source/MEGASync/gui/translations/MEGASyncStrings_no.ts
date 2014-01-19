@@ -57,7 +57,7 @@
     <message>
         <location filename="../BindFolderDialog.cpp" line="124"/>
         <source>Sync name</source>
-        <translation>Sync name</translation>
+        <translation>Navngi synkronisering</translation>
     </message>
     <message>
         <location filename="../BindFolderDialog.cpp" line="125"/>
@@ -151,13 +151,13 @@ Please enter a different name to identify this synced folder:</source>
             <source>You are about to import this file to a synced folder.
     If you enable downloading, the file will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Er du sikker?</translation>
+            <translation>Du er i ferd med å importere denne filen til en synkronisert mappe. Hvis du aktiverer nedlasting vil filen dupliseres på datamaskinen din. Er du sikker?</translation>
         </message>
         <message>
             <source>You are about to import these files to a synced folder.
     If you enable downloading, the files will be duplicated on your computer.
     Are you sure?</source>
-            <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Er du sikker?</translation>
+            <translation>Du er i ferd med å importere disse filene til en synkronisert mappe. Hvis du aktiverer nedlasting vil filene bli duplisert på datamaskinen. Er du sikker?</translation>
     </message>
 </context>
 <context>
@@ -291,7 +291,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
 	<source>MEGAsync is waiting</source>
-	<translation>MEGAsync is waiting</translation>
+	<translation>MEGAsync venter</translation>
     </message>
 </context>
 <context>
@@ -366,7 +366,7 @@ Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
         <translation>Synkroniseringen vil stoppe.
-Deletions that occur while it is not running will not be propagated.
+Slettinger som blir gjort mens prosessen kjører vil ikke bli utført før synkroniseringen er ferdig.
 
 Avslutt uansett?</translation>
     </message>
@@ -466,7 +466,7 @@ Avslutt uansett?</translation>
     </message>
     <message>
 	<source>MEGAsync has been updated</source>
-	<translation>MEGAsync has been updated</translation>
+	<translation>MEGAsync har blitt oppdatert</translation>
     </message>
 </context>
 <context>
@@ -818,7 +818,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="192"/>
         <source>Syncs</source>
-        <translation>Syncs</translation>
+        <translation>Synkroniseringer</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="227"/>
@@ -968,7 +968,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <location filename="../SettingsDialog.ui" line="1003"/>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Upload limits are per upload server and are applied when starting new uploads</translation>
+        <translation>Opplastingsgrensene er per opplastingstjener og brukes når du starter nye opplastninger</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.ui" line="1017"/>
@@ -1497,7 +1497,7 @@ Please, select another folder.</source>
     <message>
         <location filename="../../platform/win/WindowsPlatform.cpp" line="162"/>
         <source>MEGA synced folder</source>
-        <translation>MEGA synced folder</translation>
+        <translation>MEGA-synkronisert mappe</translation>
     </message>
 </context>
 <context>
