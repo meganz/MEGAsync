@@ -51,8 +51,8 @@ RequestExecutionLevel user
 ;!define MUI_FINISHPAGE_NOAUTOCLOSE
 
 var ICONS_GROUP
-var INSTALLDAY
-var EXPIRATIONDAY
+;var INSTALLDAY
+;var EXPIRATIONDAY
 var USERNAME
 var CURRENT_USER_INSTDIR
 var ALL_USERS_INSTDIR
@@ -169,18 +169,8 @@ Function RunExplorer
   ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
 FunctionEnd
 
+
 Function .onInit
-
-  System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
-  strCpy $USERNAME $0
-
-  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
-  strCpy $ALL_USERS_INSTDIR $1
-  
-  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
-  strCpy $CURRENT_USER_INSTDIR $1
-
-  ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "$USERNAME   $CURRENT_USER_INSTDIR   $ALL_USERS_INSTDIR"
   ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   ;strCpy $INSTALLDAY "$2$1$0"
   ;strCpy $EXPIRATIONDAY "20140121"
@@ -212,7 +202,35 @@ Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
+Function GetPaths
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
+  strCpy $ALL_USERS_INSTDIR $1
+  
+  System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
+  strCpy $USERNAME $0
+
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
+  strCpy $CURRENT_USER_INSTDIR $1
+  
+  WriteINIStr "$ALL_USERS_INSTDIR\megatmp.ini" section1 "M1" "$CURRENT_USER_INSTDIR"
+  WriteINIStr "$ALL_USERS_INSTDIR\megatmp.ini" section1 "M2" "$USERNAME"
+FunctionEnd
+
 Section "Principal" SEC01
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
+  strCpy $ALL_USERS_INSTDIR $1
+  
+  ${UAC.CallFunctionAsUser} GetPaths
+
+readpaths:
+  ReadINIStr $CURRENT_USER_INSTDIR "$ALL_USERS_INSTDIR\megatmp.ini" section1 "M1"
+  ReadINIStr $USERNAME "$ALL_USERS_INSTDIR\megatmp.ini" section1 "M2"
+  StrCmp $CURRENT_USER_INSTDIR "" 0 pathsreaded
+  Sleep 1000
+  goto readpaths
+
+pathsreaded:
+  Delete "$ALL_USERS_INSTDIR\megatmp.ini"
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser
   SetShellVarContext all
   StrCpy $INSTDIR "$ALL_USERS_INSTDIR\MEGAsync"
