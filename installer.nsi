@@ -54,6 +54,8 @@ var ICONS_GROUP
 var INSTALLDAY
 var EXPIRATIONDAY
 var USERNAME
+var CURRENT_USER_INSTDIR
+var ALL_USERS_INSTDIR
 
 ; Installer pages
 !insertmacro MUI_PAGE_WELCOME
@@ -172,6 +174,13 @@ Function .onInit
   System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
   strCpy $USERNAME $0
 
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
+  strCpy $ALL_USERS_INSTDIR $1
+  
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
+  strCpy $CURRENT_USER_INSTDIR $1
+
+  ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "$USERNAME   $CURRENT_USER_INSTDIR   $ALL_USERS_INSTDIR"
   ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   ;strCpy $INSTALLDAY "$2$1$0"
   ;strCpy $EXPIRATIONDAY "20140121"
@@ -204,19 +213,14 @@ Function .onInit
 FunctionEnd
 
 Section "Principal" SEC01
-
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser
-allusers:
   SetShellVarContext all
-  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
+  StrCpy $INSTDIR "$ALL_USERS_INSTDIR\MEGAsync"
   goto modeselected
 currentuser:
   SetShellVarContext current
-  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
-
+  StrCpy $INSTDIR "$CURRENT_USER_INSTDIR\MEGAsync"
 modeselected:
-  
-  StrCpy $INSTDIR "$1\MEGAsync"
 
   ;SetRebootFlag true
   SetOverwrite try
@@ -412,20 +416,37 @@ modeselected:
  ;Exec "explorer.exe"
  ;${EnableX64FSRedirection}
 
-  ; Shortcuts
+    StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
+  SetShellVarContext all
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
   CreateShortCut "$DESKTOP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
-  !insertmacro MUI_STARTMENU_WRITE_END
-SectionEnd
-
-Section -AdditionalIcons
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url" "" "$INSTDIR\MEGAsync.exe" 1
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
   !insertmacro MUI_STARTMENU_WRITE_END
+  goto modeselected2
+currentuser2:
+  ${UAC.CallFunctionAsUser} CreateMegaShortcuts
+modeselected2:
+
+SectionEnd
+
+Function CreateMegaShortcuts
+  SetShellVarContext current
+  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+  CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
+  CreateShortCut "$DESKTOP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
+  WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url" "" "$INSTDIR\MEGAsync.exe" 1
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  !insertmacro MUI_STARTMENU_WRITE_END
+FunctionEnd
+
+Section -AdditionalIcons
+
 SectionEnd
 
 Section -Post
@@ -515,18 +536,30 @@ Section Uninstall
         Delete /REBOOTOK $0
   ${EndIf}
   
+  SetShellVarContext current
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk"
   Delete "$INSTDIR\MEGA Website.url"
   Delete "$DESKTOP\MEGAsync.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk"
-
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
   Delete "$1\MEGAsync.lnk"
-
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR"
+  
+  SetShellVarContext all
+  Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk"
+  Delete "$INSTDIR\MEGA Website.url"
+  Delete "$DESKTOP\MEGAsync.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk"
+  System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
+  Delete "$1\MEGAsync.lnk"
+  RMDir "$SMPROGRAMS\$ICONS_GROUP"
+  RMDir "$INSTDIR\imageformats"
+  RMDir "$INSTDIR"
+
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
