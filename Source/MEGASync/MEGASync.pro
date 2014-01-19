@@ -65,11 +65,7 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ka.ts	gui/translations/MEGASyncStrings_lv.ts \
     gui/translations/MEGASyncStrings_lt.ts	gui/translations/MEGASyncStrings_mi.ts \
     gui/translations/MEGASyncStrings_mk.ts	gui/translations/MEGASyncStrings_sl.ts \
-    gui/translations/MEGASyncStrings_tl.ts	gui/translations/MEGASyncStrings_vn.ts \
-    gui/translations/MEGASyncStrings_zh_CN.ts	gui/translations/MEGASyncStrings_zh_TW.ts \
-    gui/translations/MEGASyncStrings_zh_CN.ts	gui/translations/MEGASyncStrings_zh_TW.ts \
-    gui/translations/MEGASyncStrings_zh_CN.ts	gui/translations/MEGASyncStrings_zh_TW.ts \
-    gui/translations/MEGASyncStrings_zh_CN.ts	gui/translations/MEGASyncStrings_zh_TW.ts
+    gui/translations/MEGASyncStrings_tl.ts	gui/translations/MEGASyncStrings_vn.ts
 
 CODECFORTR = UTF8
 
