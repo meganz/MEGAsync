@@ -1139,6 +1139,8 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
     infoDialog->setWaiting(waiting);
     infoDialog->setIndexing(indexing);
     updateTrayIcon();
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        Platform::notifyItemChange(preferences->getLocalFolder(i));
 }
 
 //TODO: Manage sync callbacks here
