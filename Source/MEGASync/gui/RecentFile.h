@@ -27,6 +27,7 @@ protected:
 	long long fileHandle;
     QDateTime dateTime;
 	QString localPath;
+    void changeEvent(QEvent * event);
 
 private slots:
 	void on_pArrow_clicked();

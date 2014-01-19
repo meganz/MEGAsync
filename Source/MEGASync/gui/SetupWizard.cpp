@@ -52,7 +52,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			else
 			{
 				ui->sPages->setCurrentWidget(ui->pNewAccount);
-                QMessageBox::warning(this, tr("Error"), QString::fromUtf8(error->getErrorString()), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
 			}
 			break;
 		}
@@ -76,7 +76,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 				ui->bBack->setEnabled(true);
 				ui->bNext->setEnabled(true);
 				ui->sPages->setCurrentWidget(ui->pLogin);
-                QMessageBox::warning(this, tr("Error"), QString::fromUtf8(error->getErrorString()), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
 			}
 			break;
 		}
@@ -102,7 +102,7 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		   }
 		   else
 		   {
-               QMessageBox::warning(this, tr("Error"), QString::fromUtf8(error->getErrorString()), QMessageBox::Ok);
+               QMessageBox::warning(this, tr("Error"),  error->QgetErrorString(), QMessageBox::Ok);
 		   }
 		   break;
 		}

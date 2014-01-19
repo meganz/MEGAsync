@@ -100,7 +100,6 @@ public slots:
     void cleanAll();
 
 protected:
-    void createActions();
     void createTrayIcon();
     bool showTrayIconAlwaysNEW();
     void loggedIn();

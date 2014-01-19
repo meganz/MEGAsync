@@ -36,7 +36,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, Meg
 	Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
 	if(e->getErrorCode() != MegaError::API_OK || !node)
 	{
-        LOG(QString::fromAscii("ERROR: %1").arg(QString::fromAscii(e->getErrorString())));
+        LOG(QString::fromAscii("ERROR: %1").arg(e->QgetErrorString()));
 		this->reject();
 		return;
 	}

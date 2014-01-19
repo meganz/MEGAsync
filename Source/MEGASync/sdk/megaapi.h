@@ -490,14 +490,16 @@ class MegaError
 		MegaError* copy();
 		int getErrorCode() const;
 		const char* getErrorString() const;
-		const char* toString() const;
+        QString QgetErrorString() const;
+        const char* toString() const;
 		const char* __str__() const;
 
 		bool isTemporal() const;
 		long getNextAttempt() const;
 		void setNextAttempt(long nextAttempt);
 
-		static const char *getErrorString(int errorCode);
+        static const char *getErrorString(int errorCode);
+        static QString QgetErrorString(int errorCode);
 	protected:
         //< 0 = API error code, > 0 = http error, 0 = No error
 		int errorCode;
