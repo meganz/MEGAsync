@@ -37,8 +37,8 @@ private:
     QStringList finalSourcePaths;
 
     //A lot of space to store big keys in Base64
-    char PUBLIC_KEY[4096];
-    char PRIVATE_KEY[4096];
+    char PUBLIC_KEY[10000];
+    char PRIVATE_KEY[10000];
 
     static const QString VERSION;
     static const QString BASE_UPDATE_URL;

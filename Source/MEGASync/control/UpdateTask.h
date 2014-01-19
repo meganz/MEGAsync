@@ -48,7 +48,7 @@ protected:
    AsymmCipher asymkey;
    QNetworkAccessManager *m_WebCtrl;
    HashSignature *signatureChecker;
-   char signature[256];
+   char signature[512];
    int updateVersion;
    int currentFile;
    QDir updateFolder;
