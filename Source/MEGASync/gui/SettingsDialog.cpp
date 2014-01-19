@@ -238,7 +238,6 @@ void SettingsDialog::loadSettings()
             }
         }
     }
-
     for(int i=0; i<languageCodes.size(); i++)
     {
         if(currentLanguage.startsWith(languageCodes[i]))
@@ -247,12 +246,18 @@ void SettingsDialog::loadSettings()
             break;
         }
     }
-
     if(currentIndex == -1)
         currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
 
     ui->cLanguage->addItems(languages);
     ui->cLanguage->setCurrentIndex(currentIndex);
+
+    int width = ui->bBandwidth->width();
+    QFont f = ui->bBandwidth->font();
+    QFontMetrics fm = QFontMetrics(f);
+    int neededWidth = fm.width(tr("Bandwidth"));
+    if(width < neededWidth)
+        ui->bBandwidth->setText(tr("Transfers"));
 
     //Account
     ui->lEmail->setText(preferences->email());
