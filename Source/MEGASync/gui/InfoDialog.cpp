@@ -41,6 +41,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	remainingUploads = remainingDownloads = 0;
     uploadStartTime = 0;
     downloadStartTime = 0;
+    effectiveDownloadSpeed = 200000;
+    effectiveUploadSpeed = 200000;
     ui->lDownloads->setText(QString::fromAscii(""));
     ui->lUploads->setText(QString::fromAscii(""));
     //ui->bUploads->hide();
@@ -132,13 +134,23 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     {
         wTransfer = ui->wTransfer1;
         transfer1 = transfer->getTransfer();
-        if(!downloadStartTime) downloadStartTime = QDateTime::currentMSecsSinceEpoch();
+        if(!downloadStartTime)
+        {
+            downloadStartTime = QDateTime::currentMSecsSinceEpoch();
+            elapsedDownloadTime=0;
+            lastUpdate = QDateTime::currentMSecsSinceEpoch();
+        }
     }
     else
     {
         wTransfer = ui->wTransfer2;
         transfer2 = transfer->getTransfer();
-        if(!uploadStartTime) uploadStartTime = QDateTime::currentMSecsSinceEpoch();
+        if(!uploadStartTime)
+        {
+            uploadStartTime = QDateTime::currentMSecsSinceEpoch();
+            elapsedUploadTime=0;
+            lastUpdate = QDateTime::currentMSecsSinceEpoch();
+        }
     }
 
     wTransfer->setFileName(fileName);
@@ -181,7 +193,12 @@ void InfoDialog::updateTransfers()
         ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
 
         long long remainingBytes = totalDownloadSize-totalDownloadedSize;
-        int totalRemainingSeconds = (downloadSpeed>0) ? remainingBytes/downloadSpeed : 0;
+        long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
+        if(timeIncrement < 1000) elapsedDownloadTime += timeIncrement;
+        double effectiveSpeed = totalDownloadedSize/(elapsedDownloadTime/1000+1);
+        effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/10; //Smooth the effective speed
+
+        int totalRemainingSeconds = (effectiveDownloadSpeed>0) ? remainingBytes/effectiveDownloadSpeed : 0;
         int remainingHours = totalRemainingSeconds/3600;
         int remainingMinutes = (totalRemainingSeconds%3600)/60;
         int remainingSeconds =  (totalRemainingSeconds%60);
@@ -230,7 +247,13 @@ void InfoDialog::updateTransfers()
         ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
 
         long long remainingBytes = totalUploadSize-totalUploadedSize;
-        int totalRemainingSeconds = (uploadSpeed>0) ? remainingBytes/uploadSpeed : 0;
+        long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
+        if(timeIncrement < 1000) elapsedUploadTime += timeIncrement;
+        double effectiveSpeed = totalUploadedSize/(elapsedUploadTime/1000+1);
+        effectiveUploadSpeed += (effectiveSpeed-effectiveUploadSpeed)/10; //Smooth the effective speed
+
+        int totalRemainingSeconds = (effectiveUploadSpeed>0) ? remainingBytes/effectiveUploadSpeed : 0;
+
         int remainingHours = totalRemainingSeconds/3600;
         int remainingMinutes = (totalRemainingSeconds%3600)/60;
         int remainingSeconds =  (totalRemainingSeconds%60);
@@ -264,6 +287,8 @@ void InfoDialog::updateTransfers()
         totalUploadSize = 0;
         megaApi->resetTotalUploads();
     }
+
+    lastUpdate = QDateTime::currentMSecsSinceEpoch();
 
     //if(ui->bDownloads->underMouse())
     //    showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)),true);

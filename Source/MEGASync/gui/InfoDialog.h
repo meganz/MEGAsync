@@ -61,8 +61,13 @@ private:
 
 	long long downloadSpeed;
 	long long uploadSpeed;
+    long long effectiveDownloadSpeed;
+    long long effectiveUploadSpeed;
     long long uploadStartTime;
     long long downloadStartTime;
+    long long elapsedDownloadTime;
+    long long elapsedUploadTime;
+    long long lastUpdate;
 	int currentUpload;
 	int currentDownload;
 	int totalUploads;
