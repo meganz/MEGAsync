@@ -67,11 +67,11 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris, string* 
 
 Sync::~Sync()
 {
-	// unlock tmp folder
-	delete tmpfa;
+	// must be set to prevent remote mass deletion while rootlocal destructor runs
+	assert(state == SYNC_CANCELED);
 
-	// prevent remote mass deletion while rootlocal destructor runs
-	state = SYNC_CANCELED;
+	// unlock tmp lock
+	delete tmpfa;
 
 	// stop all active and pending downloads
 	TreeProcDelSyncGet tdsg;

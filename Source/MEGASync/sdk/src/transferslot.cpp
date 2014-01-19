@@ -106,8 +106,8 @@ void TransferSlot::doio(MegaClient* client)
 {
 	if (!fa)
 	{
-cout << "Retrying completion..." << endl;
-		// this is a pending completion
+		// this is a pending completion, retry every 200 ms
+		transfer->bt.backoff(client->waiter->ds,2);
 		return transfer->complete();
 	}
 

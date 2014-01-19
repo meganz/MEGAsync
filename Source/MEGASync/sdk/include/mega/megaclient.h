@@ -165,8 +165,9 @@ public:
 	// export node link or remove existing exported link for this node
 	error exportnode(Node*, int);
 
-	// add sync
+	// add/delete sync
 	error addsync(string*, const char*, string*, Node*, int);
+	void delsync(Sync*);
 
 	// close all open HTTP connections
 	void disconnect();
@@ -411,11 +412,14 @@ public:
 
 	// app scanstate flag
 	bool syncscanstate;
+
+	// block local fs updates processing while locked ops are in progress
+	bool syncfsopsfailed;
 	
 	// retry accessing temporarily locked filesystem items
 	bool syncfslockretry;
 	BackoffTimer syncfslockretrybt;
-	
+
 	// retry of transiently failed local filesystem ops
 	bool syncdownretry;
 	BackoffTimer syncdownbt;
