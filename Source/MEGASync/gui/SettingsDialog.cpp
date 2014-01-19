@@ -218,7 +218,7 @@ void SettingsDialog::loadSettings()
     QStringList languages;
     languages.append(QString::fromAscii("English"));
     languageCodes.append(QString::fromAscii("en"));
-    int currentIndex = 0;
+    int currentIndex = -1;
     QString currentLanguage = preferences->language();
     while (it.hasNext())
     {
@@ -228,25 +228,29 @@ void SettingsDialog::loadSettings()
             int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
             if((extensionIndex-fullPrefix.size()) <= 0) continue;
             QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
-            QLocale locale(languageCode);
-            QLocale::Language language = locale.language();
-            QString languageString = QLocale::languageToString(language);
-            if(languageCode.size()>3)
-            {
-                languageString.append(QString::fromAscii(" ("))
-                        .append(locale.countryToString(locale.country()))
-                        .append(QString::fromAscii(")"));
-            }
-
+            QString languageString = Utilities::languageCodeToString(languageCode);
             if(!languageString.isEmpty())
             {
-                if(currentLanguage.startsWith(languageCode))
-                    currentIndex = languages.size();
-                languages.append(languageString);
-                languageCodes.append(languageCode);
+                int i=0;
+                while(i<languages.size() && (languageString > languages[i])) i++;
+                languages.insert(i, languageString);
+                languageCodes.insert(i, languageCode);
             }
         }
     }
+
+    for(int i=0; i<languageCodes.size(); i++)
+    {
+        if(currentLanguage.startsWith(languageCodes[i]))
+        {
+            currentIndex = i;
+            break;
+        }
+    }
+
+    if(currentIndex == -1)
+        currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
+
     ui->cLanguage->addItems(languages);
     ui->cLanguage->setCurrentIndex(currentIndex);
 

@@ -21,13 +21,14 @@ public:
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
+    static QHash<QString, QString> languageNames;
     static void initializeExtensions();
     static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
     static QPixmap getExtensionPixmap(QString fileName, QString prefix);
 
 //Platform dependent functions
 public:
-
+    static QString languageCodeToString(QString code);
     static QPixmap getExtensionPixmapSmall(QString fileName);
     static QPixmap getExtensionPixmapMedium(QString fileName);
     static QImage createThumbnail(QString imagePath, int size);
