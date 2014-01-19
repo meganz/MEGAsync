@@ -204,6 +204,10 @@ void SettingsDialog::loadSettings()
     //General
     ui->cShowNotifications->setChecked(preferences->showNotifications());
     ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+
+    if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
+        ui->cAutoUpdate->setEnabled(false);
+
     ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
     //Language

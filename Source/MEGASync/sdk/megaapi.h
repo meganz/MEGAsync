@@ -790,6 +790,8 @@ public:
     int getNumPendingDownloads();
     int getTotalUploads();
     int getTotalDownloads();
+    void resetTotalDownloads();
+    void resetTotalUploads();
     void updateStatics();
     bool isIndexing();
 
@@ -986,6 +988,7 @@ protected:
     virtual void syncupdate_treestate(LocalNode*);
 	virtual bool sync_syncable(Node*);
     virtual bool sync_syncable(const char*name, string*, string*);
+    virtual void syncupdate_local_lockretry(bool);
 
     // suggest reload due to possible race condition with other clients
 	virtual void reload(const char*);

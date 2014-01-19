@@ -211,6 +211,7 @@ void InfoDialog::updateTransfers()
         totalDownloads = 0;
         totalDownloadedSize = 0;
         totalDownloadSize = 0;
+        megaApi->resetTotalDownloads();
     }
 
     if(remainingUploads)
@@ -260,6 +261,7 @@ void InfoDialog::updateTransfers()
         totalUploads = 0;
         totalUploadedSize = 0;
         totalUploadSize = 0;
+        megaApi->resetTotalUploads();
     }
 
     //if(ui->bDownloads->underMouse())
