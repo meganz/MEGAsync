@@ -1984,8 +1984,7 @@ void MegaApi::transfer_update(Transfer *tr)
         //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
         //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
 
-        if(tr->slot->progressreported)
-            fireOnTransferUpdate(this, transfer);
+        fireOnTransferUpdate(this, transfer);
 	}
 }
 
