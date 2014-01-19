@@ -132,22 +132,13 @@ void Transfer::complete()
 					tmplocalname = (*it)->localname;
 					success = true;
 				}
-				else
-				{
-					if (client->fsaccess->transient_error) transient_error = true;
-				}
+				else if (client->fsaccess->transient_error) transient_error = true;
 			}
 
 			if (!success)
 			{
-				if (client->fsaccess->copylocal(tmplocalname.size() ? &tmplocalname : &localfilename,&(*it)->localname))
-				{
-					success = true;
-				}
-				else
-				{
-					if (client->fsaccess->transient_error) transient_error = true;
-				}
+				if (client->fsaccess->copylocal(tmplocalname.size() ? &tmplocalname : &localfilename,&(*it)->localname)) success = true;
+				else if (client->fsaccess->transient_error) transient_error = true;
 			}
 
 			if (success || !transient_error)
