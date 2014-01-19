@@ -1040,7 +1040,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
         <location filename="../SettingsDialog.cpp" line="222"/>
         <location filename="../SettingsDialog.cpp" line="270"/>
         <source>%1 (%2%) of %3 used</source>
-        <translation>%1 (%1%) no %3 izmantoti</translation>
+        <translation>%1 (%2%) no %3 izmantoti</translation>
     </message>
     <message>
         <location filename="../SettingsDialog.cpp" line="235"/>
