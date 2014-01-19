@@ -210,7 +210,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
             if(e == MegaError::API_ETEMPUNAVAIL)
 				status = ImportListWidgetItem::WARNING;
 
-            item->setData(QString::fromUtf8(MegaError::getErrorString(e)), status);
+            item->setData(MegaError::QgetErrorString(e), status);
 		}
 		else
 		{
@@ -237,6 +237,9 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        int totalImports = linkProcessor->getCurrentIndex();
+        for(int i=0; i<totalImports; i++)
+            this->onLinkInfoAvailable(i);
     }
     QDialog::changeEvent(event);
 }

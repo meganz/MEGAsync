@@ -31,6 +31,7 @@ public:
 
 	int numSuccessfullImports();
 	int numFailedImports();
+    int getCurrentIndex();
 
 protected:
 	MegaApi *megaApi;

@@ -146,5 +146,10 @@ int LinkProcessor::numSuccessfullImports()
 
 int LinkProcessor::numFailedImports()
 {
-	return importFailed;
+    return importFailed;
+}
+
+int LinkProcessor::getCurrentIndex()
+{
+    return currentIndex;
 }

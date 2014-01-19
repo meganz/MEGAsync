@@ -739,7 +739,12 @@ MegaError* MegaError::copy()
 int MegaError::getErrorCode() const { return errorCode; }
 const char* MegaError::getErrorString() const
 {
-	return MegaError::getErrorString(errorCode);
+    return MegaError::getErrorString(errorCode);
+}
+
+QString MegaError::QgetErrorString() const
+{
+    return QCoreApplication::translate("MegaError", getErrorString());
 }
 
 const char* MegaError::getErrorString(int errorCode)
@@ -798,8 +803,14 @@ const char* MegaError::getErrorString(int errorCode)
             return QT_TR_NOOP("Unknown error");
 		}
 	}
-	return "HTTP Error"; 
+    return "HTTP Error";
 }
+
+QString MegaError::QgetErrorString(int errorCode)
+{
+    return QCoreApplication::translate("MegaError", getErrorString(errorCode));
+}
+
 const char* MegaError::toString() const { return getErrorString(); } 
 const char* MegaError::__str__() const { return getErrorString(); } 
 

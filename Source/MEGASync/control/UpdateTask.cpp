@@ -88,7 +88,7 @@ void UpdateTask::postponeUpdate()
 
 void UpdateTask::downloadFile(QString url)
 {
-    LOG("downloadFile " << url.toStdString());
+    LOG(QString::fromAscii("downloadFile ") + url);
     QNetworkRequest request(url);
     m_WebCtrl->get(request);
 }
@@ -118,11 +118,11 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
     int currentVersion = QApplication::applicationVersion().toInt();
     if(updateVersion <= currentVersion)
     {
-        LOG("Update not needed. Current version: " << currentVersion << "  Update version: " << updateVersion);
+        LOG(QString::fromAscii("Update not needed. Current version: ") + QString::number(currentVersion) + QString::fromAscii("  Update version: ") + QString::number(updateVersion));
         return false;
     }
 
-    LOG("Update available! Current version: " << currentVersion << "  Update version: " << updateVersion);
+    LOG(QString::fromAscii("Update available! Current version: ") + QString::number(currentVersion) + QString::fromAscii("  Update version: ") + QString::number(updateVersion));
 
     QString updateSignature = readNextLine(reply);
     if(!updateSignature.size())
@@ -151,7 +151,7 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 
         if(alreadyInstalled(localPath, fileSignature))
         {
-            LOG("File already installed: " << localPath.toStdString());
+            LOG(QString::fromAscii("File already installed: ") + localPath);
             continue;
         }
         downloadURLs.append(url);
@@ -237,12 +237,12 @@ bool UpdateTask::performUpdate()
         appFolder.rename(file, backupFolder.absoluteFilePath(file));
         if(!updateFolder.rename(file, appFolder.absoluteFilePath(file)))
         {
-            LOG("Error installing the file " << file.toStdString() << " in " << appFolder.absoluteFilePath(file).toStdString());
+            LOG(QString::fromAscii("Error installing the file ") + file + QString::fromAscii(" in ") + appFolder.absoluteFilePath(file));
             rollbackUpdate(i);
             return false;
         }
 
-        LOG("File installed: " << file.toStdString());
+        LOG(QString::fromAscii("File installed: ") + file);
     }
 
     LOG("Update installed!!");
@@ -257,7 +257,7 @@ void UpdateTask::rollbackUpdate(int fileNum)
         QString file = localPaths[i];
         appFolder.rename(file, updateFolder.absoluteFilePath(file));
         backupFolder.rename(file, appFolder.absoluteFilePath(file));
-        LOG("File restored: " << file.toStdString());
+        LOG(QString::fromAscii("File restored: ") + file);
     }
 }
 
@@ -282,7 +282,7 @@ bool UpdateTask::checkSignature(QString value)
     int l = Base64::atob(value.toAscii().constData(), (byte *)signature, sizeof(signature));
     if(l != sizeof(signature))
     {
-        LOG("Invalid signature size: " << l);
+        LOG(QString::fromAscii("Invalid signature size: ") + QString::number(l));
         return false;
     }
 
@@ -350,7 +350,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
         //Process the file
         if(!processFile(reply))
         {
-            LOG("Update failed processing file: " << downloadURLs[currentFile].toStdString());
+            LOG(QString::fromAscii("Update failed processing file: ") + downloadURLs[currentFile]);
             postponeUpdate();
             return;
         }
@@ -366,7 +366,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
             return;
         }
 
-        LOG("File already downloaded: " << localPaths[currentFile].toStdString());
+        LOG(QString::fromAscii("File already downloaded: ") + localPaths[currentFile]);
         currentFile++;
     }
 

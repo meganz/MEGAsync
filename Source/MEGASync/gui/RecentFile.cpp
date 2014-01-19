@@ -100,6 +100,14 @@ void RecentFile::updateWidget()
     }
 }
 
+void RecentFile::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+
+    QWidget::changeEvent(event);
+}
+
 void RecentFile::on_pArrow_clicked()
 {
 	((MegaApplication*)qApp)->copyFileLink(fileHandle);

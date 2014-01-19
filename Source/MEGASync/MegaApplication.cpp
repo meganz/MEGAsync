@@ -101,6 +101,13 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadFolderSelector = NULL;
     reboot = false;
     translator = NULL;
+    exitAction = NULL;
+    aboutAction = NULL;
+    settingsAction = NULL;
+    pauseAction = NULL;
+    resumeAction = NULL;
+    importLinksAction = NULL;
+    trayMenu = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -126,8 +133,6 @@ void MegaApplication::initialize()
     QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
 
     preferences = Preferences::instance();
-    QString language = preferences->language();
-    changeLanguage(language);
 
     delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
@@ -153,11 +158,13 @@ void MegaApplication::initialize()
     refreshTimer = new QTimer(this);
     refreshTimer->start(10000);
 
-    createActions();
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
     preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
+
+    QString language = preferences->language();
+    changeLanguage(language);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -187,7 +194,7 @@ void MegaApplication::changeLanguage(QString languageCode)
     }
     else delete newTranslator;
 
-    updateTrayIcon();
+    createTrayIcon();
 }
 
 void MegaApplication::updateTrayIcon()
@@ -419,7 +426,7 @@ void MegaApplication::aboutDialog()
 
 void MegaApplication::refreshTrayIcon()
 {
-    trayIcon->show();
+    if(trayIcon) trayIcon->show();
 }
 
 void MegaApplication::cleanAll()
@@ -697,37 +704,53 @@ void MegaApplication::openSettings()
 	settingsDialog->show();
 }
 
-//This function creates the menu actions
-void MegaApplication::createActions()
-{
-    exitAction = new QAction(tr("Exit"), this);
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
-    aboutAction = new QAction(tr("About"), this);
-    connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
-    settingsAction = new QAction(tr("Settings"), this);
-    connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
-    pauseAction = new QAction(tr("Pause"), this);
-    connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
-    resumeAction = new QAction(tr("Resume"), this);
-    connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
-	importLinksAction = new QAction(tr("Import links"), this);
-	connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
-}
-
 //This function creates the tray icon
 void MegaApplication::createTrayIcon()
 {
-    if(trayMenu) trayMenu->deleteLater();
-    trayMenu = new QMenu();
+    if(!trayMenu) trayMenu = new QMenu();
+    else
+    {
+        QList<QAction *> actions = trayMenu->actions();
+        for(int i=0; i<actions.size(); i++)
+        {
+            trayMenu->removeAction(actions[i]);
+        }
+    }
+
+    if(exitAction) delete exitAction;
+    exitAction = new QAction(tr("Exit"), this);
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
+    if(aboutAction) delete aboutAction;
+    aboutAction = new QAction(tr("About"), this);
+    connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
+
+    if(settingsAction) delete settingsAction;
+    settingsAction = new QAction(tr("Settings"), this);
+    connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+    if(pauseAction) delete pauseAction;
+    pauseAction = new QAction(tr("Pause"), this);
+    connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
+
+    if(resumeAction) delete resumeAction;
+    resumeAction = new QAction(tr("Resume"), this);
+    connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
+
+    if(importLinksAction) delete importLinksAction;
+    importLinksAction = new QAction(tr("Import links"), this);
+    connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
+
     //trayMenu->addAction(aboutAction);
-    trayMenu->addAction(pauseAction);
+    if(!paused) trayMenu->addAction(pauseAction);
+    else trayMenu->addAction(resumeAction);
 	trayMenu->addAction(importLinksAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
     trayIcon->setContextMenu(trayMenu);
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+
+    updateTrayIcon();
 }
 
 //Called when a request is about to start
@@ -1019,7 +1042,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {    
     //Show information to users
-    showWarningMessage(tr("Temporary transmission error: ") + QString::fromUtf8(e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+    showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
     onSyncStateChanged(megaApi);
 }
 
