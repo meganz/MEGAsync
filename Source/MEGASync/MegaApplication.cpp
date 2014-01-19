@@ -11,8 +11,8 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 
-const int MegaApplication::VERSION_CODE = 110;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.10");
+const int MegaApplication::VERSION_CODE = 112;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
