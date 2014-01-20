@@ -1888,7 +1888,7 @@ void MegaApi::transfer_removed(Transfer *t)
     updateStatics();
     if (t->type == GET) pendingDownloads--;
     else pendingUploads --;
-    fireOnSyncStateChanged(this);
+    if(!pendingUploads && !pendingUploads) fireOnSyncStateChanged(this);
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
     LOG("transfer_removed");
