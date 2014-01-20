@@ -913,7 +913,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     totalDownloads = 0;
     client = NULL;
     waiting = false;
-
+    waitingRequest = false;
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
@@ -2389,7 +2389,10 @@ void MegaApi::clearing()
 void MegaApi::notify_retry(dstime dsdelta)
 {
 	cout << "API request failed, retrying in " << dsdelta*100 << " ms..." << endl;
-	/*
+    waitingRequest = true;
+    fireOnSyncStateChanged(this);
+
+    /*
 	 * MegaRequest *request = requestMap[client->restag];
 	 * request->setNextRetryDelay(dsdelta*100);
 	 * request->setNumRetry(request->getNumRetry()+1);
@@ -3000,6 +3003,7 @@ void MegaApi::fireOnRequestStart(MegaApi* api, MegaRequest *request)
 
 void MegaApi::fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError e)
 {    
+    waitingRequest = false;
 	/*  Renew an expired SID. Deactivated. It needs SDK changes
 	//If expired Session ID
 	if((e.getErrorCode()==MegaError::API_ESID) && (loginRequest) &&
@@ -4240,7 +4244,7 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    return waiting;
+    return waiting || waitingRequest;
 }
 
 char* MegaApi::strdup(const char* buffer)

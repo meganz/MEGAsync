@@ -872,6 +872,7 @@ protected:
 	set<MegaGlobalListener *> globalListeners;
 	set<MegaListener *> listeners;
     bool waiting;
+    bool waitingRequest;
 
     DECLARE_MUTEX(listenerMutex);
     DECLARE_MUTEX(transferListenerMutex);
