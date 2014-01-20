@@ -112,9 +112,11 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 {
+    if(!totalBytes) return;
+
     this->totalBytes = totalBytes;
     this->usedBytes = usedBytes;
-	int percentage = (100 * usedBytes) / totalBytes;
+    int percentage = (100 * usedBytes) / totalBytes;
 	ui->pUsage->setProgress(percentage);
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(totalBytes));
