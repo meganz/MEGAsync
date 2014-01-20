@@ -2157,6 +2157,7 @@ bool MegaApi::sync_syncable(const char *name, string *, string *)
 
 void MegaApi::syncupdate_local_lockretry(bool waiting)
 {
+    LOG("syncupdate_local_lockretry");
     this->waiting = waiting;
     this->fireOnSyncStateChanged(this);
 }
