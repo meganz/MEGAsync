@@ -293,6 +293,7 @@ void MegaApplication::loggedIn()
 
     //Start the HTTP server
     //httpServer = new HTTPServer(2973, NULL);
+    megaApi->getAccountDetails();
 }
 
 void MegaApplication::startSyncs()
@@ -675,15 +676,24 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
     if(reason == QSystemTrayIcon::Trigger)
     {
-        //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
-        QRect screenGeometry = QApplication::desktop()->availableGeometry();
-        infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+        if(!infoDialog->isVisible())
+        {
+            //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
+            QRect screenGeometry = QApplication::desktop()->availableGeometry();
+            infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
 
-        //Show the dialog
-        megaApi->updateStatics();
-        infoDialog->updateTransfers();
-        infoDialog->updateDialog();
-		infoDialog->show();
+            //Show the dialog
+            megaApi->updateStatics();
+            infoDialog->updateTransfers();
+            infoDialog->updateDialog();
+            infoDialog->showMinimized();
+            infoDialog->setWindowState(Qt::WindowActive);
+            infoDialog->showNormal();
+            infoDialog->raise();
+            infoDialog->activateWindow();
+            infoDialog->setFocus();
+        }
+        else infoDialog->hide();
     }
 }
 
@@ -789,7 +799,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 			{
                 //Successful login, fetch nodes and account details
 				megaApi->fetchNodes();
-				megaApi->getAccountDetails();
                 break;
 			}
 
@@ -945,6 +954,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
     //Send statics to the information dialog
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+    updateTrayIcon();
 }
 
 //Called when there is a temporal problem in a request

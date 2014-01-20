@@ -87,6 +87,7 @@ protected:
     //bool eventFilter(QObject *obj, QEvent *ev);
 	void showPopup(QPoint globalpos, bool download);
 	void updateRecentFiles();
+    virtual void focusOutEvent(QFocusEvent * event);
 
 	QDateTime lastPopupUpdate;
     QTimer *timer;
