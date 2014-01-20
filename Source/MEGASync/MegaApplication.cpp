@@ -667,10 +667,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
     if(reason == QSystemTrayIcon::Trigger)
     {
-        //If the information dialog isn't visible:
-        //Update it
-        infoDialog->updateDialog();
-
         //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
         QRect screenGeometry = QApplication::desktop()->availableGeometry();
         infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
@@ -1197,12 +1193,4 @@ void MegaApplication::showSyncedIcon()
 	trayMenu->insertAction(importLinksAction, pauseAction);
 }
 
-void MegaApplication::showSyncingIcon()
-{
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-    if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
-    else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
-    trayMenu->removeAction(resumeAction);
-	trayMenu->insertAction(importLinksAction, pauseAction);
-}
 
