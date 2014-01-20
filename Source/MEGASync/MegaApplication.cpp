@@ -220,6 +220,14 @@ void MegaApplication::updateTrayIcon()
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
     }
+
+    if(infoDialog)
+    {
+        infoDialog->setIndexing(indexing);
+        infoDialog->setWaiting(waiting);
+        infoDialog->setPaused(paused);
+        infoDialog->updateState();
+    }
 }
 
 void MegaApplication::start()
@@ -840,12 +848,9 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
     {
-        infoDialog->setPaused(request->getFlag());
         paused = request->getFlag();
         if(paused)
         {
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
             trayMenu->removeAction(pauseAction);
             trayMenu->insertAction(importLinksAction, resumeAction);
         }
@@ -853,18 +858,8 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         {
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
-            if(indexing || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
-            {
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-                if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
-                else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
-            }
-            else
-            {
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-                trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
-            }
         }
+        updateTrayIcon();
         break;
     }
     case MegaRequest::TYPE_ADD_SYNC:
@@ -928,6 +923,9 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     default:
         break;
     }
+
+    if(waiting)
+        onSyncStateChanged(megaApi);
 }
 
 //Called when a transfer is about to start
@@ -947,7 +945,6 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
     //Send statics to the information dialog
 	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
-    onSyncStateChanged(megaApi);
 }
 
 //Called when there is a temporal problem in a request
@@ -1146,8 +1143,6 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
     infoDialog->updateTransfers();
     indexing = megaApi->isIndexing();
     waiting = megaApi->isWaiting();
-    infoDialog->setWaiting(waiting);
-    infoDialog->setIndexing(indexing);
     updateTrayIcon();
     for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         Platform::notifyItemChange(preferences->getLocalFolder(i));

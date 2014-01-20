@@ -34,6 +34,7 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes);
+    void updateState();
 
 public slots:
    void addSync();

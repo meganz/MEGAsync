@@ -317,10 +317,6 @@ void InfoDialog::updateSyncsButton()
 void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
-    if(ui->bPause->isChecked()) ui->lSyncUpdated->setText(tr("File transfers paused"));
-    else if(indexing) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-    else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
-    else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
 }
 
 void InfoDialog::setWaiting(bool waiting)
@@ -332,6 +328,18 @@ void InfoDialog::increaseUsedStorage(long long bytes)
 {
     this->usedBytes+=bytes;
     this->setUsage(totalBytes, usedBytes);
+}
+
+void InfoDialog::updateState()
+{
+    if(ui->bPause->isChecked())
+    {
+        setTransferSpeeds(-1, -1);
+        ui->lSyncUpdated->setText(tr("File transfers paused"));
+    }
+    else if(indexing) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+    else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+    else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
@@ -366,16 +374,6 @@ void InfoDialog::setPaused(bool paused)
     ui->bPause->setChecked(paused);
     ui->bPause->setEnabled(true);
     overlay->setVisible(paused);
-    if(ui->bPause->isChecked())
-    {
-        ui->lSyncUpdated->setText(tr("File transfers paused"));
-        setTransferSpeeds(-1, -1);
-    }
-    else
-    {
-        if(!indexing) ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
-        else ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-    }
 }
 
 void InfoDialog::updateDialog()
