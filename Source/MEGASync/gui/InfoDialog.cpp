@@ -25,7 +25,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //ui->bUploads->installEventFilter(this);
 
     //Set window properties
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
     //Initialize fields
     this->app = app;
@@ -451,6 +451,7 @@ void InfoDialog::on_bOfficialWeb_clicked()
 {
     QString helpUrl = QString::fromAscii("https://mega.co.nz/");
     QDesktopServices::openUrl(QUrl(helpUrl));
+    this->hide();
 }
 
 void InfoDialog::on_bSyncFolder_clicked()
@@ -624,7 +625,16 @@ void InfoDialog::updateRecentFiles()
 {
 	ui->wRecent1->updateWidget();
 	ui->wRecent2->updateWidget();
-	ui->wRecent3->updateWidget();
+    ui->wRecent3->updateWidget();
+}
+
+void InfoDialog::focusOutEvent(QFocusEvent *event)
+{
+    QPoint p = mapFromGlobal(QCursor::pos());
+    if(p.x()<0 || p.y()<0 || p.x()>this->width() || p.y()>this->height())
+        this->hide();
+    else
+        this->setFocus();
 }
 
 void InfoDialog::on_bPause_clicked()
