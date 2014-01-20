@@ -10,6 +10,8 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+
 SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
@@ -205,8 +207,10 @@ void SettingsDialog::loadSettings()
     ui->cShowNotifications->setChecked(preferences->showNotifications());
     ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
 
+    qt_ntfs_permission_lookup++; // turn checking on
     if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
         ui->cAutoUpdate->setEnabled(false);
+    qt_ntfs_permission_lookup--; // turn it off again
 
     ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
