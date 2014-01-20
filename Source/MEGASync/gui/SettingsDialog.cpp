@@ -394,7 +394,7 @@ void SettingsDialog::saveSettings()
                 Node *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
                 if(!n) continue;
 
-                if((n->nodehandle == megaHandle) || !localPath.compare(newLocalPath))
+                if((n->nodehandle == megaHandle) && !localPath.compare(newLocalPath))
                     break;
             }
 
@@ -421,7 +421,7 @@ void SettingsDialog::saveSettings()
                 QString previousLocalPath = preferences->getLocalFolder(j);
                 long long previousMegaHandle = preferences->getMegaFolderHandle(j);
 
-                if((node->nodehandle == previousMegaHandle) || !localFolderPath.compare(previousLocalPath))
+                if((node->nodehandle == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
                     break;
             }
 
