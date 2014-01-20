@@ -1145,7 +1145,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
 
     infoDialog->updateTransfers();
     indexing = megaApi->isIndexing();
-    waiting = megaApi->isIndexing();
+    waiting = megaApi->isWaiting();
     infoDialog->setWaiting(waiting);
     infoDialog->setIndexing(indexing);
     updateTrayIcon();
