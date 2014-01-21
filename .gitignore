@@ -2,3 +2,5 @@ Thumbs.db
 vcredist_x86.exe
 vcredist_x64.exe
 MegaSyncSetup*.exe
+Release_x32
+Release_x64

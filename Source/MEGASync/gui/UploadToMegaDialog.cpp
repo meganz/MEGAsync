@@ -54,7 +54,7 @@ void UploadToMegaDialog::on_bChange_clicked()
 	if(result != QDialog::Accepted)
 		return;
 
-	handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     ui->eFolderPath->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }
 

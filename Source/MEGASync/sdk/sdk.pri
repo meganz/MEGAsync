@@ -26,15 +26,25 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/waiter.cpp  \
     $$PWD/src/crypto/cryptopp.cpp  \
     $$PWD/src/db/sqlite.cpp  \
-    $$PWD/src/win32/net.cpp  \
-    $$PWD/src/win32/fs.cpp  \
-    $$PWD/src/win32/winwaiter.cpp  \
-    $$PWD/win32/megaapiwait.cpp  \
     $$PWD/megaapi.cpp \
     $$PWD/sqlite3.c \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp
+
+win32 {
+SOURCES += $$PWD/src/win32/net.cpp  \
+    $$PWD/src/win32/fs.cpp  \
+    $$PWD/src/win32/winwaiter.cpp  \
+    $$PWD/win32/megaapiwait.cpp
+}
+
+unix:!mac {
+SOURCES += $$PWD/src/posix/net.cpp  \
+    $$PWD/src/posix/fs.cpp  \
+    $$PWD/src/posix/posixwaiter.cpp \
+    $$PWD/linux/megaapiwait.cpp
+}
 
 HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/account.h \
@@ -68,15 +78,28 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/waiter.h \
 	    $$PWD/include/mega/crypto/cryptopp.h  \
 	    $$PWD/include/mega/db/sqlite.h  \
-	    $$PWD/include/mega/win32/meganet.h  \
-	    $$PWD/include/mega/win32/megasys.h  \
-	    $$PWD/include/mega/win32/megafs.h  \
-	    $$PWD/include/mega/win32/megawaiter.h  \
-	    $$PWD/win32/megaapiwait.h  \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
 	    $$PWD/qt/QTMegaListener.h
+
+win32 {
+    HEADERS  += $$PWD/include/mega/win32/meganet.h  \
+            $$PWD/include/mega/win32/megasys.h  \
+            $$PWD/include/mega/win32/megafs.h  \
+            $$PWD/include/mega/win32/megawaiter.h  \
+            $$PWD/win32/megaapiwait.h
+}
+
+
+unix:!macx {
+    HEADERS  += $$PWD/include/mega/posix/meganet.h  \
+            $$PWD/include/mega/posix/megasys.h  \
+            $$PWD/include/mega/posix/megafs.h  \
+            $$PWD/include/mega/posix/megawaiter.h \
+            $$PWD/include/mega/linux/megaapiwait.h  \
+            $$PWD/include/mega/config.h
+}
 
 DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
 LIBS += -lcryptopp
@@ -86,11 +109,12 @@ INCLUDEPATH += $$PWD/include
     DEFINES += SQLITE_DEBUG
 }
 
+INCLUDEPATH += $$PWD
+INCLUDEPATH += $$PWD/3rdparty/include
+
 win32 {
 
-    INCLUDEPATH += $$PWD
     INCLUDEPATH += $$PWD/include/mega/win32
-    INCLUDEPATH += $$PWD/3rdparty/include
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
 
     contains(CONFIG, BUILDX64) {
@@ -115,6 +139,8 @@ win32 {
 }
 
 unix {
+   INCLUDEPATH += $$PWD/include
+   INCLUDEPATH += $$PWD/include/mega/posix
    INCLUDEPATH += /usr/include/cryptopp
-   LIBS += -lssl -lcurl
+   LIBS += -L$$PWD/3rdparty/libs/x64 -lssl -lcurl -ldl
 }

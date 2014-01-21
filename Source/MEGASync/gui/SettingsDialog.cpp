@@ -10,7 +10,9 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 
+#ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
 
 SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
@@ -207,11 +209,14 @@ void SettingsDialog::loadSettings()
     ui->cShowNotifications->setChecked(preferences->showNotifications());
     ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
 
+#ifdef WIN32
     qt_ntfs_permission_lookup++; // turn checking on
+#endif
     if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
         ui->cAutoUpdate->setEnabled(false);
+#ifdef WIN32
     qt_ntfs_permission_lookup--; // turn it off again
-
+#endif
     ui->cStartOnStartup->setChecked(preferences->startOnStartup());
 
     //Language
@@ -613,7 +618,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
     if(result != QDialog::Accepted)
         return;
 
-    handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     QString newPath = QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
     if(newPath.compare(ui->eUploadFolder->text()))
     {
