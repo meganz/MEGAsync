@@ -268,6 +268,9 @@ void SettingsDialog::loadSettings()
     if(width < neededWidth)
         ui->bBandwidth->setText(tr("Transfers"));
 
+    if(ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+        ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
+
     //Account
     ui->lEmail->setText(preferences->email());
 	if(preferences->totalStorage()==0)
