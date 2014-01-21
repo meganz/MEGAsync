@@ -425,6 +425,9 @@
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -743,8 +746,7 @@
              <item>
               <widget class="QLabel" name="lAdvancedDesc">
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string> Sync specific folders in your cloud drive</string>

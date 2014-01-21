@@ -10,6 +10,7 @@
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QSharedMemory>
+#include <QFontDatabase>
 
 const int MegaApplication::VERSION_CODE = 1000;
 const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.0");
@@ -47,6 +48,14 @@ int main(int argc, char *argv[])
 
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
+
+#ifndef WIN32
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Semibold.ttf"));
+
+    QFont font(QString::fromAscii("Open Sans"), 8);
+    app.setFont(font);
+#endif
 
     //QDate betaLimit(2014, 1, 21);
     //long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();

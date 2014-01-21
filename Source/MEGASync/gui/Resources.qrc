@@ -185,5 +185,7 @@
         <file>translations/MEGASyncStrings_vn.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
+        <file>fonts/OpenSans-Regular.ttf</file>
+        <file>fonts/OpenSans-Semibold.ttf</file>
     </qresource>
 </RCC>
