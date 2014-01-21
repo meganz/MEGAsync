@@ -4,7 +4,9 @@
 #include <QDesktopServices>
 #include <assert.h>
 
+#ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
 
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 10000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 500;
@@ -278,14 +280,17 @@ bool Preferences::updateAutomatically()
     mutex.lock();
     bool value = settings->value(updateAutomaticallyKey, defaultUpdateAutomatically).toBool();
 
+#ifdef WIN32
     qt_ntfs_permission_lookup++; // turn checking on
+#endif
     if(value && !QFileInfo(MegaApplication::applicationFilePath()).isWritable())
     {
         this->setUpdateAutomatically(false);
         value = false;
     }
+#ifdef WIN32
     qt_ntfs_permission_lookup--; // turn it off again
-
+#endif
     mutex.unlock();
     return value;
 }

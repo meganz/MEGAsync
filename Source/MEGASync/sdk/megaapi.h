@@ -34,12 +34,6 @@ typedef int64_t m_off_t;
 
 #include "mega/db/sqlite.h"
 
-#ifdef WIN32
-
-#include "mega/win32/meganet.h"
-#include "mega/win32/megafs.h"
-#include "win32/megaapiwait.h"
-#include "mega.h"
 
 #ifdef USE_PTHREAD
 #include <pthread.h>
@@ -110,19 +104,26 @@ protected:
 using namespace std;
 using namespace mega;
 
+#ifdef WIN32
+
+#include "mega/win32/meganet.h"
+#include "mega/win32/megafs.h"
+#include "win32/megaapiwait.h"
+#include "mega.h"
+
 class MegaHttpIO : public WinHttpIO {};
 class MegaFileSystemAccess : public WinFileSystemAccess {};
 class MegaWaiter : public MegaApiWinWaiter {};
 
 #else
 
-#include "posix/net.h"
-#include "posix/fs.h"
-#include "posix/wait.h"
+#include "mega/posix/meganet.h"
+#include "mega/posix/megafs.h"
+#include "linux/megaapiwait.h"
 
-class MegaHttpIO : public PosixHttpIO {};
-class MegaFileAccess : public PosixFileAccess {};
-class MegaWaiter : public PosixWaiter {};
+class MegaHttpIO : public CurlHttpIO {};
+class MegaFileSystemAccess : public PosixFileSystemAccess {};
+class MegaWaiter : public MegaApiLinuxWaiter {};
 
 #endif
 

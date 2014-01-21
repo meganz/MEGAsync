@@ -16,8 +16,8 @@ const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.0");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
-QString MegaApplication::appPath = NULL;
-QString MegaApplication::appDirPath = NULL;
+QString MegaApplication::appPath = QString();
+QString MegaApplication::appDirPath = QString();
 
 int main(int argc, char *argv[])
 {

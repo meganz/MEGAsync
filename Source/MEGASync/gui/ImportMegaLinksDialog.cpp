@@ -183,7 +183,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 	if(result != QDialog::Accepted)
 		return;
 
-	handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
 }
 

@@ -10,6 +10,8 @@
 #include <QDir>
 #include <QProcess>
 
+#include "MegaApplication.h"
+
 class LinuxPlatform
 {
 
@@ -18,7 +20,7 @@ private:
 
 public:
 
-    static boolean enableTrayIcon(QString executable);
+    static bool enableTrayIcon(QString executable);
     static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
