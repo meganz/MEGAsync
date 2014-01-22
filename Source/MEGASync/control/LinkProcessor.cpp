@@ -1,4 +1,5 @@
 #include "LinkProcessor.h"
+#include <QDir>
 
 LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener()
 {
@@ -129,7 +130,7 @@ void LinkProcessor::downloadLinks(QString localPath)
 	{
 		if(linkNode[i] && linkSelected[i])
 		{
-            megaApi->startPublicDownload(linkNode[i], (localPath+QString::fromAscii("\\")).toUtf8().constData());
+            megaApi->startPublicDownload(linkNode[i], (localPath+QDir::separator()).toUtf8().constData());
 		}
 	}
 }
