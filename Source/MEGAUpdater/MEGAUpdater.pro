@@ -1,7 +1,3 @@
-debug_and_release {
-    CONFIG -= debug_and_release
-    CONFIG += debug_and_release
-}
 CONFIG(debug, debug|release) {
     CONFIG -= debug release
     CONFIG += debug
@@ -11,36 +7,34 @@ CONFIG(release, debug|release) {
     CONFIG += release
 }
 
-QT += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+CONFIG -= qt
 
 TARGET = MEGAupdater
 TEMPLATE = app
+CONFIG += console
 
-SOURCES += ../MEGAsync/sdk/src/crypto/cryptopp.cpp ../MEGAsync/sdk/src/base64.cpp ../MEGAsync/sdk/src/utils.cpp
-LIBS += -lws2_32 -lcryptopp
-release {
-    LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs/static"
-}
-else {
-    LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs/staticd"
+SOURCES += ../MEGASync/sdk/src/crypto/cryptopp.cpp ../MEGASync/sdk/src/base64.cpp ../MEGASync/sdk/src/utils.cpp
+LIBS += -lcryptopp
+
+win32 {
+    release {
+        LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs/static"
+    }
+    else {
+        LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs/staticd"
+    }
 }
 
 DEFINES += USE_CRYPTOPP
 DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD ../MEGASync ../MEGAsync/sdk/3rdparty/include ../MEGAsync/sdk/include/ ../MEGAsync/sdk/include/mega/win32
+INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/include/
 
-DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
+win32 {
+    INCLUDEPATH += ../MEGASync/sdk/include/mega/win32
+}
 
-HEADERS += \
-    MegaUpdater.h \
-    UpdaterGUI.h
+unix:!macx {
+    INCLUDEPATH += ../MEGASync/sdk/include/mega/posix
+}
 
-SOURCES += \
-    MegaUpdater.cpp \
-    UpdaterGUI.cpp
-
-FORMS += \
-    UpdaterGUI.ui
-
+SOURCES += MegaUpdater.cpp
