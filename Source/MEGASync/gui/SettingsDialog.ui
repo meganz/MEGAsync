@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>455</width>
-    <height>453</height>
+    <width>500</width>
+    <height>520</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>455</width>
-    <height>453</height>
+    <width>500</width>
+    <height>520</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>455</width>
-    <height>453</height>
+    <width>500</width>
+    <height>520</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -99,57 +99,16 @@ margin-top: 6px;
        <number>0</number>
       </property>
       <item>
-       <widget class="QToolButton" name="bGeneral">
-        <property name="minimumSize">
-         <size>
-          <width>90</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>90</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>General</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/general_32.png</normaloff>://images/general_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
@@ -178,13 +137,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bSyncs">
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
@@ -213,13 +172,13 @@ margin-top: 6px;
        <widget class="QToolButton" name="bBandwidth">
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
@@ -245,16 +204,51 @@ margin-top: 6px;
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bAdvanced">
+       <widget class="QToolButton" name="bProxies">
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>90</width>
+          <width>100</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Proxy</string>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="bAdvanced">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
           <height>60</height>
          </size>
         </property>
@@ -281,41 +275,6 @@ margin-top: 6px;
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="layoutHeader">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="lHeader">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="lineWidth">
-        <number>0</number>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </item>
    <item row="3" column="0">
     <widget class="QWidget" name="wBottom" native="true">
@@ -399,102 +358,48 @@ margin-top: 6px;
      </layout>
     </widget>
    </item>
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="layoutHeader">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="lHeader">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="2" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
-     <widget class="QWidget" name="pGeneral">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>10</number>
-       </property>
-       <item>
-        <widget class="QGroupBox" name="gGeneral">
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="spacing">
-           <number>12</number>
-          </property>
-          <property name="topMargin">
-           <number>14</number>
-          </property>
-          <property name="bottomMargin">
-           <number>19</number>
-          </property>
-          <item>
-           <widget class="QCheckBox" name="cShowNotifications">
-            <property name="text">
-             <string>Show notifications</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cStartOnStartup">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Start on startup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cAutoUpdate">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Update automatically</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="gLanguage">
-         <property name="title">
-          <string>Language</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="topMargin">
-           <number>9</number>
-          </property>
-          <property name="bottomMargin">
-           <number>23</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="cLanguage">
-            <item>
-             <property name="text">
-              <string>English</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="vGeneral">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="pAccount">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QGroupBox" name="groupBox_3">
          <property name="title">
@@ -511,14 +416,14 @@ margin-top: 6px;
            <widget class="QLabel" name="lAccountImage">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>0</height>
+              <width>32</width>
+              <height>32</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>16777215</height>
+              <width>32</width>
+              <height>10000</height>
              </size>
             </property>
             <property name="text">
@@ -602,9 +507,6 @@ margin-top: 6px;
           <string>Storage space</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
-          <property name="bottomMargin">
-           <number>21</number>
-          </property>
           <item>
            <widget class="QProgressBar" name="pStorage">
             <property name="value">
@@ -658,17 +560,58 @@ margin-top: 6px;
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+        <widget class="QGroupBox" name="gGeneral">
+         <property name="title">
+          <string/>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
+         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
+          <item>
+           <widget class="QCheckBox" name="cShowNotifications">
+            <property name="text">
+             <string>Show notifications</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cStartOnStartup">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Start on startup</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cAutoUpdate">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Update automatically</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gLanguage">
+         <property name="title">
+          <string>Language</string>
          </property>
-        </spacer>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QComboBox" name="cLanguage">
+            <item>
+             <property name="text">
+              <string>English</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -764,13 +707,13 @@ margin-top: 6px;
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>202</number>
+             <number>225</number>
             </attribute>
             <attribute name="horizontalHeaderHighlightSections">
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>202</number>
+             <number>225</number>
             </attribute>
             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
              <bool>false</bool>
@@ -822,15 +765,21 @@ margin-top: 6px;
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <item>
         <widget class="QGroupBox" name="gBandwidth">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="title">
           <string>Upload rate limit</string>
          </property>
          <layout class="QFormLayout" name="formLayout">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          <property name="rowWrapPolicy">
+           <enum>QFormLayout::DontWrapRows</enum>
           </property>
-          <property name="verticalSpacing">
-           <number>14</number>
+          <property name="formAlignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
           <item row="1" column="0">
            <widget class="QRadioButton" name="rNoLimit">
@@ -980,7 +929,7 @@ margin-top: 6px;
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_3">
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -1110,7 +1059,7 @@ padding: 4px;</string>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>100</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="selectionMode">
@@ -1128,84 +1077,26 @@ padding: 4px;</string>
      </widget>
      <widget class="QWidget" name="pProxies">
       <layout class="QVBoxLayout" name="verticalLayout_11">
-       <property name="topMargin">
-        <number>15</number>
-       </property>
        <item>
         <widget class="QGroupBox" name="gProxy">
          <property name="title">
-          <string/>
+          <string>Proxy Settings</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
           </property>
-          <property name="verticalSpacing">
-           <number>10</number>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-          <property name="bottomMargin">
-           <number>19</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lProxySettings">
-            <property name="text">
-             <string>Proxy Settings</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QRadioButton" name="rNoProxy">
-            <property name="text">
-             <string>No proxy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="rProxyAuto">
-            <property name="text">
-             <string>Auto-detect</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QRadioButton" name="rProxyManual">
-            <property name="text">
-             <string>Proxy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lProxyType">
-            <property name="text">
-             <string>Proxy type:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="cProxyType">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="lProxyServer">
-            <property name="text">
-             <string>Server:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
+          <item row="9" column="1">
            <widget class="QWidget" name="wProxyAddress" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
              <property name="margin">
               <number>0</number>
@@ -1261,56 +1152,36 @@ padding: 4px;</string>
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QCheckBox" name="cProxyRequiresPassword">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Proxy server requires a password</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="lProxyUsername">
-            <property name="text">
-             <string>Username:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="12" column="0">
            <widget class="QLabel" name="lProxyPassword">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Password:</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="eProxyUsername">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>240</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>240</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
+          <item row="12" column="1">
            <widget class="QLineEdit" name="eProxyPassword">
             <property name="enabled">
              <bool>false</bool>
@@ -1335,21 +1206,105 @@ padding: 4px;</string>
             </property>
            </widget>
           </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="lProxyUsername">
+            <property name="text">
+             <string>Username:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QLineEdit" name="eProxyUsername">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>240</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="lProxyType">
+            <property name="text">
+             <string>Proxy type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QComboBox" name="cProxyType">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="lProxyServer">
+            <property name="text">
+             <string>Server:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QCheckBox" name="cProxyRequiresPassword">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Proxy server requires a password</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QRadioButton" name="rNoProxy">
+            <property name="text">
+             <string>No proxy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QRadioButton" name="rProxyAuto">
+            <property name="text">
+             <string>Auto-detect</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QRadioButton" name="rProxyManual">
+            <property name="text">
+             <string>Proxy</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -1363,30 +1318,14 @@ padding: 4px;</string>
  </resources>
  <connections>
   <connection>
-   <sender>cShowNotifications</sender>
-   <signal>stateChanged(int)</signal>
+   <sender>cProxyType</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>stateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>213</x>
-     <y>164</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cAutoUpdate</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>222</y>
+     <x>52</x>
+     <y>144</y>
     </hint>
     <hint type="destinationlabel">
      <x>213</x>
@@ -1411,6 +1350,22 @@ padding: 4px;</string>
    </hints>
   </connection>
   <connection>
+   <sender>cAutoUpdate</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>213</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>cLanguage</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
@@ -1427,14 +1382,14 @@ padding: 4px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>cProxyType</sender>
-   <signal>currentIndexChanged(int)</signal>
+   <sender>cShowNotifications</sender>
+   <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>stateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>144</y>
+     <x>213</x>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
      <x>213</x>
@@ -1451,86 +1406,6 @@ padding: 4px;</string>
     <hint type="sourcelabel">
      <x>213</x>
      <y>193</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eLimit</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>36</x>
-     <y>157</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyPassword</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>148</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyPort</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyServer</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyUsername</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>144</x>
-     <y>147</y>
     </hint>
     <hint type="destinationlabel">
      <x>213</x>
@@ -1571,14 +1446,62 @@ padding: 4px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>rProxyAuto</sender>
-   <signal>toggled(bool)</signal>
+   <sender>eProxyPassword</sender>
+   <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>stateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>142</y>
+     <x>144</x>
+     <y>148</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eLimit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>36</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eProxyUsername</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tSyncs</sender>
+   <signal>itemChanged(QTableWidgetItem*)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>213</x>
@@ -1603,14 +1526,46 @@ padding: 4px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>tSyncs</sender>
-   <signal>itemChanged(QTableWidgetItem*)</signal>
+   <sender>rProxyAuto</sender>
+   <signal>toggled(bool)</signal>
    <receiver>SettingsDialog</receiver>
    <slot>stateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>49</x>
-     <y>154</y>
+     <x>52</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eProxyPort</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eProxyServer</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>213</x>

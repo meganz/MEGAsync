@@ -23,8 +23,6 @@ public slots:
     void stateChanged();
     
 private slots:
-    void on_bGeneral_clicked();
-
     void on_bAccount_clicked();
 
     void on_bSyncs_clicked();
@@ -33,7 +31,7 @@ private slots:
 
     void on_bAdvanced_clicked();
 
-    //void on_bProxies_clicked();
+    void on_bProxies_clicked();
 
     void on_bCancel_clicked();
 

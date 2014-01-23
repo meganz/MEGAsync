@@ -30,7 +30,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
-
+    ui->bAccount->setChecked(true);
+    ui->wStack->setCurrentWidget(ui->pAccount);
     loadSettings();
 }
 
@@ -44,73 +45,58 @@ void SettingsDialog::stateChanged()
     ui->bApply->setEnabled(true);
 }
 
-void SettingsDialog::on_bGeneral_clicked()
-{
-    ui->bGeneral->setChecked(true);
-    ui->bAccount->setChecked(false);
-    ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-	//ui->bProxies->setChecked(false);
-    ui->wStack->setCurrentWidget(ui->pGeneral);
-}
-
 void SettingsDialog::on_bAccount_clicked()
 {
-    ui->bGeneral->setChecked(false);
     ui->bAccount->setChecked(true);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
-	//ui->bProxies->setChecked(false);
+    ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAccount);
 }
 
 void SettingsDialog::on_bSyncs_clicked()
 {
-    ui->bGeneral->setChecked(false);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
-	//ui->bProxies->setChecked(false);
+    ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible( true );
 }
 
 void SettingsDialog::on_bBandwidth_clicked()
 {
-    ui->bGeneral->setChecked(false);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
     ui->bAdvanced->setChecked(false);
-	//ui->bProxies->setChecked(false);
+    ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pBandwidth);
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
 {
-    ui->bGeneral->setChecked(false);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(true);
-    //ui->bProxies->setChecked(false);
+    ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAdvanced);
 }
 
-/*
+
 void SettingsDialog::on_bProxies_clicked()
 {
-    ui->bGeneral->setChecked(false);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
-	//ui->bProxies->setChecked(true);
+    ui->bAdvanced->setChecked(false);
+    ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
 }
-*/
+
 
 void SettingsDialog::on_bCancel_clicked()
 {
