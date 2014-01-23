@@ -23,6 +23,8 @@ win32 {
     else {
         LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs/staticd"
     }
+
+    LIBS += -lws2_32
 }
 
 DEFINES += USE_CRYPTOPP
