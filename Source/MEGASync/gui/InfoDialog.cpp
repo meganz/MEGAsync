@@ -383,7 +383,8 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::addSync()
 {
-    BindFolderDialog *dialog = new BindFolderDialog(app, this);
+    BindFolderDialog *dialog = new BindFolderDialog(app);
+    this->hide();
     int result = dialog->exec();
     if(result != QDialog::Accepted)
         return;
@@ -392,6 +393,7 @@ void InfoDialog::addSync()
     long long handle = dialog->getMegaFolder();
     Node *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
+    delete dialog;
     if(!localFolderPath.length() || !node)
         return;
 
@@ -443,15 +445,15 @@ void InfoDialog::cancelCurrentDownload()
 
 void InfoDialog::on_bSettings_clicked()
 {
+    this->hide();
 	app->openSettings();
-	this->hide();
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()
 {
+    this->hide();
     QString helpUrl = QString::fromAscii("https://mega.co.nz/");
     QDesktopServices::openUrl(QUrl(helpUrl));
-    this->hide();
 }
 
 void InfoDialog::on_bSyncFolder_clicked()
@@ -487,6 +489,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 
 void InfoDialog::openFolder(QString path)
 {
+    this->hide();
 	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
 
