@@ -22,6 +22,11 @@
 #ifndef MEGA_WIN32_OS_H
 #define MEGA_WIN32_OS_H 1
 
+#ifdef HAVE_CONFIG_H
+// platform dependent constants
+#include "mega/config.h"
+#endif
+
 // XXX: move to autoconf
 #define __STDC_FORMAT_MACROS
 

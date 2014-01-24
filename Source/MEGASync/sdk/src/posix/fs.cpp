@@ -200,7 +200,7 @@ void PosixFileSystemAccess::tmpnamelocal(string* localname)
 	static unsigned tmpindex;
 	char buf[128];
 
-	sprintf(buf,".getxfer.%lu.%u.mega",getpid(),tmpindex++);
+	sprintf(buf,".getxfer.%lu.%u.mega",(unsigned long)getpid(),tmpindex++);
 	*localname = buf;
 }
 
