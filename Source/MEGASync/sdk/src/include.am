@@ -3,16 +3,16 @@ lib_LTLIBRARIES = src/libmega.la
 
 # CXX flags
 if WIN32
-src_libmega_la_CXXFLAGS = -D_WIN32=1 $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS)
+src_libmega_la_CXXFLAGS = -D_WIN32=1 -Iinclude/ -Iinclude/mega/win32 $(LIBS_EXTRA) $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS) $(CXXFLAGS) $(WINHTTP_CXXFLAGS)
 else
 src_libmega_la_CXXFLAGS = $(LIBCURL_FLAGS) $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS)
 endif
 
 # Libs
 if WIN32
-src_libmega_la_LIBADD =  $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS) $(DB_LIBS)
+src_libmega_la_LIBADD = $(LIBS_EXTRA) $(CRYPTO_LDFLAGS) $(CRYPTO_LIBS) $(DB_LDFLAGS) $(DB_LIBS) $(WINHTTP_LDFLAGS) $(WINHTTP_LIBS)
 else
-src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LIBS) -lcrypto++ $(DB_LDFLAGS) $(DB_LIBS)
+src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LDFLAGS) $(CRYPTO_LIBS) $(DB_LDFLAGS) $(DB_LIBS)
 endif
 
 # add library version
@@ -55,6 +55,8 @@ src_libmega_la_SOURCES+= src/win32/console.cpp
 src_libmega_la_SOURCES+= src/win32/net.cpp
 src_libmega_la_SOURCES+= src/win32/waiter.cpp
 src_libmega_la_SOURCES+= src/win32/consolewaiter.cpp
+# need to find a better way to specify sqlite path
+src_libmega_la_SOURCES+= ../sqlite3/sqlite3.c
 
 # posix sources
 else

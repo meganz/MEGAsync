@@ -32,7 +32,6 @@ bool debug;
 // FIXME: set folder timestamps
 // FIXME: prevent synced folder from being moved into another synced folder
 // FIXME: treestate semantics
-// FIXME: disallow ~Sync triggerd by the application, implement delsync() instead
 
 // root URL for API access
 const char* const MegaClient::APIURL = "https://g.api.mega.co.nz/";
@@ -712,6 +711,8 @@ void MegaClient::exec()
 			syncnagleretry = false;
 			syncops = true;
 		}
+		
+		if (syncfslockretry && syncfslockretrybt.armed(ds)) syncfslockretrybt.backoff(ds,5);
 
 		syncactivity = false;
 
@@ -923,7 +924,7 @@ int MegaClient::wait()
 	
 		nexttransferretry(PUT,&nds,ds);
 		nexttransferretry(GET,&nds,ds);
-		
+
 		// retry failed client-server requests
 		if (!pendingcs) btcs.update(ds,&nds);
 
@@ -1939,9 +1940,8 @@ void MegaClient::notifypurge(void)
 	if ((t = nodenotify.size()))
 	{
 		// check for deleted syncs
-		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); )
-			if ((*it)->state != SYNC_FAILED && (*it)->localroot.node->removed) delete *(it++);
-			else it++;
+		for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++)
+			if (((*it)->state == SYNC_INITIALSCAN || (*it)->state == SYNC_ACTIVE) && (*it)->localroot.node->removed) delsync(*it);
 
 		applykeys();
 
@@ -3532,7 +3532,11 @@ void MegaClient::purgenodesusersabortsc()
 {
 	app->clearing();
 
-	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); ) delete *(it++);
+	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); )
+	{
+		(*it)->state = SYNC_CANCELED;
+		delete *(it++);
+	}
 	syncs.clear();
 
 	newsyncdebris.clear();
@@ -3778,8 +3782,6 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 						{
 							fsaccess->local2path(localpath,&localname);
 							app->syncupdate_get(l->sync,localname.c_str());
-
-                            //rit->second->localnode->treestate(TREESTATE_PENDING);
 
 							rit->second->syncget = new SyncFileGet(l->sync,rit->second,localpath);
 							startxfer(GET,rit->second->syncget);
