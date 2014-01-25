@@ -22,7 +22,6 @@ private:
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR pszIconfile=NULL, int iIconindex=0);
     static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
     static WinShellDispatcherTask *shellDispatcherTask;
-    static QThread shellDispatcherThread;
 
 public:
 

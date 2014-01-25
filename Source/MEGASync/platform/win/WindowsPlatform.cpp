@@ -2,7 +2,6 @@
 #include <Shlobj.h>
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
-QThread WindowsPlatform::shellDispatcherThread;
 
 bool WindowsPlatform::enableTrayIcon(QString executable)
 {
@@ -139,10 +138,7 @@ void WindowsPlatform::showInFolder(QString pathIn)
 void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 {
     shellDispatcherTask = new WinShellDispatcherTask(receiver);
-    shellDispatcherTask->moveToThread(&shellDispatcherThread);
-    shellDispatcherThread.start();
-    QObject::connect(&shellDispatcherThread, SIGNAL(finished()), shellDispatcherTask, SLOT(deleteLater()));
-    QMetaObject::invokeMethod(shellDispatcherTask, "doWork", Qt::QueuedConnection);
+    shellDispatcherTask->start();
 }
 
 void WindowsPlatform::stopShellDispatcher()
@@ -150,7 +146,8 @@ void WindowsPlatform::stopShellDispatcher()
     if(shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();
-        shellDispatcherThread.quit();
+        shellDispatcherTask->quit();
+        shellDispatcherTask->wait();
         //The task is self destructed when it finishes
         shellDispatcherTask = NULL;
     }
