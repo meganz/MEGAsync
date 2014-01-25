@@ -2041,7 +2041,7 @@ void MegaApi::transfer_update(Transfer *tr)
 	if(tr->slot)
     {
 #ifdef WIN32
-        if(!tr->files.front()->syncxfer && !tr->slot->progressreported)
+        if(!tr->files.front()->syncxfer && !tr->slot->progressreported && (tr->type==GET))
         {
             tr->localfilename.append("",1);
             DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
