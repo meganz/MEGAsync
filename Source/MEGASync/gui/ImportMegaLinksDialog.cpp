@@ -58,19 +58,24 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	else defaultFolderPath = preferences->downloadFolder();
 	ui->eLocalFolder->setText(defaultFolderPath);
 
-	Node *testNode = megaApi->getNodeByHandle(preferences->importFolder());
-    if(testNode) ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(testNode)));
+    MegaNode *testNode = megaApi->getNodeByHandle(preferences->importFolder());
+    const char *tPath = megaApi->getNodePath(testNode);
+    if(testNode) ui->eMegaFolder->setText(QString::fromUtf8(tPath));
     else ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-
-    while(testNode)
+    delete tPath;
+    MegaNode *p = testNode;
+    while(p)
     {
-        if(testNode->localnode)
+        if(megaApi->isSynced(p))
         {
             ui->cDownload->setChecked(false);
             this->on_cDownload_clicked();
+            delete p;
             break;
         }
-        testNode = testNode->parent;
+        testNode = p;
+        p = megaApi->getParentNode(testNode);
+        delete testNode;
     }
 
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
@@ -110,10 +115,11 @@ void ImportMegaLinksDialog::on_cDownload_clicked()
     if(ui->cImport->isChecked() && ui->cDownload->isChecked())
     {
         QString importFolder = ui->eMegaFolder->text();
-        Node *nImportFolder = megaApi->getNodeByPath(importFolder.toUtf8().constData());
-        while(nImportFolder)
+        MegaNode *nImportFolder = megaApi->getNodeByPath(importFolder.toUtf8().constData());
+        MegaNode *parent = nImportFolder;
+        while(parent)
         {
-            if(nImportFolder->localnode)
+            if(megaApi->isSynced(parent))
             {
                 int result;
                 if(linkProcessor->size()==1)
@@ -133,11 +139,15 @@ void ImportMegaLinksDialog::on_cDownload_clicked()
                 if(result != QMessageBox::Yes)
                 {
                     ui->cDownload->setChecked(false);
+                    delete parent;
                     return;
                 }
+                delete parent;
                 break;
             }
-            nImportFolder = nImportFolder->parent;
+            nImportFolder = parent;
+            parent = megaApi->getParentNode(nImportFolder);
+            delete nImportFolder;
         }
     }
 
@@ -184,13 +194,17 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 		return;
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
+    MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    const char *fPath = megaApi->getNodePath(selectedFolder);
+    ui->eMegaFolder->setText(QString::fromUtf8(fPath));
+    delete selectedFolder;
+    delete fPath;
 }
 
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 {
 	ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
-    PublicNode *node = linkProcessor->getNode(id);
+    MegaNode *node = linkProcessor->getNode(id);
 	item->setNode(node);
 
     int e = linkProcessor->getError(id);

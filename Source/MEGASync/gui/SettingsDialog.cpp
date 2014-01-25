@@ -293,9 +293,15 @@ void SettingsDialog::loadSettings()
             break;
     }
 
-    Node *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+    MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
     if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
-    else ui->eUploadFolder->setText(QString::fromUtf8(megaApi->getNodePath(node)));
+    else
+    {
+        const char *nPath = megaApi->getNodePath(node);
+        ui->eUploadFolder->setText(QString::fromUtf8(nPath));
+        delete nPath;
+    }
+    delete node;
 
     //Syncs
     loadSyncSettings();
@@ -367,9 +373,10 @@ void SettingsDialog::saveSettings()
     app->changeLanguage(selectedLanguageCode);
 
     //Account
-    Node *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
+    MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
     if(node && ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")))
-        preferences->setUploadFolder(node->nodehandle);
+        preferences->setUploadFolder(node->getHandle());
+    delete node;
 
     //Syncs
 	if(syncsChanged)
@@ -385,11 +392,15 @@ void SettingsDialog::saveSettings()
             {
                 QString newLocalPath = ui->tSyncs->item(j, 0)->text().trimmed();
                 QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
-                Node *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
                 if(!n) continue;
 
-                if((n->nodehandle == megaHandle) && !localPath.compare(newLocalPath))
+                if((n->getHandle() == megaHandle) && !localPath.compare(newLocalPath))
+                {
+                    delete n;
                     break;
+                }
+                delete n;
             }
 
             if(j == ui->tSyncs->rowCount())
@@ -407,7 +418,7 @@ void SettingsDialog::saveSettings()
 			QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
 			QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
             QString syncName = syncNames.at(i);
-			Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+            MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
             if(!node) continue;
             int j;
             for(j=0; j<preferences->getNumSyncedFolders(); j++)
@@ -415,7 +426,7 @@ void SettingsDialog::saveSettings()
                 QString previousLocalPath = preferences->getLocalFolder(j);
                 long long previousMegaHandle = preferences->getMegaFolderHandle(j);
 
-                if((node->nodehandle == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
+                if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
                     break;
             }
 
@@ -424,10 +435,11 @@ void SettingsDialog::saveSettings()
                 LOG(QString::fromAscii("ADDING SYNC: %1 - %2").arg(localFolderPath).arg(megaFolderPath));
                 preferences->addSyncedFolder(localFolderPath,
                                              megaFolderPath,
-                                             node->nodehandle,
+                                             node->getHandle(),
                                              syncName);
                 megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
             }
+            delete node;
 		}
 
         updateAddButton();
@@ -530,9 +542,10 @@ void SettingsDialog::on_bAdd_clicked()
         currentLocalFolders.append(localFolder);
 
         QString newMegaPath = ui->tSyncs->item(i, 1)->text().trimmed();
-        Node *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+        MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
         if(!n) continue;
-        currentMegaFolders.append(n->nodehandle);
+        currentMegaFolders.append(n->getHandle());
+        delete n;
     }
 
     BindFolderDialog *dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFolders, this);
@@ -542,19 +555,24 @@ void SettingsDialog::on_bAdd_clicked()
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     long long handle = dialog->getMegaFolder();
-    Node *node = megaApi->getNodeByHandle(handle);
+    MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
+    {
+        delete node;
         return;
-
+    }
    QTableWidgetItem *localFolder = new QTableWidgetItem();
    localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
    QTableWidgetItem *megaFolder = new QTableWidgetItem();
-   megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(megaApi->getNodePath(node)) + QString::fromAscii("  "));
+   const char *nPath = megaApi->getNodePath(node);
+   megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(nPath) + QString::fromAscii("  "));
    int pos = ui->tSyncs->rowCount();
    ui->tSyncs->setRowCount(pos+1);
    ui->tSyncs->setItem(pos, 0, localFolder);
    ui->tSyncs->setItem(pos, 1, megaFolder);
    syncNames.append(dialog->getSyncName());
+   delete node;
+   delete nPath;
 
    syncsChanged = true;
    stateChanged();
@@ -587,13 +605,14 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
     else
     {
         QString megaFolderPath = ui->tSyncs->item(index.row(), 1)->text().trimmed();
-        Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+        MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
         if(node)
         {
             const char *handle = MegaApi::getBase64Handle(node);
             QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
             QDesktopServices::openUrl(QUrl(url));
             delete handle;
+            delete node;
         }
     }
 }
@@ -608,7 +627,11 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    QString newPath = QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle)));
+    MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    const char *nPath = megaApi->getNodePath(node);
+    QString newPath = QString::fromUtf8(nPath);
+    delete nPath;
+    delete node;
     if(newPath.compare(ui->eUploadFolder->text()))
     {
         ui->eUploadFolder->setText(newPath);

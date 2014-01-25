@@ -339,10 +339,10 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
-#define RESPONSE_DEFAULT    TEXT("9")
-#define RESPONSE_SYNCED     TEXT("0")
-#define RESPONSE_PENDING    TEXT("1")
-#define RESPONSE_SYNCING    TEXT("2")
+#define RESPONSE_DEFAULT    L"9"
+#define RESPONSE_SYNCED     L"0"
+#define RESPONSE_PENDING    L"1"
+#define RESPONSE_SYNCING    L"2"
 
 VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {

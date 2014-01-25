@@ -131,10 +131,12 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::showInFolder()
 {
+    QWidget::window()->hide();
     Platform::showInFolder(localPath);
 }
 
 void RecentFile::openFile()
 {
+    QWidget::window()->hide();
 	QDesktopServices::openUrl(QUrl::fromLocalFile(localPath));
 }

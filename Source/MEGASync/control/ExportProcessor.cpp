@@ -26,8 +26,9 @@ void ExportProcessor::requestLinks()
 #else
         string tmpPath((const char*)fileList[i].toUtf8().constData());
 #endif
-        Node *node = megaApi->getSyncedNode(&tmpPath);
+        MegaNode *node = megaApi->getSyncedNode(&tmpPath);
         megaApi->exportNode(node, this);
+        delete node;
     }
 }
 

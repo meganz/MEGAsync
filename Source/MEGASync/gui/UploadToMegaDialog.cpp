@@ -33,15 +33,17 @@ bool UploadToMegaDialog::isDefaultFolder()
 
 void UploadToMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
-	Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
+    MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
 	if(e->getErrorCode() != MegaError::API_OK || !node)
 	{
         LOG(QString::fromAscii("ERROR: %1").arg(e->QgetErrorString()));
 		this->reject();
+        delete node;
 		return;
 	}
 
-	selectedHandle = node->nodehandle;
+    selectedHandle = node->getHandle();
+    delete node;
 	accept();
 }
 
@@ -55,7 +57,11 @@ void UploadToMegaDialog::on_bChange_clicked()
 		return;
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    ui->eFolderPath->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
+    MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    const char *nPath = megaApi->getNodePath(node);
+    ui->eFolderPath->setText(QString::fromUtf8(nPath));
+    delete nPath;
+    delete node;
 }
 
 void UploadToMegaDialog::changeEvent(QEvent *event)
@@ -69,21 +75,26 @@ void UploadToMegaDialog::changeEvent(QEvent *event)
 
 void UploadToMegaDialog::on_bOK_clicked()
 {
-    Node *node = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
-    if(node && node->type!=FILENODE)
+    MegaNode *node = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
+    if(node && node->getType()!=FILENODE)
     {
-        selectedHandle = node->nodehandle;
+        selectedHandle = node->getHandle();
+        delete node;
         accept();
         return;
     }
 
     if(!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
     {
-        megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), megaApi->getRootNode(), delegateListener);
+        MegaNode *rootNode = megaApi->getRootNode();
+        megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
+        delete rootNode;
+        delete node;
         return;
     }
 
     LOG("ERROR: FOLDER NOT FOUND");
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
+    delete node;
     return;
 }

@@ -134,12 +134,14 @@ public:
 };
 
 class MegaApi;
-class PublicNode
+class MegaNode
 {
     public:
-        PublicNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, handle nodehandle, string *nodekey, string *attrstring);
-        PublicNode(PublicNode *node);
-        ~PublicNode();
+        MegaNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, handle nodehandle, string *nodekey, string *attrstring);
+        MegaNode(MegaNode *node);
+        ~MegaNode();
+
+        static MegaNode *fromNode(Node *node);
 
         int getType();
         const char* getName();
@@ -149,8 +151,13 @@ class PublicNode
         handle getHandle();
         string* getNodeKey();
         string* getAttrString();
+        int getTag();
+        bool isRemoved();
+        bool isSyncDeleted();
 
     private:
+        MegaNode(Node *node);
+
         int type;
         const char *name;
         m_off_t size;
@@ -159,6 +166,10 @@ class PublicNode
         handle nodehandle;
         string nodekey;
         string attrstring;
+
+        int tag;
+        bool removed;
+        bool syncdeleted;
 };
 
 struct MegaFile : public File
@@ -175,7 +186,7 @@ struct MegaFileGet : public MegaFile
 {
     void completed(Transfer*, LocalNode*);
 	MegaFileGet(MegaClient *client, Node* n, string dstPath);
-    MegaFileGet(MegaClient *client, PublicNode* n, string dstPath);
+    MegaFileGet(MegaClient *client, MegaNode* n, string dstPath);
 	~MegaFileGet() {}
 };
 
@@ -186,7 +197,7 @@ struct MegaFilePut : public MegaFile
     ~MegaFilePut() {}
 };
 
-//Wrapping for arrays, to ease the use of SWIG
+//Wrapping for arrays, to ease the usage of SWIG
 template <class T>
 class ArrayWrapper
 {
@@ -208,21 +219,25 @@ class ArrayWrapper
 		
 		virtual ~ArrayWrapper()
 		{
-			if(copied && list) delete [] list;
+            if(copied && list)
+            {
+                for(int i=0; i<s; i++)
+                    delete list[i];
+                delete [] list;
+            }
 		}
-		
-				
+
 		T get(int i)
 		{
-			//if(list && i >= 0 && i <= s)
+            if(list && (i >= 0) && (i <= s))
 				return list[i];
-			//return NULL;	
+            return NULL;
 		}
 		
 		int size() { return s; }
 		
 	protected:
-		void setArray(T* newlist, int size, bool copy=0)
+        void setArray(T* newlist, int size, bool copy=false)
 		{
 			if(copied && list) delete [] list;
 			if(!size) return;
@@ -245,14 +260,14 @@ class ArrayWrapper
 		bool copied;
 };
 
-typedef ArrayWrapper<Node*> NodeList;
+typedef ArrayWrapper<MegaNode*> NodeList;
 typedef ArrayWrapper<User*> UserList;
-typedef ArrayWrapper<AccountBalance> BalanceList;
-typedef ArrayWrapper<AccountSession> SessionList;
-typedef ArrayWrapper<AccountPurchase> PurchaseList;
-typedef ArrayWrapper<AccountTransaction> TransactionList;
+//typedef ArrayWrapper<AccountBalance> BalanceList;
+//typedef ArrayWrapper<AccountSession> SessionList;
+//typedef ArrayWrapper<AccountPurchase> PurchaseList;
+//typedef ArrayWrapper<AccountTransaction> TransactionList;
 typedef ArrayWrapper<const char*> StringList;
-typedef ArrayWrapper<Share*> ShareList;
+//typedef ArrayWrapper<Share*> ShareList;
 
 class MegaRequestListener;
 class MegaTransferListener;
@@ -301,7 +316,7 @@ class MegaRequest
 		const char* getFile() const;
 		int getNumRetry() const;
 		int getNextRetryDelay() const;
-        PublicNode *getPublicNode();
+        MegaNode *getPublicNode();
         int getParamType() const;
         bool getFlag() const;
 
@@ -317,7 +332,7 @@ class MegaRequest
 		void setAccess(const char* access);
 		void setNumRetry(int ds);
 		void setNextRetryDelay(int delay);
-        void setPublicNode(PublicNode* publicNode);
+        void setPublicNode(MegaNode* publicNode);
 		void setNumDetails(int numDetails);
 		void setFile(const char* file);
         void setParamType(int type);
@@ -349,7 +364,7 @@ class MegaRequest
         Transfer *transfer;
 		AccountDetails *accountDetails;
 		int numDetails;
-        PublicNode* publicNode;
+        MegaNode* publicNode;
 		int numRetry;
 		int nextRetryDelay;
 };
@@ -393,7 +408,8 @@ class MegaTransfer
 		long long getSpeed() const;
 		long long getDeltaSize() const;
 		long long getUpdateTime() const;
-        PublicNode *getPublicNode() const;
+        MegaNode *getPublicNode() const;
+        bool isSyncTransfer() const;
 
 		void setStartTime(long long startTime);
 		void setTransferredBytes(long long transferredBytes);
@@ -417,12 +433,14 @@ class MegaTransfer
 		void setSpeed(long long speed);
 		void setDeltaSize(long long deltaSize);
 		void setUpdateTime(long long updateTime);
-        void setPublicNode(PublicNode *publicNode);
+        void setPublicNode(MegaNode *publicNode);
+        void setSyncTransfer(bool syncTransfer);
 
 	protected:
 		int slot;
 		int type;
 		int tag;
+        bool syncTransfer;
 		long long startTime;
 		long long updateTime;
 		long long time;
@@ -436,7 +454,7 @@ class MegaTransfer
 		const char* parentPath;
 		const char* fileName;
 		const char* base64Key;
-        PublicNode *publicNode;
+        MegaNode *publicNode;
 
 		int numConnections;
 		long long startPos;
@@ -521,11 +539,11 @@ class SearchTreeProcessor : public TreeProcessor
 	SearchTreeProcessor(const char *search);
 	virtual int processNode(Node* node);
     virtual ~SearchTreeProcessor() {}
-	vector<Node *> &getResults();
+    vector<MegaNode *> &getResults();
     
     protected:
 	const char *search;
-	vector<Node *> results;
+    vector<MegaNode *> results;
 };
 
 class SizeProcessor : public TreeProcessor
@@ -693,16 +711,16 @@ public:
 		ORDER_MODIFICATION_ASC, ORDER_MODIFICATION_DESC,
 		ORDER_ALPHABETICAL_ASC, ORDER_ALPHABETICAL_DESC};
 
-	static bool nodeComparatorDefaultASC  (Node *i, Node *j);
-	static bool nodeComparatorDefaultDESC (Node *i, Node *j);
-	static bool nodeComparatorSizeASC  (Node *i, Node *j);
-	static bool nodeComparatorSizeDESC (Node *i, Node *j);	
-	static bool nodeComparatorCreationASC  (Node *i, Node *j);
-	static bool nodeComparatorCreationDESC  (Node *i, Node *j);
-	static bool nodeComparatorModificationASC  (Node *i, Node *j);
-	static bool nodeComparatorModificationDESC  (Node *i, Node *j);	
-	static bool nodeComparatorAlphabeticalASC  (Node *i, Node *j);
-	static bool nodeComparatorAlphabeticalDESC  (Node *i, Node *j);	
+    static bool nodeComparatorDefaultASC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorDefaultDESC (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorSizeASC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorSizeDESC (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorCreationASC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorCreationDESC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorModificationASC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorModificationDESC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorAlphabeticalASC  (MegaNode *i, MegaNode *j);
+    static bool nodeComparatorAlphabeticalDESC  (MegaNode *i, MegaNode *j);
 	static bool userComparatorDefaultASC (User *i, User *j);
 
     MegaApi(MegaListener *listener = NULL, string *basePath = NULL);
@@ -738,40 +756,40 @@ public:
     int isLoggedIn();
 	const char* getMyEmail();
 	
-    void createFolder(const char* name, Node* parent, MegaRequestListener *listener = NULL);
-	void moveNode(Node* node, Node* newParent, MegaRequestListener *listener = NULL);
-	void copyNode(Node* node, Node* newParent, MegaRequestListener *listener = NULL);
-	void renameNode(Node* node, const char* newName, MegaRequestListener *listener = NULL);
-	void remove(Node* node, MegaRequestListener *listener = NULL);
-	void share(Node* node, User* user, const char *level, MegaRequestListener *listener = NULL);
-	void share(Node* node, const char* email, const char *level, MegaRequestListener *listener = NULL);
+    void createFolder(const char* name, MegaNode *parent, MegaRequestListener *listener = NULL);
+    void moveNode(MegaNode* node, MegaNode* newParent, MegaRequestListener *listener = NULL);
+    void copyNode(MegaNode* node, MegaNode *newParent, MegaRequestListener *listener = NULL);
+    void renameNode(MegaNode* node, const char* newName, MegaRequestListener *listener = NULL);
+    void remove(MegaNode* node, MegaRequestListener *listener = NULL);
+    void share(MegaNode *node, User* user, const char *level, MegaRequestListener *listener = NULL);
+    void share(MegaNode* node, const char* email, const char *level, MegaRequestListener *listener = NULL);
 	void folderAccess(const char* megaFolderLink, MegaRequestListener *listener = NULL);
 	void importFileLink(const char* megaFileLink, Node* parent, MegaRequestListener *listener = NULL);
-    void importPublicNode(PublicNode *publicNode, Node* parent, MegaRequestListener *listener = NULL);
+    void importPublicNode(MegaNode *publicNode, MegaNode *parent, MegaRequestListener *listener = NULL);
 	void getPublicNode(const char* megaFileLink, MegaRequestListener *listener = NULL);
-	void exportNode(Node *node, MegaRequestListener *listener = NULL);
+    void exportNode(MegaNode *node, MegaRequestListener *listener = NULL);
 	void fetchNodes(MegaRequestListener *listener = NULL);
 	void getAccountDetails(MegaRequestListener *listener = NULL);
 	void getAccountDetails(int storage, int transfer, int pro, int transactions, int purchases, int sessions, MegaRequestListener *listener = NULL);
 	void changePassword(const char *oldPassword, const char *newPassword, MegaRequestListener *listener = NULL);
 	void logout(MegaRequestListener *listener = NULL);
-	void getNodeAttribute(Node* node, int type, char *dstFilePath, MegaRequestListener *listener = NULL);
-	void setNodeAttribute(Node* node, int type, char *srcFilePath, MegaRequestListener *listener = NULL);
+    void getNodeAttribute(MegaNode* node, int type, char *dstFilePath, MegaRequestListener *listener = NULL);
+    void setNodeAttribute(MegaNode* node, int type, char *srcFilePath, MegaRequestListener *listener = NULL);
 	void addContact(const char* email, MegaRequestListener* listener=NULL);
     void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);
     void setUploadLimit(int bpslimit);
 
 	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
-    void startUpload(const char* localPath, Node* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
-    void startUpload(const char* localPath, Node* parent, MegaTransferListener *listener=NULL);
-    void startUpload(const char* localPath, Node* parent, const char* fileName, MegaTransferListener *listener = NULL);
-    void startUpload(const char* localPath, Node* parent, int maxSpeed, MegaTransferListener *listener = NULL);
+    void startUpload(const char* localPath, MegaNode* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
+    void startUpload(const char* localPath, MegaNode *parent, MegaTransferListener *listener=NULL);
+    void startUpload(const char* localPath, MegaNode* parent, const char* fileName, MegaTransferListener *listener = NULL);
+    void startUpload(const char* localPath, MegaNode* parent, int maxSpeed, MegaTransferListener *listener = NULL);
 
 	void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
-	void startDownload(Node* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
-	void startDownload(Node* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
-	void startDownload(Node* node, const char* localFolder, MegaTransferListener *listener);
-    void startPublicDownload(PublicNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
+    void startDownload(MegaNode* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
+    void startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
+    void startDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener);
+    void startPublicDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
     //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
 
     bool checkTransfer(Transfer *transfer);
@@ -782,8 +800,8 @@ public:
     bool isRegularTransfer(MegaTransfer *transfer);
 
     treestate_t syncPathState(string *path);
-    Node *getSyncedNode(string *path);
-    void syncFolder(const char *localFolder, Node *megaFolder);
+    MegaNode *getSyncedNode(string *path);
+    void syncFolder(const char *localFolder, MegaNode *megaFolder);
     void removeSync(handle nodehandle, MegaRequestListener *listener=NULL);
     int getNumActiveSyncs();
     void stopSyncs(MegaRequestListener *listener=NULL);
@@ -793,35 +811,37 @@ public:
     int getTotalDownloads();
     void resetTotalDownloads();
     void resetTotalUploads();
+    string getLocalPath(MegaNode *node);
     void updateStatics();
     bool isIndexing();
     bool isWaiting();
+    bool isSynced(MegaNode *n);
 
 
 	//Filesystem
-	NodeList* getChildren(Node* parent, int order=1);
+    NodeList* getChildren(MegaNode *parent, int order=1);
 	Node* getChildNode(Node *parent, const char* name);
-	Node* getParentNode(Node* node);
-	const char* getNodePath(Node* node);
-	Node* getNodeByPath(const char *path, Node* cwd = NULL);
-	Node* getNodeByHandle(handle handler);
-	UserList* getContacts();
-	User* getContact(const char* email);
+    MegaNode *getParentNode(MegaNode *node);
+    const char* getNodePath(MegaNode *node);
+    MegaNode *getNodeByPath(const char *path, MegaNode *n = NULL);
+    MegaNode *getNodeByHandle(handle handler);
+    //UserList* getContacts();
+    //User* getContact(const char* email);
 	NodeList *getInShares(User* user);
-	ShareList *getOutShares(Node *node);
+    //ShareList *getOutShares(Node *node);
 	const char *getAccess(Node* node);
 	bool processTree(Node* node, TreeProcessor* processor, bool recursive = 1);
 	NodeList* search(Node* node, const char* searchString, bool recursive = 1);
-    long long getSize(Node *node);
-    static const char *getBase64Handle(Node *node);
+    long long getSize(MegaNode *node);
+    static const char *getBase64Handle(MegaNode *node);
 
 	MegaError checkAccess(Node* node, const char *level);
 	MegaError checkMove(Node* node, Node* target);
 	
-	Node* getRootNode();
-	Node* getInboxNode();
-	Node* getRubbishNode();
-	Node* getMailNode();
+    MegaNode *getRootNode();
+    MegaNode* getInboxNode();
+    MegaNode *getRubbishNode();
+    MegaNode* getMailNode();
 	StringList *getRootNodeNames();
 	StringList *getRootNodePaths();
 
@@ -887,7 +907,6 @@ protected:
 	long long updateSIDtime;
 	int threadExit;
     dstime pausetime;
-	handle cwd;
 	void loop();
 	
 	int maxRetries;
