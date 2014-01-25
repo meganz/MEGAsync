@@ -39,7 +39,7 @@ typedef struct
    BOOL fPendingIO;
 } PIPEINST, *LPPIPEINST;
 
-class WinShellDispatcherTask : public QObject
+class WinShellDispatcherTask : public QThread
 {
     Q_OBJECT
 
@@ -62,8 +62,8 @@ class WinShellDispatcherTask : public QObject
 	void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
 
- public slots:
-   void doWork();
+ protected:
+   virtual void run();
 
 };
 

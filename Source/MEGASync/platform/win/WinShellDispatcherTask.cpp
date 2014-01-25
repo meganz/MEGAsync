@@ -16,21 +16,23 @@ typedef enum {
        STRING_SEND = 3
 } StringID;
 
-WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QObject()
+WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QThread()
 {
     this->receiver = receiver;
+    moveToThread(this);
 }
 
 WinShellDispatcherTask::~WinShellDispatcherTask()
 {
 }
 
-void WinShellDispatcherTask::doWork()
+void WinShellDispatcherTask::run()
 {
     LOG("Shell dispatcher starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
     dispatchPipe();
+    delete this;
 }
 
 int WinShellDispatcherTask::dispatchPipe()
