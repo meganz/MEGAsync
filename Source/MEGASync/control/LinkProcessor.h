@@ -18,12 +18,12 @@ public:
 	QString getLink(int id);
 	bool isSelected(int id);
 	int getError(int id);
-    PublicNode *getNode(int id);
+    MegaNode *getNode(int id);
 	int size();
 
 	void requestLinkInfo();
 	void importLinks(QString nodePath);
-	void importLinks(Node *node);
+    void importLinks(MegaNode *node);
 	handle getImportParentFolder();
 
 	void downloadLinks(QString localPath);
@@ -37,7 +37,7 @@ protected:
 	MegaApi *megaApi;
 	QStringList linkList;
 	QList<bool> linkSelected;
-    QList<PublicNode *> linkNode;
+    QList<MegaNode *> linkNode;
 	QList<int> linkError;
 	int currentIndex;
 	int remainingNodes;

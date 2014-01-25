@@ -20,11 +20,9 @@ QTMegaListener::QTMegaListener(MegaListener *listener)
 			this, SLOT(QTonTransferTemporaryError(MegaApi *, MegaTransfer *, MegaError *)));
 
 	connect(this, SIGNAL(QTonUsersUpdateSignal(MegaApi *, UserList *)),
-			this, SLOT(QTonUsersUpdate(MegaApi *, UserList *)),
-			Qt::BlockingQueuedConnection);
+            this, SLOT(QTonUsersUpdate(MegaApi *, UserList *)));
 	connect(this, SIGNAL(QTonNodesUpdateSignal(MegaApi *, NodeList *)),
-			this, SLOT(QTonNodesUpdate(MegaApi *, NodeList *)),
-			Qt::BlockingQueuedConnection);
+            this, SLOT(QTonNodesUpdate(MegaApi *, NodeList *)));
 	connect(this, SIGNAL(QTonReloadNeededSignal(MegaApi *)),
 			this, SLOT(QTonReloadNeeded(MegaApi *)));
     connect(this, SIGNAL(QTonSyncStateChangedSignal(MegaApi *)),
@@ -140,6 +138,7 @@ void QTMegaListener::QTonUsersUpdate(MegaApi *api, UserList *users)
 void QTMegaListener::QTonNodesUpdate(MegaApi *api, NodeList *nodes)
 {
 	if(listener) listener->onNodesUpdate(api, nodes);
+    delete nodes; //TODO: Fix this
 }
 
 void QTMegaListener::QTonReloadNeeded(MegaApi *api)

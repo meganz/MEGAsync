@@ -311,9 +311,10 @@ void MegaApplication::startSyncs()
     if(megaApi->getNumActiveSyncs() != 0) stopSyncs();
 
     //Start syncs
+    MegaNode *rubbishNode =  megaApi->getRubbishNode();
 	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
 	{
-        Node *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
         if(!node)
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
@@ -324,15 +325,18 @@ void MegaApplication::startSyncs()
             continue;
         }
 
-        if(megaApi->getParentNode(node) == megaApi->getRubbishNode())
+        MegaNode *parentNode = megaApi->getParentNode(node);
+        if(parentNode->getHandle() == rubbishNode->getHandle())
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                 "because the remote folder is in the rubbish bin")
                              .arg(preferences->getSyncName(i)));
             preferences->removeSyncedFolder(i);
             i--;
+            delete parentNode;
             continue;
         }
+        delete parentNode;
 
         QString localFolder = preferences->getLocalFolder(i);
         if(!QFileInfo(localFolder).isDir())
@@ -347,7 +351,9 @@ void MegaApplication::startSyncs()
 
         LOG(QString::fromAscii("Sync  %1 added.").arg(i));
         megaApi->syncFolder(localFolder.toUtf8().constData(), node);
+        delete node;
 	}
+    delete rubbishNode;
 }
 
 void MegaApplication::stopSyncs()
@@ -360,15 +366,16 @@ void MegaApplication::stopSyncs()
 //to the Mega node that is passed as parameter
 void MegaApplication::processUploadQueue(handle nodeHandle)
 {
-	Node *node = megaApi->getNodeByHandle(nodeHandle);
+    MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
     QStringList notUploaded;
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
-	if(!node || node->type==FILENODE)
+    if(!node || node->getType()==FILENODE)
 	{
 		uploadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
-		return;
+        delete node;
+        return;
 	}
 
     //Process the upload queue using the MegaUploader object
@@ -383,6 +390,7 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
         }
         uploader->upload(filePath, node);
     }
+    delete node;
 
     //If any file or folder couldn't be uploaded, inform users
     if(notUploaded.size())
@@ -596,11 +604,12 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     }
 
     //If there is a default upload folder in the preferences
-	Node *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+    MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
 	if(node)
 	{
         //use it to upload the list of files
-		processUploadQueue(node->nodehandle);
+        processUploadQueue(node->getHandle());
+        delete node;
 		return;
 	}
 
@@ -821,7 +830,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         if(preferences && preferences->logged())
         {
             preferences->unlink();
-            delete infoDialog;
+            if(infoDialog) delete infoDialog;
             infoDialog = NULL;
             start();
         }
@@ -861,7 +870,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
         preferences->setUsedStorage(details->storage_used);
 		preferences->setTotalBandwidth(details->transfer_max);
 		preferences->setUsedBandwidth(details->transfer_own_used);
-		infoDialog->setUsage(details->storage_max, details->storage_used);
+        if(infoDialog) infoDialog->setUsage(details->storage_max, details->storage_used);
         break;
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
@@ -892,14 +901,16 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                     if(e->getErrorCode() == MegaError::API_ENOENT)
                     {
                         QString localFolder = preferences->getLocalFolder(i);
-                        Node *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                        MegaNode *parentNode = megaApi->getParentNode(node);
+                        MegaNode *rubbishNode = megaApi->getRubbishNode();
                         if(!node)
                         {
                             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                                 "because the remote folder doesn't exist")
                                              .arg(preferences->getSyncName(i)));
                         }
-                        else if(megaApi->getParentNode(node) == megaApi->getRubbishNode())
+                        else if(parentNode && (parentNode->getHandle() == rubbishNode->getHandle()))
                         {
                             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                                 "because the remote folder is in the rubbish bin")
@@ -911,6 +922,9 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                                                 "because the local folder doesn't exist")
                                              .arg(preferences->getSyncName(i)));
                         }
+                        delete node;
+                        delete parentNode;
+                        delete rubbishNode;
                     }
                     LOG("Sync error! Removed");
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i));
@@ -962,7 +976,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 	}
 
     //Send statics to the information dialog
-	infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+    if(infoDialog) infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
     updateTrayIcon();
 }
 
@@ -987,7 +1001,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             #ifdef WIN32
                 if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
             #endif
-            infoDialog->addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
+            if(infoDialog) infoDialog->addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
         }
 	}
 	else
@@ -1000,25 +1014,29 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //The SDK still has to put the new node.
         //onNodes update will be called with node->tag == transfer->getTag()
         //so we save the path of the file to show it later
-        if(e->getErrorCode() == MegaError::API_OK)
+        if((e->getErrorCode() == MegaError::API_OK) && (!transfer->isSyncTransfer()))
         {
             LOG(QString::fromAscii("Putting: %1 TAG: %2").arg(QString::fromUtf8(transfer->getPath())).arg(transfer->getTag()));
             uploadLocalPaths[transfer->getTag()]=QString::fromUtf8(transfer->getPath());
         }
+        else LOG("Sync Transfer");
 	}
 
     //Send updated statics to the information dialog
     if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
         ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
     {
-        infoDialog->setTransfer(transfer);
-        infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-        infoDialog->updateTransfers();
-        infoDialog->updateDialog();
+        if(infoDialog)
+        {
+            infoDialog->setTransfer(transfer);
+            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+            infoDialog->updateTransfers();
+            infoDialog->updateDialog();
+        }
     }
 
-    infoDialog->increaseUsedStorage(transfer->getTotalBytes());
+    if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
     preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
@@ -1056,10 +1074,13 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
         ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
     {
-        infoDialog->setTransfer(transfer);
-        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-        infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-        infoDialog->updateDialog();
+        if(infoDialog)
+        {
+            infoDialog->setTransfer(transfer);
+            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+            infoDialog->updateDialog();
+        }
     }
 }
 
@@ -1092,39 +1113,30 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
     for(int i=0; i<nodes->size(); i++)
 	{
         localPath.clear();
-		Node *node = nodes->get(i);
+        MegaNode *node = nodes->get(i);
 
-        if(!node->tag && !node->removed && !node->syncdeleted)
+        if(!node->getTag() && !node->isRemoved() && !node->isSyncDeleted())
             externalNodes++;
 
-        if(!node->removed && node->tag && !node->syncdeleted && (node->type==FILENODE))
+        if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==FILENODE))
         {
             //Get the associated local node
-            LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->displayname())).arg(node->tag));
-            if(node->localnode)
+            LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->getName())).arg(node->getTag()));
+            string path = megaApi->getLocalPath(node);
+            if(path.size())
             {
                 //If the node has been uploaded by a synced folder
                 //The SDK provides its local path
                 LOG("Sync upload");
-                string localseparator;
-                localseparator.assign((char*)L"\\",sizeof(wchar_t));
-                string path;
-                LocalNode* l = node->localnode;
-                while (l)
-                {
-                    path.insert(0,l->localname);
-                    if ((l = l->parent)) path.insert(0, localseparator);
-                }
-                path.append("", 1);
                 localPath = QString::fromWCharArray((const wchar_t *)path.data());
                 LOG(QString::fromAscii("Sync path: %1").arg(localPath));
             }
-            else if(uploadLocalPaths.contains(node->tag))
+            else if(uploadLocalPaths.contains(node->getTag()))
             {
                 //If the node has been uploaded by a regular upload,
                 //we recover the path using the tag of the transfer
-                localPath = uploadLocalPaths.value(node->tag);
-                uploadLocalPaths.remove(node->tag);
+                localPath = uploadLocalPaths.value(node->getTag());
+                uploadLocalPaths.remove(node->getTag());
                 LOG(QString::fromAscii("Local upload: %1").arg(localPath));
             }
 
@@ -1134,7 +1146,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 #ifdef WIN32
                     if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
                 #endif
-                infoDialog->addRecentFile(QString::fromUtf8(node->displayname()), node->nodehandle, localPath);
+                if(infoDialog) infoDialog->addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
             }
         }
 	}

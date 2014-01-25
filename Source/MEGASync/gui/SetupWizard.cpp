@@ -84,20 +84,21 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		{
 		   if(error->getErrorCode() == MegaError::API_OK)
 		   {
-			   Node *node = megaApi->getNodeByPath("/MEGAsync");
+               MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
 			   if(!node)
 			   {
                    QMessageBox::warning(this, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
 			   }
 			   else
 			   {
-				   selectedMegaFolderHandle = node->nodehandle;
+                   selectedMegaFolderHandle = node->getHandle();
 				   ui->bBack->setVisible(false);
 				   ui->bNext->setVisible(false);
 				   ui->bCancel->setText(tr("Finish"));
                    ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
                    ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
 				   ui->sPages->setCurrentWidget(ui->pWelcome);
+                   delete node;
 			   }
 		   }
 		   else
@@ -253,7 +254,9 @@ void SetupWizard::on_bNext_clicked()
         else
         {
             defaultFolderPath.append(QString::fromAscii("/MEGA"));
-            long long totalSize = megaApi->getSize(megaApi->getRootNode());
+            MegaNode *rootNode = megaApi->getRootNode();
+            long long totalSize = megaApi->getSize(rootNode);
+            delete rootNode;
             if(totalSize > 2147483648)
             {
                 int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in your Cloud Drive.\n"
@@ -268,8 +271,8 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromAscii("/"));
-            Node *node = megaApi->getRootNode();
-            selectedMegaFolderHandle = node->nodehandle;
+            MegaNode *node = megaApi->getRootNode();
+            selectedMegaFolderHandle = node->getHandle();
             ui->bBack->setVisible(false);
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
@@ -278,6 +281,7 @@ void SetupWizard::on_bNext_clicked()
             ui->sPages->setCurrentWidget(ui->pWelcome);
             ui->lFinalMegaFolderIntro->setText(tr("and your MEGA Cloud Drive"));
             ui->bFinalMegaFolder->hide();
+            delete node;
         }
 
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -309,14 +313,16 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        Node *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
+        MegaNode *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
         if(!node)
         {
-			megaApi->createFolder("MEGAsync", megaApi->getRootNode(), delegateListener);
+            MegaNode *rootNode = megaApi->getRootNode();
+            megaApi->createFolder("MEGAsync", rootNode, delegateListener);
+            delete rootNode;
         }
         else
         {
-            selectedMegaFolderHandle = node->nodehandle;
+            selectedMegaFolderHandle = node->getHandle();
             ui->bBack->setVisible(false);
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
@@ -324,6 +330,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
             ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
             ui->sPages->setCurrentWidget(ui->pWelcome);
+            delete node;
         }
     }
 }
@@ -365,8 +372,10 @@ void SetupWizard::on_bCancel_clicked()
         preferences->setEmail(email);
         preferences->setCredentials(emailHash, privatePw);
         QString syncName;
-        if(selectedMegaFolderHandle == megaApi->getRootNode()->nodehandle) syncName = QString::fromAscii("MEGA");
+        MegaNode *rootNode = megaApi->getRootNode();
+        if(selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
         preferences->addSyncedFolder(ui->bFinalLocalFolder->text(), ui->bFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        delete rootNode;
         this->close();
         return;
     }
@@ -398,7 +407,11 @@ void SetupWizard::on_bMegaFolder_clicked()
         return;
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
+    MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    const char *nPath = megaApi->getNodePath(node);
+    ui->eMegaFolder->setText(QString::fromUtf8(nPath));
+    delete nPath;
+    delete node;
 }
 
 void SetupWizard::wTypicalSetup_clicked()
@@ -452,12 +465,13 @@ void SetupWizard::on_bFinalLocalFolder_clicked()
 void SetupWizard::on_bFinalMegaFolder_clicked()
 {
     QString megaFolderPath = ui->bFinalMegaFolder->text();
-    Node *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+    MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
     if(node)
     {
         const char *handle = MegaApi::getBase64Handle(node);
         QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
         QDesktopServices::openUrl(QUrl(url));
         delete handle;
+        delete node;
     }
 }

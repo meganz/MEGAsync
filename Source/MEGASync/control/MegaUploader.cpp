@@ -9,27 +9,17 @@ MegaUploader::MegaUploader(MegaApi *megaApi) : QObject(), delegateListener(this)
     this->megaApi = megaApi;
 }
 
-bool MegaUploader::upload(QString path, Node *parent)
+bool MegaUploader::upload(QString path, MegaNode *parent)
 {
     return upload(QFileInfo(path), parent);
 }
 
-bool MegaUploader::upload(QFileInfo info, Node *parent)
+bool MegaUploader::upload(QFileInfo info, MegaNode *parent)
 {
-    if(parent->localnode)
+    string localPath = megaApi->getLocalPath(parent);
+    if(localPath.size())
     {
-        string localseparator;
-        localseparator.assign((char*)L"\\",sizeof(wchar_t));
-        string path;
-        path.insert(0, localseparator);
-        LocalNode* l = parent->localnode;
-        while (l)
-        {
-            path.insert(0,l->localname);
-            if ((l = l->parent)) path.insert(0, localseparator);
-        }
-        path.append("", 1);
-        QString destPath = QString::fromWCharArray((const wchar_t *)path.data()) + info.fileName();
+        QString destPath = QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName();
 
 #ifdef WIN32
         if(destPath.startsWith(QString::fromAscii("\\\\?\\"))) destPath = destPath.mid(4);
@@ -76,7 +66,7 @@ void MegaUploader::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError
         case MegaRequest::TYPE_MKDIR:
             if(e->getErrorCode() == MegaError::API_OK)
             {
-                Node *parent = megaApi->getNodeByHandle(request->getNodeHandle());
+                MegaNode *parent = megaApi->getNodeByHandle(request->getNodeHandle());
                 QDir dir(folders.dequeue().absoluteFilePath());
                 QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
                 for(int i=0; i<entries.size(); i++)
@@ -91,6 +81,7 @@ void MegaUploader::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError
                                               &delegateListener);
                     }
                 }
+                delete parent;
             }
             break;
     }

@@ -57,10 +57,12 @@ void BindFolderDialog::on_bOK_clicked()
     QString localFolderPath = QDir::toNativeSeparators(QDir(ui->wBinder->selectedLocalFolder()).canonicalPath());
     MegaApi *megaApi = app->getMegaApi();
     long long handle = ui->wBinder->selectedMegaFolder();
-    Node *node = megaApi->getNodeByHandle(handle);
+
+    MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
     {
         QMessageBox::warning(this, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
+        delete node;
         return;
     }
 
@@ -70,37 +72,53 @@ void BindFolderDialog::on_bOK_clicked()
         if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QChar::fromAscii('\\'))))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
+            delete node;
             return;
         }
         else if(c.startsWith(localFolderPath) && c[localFolderPath.size()]==QChar::fromAscii('\\'))
         {
             QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
+            delete node;
             return;
         }
     }
 
     for(int i=0; i<megaFolderHandles.size(); i++)
     {
-        Node *n = megaApi->getNodeByHandle(megaFolderHandles[i]);
+        MegaNode *n = megaApi->getNodeByHandle(megaFolderHandles[i]);
         if(n)
         {
-            QString megaPath = QString::fromUtf8(megaApi->getNodePath(node));
-            QString p = QString::fromUtf8(megaApi->getNodePath(n));
+            const char *cPath = megaApi->getNodePath(node);
+            QString megaPath = QString::fromUtf8(cPath);
+            delete cPath;
+
+            const char *nPath = megaApi->getNodePath(n);
+            QString p = QString::fromUtf8(nPath);
+            delete nPath;
+
             if(megaPath.startsWith(p) && ((p.size() == megaPath.size()) || (megaPath[p.size()]==QChar::fromAscii('/'))))
             {
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
+                delete n;
+                delete node;
                 return;
             }
             else if(megaPath==QString::fromAscii("/") || (p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/')))
             {
-                if(handle == megaApi->getRootNode()->nodehandle)
+                MegaNode *rootNode = megaApi->getRootNode();
+                if(handle == rootNode->getHandle())
                     QMessageBox::warning(this, tr("Error"), tr("Full account syncing is only possible without any selective syncs"), QMessageBox::Ok);
                 else
                     QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
+                delete n;
+                delete node;
+                delete rootNode;
                 return;
             }
+            delete n;
         }
     }
+    delete node;
 
    if(!Utilities::verifySyncedFolderLimits(localFolderPath))
    {

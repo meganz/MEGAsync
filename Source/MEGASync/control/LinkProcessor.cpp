@@ -45,7 +45,7 @@ int LinkProcessor::getError(int id)
 	return linkError[id];
 }
 
-PublicNode *LinkProcessor::getNode(int id)
+MegaNode *LinkProcessor::getNode(int id)
 {
 	return linkNode[id];
 }
@@ -60,7 +60,7 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
         if(e->getErrorCode() != API_OK)  linkNode[currentIndex] = NULL;
-        else linkNode[currentIndex] = new PublicNode(request->getPublicNode());
+        else linkNode[currentIndex] = new MegaNode(request->getPublicNode());
 
 		linkError[currentIndex] = e->getErrorCode();
 		linkSelected[currentIndex] = (linkError[currentIndex]==MegaError::API_OK);
@@ -98,15 +98,24 @@ void LinkProcessor::requestLinkInfo()
 
 void LinkProcessor::importLinks(QString megaPath)
 {
-	Node *node = megaApi->getNodeByPath(megaPath.toUtf8().constData());
-	if(node) importLinks(node);
-	else megaApi->createFolder("MEGAsync Imports", megaApi->getRootNode(), this);
+    MegaNode *node = megaApi->getNodeByPath(megaPath.toUtf8().constData());
+    if(node)
+    {
+        importLinks(node);
+        delete node;
+    }
+    else
+    {
+        MegaNode *rootNode = megaApi->getRootNode();
+        megaApi->createFolder("MEGAsync Imports", megaApi->getRootNode(), this);
+        delete rootNode;
+    }
 }
 
-void LinkProcessor::importLinks(Node *node)
+void LinkProcessor::importLinks(MegaNode *node)
 {
 	if(!node) return;
-	importParentFolder = node->nodehandle;
+    importParentFolder = node->getHandle();
 
 	for(int i=0; i<linkList.size(); i++)
 	{

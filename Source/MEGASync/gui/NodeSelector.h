@@ -33,7 +33,7 @@ private:
     bool sizeWarning;
 
 protected:
-    void addChildren(QTreeWidgetItem *parentItem, Node *parentNode);
+    void addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode);
 	QTMegaRequestListener *delegateListener;
 
 public slots:

@@ -52,7 +52,11 @@ void FolderBinder::on_bMegaFolder_clicked()
         return;
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
-    ui->eMegaFolder->setText(QString::fromUtf8(megaApi->getNodePath(megaApi->getNodeByHandle(selectedMegaFolderHandle))));
+    MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    const char *fPath = megaApi->getNodePath(selectedFolder);
+    ui->eMegaFolder->setText(QString::fromUtf8(fPath));
+    delete selectedFolder;
+    delete fPath;
 }
 
 void FolderBinder::changeEvent(QEvent *event)

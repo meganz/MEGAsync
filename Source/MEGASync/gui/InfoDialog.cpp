@@ -308,10 +308,12 @@ void InfoDialog::updateTransfers()
 void InfoDialog::updateSyncsButton()
 {
     int num = preferences->getNumSyncedFolders();
-    if(num == 1 && preferences->getMegaFolderHandle(0)==megaApi->getRootNode()->nodehandle)
+    MegaNode *rootNode = megaApi->getRootNode();
+    if(num == 1 && preferences->getMegaFolderHandle(0)==rootNode->getHandle())
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
     else
         ui->bSyncFolder->setText(tr("Syncs"));
+    delete rootNode;
 }
 
 void InfoDialog::setIndexing(bool indexing)
@@ -391,14 +393,20 @@ void InfoDialog::addSync()
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     long long handle = dialog->getMegaFolder();
-    Node *node = megaApi->getNodeByHandle(handle);
+    MegaNode *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
     delete dialog;
     if(!localFolderPath.length() || !node)
+    {
+        delete node;
         return;
+    }
 
-   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(megaApi->getNodePath(node)), handle, syncName);
+   const char *nPath = megaApi->getNodePath(node);
+   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
+   delete nPath;
    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+   delete node;
    updateSyncsButton();
 }
 
@@ -460,7 +468,8 @@ void InfoDialog::on_bSyncFolder_clicked()
 {
     int num = preferences->getNumSyncedFolders();
 
-    if(num == 1 && preferences->getMegaFolderHandle(0)==megaApi->getRootNode()->nodehandle)
+    MegaNode *rootNode = megaApi->getRootNode();
+    if(num == 1 && preferences->getMegaFolderHandle(0)==rootNode->getHandle())
     {
         openFolder(preferences->getLocalFolder(0));
     }
@@ -485,6 +494,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         }
         menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
     }
+    delete rootNode;
 }
 
 void InfoDialog::openFolder(QString path)

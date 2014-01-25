@@ -26,14 +26,14 @@ NodeSelector::~NodeSelector()
 
 void NodeSelector::nodesReady()
 {
-    Node *rootNode = megaApi->getRootNode();
+    MegaNode *rootNode = megaApi->getRootNode();
     if(!rootNode) return;
 
     ui->tMegaFolders->clear();
     QTreeWidgetItem *root = new QTreeWidgetItem();
     root->setText(0, tr("Cloud Drive"));
     root->setIcon(0, folderIcon);
-    root->setData(0, Qt::UserRole, (qulonglong)rootNode->nodehandle);
+    root->setData(0, Qt::UserRole, (qulonglong)rootNode->getHandle());
     addChildren(root, rootNode);
     ui->tMegaFolders->setIconSize(QSize(24, 24));
     ui->tMegaFolders->addTopLevelItem(root);
@@ -41,6 +41,7 @@ void NodeSelector::nodesReady()
     ui->tMegaFolders->expandToDepth(0);
     selectedItem = root;
     selectedFolder = selectedItem->data(0, Qt::UserRole).toULongLong();
+    delete rootNode;
 }
 
 long long NodeSelector::getSelectedFolderHandle()
@@ -52,15 +53,16 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 {
 	if(e->getErrorCode() == MegaError::API_OK)
 	{
-		Node *node = megaApi->getNodeByHandle(request->getNodeHandle());
+        MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
 		QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText(0, QString::fromUtf8(node->displayname()));
+        item->setText(0, QString::fromUtf8(node->getName()));
 		item->setIcon(0, folderIcon);
-		item->setData(0, Qt::UserRole, (qulonglong)node->nodehandle);
+        item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
 		selectedItem->addChild(item);
 		selectedItem->sortChildren(0,  Qt::AscendingOrder);
 		ui->tMegaFolders->setCurrentItem(item);
 		ui->tMegaFolders->update();
+        delete node;
 	}
     ui->tMegaFolders->setEnabled(true);
 }
@@ -75,18 +77,18 @@ void NodeSelector::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void NodeSelector::addChildren(QTreeWidgetItem *parentItem, Node *parentNode)
+void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode)
 {
     NodeList *children = megaApi->getChildren(parentNode);
     for(int i=0; i<children->size(); i++)
     {
-        Node *node = children->get(i);
-        if(node->type == FOLDERNODE)
+        MegaNode *node = children->get(i);
+        if(node->getType() == FOLDERNODE)
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, QString::fromUtf8(node->displayname()));
+            item->setText(0, QString::fromUtf8(node->getName()));
             item->setIcon(0, folderIcon);
-            item->setData(0, Qt::UserRole, (qulonglong)node->nodehandle);
+            item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
             parentItem->addChild(item);
             addChildren(item, node);
         }
@@ -112,9 +114,9 @@ void NodeSelector::on_bNewFolder_clicked()
     text = text.trimmed();
     if (ok && !text.isEmpty())
     {
-        Node *parent = megaApi->getNodeByHandle(selectedFolder);
-        Node *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
-        if(!node || (node->type==FILENODE))
+        MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
+        MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
+        if(!node || (node->getType()==FILENODE))
         {
             ui->tMegaFolders->setEnabled(false);
 			megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
@@ -132,17 +134,22 @@ void NodeSelector::on_bNewFolder_clicked()
                 }
             }
         }
+        delete parent;
+        delete node;
     }
 }
 
 void NodeSelector::on_bOk_clicked()
 {
-    if(!rootAllowed && (selectedFolder == megaApi->getRootNode()->nodehandle))
+    MegaNode *rootNode = megaApi->getRootNode();
+    if(!rootAllowed && (selectedFolder == rootNode->getHandle()))
     {
         QMessageBox::warning(this, tr("Error"), tr("The root folder can't be synced.\n"
                                                  "Please, select a subfolder."), QMessageBox::Ok);
+        delete rootNode;
         return;
     }
+    delete rootNode;
 
     if(sizeWarning)
     {

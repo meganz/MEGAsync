@@ -15,14 +15,14 @@ class MegaUploader : public QObject, public MegaRequestListener
 
 public:
     MegaUploader(MegaApi *megaApi);
-    bool upload(QString path, Node *parent);
+    bool upload(QString path, MegaNode *parent);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 
 signals:
     void startFileCopy();
 
 protected:
-    bool upload(QFileInfo info, Node *parent);
+    bool upload(QFileInfo info, MegaNode *parent);
 
     MegaApi *megaApi;
     QTMegaRequestListener delegateListener;
