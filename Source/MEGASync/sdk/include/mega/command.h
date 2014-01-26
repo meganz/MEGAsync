@@ -241,21 +241,13 @@ public:
 class CommandMoveNode : public Command
 {
 	handle h;
+	Node* syncn;
+	syncdel_t syncdel;
 
 public:
 	void procresult();
 
-	CommandMoveNode(MegaClient*, Node*, Node*);
-};
-
-class CommandMoveSyncDebris : public Command
-{
-	handle h;
-
-public:
-	void procresult();
-
-	CommandMoveSyncDebris(MegaClient*, handle, handle);
+	CommandMoveNode(MegaClient*, Node*, Node*, syncdel_t);
 };
 
 class CommandSingleKeyCR : public Command

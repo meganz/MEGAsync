@@ -900,6 +900,8 @@ void MegaClient::exec()
 
 						if (synccreate.size()) syncupdate();
 					}
+
+					if (todebris.size()) execmovetosyncdebris();
 				}
 			}
 		}
@@ -2140,7 +2142,7 @@ error MegaClient::checkmove(Node* fn, Node* tn)
 }
 
 // move node to new parent node (for changing the filename, use setattr and modify the 'n' attribute)
-error MegaClient::rename(Node* n, Node* p)
+error MegaClient::rename(Node* n, Node* p, syncdel_t syncdel)
 {
 	error e;
 
@@ -2150,7 +2152,7 @@ error MegaClient::rename(Node* n, Node* p)
 	{
 		notifynode(n);
 
-		reqs[r].add(new CommandMoveNode(this,n,p));
+		reqs[r].add(new CommandMoveNode(this,n,p,syncdel));
 	}
 
 	return API_OK;
@@ -3539,7 +3541,7 @@ void MegaClient::purgenodesusersabortsc()
 	}
 	syncs.clear();
 
-	newsyncdebris.clear();
+	todebris.clear();
 
 	for (node_map::iterator it = nodes.begin(); it != nodes.end(); it++) delete it->second;
 	nodes.clear();
@@ -3637,7 +3639,7 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 	for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 	{
 		// node must be syncable, alive, decrypted and have its name defined to be considered
-		if (app->sync_syncable(*it) && !(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
+		if (app->sync_syncable(*it) && (*it)->syncdeleted == SYNCDEL_NONE && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
 	}
 
 	// remove remote items that exist locally from hash, recurse into existing folders
@@ -3842,7 +3844,7 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 		for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
 		{
 			// node must be alive, decrypted and name defined to be considered
-			if (!(*it)->syncdeleted && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
+			if ((*it)->syncdeleted == SYNCDEL_NONE && !(*it)->attrstring.size() && (ait = (*it)->attrs.map.find('n')) != (*it)->attrs.map.end()) addchild(&nchildren,&ait->second,*it,&strings);
 		}
 	}
 
@@ -3953,8 +3955,8 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
 	if (insync) l->treestate(TREESTATE_SYNCED);
 }
 
-// execute updates stored in syncdeleted[], syncoverwritten[] and synccreate[]
-// skip if a sync-related putnodes() is currently in progress
+// execute updates stored in synccreate[]
+// must not be invoked while the previous creation operation is still in progress
 void MegaClient::syncupdate()
 {
 	// split synccreate[] in separate subtrees and send off to putnodes() for creation on the server
@@ -4165,87 +4167,139 @@ Node* MegaClient::nodebyfingerprint(FileFingerprint* fingerprint)
 }
 
 // move node to //bin, then on to the SyncDebris folder of the day (to prevent dupes)
-void MegaClient::movetosyncdebris(Node* n)
+void MegaClient::movetosyncdebris(Node* dn)
 {
-	Node* p;
+	dn->syncdeleted = SYNCDEL_DELETED;
 
-	if (n)
+	// detach node from LocalNode
+	if (dn->localnode)
 	{
-		// detach node from LocalNode
-		if (n->localnode)
-		{
-			n->localnode->node = NULL;
-			n->localnode = NULL;
-		}
-	
-		reqs[r].add(new CommandMoveSyncDebris(this,n->nodehandle,rootnodes[RUBBISHNODE-ROOTNODE]));
-		
-		n->syncdeleted = true;
+		dn->localnode->node = NULL;
+		dn->localnode = NULL;
 	}
-	
-	if ((p = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE])))
+
+	Node* n = dn;
+
+	// at least one parent node already on the way to SyncDebris?
+	while ((n = n->parent) && n->syncdeleted == SYNCDEL_NONE);
+
+	// no: enqueue this one
+	if (!n) dn->todebris_it = todebris.insert(dn).first;
+}
+
+// immediately moves pending todebris items to //bin
+void MegaClient::execmovetosyncdebris()
+{
+	Node* n;
+	Node* tn;
+	node_set::iterator it;
+
+	time_t ts; 
+	struct tm* ptm;
+	char buf[32];
+	syncdel_t target;
+
+	// attempt to move the nodes in node_set todebris to the following locations (in falling :
+	// - //bin/SyncDebris/yyyy-mm-dd
+	// - //bin/SyncDebris
+	// - //bin
+
+	// (if no rubbish bin is found, we should probably reload...)
+	if (!(tn = nodebyhandle(rootnodes[RUBBISHNODE-ROOTNODE]))) return;
+	target = SYNCDEL_BIN;
+
+	ts = time(NULL);
+	ptm = localtime(&ts);
+	sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
+
+	// locate //bin/SyncDebris
+	if ((n = childnodebyname(tn,SYNCDEBRISFOLDERNAME)))
 	{
-		// check if we already have today's sync debris subfolder in rubbish bin
-		handle h;
-		time_t ts = time(NULL);
-		struct tm* ptm = localtime(&ts);
-		char buf[32];
+		tn = n;
+		target = SYNCDEL_DEBRIS;
 
-		sprintf(buf,"%04d-%02d-%02d",ptm->tm_year+1900,ptm->tm_mon+1,ptm->tm_mday);
-
-		if ((p = childnodebyname(p,SYNCDEBRISFOLDERNAME)))
+		// locate //bin/SyncDebris/yyyy-mm-dd
+		if ((n = childnodebyname(tn,buf)))
 		{
-			h = p->nodehandle;
-
-			if ((p = childnodebyname(p,buf)))
-			{
-				if (n) reqs[r].add(new CommandMoveSyncDebris(this,n->nodehandle,p->nodehandle));
-
-				// move to daily SyncDebris subfolder (no retry)
-				for (handle_set::iterator it = newsyncdebris.begin(); it != newsyncdebris.end(); it++) reqs[r].add(new CommandMoveSyncDebris(this,*it,p->nodehandle));
-
-				newsyncdebris.clear();
-				return;
-			}
+			tn = n;
+			target = SYNCDEL_DEBRISDAY;
 		}
-		else h = UNDEF;
+	}
 
-		if (n) newsyncdebris.insert(n->nodehandle);
-
-		if (!syncdebrisadding)
+	// in order to reduce the API load, we move
+	// - SYNCDEL_DELETED nodes to any available target
+	// - SYNCDEL_BIN/SYNCDEL_DEBRIS nodes to SYNCDEL_DEBRISDAY
+	// (move top-level nodes only)
+	for (it = todebris.begin(); it != todebris.end(); )
+	{
+		n = *it;
+	
+		if (n->syncdeleted == SYNCDEL_DELETED || n->syncdeleted == SYNCDEL_BIN || n->syncdeleted == SYNCDEL_DEBRIS)
 		{
-			// create missing component(s) of the sync debris folder of the day
-			NewNode* nn;
-			SymmCipher tkey;
-			string tattrstring;
-			AttrMap tattrs;
-			int i = h == UNDEF ? 2 : 1;
+			while ((n = n->parent) && n->syncdeleted == SYNCDEL_NONE);
 
-			nn = new NewNode[i]+i;
-
-			while (i--)
+			if (!n)
 			{
-				nn--;
-
-				nn->source = NEW_NODE;
-				nn->type = FOLDERNODE;
-				nn->nodehandle = i;
-				nn->parenthandle = i ? 0 : UNDEF;
-
-				nn->clienttimestamp = ts;
-				nn->nodekey.resize(FOLDERNODEKEYLENGTH);
-				PrnGen::genblock((byte*)nn->nodekey.data(),FOLDERNODEKEYLENGTH);
-
-				// set new name, encrypt and attach attributes
-				tattrs.map['n'] = (i || h != UNDEF) ? buf : SYNCDEBRISFOLDERNAME;
-				tattrs.getjson(&tattrstring);
-				tkey.setkey((const byte*)nn->nodekey.data(),FOLDERNODE);
-				makeattr(&tkey,&nn->attrstring,tattrstring.c_str());
+				n = *it;
+		
+				if (n->syncdeleted == SYNCDEL_DELETED || ((n->syncdeleted == SYNCDEL_BIN || n->syncdeleted == SYNCDEL_DEBRIS) && target == SYNCDEL_DEBRISDAY))
+				{
+					n->syncdeleted = SYNCDEL_INFLIGHT;
+					rename(n,tn,target);
+					it++;
+				}
+				else
+				{
+					n->syncdeleted = SYNCDEL_NONE;				
+					n->todebris_it = todebris.end();
+					todebris.erase(it++);
+				}
 			}
-
-			reqs[r].add(new CommandPutNodes(this,h == UNDEF ? rootnodes[RUBBISHNODE-ROOTNODE] : h,NULL,nn,h == UNDEF ? 2 : 1,0,PUTNODES_SYNCDEBRIS));
-			syncdebrisadding = true;
+			else it++;
 		}
+		else if (n->syncdeleted == SYNCDEL_DEBRISDAY)
+		{
+			n->syncdeleted = SYNCDEL_NONE;
+			n->todebris_it = todebris.end();
+			todebris.erase(it++);
+		}
+		else it++;
+	}
+
+	if (target != SYNCDEL_DEBRISDAY && todebris.size() && !syncdebrisadding)
+	{
+		syncdebrisadding = true;
+
+		// create missing component(s) of the sync debris folder of the day
+		NewNode* nn;
+		SymmCipher tkey;
+		string tattrstring;
+		AttrMap tattrs;
+		int i = (target == SYNCDEL_DEBRIS) ? 1 : 2;
+
+		nn = new NewNode[i]+i;
+
+		while (i--)
+		{
+			nn--;
+
+			nn->source = NEW_NODE;
+			nn->type = FOLDERNODE;
+			nn->nodehandle = i;
+			nn->parenthandle = i ? 0 : UNDEF;
+
+			nn->clienttimestamp = ts;
+			nn->nodekey.resize(FOLDERNODEKEYLENGTH);
+			PrnGen::genblock((byte*)nn->nodekey.data(),FOLDERNODEKEYLENGTH);
+
+			// set new name, encrypt and attach attributes
+			tattrs.map['n'] = (i || target == SYNCDEL_DEBRIS) ? buf : SYNCDEBRISFOLDERNAME;
+			tattrs.getjson(&tattrstring);
+			tkey.setkey((const byte*)nn->nodekey.data(),FOLDERNODE);
+			makeattr(&tkey,&nn->attrstring,tattrstring.c_str());
+		}
+
+		reqs[r].add(new CommandPutNodes(this,tn->nodehandle,NULL,nn,(target == SYNCDEL_DEBRIS) ? 1 : 2,0,PUTNODES_SYNCDEBRIS));
 	}
 }
 
@@ -4319,8 +4373,6 @@ void MegaClient::putnodes_syncdebris_result(error e, NewNode* nn)
 	delete[] nn;
 
 	syncdebrisadding = false;
-
-	if (e == API_OK) movetosyncdebris(NULL);
 }
 
 bool MegaClient::toggledebug()

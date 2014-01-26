@@ -115,7 +115,7 @@ public:
 	error unlink(Node*);
 
 	// move node to new parent folder
-	error rename(Node*, Node*);
+	error rename(Node*, Node*, syncdel_t = SYNCDEL_NONE);
 
 	// start/stop/pause file transfer
 	bool startxfer(direction_t, File*);
@@ -401,9 +401,6 @@ public:
 	// sync debris folder name in //bin
 	static const char* const SYNCDEBRISFOLDERNAME;
 
-	// nodes being moved to //bin/SyncDebris with move failcount
-	handle_set newsyncdebris;
-
 	// we are adding the //bin/SyncDebris/yyyy-mm-dd subfolder(s)
 	bool syncdebrisadding;
 
@@ -463,9 +460,11 @@ public:
 	// start downloading/copy missing files, create missing directories
 	bool syncdown(LocalNode*, string*, bool);
 
-	// move node to //bin/SyncDebris/yyyy-mm-dd/
+	// move nodes to //bin/SyncDebris/yyyy-mm-dd/
 	void movetosyncdebris(Node*);
-
+	void execmovetosyncdebris();
+	node_set todebris;
+	
 	// recursively cancel transfers in a subtree
 	void stopxfers(LocalNode*);
 
