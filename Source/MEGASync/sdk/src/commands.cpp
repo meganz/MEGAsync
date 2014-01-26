@@ -531,12 +531,14 @@ void CommandPutNodes::procresult()
 	}
 }
 
-CommandMoveNode::CommandMoveNode(MegaClient* client, Node* n, Node* t)
+CommandMoveNode::CommandMoveNode(MegaClient* client, Node* n, Node* t, syncdel_t csyncdel)
 {
 	cmd("m");
 	notself(client);
 
 	h = n->nodehandle;
+
+	if ((syncdel = csyncdel) != SYNCDEL_NONE) syncn = n;
 
 	arg("n",(byte*)&h,MegaClient::NODEHANDLE);
 	arg("t",(byte*)&t->nodehandle,MegaClient::NODEHANDLE);
@@ -550,7 +552,35 @@ CommandMoveNode::CommandMoveNode(MegaClient* client, Node* n, Node* t)
 
 void CommandMoveNode::procresult()
 {
-	if (client->json.isnumeric()) client->app->rename_result(h,(error)client->json.getint());
+	if (client->json.isnumeric())
+	{
+		error e = (error)client->json.getint();
+
+		if (syncdel != SYNCDEL_NONE)
+		{
+			if (e == API_OK)
+			{
+				Node* n;
+
+				// update all todebris records in the subtree
+				for (node_set::iterator it = client->todebris.begin(); it != client->todebris.end(); it++)
+				{
+					n = *it;
+
+					do {
+						if (n == syncn)
+						{
+							(*it)->syncdeleted = syncdel;
+							break;
+						}
+					} while ((n = n->parent));
+				}
+			}
+			else syncn->syncdeleted = SYNCDEL_NONE;
+		}
+
+		client->app->rename_result(h,e);
+	}
 	else
 	{
 		client->json.storeobject();
@@ -1776,23 +1806,6 @@ void CommandFetchNodes::procresult()
 				if (!client->json.storeobject()) return client->app->fetchnodes_result(API_EINTERNAL);
 		}
 	}
-}
-
-// no sharekey elements are generated for SyncDebris moves
-CommandMoveSyncDebris::CommandMoveSyncDebris(MegaClient* client, handle ch, handle ct)
-{
-	h = ch;
-
-	cmd("m");
-
-	arg("n",(byte*)&h,MegaClient::NODEHANDLE);
-	arg("t",(byte*)&ct,MegaClient::NODEHANDLE);
-}
-
-void CommandMoveSyncDebris::procresult()
-{
-	client->json.storeobject();
-	client->movetosyncdebris(NULL);
 }
 
 } // namespace

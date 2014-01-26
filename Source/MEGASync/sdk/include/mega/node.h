@@ -149,9 +149,12 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 	// active sync get
 	struct SyncFileGet* syncget;
 
-	// active removal to SyncDebris
-	bool syncdeleted;
+	// state of removal to //bin / SyncDebris
+	syncdel_t syncdeleted;
 
+	// location in the todebris node_set
+	node_set::iterator todebris_it;
+	
 	// source tag
 	int tag;
 

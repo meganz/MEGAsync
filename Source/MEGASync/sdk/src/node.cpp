@@ -44,7 +44,8 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph, nodetype_t
 	localnode = NULL;
 	syncget = NULL;
 	
-	syncdeleted = false;
+	syncdeleted = SYNCDEL_NONE;
+	todebris_it = client->todebris.end();
 
 	type = t;
 
@@ -85,6 +86,9 @@ Node::~Node()
 	// remove node's fingerprint from hash
 	if (type == FILENODE && fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
 
+	// remove from todebris node_set
+	if (todebris_it != client->todebris.end()) client->todebris.erase(todebris_it);
+	
 	// delete outshares, including pointers from users for this node
 	for (share_map::iterator it = outshares.begin(); it != outshares.end(); it++) delete it->second;
 
@@ -771,7 +775,12 @@ void LocalNode::completed(Transfer* t, LocalNode*)
 	else
 	{
 		// otherwise, overwrite node if it already exists and complete in its place
-		if (node) sync->client->movetosyncdebris(node);
+		if (node)
+		{
+			sync->client->movetosyncdebris(node);
+			sync->client->execmovetosyncdebris();
+		}
+
 		h = parent->node->nodehandle;
 	}
 

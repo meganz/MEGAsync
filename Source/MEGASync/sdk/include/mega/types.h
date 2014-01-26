@@ -189,6 +189,8 @@ typedef map<pair<handle,fatype>,pair<handle,int> > fa_map;
 
 typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate_t;
 
+typedef enum { SYNCDEL_NONE, SYNCDEL_DELETED, SYNCDEL_INFLIGHT, SYNCDEL_BIN, SYNCDEL_DEBRIS, SYNCDEL_DEBRISDAY } syncdel_t;
+
 typedef vector<LocalNode*> localnode_vector;
 
 typedef map<handle,LocalNode*> handlelocalnode_map;
