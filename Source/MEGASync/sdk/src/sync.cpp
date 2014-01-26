@@ -74,8 +74,11 @@ Sync::~Sync()
 	delete tmpfa;
 
 	// stop all active and pending downloads
-	TreeProcDelSyncGet tdsg;
-	client->proctree(localroot.node,&tdsg);
+    if(localroot.node)
+    {
+        TreeProcDelSyncGet tdsg;
+        client->proctree(localroot.node,&tdsg);
+    }
 
 	client->syncs.erase(sync_it);
 

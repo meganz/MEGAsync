@@ -27,11 +27,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     this->preferences = Preferences::instance();
 	syncsChanged = false;
     excludedNamesChanged = false;
+    proxyOnly = false;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
+
+    ui->gCache->setVisible(false);
     loadSettings();
 }
 
@@ -42,14 +45,21 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
+    this->proxyOnly = proxyOnly;
     loadSettings();
     if(proxyOnly)
     {
         ui->bAccount->setEnabled(false);
+        ui->bAccount->setChecked(false);
         ui->bAdvanced->setEnabled(false);
+        ui->bAdvanced->setChecked(false);
         ui->bSyncs->setEnabled(false);
+        ui->bSyncs->setChecked(false);
         ui->bBandwidth->setEnabled(false);
+        ui->bBandwidth->setChecked(false);
+        ui->bProxies->setChecked(true);
         ui->wStack->setCurrentWidget(ui->pProxies);
+
     }
     else
     {
@@ -349,15 +359,42 @@ void SettingsDialog::loadSettings()
 	}
 
     //Proxies
-    /*ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
+    ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
     ui->rProxyAuto->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_AUTO);
     ui->rProxyManual->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_CUSTOM);
     ui->cProxyType->setCurrentIndex(preferences->proxyProtocol());
     ui->eProxyServer->setText(preferences->proxyServer());
     ui->eProxyPort->setText(QString::number(preferences->proxyPort()));
+
     ui->cProxyRequiresPassword->setChecked(preferences->proxyRequiresAuth());
     ui->eProxyUsername->setText(preferences->getProxyUsername());
-    ui->eProxyPassword->setText(preferences->getProxyPassword());*/
+    ui->eProxyPassword->setText(preferences->getProxyPassword());
+
+    if(ui->rProxyManual->isChecked())
+    {
+        ui->cProxyType->setEnabled(true);
+        ui->eProxyServer->setEnabled(true);
+        ui->eProxyPort->setEnabled(true);
+        ui->cProxyRequiresPassword->setEnabled(true);
+    }
+    else
+    {
+        ui->cProxyType->setEnabled(false);
+        ui->eProxyServer->setEnabled(false);
+        ui->eProxyPort->setEnabled(false);
+        ui->cProxyRequiresPassword->setEnabled(false);
+    }
+
+    if(ui->cProxyRequiresPassword->isChecked())
+    {
+        ui->eProxyUsername->setEnabled(true);
+        ui->eProxyPassword->setEnabled(true);
+    }
+    else
+    {
+        ui->eProxyUsername->setEnabled(false);
+        ui->eProxyPassword->setEnabled(false);
+    }
 
     //Advanced
     ui->lExcludedNames->clear();
@@ -371,133 +408,183 @@ void SettingsDialog::loadSettings()
 
 void SettingsDialog::saveSettings()
 {
-    //General
-    preferences->setShowNotifications(ui->cShowNotifications->isChecked());
-
-    bool updateAutomatically = ui->cAutoUpdate->isChecked();
-    if(updateAutomatically != preferences->updateAutomatically())
+    if(!proxyOnly)
     {
-        if(updateAutomatically) app->startUpdateTask();
-        else app->stopUpdateTask();
-    }
-    preferences->setUpdateAutomatically(updateAutomatically);
+        //General
+        preferences->setShowNotifications(ui->cShowNotifications->isChecked());
 
-    bool startOnStartup = ui->cStartOnStartup->isChecked();
-    Platform::startOnStartup(startOnStartup);
-    preferences->setStartOnStartup(startOnStartup);
-
-    //Language
-    int currentIndex = ui->cLanguage->currentIndex();
-    QString selectedLanguageCode = languageCodes[currentIndex];
-    preferences->setLanguage(selectedLanguageCode);
-    app->changeLanguage(selectedLanguageCode);
-
-    //Account
-    MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
-    if(node && ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")))
-        preferences->setUploadFolder(node->getHandle());
-    delete node;
-
-    //Syncs
-	if(syncsChanged)
-	{
-        //Check for removed folders
-        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        bool updateAutomatically = ui->cAutoUpdate->isChecked();
+        if(updateAutomatically != preferences->updateAutomatically())
         {
-            QString localPath = preferences->getLocalFolder(i);
-            long long megaHandle = preferences->getMegaFolderHandle(i);
+            if(updateAutomatically) app->startUpdateTask();
+            else app->stopUpdateTask();
+        }
+        preferences->setUpdateAutomatically(updateAutomatically);
 
-            int j;
-            for(j=0; j<ui->tSyncs->rowCount(); j++)
+        bool startOnStartup = ui->cStartOnStartup->isChecked();
+        Platform::startOnStartup(startOnStartup);
+        preferences->setStartOnStartup(startOnStartup);
+
+        //Language
+        int currentIndex = ui->cLanguage->currentIndex();
+        QString selectedLanguageCode = languageCodes[currentIndex];
+        preferences->setLanguage(selectedLanguageCode);
+        app->changeLanguage(selectedLanguageCode);
+
+        //Account
+        MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
+        if(node && ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")))
+            preferences->setUploadFolder(node->getHandle());
+        delete node;
+
+        //Syncs
+        if(syncsChanged)
+        {
+            //Check for removed folders
+            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
-                QString newLocalPath = ui->tSyncs->item(j, 0)->text().trimmed();
-                QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
-                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-                if(!n) continue;
+                QString localPath = preferences->getLocalFolder(i);
+                long long megaHandle = preferences->getMegaFolderHandle(i);
 
-                if((n->getHandle() == megaHandle) && !localPath.compare(newLocalPath))
+                int j;
+                for(j=0; j<ui->tSyncs->rowCount(); j++)
                 {
+                    QString newLocalPath = ui->tSyncs->item(j, 0)->text().trimmed();
+                    QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
+                    MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+                    if(!n) continue;
+
+                    if((n->getHandle() == megaHandle) && !localPath.compare(newLocalPath))
+                    {
+                        delete n;
+                        break;
+                    }
                     delete n;
-                    break;
                 }
-                delete n;
+
+                if(j == ui->tSyncs->rowCount())
+                {
+                    LOG(QString::fromAscii("REMOVING SYNC: %1").arg(preferences->getSyncName(i)));
+                    preferences->removeSyncedFolder(i);
+                    megaApi->removeSync(megaHandle);
+                    i--;
+                }
             }
 
-            if(j == ui->tSyncs->rowCount())
+            //Check for new folders
+            for(int i=0; i<ui->tSyncs->rowCount(); i++)
             {
-                LOG(QString::fromAscii("REMOVING SYNC: %1").arg(preferences->getSyncName(i)));
-                preferences->removeSyncedFolder(i);
-                megaApi->removeSync(megaHandle);
-                i--;
+                QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
+                QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
+                QString syncName = syncNames.at(i);
+                MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
+                if(!node) continue;
+                int j;
+                for(j=0; j<preferences->getNumSyncedFolders(); j++)
+                {
+                    QString previousLocalPath = preferences->getLocalFolder(j);
+                    long long previousMegaHandle = preferences->getMegaFolderHandle(j);
+
+                    if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
+                        break;
+                }
+
+                if(j == preferences->getNumSyncedFolders())
+                {
+                    LOG(QString::fromAscii("ADDING SYNC: %1 - %2").arg(localFolderPath).arg(megaFolderPath));
+                    preferences->addSyncedFolder(localFolderPath,
+                                                 megaFolderPath,
+                                                 node->getHandle(),
+                                                 syncName);
+                    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                }
+                delete node;
             }
+
+            updateAddButton();
+            syncsChanged = false;
         }
 
-        //Check for new folders
-		for(int i=0; i<ui->tSyncs->rowCount(); i++)
-		{
-			QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
-			QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
-            QString syncName = syncNames.at(i);
-            MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-            if(!node) continue;
-            int j;
-            for(j=0; j<preferences->getNumSyncedFolders(); j++)
-            {
-                QString previousLocalPath = preferences->getLocalFolder(j);
-                long long previousMegaHandle = preferences->getMegaFolderHandle(j);
+        //Bandwidth
+        if(ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length()==0) preferences->setUploadLimitKB(0);
+        else if(ui->rAutoLimit->isChecked()) preferences->setUploadLimitKB(-1);
+        else preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
 
-                if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
-                    break;
-            }
+        app->setUploadLimit(preferences->uploadLimitKB());
 
-            if(j == preferences->getNumSyncedFolders())
-            {
-                LOG(QString::fromAscii("ADDING SYNC: %1 - %2").arg(localFolderPath).arg(megaFolderPath));
-                preferences->addSyncedFolder(localFolderPath,
-                                             megaFolderPath,
-                                             node->getHandle(),
-                                             syncName);
-                megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
-            }
-            delete node;
-		}
+        //Advanced
+        if(excludedNamesChanged)
+        {
+            QStringList excludedNames;
+            for(int i=0; i<ui->lExcludedNames->count(); i++)
+                excludedNames.append(ui->lExcludedNames->item(i)->text());
+            preferences->setExcludedSyncNames(excludedNames);
 
-        updateAddButton();
-		syncsChanged = false;
-	}
-
-    //Bandwidth
-    if(ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length()==0) preferences->setUploadLimitKB(0);
-    else if(ui->rAutoLimit->isChecked()) preferences->setUploadLimitKB(-1);
-    else preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
-
-    app->setUploadLimit(preferences->uploadLimitKB());
-
-    //Advanced
-    if(excludedNamesChanged)
-    {
-        QStringList excludedNames;
-        for(int i=0; i<ui->lExcludedNames->count(); i++)
-            excludedNames.append(ui->lExcludedNames->item(i)->text());
-        preferences->setExcludedSyncNames(excludedNames);
-
-        QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
-                                                                        "when the application starts again."), QMessageBox::Ok);
-        excludedNamesChanged = false;
+            QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
+                                                                            "when the application starts again."), QMessageBox::Ok);
+            excludedNamesChanged = false;
+        }
     }
 
     //Proxies
-/*  if(ui->rNoProxy->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
-    else if(ui->rProxyAuto->isChecked()) preferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
-    else preferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
+    bool proxyChanged = false;
+    if(ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))
+    {
+        preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
+        proxyChanged = true;
+    }
+    else if(ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))
+    {
+        preferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
+        proxyChanged = true;
+    }
+    else if(ui->rProxyManual->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_CUSTOM))
+    {
+        preferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
+        proxyChanged = true;
+    }
 
-    preferences->setProxyProtocol(ui->cProxyType->currentIndex());
-    preferences->setProxyServer(ui->eProxyServer->text().trimmed());
-    preferences->setProxyPort(ui->eProxyPort->text().toInt());
-    preferences->setProxyRequiresAuth(ui->cProxyRequiresPassword->isChecked());
-    preferences->setProxyUsername(ui->eProxyUsername->text());
-    preferences->setProxyPassword(ui->eProxyPassword->text());
-*/
+    if(preferences->proxyProtocol() != ui->cProxyType->currentIndex())
+    {
+        preferences->setProxyProtocol(ui->cProxyType->currentIndex());
+        proxyChanged = true;
+    }
+
+    if(preferences->proxyServer() != ui->eProxyServer->text().trimmed())
+    {
+        preferences->setProxyServer(ui->eProxyServer->text().trimmed());
+        proxyChanged = true;
+    }
+
+    if(preferences->proxyPort() != ui->eProxyPort->text().toInt())
+    {
+        preferences->setProxyPort(ui->eProxyPort->text().toInt());
+        proxyChanged = true;
+    }
+
+    if(preferences->proxyRequiresAuth() != ui->cProxyRequiresPassword->isChecked())
+    {
+        preferences->setProxyRequiresAuth(ui->cProxyRequiresPassword->isChecked());
+        proxyChanged = true;
+    }
+
+    if(ui->cProxyRequiresPassword->isChecked())
+    {
+        if(preferences->getProxyUsername() != ui->eProxyUsername->text())
+        {
+            preferences->setProxyUsername(ui->eProxyUsername->text());
+            proxyChanged = true;
+        }
+
+        if(preferences->getProxyPassword() != ui->eProxyPassword->text())
+        {
+            preferences->setProxyPassword(ui->eProxyPassword->text());
+            proxyChanged = true;
+        }
+    }
+
+    if(proxyChanged)
+        app->applyProxySettings();
 
     ui->bApply->setEnabled(false);
 }

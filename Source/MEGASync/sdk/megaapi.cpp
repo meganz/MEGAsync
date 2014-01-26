@@ -963,7 +963,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
-    dbAccess = new MegaDbAccess(basePath);
+    dbAccess = NULL; //new MegaDbAccess(basePath);
     client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb");
 
     //Start blocking thread
@@ -2360,7 +2360,7 @@ void MegaApi::fetchnodes_result(error e)
             Node *node = client->nodebyhandle(preferences->getMegaFolderHandle(i));
             QString localFolder = preferences->getLocalFolder(i);
             MegaRequest *syncRequest = new MegaRequest(MegaRequest::TYPE_ADD_SYNC);
-            if(node) syncRequest->setNodeHandle(node->nodehandle);
+            syncRequest->setNodeHandle(preferences->getMegaFolderHandle(i));
             syncRequest->setFile(localFolder.toUtf8().constData());
             client->restag = client->nextreqtag();
             requestMap[client->restag]=syncRequest;
@@ -4247,6 +4247,9 @@ void MegaApi::sendPendingRequests()
                 if(sync->localroot.node->nodehandle == nodehandle)
                 {
                     LOG("DELETING SYNC IN MEGAAPI");
+                    string path;
+                    fsAccess->local2path(&sync->localroot.localname, &path);
+                    request->setFile(path.c_str());
                     client->delsync(sync);
                     client->restag = nextTag;
                     fireOnRequestFinish(this, request, MegaError(API_OK));

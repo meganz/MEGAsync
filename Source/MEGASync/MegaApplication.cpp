@@ -11,6 +11,7 @@
 #include <QDesktopWidget>
 #include <QSharedMemory>
 #include <QFontDatabase>
+#include <QNetworkProxy>
 
 const int MegaApplication::VERSION_CODE = 1000;
 const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.0");
@@ -167,6 +168,10 @@ void MegaApplication::initialize()
 
     //Create GUI elements
     trayIcon = new QSystemTrayIcon(this);
+
+    QString language = preferences->language();
+    changeLanguage(language);
+
     initialMenu = new QMenu();
     changeProxyAction = new QAction(tr("Settings"), this);
     connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
@@ -174,7 +179,6 @@ void MegaApplication::initialize()
     connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
-    trayIcon->setContextMenu(initialMenu);
 
     refreshTimer = new QTimer(this);
     refreshTimer->start(10000);
@@ -183,9 +187,6 @@ void MegaApplication::initialize()
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
     preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
-
-    QString language = preferences->language();
-    changeLanguage(language);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -254,12 +255,14 @@ void MegaApplication::start()
     indexing = false;
 
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+    trayIcon->setContextMenu(initialMenu);
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
-    trayIcon->setContextMenu(NULL);
     trayIcon->show();
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     setupWizard = NULL;
+
+    applyProxySettings();
 
     //Start the initial setup wizard if needed
     if(!preferences->logged())
@@ -273,8 +276,6 @@ void MegaApplication::start()
     }
 	else
 	{
-        applyProxySettings();
-
         //Otherwise, login in the account
         megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
@@ -284,6 +285,9 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {    
+    if(settingsDialog)
+        settingsDialog->setProxyOnly(false);
+
     //Apply the "Start on startup" configuration
     Platform::startOnStartup(preferences->startOnStartup());
 
@@ -440,7 +444,7 @@ void MegaApplication::rebootApplication()
 
 void MegaApplication::exitApplication()
 {
-    if(QMessageBox::question(NULL, tr("MEGAsync"),
+    if(!megaApi->isLoggedIn() || QMessageBox::question(NULL, tr("MEGAsync"),
             tr("Synchronization will stop.\nDeletions that occur while it is not running will not be propagated.\n\nExit anyway?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
@@ -542,18 +546,39 @@ void MegaApplication::stopUpdateTask()
 
 void MegaApplication::applyProxySettings()
 {
+    QNetworkProxy proxy;
     MegaProxySettings proxySettings;
     proxySettings.setProxyType(preferences->proxyType());
     string proxyString = preferences->proxyString().toStdString();
     proxySettings.setProxyURL(&proxyString);
-    if(preferences->proxyRequiresAuth())
-    {
-        string username = preferences->getProxyUsername().toStdString();
-        string password = preferences->getProxyPassword().toStdString();
-        proxySettings.setCredentials(&username, &password);
-    }
-    megaApi->setProxySettings(&proxySettings);
+    string username = preferences->getProxyUsername().toStdString();
+    string password = preferences->getProxyPassword().toStdString();
+    proxySettings.setCredentials(&username, &password);
 
+    if(preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
+    {
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(preferences->proxyServer());
+        proxy.setPort(preferences->proxyPort());
+        if(preferences->proxyRequiresAuth())
+        {
+            proxy.setUser(preferences->getProxyUsername());
+            proxy.setPassword(preferences->getProxyPassword());
+        }
+        megaApi->setProxySettings(&proxySettings);
+    }
+    else if(preferences->proxyType() == Preferences::PROXY_TYPE_AUTO)
+    {
+        megaApi->setProxySettings(&proxySettings);
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(preferences->proxyServer());
+        proxy.setPort(preferences->proxyPort());
+    }
+    else
+    {
+        megaApi->setProxySettings(&proxySettings);
+    }
+    QNetworkProxy::setApplicationProxy(proxy);
 }
 
 void MegaApplication::pauseSync()
@@ -710,17 +735,17 @@ void MegaApplication::onUpdateCompleted()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if(!infoDialog || megaApi->isLoggedIn() != FULLACCOUNT)
-    {
-        if(setupWizard && setupWizard->isVisible())
-            setupWizard->activateWindow();
-        else
-            showInfoMessage(tr("Logging in..."));
-        return;
-    }
-
     if(reason == QSystemTrayIcon::Trigger)
     {
+        if(!infoDialog || megaApi->isLoggedIn() != FULLACCOUNT)
+        {
+            if(setupWizard && setupWizard->isVisible())
+                setupWizard->activateWindow();
+            else
+                showInfoMessage(tr("Logging in..."));
+            return;
+        }
+
         if(!infoDialog->isVisible())
         {
             //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
@@ -747,8 +772,6 @@ void MegaApplication::openSettings()
 {
 	if(settingsDialog)
     {
-        settingsDialog->setProxyOnly(false);
-
         //If the dialog is active
 		if(settingsDialog->isVisible())
 		{
@@ -891,6 +914,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
 	case MegaRequest::TYPE_FETCH_NODES:
 	{
+        cout << "FETCHNODES" << endl;
         //This prevents to handle node requests in the initial setup wizard
         if(preferences->logged())
 		{
@@ -1002,6 +1026,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     {
         if(infoDialog) infoDialog->updateSyncsButton();
         LOG("Sync removed");
+        Platform::syncFolderRemoved(QString::fromUtf8(request->getFile()));
         onSyncStateChanged(megaApi);
         break;
     }
@@ -1167,6 +1192,21 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 	{
         localPath.clear();
         MegaNode *node = nodes->get(i);
+
+        if(node->isRemoved() && (node->getType()==FOLDERNODE))
+        {
+            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+            {
+                if(preferences->getMegaFolderHandle(i) == node->getHandle())
+                {
+                    LOG("Remote sync deletion detected!");
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i));
+                    preferences->removeSyncedFolder(i);
+                    if(infoDialog) infoDialog->updateSyncsButton();
+                    onSyncStateChanged(megaApi);
+                }
+            }
+        }
 
         if(!node->getTag() && !node->isRemoved() && !node->isSyncDeleted())
             externalNodes++;

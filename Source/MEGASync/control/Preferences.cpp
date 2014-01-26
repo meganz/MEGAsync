@@ -631,7 +631,6 @@ void Preferences::removeSyncedFolder(int num)
 {
     mutex.lock();
     assert(logged());
-    Platform::syncFolderRemoved(localFolders[num]);
     syncNames.removeAt(num);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);

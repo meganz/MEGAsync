@@ -137,6 +137,7 @@ void WindowsPlatform::showInFolder(QString pathIn)
 
 void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 {
+    if(shellDispatcherTask) delete shellDispatcherTask;
     shellDispatcherTask = new WinShellDispatcherTask(receiver);
     shellDispatcherTask->start();
 }
@@ -144,13 +145,7 @@ void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 void WindowsPlatform::stopShellDispatcher()
 {
     if(shellDispatcherTask)
-    {
         shellDispatcherTask->exitTask();
-        shellDispatcherTask->quit();
-        shellDispatcherTask->wait();
-        //The task is self destructed when it finishes
-        shellDispatcherTask = NULL;
-    }
 }
 
 void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
@@ -199,6 +194,7 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
     WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinksPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath)
@@ -227,6 +223,7 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath)
 
     WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinksPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
 QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
