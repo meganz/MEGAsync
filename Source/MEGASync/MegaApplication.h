@@ -73,6 +73,7 @@ public:
     void setUploadLimit(int limit);
     void startUpdateTask();
     void stopUpdateTask();
+    void applyProxySettings();
 
 signals:
     void startUpdaterThread();
@@ -81,6 +82,7 @@ public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void start();
     void openSettings();
+    void changeProxy();
     void pauseSync();
     void resumeSync();
 	void importLinks();
@@ -107,6 +109,7 @@ protected:
 	void processUploadQueue(handle nodeHandle);
 
     QSystemTrayIcon *trayIcon;
+    QMenu *initialMenu;
     QMenu *trayMenu;
     QAction *exitAction;
     QAction *settingsAction;
@@ -114,6 +117,8 @@ protected:
     QAction *resumeAction;
 	QAction *importLinksAction;
     QAction *aboutAction;
+    QAction *changeProxyAction;
+    QAction *initialExitAction;
 
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;

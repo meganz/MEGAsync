@@ -36,7 +36,8 @@ win32 {
 SOURCES += $$PWD/src/win32/net.cpp  \
     $$PWD/src/win32/fs.cpp  \
     $$PWD/src/win32/winwaiter.cpp  \
-    $$PWD/win32/megaapiwait.cpp
+    $$PWD/win32/megaapiwait.cpp \
+    $$PWD/win32/megaapiwinhttpio.cpp
 }
 
 unix:!mac {
@@ -88,7 +89,8 @@ win32 {
             $$PWD/include/mega/win32/megasys.h  \
             $$PWD/include/mega/win32/megafs.h  \
             $$PWD/include/mega/win32/megawaiter.h  \
-            $$PWD/win32/megaapiwait.h
+	    $$PWD/win32/megaapiwait.h \
+	    $$PWD/win32/megaapiwinhttpio.h
 }
 
 

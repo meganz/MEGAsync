@@ -66,6 +66,7 @@ public:
     void setProxyUsername(const QString &value);
     QString getProxyPassword();
     void setProxyPassword(const QString &value);
+    QString proxyString();
     long long lastExecutionTime();
     void setLastExecutionTime(long long time);
 

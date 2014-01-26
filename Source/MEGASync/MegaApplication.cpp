@@ -167,6 +167,15 @@ void MegaApplication::initialize()
 
     //Create GUI elements
     trayIcon = new QSystemTrayIcon(this);
+    initialMenu = new QMenu();
+    changeProxyAction = new QAction(tr("Settings"), this);
+    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
+    initialExitAction = new QAction(tr("Exit"), this);
+    connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    initialMenu->addAction(changeProxyAction);
+    initialMenu->addAction(initialExitAction);
+    trayIcon->setContextMenu(initialMenu);
+
     refreshTimer = new QTimer(this);
     refreshTimer->start(10000);
 
@@ -264,6 +273,8 @@ void MegaApplication::start()
     }
 	else
 	{
+        applyProxySettings();
+
         //Otherwise, login in the account
         megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
@@ -529,6 +540,22 @@ void MegaApplication::stopUpdateTask()
         updateThread.quit();
 }
 
+void MegaApplication::applyProxySettings()
+{
+    MegaProxySettings proxySettings;
+    proxySettings.setProxyType(preferences->proxyType());
+    string proxyString = preferences->proxyString().toStdString();
+    proxySettings.setProxyURL(&proxyString);
+    if(preferences->proxyRequiresAuth())
+    {
+        string username = preferences->getProxyUsername().toStdString();
+        string password = preferences->getProxyPassword().toStdString();
+        proxySettings.setCredentials(&username, &password);
+    }
+    megaApi->setProxySettings(&proxySettings);
+
+}
+
 void MegaApplication::pauseSync()
 {
     pauseTransfers(true);
@@ -720,6 +747,8 @@ void MegaApplication::openSettings()
 {
 	if(settingsDialog)
     {
+        settingsDialog->setProxyOnly(false);
+
         //If the dialog is active
 		if(settingsDialog->isVisible())
 		{
@@ -734,7 +763,31 @@ void MegaApplication::openSettings()
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
-	settingsDialog->show();
+    settingsDialog->show();
+}
+
+void MegaApplication::changeProxy()
+{
+    if(settingsDialog)
+    {
+        settingsDialog->setProxyOnly(true);
+
+        //If the dialog is active
+        if(settingsDialog->isVisible())
+        {
+            //and visible -> show it
+            settingsDialog->activateWindow();
+            return;
+        }
+
+        //Otherwise, delete it
+        delete settingsDialog;
+    }
+
+    //Show a new settings dialog
+    settingsDialog = new SettingsDialog(this);
+    settingsDialog->setProxyOnly(true);
+    settingsDialog->show();
 }
 
 //This function creates the tray icon
