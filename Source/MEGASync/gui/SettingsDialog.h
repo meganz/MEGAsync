@@ -18,6 +18,7 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(MegaApplication *app, QWidget *parent = 0);
     ~SettingsDialog();
+    void setProxyOnly(bool proxyOnly);
 
 public slots:
     void stateChanged();

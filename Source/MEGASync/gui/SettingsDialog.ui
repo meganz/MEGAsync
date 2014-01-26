@@ -396,7 +396,7 @@ margin-top: 6px;
    <item row="2" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">

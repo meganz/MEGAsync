@@ -40,6 +40,26 @@ SettingsDialog::~SettingsDialog()
     delete ui;
 }
 
+void SettingsDialog::setProxyOnly(bool proxyOnly)
+{
+    loadSettings();
+    if(proxyOnly)
+    {
+        ui->bAccount->setEnabled(false);
+        ui->bAdvanced->setEnabled(false);
+        ui->bSyncs->setEnabled(false);
+        ui->bBandwidth->setEnabled(false);
+        ui->wStack->setCurrentWidget(ui->pProxies);
+    }
+    else
+    {
+        ui->bAccount->setEnabled(true);
+        ui->bAdvanced->setEnabled(true);
+        ui->bSyncs->setEnabled(true);
+        ui->bBandwidth->setEnabled(true);
+    }
+}
+
 void SettingsDialog::stateChanged()
 {
     ui->bApply->setEnabled(true);

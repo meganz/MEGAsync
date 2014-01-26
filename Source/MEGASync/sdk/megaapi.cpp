@@ -1134,6 +1134,35 @@ void MegaApi::fastConfirmAccount(const char* link, const char *base64pwkey, Mega
     waiter->notify();
 }
 
+void MegaApi::setProxySettings(MegaProxySettings *proxySettings)
+{
+    MegaProxySettings localProxySettings;
+    localProxySettings.setProxyType(proxySettings->getProxyType());
+
+    string url = proxySettings->getProxyURL();
+    string localurl;
+    fsAccess->path2local(&url, &localurl);
+    localurl.append("", 1);
+    localProxySettings.setProxyURL(&localurl);
+
+    if(proxySettings->credentialsNeeded())
+    {
+        string username = proxySettings->getUsername();
+        string localusername;
+        fsAccess->path2local(&username, &localusername);
+        localusername.append("", 1);
+
+        string password = proxySettings->getPassword();
+        string localpassword;
+        fsAccess->path2local(&password, &localpassword);
+        localpassword.append("", 1);
+
+        localProxySettings.setCredentials(&localusername, &localpassword);
+    }
+
+    httpio->setProxy(&localProxySettings);
+}
+
 void MegaApi::loop()
 {
     while(true)

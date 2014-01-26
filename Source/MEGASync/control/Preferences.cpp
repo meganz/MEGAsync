@@ -447,6 +447,26 @@ void Preferences::setProxyPassword(const QString &value)
     mutex.unlock();
 }
 
+QString Preferences::proxyString()
+{
+    mutex.lock();
+    QString proxy;
+    int protocol = proxyProtocol();
+    switch(protocol)
+    {
+        case PROXY_PROTOCOL_HTTP:
+        default:
+            proxy = QString::fromAscii("http://");
+    }
+
+    proxy.append(proxyServer());
+    proxy.append(QChar::fromAscii(':'));
+    proxy.append(QString::number(proxyPort()));
+    mutex.unlock();
+
+    return proxy;
+}
+
 long long Preferences::lastExecutionTime()
 {
     mutex.lock();
