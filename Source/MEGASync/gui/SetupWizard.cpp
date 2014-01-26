@@ -112,10 +112,27 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
             QString email = ui->eLoginEmail->text().toLower().trimmed();
             if(preferences->hasEmail(email))
             {
+                int proxyType = preferences->proxyType();
+                QString proxyServer = preferences->proxyServer();
+                int proxyPort = preferences->proxyPort();
+                int proxyProtocol = preferences->proxyProtocol();
+                bool proxyAuth = preferences->proxyRequiresAuth();
+                QString proxyUsername = preferences->getProxyUsername();
+                QString proxyPassword = preferences->getProxyPassword();
+
                 QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
                 QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
                 preferences->setEmail(email);
                 preferences->setCredentials(emailHash, privatePw);
+
+                preferences->setProxyType(proxyType);
+                preferences->setProxyServer(proxyServer);
+                preferences->setProxyPort(proxyPort);
+                preferences->setProxyProtocol(proxyProtocol);
+                preferences->setProxyRequiresAuth(proxyAuth);
+                preferences->setProxyUsername(proxyUsername);
+                preferences->setProxyPassword(proxyPassword);
+
                 close();
                 return;
             }
@@ -369,6 +386,14 @@ void SetupWizard::on_bCancel_clicked()
         QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
         QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
 
+        int proxyType = preferences->proxyType();
+        QString proxyServer = preferences->proxyServer();
+        int proxyPort = preferences->proxyPort();
+        int proxyProtocol = preferences->proxyProtocol();
+        bool proxyAuth = preferences->proxyRequiresAuth();
+        QString proxyUsername = preferences->getProxyUsername();
+        QString proxyPassword = preferences->getProxyPassword();
+
         preferences->setEmail(email);
         preferences->setCredentials(emailHash, privatePw);
         QString syncName;
@@ -376,6 +401,15 @@ void SetupWizard::on_bCancel_clicked()
         if(selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
         preferences->addSyncedFolder(ui->bFinalLocalFolder->text(), ui->bFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
         delete rootNode;
+
+        preferences->setProxyType(proxyType);
+        preferences->setProxyServer(proxyServer);
+        preferences->setProxyPort(proxyPort);
+        preferences->setProxyProtocol(proxyProtocol);
+        preferences->setProxyRequiresAuth(proxyAuth);
+        preferences->setProxyUsername(proxyUsername);
+        preferences->setProxyPassword(proxyPassword);
+
         this->close();
         return;
     }

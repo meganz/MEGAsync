@@ -32,7 +32,6 @@ void WinShellDispatcherTask::run()
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
     dispatchPipe();
-    delete this;
 }
 
 int WinShellDispatcherTask::dispatchPipe()

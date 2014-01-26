@@ -2,6 +2,7 @@
 #include "UpdateTask.h"
 #include "control/Utilities.h"
 #include <iostream>
+#include <QAuthenticator>
 
 using namespace std;
 
@@ -34,6 +35,7 @@ void UpdateTask::doWork()
     updateFolder = QDir(basePath + UPDATE_FOLDER_NAME);
     m_WebCtrl = new QNetworkAccessManager();
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
+    connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
     int len = strlen(PUBLIC_KEY)/4*3+3;
     string pubks;
@@ -378,4 +380,11 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     }
 
     finalCleanup();
+}
+
+void UpdateTask::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *auth)
+{
+    Preferences *preferences = Preferences::instance();
+    auth->setUser(preferences->getProxyUsername());
+    auth->setPassword(preferences->getProxyPassword());
 }

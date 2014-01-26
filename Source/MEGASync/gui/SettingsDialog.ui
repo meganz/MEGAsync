@@ -396,7 +396,7 @@ margin-top: 6px;
    <item row="2" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>4</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1074,7 +1074,7 @@ padding: 4px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_6">
+        <widget class="QGroupBox" name="gCache">
          <property name="title">
           <string>Cache</string>
          </property>
@@ -1289,6 +1289,11 @@ padding: 4px;</string>
               <height>16777215</height>
              </size>
             </property>
+            <item>
+             <property name="text">
+              <string>HTTP</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="9" column="0">

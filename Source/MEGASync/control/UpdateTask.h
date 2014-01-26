@@ -67,6 +67,7 @@ signals:
 
 private slots:
    void downloadFinished(QNetworkReply* reply);
+   void onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*);
    void tryUpdate();
 
 public slots:

@@ -79,6 +79,7 @@ private:
     bool excludedNamesChanged;
     QStringList syncNames;
     QStringList languageCodes;
+    bool proxyOnly;
 
     void loadSyncSettings();
     void loadSettings();

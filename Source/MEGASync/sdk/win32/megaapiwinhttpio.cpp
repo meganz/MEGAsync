@@ -1,5 +1,8 @@
 #include "megaapiwinhttpio.h"
 
+#include <QString>
+#include "control/Preferences.h"
+
 namespace mega {
 
 MegaProxySettings::MegaProxySettings() { proxyType = AUTO; }
@@ -14,14 +17,6 @@ string MegaProxySettings::getPassword() { return password; }
 
 void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
 {
-    /*MegaProxySettings *proxySettings = new MegaProxySettings();
-    proxySettings->setProxyType(MegaProxySettings::AUTO);
-    wstring wProxyURL = L"http://127.0.0.1:8080";
-    string proxyURL;
-    proxyURL.assign((char *)wProxyURL.data(), wProxyURL.length()*sizeof(wchar_t));
-    proxyURL.append("", 1);
-    proxySettings->setProxyURL(&proxyURL);*/
-
     if(proxySettings->credentialsNeeded())
     {
         proxyUsername = proxySettings->getUsername();
@@ -36,7 +31,6 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
     // create the session handle using the default settings.
     if(proxySettings->getProxyType() == MegaProxySettings::NONE)
     {
-        cout << "NO PROXY" << endl;
         WINHTTP_PROXY_INFO proxyInfo;
         proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
         proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
@@ -45,7 +39,6 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
     }
     else if(proxySettings->getProxyType() == MegaProxySettings::CUSTOM)
     {
-        cout << "MANUAL" << endl;
         WINHTTP_PROXY_INFO proxyInfo;
         proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
         proxyInfo.lpszProxy = (LPWSTR)proxySettings->getProxyURL().data();
@@ -54,14 +47,18 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
     }
     else
     {
-        cout << "AUTO" << endl;
-        WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieProxyConfig;
-        //Liberar memoria
+        WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieProxyConfig = {0};
         if(WinHttpGetIEProxyConfigForCurrentUser(&ieProxyConfig) == TRUE)
         {
             if(ieProxyConfig.lpszProxy)
             {
-                cout << "IEPROXY..." << endl;
+                Preferences *preferences = Preferences::instance();
+                QString ieProxy = QString::fromWCharArray(ieProxyConfig.lpszProxy);
+                QStringList params = ieProxy.split(QChar::fromAscii(':'));
+                preferences->setProxyServer(params[0]);
+                if(params.size()>1)
+                    preferences->setProxyPort(params[1].toInt());
+
                 WINHTTP_PROXY_INFO proxyInfo;
                 proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
                 proxyInfo.lpszProxy = ieProxyConfig.lpszProxy;
@@ -91,10 +88,48 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
 
                     WINHTTP_PROXY_INFO proxyInfo;
                     if(WinHttpGetProxyForUrl(hSession, L"https://g.api.mega.co.nz/", &autoProxyOptions, &proxyInfo))
+                    {
+                        Preferences *preferences = Preferences::instance();
+                        if(proxyInfo.lpszProxy)
+                        {
+                            QString ieProxy = QString::fromWCharArray(proxyInfo.lpszProxy);
+                            QStringList params = ieProxy.split(QChar::fromAscii(':'));
+                            preferences->setProxyServer(params[0]);
+                            if(params.size()>1)
+                                preferences->setProxyPort(params[1].toInt());
+                        }
                         WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
+                    }
+                    else
+                    {
+                        WINHTTP_PROXY_INFO proxyInfo;
+                        proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
+                        proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
+                        proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
+                        WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
+                    }
+                }
+                else
+                {
+                    WINHTTP_PROXY_INFO proxyInfo;
+                    proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
+                    proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
+                    proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
+                    WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
                 }
             }
         }
+        else
+        {
+            WINHTTP_PROXY_INFO proxyInfo;
+            proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
+            proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
+            proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
+            WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
+        }
+        if(ieProxyConfig.lpszProxy) GlobalFree(ieProxyConfig.lpszProxy);
+        if(ieProxyConfig.lpszProxyBypass) GlobalFree(ieProxyConfig.lpszProxyBypass);
+        if(ieProxyConfig.lpszAutoConfigUrl) GlobalFree(ieProxyConfig.lpszAutoConfigUrl);
     }
 }
 
