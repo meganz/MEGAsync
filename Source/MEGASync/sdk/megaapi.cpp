@@ -78,10 +78,6 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 		FIMEMORY* hmem;
 		int w, h;
 
-        QString name = QString::fromWCharArray((const wchar_t *)filename->data());
-        if(QImageReader::imageFormat(name).isEmpty()) return;
-
-
 		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeX((freeimage_filename_char_t*)filename->data());
 
 		if (fif == FIF_UNKNOWN) return;
@@ -154,7 +150,12 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 
 #elif USE_QT
 
+#ifdef WIN32
     QString filePath = QString::fromWCharArray((wchar_t *)filename->data());
+#else
+    QString filePath = QString::fromUtf8(filename->data());
+#endif
+
     QImage image = Utilities::createThumbnail(filePath, size);
     if(image.isNull()) return;
     QByteArray ba;
@@ -2260,16 +2261,14 @@ void MegaApi::syncupdate_remote_move(string *a, string *b)
 void MegaApi::syncupdate_treestate(LocalNode *l)
 {
     LOG("syncupdate_treestate");
-    string localseparator;
-    localseparator.assign((char*)L"\\",sizeof(wchar_t));
     string path;
-    while (l)
-    {
-        path.insert(0,l->localname);
-        if ((l = l->parent)) path.insert(0, localseparator);
-    }
+    l->getlocalpath(&path, true);
+#ifdef WIN32
     path.append("", 1);
     QString localPath = QString::fromWCharArray((const wchar_t *)path.data());
+#else
+    QString localPath = QString::fromUtf8(path.data());
+#endif
     Platform::notifyItemChange(localPath);
 }
 
