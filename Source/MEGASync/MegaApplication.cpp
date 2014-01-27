@@ -438,9 +438,6 @@ void MegaApplication::rebootApplication()
     if(megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads())
         return;
 
-    stopUpdateTask();
-    Platform::stopShellDispatcher();
-
     QString app = MegaApplication::applicationFilePath();
     QStringList args = QStringList();
     args.append(QString::fromAscii("/reboot"));
@@ -454,10 +451,6 @@ void MegaApplication::exitApplication()
             tr("Synchronization will stop.\nDeletions that occur while it is not running will not be propagated.\n\nExit anyway?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
-        stopSyncs();
-        stopUpdateTask();
-        Platform::stopShellDispatcher();
-        trayIcon->hide();
         QApplication::exit();
     }
 }
@@ -480,6 +473,8 @@ void MegaApplication::refreshTrayIcon()
 void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
+    stopSyncs();
+    stopUpdateTask();
     Platform::stopShellDispatcher();
     trayIcon->hide();
     processEvents();
