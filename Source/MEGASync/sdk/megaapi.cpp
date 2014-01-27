@@ -2621,7 +2621,13 @@ void MegaApi::exportnode_result(handle h, handle ph)
 		Base64::btoa((byte*)&ph,MegaClient::NODEHANDLE,node);
 
 		// the key
-		if (n->type == FILENODE) Base64::btoa((const byte*)n->nodekey.data(),FILENODEKEYLENGTH,key);
+        if (n->type == FILENODE)
+        {
+            if(n->nodekey.size()>=FILENODEKEYLENGTH)
+                Base64::btoa((const byte*)n->nodekey.data(),FILENODEKEYLENGTH,key);
+            else
+                key[0]=0;
+        }
 		else if (n->sharekey) Base64::btoa(n->sharekey->key,FOLDERNODEKEYLENGTH,key);
 		else
 		{
@@ -4408,6 +4414,7 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 			t->nodekey.assign((char*)buf,FOLDERNODEKEYLENGTH);
 		}
 
+        //TODO: Check if nodekey is empty (this code isn't used in the current release)
 		key.setkey((const byte*)t->nodekey.data(),n->type);
 
 		n->attrs.getjson(&attrstring);
