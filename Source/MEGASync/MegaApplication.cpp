@@ -553,6 +553,7 @@ void MegaApplication::stopUpdateTask()
 void MegaApplication::applyProxySettings()
 {
     QNetworkProxy proxy;
+
     MegaProxySettings proxySettings;
     proxySettings.setProxyType(preferences->proxyType());
     string proxyString = preferences->proxyString().toStdString();
@@ -576,9 +577,12 @@ void MegaApplication::applyProxySettings()
     else if(preferences->proxyType() == Preferences::PROXY_TYPE_AUTO)
     {
         megaApi->setProxySettings(&proxySettings);
-        proxy.setType(QNetworkProxy::HttpProxy);
-        proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(preferences->proxyPort());
+        if(preferences->proxyServer().size())
+        {
+            proxy.setType(QNetworkProxy::HttpProxy);
+            proxy.setHostName(preferences->proxyServer());
+            proxy.setPort(preferences->proxyPort());
+        }
     }
     else
     {
