@@ -339,7 +339,7 @@ void Node::setattr()
 // otherwise, the file's fingerprint is derived from the file's mtime/size/key
 void Node::setfingerprint()
 {
-	if (type == FILENODE)
+	if (type == FILENODE && nodekey.size() >= sizeof crc)
 	{
 		if (fingerprint_it != client->fingerprints.end()) client->fingerprints.erase(fingerprint_it);
 
