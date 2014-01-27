@@ -13,8 +13,8 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
-const int MegaApplication::VERSION_CODE = 1000;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.0");
+const int MegaApplication::VERSION_CODE = 1001;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.1");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
