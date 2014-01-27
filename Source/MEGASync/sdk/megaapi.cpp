@@ -1997,8 +1997,17 @@ void MegaApi::transfer_added(Transfer *t)
 void MegaApi::transfer_removed(Transfer *t)
 {
     updateStatics();
-    if (t->type == GET) pendingDownloads--;
-    else pendingUploads --;
+    if (t->type == GET)
+    {
+        if(pendingDownloads > 0)
+            pendingDownloads--;
+    }
+    else
+    {
+        if(pendingUploads > 0)
+            pendingUploads --;
+    }
+
     if(!pendingUploads && !pendingUploads) fireOnSyncStateChanged(this);
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
@@ -2127,8 +2136,16 @@ void MegaApi::transfer_complete(Transfer* tr)
 {
     LOG("transfer_complete");
     updateStatics();
-    if (tr->type == GET) pendingDownloads--;
-    else pendingUploads --;
+    if (tr->type == GET)
+    {
+        if(pendingDownloads > 0)
+            pendingDownloads--;
+    }
+    else
+    {
+        if(pendingUploads > 0)
+            pendingUploads --;
+    }
 
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
@@ -4303,7 +4320,7 @@ void MegaApi::updateStatics()
     while(it != end)
     {
         Transfer *transfer = it->second;
-        if(transfer->failcount<2 && transfer->size) downloadCount++;
+        if(transfer->failcount<2) downloadCount++;
         it++;
     }
 
@@ -4312,7 +4329,7 @@ void MegaApi::updateStatics()
     while(it != end)
     {
         Transfer *transfer = it->second;
-        if(transfer->failcount<2 && transfer->size) uploadCount++;
+        if(transfer->failcount<2) uploadCount++;
         it++;
     }
     MUTEX_UNLOCK(sdkMutex);
