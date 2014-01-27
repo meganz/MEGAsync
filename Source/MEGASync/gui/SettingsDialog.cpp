@@ -584,7 +584,10 @@ void SettingsDialog::saveSettings()
     }
 
     if(proxyChanged)
+    {
         app->applyProxySettings();
+        megaApi->retryPendingConnections();
+    }
 
     ui->bApply->setEnabled(false);
 }
