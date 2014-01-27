@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 
             string s;
             s.resize((SIGNATURE_LENGTH*4)/3+4);
-            Base64::btoa((byte *)signature,SIGNATURE_LENGTH, (char *)s.data());
+            s.resize(Base64::btoa((byte *)signature,SIGNATURE_LENGTH, (char *)s.data()));
             signatures.push_back(s);
             delete signature;
 
