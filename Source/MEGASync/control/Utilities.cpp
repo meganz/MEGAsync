@@ -147,6 +147,11 @@ void Utilities::initializeExtensions()
 
 void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
 {
+#ifdef WIN32
+    if(path.startsWith(QString::fromAscii("\\\\?\\")))
+        path = path.mid(4);
+#endif
+
     QFileInfo baseDir(path);
     if(!baseDir.exists() || !baseDir.isDir()) return;
     if((((*numFolders) > folderLimit)) ||
@@ -244,9 +249,10 @@ QPixmap Utilities::getExtensionPixmapMedium(QString fileName)
 
 QImage Utilities::createThumbnail(QString imagePath, int size)
 {
+#ifdef WIN32
     if(imagePath.startsWith(QString::fromAscii("\\\\?\\")))
         imagePath = imagePath.mid(4);
-
+#endif
     if(QImageReader::imageFormat(imagePath).isEmpty()) return QImage();
 
     QImage image(imagePath);
@@ -313,6 +319,11 @@ void Utilities::log(std::ostream *message)
 
 bool Utilities::verifySyncedFolderLimits(QString path)
 {
+#ifdef WIN32
+    if(path.startsWith(QString::fromAscii("\\\\?\\")))
+        path = path.mid(4);
+#endif
+
     long numFiles = 0;
     long numFolders = 0;
     QFileInfo info(path);

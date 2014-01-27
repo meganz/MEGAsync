@@ -404,7 +404,11 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         case L'F':
         {
             if(lstrlen(pipe->chRequest)<3) break;
-            QFileInfo file(QString::fromWCharArray(content));
+            QString filePath = QString::fromWCharArray(content);
+            if(filePath.startsWith(QString::fromAscii("\\\\?\\")))
+                filePath = filePath.mid(4);
+
+            QFileInfo file(filePath);
             if(file.exists())
             {
                 LOG("Adding file to upload queue");
@@ -415,7 +419,11 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         case L'L':
         {
             if(lstrlen(pipe->chRequest)<3) break;
-            QFileInfo file(QString::fromWCharArray(content));
+            QString filePath = QString::fromWCharArray(content);
+            if(filePath.startsWith(QString::fromAscii("\\\\?\\")))
+                filePath = filePath.mid(4);
+
+            QFileInfo file(filePath);
             if(file.exists())
             {
                 LOG("Adding file to export queue");
@@ -428,6 +436,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             if(lstrlen(pipe->chRequest)<3) break;
             treestate_t state;
             QString temp = QString::fromWCharArray(content);
+            if(temp.startsWith(QString::fromAscii("\\\\?\\")))
+                temp = temp.mid(4);
+
             if((temp == lastPath) && (numHits < 3))
             {
                 state = lastState;

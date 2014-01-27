@@ -153,6 +153,9 @@ void WindowsPlatform::stopShellDispatcher()
 
 void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
+    if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+        syncPath = syncPath.mid(4);
+
     QDir syncDir(syncPath);
     if(!syncDir.exists()) return;
 
@@ -202,6 +205,9 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath)
 {
+    if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+        syncPath = syncPath.mid(4);
+
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
     fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;

@@ -1104,7 +1104,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if((e->getErrorCode() == MegaError::API_OK) && (!transfer->isSyncTransfer()))
         {
             LOG(QString::fromAscii("Putting: %1 TAG: %2").arg(QString::fromUtf8(transfer->getPath())).arg(transfer->getTag()));
-            uploadLocalPaths[transfer->getTag()]=QString::fromUtf8(transfer->getPath());
+            QString localPath = QString::fromUtf8(transfer->getPath());
+            #ifdef WIN32
+                if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+            #endif
+            uploadLocalPaths[transfer->getTag()]=localPath;
         }
         else LOG("Sync Transfer");
 	}
@@ -1230,7 +1234,12 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 //If the node has been uploaded by a synced folder
                 //The SDK provides its local path
                 LOG("Sync upload");
+            #ifdef WIN32
                 localPath = QString::fromWCharArray((const wchar_t *)path.data());
+                if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+            #else
+                localPath = QString::fromUtf8(path.data());
+            #endif
                 LOG(QString::fromAscii("Sync path: %1").arg(localPath));
             }
             else if(uploadLocalPaths.contains(node->getTag()))
@@ -1245,9 +1254,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
             //If we have the local path, notify the state change in the local file
             if(localPath.size())
             {
-                #ifdef WIN32
-                    if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
-                #endif
                 if(infoDialog) infoDialog->addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
             }
         }
