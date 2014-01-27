@@ -244,6 +244,9 @@ QPixmap Utilities::getExtensionPixmapMedium(QString fileName)
 
 QImage Utilities::createThumbnail(QString imagePath, int size)
 {
+    if(imagePath.startsWith(QString::fromAscii("\\\\?\\")))
+        imagePath = imagePath.mid(4);
+
     if(QImageReader::imageFormat(imagePath).isEmpty()) return QImage();
 
     QImage image(imagePath);
