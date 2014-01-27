@@ -963,7 +963,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
-    dbAccess = NULL; //new MegaDbAccess(basePath);
+    dbAccess = new MegaDbAccess(basePath);
     client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb");
 
     //Start blocking thread
