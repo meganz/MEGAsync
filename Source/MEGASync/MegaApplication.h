@@ -74,6 +74,7 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
+    void showUpdatedMessage();
 
 signals:
     void startUpdaterThread();
@@ -152,6 +153,7 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
+    bool updated;
 };
 
 #endif // MEGAAPPLICATION_H

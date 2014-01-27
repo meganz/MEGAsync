@@ -121,6 +121,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksAction = NULL;
     trayMenu = NULL;
     waiting = false;
+    updated = false;
 }
 
 MegaApplication::~MegaApplication()
@@ -262,6 +263,11 @@ void MegaApplication::start()
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     setupWizard = NULL;
 
+    if(updated)
+    {
+        showInfoMessage(tr("MEGAsync has been updated"));
+        updated = false;
+    }
     applyProxySettings();
 
     //Start the initial setup wizard if needed
@@ -579,6 +585,11 @@ void MegaApplication::applyProxySettings()
         megaApi->setProxySettings(&proxySettings);
     }
     QNetworkProxy::setApplicationProxy(proxy);
+}
+
+void MegaApplication::showUpdatedMessage()
+{
+    updated = true;
 }
 
 void MegaApplication::pauseSync()
@@ -914,7 +925,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
 	case MegaRequest::TYPE_FETCH_NODES:
 	{
-        cout << "FETCHNODES" << endl;
         //This prevents to handle node requests in the initial setup wizard
         if(preferences->logged())
 		{
@@ -1257,7 +1267,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi* api)
 {
-    //megaApi->fetchNodes();
+    megaApi->fetchNodes();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *api)

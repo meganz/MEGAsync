@@ -137,7 +137,7 @@ void WindowsPlatform::showInFolder(QString pathIn)
 
 void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    if(shellDispatcherTask) delete shellDispatcherTask;
+    if(shellDispatcherTask) return;
     shellDispatcherTask = new WinShellDispatcherTask(receiver);
     shellDispatcherTask->start();
 }
@@ -145,7 +145,10 @@ void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 void WindowsPlatform::stopShellDispatcher()
 {
     if(shellDispatcherTask)
+    {
         shellDispatcherTask->exitTask();
+        shellDispatcherTask = NULL;
+    }
 }
 
 void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
