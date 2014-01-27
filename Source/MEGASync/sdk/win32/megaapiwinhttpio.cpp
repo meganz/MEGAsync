@@ -47,12 +47,13 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
     }
     else
     {
+        Preferences *preferences = Preferences::instance();
+        preferences->setProxyServer(QString());
         WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieProxyConfig = {0};
         if(WinHttpGetIEProxyConfigForCurrentUser(&ieProxyConfig) == TRUE)
         {
             if(ieProxyConfig.lpszProxy)
             {
-                Preferences *preferences = Preferences::instance();
                 QString ieProxy = QString::fromWCharArray(ieProxyConfig.lpszProxy);
                 QStringList params = ieProxy.split(QChar::fromAscii(':'));
                 preferences->setProxyServer(params[0]);
