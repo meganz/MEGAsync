@@ -3536,7 +3536,7 @@ void MegaClient::purgenodesusersabortsc()
 
 	for (sync_list::iterator it = syncs.begin(); it != syncs.end(); )
 	{
-		(*it)->state = SYNC_CANCELED;
+		(*it)->changestate(SYNC_CANCELED);
 		delete *(it++);
 	}
 	syncs.clear();
@@ -4363,7 +4363,7 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
 // we cannot delete the Sync object directly, as it might have pending operations on it
 void MegaClient::delsync(Sync* sync)
 {
-	sync->state = SYNC_CANCELED;
+	sync->changestate(SYNC_CANCELED);
 	
 	syncactivity = true;
 }
