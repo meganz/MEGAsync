@@ -760,10 +760,11 @@ void Preferences::login(QString account)
     readFolders();
     readRecentFiles();
     loadExcludedSyncNames();
-    if(settings->value(lastVersionKey).toInt() != MegaApplication::VERSION_CODE)
+    int lastVersion = settings->value(lastVersionKey).toInt();
+    if(lastVersion != MegaApplication::VERSION_CODE)
     {
-        //QMessageBox::information(NULL, QString::fromAscii("Updated!"), QString::fromAscii("MEGAsync has been updated to version ")
-        //                                                  + MegaApplication::VERSION_STRING);
+        if((lastVersion != 0) && (lastVersion < MegaApplication::VERSION_CODE))
+            ((MegaApplication *)qApp)->showUpdatedMessage();
         settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
     }
     settings->sync();
