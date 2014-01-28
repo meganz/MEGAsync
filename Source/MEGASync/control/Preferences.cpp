@@ -324,7 +324,6 @@ void Preferences::setUploadLimitKB(int value)
 int Preferences::proxyType()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(proxyTypeKey, defaultProxyType).toInt();
     mutex.unlock();
     return value;
@@ -333,7 +332,6 @@ int Preferences::proxyType()
 void Preferences::setProxyType(int value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyTypeKey, value);
     settings->sync();
     mutex.unlock();
@@ -342,7 +340,6 @@ void Preferences::setProxyType(int value)
 int Preferences::proxyProtocol()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(proxyProtocolKey, defaultProxyProtocol).toInt();
     mutex.unlock();
     return value;
@@ -351,7 +348,6 @@ int Preferences::proxyProtocol()
 void Preferences::setProxyProtocol(int value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyProtocolKey, value);
     settings->sync();
     mutex.unlock();
@@ -360,7 +356,6 @@ void Preferences::setProxyProtocol(int value)
 QString Preferences::proxyServer()
 {
     mutex.lock();
-    assert(logged());
     QString value = settings->value(proxyServerKey, defaultProxyServer).toString();
     mutex.unlock();
     return value;
@@ -369,7 +364,6 @@ QString Preferences::proxyServer()
 void Preferences::setProxyServer(const QString &value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyServerKey, value);
     settings->sync();
     mutex.unlock();
@@ -378,7 +372,6 @@ void Preferences::setProxyServer(const QString &value)
 int Preferences::proxyPort()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(proxyPortKey, defaultProxyPort).toInt();
     mutex.unlock();
     return value;
@@ -387,7 +380,6 @@ int Preferences::proxyPort()
 void Preferences::setProxyPort(int value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyPortKey, value);
     settings->sync();
     mutex.unlock();
@@ -396,7 +388,6 @@ void Preferences::setProxyPort(int value)
 bool Preferences::proxyRequiresAuth()
 {
     mutex.lock();
-    assert(logged());
     bool value = settings->value(proxyRequiresAuthKey, defaultProxyRequiresAuth).toBool();
     mutex.unlock();
     return value;
@@ -405,7 +396,6 @@ bool Preferences::proxyRequiresAuth()
 void Preferences::setProxyRequiresAuth(bool value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyRequiresAuthKey, value);
     settings->sync();
     mutex.unlock();
@@ -414,7 +404,6 @@ void Preferences::setProxyRequiresAuth(bool value)
 QString Preferences::getProxyUsername()
 {
     mutex.lock();
-    assert(logged());
     QString value = settings->value(proxyUsernameKey, defaultProxyUsername).toString();
     mutex.unlock();
     return value;
@@ -423,7 +412,6 @@ QString Preferences::getProxyUsername()
 void Preferences::setProxyUsername(const QString &value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyUsernameKey, value);
     settings->sync();
     mutex.unlock();
@@ -432,7 +420,6 @@ void Preferences::setProxyUsername(const QString &value)
 QString Preferences::getProxyPassword()
 {
     mutex.lock();
-    assert(logged());
     QString value = settings->value(proxyPasswordKey, defaultProxyPassword).toString();
     mutex.unlock();
     return value;
@@ -441,7 +428,6 @@ QString Preferences::getProxyPassword()
 void Preferences::setProxyPassword(const QString &value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(proxyPasswordKey, value);
     settings->sync();
     mutex.unlock();
