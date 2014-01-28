@@ -13,7 +13,7 @@
 using namespace mega;
 using namespace std;
 
-const char APP_VERSION[] = "1001";
+const char APP_VERSION[] = "1002";
 const char SERVER_BASE_URL[] = "http://g.static.mega.co.nz/upd/wsync/";
 
 const char *TARGET_PATHS[] = {
