@@ -277,6 +277,8 @@ void MegaApplication::start()
 		setupWizard->exec();
         if(!preferences->logged())
             ::exit(0);
+        delete setupWizard;
+        setupWizard = NULL;
         loggedIn();
         startSyncs();
     }
@@ -467,6 +469,8 @@ void MegaApplication::aboutDialog()
 
 void MegaApplication::refreshTrayIcon()
 {
+    if(megaApi) megaApi->updateStatics();
+    if(infoDialog) infoDialog->updateTransfers();
     if(trayIcon) trayIcon->show();
 }
 
@@ -747,12 +751,15 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
-        if(!infoDialog || megaApi->isLoggedIn() != FULLACCOUNT)
+        if(!infoDialog)
         {
-            if(setupWizard && setupWizard->isVisible())
+            if(setupWizard)
+            {
+                setupWizard->setVisible(true);
                 setupWizard->activateWindow();
-            else
-                showInfoMessage(tr("Logging in..."));
+            }
+            else showInfoMessage(tr("Logging in..."));
+
             return;
         }
 
@@ -763,9 +770,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
 
             //Show the dialog
-            megaApi->updateStatics();
-            infoDialog->updateTransfers();
-            infoDialog->updateDialog();
             infoDialog->showMinimized();
             infoDialog->setWindowState(Qt::WindowActive);
             infoDialog->showNormal();
@@ -1203,6 +1207,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
     QString localPath;
     for(int i=0; i<nodes->size(); i++)
 	{
+        LOG(QString::fromAscii("onNodesUpdate ") + QString::number(nodes->size()));
         localPath.clear();
         MegaNode *node = nodes->get(i);
 
@@ -1228,7 +1233,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         {
             //Get the associated local node
             LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->getName())).arg(node->getTag()));
-            string path = megaApi->getLocalPath(node);
+            string path = node->getLocalPath();
             if(path.size())
             {
                 //If the node has been uploaded by a synced folder
@@ -1262,8 +1267,6 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
     //Update the information dialog
     if(infoDialog)
     {
-        megaApi->updateStatics();
-        infoDialog->updateTransfers();
         infoDialog->updateDialog();
     }
 
