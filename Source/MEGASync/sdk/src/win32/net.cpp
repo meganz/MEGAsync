@@ -25,9 +25,6 @@ namespace mega {
 
 WinHttpIO::WinHttpIO()
 {
-    // create the session handle using the default settings.
-    hSession = WinHttpOpen(L"MEGAsync/Win32 1.0.2",WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,WINHTTP_NO_PROXY_NAME,WINHTTP_NO_PROXY_BYPASS,WINHTTP_FLAG_ASYNC);
-
 	InitializeCriticalSection(&csHTTP);
 	EnterCriticalSection(&csHTTP);
 
@@ -40,6 +37,17 @@ WinHttpIO::~WinHttpIO()
 {
 	WinHttpCloseHandle(hSession);
 	LeaveCriticalSection(&csHTTP);
+}
+
+void WinHttpIO::setuseragent(string* useragent)
+{
+	string wuseragent;
+
+	wuseragent.resize((useragent->size()+1)*sizeof(wchar_t));
+	wuseragent.resize(sizeof(wchar_t)*(MultiByteToWideChar(CP_UTF8,0,useragent->c_str(),-1,(wchar_t*)wuseragent.data(),wuseragent.size()/sizeof(wchar_t)+1)-1));
+
+    // create the session handle using the default settings.
+    hSession = WinHttpOpen((LPCWSTR)wuseragent.data(),WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,WINHTTP_NO_PROXY_NAME,WINHTTP_NO_PROXY_BYPASS,WINHTTP_FLAG_ASYNC);
 }
 
 // trigger wakeup

@@ -59,6 +59,8 @@ public:
 	void leavecs();
 
 	void httpevent();
+	
+	void setuseragent(string*);
 
 	WinHttpIO();
 	~WinHttpIO();

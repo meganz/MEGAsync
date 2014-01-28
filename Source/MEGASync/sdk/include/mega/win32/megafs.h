@@ -71,7 +71,9 @@ public:
 
 	static bool istransient(DWORD);
 	bool istransientorexists(DWORD);
-	
+
+	void osversion(string*);
+
 	WinFileSystemAccess();
 	~WinFileSystemAccess();
 };

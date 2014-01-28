@@ -79,6 +79,8 @@ public:
 	void addevents(Waiter*, int);
 	int checkevents(Waiter*);
 
+	void osversion(string*);
+	
 	PosixFileSystemAccess();
 	~PosixFileSystemAccess();
 };

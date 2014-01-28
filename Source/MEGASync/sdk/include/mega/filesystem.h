@@ -198,7 +198,10 @@ struct FileSystemAccess : public EventTrigger
 
 	// set whenever an operation fails because the target already exists
 	bool target_exists;
-	
+
+	// append local operating system version information to string
+	virtual void osversion(string*) { }
+
 	virtual ~FileSystemAccess() { }
 };
 

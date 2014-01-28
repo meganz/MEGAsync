@@ -435,6 +435,16 @@ size_t WinFileSystemAccess::lastpartlocal(string* name)
 	return 0;
 }
 
+void WinFileSystemAccess::osversion(string* u)
+{
+	char buf[128];
+	DWORD dwVersion = GetVersion();
+
+	sprintf(buf,"Windows %d.%d",(int)(LOBYTE(LOWORD(dwVersion))),(int)(HIBYTE(LOWORD(dwVersion))));
+
+	u->append(buf);
+}
+
 // set DirNotify's root LocalNode
 void WinDirNotify::addnotify(LocalNode* l, string*)
 {

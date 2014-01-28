@@ -240,6 +240,9 @@ private:
 
 	// next internal upload handle
 	handle nextuh;
+	
+	// User-Agent header for HTTP requests
+	string useragent;
 
 	// maximum number of concurrent transfers
 	static const unsigned MAXTRANSFERS = 8;
@@ -574,7 +577,7 @@ public:
 	// convert hex digit to number
 	static int hexval(char);
 
-	MegaClient(MegaApp*, Waiter*, HttpIO*, FileSystemAccess*, DbAccess*, const char*);
+	MegaClient(MegaApp*, Waiter*, HttpIO*, FileSystemAccess*, DbAccess*, const char*, const char*);
 	~MegaClient();
 };
 
