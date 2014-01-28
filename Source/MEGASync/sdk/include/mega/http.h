@@ -48,6 +48,9 @@ struct HttpIO : public EventTrigger
 	void inetstatus(bool, dstime);
 	bool inetisback();
 
+	// set useragent (must be called exactly once)
+	virtual void setuseragent(string*) = 0;
+
 	HttpIO();
 	virtual ~HttpIO() { }
 };

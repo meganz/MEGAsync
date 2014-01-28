@@ -271,6 +271,8 @@ Node* MegaClient::childnodebyname(Node* p, const char* name)
 
 void MegaClient::init()
 {
+	warned = false;
+
 	noinetds = 0;
 
 	if (syncscanstate)
@@ -284,6 +286,8 @@ void MegaClient::init()
 	pendingcs = NULL;
 	pendingsc = NULL;
 
+	curfa = newfa.end();
+
 	btcs.reset();
 	btsc.reset();
 	btpfa.reset();
@@ -291,6 +295,7 @@ void MegaClient::init()
 	me = UNDEF;
 
 	syncadding = 0;
+	syncactivity = false;
 	syncadded = false;
 	syncdebrisadding = false;
 	syncscanfailed = false;
@@ -306,9 +311,10 @@ void MegaClient::init()
 	putmbpscap = 0;
 	
 	scnotifyurl.clear();
+	*scsn = 0;
 }
 
-MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k)
+MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, DbAccess* d, const char* k, const char* u)
 {
 	sctable = NULL;
 	syncscanstate = false;
@@ -323,8 +329,7 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 
 	a->client = this;
 
-	*scsn = 0;
-	scsn[sizeof scsn-1] = 0;
+	userid = 0;
 
 	connections[PUT] = 3;
 	connections[GET] = 4;
@@ -337,21 +342,25 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 	// initialize random API request sequence ID (to guard against replaying older requests)
 	for (i = sizeof reqid; i--; ) reqid[i] = 'a'+PrnGen::genuint32(26);
 
-	warned = false;
-
-	userid = 0;
-
 	r = 0;
 
-	curfa = newfa.end();
-
 	nextuh = 0;
-
 	currsyncid = 0;
-	syncactivity = false;
 	reqtag = 0;
 
+	scsn[sizeof scsn-1] = 0;
+
 	snprintf(appkey,sizeof appkey,"&ak=%s",k);
+
+	// initialize useragent
+	useragent = u;
+
+	useragent.append(" (");	
+	fsaccess->osversion(&useragent);
+
+	useragent.append(") MegaClient/" TOSTRING(MEGA_MAJOR_VERSION) "." TOSTRING(MEGA_MINOR_VERSION) "." TOSTRING(MEGA_MICRO_VERSION));
+	
+	h->setuseragent(&useragent);
 }
 
 MegaClient::~MegaClient()

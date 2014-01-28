@@ -29,6 +29,8 @@ namespace mega {
 
 class CurlHttpIO : public HttpIO
 {
+	string* useragent;
+
 protected:
 	CURLM* curlm;
 	CURLSH* curlsh;
@@ -48,6 +50,8 @@ public:
 
 	void addevents(Waiter*, int);
 
+	void setuseragent(string*);
+	
 	CurlHttpIO();
 	~CurlHttpIO();
 };

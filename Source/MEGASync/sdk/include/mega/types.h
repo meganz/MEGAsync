@@ -76,6 +76,9 @@ struct Waiter;
 #define EOO 0
 #define THUMBNAIL120X120 0
 
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
 // HttpReq states
 typedef enum { REQ_READY, REQ_PREPARED, REQ_INFLIGHT, REQ_SUCCESS, REQ_FAILURE, REQ_DONE } reqstatus_t;
 

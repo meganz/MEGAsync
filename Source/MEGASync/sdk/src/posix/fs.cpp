@@ -20,6 +20,7 @@
  */
 
 #include "mega.h"
+#include <sys/utsname.h>
 
 namespace mega {
 
@@ -333,6 +334,20 @@ size_t PosixFileSystemAccess::lastpartlocal(string* localname)
 	if ((ptr = strrchr(ptr,'/'))) return ptr-localname->data();
 
 	return 0;
+}
+
+void PosixFileSystemAccess::osversion(string* u)
+{
+	utsname uts;
+	
+	if (!uname(&uts))
+	{
+		u->append(uts.sysname);
+		u->append(" ");
+		u->append(uts.release);
+		u->append(" ");
+		u->append(uts.machine);
+	}
 }
 
 PosixDirNotify::PosixDirNotify(string* localbasepath, string* ignore) : DirNotify(localbasepath,ignore)
