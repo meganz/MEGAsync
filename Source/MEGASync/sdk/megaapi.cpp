@@ -976,7 +976,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
     dbAccess = new MegaDbAccess(basePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.2");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2533,9 +2533,13 @@ void MegaApi::clearing()
 
 void MegaApi::notify_retry(dstime dsdelta)
 {
-	cout << "API request failed, retrying in " << dsdelta*100 << " ms..." << endl;
-    waitingRequest = true;
-    fireOnSyncStateChanged(this);
+    cout << "notify_retry " << dsdelta*100 << " ms..." << endl;
+    bool previousFlag = waitingRequest;
+    if(!dsdelta) waitingRequest = false;
+    else if(dsdelta > 10) waitingRequest = true;
+
+    if(previousFlag != waitingRequest)
+        fireOnSyncStateChanged(this);
 
     /*
 	 * MegaRequest *request = requestMap[client->restag];
@@ -3133,7 +3137,6 @@ void MegaApi::fireOnRequestStart(MegaApi* api, MegaRequest *request)
 
 void MegaApi::fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError e)
 {    
-    waitingRequest = false;
 	/*  Renew an expired SID. Deactivated. It needs SDK changes
 	//If expired Session ID
 	if((e.getErrorCode()==MegaError::API_ESID) && (loginRequest) &&
