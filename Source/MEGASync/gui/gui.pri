@@ -14,7 +14,8 @@ SOURCES += gui/SettingsDialog.cpp \
     gui/UploadToMegaDialog.cpp \
     gui/PasteMegaLinksDialog.cpp \
     gui/ImportMegaLinksDialog.cpp \
-    gui/ImportListWidgetItem.cpp
+    gui/ImportListWidgetItem.cpp \
+    gui/CrashReportDialog.cpp
 
 HEADERS  += gui/SettingsDialog.h \
     gui/ActiveTransfer.h \
@@ -29,7 +30,8 @@ HEADERS  += gui/SettingsDialog.h \
     gui/UploadToMegaDialog.h \
     gui/PasteMegaLinksDialog.h \
     gui/ImportMegaLinksDialog.h \
-    gui/ImportListWidgetItem.h
+    gui/ImportListWidgetItem.h \
+    gui/CrashReportDialog.h
 
 
 FORMS    += gui/SettingsDialog.ui \
@@ -45,7 +47,8 @@ FORMS    += gui/SettingsDialog.ui \
     gui/UploadToMegaDialog.ui \
     gui/PasteMegaLinksDialog.ui \
     gui/ImportMegaLinksDialog.ui \
-    gui/ImportListWidgetItem.ui
+    gui/ImportListWidgetItem.ui \
+    gui/CrashReportDialog.ui
 
 RESOURCES += gui/Resources.qrc
 
