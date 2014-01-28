@@ -469,8 +469,11 @@ void MegaApplication::aboutDialog()
 
 void MegaApplication::refreshTrayIcon()
 {
-    if(megaApi) megaApi->updateStatics();
-    if(infoDialog) infoDialog->updateTransfers();
+    if(megaApi)
+    {
+        megaApi->updateStatics();
+        onSyncStateChanged(megaApi);
+    }
     if(trayIcon) trayIcon->show();
 }
 
