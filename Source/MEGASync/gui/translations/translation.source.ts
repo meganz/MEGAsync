@@ -240,6 +240,29 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>Installer</name>
+    <message>
+        <source>Choose Users</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Choose for which users you want to install $(^NameDA).</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Install for anyone using this computer</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Install just for me</source>
+        <translation>XXXXX</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
