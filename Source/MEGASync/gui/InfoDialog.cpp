@@ -84,6 +84,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
             }
         }
     }
+    updateRecentFiles();
     updateSyncsButton();
 
     //Create the overlay widget with a semi-transparent background
