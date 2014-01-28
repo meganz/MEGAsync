@@ -154,6 +154,7 @@ class MegaNode
         int getTag();
         bool isRemoved();
         bool isSyncDeleted();
+        string getLocalPath();
 
     private:
         MegaNode(Node *node);
@@ -166,6 +167,7 @@ class MegaNode
         handle nodehandle;
         string nodekey;
         string attrstring;
+        string localPath;
 
         int tag;
         bool removed;
