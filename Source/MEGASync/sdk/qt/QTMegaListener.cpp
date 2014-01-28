@@ -138,12 +138,7 @@ void QTMegaListener::QTonUsersUpdate(MegaApi *api, UserList *users)
 void QTMegaListener::QTonNodesUpdate(MegaApi *api, NodeList *nodes)
 {
 	if(listener) listener->onNodesUpdate(api, nodes);
-    if(nodes)
-    {
-        for(int i=0; i<nodes->size(); i++)
-            delete nodes->get(i);
-        delete nodes;
-    }
+    if(nodes) delete nodes;
 }
 
 void QTMegaListener::QTonReloadNeeded(MegaApi *api)
