@@ -36,10 +36,6 @@
         <translation>[$1585]</translation>
     </message>
     <message>
-        <source>Local folder too large (this beta is limited to %1 folders or %2 files.  Please select another folder.</source>
-        <translation>[$1586]</translation>
-    </message>
-    <message>
         <source>Sync name</source>
         <translation>[$1587]</translation>
     </message>
@@ -49,12 +45,21 @@ Please enter a different name to identify this synced folder:</source>
         <translation>[$1588] [$1589]</translation>
     </message>
     <message>
-	<source>OK</source>
-	<translation>[$81]</translation>
+        <source>OK</source>
+        <translation>[$81]</translation>
     </message>
     <message>
-	<source>Cancel</source>
-	<translation>[$82]</translation>
+        <source>Cancel</source>
+        <translation>[$82]</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>[$1578]</translation>
+    </message>
+    <message>
+        <source>Local folder too large (this version is limited to %1 folders or %2 files.
+Please, select another folder.</source>
+        <translation>[$1586]</translation>
     </message>
 </context>
 <context>
@@ -114,17 +119,21 @@ Please enter a different name to identify this synced folder:</source>
         <source>Not found</source>
         <translation>[$1601]</translation>
     </message>
-     <message>
-            <source>You are about to import this file to a synced folder.
-    If you enable downloading, the file will be duplicated on your computer.
-    Are you sure?</source>
-            <translation>[$1814] [$1815]</translation>
-        </message>
-        <message>
-            <source>You are about to import these files to a synced folder.
-    If you enable downloading, the files will be duplicated on your computer.
-    Are you sure?</source>
-            <translation>[$1816] [$1815]</translation>
+    <message>
+        <source>Warning</source>
+        <translation>[$1680]</translation>
+    </message>
+    <message>
+        <source>You are about to import this file to a synced folder.
+If you enable downloading, the file will be duplicated on your computer.
+Are you sure?</source>
+        <translation>[$1814] [$1815]</translation>
+    </message>
+    <message>
+        <source>You are about to import these files to a synced folder.
+If you enable downloading, the files will be duplicated on your computer.
+Are you sure?</source>
+        <translation>[$1816] [$1815]</translation>
     </message>
 </context>
 <context>
@@ -226,19 +235,19 @@ Please enter a different name to identify this synced folder:</source>
         <translation>[$1625] </translation>
     </message>
     <message>
-	<source>MEGAsync is waiting</source>
-	<translation>[$1818]</translation>
+        <source>MEGAsync is waiting</source>
+        <translation>[$1818]</translation>
     </message>
 </context>
 <context>
     <name>MegaApplication</name>
     <message>
-        <source>MEGAsync BETA</source>
+        <source>MEGAsync</source>
         <translation>[$1626]</translation>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -264,8 +273,8 @@ because the local folder doesn&apos;t exist</source>
         <translation>[$1632]</translation>
     </message>
     <message>
-        <source>Error: Invalid destination folder. [$1634]</source>
-        <translation>[$1633] </translation>
+        <source>Error: Invalid destination folder. The upload has been cancelled</source>
+        <translation>XXXXX</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -274,10 +283,6 @@ because the local folder doesn&apos;t exist</source>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation>[$1636]</translation>
-    </message>
-    <message>
-        <source>MEGAsync</source>
-        <translation>[$1626]</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -358,12 +363,12 @@ Exit anyway?</source>
         <translation>[$1655]</translation>
     </message>
     <message>
-	<source>MEGAsync has been updated</source>
-	<translation>[$1819]</translation>
+        <source>MEGAsync has been updated</source>
+        <translation>[$1819]</translation>
     </message>
     <message>
-	<source>Waiting</source>
-	<translation>Waiting</translation>
+        <source>Waiting</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
@@ -476,10 +481,7 @@ Exit anyway?</source>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>La carpeta de destino está sincronizada y ya tienes un archivo  
-con el mismo nombre dentro de ella (%1).
-Si continúas la subida, el archivo previo se sobreescribirá
-¿Estás seguro?</translation>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
@@ -501,7 +503,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <translation>[$1684]</translation>
     </message>
     <message>
-	<source>OK</source>
+        <source>OK</source>
         <translation>[$1685]</translation>
     </message>
     <message>
@@ -520,7 +522,7 @@ Si continúas la subida, el archivo previo se sobreescribirá
         <source>Error</source>
         <translation>[$1578]</translation>
     </message>
-      <message>
+    <message>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translation>[$1678] [$1679]</translation>
@@ -565,6 +567,25 @@ Are you sure you want to sync it?</source>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translation>[$1696]</translation>
+    </message>
+</context>
+<context>
+    <name>QDialogButtonBox</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation>&amp;[$78]</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation>&amp;[$79]</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;[$81]</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;[$82]</translation>
     </message>
 </context>
 <context>
@@ -638,7 +659,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>General</source>
-        <translation>[$1712]</translation>
+        <translation type="obsolete">[$1712]</translation>
     </message>
     <message>
         <source>Account</source>
@@ -661,7 +682,7 @@ Are you sure you want to sync it?</source>
         <translation>[$1717]</translation>
     </message>
     <message>
-	<source>OK</source>
+        <source>OK</source>
         <translation>[$1685]</translation>
     </message>
     <message>
@@ -867,14 +888,29 @@ Are you sure you want to sync it?</source>
         <translation>[$1578]</translation>
     </message>
     <message>
-	<source>Transfers</source>
-	<translation>[$1346]</translation>
+        <source>Transfers</source>
+        <translation>[$1346]</translation>
     </message>
     <message>
-	<source>The new excluded file names will be taken into account
+        <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-	<translation>The new excluded file names will be taken into account
-when the application starts again.</translation>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Cache</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Current cache size: %1</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation>HTTP</translation>
     </message>
 </context>
 <context>
@@ -993,7 +1029,7 @@ when the application starts again.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>[$1578]</translation>
     </message>
     <message>
         <source>User already exists</source>
@@ -1030,10 +1066,6 @@ when the application starts again.</translation>
     <message>
         <source>Please, enter your password</source>
         <translation>[$1791]</translation>
-    </message>
-    <message>
-        <source>[$1627]...</source>
-        <translation>Accediendo a la cuenta...</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
@@ -1074,17 +1106,21 @@ Are you sure you want to sync your entire Cloud Drive?</source>
         <translation>[$1800]</translation>
     </message>
     <message>
-        <source>Please select a MEGA folder</source>
+        <source>Please, select a MEGA folder</source>
         <translation>[$1801]</translation>
     </message>
     <message>
         <source>Local folder too large (this beta is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation>La carpeta local contiene demasiados archivos o carpetas (esta versión está limitada a %1 carpetas o %2 archivos).</translation>
+        <translation>[$1586]</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translation>[$1802]</translation>
+    </message>
+    <message>
+        <source>Logging in...</source>
+        <translation>[$1627]...</translation>
     </message>
 </context>
 <context>
@@ -1157,12 +1193,12 @@ Please, select another folder.</source>
         <translation>MEGAsync Uploads</translation>
     </message>
     <message>
-	<source>OK</source>
-	<translation>[$81]</translation>
+        <source>OK</source>
+        <translation>[$81]</translation>
     </message>
     <message>
-	<source>Cancel</source>
-	<translation>[$82]</translation>
+        <source>Cancel</source>
+        <translation>[$82]</translation>
     </message>
 </context>
 <context>
@@ -1170,25 +1206,6 @@ Please, select another folder.</source>
     <message>
         <source>MEGA synced folder</source>
         <translation>[$1813]</translation>
-    </message>
-</context>
-<context>
-    <name>QDialogButtonBox</name>
-    <message>
-        <source>&amp;Yes</source>
-        <translation>&amp;[$78]</translation>
-    </message>
-    <message>
-        <source>&amp;No</source>
-        <translation>&amp;[$79]</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;[$81]</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;[$82]</translation>
     </message>
 </context>
 </TS>
