@@ -289,6 +289,7 @@ MegaNode::MegaNode(MegaNode *node)
     this->removed = node->isRemoved();
     this->syncdeleted = node->isSyncDeleted();
     this->tag = node->getTag();
+    this->localPath = node->getLocalPath();
 }
 
 MegaNode::MegaNode(Node *node)
@@ -304,6 +305,11 @@ MegaNode::MegaNode(Node *node)
     this->removed = node->removed;
     this->syncdeleted = node->syncdeleted;
     this->tag = node->tag;
+    if(node->localnode)
+    {
+        node->localnode->getlocalpath(&localPath, true);
+        localPath.append("", 1);
+    }
 }
 
 MegaNode::~MegaNode()
@@ -340,6 +346,11 @@ bool MegaNode::isRemoved()
 bool MegaNode::isSyncDeleted()
 {
     return syncdeleted;
+}
+
+string MegaNode::getLocalPath()
+{
+    return localPath;
 }
 
 MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
@@ -2207,7 +2218,7 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 
 void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
 {
-
+    LOG("syncupdate_local_file_addition");
 }
 
 void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
@@ -2263,6 +2274,9 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     LOG("syncupdate_treestate");
     string path;
     l->getlocalpath(&path, true);
+
+    MUTEX_UNLOCK(sdkMutex);
+
 #ifdef WIN32
     path.append("", 1);
     QString localPath = QString::fromWCharArray((const wchar_t *)path.data());
@@ -2270,15 +2284,19 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     QString localPath = QString::fromUtf8(path.data());
 #endif
     Platform::notifyItemChange(localPath);
+
+    MUTEX_LOCK(sdkMutex);
 }
 
 bool MegaApi::sync_syncable(Node *node)
 {
+    LOG("sync_syncable1");
     return is_syncable(node->displayname());
 }
 
 bool MegaApi::sync_syncable(const char *name, string *, string *)
 {
+    LOG("sync_syncable2");
     return is_syncable(name);
 }
 
