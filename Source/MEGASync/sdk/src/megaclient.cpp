@@ -505,7 +505,7 @@ void MegaClient::exec()
 						break;
 
 					case REQ_SUCCESS:
-						if (pendingcs->in != TOSTRING(API_EAGAIN))
+						if (pendingcs->in != "-3")
 						{
 							if (*pendingcs->in.c_str() == '[')
 							{
