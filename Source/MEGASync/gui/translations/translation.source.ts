@@ -63,6 +63,33 @@ Please, select another folder.</source>
     </message>
 </context>
 <context>
+    <name>CrashReportDialog</name>
+    <message>
+        <source>Dialog</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>MEGAsync has detected a problem. These are the details:</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>You can help us to improve MEGAsync sending this error report. It doesn&apos;t contain any personal information. If you want tu give us more details, please write them below:</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Send report</source>
+        <translation>XXXXX</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
