@@ -46,7 +46,7 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
 	transfer = ctransfer;
 	transfer->slot = this;
 
-	connections = transfer->client->connections[transfer->type];
+	connections = transfer->size > 131072 ? transfer->client->connections[transfer->type] : 1;
 
 	reqs = new HttpReqXfer*[connections]();
 
