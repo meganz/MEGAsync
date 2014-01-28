@@ -272,6 +272,7 @@ Node* MegaClient::childnodebyname(Node* p, const char* name)
 void MegaClient::init()
 {
 	warned = false;
+	csretrying = false;
 
 	noinetds = 0;
 
@@ -504,10 +505,16 @@ void MegaClient::exec()
 						break;
 
 					case REQ_SUCCESS:
-						if (pendingcs->in != "-3")
+						if (pendingcs->in != TOSTRING(API_EAGAIN))
 						{
 							if (*pendingcs->in.c_str() == '[')
 							{
+								if (csretrying)
+								{
+									app->notify_retry(0);
+									csretrying = false;
+								}
+							
 								// request succeeded, process result array
 								json.begin(pendingcs->in.c_str());
 								reqs[r^1].procresult(this);
@@ -538,6 +545,7 @@ void MegaClient::exec()
 
 						btcs.backoff(ds);
 						app->notify_retry(btcs.retryin(ds));
+						csretrying = true;
 
 					default:;
 				}
