@@ -73,6 +73,12 @@ int main(int argc, char *argv[])
     app.initialize();
     app.start();
     return app.exec();
+
+    QT_TRANSLATE_NOOP("Installer", "Choose Users");
+    QT_TRANSLATE_NOOP("Installer", "Choose for which users you want to install $(^NameDA).");
+    QT_TRANSLATE_NOOP("Installer", "Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)");
+    QT_TRANSLATE_NOOP("Installer", "Install for anyone using this computer");
+    QT_TRANSLATE_NOOP("Installer", "Install just for me");
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
