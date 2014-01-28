@@ -82,6 +82,8 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		}
 		case MegaRequest::TYPE_MKDIR:
 		{
+           ui->bNext->setEnabled(true);
+           ui->bBack->setEnabled(true);
 		   if(error->getErrorCode() == MegaError::API_OK)
 		   {
                MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
@@ -336,6 +338,8 @@ void SetupWizard::on_bNext_clicked()
             MegaNode *rootNode = megaApi->getRootNode();
             megaApi->createFolder("MEGAsync", rootNode, delegateListener);
             delete rootNode;
+            ui->bNext->setEnabled(false);
+            ui->bBack->setEnabled(false);
         }
         else
         {

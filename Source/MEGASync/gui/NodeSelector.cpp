@@ -51,6 +51,7 @@ long long NodeSelector::getSelectedFolderHandle()
 
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
+    ui->bNewFolder->setEnabled(true);
 	if(e->getErrorCode() == MegaError::API_OK)
 	{
         MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
@@ -120,6 +121,7 @@ void NodeSelector::on_bNewFolder_clicked()
         {
             ui->tMegaFolders->setEnabled(false);
 			megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
+            ui->bNewFolder->setEnabled(false);
         }
         else
         {
