@@ -1110,7 +1110,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
         <translation>[$1801]</translation>
     </message>
     <message>
-        <source>Local folder too large (this beta is limited to %1 folders or %2 files.
+        <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
         <translation>[$1586]</translation>
     </message>
