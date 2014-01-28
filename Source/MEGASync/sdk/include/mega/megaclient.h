@@ -289,6 +289,9 @@ private:
 	// last successful interaction with the Internet
 	dstime noinetds;
 
+	// was the app notified of a retrying CS request?
+	bool csretrying;
+	
 public:
 	// application callbacks
 	struct MegaApp* app;
