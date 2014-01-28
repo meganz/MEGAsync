@@ -1049,9 +1049,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     default:
         break;
     }
-
-    if(waiting)
-        onSyncStateChanged(megaApi);
 }
 
 //Called when a transfer is about to start
