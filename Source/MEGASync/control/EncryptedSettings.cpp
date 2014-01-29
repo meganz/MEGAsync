@@ -26,6 +26,11 @@ void EncryptedSettings::beginGroup(const QString &prefix)
     QSettings::beginGroup(hash(prefix));
 }
 
+void EncryptedSettings::beginGroup(int numGroup)
+{
+     QSettings::beginGroup(QSettings::childGroups().at(numGroup));
+}
+
 void EncryptedSettings::endGroup()
 {
     QSettings::endGroup();

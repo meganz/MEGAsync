@@ -205,6 +205,8 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath)
 {
+    if(!syncPath.size()) return;
+
     if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
         syncPath = syncPath.mid(4);
 

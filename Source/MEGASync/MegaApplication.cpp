@@ -46,6 +46,30 @@ int main(int argc, char *argv[])
             #endif
         }
     }
+    else if((argc == 2) && !strcmp("/uninstall", argv[1]))
+    {
+        Preferences *preferences = Preferences::instance();
+        if(preferences->logged())
+            preferences->unlink();
+
+        for(int i=0; i<preferences->getNumUsers(); i++)
+        {
+            preferences->enterUser(i);
+            for(int j=0; j<preferences->getNumSyncedFolders(); j++)
+                Platform::syncFolderRemoved(preferences->getLocalFolder(j));
+            preferences->leaveUser();
+        }
+
+#if QT_VERSION < 0x050000
+    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#else
+    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+#endif
+        QDir dataDir(dataPath);
+        Utilities::removeRecursively(dataDir);
+
+        return 0;
+    }
 
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
