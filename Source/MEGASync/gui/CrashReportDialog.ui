@@ -30,7 +30,7 @@
    <item>
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>You can help us to improve MEGAsync sending this error report. It doesn't contain any personal information. If you want tu give us more details, please write them below:</string>
+      <string>You can help us to improve MEGAsync by sending this error report. It doesn't contain any personal information. If you want to give us more details, please write them below:</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
