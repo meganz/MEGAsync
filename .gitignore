@@ -5,6 +5,7 @@ MegaSyncSetup*.exe
 Release_x32
 Release_x64
 MEGAsync
+MEGAupdater
 
 # Compiled Object files
 *.slo
