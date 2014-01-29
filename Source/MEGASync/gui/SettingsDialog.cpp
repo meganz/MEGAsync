@@ -527,6 +527,9 @@ void SettingsDialog::saveSettings()
     }
 
     //Proxies
+    QT_TR_NOOP("Error");
+    QT_TR_NOOP("Your proxy settings are invalid or the proxy doesn't respond");
+
     bool proxyChanged = false;
     if(ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))
     {
