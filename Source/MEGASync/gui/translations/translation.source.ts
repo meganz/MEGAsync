@@ -73,7 +73,7 @@ Please, select another folder.</source>
         <translation>[$1865]</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn't contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translation>[$1866]</translation>
     </message>
     <message>
@@ -965,6 +965,10 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translation>[$1879]</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
