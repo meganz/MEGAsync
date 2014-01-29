@@ -962,6 +962,10 @@ when the application starts again.</source>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
+    <message>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <translation>XXXXX</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
