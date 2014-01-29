@@ -176,6 +176,8 @@ void MegaApplication::initialize()
     //Create GUI elements
     trayIcon = new QSystemTrayIcon(this);
     connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     QString language = preferences->language();
     changeLanguage(language);
@@ -266,10 +268,6 @@ void MegaApplication::start()
     trayIcon->show();
     if(!preferences->lastExecutionTime())
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
-
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-    setupWizard = NULL;
 
     if(updated)
     {
@@ -785,12 +783,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             infoDialog->activateWindow();
             infoDialog->setFocus();
         }
-        else infoDialog->hide();
+        else if(!infoDialog->hasFocus())
+            infoDialog->hide();
     }
 }
 
 void MegaApplication::onMessageClicked()
 {
+    LOG("onMessageClicked");
     trayIconActivated(QSystemTrayIcon::Trigger);
 }
 
