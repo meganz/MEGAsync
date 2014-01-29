@@ -504,9 +504,16 @@ UAC::RunElevated
 !insertmacro MUI_UNGETLANGUAGE
 FunctionEnd
 
+Function un.UninstallSyncs
+  ExecDos::exec "$INSTDIR\MEGAsync.exe /uninstall"
+FunctionEnd
+
 Section Uninstall
   ExecDos::exec /DETAILED "taskkill /f /IM MEGASync.exe"
   Sleep 1000
+  ${UAC.CallFunctionAsUser} un.UninstallSyncs
+  Sleep 1000
+
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"

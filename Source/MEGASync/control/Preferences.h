@@ -100,6 +100,10 @@ public:
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
 
+    int getNumUsers();
+    void enterUser(int i);
+    void leaveUser();
+
     void unlink();
 
     enum {

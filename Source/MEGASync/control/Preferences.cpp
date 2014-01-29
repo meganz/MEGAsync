@@ -537,6 +537,11 @@ QString Preferences::getLocalFolder(int num)
 {
     mutex.lock();
     assert(logged() && localFolders.size()>num);
+    if(num >= localFolders.size())
+    {
+        mutex.unlock();
+        return QString();
+    }
     QString value = QDir::toNativeSeparators(localFolders.at(num));
     mutex.unlock();
     return value;
@@ -603,7 +608,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long 
     megaFolderHandles.append(megaFolderHandle);
     writeFolders();
     mutex.unlock();
-    Platform::syncFolderAdded(localFolder, megaFolder);
+    Platform::syncFolderAdded(localFolder, syncName);
 }
 
 void Preferences::removeSyncedFolder(int num)
@@ -707,6 +712,45 @@ void Preferences::setExcludedSyncNames(QStringList names)
     else
         settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
     settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::getNumUsers()
+{
+    mutex.lock();
+    assert(!logged());
+    int value = settings->numChildGroups();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::enterUser(int i)
+{
+    mutex.lock();
+    assert(!logged());
+    assert(i<settings->numChildGroups());
+    if(i<settings->numChildGroups())
+        settings->beginGroup(i);
+    readFolders();
+    readRecentFiles();
+    loadExcludedSyncNames();
+    mutex.unlock();
+}
+
+void Preferences::leaveUser()
+{
+    mutex.lock();
+    assert(logged());
+    settings->endGroup();
+
+    syncNames.clear();
+    localFolders.clear();
+    megaFolders.clear();
+    megaFolderHandles.clear();
+    recentFileNames.clear();
+    recentFileHandles.clear();
+    recentLocalPaths.clear();
+    recentFileTime.clear();
     mutex.unlock();
 }
 
