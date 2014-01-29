@@ -4,3 +4,33 @@ vcredist_x64.exe
 MegaSyncSetup*.exe
 Release_x32
 Release_x64
+MEGAsync
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.lo
+*.pyc
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.so.1*
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Generated files
+Makefile
+*.swp
