@@ -13,8 +13,8 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
-const int MegaApplication::VERSION_CODE = 1002;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.2");
+const int MegaApplication::VERSION_CODE = 1003;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.3");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -764,6 +764,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
             QRect screenGeometry = QApplication::desktop()->availableGeometry();
             infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+            infoDialog->updateDialog();
 
             //Show the dialog
             infoDialog->showMinimized();
@@ -1276,6 +1277,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *api)
     if(!infoDialog) return;
 
     infoDialog->updateTransfers();
+    infoDialog->updateDialog();
     indexing = megaApi->isIndexing();
     waiting = megaApi->isWaiting();
     updateTrayIcon();
