@@ -8,8 +8,8 @@
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
-const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 10000;
-const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 500;
+const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 80000;
+const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 15000;
 
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
@@ -433,18 +433,10 @@ void Preferences::setProxyPassword(const QString &value)
     mutex.unlock();
 }
 
-QString Preferences::proxyString()
+QString Preferences::proxyHostAndPort()
 {
     mutex.lock();
     QString proxy;
-    int protocol = proxyProtocol();
-    switch(protocol)
-    {
-        case PROXY_PROTOCOL_HTTP:
-        default:
-            proxy = QString::fromAscii("http://");
-    }
-
     proxy.append(proxyServer());
     proxy.append(QChar::fromAscii(':'));
     proxy.append(QString::number(proxyPort()));

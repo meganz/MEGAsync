@@ -62,7 +62,7 @@ Please, select another folder.</source>
         <translation type="obsolete">[$1586]</translation>
     </message>
     <message>
-        <source>You are trying to select an extremely large folder.
+        <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>XXXXX</translation>
@@ -1195,7 +1195,7 @@ Please, select another folder.</source>
         <translation>[$1627]...</translation>
     </message>
     <message>
-        <source>You are trying to select an extremely large folder.
+        <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>XXXXX</translation>

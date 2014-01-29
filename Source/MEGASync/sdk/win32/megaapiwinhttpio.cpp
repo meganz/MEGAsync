@@ -2,6 +2,7 @@
 
 #include <QString>
 #include "control/Preferences.h"
+#include "control/Utilities.h"
 
 namespace mega {
 
@@ -17,7 +18,8 @@ string MegaProxySettings::getPassword() { return password; }
 
 void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
 {
-    if(proxySettings->credentialsNeeded())
+    if((proxySettings->getProxyType() == MegaProxySettings::CUSTOM) &&
+        (proxySettings->credentialsNeeded()))
     {
         proxyUsername = proxySettings->getUsername();
         proxyPassword = proxySettings->getPassword();
@@ -31,6 +33,7 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
     // create the session handle using the default settings.
     if(proxySettings->getProxyType() == MegaProxySettings::NONE)
     {
+        LOG("No Proxy");
         WINHTTP_PROXY_INFO proxyInfo;
         proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
         proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
@@ -39,14 +42,19 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
     }
     else if(proxySettings->getProxyType() == MegaProxySettings::CUSTOM)
     {
+        LOG("Custom Proxy");
+        string proxyURL = proxySettings->getProxyURL();
+        LOG(QString::fromWCharArray((LPWSTR)proxyURL.data()));
+
         WINHTTP_PROXY_INFO proxyInfo;
         proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
-        proxyInfo.lpszProxy = (LPWSTR)proxySettings->getProxyURL().data();
+        proxyInfo.lpszProxy = (LPWSTR)proxyURL.data();
         proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
         WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
     }
     else
     {
+        LOG("Auto Proxy");
         Preferences *preferences = Preferences::instance();
         preferences->setProxyServer(QString());
         WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieProxyConfig = {0};
@@ -59,6 +67,8 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
                 preferences->setProxyServer(params[0]);
                 if(params.size()>1)
                     preferences->setProxyPort(params[1].toInt());
+
+                LOG(QString::fromWCharArray(ieProxyConfig.lpszProxy));
 
                 WINHTTP_PROXY_INFO proxyInfo;
                 proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
@@ -73,12 +83,17 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
                     WINHTTP_AUTOPROXY_OPTIONS autoProxyOptions;
                     if(ieProxyConfig.lpszAutoConfigUrl)
                     {
+                        LOG("Auto-config Proxy");
+                        LOG(QString::fromWCharArray(ieProxyConfig.lpszAutoConfigUrl));
+
                         autoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
                         autoProxyOptions.lpszAutoConfigUrl = ieProxyConfig.lpszAutoConfigUrl;
                         autoProxyOptions.dwAutoDetectFlags = 0;
                     }
                     else
                     {
+                        LOG("Auto detect");
+
                         autoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
                         autoProxyOptions.lpszAutoConfigUrl = NULL;
                         autoProxyOptions.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DHCP | WINHTTP_AUTO_DETECT_TYPE_DNS_A;
@@ -103,6 +118,8 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
                     }
                     else
                     {
+                        LOG("No Proxy found for URL");
+
                         WINHTTP_PROXY_INFO proxyInfo;
                         proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
                         proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
@@ -112,6 +129,8 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
                 }
                 else
                 {
+                    LOG("No valid Proxy found in IE settings");
+
                     WINHTTP_PROXY_INFO proxyInfo;
                     proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
                     proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
@@ -122,6 +141,8 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
         }
         else
         {
+            LOG("No Proxy found. No IE proxy config found");
+
             WINHTTP_PROXY_INFO proxyInfo;
             proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
             proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;

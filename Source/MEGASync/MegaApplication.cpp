@@ -408,17 +408,13 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
     {
         if(notUploaded.size()==1)
         {            
-            showInfoMessage(tr("The folder (%1) wasn't uploaded "
-                               "because it's too large (this beta is limited to %2 folders or %3 files.")
-                .arg(notUploaded[0]).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
-                .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
+            showInfoMessage(tr("The folder (%1) wasn't uploaded because it's extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.")
+                .arg(notUploaded[0]));
         }
         else
         {
-            showInfoMessage(tr("%1 folders weren't uploaded "
-                 "because they are too large (this beta is limited to %2 folders or %3 files.")
-                .arg(notUploaded.size()).arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
-                .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER));
+            showInfoMessage(tr("%1 folders weren't uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.")
+                .arg(notUploaded.size()));
         }
     }
 }
@@ -546,19 +542,25 @@ void MegaApplication::applyProxySettings()
 
     MegaProxySettings proxySettings;
     proxySettings.setProxyType(preferences->proxyType());
-    string proxyString = preferences->proxyString().toStdString();
+    string proxyString = preferences->proxyHostAndPort().toStdString();
     proxySettings.setProxyURL(&proxyString);
-    string username = preferences->getProxyUsername().toStdString();
-    string password = preferences->getProxyPassword().toStdString();
-    proxySettings.setCredentials(&username, &password);
 
     if(preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
     {
+        LOG("Custom proxy QT");
+        LOG(preferences->proxyServer());
+        LOG(QString::number(preferences->proxyPort()));
+
         proxy.setType(QNetworkProxy::HttpProxy);
         proxy.setHostName(preferences->proxyServer());
         proxy.setPort(preferences->proxyPort());
         if(preferences->proxyRequiresAuth())
         {
+            LOG("Auth proxy QT");
+            string username = preferences->getProxyUsername().toStdString();
+            string password = preferences->getProxyPassword().toStdString();
+            proxySettings.setCredentials(&username, &password);
+
             proxy.setUser(preferences->getProxyUsername());
             proxy.setPassword(preferences->getProxyPassword());
         }
@@ -566,16 +568,30 @@ void MegaApplication::applyProxySettings()
     }
     else if(preferences->proxyType() == Preferences::PROXY_TYPE_AUTO)
     {
+        LOG("Auto proxy QT");
+
         megaApi->setProxySettings(&proxySettings);
         if(preferences->proxyServer().size())
         {
+            LOG(preferences->proxyServer());
+            LOG(QString::number(preferences->proxyPort()));
+
             proxy.setType(QNetworkProxy::HttpProxy);
             proxy.setHostName(preferences->proxyServer());
             proxy.setPort(preferences->proxyPort());
         }
+        else
+        {
+            LOG("No proxy found QT");
+            proxy.setType(QNetworkProxy::NoProxy);
+        }
+
     }
     else
     {
+        LOG("No proxy QT");
+
+        proxy.setType(QNetworkProxy::NoProxy);
         megaApi->setProxySettings(&proxySettings);
     }
     QNetworkProxy::setApplicationProxy(proxy);

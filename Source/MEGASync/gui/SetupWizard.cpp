@@ -326,9 +326,7 @@ void SetupWizard::on_bNext_clicked()
         QString localFolderPath = ui->eLocalFolder->text();
         if(!Utilities::verifySyncedFolderLimits(localFolderPath))
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Local folder too large (this version is limited to %1 folders or %2 files.\n"
-                 "Please, select another folder.").arg(Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)
-                 .arg(Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER), QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
