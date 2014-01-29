@@ -192,8 +192,6 @@ void MegaApplication::initialize()
 
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
-
-    preferences->setLastExecutionTime(QDateTime::currentMSecsSinceEpoch());
 }
 
 QString MegaApplication::applicationFilePath()
@@ -265,6 +263,9 @@ void MegaApplication::start()
     trayIcon->setContextMenu(initialMenu);
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
+    if(!preferences->lastExecutionTime())
+        Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
+
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     setupWizard = NULL;
@@ -320,13 +321,6 @@ void MegaApplication::loggedIn()
 
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
-
-    //Try to keep the tray icon always active
-    if(!Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName()))
-        LOG("Error enabling trayicon");
-    else
-        LOG("OK enabling trayicon");
-
     Platform::startShellDispatcher(this);
 
     //Start the HTTP server
