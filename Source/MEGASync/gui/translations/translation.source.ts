@@ -59,7 +59,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation>[$1586]</translation>
+        <translation type="obsolete">[$1586]</translation>
+    </message>
+    <message>
+        <source>You are trying to select an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
@@ -328,11 +334,11 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>[$1635]</translation>
+        <translation type="obsolete">[$1635]</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation>[$1636]</translation>
+        <translation type="obsolete">[$1636]</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -419,6 +425,14 @@ Exit anyway?</source>
     <message>
         <source>Waiting</source>
         <translation>[$1329]</translation>
+    </message>
+    <message>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
@@ -1170,7 +1184,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation>[$1586]</translation>
+        <translation type="obsolete">[$1586]</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1179,6 +1193,12 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translation>[$1627]...</translation>
+    </message>
+    <message>
+        <source>You are trying to select an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
