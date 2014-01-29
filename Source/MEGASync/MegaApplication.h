@@ -81,6 +81,7 @@ signals:
 
 public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+    void onMessageClicked();
     void start();
     void openSettings();
     void changeProxy();
