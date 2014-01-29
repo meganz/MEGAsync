@@ -354,19 +354,6 @@ void MegaApplication::startSyncs()
             continue;
         }
 
-        MegaNode *parentNode = megaApi->getParentNode(node);
-        if(parentNode->getHandle() == rubbishNode->getHandle())
-        {
-            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                "because the remote folder is in the rubbish bin")
-                             .arg(preferences->getSyncName(i)));
-            preferences->removeSyncedFolder(i);
-            i--;
-            delete parentNode;
-            continue;
-        }
-        delete parentNode;
-
         QString localFolder = preferences->getLocalFolder(i);
         if(!QFileInfo(localFolder).isDir())
         {
