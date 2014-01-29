@@ -65,7 +65,7 @@ Please, select another folder.</source>
 <context>
     <name>CrashReportDialog</name>
     <message>
-        <source>Dialog</source>
+        <source>Error report</source>
         <translation>XXXXX</translation>
     </message>
     <message>
