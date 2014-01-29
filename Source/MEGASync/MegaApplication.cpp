@@ -175,6 +175,7 @@ void MegaApplication::initialize()
 
     //Create GUI elements
     trayIcon = new QSystemTrayIcon(this);
+    connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
 
     QString language = preferences->language();
     changeLanguage(language);
@@ -770,6 +771,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
         else infoDialog->hide();
     }
+}
+
+void MegaApplication::onMessageClicked()
+{
+    trayIconActivated(QSystemTrayIcon::Trigger);
 }
 
 //Called when the user wants to open the settings dialog
