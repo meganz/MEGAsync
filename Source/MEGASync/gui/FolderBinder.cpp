@@ -30,8 +30,17 @@ QString FolderBinder::selectedLocalFolder()
 
 void FolderBinder::on_bLocalFolder_clicked()
 {
+    QString defaultPath = ui->eLocalFolder->text().trimmed();
+    if(!defaultPath.size())
+    {
+    #if QT_VERSION < 0x050000
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    #else
+        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+    #endif
+    }
     QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
-                                                      ui->eLocalFolder->text(),
+                                                      defaultPath,
                                                       QFileDialog::ShowDirsOnly
                                                       | QFileDialog::DontResolveSymlinks);
     if(path.length())
