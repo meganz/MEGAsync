@@ -1011,11 +1011,6 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i));
                     preferences->removeSyncedFolder(i);
                 }
-                else
-                {
-                    LOG("Sync notified!");
-                    Platform::syncFolderAdded(preferences->getLocalFolder(i), preferences->getSyncName(i));
-                }
                 break;
             }
         }
