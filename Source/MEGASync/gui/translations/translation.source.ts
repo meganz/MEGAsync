@@ -73,7 +73,7 @@ Please, select another folder.</source>
         <translation>XXXXX</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync sending this error report. It doesn&apos;t contain any personal information. If you want tu give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translation>XXXXX</translation>
     </message>
     <message>
