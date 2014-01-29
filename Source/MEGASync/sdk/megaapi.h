@@ -117,11 +117,12 @@ class MegaWaiter : public MegaApiWinWaiter {};
 
 #else
 
+#include "linux/megaapiposixhttpio.h"
 #include "mega/posix/meganet.h"
 #include "mega/posix/megafs.h"
 #include "linux/megaapiwait.h"
 
-class MegaHttpIO : public CurlHttpIO {};
+class MegaHttpIO : public MegaApiCurlHttpIO {};
 class MegaFileSystemAccess : public PosixFileSystemAccess {};
 class MegaWaiter : public MegaApiLinuxWaiter {};
 
@@ -210,7 +211,7 @@ class ArrayWrapper
 			list = NULL;
 			s = 0;
 		}
-		
+
 		ArrayWrapper(T* newlist, int size, bool copy=0)
 		{
 			copied = 0;
@@ -218,7 +219,7 @@ class ArrayWrapper
 			s = 0;
 			setArray(newlist, size, copy);
 		}
-		
+
 		virtual ~ArrayWrapper()
 		{
             if(copied && list)
@@ -235,9 +236,9 @@ class ArrayWrapper
 				return list[i];
             return NULL;
 		}
-		
+
 		int size() { return s; }
-		
+
 	protected:
         void setArray(T* newlist, int size, bool copy=false)
 		{
@@ -279,7 +280,7 @@ class MegaApi;
 //Encapsulates the information about a request instead of return it as individual parameters in the callbacks.
 //This allow extending the information adding more getters without breaking client's code.
 class MegaRequest
-{	
+{
 	public:
         enum {  TYPE_LOGIN, TYPE_MKDIR, TYPE_MOVE, TYPE_COPY,
                 TYPE_RENAME, TYPE_REMOVE, TYPE_SHARE,
@@ -299,7 +300,7 @@ class MegaRequest
 		MegaRequest(MegaRequest &request);
 		virtual ~MegaRequest();
 
-		MegaRequest *copy();		
+		MegaRequest *copy();
 		int getType() const;
 		const char *getRequestString() const;
 		const char* toString() const;
@@ -345,7 +346,7 @@ class MegaRequest
         Transfer * getTransfer() const;
 		AccountDetails * getAccountDetails() const;
 		int getNumDetails() const;
-		
+
 	protected:
 		int type;
 		handle nodeHandle;
@@ -361,7 +362,7 @@ class MegaRequest
 		const char* file;
 		int attrType;
         bool flag;
-		
+
 		MegaRequestListener *listener;
         Transfer *transfer;
 		AccountDetails *accountDetails;
@@ -375,11 +376,11 @@ class MegaTransfer
 {
 	public:
         enum {TYPE_DOWNLOAD, TYPE_UPLOAD};
-		
+
 		MegaTransfer(int type, MegaTransferListener *listener = NULL);
         MegaTransfer(const MegaTransfer &transfer);
 		~MegaTransfer();
-		
+
         MegaTransfer *copy();
 
 		int getSlot() const;
@@ -464,11 +465,11 @@ class MegaTransfer
 		int maxSpeed;
 		int retry;
 		int maxRetries;
-		
+
         Transfer *transfer;
 
 		MegaTransferListener *listener;
-		
+
 		//Might be useful for streaming
 		char *lastBuffer;
 		long lastBufferStartOffset;
@@ -504,7 +505,7 @@ class MegaError
 			API_EREAD = -21,		// file could not be read from
 			API_EAPPKEY = -22		// invalid or missing application key
 		};
-	
+
 		MegaError(int errorCode);
 		MegaError(const MegaError &megaError);
         virtual ~MegaError(){}
@@ -542,7 +543,7 @@ class SearchTreeProcessor : public TreeProcessor
 	virtual int processNode(Node* node);
     virtual ~SearchTreeProcessor() {}
     vector<MegaNode *> &getResults();
-    
+
     protected:
 	const char *search;
     vector<MegaNode *> results;
@@ -630,26 +631,26 @@ class RequestQueue
 	{
         INIT_MUTEX(mutex);
 	}
-	
+
 	void push(MegaRequest *request)
 	{
         MUTEX_LOCK(mutex);
 	    requests.push_back(request);
         MUTEX_UNLOCK(mutex);
 	}
-	
+
 	void push_front(MegaRequest *request)
 	{
         MUTEX_LOCK(mutex);
 	    requests.push_front(request);
         MUTEX_UNLOCK(mutex);
 	}
-	
+
 	MegaRequest * pop()
 	{
         MUTEX_LOCK(mutex);
 	    if(requests.empty())
-	    { 
+	    {
             MUTEX_UNLOCK(mutex);
             return NULL;
 	    }
@@ -705,8 +706,8 @@ class TransferQueue
 
 class MegaApi : public MegaApp
 {
-	
-public:	
+
+public:
 	enum {	ORDER_NONE, ORDER_DEFAULT_ASC, ORDER_DEFAULT_DESC,
 		ORDER_SIZE_ASC, ORDER_SIZE_DESC,
 		ORDER_CREATION_ASC, ORDER_CREATION_DESC,
@@ -757,7 +758,7 @@ public:
     void setProxySettings(MegaProxySettings *proxySettings);
     int isLoggedIn();
 	const char* getMyEmail();
-	
+
     void createFolder(const char* name, MegaNode *parent, MegaRequestListener *listener = NULL);
     void moveNode(MegaNode* node, MegaNode* newParent, MegaRequestListener *listener = NULL);
     void copyNode(MegaNode* node, MegaNode *newParent, MegaRequestListener *listener = NULL);
@@ -839,7 +840,7 @@ public:
 
 	MegaError checkAccess(Node* node, const char *level);
 	MegaError checkMove(Node* node, Node* target);
-	
+
     MegaNode *getRootNode();
     MegaNode* getInboxNode();
     MegaNode *getRubbishNode();
@@ -850,7 +851,7 @@ public:
 	//Debug
 	void setDebug(bool debug);
 	bool getDebug();
-	
+
 	//General porpuse
 	static char* strdup(const char* buffer);
 
@@ -862,14 +863,14 @@ protected:
 	static const char* rootnodepaths[];
 	static StringList *rootNodeNames;
 	static StringList *rootNodePaths;
-	
-	void fireOnRequestStart(MegaApi* api, MegaRequest *request);	
+
+	void fireOnRequestStart(MegaApi* api, MegaRequest *request);
 	void fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError e);
 	void fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError e);
 	void fireOnTransferStart(MegaApi* api, MegaTransfer *transfer);
 	void fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError e);
 	void fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer);
-	void fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError e);	
+	void fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError e);
 	void fireOnUsersUpdate(MegaApi* api, UserList *users);
 	void fireOnNodesUpdate(MegaApi* api, NodeList *nodes);
 	void fireOnReloadNeeded(MegaApi* api);
@@ -910,7 +911,7 @@ protected:
 	int threadExit;
     dstime pausetime;
 	void loop();
-	
+
 	int maxRetries;
 
     // a request-level error occurred
@@ -934,7 +935,7 @@ protected:
     virtual void account_details(AccountDetails*,  bool, bool, bool, bool, bool, bool);
 	virtual void account_details(AccountDetails*, error);
 
-	virtual void setattr_result(handle, error);    
+	virtual void setattr_result(handle, error);
 	virtual void rename_result(handle, error);
 	virtual void unlink_result(handle, error);
 	virtual void nodes_updated(Node**, int);
@@ -1027,7 +1028,7 @@ protected:
     // generic debug logging
 	virtual void debug_log(const char*);
 	//////////
-	
+
 	void sendPendingRequests();
 	void sendPendingTransfers();
     bool is_syncable(const char* name);

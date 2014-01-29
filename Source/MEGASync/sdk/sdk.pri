@@ -44,7 +44,8 @@ unix:!mac {
 SOURCES += $$PWD/src/posix/net.cpp  \
     $$PWD/src/posix/fs.cpp  \
     $$PWD/src/posix/posixwaiter.cpp \
-    $$PWD/linux/megaapiwait.cpp
+    $$PWD/linux/megaapiwait.cpp \
+    $$PWD/linux/megaapiposixhttpio.cpp
 }
 
 HEADERS  += $$PWD/include/mega.h \
@@ -100,7 +101,8 @@ unix:!macx {
             $$PWD/include/mega/posix/megafs.h  \
             $$PWD/include/mega/posix/megawaiter.h \
             $$PWD/include/mega/linux/megaapiwait.h  \
-            $$PWD/include/mega/config.h
+            $$PWD/include/mega/config.h \
+	    $$PWD/win32/megaapiwinhttpio.h
 }
 
 DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
