@@ -23,6 +23,8 @@ void MegaApiCurlHttpIO::setProxy(MegaProxySettings *proxySettings)
 
 void MegaApiCurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
 {
+    // XXX: do we need to set Proxy here ?
+    CurlHttpIO::post(req, data, len);
 }
 
 }
