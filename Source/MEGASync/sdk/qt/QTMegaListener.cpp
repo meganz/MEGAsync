@@ -1,6 +1,6 @@
 #include "QTMegaListener.h"
 
-QTMegaListener::QTMegaListener(MegaListener *listener)
+QTMegaListener::QTMegaListener(MegaListener *listener) : QObject()
 {
 	this->listener = listener;
 	connect(this, SIGNAL(QTonRequestStartSignal(MegaApi *, MegaRequest *)),

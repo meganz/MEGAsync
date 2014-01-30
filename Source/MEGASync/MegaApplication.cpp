@@ -198,7 +198,7 @@ void MegaApplication::initialize()
     uploader = new MegaUploader(megaApi);
 
     //Create GUI elements
-    trayIcon = new QSystemTrayIcon(this);
+    trayIcon = new QSystemTrayIcon();
     connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -214,7 +214,7 @@ void MegaApplication::initialize()
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
 
-    refreshTimer = new QTimer(this);
+    refreshTimer = new QTimer();
     refreshTimer->start(10000);
 
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
@@ -450,6 +450,7 @@ void MegaApplication::rebootApplication()
     QStringList args = QStringList();
     args.append(QString::fromAscii("/reboot"));
     QProcess::startDetached(app, args);
+    trayIcon->hide();
     QApplication::exit();
 }
 
@@ -459,6 +460,7 @@ void MegaApplication::exitApplication()
             tr("Synchronization will stop.\nDeletions that occur while it is not running will not be propagated.\n\nExit anyway?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
+        trayIcon->hide();
         QApplication::exit();
     }
 }
@@ -489,12 +491,8 @@ void MegaApplication::cleanAll()
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
-    trayIcon->hide();
-    processEvents();
     megaApi->removeListener(delegateListener);
     delete megaApi;
-    delete delegateListener;
-    delete preferences;
 }
 
 void MegaApplication::unlink()
