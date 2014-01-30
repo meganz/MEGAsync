@@ -1,6 +1,6 @@
 #include "QTMegaTransferListener.h"
 
-QTMegaTransferListener::QTMegaTransferListener(MegaTransferListener *listener)
+QTMegaTransferListener::QTMegaTransferListener(MegaTransferListener *listener) : QObject()
 {
 	this->listener = listener;
 	connect(this, SIGNAL(QTonTransferStartSignal(MegaApi *, MegaTransfer *)),
