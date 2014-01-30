@@ -673,7 +673,6 @@ void InfoDialog::changeEvent(QEvent *event)
         if(totalBytes) setUsage(totalBytes, usedBytes);
         updateSyncsButton();
         updateTransfers();
-        updateRecentFiles();
     }
     QDialog::changeEvent(event);
 }
