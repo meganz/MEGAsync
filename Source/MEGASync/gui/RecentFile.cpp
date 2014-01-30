@@ -103,7 +103,7 @@ void RecentFile::updateWidget()
 void RecentFile::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
-        ui->retranslateUi(this);
+        updateWidget();
 
     QWidget::changeEvent(event);
 }
