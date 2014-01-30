@@ -2095,7 +2095,8 @@ void MegaApi::transfer_update(Transfer *tr)
         {
             tr->localfilename.append("",1);
             DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
-            SetFileAttributesW((LPCWSTR)tr->localfilename.data(),a | FILE_ATTRIBUTE_HIDDEN);
+            if(a != INVALID_FILE_ATTRIBUTES)
+                SetFileAttributesW((LPCWSTR)tr->localfilename.data(),a | FILE_ATTRIBUTE_HIDDEN);
             tr->localfilename.resize(tr->localfilename.size()-1);
         }
 #endif
@@ -2182,7 +2183,8 @@ void MegaApi::transfer_complete(Transfer* tr)
         fsAccess->path2local(&finalUtf8, &final);
         final.append("",1);
         DWORD a = GetFileAttributesW((LPCWSTR) final.data());
-        SetFileAttributesW((LPCWSTR)final.data(),a & ~FILE_ATTRIBUTE_HIDDEN);
+        if(a != INVALID_FILE_ATTRIBUTES)
+            SetFileAttributesW((LPCWSTR)final.data(),a & ~FILE_ATTRIBUTE_HIDDEN);
     }
 #endif
 
