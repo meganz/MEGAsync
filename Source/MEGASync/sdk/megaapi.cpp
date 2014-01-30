@@ -2182,13 +2182,9 @@ void MegaApi::transfer_complete(Transfer* tr)
 #ifdef WIN32
     if((!tr->files.front()->syncxfer) && (tr->type==GET))
     {
-        string finalUtf8(transfer->getPath());
-        string final;
-        fsAccess->path2local(&finalUtf8, &final);
-        final.append("",1);
-        DWORD a = GetFileAttributesW((LPCWSTR) final.data());
+        DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
         if(a != INVALID_FILE_ATTRIBUTES)
-            SetFileAttributesW((LPCWSTR)final.data(),a & ~FILE_ATTRIBUTE_HIDDEN);
+            SetFileAttributesW((LPCWSTR)tr->localfilename.data(),a & ~FILE_ATTRIBUTE_HIDDEN);
     }
 #endif
 
@@ -3815,12 +3811,20 @@ void MegaApi::sendPendingTransfers()
                 MegaFileGet *f;
                 if(node)
                 {
-                    path += node->displayname();
+                    string securename = node->displayname();
+                    string name;
+                    client->fsaccess->name2local(&securename);
+                    client->fsaccess->local2path(&securename, &name);
+                    path += name;
                     f = new MegaFileGet(client, node, path);
                 }
                 else
                 {
-                    path += publicNode->getName();
+                    string securename = publicNode->getName();
+                    string name;
+                    client->fsaccess->name2local(&securename);
+                    client->fsaccess->local2path(&securename, &name);
+                    path += name;
                     f = new MegaFileGet(client, publicNode, path);
                 }
                 transfer->setPath(path.c_str());
