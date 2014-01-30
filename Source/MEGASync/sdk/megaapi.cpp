@@ -182,7 +182,11 @@ MegaFileGet::MegaFileGet(MegaClient *client, Node *n, string dstPath)
 {
     h = n->nodehandle;
     *(FileFingerprint*)this = *n;
-    name = n->displayname();
+
+    string securename = n->displayname();
+    client->fsaccess->name2local(&securename);
+    client->fsaccess->local2path(&securename, &name);
+
     string finalPath;
     if(dstPath.size())
     {
@@ -2087,7 +2091,7 @@ void MegaApi::transfer_update(Transfer *tr)
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
 
-    LOG("transfer_update");
+    //LOG("transfer_update");
 	if(tr->slot)
     {
 #ifdef WIN32
@@ -2176,7 +2180,7 @@ void MegaApi::transfer_complete(Transfer* tr)
     //cout << "transfer_complete: TMP: " << tmpPath << "   FINAL: " << transfer->getFileName() << endl;
 
 #ifdef WIN32
-    if(!tr->files.front()->syncxfer)
+    if((!tr->files.front()->syncxfer) && (tr->type==GET))
     {
         string finalUtf8(transfer->getPath());
         string final;
@@ -2210,7 +2214,7 @@ void MegaApi::syncupdate_stuck(string *s)
 
 void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
 {
-    LOG("syncupdate_local_folder_addition");
+    //LOG("syncupdate_local_folder_addition");
 }
 
 void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
@@ -2220,7 +2224,7 @@ void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
 
 void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
 {
-    LOG("syncupdate_local_file_addition");
+    //LOG("syncupdate_local_file_addition");
 }
 
 void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
@@ -2273,7 +2277,7 @@ void MegaApi::syncupdate_remote_move(string *a, string *b)
 
 void MegaApi::syncupdate_treestate(LocalNode *l)
 {
-    LOG("syncupdate_treestate");
+    //LOG("syncupdate_treestate");
     string path;
     l->getlocalpath(&path, true);
 
@@ -2292,13 +2296,13 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
 
 bool MegaApi::sync_syncable(Node *node)
 {
-    LOG("sync_syncable1");
+    //LOG("sync_syncable1");
     return is_syncable(node->displayname());
 }
 
 bool MegaApi::sync_syncable(const char *name, string *, string *)
 {
-    LOG("sync_syncable2");
+    //LOG("sync_syncable2");
     return is_syncable(name);
 }
 
@@ -2306,6 +2310,9 @@ void MegaApi::syncupdate_local_lockretry(bool waiting)
 {
     LOG("syncupdate_local_lockretry");
     this->waiting = waiting;
+    if(waiting) LOG("THE SYNC IS WAITING");
+    else LOG("THE SYNC IS NOT WAITING");
+
     this->fireOnSyncStateChanged(this);
 }
 
@@ -2537,8 +2544,16 @@ void MegaApi::notify_retry(dstime dsdelta)
 {
     cout << "notify_retry " << dsdelta*100 << " ms..." << endl;
     bool previousFlag = waitingRequest;
-    if(!dsdelta) waitingRequest = false;
-    else if(dsdelta > 10) waitingRequest = true;
+    if(!dsdelta)
+    {
+        LOG("NO REQUESTS WAITING");
+        waitingRequest = false;
+    }
+    else if(dsdelta > 10)
+    {
+        LOG("A REQUESTS WAITING");
+        waitingRequest = true;
+    }
 
     if(previousFlag != waitingRequest)
         fireOnSyncStateChanged(this);
@@ -4384,6 +4399,12 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
+    if(waiting) LOG("STATE: SDK waiting = true");
+    else LOG("STATE: SDK waiting = false");
+
+    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
+    else LOG("STATE: SDK waitingForRequest = false");
+
     return waiting || waitingRequest;
 }
 

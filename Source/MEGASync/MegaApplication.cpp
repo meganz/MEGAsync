@@ -14,7 +14,7 @@
 #include <QNetworkProxy>
 
 const int MegaApplication::VERSION_CODE = 1003;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.4d");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.4e");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -254,13 +254,32 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::updateTrayIcon()
 {
     if(!trayIcon) return;
+
     if(paused)
     {
+        LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
+
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
     }
     else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
     {
+        LOG("STATE: Setting the \"syncing\" tray icon");
+        LOG("Reason:");
+        if(indexing) LOG("Indexing");
+        if(waiting) LOG("Waiting");
+        if(megaApi->getNumPendingUploads())
+        {
+            LOG("Pending uploads");
+            LOG(QString::number(megaApi->getNumPendingUploads()));
+        }
+
+        if(megaApi->getNumPendingDownloads())
+        {
+            LOG("Pending downloads");
+            LOG(QString::number(megaApi->getNumPendingDownloads()));
+        }
+
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
         if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
         else if(waiting) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting"));
@@ -268,16 +287,10 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
+        LOG("STATE: Setting the \"synced\" tray icon (default).");
+
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
-    }
-
-    if(infoDialog)
-    {
-        infoDialog->setIndexing(indexing);
-        infoDialog->setWaiting(waiting);
-        infoDialog->setPaused(paused);
-        infoDialog->updateState();
     }
 }
 
@@ -479,6 +492,7 @@ void MegaApplication::refreshTrayIcon()
 {
     if(megaApi)
     {
+        LOG("STATE: Refreshing state");
         megaApi->updateStatics();
         onSyncStateChanged(megaApi);
     }
@@ -907,7 +921,7 @@ void MegaApplication::createTrayIcon()
 
     trayIcon->setContextMenu(trayMenu);
 
-    updateTrayIcon();
+    onSyncStateChanged(megaApi);
 }
 
 //Called when a request is about to start
@@ -1010,7 +1024,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
         }
-        updateTrayIcon();
+        onSyncStateChanged(megaApi);
         break;
     }
     case MegaRequest::TYPE_ADD_SYNC:
@@ -1093,8 +1107,10 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 	}
 
     //Send statics to the information dialog
-    if(infoDialog) infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
-    updateTrayIcon();
+    if(infoDialog)
+        infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+
+    onSyncStateChanged(megaApi);
 }
 
 //Called when there is a temporal problem in a request
@@ -1166,7 +1182,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
 		uploadSpeed = downloadSpeed = 0;
-		this->showSyncedIcon();
+        onSyncStateChanged(megaApi);
         if(reboot)
         {
             QTimer::singleShot(10000, this, SLOT(rebootApplication()));
@@ -1306,15 +1322,37 @@ void MegaApplication::onReloadNeeded(MegaApi* api)
 
 void MegaApplication::onSyncStateChanged(MegaApi *api)
 {
-    if(!infoDialog) return;
+    if(megaApi)
+    {
+        indexing = megaApi->isIndexing();
+        waiting = megaApi->isWaiting();
+    }
 
-    infoDialog->updateTransfers();
-    infoDialog->updateDialog();
-    indexing = megaApi->isIndexing();
-    waiting = megaApi->isWaiting();
+    if(infoDialog)
+    {
+        infoDialog->updateTransfers();
+        infoDialog->updateDialog();
+        infoDialog->setIndexing(indexing);
+        infoDialog->setWaiting(waiting);
+        infoDialog->setPaused(paused);
+        infoDialog->updateState();
+    }
+
+    LOG("Current state: ");
+    if(paused) LOG("Paused = true");
+    else LOG("Paused = false");
+    if(indexing) LOG("Indexing = true");
+    else LOG("Indexing = false");
+    if(waiting) LOG("Waiting = true");
+    else LOG("Waiting = false");
+
     updateTrayIcon();
-    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-        Platform::notifyItemChange(preferences->getLocalFolder(i));
+
+    if(preferences->logged())
+    {
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+            Platform::notifyItemChange(preferences->getLocalFolder(i));
+    }
 }
 
 //TODO: Manage sync callbacks here
@@ -1348,13 +1386,3 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 */
-
-void MegaApplication::showSyncedIcon()
-{
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
-	trayMenu->removeAction(resumeAction);
-	trayMenu->insertAction(importLinksAction, pauseAction);
-}
-
-
