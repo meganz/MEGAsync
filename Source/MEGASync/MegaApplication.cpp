@@ -859,8 +859,7 @@ void MegaApplication::changeProxy()
     }
 
     //Show a new settings dialog
-    settingsDialog = new SettingsDialog(this);
-    settingsDialog->setProxyOnly(true);
+    settingsDialog = new SettingsDialog(this, true);
     settingsDialog->show();
 }
 

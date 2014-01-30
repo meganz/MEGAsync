@@ -548,7 +548,7 @@ void MegaRequest::setTransfer(Transfer *transfer)
 
 void MegaRequest::setPublicNode(MegaNode *publicNode)
 {
-    if(this->publicNode) delete publicNode;
+    if(this->publicNode) delete this->publicNode;
     if(!publicNode) this->publicNode = NULL;
     else this->publicNode = new MegaNode(publicNode);
 }
@@ -1102,7 +1102,7 @@ void MegaApi::login(const char *login, const char *password, MegaRequestListener
 
 void MegaApi::createAccount(const char* email, const char* password, const char* name, MegaRequestListener *listener)
 {
-	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_CREATE_ACCOUNT, listener);
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_CREATE_ACCOUNT, listener);
 	request->setEmail(email);
 	request->setPassword(password);
 	request->setName(name);

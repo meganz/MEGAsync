@@ -14,7 +14,7 @@
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
-SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
+SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
@@ -27,7 +27,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     this->preferences = Preferences::instance();
 	syncsChanged = false;
     excludedNamesChanged = false;
-    proxyOnly = false;
+    this->proxyOnly = proxyOnly;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -35,7 +35,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, QWidget *parent) :
     ui->wStack->setCurrentWidget(ui->pAccount);
 
     ui->gCache->setVisible(false);
-    loadSettings();
+    setProxyOnly(proxyOnly);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -221,143 +221,151 @@ void SettingsDialog::on_cProxyRequiresPassword_clicked()
 
 void SettingsDialog::loadSettings()
 {
-    //General
-    ui->cShowNotifications->setChecked(preferences->showNotifications());
-    ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
-
-#ifdef WIN32
-    qt_ntfs_permission_lookup++; // turn checking on
-#endif
-    if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
-        ui->cAutoUpdate->setEnabled(false);
-#ifdef WIN32
-    qt_ntfs_permission_lookup--; // turn it off again
-#endif
-    ui->cStartOnStartup->setChecked(preferences->startOnStartup());
-
-    //Language
-    ui->cLanguage->clear();
-    languageCodes.clear();
-    QString fullPrefix = MegaApplication::TRANSLATION_FOLDER+MegaApplication::TRANSLATION_PREFIX;
-    QDirIterator it(MegaApplication::TRANSLATION_FOLDER);
-    QStringList languages;
-    languages.append(QString::fromAscii("English"));
-    languageCodes.append(QString::fromAscii("en"));
-    int currentIndex = -1;
-    QString currentLanguage = preferences->language();
-    while (it.hasNext())
+    if(!proxyOnly)
     {
-        QString file = it.next();
-        if(file.startsWith(fullPrefix))
+        //General
+        ui->cShowNotifications->setChecked(preferences->showNotifications());
+        ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+
+    #ifdef WIN32
+        qt_ntfs_permission_lookup++; // turn checking on
+    #endif
+        if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
+            ui->cAutoUpdate->setEnabled(false);
+    #ifdef WIN32
+        qt_ntfs_permission_lookup--; // turn it off again
+    #endif
+        ui->cStartOnStartup->setChecked(preferences->startOnStartup());
+
+        //Language
+        ui->cLanguage->clear();
+        languageCodes.clear();
+        QString fullPrefix = MegaApplication::TRANSLATION_FOLDER+MegaApplication::TRANSLATION_PREFIX;
+        QDirIterator it(MegaApplication::TRANSLATION_FOLDER);
+        QStringList languages;
+        languages.append(QString::fromAscii("English"));
+        languageCodes.append(QString::fromAscii("en"));
+        int currentIndex = -1;
+        QString currentLanguage = preferences->language();
+        while (it.hasNext())
         {
-            int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
-            if((extensionIndex-fullPrefix.size()) <= 0) continue;
-            QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
-            QString languageString = Utilities::languageCodeToString(languageCode);
-            if(!languageString.isEmpty())
+            QString file = it.next();
+            if(file.startsWith(fullPrefix))
             {
-                int i=0;
-                while(i<languages.size() && (languageString > languages[i])) i++;
-                languages.insert(i, languageString);
-                languageCodes.insert(i, languageCode);
+                int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
+                if((extensionIndex-fullPrefix.size()) <= 0) continue;
+                QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
+                QString languageString = Utilities::languageCodeToString(languageCode);
+                if(!languageString.isEmpty())
+                {
+                    int i=0;
+                    while(i<languages.size() && (languageString > languages[i])) i++;
+                    languages.insert(i, languageString);
+                    languageCodes.insert(i, languageCode);
+                }
             }
         }
-    }
-    for(int i=languageCodes.size()-1; i>=0; i--)
-    {
-        if(currentLanguage.startsWith(languageCodes[i]))
+        for(int i=languageCodes.size()-1; i>=0; i--)
         {
-            currentIndex = i;
-            break;
+            if(currentLanguage.startsWith(languageCodes[i]))
+            {
+                currentIndex = i;
+                break;
+            }
         }
+        if(currentIndex == -1)
+            currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
+
+        ui->cLanguage->addItems(languages);
+        ui->cLanguage->setCurrentIndex(currentIndex);
+
+        int width = ui->bBandwidth->width();
+        QFont f = ui->bBandwidth->font();
+        QFontMetrics fm = QFontMetrics(f);
+        int neededWidth = fm.width(tr("Bandwidth"));
+        if(width < neededWidth)
+            ui->bBandwidth->setText(tr("Transfers"));
+
+        if(ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+            ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
+
+        //Account
+        ui->lEmail->setText(preferences->email());
+        if(preferences->totalStorage()==0)
+        {
+            ui->pStorage->setValue(0);
+            ui->lStorage->setText(tr("Data temporarily unavailable"));
+        }
+        else
+        {
+            int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
+            ui->pStorage->setValue(percentage);
+            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
+                  .arg(Utilities::getSizeString(preferences->usedStorage()))
+                  .arg(QString::number(percentage))
+                  .arg(Utilities::getSizeString(preferences->totalStorage())));
+        }
+        switch(preferences->accountType())
+        {
+            case Preferences::ACCOUNT_TYPE_FREE:
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.ico")));
+                ui->lAccountType->setText(tr("FREE"));
+                break;
+            case Preferences::ACCOUNT_TYPE_PROI:
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro I.ico")));
+                ui->lAccountType->setText(tr("PRO I"));
+                break;
+            case Preferences::ACCOUNT_TYPE_PROII:
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro II.ico")));
+                ui->lAccountType->setText(tr("PRO II"));
+                break;
+            case Preferences::ACCOUNT_TYPE_PROIII:
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro III.ico")));
+                ui->lAccountType->setText(tr("PRO III"));
+                break;
+        }
+
+        MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+        if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+        else
+        {
+            const char *nPath = megaApi->getNodePath(node);
+            ui->eUploadFolder->setText(QString::fromUtf8(nPath));
+            delete nPath;
+        }
+        delete node;
+
+        //Syncs
+        loadSyncSettings();
+
+        //Bandwidth
+        ui->rAutoLimit->setChecked(preferences->uploadLimitKB()<0);
+        ui->rLimit->setChecked(preferences->uploadLimitKB()>0);
+        ui->rNoLimit->setChecked(preferences->uploadLimitKB()==0);
+        ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
+        ui->eLimit->setEnabled(ui->rLimit->isChecked());
+
+        if(preferences->totalBandwidth() == 0)
+        {
+            ui->pUsedBandwidth->setValue(0);
+            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+        }
+        else
+        {
+            int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
+            ui->pUsedBandwidth->setValue(bandwidthPercentage);
+            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                    .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                    .arg(QString::number(bandwidthPercentage))
+                    .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        }
+
+        //Advanced
+        ui->lExcludedNames->clear();
+        QStringList excludedNames = preferences->getExcludedSyncNames();
+        for(int i=0; i<excludedNames.size(); i++)
+            ui->lExcludedNames->addItem(excludedNames[i]);
     }
-    if(currentIndex == -1)
-        currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
-
-    ui->cLanguage->addItems(languages);
-    ui->cLanguage->setCurrentIndex(currentIndex);
-
-    int width = ui->bBandwidth->width();
-    QFont f = ui->bBandwidth->font();
-    QFontMetrics fm = QFontMetrics(f);
-    int neededWidth = fm.width(tr("Bandwidth"));
-    if(width < neededWidth)
-        ui->bBandwidth->setText(tr("Transfers"));
-
-    if(ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
-        ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
-
-    //Account
-    ui->lEmail->setText(preferences->email());
-	if(preferences->totalStorage()==0)
-	{
-		ui->pStorage->setValue(0);
-		ui->lStorage->setText(tr("Data temporarily unavailable"));
-	}
-	else
-	{
-		int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
-		ui->pStorage->setValue(percentage);
-        ui->lStorage->setText(tr("%1 (%2%) of %3 used")
-              .arg(Utilities::getSizeString(preferences->usedStorage()))
-              .arg(QString::number(percentage))
-              .arg(Utilities::getSizeString(preferences->totalStorage())));
-	}
-    switch(preferences->accountType())
-    {
-        case Preferences::ACCOUNT_TYPE_FREE:
-            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.ico")));
-            ui->lAccountType->setText(tr("FREE"));
-            break;
-        case Preferences::ACCOUNT_TYPE_PROI:
-            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro I.ico")));
-            ui->lAccountType->setText(tr("PRO I"));
-            break;
-        case Preferences::ACCOUNT_TYPE_PROII:
-            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro II.ico")));
-            ui->lAccountType->setText(tr("PRO II"));
-            break;
-        case Preferences::ACCOUNT_TYPE_PROIII:
-            ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro III.ico")));
-            ui->lAccountType->setText(tr("PRO III"));
-            break;
-    }
-
-    MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
-    if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
-    else
-    {
-        const char *nPath = megaApi->getNodePath(node);
-        ui->eUploadFolder->setText(QString::fromUtf8(nPath));
-        delete nPath;
-    }
-    delete node;
-
-    //Syncs
-    loadSyncSettings();
-
-    //Bandwidth
-    ui->rAutoLimit->setChecked(preferences->uploadLimitKB()<0);
-    ui->rLimit->setChecked(preferences->uploadLimitKB()>0);
-    ui->rNoLimit->setChecked(preferences->uploadLimitKB()==0);
-    ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
-    ui->eLimit->setEnabled(ui->rLimit->isChecked());
-
-	if(preferences->totalBandwidth() == 0)
-	{
-		ui->pUsedBandwidth->setValue(0);
-		ui->lBandwidth->setText(tr("Data temporarily unavailable"));
-	}
-	else
-	{
-		int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
-		ui->pUsedBandwidth->setValue(bandwidthPercentage);
-        ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                .arg(QString::number(bandwidthPercentage))
-                .arg(Utilities::getSizeString(preferences->totalBandwidth())));
-	}
-
     //Proxies
     ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
     ui->rProxyAuto->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_AUTO);
@@ -395,12 +403,6 @@ void SettingsDialog::loadSettings()
         ui->eProxyUsername->setEnabled(false);
         ui->eProxyPassword->setEnabled(false);
     }
-
-    //Advanced
-    ui->lExcludedNames->clear();
-    QStringList excludedNames = preferences->getExcludedSyncNames();
-    for(int i=0; i<excludedNames.size(); i++)
-        ui->lExcludedNames->addItem(excludedNames[i]);
 
     ui->bApply->setEnabled(false);
     this->update();

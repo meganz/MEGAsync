@@ -16,7 +16,7 @@ class SettingsDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit SettingsDialog(MegaApplication *app, QWidget *parent = 0);
+    explicit SettingsDialog(MegaApplication *app, bool proxyOnly=false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
 
