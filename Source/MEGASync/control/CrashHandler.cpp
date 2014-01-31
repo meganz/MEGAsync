@@ -62,6 +62,10 @@ bool DumpCallback(const char* _dump_dir,const char* _minidump_id,void *context, 
     //QProcess::startDetached(app, args);
     //((MegaApplication *)qApp)->cleanAll();
     //qDebug("BreakpadQt restart");
+
+    Preferences *preferences = Preferences::instance();
+    preferences->setCrashed(true);
+
     return CrashHandlerPrivate::bReportCrashesToSystem ? success : false;
 }
 

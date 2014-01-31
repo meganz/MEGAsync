@@ -106,6 +106,9 @@ public:
 
     void unlink();
 
+    bool isCrashed();
+    void setCrashed(bool value);
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
