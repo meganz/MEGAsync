@@ -311,10 +311,20 @@ void InfoDialog::updateSyncsButton()
 {
     int num = preferences->getNumSyncedFolders();
     MegaNode *rootNode = megaApi->getRootNode();
-    if(num == 1 && preferences->getMegaFolderHandle(0)==rootNode->getHandle())
+    if(!rootNode)
+    {
+        LOG("rootNode is NULL. I'm about to crash :-(");
+    }
+    long long rootHandle = rootNode->getHandle();
+    long long firstSyncHandle = 0;
+    if(num == 1)
+        preferences->getMegaFolderHandle(0);
+
+    if((num == 1) && (firstSyncHandle==rootHandle))
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
     else
         ui->bSyncFolder->setText(tr("Syncs"));
+
     delete rootNode;
 }
 
