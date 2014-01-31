@@ -14,7 +14,7 @@
 #include <QNetworkProxy>
 
 const int MegaApplication::VERSION_CODE = 1003;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.4e");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.4f");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -790,12 +790,17 @@ void MegaApplication::onUpdateCompleted()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+    LOG("Tray icon clicked");
     if(reason == QSystemTrayIcon::Trigger)
     {
+        LOG("Event QSystemTrayIcon::Trigger");
+
         if(!infoDialog)
         {
+            LOG("NULL information dialog");
             if(setupWizard)
             {
+                LOG("Showing setup wizard");
                 setupWizard->setVisible(true);
                 setupWizard->activateWindow();
             }
@@ -804,8 +809,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
+        LOG("Information dialog available");
         if(!infoDialog->isVisible())
         {
+            LOG("Information dialog not visible, showing it");
+
             //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
             QRect screenGeometry = QApplication::desktop()->availableGeometry();
             infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
@@ -820,7 +828,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             infoDialog->setFocus();
         }
         else if(!infoDialog->hasFocus())
+        {
+            LOG("Information dialog visible and without focus, hiding it");
             infoDialog->hide();
+        }
+        else
+        {
+            LOG("Information dialog visible with focus. Nothing to do here");
+        }
     }
 }
 
