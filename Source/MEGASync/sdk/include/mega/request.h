@@ -27,7 +27,7 @@
 namespace mega {
 
 // API request
-class Request
+class MEGA_API Request
 {
 	vector<Command*> cmds;
 

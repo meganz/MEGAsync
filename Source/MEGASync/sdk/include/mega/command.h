@@ -31,7 +31,7 @@
 namespace mega {
 
 // request command component
-class Command
+class MEGA_API Command
 {
 	static const int MAXDEPTH = 8;
 
@@ -85,7 +85,7 @@ public:
 
 // list of new file attributes to write
 // file attribute put
-struct HttpReqCommandPutFA : public HttpReq, public Command
+struct MEGA_API HttpReqCommandPutFA : public HttpReq, public Command
 {
 	handle th;
 	fatype type;
@@ -98,7 +98,7 @@ struct HttpReqCommandPutFA : public HttpReq, public Command
 	~HttpReqCommandPutFA();
 };
 
-class CommandGetFA : public Command
+class MEGA_API CommandGetFA : public Command
 {
 	int part;
 	handle fahref;
@@ -110,7 +110,7 @@ public:
 };
 
 // log into full account (ephemeral sessions are curently unsupported)
-class CommandLogin : public Command
+class MEGA_API CommandLogin : public Command
 {
 public:
 	void procresult();
@@ -118,7 +118,7 @@ public:
 	CommandLogin(MegaClient*, const char*, uint64_t);
 };
 
-class CommandSetMasterKey : public Command
+class MEGA_API CommandSetMasterKey : public Command
 {
 public:
 	void procresult();
@@ -126,7 +126,7 @@ public:
 	CommandSetMasterKey(MegaClient*, const byte*, const byte*, uint64_t);
 };
 
-class CommandCreateEphemeralSession : public Command
+class MEGA_API CommandCreateEphemeralSession : public Command
 {
 	byte pw[SymmCipher::KEYLENGTH];
 
@@ -136,7 +136,7 @@ public:
 	CommandCreateEphemeralSession(MegaClient*, const byte*, const byte*, const byte*);
 };
 
-class CommandResumeEphemeralSession : public Command
+class MEGA_API CommandResumeEphemeralSession : public Command
 {
 	byte pw[SymmCipher::KEYLENGTH];
 	handle uh;
@@ -147,7 +147,7 @@ public:
 	CommandResumeEphemeralSession(MegaClient*, handle, const byte*);
 };
 
-class CommandSendSignupLink : public Command
+class MEGA_API CommandSendSignupLink : public Command
 {
 public:
 	void procresult();
@@ -155,7 +155,7 @@ public:
 	CommandSendSignupLink(MegaClient*, const char*, const char*, byte*);
 };
 
-class CommandQuerySignupLink : public Command
+class MEGA_API CommandQuerySignupLink : public Command
 {
 	string confirmcode;
 
@@ -165,7 +165,7 @@ public:
 	CommandQuerySignupLink(MegaClient*, const byte*, unsigned);
 };
 
-class CommandConfirmSignupLink : public Command
+class MEGA_API CommandConfirmSignupLink : public Command
 {
 public:
 	void procresult();
@@ -173,7 +173,7 @@ public:
 	CommandConfirmSignupLink(MegaClient*, const byte*, unsigned, uint64_t);
 };
 
-class CommandSetKeyPair : public Command
+class MEGA_API CommandSetKeyPair : public Command
 {
 public:
 	void procresult();
@@ -182,7 +182,7 @@ public:
 };
 
 // invite contact/set visibility
-class CommandUserRequest : public Command
+class MEGA_API CommandUserRequest : public Command
 {
 public:
 	void procresult();
@@ -191,7 +191,7 @@ public:
 };
 
 // set user attributes
-class CommandPutUA : public Command
+class MEGA_API CommandPutUA : public Command
 {
 public:
 	CommandPutUA(MegaClient*, const char*, const byte*, unsigned);
@@ -199,7 +199,7 @@ public:
 	void procresult();
 };
 
-class CommandGetUA : public Command
+class MEGA_API CommandGetUA : public Command
 {
 	int priv;
 
@@ -210,7 +210,7 @@ public:
 };
 
 // reload nodes/shares/contacts
-class CommandFetchNodes : public Command
+class MEGA_API CommandFetchNodes : public Command
 {
 public:
 	void procresult();
@@ -219,26 +219,26 @@ public:
 };
 
 // update own node keys
-class CommandNodeKeyUpdate : public Command
+class MEGA_API CommandNodeKeyUpdate : public Command
 {
 public:
 	CommandNodeKeyUpdate(MegaClient*, handle_vector*);
 };
 
-class CommandShareKeyUpdate : public Command
+class MEGA_API CommandShareKeyUpdate : public Command
 {
 public:
 	CommandShareKeyUpdate(MegaClient*, handle, const char*, const byte*, int);
 	CommandShareKeyUpdate(MegaClient*, handle_vector*);
 };
 
-class CommandKeyCR : public Command
+class MEGA_API CommandKeyCR : public Command
 {
 public:
 	CommandKeyCR(MegaClient*, node_vector*, node_vector*, const char*);
 };
 
-class CommandMoveNode : public Command
+class MEGA_API CommandMoveNode : public Command
 {
 	handle h;
 	Node* syncn;
@@ -250,13 +250,13 @@ public:
 	CommandMoveNode(MegaClient*, Node*, Node*, syncdel_t);
 };
 
-class CommandSingleKeyCR : public Command
+class MEGA_API CommandSingleKeyCR : public Command
 {
 public:
 	CommandSingleKeyCR(handle, handle, const byte*, unsigned);
 };
 
-class CommandDelNode : public Command
+class MEGA_API CommandDelNode : public Command
 {
 	handle h;
 
@@ -266,7 +266,7 @@ public:
 	CommandDelNode(MegaClient*, handle);
 };
 
-class CommandPubKeyRequest : public Command
+class MEGA_API CommandPubKeyRequest : public Command
 {
 	User* u;
 
@@ -276,7 +276,7 @@ public:
 	CommandPubKeyRequest(MegaClient*, User*);
 };
 
-class CommandGetFile : public Command
+class MEGA_API CommandGetFile : public Command
 {
 	TransferSlot* tslot;
 	handle ph;
@@ -289,7 +289,7 @@ public:
 	CommandGetFile(TransferSlot*, byte*, handle, bool);
 };
 
-class CommandPutFile : public Command
+class MEGA_API CommandPutFile : public Command
 {
 	TransferSlot* tslot;
 
@@ -300,7 +300,7 @@ public:
 	CommandPutFile(TransferSlot*, int);
 };
 
-class CommandAttachFA : public Command
+class MEGA_API CommandAttachFA : public Command
 {
 	handle h;
 	fatype type;
@@ -312,7 +312,7 @@ public:
 };
 
 
-class CommandPutNodes : public Command
+class MEGA_API CommandPutNodes : public Command
 {
 	NewNode* nn;
 	targettype_t type;
@@ -324,7 +324,7 @@ public:
 	CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, putsource_t = PUTNODES_APP);
 };
 
-class CommandSetAttr : public Command
+class MEGA_API CommandSetAttr : public Command
 {
 	handle h;
 
@@ -334,7 +334,7 @@ public:
 	CommandSetAttr(MegaClient*, Node*);
 };
 
-class CommandSetShare : public Command
+class MEGA_API CommandSetShare : public Command
 {
 	handle sh;
 	User* user;
@@ -348,7 +348,7 @@ public:
 	CommandSetShare(MegaClient*, Node*, User*, accesslevel_t, int);
 };
 
-class CommandGetUserQuota : public Command
+class MEGA_API CommandGetUserQuota : public Command
 {
 	AccountDetails* details;
 
@@ -358,7 +358,7 @@ public:
 	CommandGetUserQuota(MegaClient*, AccountDetails*, bool, bool, bool);
 };
 
-class CommandGetUserTransactions : public Command
+class MEGA_API CommandGetUserTransactions : public Command
 {
 	AccountDetails* details;
 
@@ -368,7 +368,7 @@ public:
 	CommandGetUserTransactions(MegaClient*, AccountDetails*);
 };
 
-class CommandGetUserPurchases : public Command
+class MEGA_API CommandGetUserPurchases : public Command
 {
 	AccountDetails* details;
 
@@ -378,7 +378,7 @@ public:
 	CommandGetUserPurchases(MegaClient*, AccountDetails*);
 };
 
-class CommandGetUserSessions : public Command
+class MEGA_API CommandGetUserSessions : public Command
 {
 	AccountDetails* details;
 
@@ -388,7 +388,7 @@ public:
 	CommandGetUserSessions(MegaClient*, AccountDetails*);
 };
 
-class CommandSetPH : public Command
+class MEGA_API CommandSetPH : public Command
 {
 	handle h;
 
@@ -398,7 +398,7 @@ public:
 	CommandSetPH(MegaClient*, Node*, int);
 };
 
-class CommandGetPH : public Command
+class MEGA_API CommandGetPH : public Command
 {
 	handle ph;
 	byte key[FILENODEKEYLENGTH];
@@ -410,7 +410,7 @@ public:
 	CommandGetPH(MegaClient*, handle, const byte*, int);
 };
 
-class CommandPurchaseAddItem : public Command
+class MEGA_API CommandPurchaseAddItem : public Command
 {
 public:
 	void procresult();
@@ -418,7 +418,7 @@ public:
 	CommandPurchaseAddItem(MegaClient*, int, handle, unsigned, char*, unsigned, char*, char*);
 };
 
-class CommandPurchaseCheckout : public Command
+class MEGA_API CommandPurchaseCheckout : public Command
 {
 public:
 	void procresult();
@@ -426,7 +426,7 @@ public:
 	CommandPurchaseCheckout(MegaClient*, int);
 };
 
-class CommandEnumerateQuotaItems : public Command
+class MEGA_API CommandEnumerateQuotaItems : public Command
 {
 public:
 	void procresult();

@@ -28,12 +28,12 @@
 namespace mega {
 
 // sparse file fingerprint, including size and mtime
-struct FileFingerprint
+struct MEGA_API FileFingerprint
 {
 	m_off_t size;
 	time_t mtime;
 	int32_t crc[4];
-	
+
 	static const int MAXFULL = 8192;
 
 	// if true, represents actual file data
@@ -50,7 +50,7 @@ struct FileFingerprint
 };
 
 // orders transfers by file fingerprints, ordered by size / mtime / sparse CRC
-struct FileFingerprintCmp
+struct MEGA_API FileFingerprintCmp
 {
     bool operator() (const FileFingerprint* a, const FileFingerprint* b) const;
 };

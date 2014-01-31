@@ -29,7 +29,7 @@
 namespace mega {
 
 // node tree processor
-class TreeProc
+class MEGA_API TreeProc
 {
 public:
 	virtual void proc(MegaClient*, Node*) = 0;
@@ -37,7 +37,7 @@ public:
 	virtual ~TreeProc() { }
 };
 
-class TreeProcDel : public TreeProc
+class MEGA_API TreeProcDel : public TreeProc
 {
 public:
 	void proc(MegaClient*, Node*);
@@ -62,7 +62,7 @@ public:
 	~TreeProcCopy();
 };
 
-class TreeProcDU : public TreeProc
+class MEGA_API TreeProcDU : public TreeProc
 {
 public:
 	m_off_t numbytes;
@@ -73,7 +73,7 @@ public:
 	TreeProcDU();
 };
 
-class TreeProcShareKeys : public TreeProc
+class MEGA_API TreeProcShareKeys : public TreeProc
 {
 	ShareNodeKeys snk;
 	Node* sn;
@@ -85,7 +85,7 @@ public:
 	TreeProcShareKeys(Node* = NULL);
 };
 
-class TreeProcDelSyncGet : public TreeProc
+class MEGA_API TreeProcDelSyncGet : public TreeProc
 {
 public:
 	void proc(MegaClient*, Node*);

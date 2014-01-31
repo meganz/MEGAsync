@@ -26,13 +26,13 @@
 namespace mega {
 
 // account details/history
-struct AccountBalance
+struct MEGA_API AccountBalance
 {
 	double amount;
 	char currency[4];
 };
 
-struct AccountSession
+struct MEGA_API AccountSession
 {
 	time_t timestamp, mru;
 	string useragent;
@@ -41,7 +41,7 @@ struct AccountSession
 	int current;
 };
 
-struct AccountPurchase
+struct MEGA_API AccountPurchase
 {
 	time_t timestamp;
 	char handle[12];
@@ -50,7 +50,7 @@ struct AccountPurchase
 	int method;
 };
 
-struct AccountTransaction
+struct MEGA_API AccountTransaction
 {
 	time_t timestamp;
 	char handle[12];
@@ -58,7 +58,7 @@ struct AccountTransaction
 	double delta;
 };
 
-struct AccountDetails
+struct MEGA_API AccountDetails
 {
 	// subscription information (summarized)
 	int pro_level;

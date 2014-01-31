@@ -27,7 +27,7 @@
 
 namespace mega {
 
-class BdbAccess : public DbAccess
+class MEGA_API BdbAccess : public DbAccess
 {
 	DbEnv* env;
 	string dbpathprefix;
@@ -39,7 +39,7 @@ public:
 	~BdbAccess();
 };
 
-class BdbTable : public DbTable
+class MEGA_API BdbTable : public DbTable
 {
 	Db* db;
 	DbTxn* dbtxn;

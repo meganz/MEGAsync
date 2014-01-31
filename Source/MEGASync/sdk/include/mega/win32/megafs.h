@@ -24,7 +24,7 @@
 
 namespace mega {
 
-struct WinDirAccess : public DirAccess
+struct MEGA_API WinDirAccess : public DirAccess
 {
 	bool ffdvalid;
 	WIN32_FIND_DATAW ffd;
@@ -39,7 +39,7 @@ public:
 	virtual ~WinDirAccess();
 };
 
-class WinFileSystemAccess : public FileSystemAccess
+class MEGA_API WinFileSystemAccess : public FileSystemAccess
 {
 public:
 	unsigned pendingevents;
@@ -78,7 +78,7 @@ public:
 	~WinFileSystemAccess();
 };
 
-struct WinDirNotify : public DirNotify
+struct MEGA_API WinDirNotify : public DirNotify
 {
 	WinFileSystemAccess* fsaccess;
 
@@ -103,7 +103,7 @@ struct WinDirNotify : public DirNotify
 	~WinDirNotify();
 };
 
-class WinFileAccess : public FileAccess
+class MEGA_API WinFileAccess : public FileAccess
 {
 	HANDLE hFile;
 

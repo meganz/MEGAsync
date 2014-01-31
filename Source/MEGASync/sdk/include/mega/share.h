@@ -29,7 +29,7 @@
 namespace mega {
 
 // share credentials
-struct Share
+struct MEGA_API Share
 {
 	accesslevel_t access;
 	User* user;
@@ -45,7 +45,7 @@ struct Share
 };
 
 // new share credentials (will be merged into node as soon as it appears)
-struct NewShare
+struct MEGA_API NewShare
 {
 	handle h;
 	int outgoing;

@@ -27,7 +27,7 @@
 namespace mega {
 
 // generic timer facility with exponential backoff
-class BackoffTimer
+class MEGA_API BackoffTimer
 {
 	dstime next;
 	dstime delta;

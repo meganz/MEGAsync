@@ -35,7 +35,7 @@ namespace mega {
 #define MAKENAMEID7(a,b,c,d,e,f,g) (nameid)((((uint64_t)a)<<48)+(((uint64_t)b)<<40)+(((uint64_t)c)<<32)+((d)<<24)+((e)<<16)+((f)<<8)+(g))
 #define MAKENAMEID8(a,b,c,d,e,f,g,h) (nameid)((((uint64_t)a)<<56)+(((uint64_t)b)<<48)+(((uint64_t)c)<<40)+(((uint64_t)d)<<32)+((e)<<24)+((f)<<16)+((g)<<8)+(h))
 
-struct ChunkedHash
+struct MEGA_API ChunkedHash
 {
 	static const int SEGSIZE = 131072;
 
@@ -44,13 +44,13 @@ struct ChunkedHash
 };
 
 // padded CBC encryption
-struct PaddedCBC
+struct MEGA_API PaddedCBC
 {
 	static void encrypt(string*, SymmCipher*);
 	static bool decrypt(string*, SymmCipher*);
 };
 
-class HashSignature
+class MEGA_API HashSignature
 {
 	Hash* hash;
 

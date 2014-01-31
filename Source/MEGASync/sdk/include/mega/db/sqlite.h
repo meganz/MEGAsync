@@ -27,7 +27,7 @@
 
 namespace mega {
 
-class SqliteDbAccess : public DbAccess
+class MEGA_API SqliteDbAccess : public DbAccess
 {
     string dbpath;
     sqlite3* db;
@@ -39,7 +39,7 @@ public:
 	~SqliteDbAccess();
 };
 
-class SqliteDbTable : public DbTable
+class MEGA_API SqliteDbTable : public DbTable
 {
 	sqlite3* db;
 	sqlite3_stmt* pStmt;

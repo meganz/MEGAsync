@@ -27,7 +27,7 @@
 namespace mega {
 
 // file to be transferred
-struct File : public FileFingerprint
+struct MEGA_API File : public FileFingerprint
 {
 	// set localfilename in attached transfer
 	virtual void prepare();
@@ -43,7 +43,7 @@ struct File : public FileFingerprint
 
 	// transfer failed
 	virtual bool failed(error);
-	
+
 	// update localname
 	virtual void updatelocalname() { }
 
@@ -55,10 +55,10 @@ struct File : public FileFingerprint
 
 	// local filename (must be set upon injection for uploads, can be set in start() for downloads)
 	string localname;
-	
+
 	// source/target node handle
 	handle h;
-	
+
 	// source handle private?
 	bool hprivate;
 
@@ -79,15 +79,15 @@ struct File : public FileFingerprint
 	virtual ~File();
 };
 
-struct SyncFileGet : public File
+struct MEGA_API SyncFileGet : public File
 {
 	Sync* sync;
 	Node* n;
-	
+
 	// set sync-specific temp filename, update treestate
 	void prepare();
 	bool failed(error);
-	
+
 	// update localname (may have changed due to renames/moves of the synced files)
 	void updatelocalname();
 

@@ -30,7 +30,7 @@ namespace mega {
 
 extern bool debug;
 
-class WinHttpIO : public HttpIO
+class MEGA_API WinHttpIO : public HttpIO
 {
 	CRITICAL_SECTION csHTTP;
 	HANDLE hWakeupEvent;
@@ -59,14 +59,14 @@ public:
 	void leavecs();
 
 	void httpevent();
-	
+
 	void setuseragent(string*);
 
 	WinHttpIO();
 	~WinHttpIO();
 };
 
-struct WinHttpContext
+struct MEGA_API WinHttpContext
 {
 	HINTERNET hRequest;
 	HINTERNET hConnect;
