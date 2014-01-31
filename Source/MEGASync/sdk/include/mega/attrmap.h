@@ -29,7 +29,7 @@ namespace mega {
 // maps attribute names to attribute values
 typedef map<nameid,string> attr_map;
 
-struct AttrMap
+struct MEGA_API AttrMap
 {
 	attr_map map;
 

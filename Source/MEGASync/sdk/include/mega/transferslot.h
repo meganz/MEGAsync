@@ -28,7 +28,7 @@
 namespace mega {
 
 // active transfer
-struct TransferSlot
+struct MEGA_API TransferSlot
 {
 	// link to related transfer (never NULL)
 	struct Transfer* transfer;
@@ -48,7 +48,7 @@ struct TransferSlot
 
 	// number of consecutive errors
 	unsigned errorcount;
-	
+
 	// upload result
 	byte ultoken[NewNode::UPLOADTOKENLEN+1];
 

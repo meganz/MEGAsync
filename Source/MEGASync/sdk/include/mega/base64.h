@@ -27,7 +27,7 @@
 namespace mega {
 
 // modified base64 encoding/decoding (unpadded, -_ instead of +/)
-class Base64
+class MEGA_API Base64
 {
 	static byte to64(byte);
 	static byte from64(byte);

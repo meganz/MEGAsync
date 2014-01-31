@@ -24,7 +24,7 @@
 
 namespace mega {
 
-struct Console
+struct MEGA_API Console
 {
 	virtual void readpwchar(char*, int, int* pw_buf_pos, char**) = 0;
 	virtual void setecho(bool) = 0;

@@ -29,7 +29,7 @@
 namespace mega {
 
 // action to be performed upon arrival of a user's public key
-class PubKeyAction
+class MEGA_API PubKeyAction
 {
 public:
 	int tag;
@@ -39,7 +39,7 @@ public:
 	virtual ~PubKeyAction() { }
 };
 
-class PubKeyActionCreateShare : public PubKeyAction
+class MEGA_API PubKeyActionCreateShare : public PubKeyAction
 {
 	handle h;	// node to create share on
 	accesslevel_t a;	// desired access level
@@ -50,7 +50,7 @@ public:
 	PubKeyActionCreateShare(handle, accesslevel_t, int);
 };
 
-class PubKeyActionSendShareKey : public PubKeyAction
+class MEGA_API PubKeyActionSendShareKey : public PubKeyAction
 {
 	handle sh;	// share node the key was requested on
 
@@ -60,7 +60,7 @@ public:
 	PubKeyActionSendShareKey(handle);
 };
 
-class PubKeyActionPutNodes : public PubKeyAction
+class MEGA_API PubKeyActionPutNodes : public PubKeyAction
 {
 	NewNode* nn;	// nodes to add
 	int nc;			// number of nodes to add

@@ -27,7 +27,7 @@
 namespace mega {
 
 // cr element share/node map key generator
-class ShareNodeKeys
+class MEGA_API ShareNodeKeys
 {
 	node_vector shares;
 	vector<string> items;

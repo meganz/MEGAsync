@@ -28,7 +28,7 @@
 
 namespace mega {
 
-struct NodeCore
+struct MEGA_API NodeCore
 {
 	// node's own handle
 	handle nodehandle;
@@ -50,7 +50,7 @@ struct NodeCore
 };
 
 // new node for putnodes()
-struct NewNode : public NodeCore
+struct MEGA_API NewNode : public NodeCore
 {
 	static const int UPLOADTOKENLEN = 27;
 
@@ -66,7 +66,7 @@ struct NewNode : public NodeCore
 };
 
 // filesystem node
-struct Node : public NodeCore, Cachable, FileFingerprint
+struct MEGA_API Node : public NodeCore, Cachable, FileFingerprint
 {
 	MegaClient* client;
 
@@ -145,7 +145,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 
 	// related synced item or NULL
 	LocalNode* localnode;
-	
+
 	// active sync get
 	struct SyncFileGet* syncget;
 
@@ -154,7 +154,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 
 	// location in the todebris node_set
 	node_set::iterator todebris_it;
-	
+
 	// source tag
 	int tag;
 
@@ -168,7 +168,7 @@ struct Node : public NodeCore, Cachable, FileFingerprint
 	~Node();
 };
 
-struct LocalNode : public File
+struct MEGA_API LocalNode : public File
 {
 	class Sync* sync;
 
@@ -177,7 +177,7 @@ struct LocalNode : public File
 
 	// children by name
 	localnode_map children;
-	
+
 	// for filesystems with botched secondary ("short") names
 	string slocalname;
 	localnode_map schildren;
@@ -194,25 +194,25 @@ struct LocalNode : public File
 
 	// FILENODE or FOLDERNODE
 	nodetype_t type;
-	
+
 	// detection of deleted filesystem records
 	int scanseqno;
 
 	// number of iterations since last seen
 	int notseen;
-	
+
 	// global sync reference
 	handle syncid;
-	
+
 	// was actively deleted
 	bool deleted;
-	
+
 	// current subtree sync state: current and displayed
 	treestate_t ts, dts;
 
 	// update sync state all the way to the root node
 	void treestate(treestate_t = TREESTATE_NONE);
-	
+
 	// timer to delay upload start
 	dstime nagleds;
 	void bumpnagleds();
@@ -229,7 +229,7 @@ struct LocalNode : public File
 
 	// node-specific DirNotify tag
 	handle dirnotifytag;
-	
+
 	void prepare();
 	void completed(Transfer*, LocalNode*);
 
@@ -240,7 +240,7 @@ struct LocalNode : public File
 	void setfsid(handle);
 
 	void setnameparent(LocalNode*, string*);
-	
+
 	void init(Sync*, nodetype_t, LocalNode*, string*, string*);
 
 	~LocalNode();

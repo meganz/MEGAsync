@@ -27,7 +27,7 @@
 namespace mega {
 
 // generic host transactional database access interface
-class DbTable
+class MEGA_API DbTable
 {
 	static const int IDSPACING = 16;
 
@@ -69,7 +69,7 @@ public:
 	virtual ~DbTable() { }
 };
 
-struct DbAccess
+struct MEGA_API DbAccess
 {
 	virtual DbTable* open(FileSystemAccess*, string*) = 0;
 

@@ -24,7 +24,7 @@
 
 namespace mega {
 
-class WinConsoleWaiter : public WinWaiter
+class MEGA_API WinConsoleWaiter : public WinWaiter
 {
     HANDLE hInput;
 

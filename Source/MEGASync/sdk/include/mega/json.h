@@ -28,7 +28,7 @@
 namespace mega {
 
 // linear non-strict JSON scanner
-struct JSON
+struct MEGA_API JSON
 {
 	const char* pos;	// make private
 

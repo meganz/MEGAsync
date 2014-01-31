@@ -27,7 +27,7 @@
 namespace mega {
 
 // user/contact
-struct User : public Cachable
+struct MEGA_API User : public Cachable
 {
 	// user handle
 	handle userhandle;

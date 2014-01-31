@@ -22,9 +22,28 @@
 #ifndef MEGA_TYPES_H
 #define MEGA_TYPES_H 1
 
-// FIXME: #define PRI*64 is missing
-#define __STDC_FORMAT_MACROS
-#include <inttypes.h>
+#ifdef _MSC_VER
+#if MEGA_LINKED_AS_SHARED_LIBRARY
+ #define MEGA_API __declspec(dllimport)
+#elif MEGA_CREATE_SHARED_LIBRARY
+ #define MEGA_API __declspec(dllexport)
+#endif
+#endif
+
+#ifndef MEGA_API
+ #define MEGA_API
+#endif
+
+// inttypes.h is not present in Microsoft Visual Studio
+#ifdef _MSC_VER
+ #define PRIu32       "I32u"
+ #define PRIu64       "I64u"
+ #define PRId64       "I64d"
+#else
+ // FIXME: #define PRI*64 is missing
+ #define __STDC_FORMAT_MACROS
+ #include <inttypes.h>
+#endif
 
 #include <iostream>
 #include <algorithm>

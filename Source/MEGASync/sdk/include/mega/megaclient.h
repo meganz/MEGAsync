@@ -38,7 +38,7 @@ namespace mega {
 
 extern bool debug;
 
-class MegaClient
+class MEGA_API MegaClient
 {
 public:
 	// own identity
@@ -124,11 +124,11 @@ public:
 
 	// pause flags
 	bool xferpaused[2];
-	
+
 	// active syncs
 	sync_list syncs;
 	bool syncadded;
-	
+
 	// indicates whether all startup syncs have been fully scanned
 	bool syncsup;
 
@@ -192,7 +192,7 @@ public:
 
 	// submit purchased products for payment
 	void purchase_checkout(int);
-	
+
 	// toggle global debug flag
 	bool toggledebug();
 
@@ -240,7 +240,7 @@ private:
 
 	// next internal upload handle
 	handle nextuh;
-	
+
 	// User-Agent header for HTTP requests
 	string useragent;
 
@@ -272,7 +272,7 @@ private:
 	unsigned addnode(node_vector*, Node*);
 
 	// add child for consideration in syncup()/syncdown()
-	void addchild(remotenode_map*, string*, Node*, vector<string>*);
+	void addchild(remotenode_map*, string*, Node*, list<string>*);
 
 	// crypto request response
 	void cr_response(node_vector*, node_vector*, JSON*);
@@ -285,13 +285,13 @@ private:
 
 	// converts UTF-8 to 32-bit word array
 	static char* str_to_a32(const char*, int*);
-	
+
 	// last successful interaction with the Internet
 	dstime noinetds;
 
 	// was the app notified of a retrying CS request?
 	bool csretrying;
-	
+
 public:
 	// application callbacks
 	struct MegaApp* app;
@@ -418,7 +418,7 @@ public:
 
 	// block local fs updates processing while locked ops are in progress
 	bool syncfsopsfailed;
-	
+
 	// retry accessing temporarily locked filesystem items
 	bool syncfslockretry;
 	BackoffTimer syncfslockretrybt;
@@ -426,7 +426,7 @@ public:
 	// retry of transiently failed local filesystem ops
 	bool syncdownretry;
 	BackoffTimer syncdownbt;
-	
+
 	// sync PUT Nagle timer
 	bool syncnagleretry;
 	BackoffTimer syncnaglebt;
@@ -440,7 +440,7 @@ public:
 
 	// maps local fsid to corresponding LocalNode*
 	handlelocalnode_map fsidnode;
-	
+
 	// local nodes that need to be added remotely
 	localnode_vector synccreate;
 
@@ -470,13 +470,13 @@ public:
 	void movetosyncdebris(Node*);
 	void execmovetosyncdebris();
 	node_set todebris;
-	
+
 	// recursively cancel transfers in a subtree
 	void stopxfers(LocalNode*);
 
 	// update paths of all PUT transfers
 	void updateputs();
-	
+
 	// determine if all transfer slots are full
 	bool slotavail();
 

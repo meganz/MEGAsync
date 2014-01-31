@@ -28,13 +28,13 @@
 namespace mega {
 
 // generic host filesystem node ID interface
-struct FsNodeId
+struct MEGA_API FsNodeId
 {
 	virtual bool isequalto(FsNodeId*) = 0;
 };
 
 // generic host file/directory access interface
-struct FileAccess
+struct MEGA_API FileAccess
 {
 	// file size
 	m_off_t size;
@@ -60,7 +60,7 @@ struct FileAccess
 
 	// open by name only
 	bool fopen(string*);
-	
+
 	// update localname (only has an effect if operating in by-name mode)
 	virtual void updatelocalname(string*) = 0;
 
@@ -87,7 +87,7 @@ struct FileAccess
 };
 
 // generic host directory enumeration
-struct DirAccess
+struct MEGA_API DirAccess
 {
 	// open for scanning
 	virtual bool dopen(string*, FileAccess*, bool) = 0;
@@ -99,17 +99,17 @@ struct DirAccess
 };
 
 // generic filesystem change notification
-struct DirNotify
+struct MEGA_API DirNotify
 {
 	typedef enum { DIREVENTS, RETRY, NUMQUEUES } notifyqueue;
 
 	// notifyq[DIREVENTS] is fed with filesystem changes
 	// notifyq[RETRY] receives transient errors that need to be retried
 	notify_deque notifyq[NUMQUEUES];
-	
+
 	// set if no notification available on this platform or a permanent failure occurred
 	bool failed;
-	
+
 	// set if a temporary error occurred
 	bool error;
 
@@ -128,7 +128,7 @@ struct DirNotify
 };
 
 // generic host filesystem access interface
-struct FileSystemAccess : public EventTrigger
+struct MEGA_API FileSystemAccess : public EventTrigger
 {
 	// local path separator, e.g. "/"
 	string localseparator;
@@ -162,7 +162,7 @@ struct FileSystemAccess : public EventTrigger
 
 	// obtain local secondary name
 	virtual bool getsname(string*, string*) = 0;
-	
+
 	// rename file, overwrite target
 	virtual bool renamelocal(string*, string*, bool = true) = 0;
 

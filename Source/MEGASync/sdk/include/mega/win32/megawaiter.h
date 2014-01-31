@@ -24,7 +24,7 @@
 
 namespace mega {
 
-class WinWaiter : public Waiter
+class MEGA_API WinWaiter : public Waiter
 {
 	typedef ULONGLONG (WINAPI* PGTC)();
 	PGTC pGTC;

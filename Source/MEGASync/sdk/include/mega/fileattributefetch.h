@@ -29,7 +29,7 @@
 namespace mega {
 
 // file attribute fetching for a specific source cluster
-struct FileAttributeFetchChannel
+struct MEGA_API FileAttributeFetchChannel
 {
 	handle fahref;
 	BackoffTimer bt;
@@ -45,7 +45,7 @@ struct FileAttributeFetchChannel
 };
 
 // pending individual attribute fetch
-struct FileAttributeFetch
+struct MEGA_API FileAttributeFetch
 {
 	handle nodehandle;
 	fatype type;

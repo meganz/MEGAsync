@@ -28,7 +28,7 @@
 namespace mega {
 
 // generic host HTTP I/O interface
-struct HttpIO : public EventTrigger
+struct MEGA_API HttpIO : public EventTrigger
 {
 	// post request to target URL
 	virtual void post(struct HttpReq*, const char* = NULL, unsigned = 0) = 0;
@@ -56,7 +56,7 @@ struct HttpIO : public EventTrigger
 };
 
 // outgoing HTTP request
-struct HttpReq
+struct MEGA_API HttpReq
 {
 	reqstatus_t status;
 
@@ -112,7 +112,7 @@ struct HttpReq
 };
 
 // file chunk I/O
-struct HttpReqXfer : public HttpReq
+struct MEGA_API HttpReqXfer : public HttpReq
 {
 	unsigned size;
 
@@ -123,7 +123,7 @@ struct HttpReqXfer : public HttpReq
 };
 
 // file chunk upload
-struct HttpReqUL : public HttpReqXfer
+struct MEGA_API HttpReqUL : public HttpReqXfer
 {
 	bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
 
@@ -133,7 +133,7 @@ struct HttpReqUL : public HttpReqXfer
 };
 
 // file chunk download
-struct HttpReqDL : public HttpReqXfer
+struct MEGA_API HttpReqDL : public HttpReqXfer
 {
 	m_off_t dlpos;
 
@@ -144,7 +144,7 @@ struct HttpReqDL : public HttpReqXfer
 };
 
 // file attribute get
-struct HttpReqGetFA : public HttpReq
+struct MEGA_API HttpReqGetFA : public HttpReq
 {
 	~HttpReqGetFA() { };
 };

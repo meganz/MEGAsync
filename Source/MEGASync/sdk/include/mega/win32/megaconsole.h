@@ -24,7 +24,7 @@
 
 namespace mega {
 
-struct WinConsole : public Console
+struct MEGA_API WinConsole : public Console
 {
 	void readpwchar(char*, int, int* pw_buf_pos, char**);
 	void setecho(bool);

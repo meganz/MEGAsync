@@ -25,7 +25,7 @@
 namespace mega {
 
 // callback interface
-struct MegaApp
+struct MEGA_API MegaApp
 {
 	MegaClient* client;
 

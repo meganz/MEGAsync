@@ -27,7 +27,7 @@
 namespace mega {
 
 // 64-bit int serialization/unserialization
-struct Serialize64
+struct MEGA_API Serialize64
 {
 	static int serialize(byte*, int64_t);
 	static int unserialize(byte*, int, int64_t*);

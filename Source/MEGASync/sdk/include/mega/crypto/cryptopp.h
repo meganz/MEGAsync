@@ -39,7 +39,7 @@ namespace mega {
 using namespace std;
 
 // generic pseudo-random number generator
-class PrnGen
+class MEGA_API PrnGen
 {
 public:
 	static CryptoPP::AutoSeededRandomPool rng;
@@ -49,7 +49,7 @@ public:
 };
 
 // symmetric cryptography: AES-128
-class SymmCipher
+class MEGA_API SymmCipher
 {
 	CryptoPP::ECB_Mode<CryptoPP::AES>::Encryption aesecb_e;
 	CryptoPP::ECB_Mode<CryptoPP::AES>::Decryption aesecb_d;
@@ -91,7 +91,7 @@ public:
 };
 
 // asymmetric cryptography: RSA
-class AsymmCipher
+class MEGA_API AsymmCipher
 {
 	int decodeintarray(CryptoPP::Integer*, int, const byte*, int);
 
@@ -121,7 +121,7 @@ public:
 	void genkeypair(CryptoPP::Integer* privk, CryptoPP::Integer* pubk, int size);
 };
 
-class Hash
+class MEGA_API Hash
 {
 	CryptoPP::SHA512 hash;
 
@@ -130,7 +130,7 @@ public:
 	void get(string*);
 };
 
-class HashCRC32
+class MEGA_API HashCRC32
 {
 	CryptoPP::CRC32 hash;
 

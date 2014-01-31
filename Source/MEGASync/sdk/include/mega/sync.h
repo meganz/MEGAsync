@@ -26,7 +26,7 @@
 
 namespace mega {
 
-class Sync
+class MEGA_API Sync
 {
 public:
 	MegaClient* client;
@@ -54,7 +54,7 @@ public:
 
 	// look up LocalNode relative to localroot
 	LocalNode* localnodebypath(LocalNode*, string*, LocalNode** = NULL, string* = NULL);
-	
+
 	// scan items in specified path and add as children of the specified LocalNode
 	bool scan(string*, FileAccess*);
 
@@ -63,7 +63,7 @@ public:
 
 	// rescan sequence number (incremented when a full rescan or a new notification batch starts)
 	int scanseqno;
-	
+
 	// notified nodes originating from this sync bear this tag
 	int tag;
 
@@ -72,10 +72,10 @@ public:
 
 	// permanent lock on the debris/tmp folder
 	FileAccess* tmpfa;
-	
+
 	// move file or folder to localdebris
 	bool movetolocaldebris(string* localpath);
-	
+
 	Sync(MegaClient*, string*, const char*, string*, Node*, int = 0);
 	~Sync();
 };
