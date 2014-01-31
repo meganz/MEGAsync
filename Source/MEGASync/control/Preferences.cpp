@@ -774,6 +774,22 @@ void Preferences::unlink()
     mutex.unlock();
 }
 
+bool Preferences::isCrashed()
+{
+    mutex.lock();
+    bool value = settings->value(QString::fromAscii("isCrashed"), false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCrashed(bool value)
+{
+    mutex.lock();
+    settings->setValue(QString::fromAscii("isCrashed"), value);
+    settings->sync();
+    mutex.unlock();
+}
+
 void Preferences::login(QString account)
 {
     mutex.lock();

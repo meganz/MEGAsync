@@ -182,14 +182,32 @@ void MegaApplication::initialize()
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
     Utilities::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
 
+#if QT_VERSION < 0x050000
+    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#else
+    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+#endif
+
 #ifdef WIN32
     //Backwards compatibility code
-    QDirIterator di(QDir::currentPath(), QDir::Files | QDir::NoDotAndDotDot);
+    QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
     while (di.hasNext()) {
         di.next();
         const QFileInfo& fi = di.fileInfo();
         if(fi.fileName().startsWith(QString::fromAscii(".tmp.")))
             QFile::remove(di.filePath());
+    }
+
+    if(preferences->isCrashed())
+    {
+        preferences->setCrashed(false);
+        QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
+        while (di.hasNext()) {
+            di.next();
+            const QFileInfo& fi = di.fileInfo();
+            if(fi.fileName().endsWith(QString::fromAscii(".db")))
+                QFile::remove(di.filePath());
+        }
     }
 #endif
 
