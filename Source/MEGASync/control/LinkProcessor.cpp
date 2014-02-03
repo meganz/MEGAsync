@@ -117,6 +117,7 @@ void LinkProcessor::importLinks(MegaNode *node)
 	for(int i=0; i<linkList.size(); i++)
 	{
         bool dupplicate = false;
+        long long dupplicateHandle;
         const char* name = linkNode[i]->getName();
         long long size = linkNode[i]->getSize();
 
@@ -124,13 +125,23 @@ void LinkProcessor::importLinks(MegaNode *node)
         {
             MegaNode *child = children->get(j);
             if(!strcmp(name, child->getName()) && (size == child->getSize()))
+            {
                 dupplicate = true;
+                dupplicateHandle = child->getHandle();
+            }
         }
 
-        if(!dupplicate && linkNode[i] && linkSelected[i] && !linkError[i])
+        if(linkNode[i] && linkSelected[i] && !linkError[i])
 		{
-			remainingNodes++;
-            megaApi->importPublicNode(linkNode[i], node, this);
+            if(!dupplicate)
+            {
+                remainingNodes++;
+                megaApi->importPublicNode(linkNode[i], node, this);
+            }
+            else
+            {
+                emit onDupplicateLink(linkList[i], QString::fromUtf8(name), dupplicateHandle);
+            }
 		}
 	}
     delete children;

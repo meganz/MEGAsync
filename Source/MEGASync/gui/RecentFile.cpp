@@ -115,6 +115,8 @@ void RecentFile::on_pArrow_clicked()
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 {
+    if(!QFileInfo(localPath).exists()) return;
+
 	QMenu menu;
 	menu.addAction(tr("Open"), this, SLOT(openFile()));
 	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
@@ -123,6 +125,8 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 {
+    if(!QFileInfo(localPath).exists()) return;
+
 	QMenu menu;
 	menu.addAction(tr("Open"), this, SLOT(openFile()));
 	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));

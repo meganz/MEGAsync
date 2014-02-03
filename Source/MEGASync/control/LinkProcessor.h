@@ -48,6 +48,7 @@ signals:
 	void onLinkInfoAvailable(int i);
 	void onLinkInfoRequestFinish();
 	void onLinkImportFinish();
+    void onDupplicateLink(QString link, QString name, long long handle);
 
 public slots:
 	virtual void QTonRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
