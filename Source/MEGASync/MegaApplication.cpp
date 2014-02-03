@@ -177,6 +177,7 @@ void MegaApplication::initialize()
     QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
 
     preferences = Preferences::instance();
+    preferences->setLastStatsRequest(0);
 
     delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
@@ -379,7 +380,7 @@ void MegaApplication::loggedIn()
 
     //Start the HTTP server
     //httpServer = new HTTPServer(2973, NULL);
-    megaApi->getAccountDetails();
+    updateUserStats();
 }
 
 void MegaApplication::startSyncs()
@@ -652,6 +653,16 @@ void MegaApplication::applyProxySettings()
 void MegaApplication::showUpdatedMessage()
 {
     updated = true;
+}
+
+void MegaApplication::updateUserStats()
+{
+    long long lastRequest = preferences->lastStatsRequest();
+    if((QDateTime::currentMSecsSinceEpoch()-lastRequest) > Preferences::MIN_UPDATE_STATS_INTERVAL)
+    {
+        preferences->setLastStatsRequest(QDateTime::currentMSecsSinceEpoch());
+        megaApi->getAccountDetails();
+    }
 }
 
 void MegaApplication::pauseSync()
@@ -1345,7 +1356,11 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         infoDialog->updateDialog();
     }
 
-    if(externalNodes) showNotificationMessage(tr("You have new or updated files in your account"));
+    if(externalNodes)
+    {
+        updateUserStats();
+        showNotificationMessage(tr("You have new or updated files in your account"));
+    }
 }
 
 void MegaApplication::onReloadNeeded(MegaApi* api)

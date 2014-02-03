@@ -74,6 +74,7 @@ public:
     void stopUpdateTask();
     void applyProxySettings();
     void showUpdatedMessage();
+    void updateUserStats();
 
 signals:
     void startUpdaterThread();
