@@ -528,6 +528,12 @@ void MegaApplication::cleanAll()
     delete megaApi;
 }
 
+void MegaApplication::onDupplicateLink(QString link, QString name, long long handle)
+
+{
+    addRecentFile(name, handle);
+}
+
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
@@ -665,6 +671,12 @@ void MegaApplication::updateUserStats()
     }
 }
 
+void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QString localPath)
+{
+    if(infoDialog)
+        infoDialog->addRecentFile(fileName, fileHandle, localPath);
+}
+
 void MegaApplication::pauseSync()
 {
     pauseTransfers(true);
@@ -707,6 +719,8 @@ void MegaApplication::importLinks()
 	if(importDialog.shouldImport())
 	{
 		connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
+        connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, long long)),
+                this, SLOT(onDupplicateLink(QString, QString, long long)));
 		linkProcessor->importLinks(importDialog.getImportPath());
 	}
     //If importing links isn't needed, we can delete the link processor
@@ -1178,7 +1192,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             #ifdef WIN32
                 if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
             #endif
-            if(infoDialog) infoDialog->addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
+            addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
         }
 	}
 	else
@@ -1342,11 +1356,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 LOG(QString::fromAscii("Local upload: %1").arg(localPath));
             }
 
-            //If we have the local path, notify the state change in the local file
-            if(localPath.size())
-            {
-                if(infoDialog) infoDialog->addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
-            }
+            addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
         }
 	}
 

@@ -75,6 +75,7 @@ public:
     void applyProxySettings();
     void showUpdatedMessage();
     void updateUserStats();
+    void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString());
 
 signals:
     void startUpdaterThread();
@@ -101,6 +102,7 @@ public slots:
     void aboutDialog();
     void refreshTrayIcon();
     void cleanAll();
+    void onDupplicateLink(QString link, QString name, long long handle);
 
 protected:
     void createTrayIcon();
