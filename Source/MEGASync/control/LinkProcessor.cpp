@@ -25,11 +25,6 @@ LinkProcessor::~LinkProcessor()
 		delete linkNode[i];
 }
 
-QStringList LinkProcessor::getLinkList()
-{
-	return linkList;
-}
-
 QString LinkProcessor::getLink(int id)
 {
 	return linkList[id];
@@ -115,17 +110,30 @@ void LinkProcessor::importLinks(QString megaPath)
 void LinkProcessor::importLinks(MegaNode *node)
 {
 	if(!node) return;
+
+    NodeList *children = megaApi->getChildren(node);
     importParentFolder = node->getHandle();
 
 	for(int i=0; i<linkList.size(); i++)
 	{
-		if(linkNode[i] && linkSelected[i] && !linkError[i])
+        bool dupplicate = false;
+        const char* name = linkNode[i]->getName();
+        long long size = linkNode[i]->getSize();
+
+        for(int j=0; j<children->size(); j++)
+        {
+            MegaNode *child = children->get(j);
+            if(!strcmp(name, child->getName()) && (size == child->getSize()))
+                dupplicate = true;
+        }
+
+        if(!dupplicate && linkNode[i] && linkSelected[i] && !linkError[i])
 		{
 			remainingNodes++;
             megaApi->importPublicNode(linkNode[i], node, this);
-            //megaApi->importFileLink(linkList[i].toUtf8().constData(), node, this);
 		}
 	}
+    delete children;
 }
 
 handle LinkProcessor::getImportParentFolder()

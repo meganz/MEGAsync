@@ -14,7 +14,6 @@ public:
 	LinkProcessor(MegaApi *megaApi, QStringList linkList);
 	virtual ~LinkProcessor();
 
-	QStringList getLinkList();
 	QString getLink(int id);
 	bool isSelected(int id);
 	int getError(int id);
