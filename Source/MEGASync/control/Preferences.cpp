@@ -10,6 +10,7 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 80000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 15000;
+const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
@@ -45,10 +46,11 @@ const QString Preferences::fileNameKey              = QString::fromAscii("fileNa
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
 const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
-
+const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
+const QString Preferences::lastStatsRequestKey      = QString::fromAscii("lastStatsRequest");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -777,7 +779,7 @@ void Preferences::unlink()
 bool Preferences::isCrashed()
 {
     mutex.lock();
-    bool value = settings->value(QString::fromAscii("isCrashed"), false).toBool();
+    bool value = settings->value(isCrashedKey, false).toBool();
     mutex.unlock();
     return value;
 }
@@ -785,7 +787,23 @@ bool Preferences::isCrashed()
 void Preferences::setCrashed(bool value)
 {
     mutex.lock();
-    settings->setValue(QString::fromAscii("isCrashed"), value);
+    settings->setValue(isCrashedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::lastStatsRequest()
+{
+    mutex.lock();
+    long long value = settings->value(lastStatsRequestKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastStatsRequest(long long value)
+{
+    mutex.lock();
+    settings->setValue(lastStatsRequestKey, value);
     settings->sync();
     mutex.unlock();
 }

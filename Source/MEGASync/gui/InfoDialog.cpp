@@ -301,7 +301,7 @@ void InfoDialog::updateTransfers()
     if((ui->sActiveTransfers->currentWidget() != ui->pUpdated) && !remainingDownloads && !remainingUploads)
     {
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        megaApi->getAccountDetails();
+        app->updateUserStats();
         app->showNotificationMessage(tr("All transfers have been completed"));
         app->onSyncStateChanged(megaApi);
     }

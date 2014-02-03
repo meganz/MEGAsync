@@ -108,6 +108,8 @@ public:
 
     bool isCrashed();
     void setCrashed(bool value);
+    long long lastStatsRequest();
+    void setLastStatsRequest(long long value);
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -128,6 +130,7 @@ public:
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
+    static const long long MIN_UPDATE_STATS_INTERVAL;
 
 protected:
 
@@ -193,7 +196,8 @@ protected:
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
     static const QString lastVersionKey;
-
+    static const QString isCrashedKey;
+    static const QString lastStatsRequestKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
