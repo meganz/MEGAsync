@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>XXXXX</translation>
+        <translation>[$1883]</translation>
     </message>
 </context>
 <context>
@@ -428,11 +428,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>XXXXX</translation>
+        <translation>[$1884]</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>XXXXX</translation>
+        <translation>[$1885]</translation>
     </message>
 </context>
 <context>
@@ -982,7 +982,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation>XXXXX</translation>
+        <translation>[$142]</translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1198,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>XXXXX</translation>
+        <translation>[$1883]</translation>
     </message>
 </context>
 <context>
