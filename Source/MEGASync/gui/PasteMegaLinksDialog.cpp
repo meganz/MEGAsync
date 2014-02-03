@@ -35,6 +35,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 {
 	QString text = ui->eLinks->toPlainText();
 	links = extractLinks(text);
+    links = links.toSet().toList();
 	if(links.size()==0)
 	{
         if(!text.trimmed().size())
