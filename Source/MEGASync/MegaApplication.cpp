@@ -1077,6 +1077,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
     {
         paused = request->getFlag();
+        preferences->setWasPaused(paused);
         if(paused)
         {
             trayMenu->removeAction(pauseAction);

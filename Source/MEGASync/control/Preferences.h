@@ -108,6 +108,9 @@ public:
 
     bool isCrashed();
     void setCrashed(bool value);
+    bool wasPaused();
+    void setWasPaused(bool value);
+
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
 
@@ -198,6 +201,7 @@ protected:
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
+    static const QString wasPausedKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
