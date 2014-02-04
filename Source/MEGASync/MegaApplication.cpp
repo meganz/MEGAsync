@@ -215,6 +215,7 @@ void MegaApplication::initialize()
     string tmpPath = basePath.toStdString();
     megaApi = new MegaApi(delegateListener, &tmpPath);
     uploader = new MegaUploader(megaApi);
+    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
     //Create GUI elements
     trayIcon = new QSystemTrayIcon();
@@ -529,9 +530,13 @@ void MegaApplication::cleanAll()
 }
 
 void MegaApplication::onDupplicateLink(QString link, QString name, long long handle)
-
 {
     addRecentFile(name, handle);
+}
+
+void MegaApplication::onDupplicateUpload(QString localPath, QString name, long long handle)
+{
+    addRecentFile(name, handle, localPath);
 }
 
 void MegaApplication::unlink()

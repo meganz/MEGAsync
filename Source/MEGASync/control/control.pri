@@ -11,7 +11,6 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/EncryptedSettings.cpp \
     $$PWD/CrashHandler.cpp \
     $$PWD/ExportProcessor.cpp \
-    $$PWD/AsyncFileCopy.cpp \
     $$PWD/Utilities.cpp
 
 HEADERS  +=  $$PWD/HTTPServer.h \
@@ -22,7 +21,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/EncryptedSettings.h \
     $$PWD/CrashHandler.h \
     $$PWD/ExportProcessor.h \
-    $$PWD/AsyncFileCopy.h \
     $$PWD/Utilities.h
 
 debug {
