@@ -891,7 +891,7 @@ void MegaApplication::onMessageClicked()
 //Called when the user wants to open the settings dialog
 void MegaApplication::openSettings()
 {
-	if(settingsDialog)
+    if(settingsDialog)
     {
         //If the dialog is active
 		if(settingsDialog->isVisible())
