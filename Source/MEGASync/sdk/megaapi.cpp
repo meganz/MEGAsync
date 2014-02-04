@@ -2391,6 +2391,9 @@ void MegaApi::fetchnodes_result(error e)
     fireOnRequestFinish(this, request, megaError);
 
     Preferences *preferences = Preferences::instance();
+    if(preferences->logged() && preferences->wasPaused())
+        this->pauseTransfers(true);
+
     if(preferences->logged() && !client->syncs.size())
     {
         //Start syncs

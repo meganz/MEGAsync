@@ -47,6 +47,7 @@ const QString Preferences::fileHandleKey            = QString::fromAscii("fileHa
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
 const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
+const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
@@ -803,6 +804,22 @@ void Preferences::setCrashed(bool value)
 {
     mutex.lock();
     settings->setValue(isCrashedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::wasPaused()
+{
+    mutex.lock();
+    bool value = settings->value(wasPausedKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setWasPaused(bool value)
+{
+    mutex.lock();
+    settings->setValue(wasPausedKey, value);
     settings->sync();
     mutex.unlock();
 }
