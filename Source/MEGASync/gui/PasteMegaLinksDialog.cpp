@@ -85,7 +85,8 @@ QString PasteMegaLinksDialog::checkLink(QString link)
 	}
 
 	link.truncate(73);
-	if(link.toUtf8().constData()[29]=='!')
+    QByteArray data = link.toUtf8();
+    if(data.constData()[29]=='!')
 		return link;
 
 	return QString();

@@ -33,6 +33,7 @@ public:
     static QPixmap getExtensionPixmapMedium(QString fileName);
     static QImage createThumbnail(QString imagePath, int size);
     static bool removeRecursively(QDir dir);
+    static void copyRecursively(QString srcPath, QString dstPath, bool overwrite = true);
     static void getFolderSize(QString folderPath, long long *size);
     static void log(QString message);
     static void log(const char *message);

@@ -103,6 +103,7 @@ public slots:
     void refreshTrayIcon();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, long long handle);
+    void onDupplicateUpload(QString localPath, QString name, long long handle);
 
 protected:
     void createTrayIcon();

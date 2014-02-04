@@ -316,6 +316,34 @@ bool Utilities::removeRecursively(QDir dir)
     return success;
 }
 
+void Utilities::copyRecursively(QString srcPath, QString dstPath, bool overwrite)
+{
+    QFileInfo source(srcPath);
+    if(!source.exists()) return;
+
+    QFile dst(dstPath);
+    if(dst.exists() && !overwrite)
+        return;
+
+    dst.remove();
+    if(source.isFile())
+    {
+        QFile src(srcPath);
+        src.copy(dstPath);
+    }
+    else if(source.isDir())
+    {
+        QDir dstDir(dstPath);
+        dstDir.mkpath(QString::fromAscii("."));
+        QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+        while (di.hasNext()) {
+            di.next();
+            if (!di.fileInfo().isSymLink())
+                copyRecursively(di.filePath(), dstPath + QDir::separator() + di.fileName());
+        }
+    }
+}
+
 void Utilities::log(QString message)
 {
     cout << "LOG: " << message.toUtf8().constData() << endl;

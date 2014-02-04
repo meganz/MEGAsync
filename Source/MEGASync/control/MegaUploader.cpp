@@ -1,62 +1,85 @@
 #include "MegaUploader.h"
 #include <QThread>
-#include "control/AsyncFileCopy.h"
-
+#include "control/Utilities.h"
 #include <QMessageBox>
+#include <QtCore>
 
 MegaUploader::MegaUploader(MegaApi *megaApi) : QObject(), delegateListener(this)
 {
     this->megaApi = megaApi;
 }
 
-bool MegaUploader::upload(QString path, MegaNode *parent)
+void MegaUploader::upload(QString path, MegaNode *parent)
 {
     return upload(QFileInfo(path), parent);
 }
 
-bool MegaUploader::upload(QFileInfo info, MegaNode *parent)
+void MegaUploader::upload(QFileInfo info, MegaNode *parent)
 {
+    NodeList *children =  megaApi->getChildren(parent);
+    QByteArray utf8name = info.fileName().toUtf8();
+    MegaNode *dupplicate = NULL;
+    for(int i=0; i<children->size(); i++)
+    {
+        MegaNode *child = children->get(i);
+        if(!strcmp(utf8name.constData(), child->getName()) &&
+            ((info.isDir() && (child->getType()==FOLDERNODE)) ||
+            (info.isFile() && (child->getType()==FILENODE) && (info.size() == child->getSize()))))
+        {
+            dupplicate = new MegaNode(child);
+            break;
+        }
+    }
+    delete children;
+
+    if(dupplicate)
+    {
+        if(dupplicate->getType() == FILENODE)
+        {
+            emit dupplicateUpload(info.absoluteFilePath(), info.fileName(), dupplicate->getHandle());
+        }
+        if(dupplicate->getType() == FOLDERNODE)
+        {
+            QDir dir(info.absoluteFilePath());
+            QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+            for(int i=0; i<entries.size(); i++)
+                upload(entries[i], dupplicate);
+        }
+        delete dupplicate;
+        return;
+    }
+
     string localPath = megaApi->getLocalPath(parent);
     if(localPath.size())
     {
+    #ifdef WIN32
         QString destPath = QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName();
-
-#ifdef WIN32
         if(destPath.startsWith(QString::fromAscii("\\\\?\\"))) destPath = destPath.mid(4);
-#endif
+    #else
+        QString destPath = QString::fromUtf8(localPath.data()) + QDir::separator() + info.fileName();
+    #endif
 
-        if(QFileInfo(destPath).exists())
+        QFileInfo dstInfo(destPath);
+        if(dstInfo.exists() && (dstInfo.size() != info.size()))
         {
             int res = QMessageBox::warning(NULL, tr("Warning"), tr("The destination folder is synced and you already have a file \n"
                                                          "inside it with the same name (%1).\n"
                                                          "If you continue the upload, the previous file will be overwritten.\n"
                                                          "Are you sure?").arg(info.fileName()), QMessageBox::Yes, QMessageBox::Cancel);
-            if(res != QMessageBox::Yes) return false;
+            if(res != QMessageBox::Yes) return;
         }
 
-        QThread *thread = new QThread();
-        AsyncFileCopy *fileCopy = new AsyncFileCopy(info.absoluteFilePath(), destPath);
-        fileCopy->moveToThread(thread);
-        thread->start();
-        connect(this, SIGNAL(startFileCopy()), fileCopy, SLOT(doWork()));
-        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-        connect(thread, SIGNAL(finished()), fileCopy, SLOT(deleteLater()));
-        emit startFileCopy();
-        return true;
+        QtConcurrent::run(Utilities::copyRecursively, info.absoluteFilePath(), destPath, true);
     }
-
-   if(info.isFile())
+    else if(info.isFile())
     {
         megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
-        return true;
     }
     else if(info.isDir())
     {
         folders.enqueue(info);
         megaApi->createFolder(info.fileName().toUtf8().constData(), parent, &delegateListener);
-        return true;
     }
-    return false;
 }
 
 void MegaUploader::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
