@@ -172,6 +172,20 @@ void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFold
     }
 }
 
+void Utilities::getFolderSize(QString folderPath, long long *size)
+{
+    QDir dir(folderPath);
+    QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
+    for(int i=0; i<entries.size(); i++)
+    {
+        QFileInfo info = entries[i];
+        if(info.isFile())
+            (*size)+=info.size();
+        else if(info.isDir())
+            getFolderSize(info.absoluteFilePath(), size);
+    }
+}
+
 QPixmap Utilities::getExtensionPixmap(QString fileName, QString prefix)
 {
     if(extensionIcons.isEmpty()) initializeExtensions();

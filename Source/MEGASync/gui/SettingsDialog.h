@@ -2,6 +2,10 @@
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QtCore>
+
 #include "BindFolderDialog.h"
 #include "Preferences.h"
 #include "sdk/megaapi.h"
@@ -22,6 +26,7 @@ public:
 
 public slots:
     void stateChanged();
+    void onCacheSizeAvailable();
     
 private slots:
     void on_bAccount_clicked();
@@ -66,6 +71,7 @@ private slots:
 
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
+    void on_bClearCache_clicked();
 
 protected:
     void changeEvent(QEvent * event);
@@ -80,6 +86,7 @@ private:
     QStringList syncNames;
     QStringList languageCodes;
     bool proxyOnly;
+    QFutureWatcher<long long> cacheSizeWatcher;
 
     void loadSyncSettings();
     void loadSettings();

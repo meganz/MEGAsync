@@ -44,11 +44,16 @@ void RecentFile::updateWidget()
         QFontMetrics fm = QFontMetrics(f);
         ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 
-        QImage image = Utilities::createThumbnail(localPath, 120);
-        if(!image.isNull())
-            ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
-        else
-            ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
+        if(!localPath.isEmpty())
+        {
+            QImage image = Utilities::createThumbnail(localPath, 120);
+            if(!image.isNull())
+                ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
+            else
+                ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
+        }
+        else ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
+
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
     }
 
@@ -115,7 +120,7 @@ void RecentFile::on_pArrow_clicked()
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 {
-    if(!QFileInfo(localPath).exists()) return;
+    if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
 
 	QMenu menu;
 	menu.addAction(tr("Open"), this, SLOT(openFile()));
@@ -125,7 +130,7 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 {
-    if(!QFileInfo(localPath).exists()) return;
+    if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
 
 	QMenu menu;
 	menu.addAction(tr("Open"), this, SLOT(openFile()));

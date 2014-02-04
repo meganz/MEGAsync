@@ -529,7 +529,12 @@ int Preferences::getNumSyncedFolders()
 QString Preferences::getSyncName(int num)
 {
     mutex.lock();
-    assert(logged());
+    assert(logged() && (syncNames.size()>num));
+    if(num >= syncNames.size())
+    {
+        mutex.unlock();
+        return QString();
+    }
     QString value = syncNames.at(num);
     mutex.unlock();
     return value;
@@ -538,7 +543,7 @@ QString Preferences::getSyncName(int num)
 QString Preferences::getLocalFolder(int num)
 {
     mutex.lock();
-    assert(logged() && localFolders.size()>num);
+    assert(logged() && (localFolders.size()>num));
     if(num >= localFolders.size())
     {
         mutex.unlock();
@@ -552,7 +557,12 @@ QString Preferences::getLocalFolder(int num)
 QString Preferences::getMegaFolder(int num)
 {
     mutex.lock();
-    assert(logged() && syncNames.size()>num);
+    assert(logged() && (megaFolders.size()>num));
+    if(num >= megaFolders.size())
+    {
+        mutex.unlock();
+        return QString();
+    }
     QString value = megaFolders.at(num);
     mutex.unlock();
     return value;
@@ -561,7 +571,12 @@ QString Preferences::getMegaFolder(int num)
 long long Preferences::getMegaFolderHandle(int num)
 {
     mutex.lock();
-    assert(logged() && megaFolderHandles.size()>num);
+    assert(logged() && (megaFolderHandles.size()>num));
+    if(num >= megaFolderHandles.size())
+    {
+        mutex.unlock();
+        return UNDEF;
+    }
     long long value = megaFolderHandles.at(num);
     mutex.unlock();
     return value;

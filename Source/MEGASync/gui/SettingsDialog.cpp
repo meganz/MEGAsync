@@ -14,6 +14,30 @@
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
+long long calculateCacheSize()
+{
+    Preferences *preferences = Preferences::instance();
+    long long cacheSize = 0;
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+    {
+        QString syncPath = preferences->getLocalFolder(i);
+        if(!syncPath.isEmpty())
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii("Rubbish"), &cacheSize);
+    }
+    return cacheSize;
+}
+
+void deleteCache()
+{
+    Preferences *preferences = Preferences::instance();
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+    {
+        QString syncPath = preferences->getLocalFolder(i);
+        if(!syncPath.isEmpty())
+            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii("Rubbish")));
+    }
+}
+
 SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
@@ -34,7 +58,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
+    connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
+    QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
+    cacheSizeWatcher.setFuture(futureCacheSize);
     ui->gCache->setVisible(false);
+
     setProxyOnly(proxyOnly);
 }
 
@@ -73,6 +101,16 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 void SettingsDialog::stateChanged()
 {
     ui->bApply->setEnabled(true);
+}
+
+void SettingsDialog::onCacheSizeAvailable()
+{
+    long long cacheSize = cacheSizeWatcher.result();
+    if(!cacheSize)
+        return;
+
+    ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
+    ui->gCache->setVisible(true);
 }
 
 void SettingsDialog::on_bAccount_clicked()
@@ -135,7 +173,9 @@ void SettingsDialog::on_bCancel_clicked()
 
 void SettingsDialog::on_bOk_clicked()
 {
-    saveSettings();
+    if(ui->bApply->isEnabled())
+        saveSettings();
+
     this->close();
 }
 
@@ -810,4 +850,10 @@ void SettingsDialog::changeEvent(QEvent *event)
         loadSettings();
     }
     QDialog::changeEvent(event);
+}
+
+void SettingsDialog::on_bClearCache_clicked()
+{
+    QtConcurrent::run(deleteCache);
+    ui->gCache->setVisible(false);
 }
