@@ -24,9 +24,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MEGAsync
 TEMPLATE = app
 
-debug {
+#debug {
     CONFIG += console
-}
+#}
 
 include(gui/gui.pri)
 include(sdk/sdk.pri)

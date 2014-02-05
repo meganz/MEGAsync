@@ -14,7 +14,7 @@
 #include <QNetworkProxy>
 
 const int MegaApplication::VERSION_CODE = 1005;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.5");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.5a");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -140,7 +140,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoDialog = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
-    uploadFolderSelector = NULL;
     reboot = false;
     translator = NULL;
     exitAction = NULL;
@@ -752,13 +751,13 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
     //If the dialog to select the upload folder is active, return.
     //Files will be uploaded when the user selects the upload folder
-    if(uploadFolderSelector)
+    if(uploadFolderSelector.isVisible())
     {
-        uploadFolderSelector->showMinimized();
-        uploadFolderSelector->setWindowState(Qt::WindowActive);
-        uploadFolderSelector->showNormal();
-        uploadFolderSelector->raise();
-        uploadFolderSelector->activateWindow();
+        uploadFolderSelector.showMinimized();
+        uploadFolderSelector.setWindowState(Qt::WindowActive);
+        uploadFolderSelector.showNormal();
+        uploadFolderSelector.raise();
+        uploadFolderSelector.activateWindow();
         return;
     }
 
@@ -772,8 +771,6 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 		return;
 	}
 
-    //If there isn't a default upload folder, show the dialog
-	uploadFolderSelector = new UploadToMegaDialog(megaApi);
     showUploadDialog();
     return;
 }
@@ -788,27 +785,24 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::showUploadDialog()
 {
-    uploadFolderSelector->showMinimized();
-    uploadFolderSelector->setWindowState(Qt::WindowActive);
-    uploadFolderSelector->showNormal();
-    uploadFolderSelector->raise();
-    uploadFolderSelector->activateWindow();
-    uploadFolderSelector->exec();
+    uploadFolderSelector.initialize(megaApi);
+    uploadFolderSelector.showMinimized();
+    uploadFolderSelector.setWindowState(Qt::WindowActive);
+    uploadFolderSelector.showNormal();
+    uploadFolderSelector.raise();
+    uploadFolderSelector.activateWindow();
+    uploadFolderSelector.exec();
 
-	if(uploadFolderSelector->result()==QDialog::Accepted)
+    if(uploadFolderSelector.result()==QDialog::Accepted)
 	{
         //If the dialog is accepted, get the destination node
-		handle nodeHandle = uploadFolderSelector->getSelectedHandle();
-		if(uploadFolderSelector->isDefaultFolder())
-			preferences->setUploadFolder(nodeHandle);
+        handle nodeHandle = uploadFolderSelector.getSelectedHandle();
+        if(uploadFolderSelector.isDefaultFolder())
+            preferences->setUploadFolder(nodeHandle);
         processUploadQueue(nodeHandle);
 	}
     //If the dialog is rejected, cancel uploads
 	else uploadQueue.clear();
-
-    //Free the dialog
-	delete uploadFolderSelector;
-	uploadFolderSelector = NULL;
 }
 
 //Called when the link import finishes
