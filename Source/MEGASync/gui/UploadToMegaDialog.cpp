@@ -3,22 +3,28 @@
 #include "gui/NodeSelector.h"
 #include "control/Utilities.h"
 
-UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
+UploadToMegaDialog::UploadToMegaDialog(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::UploadToMegaDialog)
 {
 	ui->setupUi(this);
 	setAttribute(Qt::WA_QuitOnClose, false);
-
-	selectedHandle = UNDEF;
-    ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
-	this->megaApi = megaApi;
 	this->delegateListener = new QTMegaRequestListener(this);
 }
 
 UploadToMegaDialog::~UploadToMegaDialog()
 {
-	delete ui;
+    delete ui;
+}
+
+void UploadToMegaDialog::initialize(MegaApi *megaApi)
+{
+    selectedHandle = UNDEF;
+    ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
+    ui->cDefaultPath->setChecked(false);
+    this->megaApi = megaApi;
+    ui->bChange->setEnabled(true);
+    ui->bOK->setEnabled(true);
 }
 
 handle UploadToMegaDialog::getSelectedHandle()
@@ -33,6 +39,8 @@ bool UploadToMegaDialog::isDefaultFolder()
 
 void UploadToMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
+    ui->bChange->setEnabled(true);
+    ui->bOK->setEnabled(true);
     MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
 	if(e->getErrorCode() != MegaError::API_OK || !node)
 	{
@@ -86,6 +94,8 @@ void UploadToMegaDialog::on_bOK_clicked()
 
     if(!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
     {
+        ui->bChange->setEnabled(false);
+        ui->bOK->setEnabled(false);
         MegaNode *rootNode = megaApi->getRootNode();
         megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
         delete rootNode;
