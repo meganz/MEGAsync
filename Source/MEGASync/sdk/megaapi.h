@@ -110,6 +110,8 @@ using namespace mega;
 #include "mega/win32/megafs.h"
 #include "win32/megaapiwait.h"
 #include "mega.h"
+#include "MegaProxySettings.h"
+
 
 class MegaHttpIO : public MegaApiWinHttpIO {};
 class MegaFileSystemAccess : public WinFileSystemAccess {};
@@ -756,6 +758,7 @@ public:
 	void confirmAccount(const char* link, const char *password, MegaRequestListener *listener = NULL);
 	void fastConfirmAccount(const char* link, const char *base64pwkey, MegaRequestListener *listener = NULL);
     void setProxySettings(MegaProxySettings *proxySettings);
+    MegaProxySettings *getAutoProxySettings();
     int isLoggedIn();
 	const char* getMyEmail();
 

@@ -30,7 +30,8 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/sqlite3.c \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
-    $$PWD/qt/QTMegaListener.cpp
+    $$PWD/qt/QTMegaListener.cpp \
+    $$PWD/MegaProxySettings.cpp
 
 win32 {
 SOURCES += $$PWD/src/win32/net.cpp  \
@@ -83,7 +84,8 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
-	    $$PWD/qt/QTMegaListener.h
+	    $$PWD/qt/QTMegaListener.h \
+	    $$PWD/MegaProxySettings.h
 
 win32 {
     HEADERS  += $$PWD/include/mega/win32/meganet.h  \

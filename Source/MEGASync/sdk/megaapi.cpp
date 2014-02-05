@@ -1179,6 +1179,26 @@ void MegaApi::setProxySettings(MegaProxySettings *proxySettings)
     httpio->setProxy(&localProxySettings);
 }
 
+MegaProxySettings *MegaApi::getAutoProxySettings()
+{
+    MegaProxySettings *proxySettings = new MegaProxySettings;
+    MegaProxySettings *localProxySettings = httpio->getAutoProxySettings();
+    proxySettings->setProxyType(localProxySettings->getProxyType());
+    if(localProxySettings->getProxyType() == MegaProxySettings::CUSTOM)
+    {
+        LOG("Custom AutoProxy");
+        string localProxyURL = localProxySettings->getProxyURL();
+        string proxyURL;
+        fsAccess->local2path(&localProxyURL, &proxyURL);
+        proxySettings->setProxyURL(&proxyURL);
+        LOG(proxyURL.c_str());
+    }
+    else LOG("No AutoProxy");
+
+    delete localProxySettings;
+    return proxySettings;
+}
+
 void MegaApi::loop()
 {
     while(true)
