@@ -6,26 +6,19 @@
 
 namespace mega {
 
-MegaProxySettings::MegaProxySettings() { proxyType = AUTO; }
-void MegaProxySettings::setProxyType(int proxyType) { this->proxyType = proxyType; }
-void MegaProxySettings::setProxyURL(string *proxyURL) { this->proxyURL = *proxyURL; }
-void MegaProxySettings::setCredentials(string *username, string *password) { this->username = *username; this->password = *password; }
-int MegaProxySettings::getProxyType() { return proxyType; }
-string MegaProxySettings::getProxyURL() { return this->proxyURL; }
-bool MegaProxySettings::credentialsNeeded() { return (username.size() != 0); }
-string MegaProxySettings::getUsername() { return username; }
-string MegaProxySettings::getPassword() { return password; }
-
 void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
 {
+    LOG("Set proxy");
     if((proxySettings->getProxyType() == MegaProxySettings::CUSTOM) &&
         (proxySettings->credentialsNeeded()))
     {
+        LOG("Auth proxy");
         proxyUsername = proxySettings->getUsername();
         proxyPassword = proxySettings->getPassword();
     }
     else
     {
+        LOG("No Auth");
         proxyUsername.clear();
         proxyPassword.clear();
     }
@@ -57,102 +50,130 @@ void MegaApiWinHttpIO::setProxy(MegaProxySettings *proxySettings)
         LOG("Auto Proxy");
         Preferences *preferences = Preferences::instance();
         preferences->setProxyServer(QString());
-        WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieProxyConfig = {0};
-        if(WinHttpGetIEProxyConfigForCurrentUser(&ieProxyConfig) == TRUE)
+        MegaProxySettings *proxySettings = getAutoProxySettings();
+
+        if(proxySettings->getProxyType() == MegaProxySettings::CUSTOM)
         {
-            if(ieProxyConfig.lpszProxy)
+            LOG("Custom Proxy");
+            string proxyURL = proxySettings->getProxyURL();
+            WINHTTP_PROXY_INFO proxyInfo;
+            proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
+            proxyInfo.lpszProxy = (LPWSTR)proxyURL.data();
+            proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
+            WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
+
+            QString ieProxy = QString::fromWCharArray((LPWSTR)proxyURL.data());
+            QStringList params = ieProxy.split(QChar::fromAscii(':'));
+            preferences->setProxyServer(params[0]);
+            if(params.size()==2)
             {
-                QString ieProxy = QString::fromWCharArray(ieProxyConfig.lpszProxy);
-                QStringList params = ieProxy.split(QChar::fromAscii(':'));
                 preferences->setProxyServer(params[0]);
-                if(params.size()>1)
-                    preferences->setProxyPort(params[1].toInt());
-
-                LOG(QString::fromWCharArray(ieProxyConfig.lpszProxy));
-
-                WINHTTP_PROXY_INFO proxyInfo;
-                proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
-                proxyInfo.lpszProxy = ieProxyConfig.lpszProxy;
-                proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
-                WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
+                preferences->setProxyPort(params[1].toInt());
             }
-            else
-            {
-                if((ieProxyConfig.lpszAutoConfigUrl) || (ieProxyConfig.fAutoDetect == TRUE))
-                {
-                    WINHTTP_AUTOPROXY_OPTIONS autoProxyOptions;
-                    if(ieProxyConfig.lpszAutoConfigUrl)
-                    {
-                        LOG("Auto-config Proxy");
-                        LOG(QString::fromWCharArray(ieProxyConfig.lpszAutoConfigUrl));
-
-                        autoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
-                        autoProxyOptions.lpszAutoConfigUrl = ieProxyConfig.lpszAutoConfigUrl;
-                        autoProxyOptions.dwAutoDetectFlags = 0;
-                    }
-                    else
-                    {
-                        LOG("Auto detect");
-
-                        autoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
-                        autoProxyOptions.lpszAutoConfigUrl = NULL;
-                        autoProxyOptions.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DHCP | WINHTTP_AUTO_DETECT_TYPE_DNS_A;
-                    }
-                    autoProxyOptions.fAutoLogonIfChallenged = TRUE;
-                    autoProxyOptions.lpvReserved = NULL;
-                    autoProxyOptions.dwReserved = 0;
-
-                    WINHTTP_PROXY_INFO proxyInfo;
-                    if(WinHttpGetProxyForUrl(hSession, L"https://g.api.mega.co.nz/", &autoProxyOptions, &proxyInfo))
-                    {
-                        Preferences *preferences = Preferences::instance();
-                        if(proxyInfo.lpszProxy)
-                        {
-                            QString ieProxy = QString::fromWCharArray(proxyInfo.lpszProxy);
-                            QStringList params = ieProxy.split(QChar::fromAscii(':'));
-                            preferences->setProxyServer(params[0]);
-                            if(params.size()>1)
-                                preferences->setProxyPort(params[1].toInt());
-                        }
-                        WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
-                    }
-                    else
-                    {
-                        LOG("No Proxy found for URL");
-
-                        WINHTTP_PROXY_INFO proxyInfo;
-                        proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
-                        proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
-                        proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
-                        WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
-                    }
-                }
-                else
-                {
-                    LOG("No valid Proxy found in IE settings");
-
-                    WINHTTP_PROXY_INFO proxyInfo;
-                    proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
-                    proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
-                    proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
-                    WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
-                }
-            }
+            LOG(preferences->proxyHostAndPort());
         }
         else
         {
-            LOG("No Proxy found. No IE proxy config found");
-
+            LOG("No Proxy");
             WINHTTP_PROXY_INFO proxyInfo;
             proxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NO_PROXY;
             proxyInfo.lpszProxy = WINHTTP_NO_PROXY_NAME;
             proxyInfo.lpszProxyBypass = WINHTTP_NO_PROXY_BYPASS;
             WinHttpSetOption(hSession, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo));
         }
-        if(ieProxyConfig.lpszProxy) GlobalFree(ieProxyConfig.lpszProxy);
-        if(ieProxyConfig.lpszProxyBypass) GlobalFree(ieProxyConfig.lpszProxyBypass);
-        if(ieProxyConfig.lpszAutoConfigUrl) GlobalFree(ieProxyConfig.lpszAutoConfigUrl);
+        delete proxySettings;
     }
+}
+
+MegaProxySettings *MegaApiWinHttpIO::getAutoProxySettings()
+{
+    LOG("Get Auto Proxy");
+    MegaProxySettings *proxySettings = new MegaProxySettings();
+    proxySettings->setProxyType(MegaProxySettings::NONE);
+
+    WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieProxyConfig = {0};
+    if(WinHttpGetIEProxyConfigForCurrentUser(&ieProxyConfig) == TRUE)
+    {
+        LOG("ieProxy");
+        if(ieProxyConfig.lpszProxy)
+        {
+            LOG("ieProxy available");
+            string proxyURL;
+            proxySettings->setProxyType(MegaProxySettings::CUSTOM);
+            int len = lstrlen(ieProxyConfig.lpszProxy);
+            proxyURL.assign((const char *)ieProxyConfig.lpszProxy, (len+1) * sizeof(wchar_t));
+
+            //Only save one proxy
+            for(int i=0; i<len; i++)
+            {
+                wchar_t *character = (wchar_t *)(proxyURL.data()+(i*sizeof(wchar_t)));
+                if(((*character) == L' ') || ((*character) == L';'))
+                {
+                    proxyURL.resize(i*sizeof(wchar_t));
+                    len = i;
+                    proxyURL.append("",1);
+                    break;
+                }
+            }
+
+            //Remove protocol prefix, if any
+            for(int i=len-1; i>=0; i--)
+            {
+                wchar_t *character = (wchar_t *)(proxyURL.data()+(i*sizeof(wchar_t)));
+                if((*character) == L'/')
+                {
+                    proxyURL = proxyURL.substr((i+1)*sizeof(wchar_t));
+                    break;
+                }
+            }
+
+            proxySettings->setProxyURL(&proxyURL);
+
+        }
+        else if((ieProxyConfig.lpszAutoConfigUrl) || (ieProxyConfig.fAutoDetect == TRUE))
+        {
+            WINHTTP_AUTOPROXY_OPTIONS autoProxyOptions;
+            if(ieProxyConfig.lpszAutoConfigUrl)
+            {
+                LOG("Auto-config Proxy");
+                LOG(QString::fromWCharArray(ieProxyConfig.lpszAutoConfigUrl));
+
+                autoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
+                autoProxyOptions.lpszAutoConfigUrl = ieProxyConfig.lpszAutoConfigUrl;
+                autoProxyOptions.dwAutoDetectFlags = 0;
+            }
+            else
+            {
+                LOG("Auto detect");
+                autoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_AUTO_DETECT;
+                autoProxyOptions.lpszAutoConfigUrl = NULL;
+                autoProxyOptions.dwAutoDetectFlags = WINHTTP_AUTO_DETECT_TYPE_DHCP | WINHTTP_AUTO_DETECT_TYPE_DNS_A;
+            }
+            autoProxyOptions.fAutoLogonIfChallenged = TRUE;
+            autoProxyOptions.lpvReserved = NULL;
+            autoProxyOptions.dwReserved = 0;
+
+            WINHTTP_PROXY_INFO proxyInfo;
+            if(WinHttpGetProxyForUrl(hSession, L"https://g.api.mega.co.nz/", &autoProxyOptions, &proxyInfo))
+            {
+                LOG("Proxy for URL");
+                if(proxyInfo.lpszProxy)
+                {
+                    LOG("Valid proxy for URL");
+                    string proxyURL;
+                    proxySettings->setProxyType(MegaProxySettings::CUSTOM);
+                    proxyURL.assign((const char *)proxyInfo.lpszProxy, (lstrlen(proxyInfo.lpszProxy)+1) * sizeof(wchar_t));
+                    proxySettings->setProxyURL(&proxyURL);
+                }
+            }
+        }
+    }
+
+    if(ieProxyConfig.lpszProxy) GlobalFree(ieProxyConfig.lpszProxy);
+    if(ieProxyConfig.lpszProxyBypass) GlobalFree(ieProxyConfig.lpszProxyBypass);
+    if(ieProxyConfig.lpszAutoConfigUrl) GlobalFree(ieProxyConfig.lpszAutoConfigUrl);
+
+    return proxySettings;
 }
 
 void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)

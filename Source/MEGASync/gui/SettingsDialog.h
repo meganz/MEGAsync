@@ -5,6 +5,11 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtCore>
+#include <QNetworkProxy>
+#include <QNetworkAccessManager>
+#include <QProgressDialog>
+#include <QCloseEvent>
+#include <QAuthenticator>
 
 #include "BindFolderDialog.h"
 #include "Preferences.h"
@@ -13,6 +18,15 @@
 namespace Ui {
 class SettingsDialog;
 }
+
+class MegaProgressDialog : public QProgressDialog
+{
+public:
+    MegaProgressDialog(const QString & labelText, const QString & cancelButtonText, int minimum, int maximum, QWidget * parent = 0, Qt::WindowFlags f = 0);
+protected:
+    void reject();
+    void closeEvent(QCloseEvent * event);
+};
 
 class MegaApplication;
 class SettingsDialog : public QDialog
@@ -72,6 +86,9 @@ private slots:
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
+    void onProxyTestTimeout();
+    void onProxyTestFinished(QNetworkReply* reply);
+    void onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator* auth);
 
 protected:
     void changeEvent(QEvent * event);
@@ -87,10 +104,14 @@ private:
     QStringList languageCodes;
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
+    QNetworkAccessManager *networkAccess;
+    MegaProgressDialog *proxyTestProgressDialog;
+    QTimer proxyTestTimer;
+    bool shouldClose;
 
     void loadSyncSettings();
     void loadSettings();
-    void saveSettings();
+    bool saveSettings();
     void updateAddButton();
 };
 

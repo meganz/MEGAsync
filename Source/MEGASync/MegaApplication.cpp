@@ -274,11 +274,15 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::updateTrayIcon()
 {
     if(!trayIcon) return;
-
-    if(paused)
+    if(trayIcon->contextMenu() == initialMenu)
+    {
+        LOG("STATE: Logging in...");
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
+    }
+    else if(paused)
     {
         LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
-
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
     }
