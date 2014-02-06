@@ -50,6 +50,7 @@ public:
     void setLanguage(QString &value);
     bool updateAutomatically();
     void setUpdateAutomatically(bool value);
+    bool canUpdate();
     int uploadLimitKB();
     void setUploadLimitKB(int value);
     int proxyType();
@@ -69,6 +70,12 @@ public:
     QString proxyHostAndPort();
     long long lastExecutionTime();
     void setLastExecutionTime(long long time);
+
+    long long lastUpdateTime();
+    void setLastUpdateTime(long long time);
+    int lastUpdateVersion();
+    void setLastUpdateVersion(int version);
+
 
 	QString downloadFolder();
 	void setDownloadFolder(QString value);
@@ -134,6 +141,9 @@ public:
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
+    static const int REBOOT_DELAY_MS;
+    static const int STATE_REFRESH_INTERVAL_MS;
+    static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
 
 protected:
 
@@ -202,6 +212,8 @@ protected:
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
     static const QString wasPausedKey;
+    static const QString lastUpdateTimeKey;
+    static const QString lastUpdateVersionKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

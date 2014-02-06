@@ -15,6 +15,7 @@
 #include <QDateTime>
 
 #include "sdk/megaapi.h"
+#include "control/Preferences.h"
 
 class UpdateTask : public QObject
 {
@@ -42,6 +43,7 @@ protected:
    bool alreadyDownloaded(QString relativePath, QString fileSignature);
    bool alreadyExists(QString absolutePath, QString fileSignature);
 
+   Preferences *preferences;
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;
@@ -54,6 +56,10 @@ protected:
    QDir updateFolder;
    QDir backupFolder;
    QDir appFolder;
+   QTimer *updateTimer;
+   bool forceInstall;
+   bool running;
+   bool forceCheck;
 
    static const unsigned int INITIAL_DELAY_SECS;
    static const unsigned int RETRY_INTERVAL_SECS;
@@ -64,15 +70,19 @@ protected:
 
 signals:
    void updateCompleted();
+   void updateAvailable(bool requested);
+   void updateNotFound(bool requested);
+   void updateError();
 
 private slots:
    void downloadFinished(QNetworkReply* reply);
    void onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*);
-   void tryUpdate();
 
 public slots:
-   void doWork();
-
+   void startUpdateThread();
+   void installUpdate();
+   void checkForUpdates();
+   void tryUpdate();
 };
 
 #endif // UPDATETASK_H

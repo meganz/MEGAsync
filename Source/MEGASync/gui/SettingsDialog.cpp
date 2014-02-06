@@ -338,6 +338,9 @@ void SettingsDialog::loadSettings()
         if(ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
             ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
 
+        if(!preferences->canUpdate())
+            ui->bUpdate->setEnabled(false);
+
         //Account
         ui->lEmail->setText(preferences->email());
         if(preferences->totalStorage()==0)
@@ -471,10 +474,10 @@ bool SettingsDialog::saveSettings()
         bool updateAutomatically = ui->cAutoUpdate->isChecked();
         if(updateAutomatically != preferences->updateAutomatically())
         {
-            if(updateAutomatically) app->startUpdateTask();
-            else app->stopUpdateTask();
+            preferences->setUpdateAutomatically(updateAutomatically);
+            if(updateAutomatically)
+                on_bUpdate_clicked();
         }
-        preferences->setUpdateAutomatically(updateAutomatically);
 
         bool startOnStartup = ui->cStartOnStartup->isChecked();
         Platform::startOnStartup(startOnStartup);
@@ -959,6 +962,11 @@ void SettingsDialog::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthe
         auth->setUser(ui->eProxyUsername->text());
         auth->setPassword(ui->eProxyPassword->text());
     }
+}
+
+void SettingsDialog::on_bUpdate_clicked()
+{
+    app->checkForUpdates();
 }
 
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText, int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :

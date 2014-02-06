@@ -18,6 +18,9 @@ UpdateTask::UpdateTask(QObject *parent) :
 {
     m_WebCtrl = NULL;
     signatureChecker = NULL;
+    forceInstall = false;
+    running = false;
+    forceCheck = false;
 }
 
 UpdateTask::~UpdateTask()
@@ -26,9 +29,25 @@ UpdateTask::~UpdateTask()
     delete signatureChecker;
 }
 
-void UpdateTask::doWork()
+void UpdateTask::installUpdate()
+{
+    forceInstall = true;
+    tryUpdate();
+}
+
+void UpdateTask::checkForUpdates()
+{
+    forceCheck = true;
+    tryUpdate();
+}
+
+void UpdateTask::startUpdateThread()
 {
     if(m_WebCtrl) return;
+
+    updateTimer = new QTimer();
+    updateTimer->setSingleShot(true);
+    connect(updateTimer, SIGNAL(timeout()), this, SLOT(tryUpdate()));
 
     QString basePath = MegaApplication::applicationDirPath() + QDir::separator();
     appFolder = QDir(basePath);
@@ -44,12 +63,26 @@ void UpdateTask::doWork()
     asymkey.setkey(AsymmCipher::PUBKEY,(byte*)pubks.data(), pubks.size());
 
     signatureChecker = new HashSignature(new Hash());
-    QTimer::singleShot(INITIAL_DELAY_SECS*1000, this, SLOT(tryUpdate()));
+    preferences = Preferences::instance();
+
+    updateTimer->start(INITIAL_DELAY_SECS*1000);
 }
 
 void UpdateTask::tryUpdate()
 {
     LOG("tryUpdate");
+    if(running) return;
+
+    if(!forceInstall && !forceCheck &&
+       (!preferences->updateAutomatically()) &&
+       ((QDateTime::currentMSecsSinceEpoch()-preferences->lastUpdateTime())
+            < Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS))
+    {
+        postponeUpdate();
+    }
+
+    running = true;
+    updateTimer->stop();
     initialCleanup();
     downloadFile(UPDATE_CHECK_URL);
 }
@@ -85,7 +118,15 @@ void UpdateTask::finalCleanup()
 void UpdateTask::postponeUpdate()
 {
     LOG("postponeUpdate");
-    QTimer::singleShot(RETRY_INTERVAL_SECS*1000, this, SLOT(tryUpdate()));
+    if(forceInstall)
+        emit updateError();
+    else
+        emit updateNotFound(forceCheck);
+
+    updateTimer->start(RETRY_INTERVAL_SECS*1000);
+    forceInstall = false;
+    running = false;
+    forceCheck = false;
 }
 
 void UpdateTask::downloadFile(QString url)
@@ -373,18 +414,33 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     }
 
     //All files have been processed. Apply update
-    if(!performUpdate())
+    if(preferences->updateAutomatically() || forceInstall)
     {
-        postponeUpdate();
-        return;
-    }
+        if(!performUpdate())
+        {
+            postponeUpdate();
+            return;
+        }
 
-    finalCleanup();
+        finalCleanup();
+    }
+    else
+    {
+        LOG("Update ready");
+        emit updateAvailable(forceCheck ||
+           (QDateTime::currentMSecsSinceEpoch()-preferences->lastUpdateTime())
+                >= Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS);
+        preferences->setLastUpdateTime(QDateTime::currentMSecsSinceEpoch());
+        preferences->setLastUpdateVersion(updateVersion);
+        updateTimer->start(RETRY_INTERVAL_SECS*1000);
+    }
+    forceInstall = false;
+    forceCheck = false;
+    running = false;
 }
 
 void UpdateTask::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *auth)
 {
-    Preferences *preferences = Preferences::instance();
     auth->setUser(preferences->getProxyUsername());
     auth->setPassword(preferences->getProxyPassword());
 }

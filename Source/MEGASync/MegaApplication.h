@@ -76,9 +76,12 @@ public:
     void showUpdatedMessage();
     void updateUserStats();
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString());
+    void checkForUpdates();
 
 signals:
     void startUpdaterThread();
+    void tryUpdate();
+    void installUpdate();
 
 public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -96,6 +99,9 @@ public slots:
 	void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
+    void onUpdateAvailable(bool requested);
+    void onUpdateNotFound(bool requested);
+    void onUpdateError();
     void rebootApplication();
     void exitApplication();
     void pauseTransfers(bool pause);
@@ -104,6 +110,7 @@ public slots:
     void cleanAll();
     void onDupplicateLink(QString link, QString name, long long handle);
     void onDupplicateUpload(QString localPath, QString name, long long handle);
+    void onInstallUpdateClicked();
 
 protected:
     void createTrayIcon();
@@ -124,6 +131,7 @@ protected:
     QAction *aboutAction;
     QAction *changeProxyAction;
     QAction *initialExitAction;
+    QAction *updateAction;
 
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
@@ -145,6 +153,7 @@ protected:
     MegaUploader *uploader;
     QTimer *refreshTimer;
     QTranslator *translator;
+    QString lastTrayMessage;
 
     static QString appPath;
     static QString appDirPath;
