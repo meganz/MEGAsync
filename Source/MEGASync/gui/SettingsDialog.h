@@ -89,6 +89,7 @@ private slots:
     void onProxyTestTimeout();
     void onProxyTestFinished(QNetworkReply* reply);
     void onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator* auth);
+    void on_bUpdate_clicked();
 
 protected:
     void changeEvent(QEvent * event);

@@ -14,7 +14,7 @@
 #include <QNetworkProxy>
 
 const int MegaApplication::VERSION_CODE = 1005;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.5a");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.5b");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -151,6 +151,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayMenu = NULL;
     waiting = false;
     updated = false;
+    updateAction = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -234,7 +235,7 @@ void MegaApplication::initialize()
     initialMenu->addAction(initialExitAction);
 
     refreshTimer = new QTimer();
-    refreshTimer->start(10000);
+    refreshTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
 
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
@@ -542,26 +543,46 @@ void MegaApplication::onDupplicateUpload(QString localPath, QString name, long l
     addRecentFile(name, handle, localPath);
 }
 
+void MegaApplication::onInstallUpdateClicked()
+{
+    if(trayMenu)
+        trayMenu->removeAction(updateAction);
+    delete updateAction;
+    updateAction = NULL;
+
+    showInfoMessage(tr("Installing update..."));
+    emit installUpdate();
+}
+
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
     //delete httpServer;
     //httpServer = NULL;
     stopSyncs();
+    stopUpdateTask();
     Platform::stopShellDispatcher();
     megaApi->logout();
 }  
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
-    if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Information);
+    if(trayIcon)
+    {
+        lastTrayMessage = message;
+        trayIcon->showMessage(title, message, QSystemTrayIcon::Information);
+    }
     else QMessageBox::information(NULL, title, message);
 }
 
 void MegaApplication::showWarningMessage(QString message, QString title)
 {
     if(!preferences->showNotifications()) return;
-    if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Warning);
+    if(trayIcon)
+    {
+        lastTrayMessage = message;
+        trayIcon->showMessage(title, message, QSystemTrayIcon::Warning);
+    }
     else QMessageBox::warning(NULL, title, message);
 }
 
@@ -573,7 +594,11 @@ void MegaApplication::showErrorMessage(QString message, QString title)
 void MegaApplication::showNotificationMessage(QString message, QString title)
 {
     if(!preferences->showNotifications()) return;
-    if(trayIcon) trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 8000);
+    if(trayIcon)
+    {
+        lastTrayMessage = message;
+        trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 8000);
+    }
 }
 
 //KB/s
@@ -585,14 +610,20 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
-    if(!preferences->updateAutomatically()) return;
-
-    if(!updateThread.isRunning())
+    if(!updateThread.isRunning() && preferences->canUpdate())
     {
         updateTask.moveToThread(&updateThread);
-        updateThread.start();
-        connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(doWork()), Qt::UniqueConnection);
+
+        connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);
+        connect(this, SIGNAL(tryUpdate()), &updateTask, SLOT(checkForUpdates()), Qt::UniqueConnection);
+        connect(this, SIGNAL(installUpdate()), &updateTask, SLOT(installUpdate()), Qt::UniqueConnection);
+
         connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
+        connect(&updateTask, SIGNAL(updateAvailable(bool)), this, SLOT(onUpdateAvailable(bool)), Qt::UniqueConnection);
+        connect(&updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
+        connect(&updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
+
+        updateThread.start();
         emit startUpdaterThread();
     }
 }
@@ -683,6 +714,12 @@ void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QStr
 {
     if(infoDialog)
         infoDialog->addRecentFile(fileName, fileHandle, localPath);
+}
+
+void MegaApplication::checkForUpdates()
+{
+    this->showInfoMessage(tr("Checking for updates..."));
+    emit tryUpdate();
 }
 
 void MegaApplication::pauseSync()
@@ -830,7 +867,45 @@ void MegaApplication::onUpdateCompleted()
 {
     LOG("Update completed. Initializing a silent reboot...");
     reboot = true;
-    QTimer::singleShot(10000, this, SLOT(rebootApplication()));
+    QTimer::singleShot(Preferences::REBOOT_DELAY_MS, this, SLOT(rebootApplication()));
+}
+
+void MegaApplication::onUpdateAvailable(bool requested)
+{
+    if(!updateAction && (trayIcon->contextMenu()==trayMenu))
+    {
+        updateAction = new QAction(tr("Install update"), this);
+        connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+        if(trayMenu && !trayMenu->actions().contains(updateAction))
+        {
+            trayMenu->addAction(updateAction);
+            trayIcon->setContextMenu(trayMenu);
+        }
+    }
+
+    if(requested)
+        showInfoMessage(tr("A new version of MEGAsync is available! Click on this message to install it"));
+}
+
+void MegaApplication::onUpdateNotFound(bool requested)
+{
+    if(updateAction && (trayIcon->contextMenu()==trayMenu))
+    {
+        if(trayMenu->actions().contains(updateAction))
+        {
+            trayMenu->removeAction(updateAction);
+            delete updateAction;
+            updateAction = NULL;
+        }
+    }
+
+    if(requested)
+        showInfoMessage(tr("No updates available"));
+}
+
+void MegaApplication::onUpdateError()
+{
+    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from https://mega.co.nz/#sync"));
 }
 
 //Called when users click in the tray icon
@@ -888,7 +963,16 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 void MegaApplication::onMessageClicked()
 {
     LOG("onMessageClicked");
-    trayIconActivated(QSystemTrayIcon::Trigger);
+    if(lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
+    {
+        if(trayMenu)
+            trayMenu->removeAction(updateAction);
+        delete updateAction;
+        updateAction = NULL;
+        emit installUpdate();
+    }
+    else
+        trayIconActivated(QSystemTrayIcon::Trigger);
 }
 
 //Called when the user wants to open the settings dialog
@@ -1247,7 +1331,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         onSyncStateChanged(megaApi);
         if(reboot)
         {
-            QTimer::singleShot(10000, this, SLOT(rebootApplication()));
+            QTimer::singleShot(Preferences::REBOOT_DELAY_MS, this, SLOT(rebootApplication()));
         }
 	}
 }
@@ -1448,3 +1532,4 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 */
+
