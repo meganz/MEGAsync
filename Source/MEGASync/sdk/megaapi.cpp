@@ -2591,12 +2591,7 @@ void MegaApi::notify_retry(dstime dsdelta)
 void MegaApi::request_error(error e)
 {
 	MegaError megaError(e);
-	cout << "FATAL: Request failed (" << megaError.getErrorString() << "), exiting" << endl;
-    if(requestMap.find(client->restag) == requestMap.end()) return;
-    MegaRequest* request = requestMap.at(client->restag);
-    if(!request) return;
-
-	fireOnRequestFinish(this, request, megaError);
+    ((MegaApplication *)qApp)->showErrorMessage(QCoreApplication::translate("MegaError", "Error") + QString::fromAscii(":") + megaError.QgetErrorString());
 }
 
 // login result
