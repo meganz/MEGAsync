@@ -27,26 +27,26 @@
 namespace mega {
 
 // maps attribute names to attribute values
-typedef map<nameid,string> attr_map;
+typedef map<nameid, string> attr_map;
 
 struct MEGA_API AttrMap
 {
-	attr_map map;
+    attr_map map;
 
-	// compute rough storage size
-	unsigned storagesize(int);
+    // compute rough storage size
+    unsigned storagesize(int);
 
-	// convert nameid to string
-	int nameid2string(nameid, char*);
+    // convert nameid to string
+    int nameid2string(nameid, char*);
 
-	// export as JSON string
-	void getjson(string*);
+    // export as JSON string
+    void getjson(string*);
 
-	// export as raw binary serialize
-	void serialize(string*);
+    // export as raw binary serialize
+    void serialize(string*);
 
-	// import raw binary serialize
-	const char* unserialize(const char*, unsigned);
+    // import raw binary serialize
+    const char* unserialize(const char*, unsigned);
 };
 
 } // namespace

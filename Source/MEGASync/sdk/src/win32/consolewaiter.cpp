@@ -23,41 +23,46 @@
 #include "megaconsolewaiter.h"
 
 namespace mega {
-
 WinConsoleWaiter::WinConsoleWaiter()
 {
-	DWORD dwMode;
+    DWORD dwMode;
 
     hInput = GetStdHandle(STD_INPUT_HANDLE);
 
-	GetConsoleMode(hInput,&dwMode);
-	SetConsoleMode(hInput,dwMode & ~(ENABLE_MOUSE_INPUT | ENABLE_WINDOW_INPUT));
-	FlushConsoleInputBuffer(hInput);
+    GetConsoleMode(hInput, &dwMode);
+    SetConsoleMode(hInput, dwMode & ~( ENABLE_MOUSE_INPUT | ENABLE_WINDOW_INPUT ));
+    FlushConsoleInputBuffer(hInput);
 }
 
 // wait for events (socket, I/O completion, timeout + application events)
-// ds specifies the maximum amount of time to wait in deciseconds (or ~0 if no timeout scheduled)
+// ds specifies the maximum amount of time to wait in deciseconds (or ~0 if no
+// timeout scheduled)
 int WinConsoleWaiter::wait()
 {
-	int r;
+    int r;
 
-    addhandle(hInput,0);
+    addhandle(hInput, 0);
 
     // aggregated wait
     r = WinWaiter::wait();
 
-	// is it a network- or filesystem-triggered wakeup?
-	if (r) return r;
+    // is it a network- or filesystem-triggered wakeup?
+    if (r)
+    {
+        return r;
+    }
 
-	// FIXME: improve this gruesome nonblocking console read-simulating kludge
-	if (_kbhit()) return HAVESTDIN;
+    // FIXME: improve this gruesome nonblocking console read-simulating kludge
+    if (_kbhit())
+    {
+        return HAVESTDIN;
+    }
 
-	// this assumes that the user isn't typing too fast
-	INPUT_RECORD ir[1024];
-	DWORD dwNum;
-	ReadConsoleInput(hInput,ir,1024,&dwNum);
+    // this assumes that the user isn't typing too fast
+    INPUT_RECORD ir[1024];
+    DWORD dwNum;
+    ReadConsoleInput(hInput, ir, 1024, &dwNum);
 
-	return 0;
+    return 0;
 }
-
 } // namespace

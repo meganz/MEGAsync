@@ -23,109 +23,107 @@
 #define FSACCESS_CLASS WinFileSystemAccess
 
 namespace mega {
-
 struct MEGA_API WinDirAccess : public DirAccess
 {
-	bool ffdvalid;
-	WIN32_FIND_DATAW ffd;
-	HANDLE hFind;
-	string globbase;
+    bool ffdvalid;
+    WIN32_FIND_DATAW ffd;
+    HANDLE hFind;
+    string globbase;
 
 public:
-	bool dopen(string*, FileAccess*, bool);
-	bool dnext(string*, nodetype_t* = NULL);
+    bool dopen(string*, FileAccess*, bool);
+    bool dnext(string*, nodetype_t* = NULL);
 
-	WinDirAccess();
-	virtual ~WinDirAccess();
+    WinDirAccess();
+    virtual ~WinDirAccess();
 };
 
 class MEGA_API WinFileSystemAccess : public FileSystemAccess
 {
 public:
-	unsigned pendingevents;
+    unsigned pendingevents;
 
-	FileAccess* newfileaccess();
-	DirAccess* newdiraccess();
-	DirNotify* newdirnotify(string*, string*);
+    FileAccess* newfileaccess();
+    DirAccess* newdiraccess();
+    DirNotify* newdirnotify(string*, string*);
 
-	void tmpnamelocal(string*);
+    void tmpnamelocal(string*);
 
-	void path2local(string*, string*);
-	void local2path(string*, string*);
+    void path2local(string*, string*);
+    void local2path(string*, string*);
 
-	void name2local(string*, const char* = NULL);
-	void local2name(string*);
+    void name2local(string*, const char* = NULL);
+    void local2name(string*);
 
-	bool getsname(string*, string*);
+    bool getsname(string*, string*);
 
-	bool renamelocal(string*, string*, bool);
-	bool copylocal(string*, string*);
-	bool unlinklocal(string*);
-	bool rmdirlocal(string*);
-	bool mkdirlocal(string*, bool);
-	bool setmtimelocal(string*, time_t);
-	bool chdirlocal(string*);
-	size_t lastpartlocal(string*);
+    bool renamelocal(string*, string*, bool);
+    bool copylocal(string*, string*);
+    bool unlinklocal(string*);
+    bool rmdirlocal(string*);
+    bool mkdirlocal(string*, bool);
+    bool setmtimelocal(string *, time_t);
+    bool chdirlocal(string*);
+    size_t lastpartlocal(string*);
 
-	void addevents(Waiter*, int);
+    void addevents(Waiter*, int);
 
-	static bool istransient(DWORD);
-	bool istransientorexists(DWORD);
+    static bool istransient(DWORD);
+    bool istransientorexists(DWORD);
 
-	void osversion(string*);
+    void osversion(string*);
 
-	WinFileSystemAccess();
-	~WinFileSystemAccess();
+    WinFileSystemAccess();
+    ~WinFileSystemAccess();
 };
 
 struct MEGA_API WinDirNotify : public DirNotify
 {
-	WinFileSystemAccess* fsaccess;
+    WinFileSystemAccess* fsaccess;
 
-	LocalNode* localrootnode;
+    LocalNode* localrootnode;
 
-	HANDLE hDirectory;
+    HANDLE hDirectory;
 
-	int active;
-	string notifybuf[2];
+    int active;
+    string notifybuf[2];
 
-	DWORD dwBytes;
-	OVERLAPPED overlapped;
+    DWORD dwBytes;
+    OVERLAPPED overlapped;
 
-	static VOID CALLBACK completion(DWORD, DWORD, LPOVERLAPPED);
+    static VOID CALLBACK completion(DWORD, DWORD, LPOVERLAPPED);
 
-	void addnotify(LocalNode*, string*);
+    void addnotify(LocalNode*, string*);
 
-	void process(DWORD wNumberOfBytesTransfered);
-	void readchanges();
+    void process(DWORD wNumberOfBytesTransfered);
+    void readchanges();
 
-	WinDirNotify(string*, string*);
-	~WinDirNotify();
+    WinDirNotify(string*, string*);
+    ~WinDirNotify();
 };
 
 class MEGA_API WinFileAccess : public FileAccess
 {
-	HANDLE hFile;
+    HANDLE hFile;
 
 public:
-	HANDLE hFind;
-	WIN32_FIND_DATAW ffd;
+    HANDLE hFind;
+    WIN32_FIND_DATAW ffd;
 
-	bool fopen(string*, bool, bool);
-	void updatelocalname(string*);
-	bool fread(string*, unsigned, unsigned, m_off_t);
-	bool frawread(byte*, unsigned, m_off_t);
-	bool fwrite(const byte*, unsigned, m_off_t);
+    bool fopen(string*, bool, bool);
+    void updatelocalname(string*);
+    bool fread(string *, unsigned, unsigned, m_off_t);
+    bool frawread(byte *, unsigned, m_off_t);
+    bool fwrite(const byte *, unsigned, m_off_t);
 
-	bool sysread(byte*, unsigned, m_off_t);
-	bool sysstat(time_t*, m_off_t*);
-	bool sysopen();
-	void sysclose();
+    bool sysread(byte *, unsigned, m_off_t);
+    bool sysstat(time_t*, m_off_t*);
+    bool sysopen();
+    void sysclose();
 
-	WinFileAccess();
-	~WinFileAccess();
+    WinFileAccess();
+    ~WinFileAccess();
 };
-
 } // namespace
 
 #endif

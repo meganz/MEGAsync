@@ -27,213 +27,248 @@
 #include "mega/command.h"
 
 namespace mega {
-
 File::File()
 {
-	transfer = NULL;
-	hprivate = true;
-	syncxfer = false;
+    transfer = NULL;
+    hprivate = true;
+    syncxfer = false;
 }
 
 File::~File()
 {
-	// if transfer currently running, stop
-	if (transfer) transfer->client->stopxfer(this);
+    // if transfer currently running, stop
+    if (transfer)
+    {
+        transfer->client->stopxfer(this);
+    }
 }
 
 void File::prepare()
 {
-	transfer->localfilename = localname;
+    transfer->localfilename = localname;
 }
 
 void File::start()
-{
-}
+{}
 
 void File::progress()
-{
-}
+{}
 
 void File::completed(Transfer* t, LocalNode* l)
 {
-	if (t->type == PUT)
-	{
-		NewNode* newnode = new NewNode[1];
+    if (t->type == PUT)
+    {
+        NewNode* newnode = new NewNode[1];
 
-		// build new node
-		newnode->source = NEW_UPLOAD;
+        // build new node
+        newnode->source = NEW_UPLOAD;
 
-		// upload handle required to retrieve/include pending file attributes
-		newnode->uploadhandle = t->uploadhandle;
+        // upload handle required to retrieve/include pending file attributes
+        newnode->uploadhandle = t->uploadhandle;
 
-		// reference to uploaded file
-		memcpy(newnode->uploadtoken,t->slot->ultoken,sizeof newnode->uploadtoken);
+        // reference to uploaded file
+        memcpy(newnode->uploadtoken, t->slot->ultoken, sizeof newnode->uploadtoken);
 
-		// file's crypto key
-		newnode->nodekey.assign((char*)t->filekey,FILENODEKEYLENGTH);
-		newnode->clienttimestamp = t->mtime;
-		newnode->type = FILENODE;
-		newnode->parenthandle = UNDEF;
+        // file's crypto key
+        newnode->nodekey.assign((char*)t->filekey, FILENODEKEYLENGTH);
+        newnode->clienttimestamp = t->mtime;
+        newnode->type = FILENODE;
+        newnode->parenthandle = UNDEF;
 
-		if ((newnode->localnode = l)) newnode->syncid = l->syncid;
+        if (( newnode->localnode = l ))
+        {
+            newnode->syncid = l->syncid;
+        }
 
-		AttrMap attrs;
+        AttrMap attrs;
 
-		// store filename
-		attrs.map['n'] = name;
+        // store filename
+        attrs.map['n'] = name;
 
-		// store fingerprint
-		t->serializefingerprint(&attrs.map['c']);
+        // store fingerprint
+        t->serializefingerprint(&attrs.map['c']);
 
-		string tattrstring;
+        string tattrstring;
 
-		attrs.getjson(&tattrstring);
+        attrs.getjson(&tattrstring);
 
-		t->client->makeattr(&t->key,&newnode->attrstring,tattrstring.c_str());
+        t->client->makeattr(&t->key, &newnode->attrstring, tattrstring.c_str());
 
-		if (targetuser.size())
-		{
-			// drop file into targetuser's inbox
-			t->client->putnodes(targetuser.c_str(),newnode,1);
-		}
-		else
-		{
-			handle th = h;
+        if (targetuser.size())
+        {
+            // drop file into targetuser's inbox
+            t->client->putnodes(targetuser.c_str(), newnode, 1);
+        }
+        else
+        {
+            handle th = h;
 
-			// inaccessible target folder - use / instead
-			if (!t->client->nodebyhandle(th)) th = t->client->rootnodes[0];
+            // inaccessible target folder - use / instead
+            if (!t->client->nodebyhandle(th))
+            {
+                th = t->client->rootnodes[0];
+            }
 
-			if (l) t->client->syncadding++;
-			t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,th,NULL,newnode,1,l ? l->sync->tag : t->tag,l ? PUTNODES_SYNC : PUTNODES_APP));
-		}
-	}
+            if (l)
+            {
+                t->client->syncadding++;
+            }
+            t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,
+                                                                  th, NULL,
+                                                                  newnode, 1,
+                                                                  l ? l->sync->tag : t->tag,
+                                                                  l ? PUTNODES_SYNC : PUTNODES_APP));
+        }
+    }
 }
 
-// do not retry crypto errors or administrative takedowns; retry other types of failuresup to 16 times
+// do not retry crypto errors or administrative takedowns; retry other types of
+// failuresup to 16 times
 bool File::failed(error e)
 {
-	return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 16;
+    return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 16;
 }
 
 void File::displayname(string* dname)
 {
-	if (name.size()) *dname = name;
-	else
-	{
-		Node* n;
+    if (name.size())
+    {
+        *dname = name;
+    }
+    else
+    {
+        Node* n;
 
-		if ((n = transfer->client->nodebyhandle(h))) *dname = n->displayname();
-		else *dname = "DELETED/UNAVAILABLE";
-	}
+        if (( n = transfer->client->nodebyhandle(h)))
+        {
+            *dname = n->displayname();
+        }
+        else
+        {
+            *dname = "DELETED/UNAVAILABLE";
+        }
+    }
 }
 
 SyncFileGet::SyncFileGet(Sync* csync, Node* cn, string* clocalname)
 {
-	sync = csync;
+    sync = csync;
 
-	n = cn;
-	h = n->nodehandle;
-	*(FileFingerprint*)this = *n;
-	localname = *clocalname;
+    n = cn;
+    h = n->nodehandle;
+    *(FileFingerprint*)this = *n;
+    localname = *clocalname;
 
-	syncxfer = true;
-	n->syncget = this;
+    syncxfer = true;
+    n->syncget = this;
 }
 
 SyncFileGet::~SyncFileGet()
 {
-	n->syncget = NULL;
+    n->syncget = NULL;
 }
 
 // create sync-specific temp download directory and set unique filename
 void SyncFileGet::prepare()
 {
-	if (!transfer->localfilename.size())
-	{
-		int i;
-		string tmpname, lockname;
+    if (!transfer->localfilename.size())
+    {
+        int i;
+        string tmpname, lockname;
 
-		tmpname = "tmp";
-		sync->client->fsaccess->name2local(&tmpname);
+        tmpname = "tmp";
+        sync->client->fsaccess->name2local(&tmpname);
 
-		if (!sync->tmpfa)
-		{
-			sync->tmpfa = sync->client->fsaccess->newfileaccess();
+        if (!sync->tmpfa)
+        {
+            sync->tmpfa = sync->client->fsaccess->newfileaccess();
 
-			for (i = 3; i--; )
-			{
-				transfer->localfilename = sync->localdebris;
-				sync->client->fsaccess->mkdirlocal(&transfer->localfilename,true);
+            for (i = 3; i--; )
+            {
+                transfer->localfilename = sync->localdebris;
+                sync->client->fsaccess->mkdirlocal(&transfer->localfilename, true);
 
-				transfer->localfilename.append(sync->client->fsaccess->localseparator);
-				transfer->localfilename.append(tmpname);
-				sync->client->fsaccess->mkdirlocal(&transfer->localfilename);
-				
-				// lock it
-				transfer->localfilename.append(sync->client->fsaccess->localseparator);
-				lockname = "lock";
-				sync->client->fsaccess->name2local(&lockname);
-				transfer->localfilename.append(lockname);
+                transfer->localfilename.append(sync->client->fsaccess->localseparator);
+                transfer->localfilename.append(tmpname);
+                sync->client->fsaccess->mkdirlocal(&transfer->localfilename);
 
-				if (sync->tmpfa->fopen(&transfer->localfilename,false,true)) break;
-			}
+                // lock it
+                transfer->localfilename.append(sync->client->fsaccess->localseparator);
+                lockname = "lock";
+                sync->client->fsaccess->name2local(&lockname);
+                transfer->localfilename.append(lockname);
 
-			// if we failed to create the tmp dir three times in a row, fall back to the sync's root
-			if (i < 0)
-			{
-				delete sync->tmpfa;
-				sync->tmpfa = NULL;
-			}
-		}
-		
-		if (sync->tmpfa)
-		{
-			transfer->localfilename = sync->localdebris;
-			transfer->localfilename.append(sync->client->fsaccess->localseparator);
-			transfer->localfilename.append(tmpname);
-		}
-		else transfer->localfilename = sync->localroot.localname;
+                if (sync->tmpfa->fopen(&transfer->localfilename, false, true))
+                {
+                    break;
+                }
+            }
 
-		sync->client->fsaccess->tmpnamelocal(&tmpname);
-		transfer->localfilename.append(sync->client->fsaccess->localseparator);
-		transfer->localfilename.append(tmpname);
-	}
-	
-	if (n->parent && n->parent->localnode) n->parent->localnode->treestate(TREESTATE_SYNCING);
+            // if we failed to create the tmp dir three times in a row, fall
+            // back to the sync's root
+            if (i < 0)
+            {
+                delete sync->tmpfa;
+                sync->tmpfa = NULL;
+            }
+        }
+
+        if (sync->tmpfa)
+        {
+            transfer->localfilename = sync->localdebris;
+            transfer->localfilename.append(sync->client->fsaccess->localseparator);
+            transfer->localfilename.append(tmpname);
+        }
+        else
+        {
+            transfer->localfilename = sync->localroot.localname;
+        }
+
+        sync->client->fsaccess->tmpnamelocal(&tmpname);
+        transfer->localfilename.append(sync->client->fsaccess->localseparator);
+        transfer->localfilename.append(tmpname);
+    }
+
+    if (n->parent && n->parent->localnode)
+    {
+        n->parent->localnode->treestate(TREESTATE_SYNCING);
+    }
 }
 
 bool SyncFileGet::failed(error e)
 {
-	if (n->parent && n->parent->localnode) n->parent->localnode->treestate(TREESTATE_PENDING);
+    if (n->parent && n->parent->localnode)
+    {
+        n->parent->localnode->treestate(TREESTATE_PENDING);
+    }
 
-	return File::failed(e);
+    return File::failed(e);
 }
 
 // update localname (parent's localnode)
 void SyncFileGet::updatelocalname()
 {
-	attr_map::iterator ait;
+    attr_map::iterator ait;
 
-	if ((ait = n->attrs.map.find('n')) != n->attrs.map.end())
-	{
-		if (n->parent && n->parent->localnode)
-		{
-			string tmpname = ait->second;
-			
-			sync->client->fsaccess->name2local(&tmpname);
-			n->parent->localnode->getlocalpath(&localname);
+    if (( ait = n->attrs.map.find('n')) != n->attrs.map.end())
+    {
+        if (n->parent && n->parent->localnode)
+        {
+            string tmpname = ait->second;
 
-			localname.append(sync->client->fsaccess->localseparator);
-			localname.append(tmpname);
-		}
-	}
+            sync->client->fsaccess->name2local(&tmpname);
+            n->parent->localnode->getlocalpath(&localname);
+
+            localname.append(sync->client->fsaccess->localseparator);
+            localname.append(tmpname);
+        }
+    }
 }
 
 // add corresponding LocalNode (by path), then self-destruct
 void SyncFileGet::completed(Transfer* t, LocalNode* n)
 {
-	sync->checkpath(NULL,&localname);
-	delete this;
+    sync->checkpath(NULL, &localname);
+    delete this;
 }
-
 } // namespace

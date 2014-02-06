@@ -29,411 +29,409 @@
 #include "http.h"
 
 namespace mega {
-
 // request command component
 class MEGA_API Command
 {
-	static const int MAXDEPTH = 8;
+    static const int MAXDEPTH = 8;
 
-	char levels[MAXDEPTH];
+    char levels[MAXDEPTH];
 
-	error result;
+    error result;
 
 protected:
-	bool canceled;
+    bool canceled;
 
-	string json;
+    string json;
 
 public:
-	MegaClient* client;
+    MegaClient* client;
 
-	int tag;
+    int tag;
 
-	char level;
-	bool persistent;
+    char level;
+    bool persistent;
 
-	void cmd(const char*);
-	void notself(MegaClient*);
-	virtual void cancel(void);
+    void cmd(const char*);
+    void notself(MegaClient*);
+    virtual void cancel(void);
 
-	void arg(const char*, const char*, int = 1);
-	void arg(const char*, const byte*, int);
-	void arg(const char*, m_off_t);
-	void addcomma();
-	void appendraw(const char*);
-	void appendraw(const char*, int);
-	void beginarray();
-	void beginarray(const char*);
-	void endarray();
-	void beginobject();
-	void endobject();
-	void element(int);
-	void element(handle, int = sizeof(handle));
-	void element(const byte*, int);
+    void arg(const char*, const char*, int = 1);
+    void arg(const char*, const byte*, int);
+    void arg(const char*, m_off_t);
+    void addcomma();
+    void appendraw(const char*);
+    void appendraw(const char*, int);
+    void beginarray();
+    void beginarray(const char*);
+    void endarray();
+    void beginobject();
+    void endobject();
+    void element(int);
+    void element(handle, int = sizeof( handle ));
+    void element(const byte*, int);
 
-	void openobject();
-	void closeobject();
-	int elements();
+    void openobject();
+    void closeobject();
+    int elements();
 
-	virtual void procresult();
+    virtual void procresult();
 
-	const char* getstring();
+    const char* getstring();
 
-	Command();
-	virtual ~Command() { };
+    Command();
+    virtual ~Command() { }
 };
 
 // list of new file attributes to write
 // file attribute put
 struct MEGA_API HttpReqCommandPutFA : public HttpReq, public Command
 {
-	handle th;
-	fatype type;
-	byte* data;
-	unsigned len;
+    handle th;
+    fatype type;
+    byte* data;
+    unsigned len;
 
-	void procresult();
+    void procresult();
 
-	HttpReqCommandPutFA(MegaClient*, handle, fatype, byte*, unsigned len);
-	~HttpReqCommandPutFA();
+    HttpReqCommandPutFA(MegaClient*, handle, fatype, byte*, unsigned len);
+    ~HttpReqCommandPutFA();
 };
 
 class MEGA_API CommandGetFA : public Command
 {
-	int part;
-	handle fahref;
+    int part;
+    handle fahref;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandGetFA(int, handle);
+    CommandGetFA(int, handle);
 };
 
 // log into full account (ephemeral sessions are curently unsupported)
 class MEGA_API CommandLogin : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandLogin(MegaClient*, const char*, uint64_t);
+    CommandLogin(MegaClient*, const char*, uint64_t);
 };
 
 class MEGA_API CommandSetMasterKey : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandSetMasterKey(MegaClient*, const byte*, const byte*, uint64_t);
+    CommandSetMasterKey(MegaClient*, const byte*, const byte*, uint64_t);
 };
 
 class MEGA_API CommandCreateEphemeralSession : public Command
 {
-	byte pw[SymmCipher::KEYLENGTH];
+    byte pw[SymmCipher::KEYLENGTH];
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandCreateEphemeralSession(MegaClient*, const byte*, const byte*, const byte*);
+    CommandCreateEphemeralSession(MegaClient*, const byte*, const byte*, const byte*);
 };
 
 class MEGA_API CommandResumeEphemeralSession : public Command
 {
-	byte pw[SymmCipher::KEYLENGTH];
-	handle uh;
+    byte pw[SymmCipher::KEYLENGTH];
+    handle uh;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandResumeEphemeralSession(MegaClient*, handle, const byte*);
+    CommandResumeEphemeralSession(MegaClient*, handle, const byte*);
 };
 
 class MEGA_API CommandSendSignupLink : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandSendSignupLink(MegaClient*, const char*, const char*, byte*);
+    CommandSendSignupLink(MegaClient*, const char*, const char*, byte*);
 };
 
 class MEGA_API CommandQuerySignupLink : public Command
 {
-	string confirmcode;
+    string confirmcode;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandQuerySignupLink(MegaClient*, const byte*, unsigned);
+    CommandQuerySignupLink(MegaClient*, const byte*, unsigned);
 };
 
 class MEGA_API CommandConfirmSignupLink : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandConfirmSignupLink(MegaClient*, const byte*, unsigned, uint64_t);
+    CommandConfirmSignupLink(MegaClient*, const byte*, unsigned, uint64_t);
 };
 
 class MEGA_API CommandSetKeyPair : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandSetKeyPair(MegaClient*, const byte*, unsigned, const byte*, unsigned);
+    CommandSetKeyPair(MegaClient*, const byte*, unsigned, const byte*, unsigned);
 };
 
 // invite contact/set visibility
 class MEGA_API CommandUserRequest : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandUserRequest(MegaClient*, const char*, visibility_t);
+    CommandUserRequest(MegaClient*, const char*, visibility_t);
 };
 
 // set user attributes
 class MEGA_API CommandPutUA : public Command
 {
 public:
-	CommandPutUA(MegaClient*, const char*, const byte*, unsigned);
+    CommandPutUA(MegaClient*, const char*, const byte*, unsigned);
 
-	void procresult();
+    void procresult();
 };
 
 class MEGA_API CommandGetUA : public Command
 {
-	int priv;
+    int priv;
 
 public:
-	CommandGetUA(MegaClient*, const char*, const char*, int);
+    CommandGetUA(MegaClient*, const char*, const char*, int);
 
-	void procresult();
+    void procresult();
 };
 
 // reload nodes/shares/contacts
 class MEGA_API CommandFetchNodes : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandFetchNodes(MegaClient*);
+    CommandFetchNodes(MegaClient*);
 };
 
 // update own node keys
 class MEGA_API CommandNodeKeyUpdate : public Command
 {
 public:
-	CommandNodeKeyUpdate(MegaClient*, handle_vector*);
+    CommandNodeKeyUpdate(MegaClient*, handle_vector*);
 };
 
 class MEGA_API CommandShareKeyUpdate : public Command
 {
 public:
-	CommandShareKeyUpdate(MegaClient*, handle, const char*, const byte*, int);
-	CommandShareKeyUpdate(MegaClient*, handle_vector*);
+    CommandShareKeyUpdate(MegaClient*, handle, const char*, const byte*, int);
+    CommandShareKeyUpdate(MegaClient*, handle_vector*);
 };
 
 class MEGA_API CommandKeyCR : public Command
 {
 public:
-	CommandKeyCR(MegaClient*, node_vector*, node_vector*, const char*);
+    CommandKeyCR(MegaClient*, node_vector*, node_vector*, const char*);
 };
 
 class MEGA_API CommandMoveNode : public Command
 {
-	handle h;
-	Node* syncn;
-	syncdel_t syncdel;
+    handle h;
+    Node* syncn;
+    syncdel_t syncdel;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandMoveNode(MegaClient*, Node*, Node*, syncdel_t);
+    CommandMoveNode(MegaClient*, Node*, Node*, syncdel_t);
 };
 
 class MEGA_API CommandSingleKeyCR : public Command
 {
 public:
-	CommandSingleKeyCR(handle, handle, const byte*, unsigned);
+    CommandSingleKeyCR(handle, handle, const byte*, unsigned);
 };
 
 class MEGA_API CommandDelNode : public Command
 {
-	handle h;
+    handle h;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandDelNode(MegaClient*, handle);
+    CommandDelNode(MegaClient*, handle);
 };
 
 class MEGA_API CommandPubKeyRequest : public Command
 {
-	User* u;
+    User* u;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandPubKeyRequest(MegaClient*, User*);
+    CommandPubKeyRequest(MegaClient*, User*);
 };
 
 class MEGA_API CommandGetFile : public Command
 {
-	TransferSlot* tslot;
-	handle ph;
-	byte filekey[FILENODEKEYLENGTH];
+    TransferSlot* tslot;
+    handle ph;
+    byte filekey[FILENODEKEYLENGTH];
 
 public:
-	void cancel();
-	void procresult();
+    void cancel();
+    void procresult();
 
-	CommandGetFile(TransferSlot*, byte*, handle, bool);
+    CommandGetFile(TransferSlot*, byte*, handle, bool);
 };
 
 class MEGA_API CommandPutFile : public Command
 {
-	TransferSlot* tslot;
+    TransferSlot* tslot;
 
 public:
-	void cancel(void);
-	void procresult();
+    void cancel(void);
+    void procresult();
 
-	CommandPutFile(TransferSlot*, int);
+    CommandPutFile(TransferSlot*, int);
 };
 
 class MEGA_API CommandAttachFA : public Command
 {
-	handle h;
-	fatype type;
+    handle h;
+    fatype type;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandAttachFA(handle, fatype, handle, int);
+    CommandAttachFA(handle, fatype, handle, int);
 };
 
 
 class MEGA_API CommandPutNodes : public Command
 {
-	NewNode* nn;
-	targettype_t type;
-	putsource_t source;
+    NewNode* nn;
+    targettype_t type;
+    putsource_t source;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, putsource_t = PUTNODES_APP);
+    CommandPutNodes(MegaClient*, handle, const char*, NewNode*, int, int, putsource_t = PUTNODES_APP);
 };
 
 class MEGA_API CommandSetAttr : public Command
 {
-	handle h;
+    handle h;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandSetAttr(MegaClient*, Node*);
+    CommandSetAttr(MegaClient*, Node*);
 };
 
 class MEGA_API CommandSetShare : public Command
 {
-	handle sh;
-	User* user;
-	accesslevel_t access;
+    handle sh;
+    User* user;
+    accesslevel_t access;
 
-	bool procuserresult(MegaClient*);
+    bool procuserresult(MegaClient*);
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandSetShare(MegaClient*, Node*, User*, accesslevel_t, int);
+    CommandSetShare(MegaClient*, Node*, User*, accesslevel_t, int);
 };
 
 class MEGA_API CommandGetUserQuota : public Command
 {
-	AccountDetails* details;
+    AccountDetails* details;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandGetUserQuota(MegaClient*, AccountDetails*, bool, bool, bool);
+    CommandGetUserQuota(MegaClient*, AccountDetails*, bool, bool, bool);
 };
 
 class MEGA_API CommandGetUserTransactions : public Command
 {
-	AccountDetails* details;
+    AccountDetails* details;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandGetUserTransactions(MegaClient*, AccountDetails*);
+    CommandGetUserTransactions(MegaClient*, AccountDetails*);
 };
 
 class MEGA_API CommandGetUserPurchases : public Command
 {
-	AccountDetails* details;
+    AccountDetails* details;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandGetUserPurchases(MegaClient*, AccountDetails*);
+    CommandGetUserPurchases(MegaClient*, AccountDetails*);
 };
 
 class MEGA_API CommandGetUserSessions : public Command
 {
-	AccountDetails* details;
+    AccountDetails* details;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandGetUserSessions(MegaClient*, AccountDetails*);
+    CommandGetUserSessions(MegaClient*, AccountDetails*);
 };
 
 class MEGA_API CommandSetPH : public Command
 {
-	handle h;
+    handle h;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandSetPH(MegaClient*, Node*, int);
+    CommandSetPH(MegaClient*, Node*, int);
 };
 
 class MEGA_API CommandGetPH : public Command
 {
-	handle ph;
-	byte key[FILENODEKEYLENGTH];
-	int op;
+    handle ph;
+    byte key[FILENODEKEYLENGTH];
+    int op;
 
 public:
-	void procresult();
+    void procresult();
 
-	CommandGetPH(MegaClient*, handle, const byte*, int);
+    CommandGetPH(MegaClient*, handle, const byte*, int);
 };
 
 class MEGA_API CommandPurchaseAddItem : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandPurchaseAddItem(MegaClient*, int, handle, unsigned, char*, unsigned, char*, char*);
+    CommandPurchaseAddItem(MegaClient*, int, handle, unsigned, char*, unsigned, char*, char*);
 };
 
 class MEGA_API CommandPurchaseCheckout : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandPurchaseCheckout(MegaClient*, int);
+    CommandPurchaseCheckout(MegaClient*, int);
 };
 
 class MEGA_API CommandEnumerateQuotaItems : public Command
 {
 public:
-	void procresult();
+    void procresult();
 
-	CommandEnumerateQuotaItems(MegaClient*);
+    CommandEnumerateQuotaItems(MegaClient*);
 };
-
 } // namespace
 
 #endif

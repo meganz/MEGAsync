@@ -25,61 +25,61 @@
 #include "megaclient.h"
 
 namespace mega {
-
 class MEGA_API Sync
 {
 public:
-	MegaClient* client;
+    MegaClient* client;
 
-	// root of local filesystem tree, holding the sync's root folder
-	LocalNode localroot;
+    // root of local filesystem tree, holding the sync's root folder
+    LocalNode localroot;
 
-	// current state
-	syncstate_t state;
+    // current state
+    syncstate_t state;
 
-	// change state, signal to application
-	void changestate(syncstate_t);
+    // change state, signal to application
+    void changestate(syncstate_t);
 
-	// sync-wide directory notification provider
-	DirNotify* dirnotify;
+    // sync-wide directory notification provider
+    DirNotify* dirnotify;
 
-	// process and remove one directory notification queue item from *notify
-	void procscanq(int);
+    // process and remove one directory notification queue item from *notify
+    void procscanq(int);
 
-	// scan specific path
-	LocalNode* checkpath(LocalNode*, string*, string* = NULL);
+    // scan specific path
+    LocalNode* checkpath(LocalNode*, string*, string* = NULL);
 
-	m_off_t localbytes;
-	unsigned localnodes[2];
+    m_off_t localbytes;
+    unsigned localnodes[2];
 
-	// look up LocalNode relative to localroot
-	LocalNode* localnodebypath(LocalNode*, string*, LocalNode** = NULL, string* = NULL);
+    // look up LocalNode relative to localroot
+    LocalNode* localnodebypath(LocalNode*, string*, LocalNode** = NULL, string* = NULL);
 
-	// scan items in specified path and add as children of the specified LocalNode
-	bool scan(string*, FileAccess*);
+    // scan items in specified path and add as children of the specified
+    // LocalNode
+    bool scan(string*, FileAccess*);
 
-	// own position in session sync list
-	sync_list::iterator sync_it;
+    // own position in session sync list
+    sync_list::iterator sync_it;
 
-	// rescan sequence number (incremented when a full rescan or a new notification batch starts)
-	int scanseqno;
+    // rescan sequence number (incremented when a full rescan or a new
+    // notification batch starts)
+    int scanseqno;
 
-	// notified nodes originating from this sync bear this tag
-	int tag;
+    // notified nodes originating from this sync bear this tag
+    int tag;
 
-	// debris path component relative to the base path
-	string debris, localdebris;
+    // debris path component relative to the base path
+    string debris, localdebris;
 
-	// permanent lock on the debris/tmp folder
-	FileAccess* tmpfa;
+    // permanent lock on the debris/tmp folder
+    FileAccess* tmpfa;
 
-	// move file or folder to localdebris
-	bool movetolocaldebris(string* localpath);
+    // move file or folder to localdebris
+    bool movetolocaldebris(string* localpath);
 
-	Sync(MegaClient*, string*, const char*, string*, Node*, int = 0);
-	~Sync();
+    Sync(MegaClient*, string*, const char*, string*, Node*, int = 0);
+    ~Sync();
 };
-
 } // namespace
 
 #endif

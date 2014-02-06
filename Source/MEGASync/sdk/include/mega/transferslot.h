@@ -26,64 +26,63 @@
 #include "node.h"
 
 namespace mega {
-
 // active transfer
 struct MEGA_API TransferSlot
 {
-	// link to related transfer (never NULL)
-	struct Transfer* transfer;
+    // link to related transfer (never NULL)
+    struct Transfer* transfer;
 
-	// associated source/destination file
-	FileAccess* fa;
+    // associated source/destination file
+    FileAccess* fa;
 
-	// command in flight to obtain temporary URL
-	Command* pendingcmd;
+    // command in flight to obtain temporary URL
+    Command* pendingcmd;
 
-	// transfer attempts are considered failed after XFERTIMEOUT seconds without data flow
-	static const dstime XFERTIMEOUT = 600;
+    // transfer attempts are considered failed after XFERTIMEOUT seconds
+    // without data flow
+    static const dstime XFERTIMEOUT = 600;
 
-	m_off_t progressreported, progresscompleted;
+    m_off_t progressreported, progresscompleted;
 
-	dstime starttime, lastdata;
+    dstime starttime, lastdata;
 
-	// number of consecutive errors
-	unsigned errorcount;
+    // number of consecutive errors
+    unsigned errorcount;
 
-	// upload result
-	byte ultoken[NewNode::UPLOADTOKENLEN+1];
+    // upload result
+    byte ultoken[NewNode::UPLOADTOKENLEN + 1];
 
-	// file attribute string
-	string fileattrstring;
+    // file attribute string
+    string fileattrstring;
 
-	// file attributes mutable
-	int fileattrsmutable;
+    // file attributes mutable
+    int fileattrsmutable;
 
-	// storage server access URL
-	string tempurl;
+    // storage server access URL
+    string tempurl;
 
-	// maximum number of parallel connections and connection aray
-	int connections;
-	HttpReqXfer** reqs;
+    // maximum number of parallel connections and connection aray
+    int connections;
+    HttpReqXfer** reqs;
 
-	// handle I/O for this slot
-	void doio(MegaClient*);
+    // handle I/O for this slot
+    void doio(MegaClient*);
 
-	// disconnect and reconnect all open connections for this transfer
-	void disconnect();
+    // disconnect and reconnect all open connections for this transfer
+    void disconnect();
 
-	// indicate progress
-	void progress();
+    // indicate progress
+    void progress();
 
-	// compute the meta MAC based on the chunk MACs
-	int64_t macsmac(chunkmac_map*);
+    // compute the meta MAC based on the chunk MACs
+    int64_t macsmac(chunkmac_map*);
 
-	// tslots list position
-	transferslot_list::iterator slots_it;
+    // tslots list position
+    transferslot_list::iterator slots_it;
 
-	TransferSlot(Transfer*);
-	~TransferSlot();
+    TransferSlot(Transfer*);
+    ~TransferSlot();
 };
-
 } // namespace
 
 #endif

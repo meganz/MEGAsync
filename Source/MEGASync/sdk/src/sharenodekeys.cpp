@@ -26,82 +26,106 @@
 #include "mega/command.h"
 
 namespace mega {
-
 // add share node and return its index
 int ShareNodeKeys::addshare(Node* sn)
 {
-	for (int i = shares.size(); i--; ) if (shares[i] == sn) return i;
+    for (int i = shares.size(); i--; )
+    {
+        if (shares[i] == sn)
+        {
+            return i;
+        }
+    }
 
-	shares.push_back(sn);
+    shares.push_back(sn);
 
-	return shares.size()-1;
+    return shares.size() - 1;
 }
 
 void ShareNodeKeys::add(Node* n, Node* sn, int specific)
 {
-	if (!sn) sn = n;
+    if (!sn)
+    {
+        sn = n;
+    }
 
-	add((NodeCore*)n,sn,specific);
+    add((NodeCore*)n, sn, specific);
 }
 
-// add a nodecore (!sn: all relevant shares, otherwise starting from sn, fixed: only sn)
+// add a nodecore (!sn: all relevant shares, otherwise starting from sn, fixed:
+// only sn)
 void ShareNodeKeys::add(NodeCore* n, Node* sn, int specific, const byte* item, int itemlen)
 {
-	char buf[96];
-	char* ptr;
-	byte key[FILENODEKEYLENGTH];
+    char buf[96];
+    char* ptr;
+    byte key[FILENODEKEYLENGTH];
 
-	int addnode = 0;
+    int addnode = 0;
 
-	// emit all share nodekeys for known shares
-	do {
-		if (sn->sharekey)
-		{
-			sprintf(buf,",%d,%d,\"",addshare(sn),(int)items.size());
+    // emit all share nodekeys for known shares
+    do
+    {
+        if (sn->sharekey)
+        {
+            sprintf(buf, ",%d,%d,\"", addshare(sn), (int)items.size());
 
-			sn->sharekey->ecb_encrypt((byte*)n->nodekey.data(),key,n->nodekey.size());
+            sn->sharekey->ecb_encrypt((byte*)n->nodekey.data(), key, n->nodekey.size());
 
-			ptr = strchr(buf+5,0);
-			ptr += Base64::btoa(key,n->nodekey.size(),ptr);
-			*ptr++ = '"';
+            ptr = strchr(buf + 5, 0);
+            ptr += Base64::btoa(key, n->nodekey.size(), ptr);
+            *ptr++ = '"';
 
-			keys.append(buf,ptr-buf);
-			addnode = 1;
-		}
-	} while (!specific && (sn = sn->parent));
+            keys.append(buf, ptr - buf);
+            addnode = 1;
+        }
+    }
+    while (!specific && ( sn = sn->parent ));
 
-	if (addnode)
-	{
-		items.resize(items.size()+1);
+    if (addnode)
+    {
+        items.resize(items.size() + 1);
 
-		if (item) items[items.size()-1].assign((const char*)item,itemlen);
-		else items[items.size()-1].assign((const char*)&n->nodehandle,MegaClient::NODEHANDLE);
-	}
+        if (item)
+        {
+            items[items.size() - 1].assign((const char*)item, itemlen);
+        }
+        else
+        {
+            items[items.size() - 1].assign((const char*)&n->nodehandle, MegaClient::NODEHANDLE);
+        }
+    }
 }
 
 void ShareNodeKeys::get(Command* c)
 {
-	if (keys.size())
-	{
-		c->beginarray("cr");
+    if (keys.size())
+    {
+        c->beginarray("cr");
 
-		// emit share node handles
-		c->beginarray();
-		for (unsigned i = 0; i < shares.size(); i++) c->element((const byte*)&shares[i]->nodehandle,MegaClient::NODEHANDLE);
-		c->endarray();
+        // emit share node handles
+        c->beginarray();
+        for (unsigned i = 0; i < shares.size(); i++)
+        {
+            c->element((const byte*)&shares[i]->nodehandle, MegaClient::NODEHANDLE);
+        }
 
-		// emit item handles (can be node handles or upload tokens)
-		c->beginarray();
-		for (unsigned i = 0; i < items.size(); i++) c->element((const byte*)items[i].c_str(),items[i].size());
-		c->endarray();
+        c->endarray();
 
-		// emit linkage/keys
-		c->beginarray();
-		c->appendraw(keys.c_str()+1,keys.size()-1);
-		c->endarray();
+        // emit item handles (can be node handles or upload tokens)
+        c->beginarray();
+        for (unsigned i = 0; i < items.size(); i++)
+        {
+            c->element((const byte*)items[i].c_str(), items[i].size());
+        }
 
-		c->endarray();
-	}
+        c->endarray();
+
+        // emit linkage/keys
+        c->beginarray();
+        c->appendraw(keys.c_str() + 1, keys.size() - 1);
+        c->endarray();
+
+        c->endarray();
+    }
 }
-
 } // namespace

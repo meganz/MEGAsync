@@ -26,43 +26,41 @@
 #include <db_cxx.h>
 
 namespace mega {
-
 class MEGA_API BdbAccess : public DbAccess
 {
-	DbEnv* env;
-	string dbpathprefix;
+    DbEnv* env;
+    string dbpathprefix;
 
 public:
-	DbTable* open(FileSystemAccess*, string*);
+    DbTable* open(FileSystemAccess*, string*);
 
-	BdbAccess(string* = NULL);
-	~BdbAccess();
+    BdbAccess(string* = NULL);
+    ~BdbAccess();
 };
 
 class MEGA_API BdbTable : public DbTable
 {
-	Db* db;
-	DbTxn* dbtxn;
-	DbEnv* dbenv;
-	Dbc* dbcursor;
+    Db* db;
+    DbTxn* dbtxn;
+    DbEnv* dbenv;
+    Dbc* dbcursor;
 
 public:
-	void rewind();
-	bool next(uint32_t*, string*);
-	bool get(uint32_t, string*);
-	bool put(uint32_t, char*, unsigned);
-	bool del(uint32_t);
-	void truncate();
-	void begin();
-	void commit();
-	void abort();
+    void rewind();
+    bool next(uint32_t*, string*);
+    bool get(uint32_t, string*);
+    bool put(uint32_t, char*, unsigned);
+    bool del(uint32_t);
+    void truncate();
+    void begin();
+    void commit();
+    void abort();
 
-	uint32_t nextid;
+    uint32_t nextid;
 
-	BdbTable(DbEnv*);
-	~BdbTable();
+    BdbTable(DbEnv*);
+    ~BdbTable();
 };
-
 } // namespace
 
 #endif

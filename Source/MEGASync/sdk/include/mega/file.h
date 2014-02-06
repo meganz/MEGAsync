@@ -27,75 +27,77 @@
 namespace mega {
 
 // file to be transferred
-struct MEGA_API File : public FileFingerprint
+struct MEGA_API File: public FileFingerprint
 {
-	// set localfilename in attached transfer
-	virtual void prepare();
+    // set localfilename in attached transfer
+    virtual void prepare();
 
-	// file transfer dispatched, expect updates/completion/failure
-	virtual void start();
+    // file transfer dispatched, expect updates/completion/failure
+    virtual void start();
 
-	// progress update
-	virtual void progress();
+    // progress update
+    virtual void progress();
 
-	// transfer completion
-	virtual void completed(Transfer*, LocalNode*);
+    // transfer completion
+    virtual void completed(Transfer*, LocalNode*);
 
-	// transfer failed
-	virtual bool failed(error);
+    // transfer failed
+    virtual bool failed(error);
 
-	// update localname
-	virtual void updatelocalname() { }
+    // update localname
+    virtual void updatelocalname()
+    {
+    }
 
-	// generic filename for this transfer
-	void displayname(string*);
+    // generic filename for this transfer
+    void displayname(string*);
 
-	// normalized name (UTF-8 with unescaped special chars)
-	string name;
+    // normalized name (UTF-8 with unescaped special chars)
+    string name;
 
-	// local filename (must be set upon injection for uploads, can be set in start() for downloads)
-	string localname;
+    // local filename (must be set upon injection for uploads, can be set in start() for downloads)
+    string localname;
 
-	// source/target node handle
-	handle h;
+    // source/target node handle
+    handle h;
 
-	// source handle private?
-	bool hprivate;
+    // source handle private?
+    bool hprivate;
 
-	// is this part of a sync transfer?
-	bool syncxfer;
+    // is this part of a sync transfer?
+    bool syncxfer;
 
-	// if !hprivate, filekey and size must be valid
-	byte filekey[FILENODEKEYLENGTH];
+    // if !hprivate, filekey and size must be valid
+    byte filekey[FILENODEKEYLENGTH];
 
-	// for remote file drops: uid or e-mail address of recipient
-	string targetuser;
+    // for remote file drops: uid or e-mail address of recipient
+    string targetuser;
 
-	// transfer linkage
-	Transfer* transfer;
-	file_list::iterator file_it;
+    // transfer linkage
+    Transfer* transfer;
+    file_list::iterator file_it;
 
-	File();
-	virtual ~File();
+    File();
+    virtual ~File();
 };
 
-struct MEGA_API SyncFileGet : public File
+struct MEGA_API SyncFileGet: public File
 {
-	Sync* sync;
-	Node* n;
+    Sync* sync;
+    Node* n;
 
-	// set sync-specific temp filename, update treestate
-	void prepare();
-	bool failed(error);
+    // set sync-specific temp filename, update treestate
+    void prepare();
+    bool failed(error);
 
-	// update localname (may have changed due to renames/moves of the synced files)
-	void updatelocalname();
+    // update localname (may have changed due to renames/moves of the synced files)
+    void updatelocalname();
 
-	// self-destruct after completion
-	void completed(Transfer*, LocalNode*);
+    // self-destruct after completion
+    void completed(Transfer*, LocalNode*);
 
-	SyncFileGet(Sync*, Node*, string*);
-	~SyncFileGet();
+    SyncFileGet(Sync*, Node*, string*);
+    ~SyncFileGet();
 };
 
 } // namespace

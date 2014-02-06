@@ -23,20 +23,18 @@
 #define CONSOLE_CLASS PosixConsole
 
 namespace mega {
-
 struct PosixConsole : public Console
 {
-	tcflag_t oldlflag;
-	cc_t oldvtime;
-	struct termios term;
+    tcflag_t oldlflag;
+    cc_t oldvtime;
+    struct termios term;
 
-	void readpwchar(char*, int, int* pw_buf_pos, char**);
-	void setecho(bool);
+    void readpwchar(char*, int, int* pw_buf_pos, char**);
+    void setecho(bool);
 
-	PosixConsole();
-	~PosixConsole();
+    PosixConsole();
+    ~PosixConsole();
 };
-
 } // namespace
 
 #endif

@@ -25,44 +25,42 @@
 #include "types.h"
 
 namespace mega {
-
 // generic timer facility with exponential backoff
 class MEGA_API BackoffTimer
 {
-	dstime next;
-	dstime delta;
+    dstime next;
+    dstime delta;
 
 public:
-	// reset timer
-	void reset();
+    // reset timer
+    void reset();
 
-	// trigger exponential backoff
-	void backoff(dstime);
+    // trigger exponential backoff
+    void backoff(dstime);
 
-	// set absolute backoff
-	void backoff(dstime, dstime);
+    // set absolute backoff
+    void backoff(dstime, dstime);
 
-	// check if timer has elapsed
-	bool armed(dstime) const;
+    // check if timer has elapsed
+    bool armed(dstime) const;
 
-	// arm timer
-	bool arm(dstime);
+    // arm timer
+    bool arm(dstime);
 
-	// time left for event to become armed
-	dstime retryin(dstime);
+    // time left for event to become armed
+    dstime retryin(dstime);
 
-	// current backoff delta
-	dstime backoff();
+    // current backoff delta
+    dstime backoff();
 
-	// time of next trigger or 0 if no trigger since last backoff
-	dstime nextset() const;
+    // time of next trigger or 0 if no trigger since last backoff
+    dstime nextset() const;
 
-	// update time to wait
-	void update(dstime, dstime*);
+    // update time to wait
+    void update(dstime, dstime*);
 
-	BackoffTimer();
+    BackoffTimer();
 };
-
 } // namespace
 
 #endif

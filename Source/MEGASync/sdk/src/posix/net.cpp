@@ -22,158 +22,174 @@
 #include "mega.h"
 
 namespace mega {
-
 CurlHttpIO::CurlHttpIO()
 {
-	curl_global_init(CURL_GLOBAL_DEFAULT);
+    curl_global_init(CURL_GLOBAL_DEFAULT);
 
-	curlm = curl_multi_init();
+    curlm = curl_multi_init();
 
-	curlsh = curl_share_init();
-	curl_share_setopt(curlsh,CURLSHOPT_SHARE,CURL_LOCK_DATA_DNS);
-	curl_share_setopt(curlsh,CURLSHOPT_SHARE,CURL_LOCK_DATA_SSL_SESSION);
+    curlsh = curl_share_init();
+    curl_share_setopt(curlsh, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+    curl_share_setopt(curlsh, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
 
-	contenttypejson = curl_slist_append(NULL,"Content-Type: application/json");
-	contenttypejson = curl_slist_append(contenttypejson, "Expect:");
+    contenttypejson = curl_slist_append(NULL, "Content-Type: application/json");
+    contenttypejson = curl_slist_append(contenttypejson, "Expect:");
 
-	contenttypebinary = curl_slist_append(NULL,"Content-Type: application/octet-stream");
-	contenttypebinary = curl_slist_append(contenttypebinary, "Expect:");
+    contenttypebinary = curl_slist_append(NULL, "Content-Type: application/octet-stream");
+    contenttypebinary = curl_slist_append(contenttypebinary, "Expect:");
 }
 
 CurlHttpIO::~CurlHttpIO()
 {
-	curl_global_cleanup();
+    curl_global_cleanup();
 }
 
 void CurlHttpIO::setuseragent(string* u)
 {
-	useragent = u;
+    useragent = u;
 }
 
 // wake up from cURL I/O
 void CurlHttpIO::addevents(Waiter* w, int flags)
 {
-	int t;
-	PosixWaiter* pw = (PosixWaiter*)w;
+    int t;
+    PosixWaiter* pw = (PosixWaiter*)w;
 
-	curl_multi_fdset(curlm,&pw->rfds,&pw->wfds,&pw->efds,&t);
+    curl_multi_fdset(curlm, &pw->rfds, &pw->wfds, &pw->efds, &t);
 
-	pw->bumpmaxfd(t);
+    pw->bumpmaxfd(t);
 }
 
 // POST request to URL
 void CurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
 {
-	if (debug)
-	{
-		cout << "POST target URL: " << req->posturl << endl;
+    if (debug)
+    {
+        cout << "POST target URL: " << req->posturl << endl;
 
-		if (req->binary) cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
-		else cout << "Sending: " << *req->out << endl;
-	}
+        if (req->binary)
+        {
+            cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
+        }
+        else
+        {
+            cout << "Sending: " << *req->out << endl;
+        }
+    }
 
-	CURL* curl;
+    CURL* curl;
 
-	req->in.clear();
+    req->in.clear();
 
-	if ((curl = curl_easy_init()))
-	{
-		curl_easy_setopt(curl,CURLOPT_URL,req->posturl.c_str());
-		curl_easy_setopt(curl,CURLOPT_POSTFIELDS,data ? data : req->out->data());
-		curl_easy_setopt(curl,CURLOPT_POSTFIELDSIZE,data ? len : req->out->size());
-		curl_easy_setopt(curl,CURLOPT_USERAGENT,useragent->c_str());
-		curl_easy_setopt(curl,CURLOPT_HTTPHEADER,req->type == REQ_JSON ? contenttypejson : contenttypebinary);
-		curl_easy_setopt(curl,CURLOPT_SHARE,curlsh);
-		curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,write_data);
-		curl_easy_setopt(curl,CURLOPT_WRITEDATA,(void*)req);
-		curl_easy_setopt(curl,CURLOPT_PRIVATE,(void*)req);
+    if (( curl = curl_easy_init()))
+    {
+        curl_easy_setopt(curl, CURLOPT_URL,           req->posturl.c_str());
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS,    data ? data : req->out->data());
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, data ? len : req->out->size());
+        curl_easy_setopt(curl, CURLOPT_USERAGENT,     useragent->c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER,    req->type == REQ_JSON ? contenttypejson : contenttypebinary);
+        curl_easy_setopt(curl, CURLOPT_SHARE,         curlsh);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA,     (void*)req);
+        curl_easy_setopt(curl, CURLOPT_PRIVATE,       (void*)req);
 
-		curl_multi_add_handle(curlm,curl);
+        curl_multi_add_handle(curlm, curl);
 
-		req->status = REQ_INFLIGHT;
+        req->status = REQ_INFLIGHT;
 
-		req->httpiohandle = (void*)curl;
-	}
-	else req->status = REQ_FAILURE;
+        req->httpiohandle = (void*)curl;
+    }
+    else
+    {
+        req->status = REQ_FAILURE;
+    }
 }
 
 // cancel pending HTTP request
 void CurlHttpIO::cancel(HttpReq* req)
 {
-	if (req->httpiohandle)
-	{
-		curl_multi_remove_handle(curlm,(CURL*)req->httpiohandle);
-		curl_easy_cleanup((CURL*)req->httpiohandle);
+    if (req->httpiohandle)
+    {
+        curl_multi_remove_handle(curlm, (CURL*)req->httpiohandle);
+        curl_easy_cleanup((CURL*)req->httpiohandle);
 
-		req->httpstatus = 0;
-		req->status = REQ_FAILURE;
-		req->httpiohandle = NULL;
-	}
+        req->httpstatus = 0;
+        req->status = REQ_FAILURE;
+        req->httpiohandle = NULL;
+    }
 }
 
 // real-time progress information on POST data
 m_off_t CurlHttpIO::postpos(void* handle)
 {
-	double bytes;
+    double bytes;
 
-	curl_easy_getinfo(handle,CURLINFO_SIZE_UPLOAD,&bytes);
+    curl_easy_getinfo(handle, CURLINFO_SIZE_UPLOAD, &bytes);
 
-	return (m_off_t)bytes;
+    return (m_off_t)bytes;
 }
 
 // process events
 bool CurlHttpIO::doio()
 {
-	bool done;
+    bool done;
 
-	done = 0;
+    done = 0;
 
-	CURLMsg *msg;
-	int dummy;
+    CURLMsg *msg;
+    int dummy;
 
-	curl_multi_perform(curlm,&dummy);
+    curl_multi_perform(curlm, &dummy);
 
-	while ((msg = curl_multi_info_read(curlm,&dummy)))
-	{
-		HttpReq* req;
+    while (( msg = curl_multi_info_read(curlm, &dummy)))
+    {
+        HttpReq* req;
 
-		if (curl_easy_getinfo(msg->easy_handle,CURLINFO_PRIVATE,(char**)&req) == CURLE_OK && req)
-		{
-			req->httpio = NULL;
+        if (( curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, (char**)&req) == CURLE_OK ) && req)
+        {
+            req->httpio = NULL;
 
-			if (msg->msg == CURLMSG_DONE)
-			{
-				curl_easy_getinfo(msg->easy_handle,CURLINFO_RESPONSE_CODE,&req->httpstatus);
+            if (msg->msg == CURLMSG_DONE)
+            {
+                curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &req->httpstatus);
 
-				if (debug)
-				{
-					cout << "CURLMSG_DONE with HTTP status: " << req->httpstatus << endl;
+                if (debug)
+                {
+                    cout << "CURLMSG_DONE with HTTP status: " << req->httpstatus << endl;
 
-					if (req->binary) cout << "[received " << req->in.size() << " bytes of raw data]" << endl;
-					else cout << "Received: " << req->in.c_str() << endl;
-				}
+                    if (req->binary)
+                    {
+                        cout << "[received " << req->in.size() << " bytes of raw data]" << endl;
+                    }
+                    else
+                    {
+                        cout << "Received: " << req->in.c_str() << endl;
+                    }
+                }
 
-				req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
-				done = true;
-			}
-			else req->status = REQ_FAILURE;
-		}
+                req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
+                done = true;
+            }
+            else
+            {
+                req->status = REQ_FAILURE;
+            }
+        }
 
-		curl_multi_remove_handle(curlm,msg->easy_handle);
-		curl_easy_cleanup(msg->easy_handle);
-	}
+        curl_multi_remove_handle(curlm, msg->easy_handle);
+        curl_easy_cleanup(msg->easy_handle);
+    }
 
-	return done;
+    return done;
 }
 
 // callback for incoming HTTP payload
 size_t CurlHttpIO::write_data(void *ptr, size_t size, size_t nmemb, void *target)
 {
-	size *= nmemb;
+    size *= nmemb;
 
-	((HttpReq*)target)->put(ptr,size);
+    ((HttpReq*)target )->put(ptr, size);
 
-	return size;
+    return size;
 }
-
 } // namespace

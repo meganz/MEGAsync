@@ -27,225 +27,227 @@
 #include "attrmap.h"
 
 namespace mega {
-
 struct MEGA_API NodeCore
 {
-	// node's own handle
-	handle nodehandle;
+    // node's own handle
+    handle nodehandle;
 
-	// parent node handle (in a Node context, temporary placeholder until parent is set)
-	handle parenthandle;
+    // parent node handle (in a Node context, temporary placeholder until
+    // parent is set)
+    handle parenthandle;
 
-	// node type
-	nodetype_t type;
+    // node type
+    nodetype_t type;
 
-	// full folder/file key, symmetrically or asymmetrically encrypted
-	string nodekey;
+    // full folder/file key, symmetrically or asymmetrically encrypted
+    string nodekey;
 
-	// new node's client-controlled timestamp (should be last modification)
-	time_t clienttimestamp;
+    // new node's client-controlled timestamp (should be last modification)
+    time_t clienttimestamp;
 
-	// node attributes
-	string attrstring;
+    // node attributes
+    string attrstring;
 };
 
 // new node for putnodes()
 struct MEGA_API NewNode : public NodeCore
 {
-	static const int UPLOADTOKENLEN = 27;
+    static const int UPLOADTOKENLEN = 27;
 
-	newnodesource_t source;
+    newnodesource_t source;
 
-	handle uploadhandle;
-	byte uploadtoken[UPLOADTOKENLEN];
+    handle uploadhandle;
+    byte uploadtoken[UPLOADTOKENLEN];
 
-	handle syncid;
-	LocalNode* localnode;
+    handle syncid;
+    LocalNode* localnode;
 
-	NewNode() { syncid = UNDEF; }
+    NewNode()
+    {
+        syncid = UNDEF;
+    }
 };
 
 // filesystem node
 struct MEGA_API Node : public NodeCore, Cachable, FileFingerprint
 {
-	MegaClient* client;
+    MegaClient* client;
 
-	// node crypto keys
-	string keystring;
+    // node crypto keys
+    string keystring;
 
-	// change parent node association
-	bool setparent(Node*);
+    // change parent node association
+    bool setparent(Node*);
 
-	// copy JSON-delimited string
-	static void copystring(string*, const char*);
+    // copy JSON-delimited string
+    static void copystring(string*, const char*);
 
-	// try to resolve node key string
-	bool applykey();
+    // try to resolve node key string
+    bool applykey();
 
-	// decrypt attribute string and set fileattrs
-	void setattr();
+    // decrypt attribute string and set fileattrs
+    void setattr();
 
-	// display name (UTF-8)
-	const char* displayname();
+    // display name (UTF-8)
+    const char* displayname();
 
-	// node-specific key
-	SymmCipher key;
+    // node-specific key
+    SymmCipher key;
 
-	// node attributes
-	AttrMap attrs;
+    // node attributes
+    AttrMap attrs;
 
-	// owner
-	handle owner;
+    // owner
+    handle owner;
 
-	// actual time this node was created (cannot be set by user)
-	time_t ctime;
+    // actual time this node was created (cannot be set by user)
+    time_t ctime;
 
-	// FILENODE nodes only: nonce, meta MAC, attribute string
-	int64_t ctriv;
-	int64_t metamac;
-	string fileattrstring;
+    // FILENODE nodes only: nonce, meta MAC, attribute string
+    int64_t ctriv;
+    int64_t metamac;
+    string fileattrstring;
 
-	// check presence of file attribute
-	int hasfileattribute(fatype) const;
+    // check presence of file attribute
+    int hasfileattribute(fatype) const;
 
-	// decrypt node attribute string
-	static byte* decryptattr(SymmCipher*, const char*, int);
+    // decrypt node attribute string
+    static byte* decryptattr(SymmCipher*, const char*, int);
 
-	// inbound share
-	Share* inshare;
+    // inbound share
+    Share* inshare;
 
-	// outbound shares by user
-	share_map outshares;
+    // outbound shares by user
+    share_map outshares;
 
-	// incoming/outgoing share key
-	SymmCipher* sharekey;
+    // incoming/outgoing share key
+    SymmCipher* sharekey;
 
-	// app-private pointer
-	void* appdata;
+    // app-private pointer
+    void* appdata;
 
-	bool removed;
+    bool removed;
 
-	void setkey(const byte* = NULL);
+    void setkey(const byte* = NULL);
 
-	void setfingerprint();
+    void setfingerprint();
 
-	void faspec(string*);
+    void faspec(string*);
 
-	// parent
-	Node* parent;
+    // parent
+    Node* parent;
 
-	// children
-	node_list children;
+    // children
+    node_list children;
 
-	// own position in parent's children
-	node_list::iterator child_it;
+    // own position in parent's children
+    node_list::iterator child_it;
 
-	// own position in fingerprint set (only valid for file nodes)
-	fingerprint_set::iterator fingerprint_it;
+    // own position in fingerprint set (only valid for file nodes)
+    fingerprint_set::iterator fingerprint_it;
 
-	// related synced item or NULL
-	LocalNode* localnode;
+    // related synced item or NULL
+    LocalNode* localnode;
 
-	// active sync get
-	struct SyncFileGet* syncget;
+    // active sync get
+    struct SyncFileGet* syncget;
 
-	// state of removal to //bin / SyncDebris
-	syncdel_t syncdeleted;
+    // state of removal to //bin / SyncDebris
+    syncdel_t syncdeleted;
 
-	// location in the todebris node_set
-	node_set::iterator todebris_it;
+    // location in the todebris node_set
+    node_set::iterator todebris_it;
 
-	// source tag
-	int tag;
+    // source tag
+    int tag;
 
-	// check if node is below this node
-	bool isbelow(Node*) const;
+    // check if node is below this node
+    bool isbelow(Node*) const;
 
-	bool serialize(string*);
-	static Node* unserialize(MegaClient*, string*, node_vector*);
+    bool serialize(string*);
+    static Node* unserialize(MegaClient*, string*, node_vector*);
 
-	Node(MegaClient*, vector<Node*>*, handle, handle, nodetype_t, m_off_t, handle, const char*, time_t, time_t);
-	~Node();
+    Node(MegaClient*, vector<Node*>*, handle, handle, nodetype_t, m_off_t, handle, const char*, time_t, time_t);
+    ~Node();
 };
 
 struct MEGA_API LocalNode : public File
 {
-	class Sync* sync;
+    class Sync * sync;
 
-	// parent linkage
-	LocalNode* parent;
+    // parent linkage
+    LocalNode* parent;
 
-	// children by name
-	localnode_map children;
+    // children by name
+    localnode_map children;
 
-	// for filesystems with botched secondary ("short") names
-	string slocalname;
-	localnode_map schildren;
+    // for filesystems with botched secondary ("short") names
+    string slocalname;
+    localnode_map schildren;
 
-	// local filesystem node ID (inode...) for rename/move detection
-	handle fsid;
-	handlelocalnode_map::iterator fsid_it;
+    // local filesystem node ID (inode...) for rename/move detection
+    handle fsid;
+    handlelocalnode_map::iterator fsid_it;
 
-	// related cloud node, if any
-	Node* node;
+    // related cloud node, if any
+    Node* node;
 
-	// related pending node creation or NULL
-	NewNode* newnode;
+    // related pending node creation or NULL
+    NewNode* newnode;
 
-	// FILENODE or FOLDERNODE
-	nodetype_t type;
+    // FILENODE or FOLDERNODE
+    nodetype_t type;
 
-	// detection of deleted filesystem records
-	int scanseqno;
+    // detection of deleted filesystem records
+    int scanseqno;
 
-	// number of iterations since last seen
-	int notseen;
+    // number of iterations since last seen
+    int notseen;
 
-	// global sync reference
-	handle syncid;
+    // global sync reference
+    handle syncid;
 
-	// was actively deleted
-	bool deleted;
+    // was actively deleted
+    bool deleted;
 
-	// current subtree sync state: current and displayed
-	treestate_t ts, dts;
+    // current subtree sync state: current and displayed
+    treestate_t ts, dts;
 
-	// update sync state all the way to the root node
-	void treestate(treestate_t = TREESTATE_NONE);
+    // update sync state all the way to the root node
+    void treestate(treestate_t = TREESTATE_NONE);
 
-	// timer to delay upload start
-	dstime nagleds;
-	void bumpnagleds();
+    // timer to delay upload start
+    dstime nagleds;
+    void bumpnagleds();
 
-	// if delage > 0, own iterator inside MegaClient::localsyncgone
-	localnode_set::iterator notseen_it;
+    // if delage > 0, own iterator inside MegaClient::localsyncgone
+    localnode_set::iterator notseen_it;
 
-	// build full local path to this node
-	void getlocalpath(string*, bool sdisable = false);
-	void getlocalsubpath(string*);
+    // build full local path to this node
+    void getlocalpath(string*, bool sdisable = false);
+    void getlocalsubpath(string*);
 
-	// return child node by name
-	LocalNode* childbyname(string*);
+    // return child node by name
+    LocalNode* childbyname(string*);
 
-	// node-specific DirNotify tag
-	handle dirnotifytag;
+    // node-specific DirNotify tag
+    handle dirnotifytag;
 
-	void prepare();
-	void completed(Transfer*, LocalNode*);
+    void prepare();
+    void completed(Transfer*, LocalNode*);
 
-	void setnode(Node*);
+    void setnode(Node*);
 
-	void setnotseen(int);
+    void setnotseen(int);
 
-	void setfsid(handle);
+    void setfsid(handle);
 
-	void setnameparent(LocalNode*, string*);
+    void setnameparent(LocalNode*, string*);
 
-	void init(Sync*, nodetype_t, LocalNode*, string*, string*);
+    void init(Sync *, nodetype_t, LocalNode *, string *, string*);
 
-	~LocalNode();
+    ~LocalNode();
 };
-
 } // namespace
 
 #endif

@@ -25,24 +25,22 @@
 #include "types.h"
 
 namespace mega {
-
 // API request
 class MEGA_API Request
 {
-	vector<Command*> cmds;
+    vector<Command*> cmds;
 
 public:
-	void add(Command*);
+    void add(Command*);
 
-	int cmdspending();
+    int cmdspending();
 
-	void get(string*);
+    void get(string*);
 
-	void procresult(MegaClient*);
+    void procresult(MegaClient*);
 
-	void clear();
+    void clear();
 };
-
 } // namespace
 
 #endif

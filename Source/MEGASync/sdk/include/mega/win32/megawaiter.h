@@ -23,31 +23,29 @@
 #define WAIT_CLASS WinWaiter
 
 namespace mega {
-
 class MEGA_API WinWaiter : public Waiter
 {
-	typedef ULONGLONG (WINAPI* PGTC)();
-	PGTC pGTC;
-	ULONGLONG tickhigh;
-	DWORD prevt;
+    typedef ULONGLONG ( WINAPI * PGTC )();
+    PGTC pGTC;
+    ULONGLONG tickhigh;
+    DWORD prevt;
 
     vector<HANDLE> handles;
-	vector<int> flags;
+    vector<int> flags;
 
 public:
-	PCRITICAL_SECTION pcsHTTP;
-	unsigned pendingfsevents;
+    PCRITICAL_SECTION pcsHTTP;
+    unsigned pendingfsevents;
 
-	dstime getdstime();
+    dstime getdstime();
 
-	void init(dstime);
-	int wait();
+    void init(dstime);
+    int wait();
 
     bool addhandle(HANDLE handle, int);
 
-	WinWaiter();
+    WinWaiter();
 };
-
 } // namespace
 
 #endif

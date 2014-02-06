@@ -25,22 +25,20 @@
 #include "mega/waiter.h"
 
 namespace mega {
-
 struct PosixWaiter : public Waiter
 {
-	int maxfd;
-	fd_set rfds, wfds, efds;
+    int maxfd;
+    fd_set rfds, wfds, efds;
 
-	dstime getdstime();
+    dstime getdstime();
 
-	void init(dstime);
-	int wait();
-	void bumpmaxfd(int);
+    void init(dstime);
+    int wait();
+    void bumpmaxfd(int);
 
-    int select ();
-    void fdset (fd_set *read_fd_set, fd_set *write_fd_set, fd_set *exc_fd_set, int *max_fd);
+    int select();
+    void fdset(fd_set *read_fd_set, fd_set *write_fd_set, fd_set *exc_fd_set, int *max_fd);
 };
-
 } // namespace
 
 #endif

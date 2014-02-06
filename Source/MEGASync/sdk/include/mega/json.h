@@ -22,7 +22,6 @@
 #ifndef MEGA_JSON_H
 #define MEGA_JSON_H 1
 
-//#include "mega.h"
 #include "types.h"
 
 namespace mega {
@@ -30,36 +29,36 @@ namespace mega {
 // linear non-strict JSON scanner
 struct MEGA_API JSON
 {
-	const char* pos;	// make private
+    const char* pos;	// make private
 
-	bool isnumeric();
+    bool isnumeric();
 
-	void begin(const char*);
+    void begin(const char*);
 
-	m_off_t getint();
-	double getfloat();
-	const char* getvalue();
+    m_off_t getint();
+    double getfloat();
+    const char* getvalue();
 
-	nameid getnameid();
-	nameid getnameid(const char*);
+    nameid getnameid();
+    nameid getnameid(const char*);
 
-	bool is(const char*);
+    bool is(const char*);
 
-	int storebinary(byte*, int);
-	bool storebinary(string*);
+    int storebinary(byte*, int);
+    bool storebinary(string*);
 
-	handle gethandle(int = 6);
+    handle gethandle(int = 6);
 
-	bool enterarray();
-	bool leavearray();
+    bool enterarray();
+    bool leavearray();
 
-	bool enterobject();
-	bool leaveobject();
+    bool enterobject();
+    bool leaveobject();
 
-	bool storestring(string*);
-	bool storeobject(string* = NULL);
+    bool storestring(string*);
+    bool storeobject(string* = NULL);
 
-	static void unescape(string*);
+    static void unescape(string*);
 };
 
 } // namespace

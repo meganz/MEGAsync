@@ -23,16 +23,14 @@
 #define CONSOLE_CLASS WinConsole
 
 namespace mega {
-
 struct MEGA_API WinConsole : public Console
 {
-	void readpwchar(char*, int, int* pw_buf_pos, char**);
-	void setecho(bool);
+    void readpwchar(char*, int, int* pw_buf_pos, char**);
+    void setecho(bool);
 
-	WinConsole();
-	~WinConsole();
+    WinConsole();
+    ~WinConsole();
 };
-
 } // namespace
 
 #endif

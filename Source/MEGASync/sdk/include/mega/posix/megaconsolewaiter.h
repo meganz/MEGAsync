@@ -25,12 +25,10 @@
 #include "megawaiter.h"
 
 namespace mega {
-
 struct PosixConsoleWaiter : public PosixWaiter
 {
-	int wait();
+    int wait();
 };
-
 } // namespace
 
 #endif

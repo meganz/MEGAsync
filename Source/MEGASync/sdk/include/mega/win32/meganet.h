@@ -30,53 +30,55 @@ namespace mega {
 
 extern bool debug;
 
-class MEGA_API WinHttpIO : public HttpIO
+class MEGA_API WinHttpIO: public HttpIO
 {
-	CRITICAL_SECTION csHTTP;
-	HANDLE hWakeupEvent;
+    CRITICAL_SECTION csHTTP;
+    HANDLE hWakeupEvent;
 
 protected:
-	WinWaiter* waiter;
-	HINTERNET hSession;
+    WinWaiter* waiter;
+    HINTERNET hSession;
 
 public:
-	static const unsigned HTTP_POST_CHUNK_SIZE = 16384;
+    static const unsigned HTTP_POST_CHUNK_SIZE = 16384;
 
-	static VOID CALLBACK asynccallback(HINTERNET, DWORD_PTR, DWORD, LPVOID lpvStatusInformation, DWORD dwStatusInformationLength);
+    static VOID CALLBACK asynccallback(HINTERNET, DWORD_PTR, DWORD,
+                                       LPVOID lpvStatusInformation,
+                                       DWORD dwStatusInformationLength);
 
-	void updatedstime();
+    void updatedstime();
 
-	void post(HttpReq*, const char* = 0, unsigned = 0);
-	void cancel(HttpReq*);
+    void post(HttpReq*, const char* = 0, unsigned = 0);
+    void cancel(HttpReq*);
 
-	m_off_t postpos(void*);
+    m_off_t postpos(void*);
 
-	bool doio(void);
+    bool doio(void);
 
-	void addevents(Waiter*, int);
+    void addevents(Waiter*, int);
 
-	void entercs();
-	void leavecs();
+    void entercs();
+    void leavecs();
 
-	void httpevent();
+    void httpevent();
 
-	void setuseragent(string*);
+    void setuseragent(string*);
 
-	WinHttpIO();
-	~WinHttpIO();
+    WinHttpIO();
+    ~WinHttpIO();
 };
 
 struct MEGA_API WinHttpContext
 {
-	HINTERNET hRequest;
-	HINTERNET hConnect;
+    HINTERNET hRequest;
+    HINTERNET hConnect;
 
-	HttpReq* req;                   // backlink to underlying HttpReq
-	WinHttpIO* httpio;              // backlink to application-wide WinHttpIO object
+    HttpReq* req;                   // backlink to underlying HttpReq
+    WinHttpIO* httpio;              // backlink to application-wide WinHttpIO object
 
-	unsigned postpos;
-	unsigned postlen;
-	const char* postdata;
+    unsigned postpos;
+    unsigned postlen;
+    const char* postdata;
 };
 
 } // namespace

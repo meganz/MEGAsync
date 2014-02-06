@@ -22,64 +22,75 @@
 #include "mega/share.h"
 
 namespace mega {
-
 Share::Share(User* u, accesslevel_t a, time_t t)
 {
-	user = u;
-	access = a;
-	ts = t;
+    user = u;
+    access = a;
+    ts = t;
 }
 
 void Share::serialize(string* d)
 {
-	handle uh = user ? user->userhandle : 0;
-	char a = (char)access;
+    handle uh = user ? user->userhandle : 0;
+    char a = (char)access;
 
-	d->append((char*)&uh,sizeof uh);
-	d->append((char*)&ts,sizeof ts);
-	d->append((char*)&a,1);
-	d->append("",1);
+    d->append((char*)&uh, sizeof uh);
+    d->append((char*)&ts, sizeof ts);
+    d->append((char*)&a, 1);
+    d->append("", 1);
 }
 
-bool Share::unserialize(MegaClient* client, int direction, handle h, const byte* key, const char** ptr, const char* end)
+bool Share::unserialize(MegaClient* client, int direction, handle h,
+                        const byte* key, const char** ptr, const char* end)
 {
-	if (*ptr+sizeof(handle)+sizeof(time_t)+2 > end) return 0;
+    if (*ptr + sizeof( handle ) + sizeof( time_t ) + 2 > end)
+    {
+        return 0;
+    }
 
-	client->newshares.push_back(new NewShare(h,direction,*(handle*)*ptr,(accesslevel_t)(*ptr)[sizeof(handle)+sizeof(time_t)],*(time_t*)(*ptr+sizeof(handle)),key));
+    client->newshares.push_back(new NewShare(h, direction, *(handle*)*ptr,
+                                             (accesslevel_t)( *ptr )[sizeof( handle ) + sizeof( time_t )],
+                                             *(time_t*)( *ptr + sizeof( handle )), key));
 
-	*ptr += sizeof(handle)+sizeof(time_t)+2;
+    *ptr += sizeof( handle ) + sizeof( time_t ) + 2;
 
-	return true;
+    return true;
 }
 
 void Share::update(accesslevel_t a, time_t t)
 {
-	access = a;
-	ts = t;
+    access = a;
+    ts = t;
 }
 
 // coutgoing: < 0 - don't authenticate, > 0 - authenticate using handle auth
-NewShare::NewShare(handle ch, int coutgoing, handle cpeer, accesslevel_t caccess, time_t cts, const byte* ckey, const byte* cauth)
+NewShare::NewShare(handle ch, int coutgoing, handle cpeer, accesslevel_t caccess,
+                   time_t cts, const byte* ckey, const byte* cauth)
 {
-	h = ch;
-	outgoing = coutgoing;
-	peer = cpeer;
-	access = caccess;
-	ts = cts;
+    h = ch;
+    outgoing = coutgoing;
+    peer = cpeer;
+    access = caccess;
+    ts = cts;
 
-	if (ckey)
-	{
-		memcpy(key,ckey,sizeof key);
-		have_key = 1;
-	}
-	else have_key = 0;
+    if (ckey)
+    {
+        memcpy(key, ckey, sizeof key);
+        have_key = 1;
+    }
+    else
+    {
+        have_key = 0;
+    }
 
-	if (outgoing > 0 && cauth)
-	{
-		memcpy(auth,cauth,sizeof auth);
-		have_auth = 1;
-	}
-	else have_auth = 0;
+    if (( outgoing > 0 ) && cauth)
+    {
+        memcpy(auth, cauth, sizeof auth);
+        have_auth = 1;
+    }
+    else
+    {
+        have_auth = 0;
+    }
 }
-
 } // namespace

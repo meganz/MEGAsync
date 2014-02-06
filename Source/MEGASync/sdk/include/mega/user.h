@@ -25,46 +25,45 @@
 #include "attrmap.h"
 
 namespace mega {
-
 // user/contact
 struct MEGA_API User : public Cachable
 {
-	// user handle
-	handle userhandle;
+    // user handle
+    handle userhandle;
 
-	// string identifier for API requests (either e-mail address or ASCII user handle)
-	string uid;
+    // string identifier for API requests (either e-mail address or ASCII user
+    // handle)
+    string uid;
 
-	// e-mail address
-	string email;
+    // e-mail address
+    string email;
 
-	// persistent attributes (n = name, a = avatar)
-	AttrMap attrs;
+    // persistent attributes (n = name, a = avatar)
+    AttrMap attrs;
 
-	// visibility status
-	visibility_t show;
+    // visibility status
+    visibility_t show;
 
-	// shares by this user
-	handle_set sharing;
+    // shares by this user
+    handle_set sharing;
 
-	// contact establishment timestamp
-	time_t ctime;
+    // contact establishment timestamp
+    time_t ctime;
 
-	// user's public key
-	AsymmCipher pubk;
-	int pubkrequested;
+    // user's public key
+    AsymmCipher pubk;
+    int pubkrequested;
 
-	// actions to take after arrival of the public key
-	deque<class PubKeyAction*> pkrs;
+    // actions to take after arrival of the public key
+    deque<class PubKeyAction*> pkrs;
 
-	void set(visibility_t, time_t);
+    void set(visibility_t, time_t);
 
-	bool serialize(string*);
-	static User* unserialize(class MegaClient*, string*);
+    bool serialize(string*);
+    static User* unserialize(class MegaClient *, string*);
 
-	User(const char* = NULL);
+    User(const char* = NULL);
 };
-
 } // namespace
 
 #endif

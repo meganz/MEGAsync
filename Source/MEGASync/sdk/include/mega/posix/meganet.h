@@ -23,37 +23,36 @@
 #define HTTPIO_CLASS CurlHttpIO
 
 #include "mega.h"
-#include "wait.h"
 
 namespace mega {
 
-class CurlHttpIO : public HttpIO
+class CurlHttpIO: public HttpIO
 {
-	string* useragent;
+    string* useragent;
 
 protected:
-	CURLM* curlm;
-	CURLSH* curlsh;
+    CURLM* curlm;
+    CURLSH* curlsh;
 
-	static size_t write_data(void *, size_t, size_t, void *);
+    static size_t write_data(void *, size_t, size_t, void *);
 
-	curl_slist* contenttypejson;
-	curl_slist* contenttypebinary;
+    curl_slist* contenttypejson;
+    curl_slist* contenttypebinary;
 
 public:
-	void post(HttpReq*, const char* = 0, unsigned = 0);
-	void cancel(HttpReq*);
+    void post(HttpReq*, const char* = 0, unsigned = 0);
+    void cancel(HttpReq*);
 
-	m_off_t postpos(void*);
+    m_off_t postpos(void*);
 
-	bool doio(void);
+    bool doio(void);
 
-	void addevents(Waiter*, int);
+    void addevents(Waiter*, int);
 
-	void setuseragent(string*);
-	
-	CurlHttpIO();
-	~CurlHttpIO();
+    void setuseragent(string*);
+
+    CurlHttpIO();
+    ~CurlHttpIO();
 };
 
 } // namespace

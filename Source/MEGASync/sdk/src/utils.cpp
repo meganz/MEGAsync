@@ -22,110 +22,123 @@
 #include "mega/utils.h"
 
 namespace mega {
-
 Cachable::Cachable()
 {
-	dbid = 0;
-	notified = 0;
+    dbid = 0;
+    notified = 0;
 }
 
 // pad and CBC-encrypt
 void PaddedCBC::encrypt(string* data, SymmCipher* key)
 {
-	// pad to blocksize and encrypt
-	data->append("E");
-	data->resize((data->size()+key->BLOCKSIZE-1)&-key->BLOCKSIZE,'P');
-	key->cbc_encrypt((byte*)data->data(),data->size());
+    // pad to blocksize and encrypt
+    data->append("E");
+    data->resize(( data->size() + key->BLOCKSIZE - 1 ) & - key->BLOCKSIZE, 'P');
+    key->cbc_encrypt((byte*)data->data(), data->size());
 }
 
 // CBC-decrypt and unpad
 bool PaddedCBC::decrypt(string* data, SymmCipher* key)
 {
-	if ((data->size() & (key->BLOCKSIZE-1))) return false;
+    if (( data->size() & ( key->BLOCKSIZE - 1 )))
+    {
+        return false;
+    }
 
-	// decrypt and unpad
-	key->cbc_decrypt((byte*)data->data(),data->size());
+    // decrypt and unpad
+    key->cbc_decrypt((byte*)data->data(), data->size());
 
-	size_t p = data->find_last_of('E');
+    size_t p = data->find_last_of('E');
 
-	if (p == string::npos) return false;
+    if (p == string::npos)
+    {
+        return false;
+    }
 
-	data->resize(p);
+    data->resize(p);
 
-	return true;
+    return true;
 }
 
 // start of chunk
 m_off_t ChunkedHash::chunkfloor(m_off_t p)
 {
-	m_off_t cp, np;
+    m_off_t cp, np;
 
-	cp = 0;
+    cp = 0;
 
-	for (unsigned i = 1; i <= 8; i++)
-	{
-		np = cp+i*SEGSIZE;
-		if (p >= cp && p < np) return cp;
-		cp = np;
-	}
+    for (unsigned i = 1; i <= 8; i++)
+    {
+        np = cp + i * SEGSIZE;
+        if (( p >= cp ) && ( p < np ))
+        {
+            return cp;
+        }
+        cp = np;
+    }
 
-	return ((p-cp)&-(8*SEGSIZE))+cp;
+    return (( p - cp ) & - ( 8 * SEGSIZE )) + cp;
 }
 
 // end of chunk (== start of next chunk)
 m_off_t ChunkedHash::chunkceil(m_off_t p)
 {
-	m_off_t cp, np;
+    m_off_t cp, np;
 
-	cp = 0;
+    cp = 0;
 
-	for (unsigned i = 1; i <= 8; i++)
-	{
-		np = cp+i*SEGSIZE;
-		if (p >= cp && p < np) return np;
-		cp = np;
-	}
+    for (unsigned i = 1; i <= 8; i++)
+    {
+        np = cp + i * SEGSIZE;
+        if (( p >= cp ) && ( p < np ))
+        {
+            return np;
+        }
+        cp = np;
+    }
 
-	return ((p-cp)&-(8*SEGSIZE))+cp+8*SEGSIZE;
+    return (( p - cp ) & - ( 8 * SEGSIZE )) + cp + 8 * SEGSIZE;
 }
 
 
 // cryptographic signature generation/verification
 HashSignature::HashSignature(Hash* h)
 {
-	hash = h;
+    hash = h;
 }
 
 HashSignature::~HashSignature()
 {
-	delete hash;
+    delete hash;
 }
 
 void HashSignature::add(const byte* data, unsigned len)
 {
-	hash->add(data,len);
+    hash->add(data, len);
 }
 
 unsigned HashSignature::get(AsymmCipher* privk, byte* sigbuf, unsigned sigbuflen)
 {
-	string h;
+    string h;
 
-	hash->get(&h);
+    hash->get(&h);
 
-	return privk->rawdecrypt((const byte*)h.data(),h.size(),sigbuf,sigbuflen);
+    return privk->rawdecrypt((const byte*)h.data(), h.size(), sigbuf, sigbuflen);
 }
 
 int HashSignature::check(AsymmCipher* pubk, const byte* sig, unsigned len)
 {
-	string h, s;
+    string h, s;
 
-	hash->get(&h);
+    hash->get(&h);
 
-	s.resize(h.size());
+    s.resize(h.size());
 
-	if (pubk->rawencrypt(sig,len,(byte*)s.data(),s.size()) != h.size()) return 0;
+    if (pubk->rawencrypt(sig, len, (byte*)s.data(), s.size()) != h.size())
+    {
+        return 0;
+    }
 
-	return s == h;
+    return s == h;
 }
-
 } // namespace

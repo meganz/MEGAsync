@@ -26,7 +26,6 @@
 #include <sqlite3.h>
 
 namespace mega {
-
 class MEGA_API SqliteDbAccess : public DbAccess
 {
     string dbpath;
@@ -36,31 +35,30 @@ public:
     DbTable* open(FileSystemAccess*, string*);
 
     SqliteDbAccess(string* = NULL);
-	~SqliteDbAccess();
+    ~SqliteDbAccess();
 };
 
 class MEGA_API SqliteDbTable : public DbTable
 {
-	sqlite3* db;
-	sqlite3_stmt* pStmt;
+    sqlite3* db;
+    sqlite3_stmt* pStmt;
 
 public:
-	void rewind();
-	bool next(uint32_t*, string*);
-	bool get(uint32_t, string*);
-	bool put(uint32_t, char*, unsigned);
-	bool del(uint32_t);
-	void truncate();
-	void begin();
-	void commit();
-	void abort();
+    void rewind();
+    bool next(uint32_t*, string*);
+    bool get(uint32_t, string*);
+    bool put(uint32_t, char*, unsigned);
+    bool del(uint32_t);
+    void truncate();
+    void begin();
+    void commit();
+    void abort();
 
-	uint32_t nextid;
+    uint32_t nextid;
 
-	SqliteDbTable(sqlite3*);
-	~SqliteDbTable();
+    SqliteDbTable(sqlite3*);
+    ~SqliteDbTable();
 };
-
 } // namespace
 
 #endif

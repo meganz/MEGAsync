@@ -26,129 +26,128 @@
 #include "waiter.h"
 
 namespace mega {
-
 // generic host HTTP I/O interface
 struct MEGA_API HttpIO : public EventTrigger
 {
-	// post request to target URL
-	virtual void post(struct HttpReq*, const char* = NULL, unsigned = 0) = 0;
+    // post request to target URL
+    virtual void post(struct HttpReq*, const char* = NULL, unsigned = 0) = 0;
 
-	// cancel request
-	virtual void cancel(HttpReq*) = 0;
+    // cancel request
+    virtual void cancel(HttpReq*) = 0;
 
-	// real-time POST progress information
-	virtual m_off_t postpos(void*) = 0;
+    // real-time POST progress information
+    virtual m_off_t postpos(void*) = 0;
 
-	// execute I/O operations
-	virtual bool doio(void) = 0;
+    // execute I/O operations
+    virtual bool doio(void) = 0;
 
-	// track Internet connectivity issues
-	dstime noinetds;
-	bool inetback;
-	void inetstatus(bool, dstime);
-	bool inetisback();
+    // track Internet connectivity issues
+    dstime noinetds;
+    bool inetback;
+    void inetstatus(bool, dstime);
+    bool inetisback();
 
-	// set useragent (must be called exactly once)
-	virtual void setuseragent(string*) = 0;
+    // set useragent (must be called exactly once)
+    virtual void setuseragent(string*) = 0;
 
-	HttpIO();
-	virtual ~HttpIO() { }
+    HttpIO();
+    virtual ~HttpIO() { }
 };
 
 // outgoing HTTP request
 struct MEGA_API HttpReq
 {
-	reqstatus_t status;
+    reqstatus_t status;
 
-	int httpstatus;
+    int httpstatus;
 
-	contenttype_t type;
+    contenttype_t type;
 
-	string posturl;
+    string posturl;
 
-	string* out;
-	string in;
+    string* out;
+    string in;
 
-	string outbuf;
+    string outbuf;
 
-	byte* buf;
-	unsigned buflen, bufpos;
+    byte* buf;
+    unsigned buflen, bufpos;
 
-	// HttpIO implementation-specific identifier for this connection
-	void* httpiohandle;
+    // HttpIO implementation-specific identifier for this connection
+    void* httpiohandle;
 
-	// while this request is in flight, points to the application's HttpIO object - NULL otherwise
-	HttpIO* httpio;
+    // while this request is in flight, points to the application's HttpIO
+    // object - NULL otherwise
+    HttpIO* httpio;
 
-	// set url and content type for subsequent requests
-	void setreq(const char*, contenttype_t);
+    // set url and content type for subsequent requests
+    void setreq(const char*, contenttype_t);
 
-	// post request to the network
-	void post(MegaClient*, const char* = NULL, unsigned = 0);
+    // post request to the network
+    void post(MegaClient*, const char* = NULL, unsigned = 0);
 
-	// store chunk of incoming data
-	void put(void*, unsigned);
+    // store chunk of incoming data
+    void put(void*, unsigned);
 
-	// reserve space for incoming data
-	byte* reserveput(unsigned* len);
+    // reserve space for incoming data
+    byte* reserveput(unsigned* len);
 
-	// confirm receipt of data in reserved space
-	void completeput(unsigned len);
+    // confirm receipt of data in reserved space
+    void completeput(unsigned len);
 
-	// disconnect open HTTP connection
-	void disconnect();
+    // disconnect open HTTP connection
+    void disconnect();
 
-	// progress information
-	virtual m_off_t transferred(MegaClient*);
+    // progress information
+    virtual m_off_t transferred(MegaClient*);
 
-	// timestamp of last data received
-	dstime lastdata;
+    // timestamp of last data received
+    dstime lastdata;
 
-	// prevent raw data from being dumped in debug mode
-	bool binary;
+    // prevent raw data from being dumped in debug mode
+    bool binary;
 
-	HttpReq(int = 0);
-	virtual ~HttpReq();
+    HttpReq(int = 0);
+    virtual ~HttpReq();
 };
 
 // file chunk I/O
 struct MEGA_API HttpReqXfer : public HttpReq
 {
-	unsigned size;
+    unsigned size;
 
-	virtual bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t) = 0;
-	virtual void finalize(FileAccess*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t) { }
+    virtual bool prepare(FileAccess *, const char*, SymmCipher *, chunkmac_map *, uint64_t, m_off_t, m_off_t) = 0;
+    virtual void finalize(FileAccess*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t) { }
 
-	HttpReqXfer() : HttpReq(1) { };
+    HttpReqXfer() : HttpReq(1) { }
 };
 
 // file chunk upload
 struct MEGA_API HttpReqUL : public HttpReqXfer
 {
-	bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
+    bool prepare(FileAccess *, const char*, SymmCipher *, chunkmac_map *, uint64_t, m_off_t, m_off_t);
 
-	m_off_t transferred(MegaClient*);
+    m_off_t transferred(MegaClient*);
 
-	~HttpReqUL() { };
+    ~HttpReqUL() { }
 };
 
 // file chunk download
 struct MEGA_API HttpReqDL : public HttpReqXfer
 {
-	m_off_t dlpos;
+    m_off_t dlpos;
 
-	bool prepare(FileAccess*, const char*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
-	void finalize(FileAccess*, SymmCipher*, chunkmac_map*, uint64_t, m_off_t, m_off_t);
+    bool prepare(FileAccess *, const char*, SymmCipher *, chunkmac_map *, uint64_t, m_off_t, m_off_t);
+    void finalize(FileAccess *, SymmCipher *, chunkmac_map *, uint64_t, m_off_t, m_off_t);
 
-	~HttpReqDL() { };
+    ~HttpReqDL() { }
 };
 
 // file attribute get
 struct MEGA_API HttpReqGetFA : public HttpReq
 {
-	~HttpReqGetFA() { };
+    ~HttpReqGetFA() { }
 };
-
 } // namespace
 
 #endif

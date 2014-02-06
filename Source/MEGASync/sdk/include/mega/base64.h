@@ -25,18 +25,16 @@
 #include "types.h"
 
 namespace mega {
-
 // modified base64 encoding/decoding (unpadded, -_ instead of +/)
 class MEGA_API Base64
 {
-	static byte to64(byte);
-	static byte from64(byte);
+    static byte to64(byte);
+    static byte from64(byte);
 
 public:
-	static int btoa(const byte*, int, char*);
-	static int atob(const char*, byte*, int);
+    static int btoa(const byte*, int, char*);
+    static int atob(const char*, byte*, int);
 };
-
 } // namespace
 
 #endif
