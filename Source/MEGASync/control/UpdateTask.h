@@ -61,13 +61,6 @@ protected:
    bool running;
    bool forceCheck;
 
-   static const unsigned int INITIAL_DELAY_SECS;
-   static const unsigned int RETRY_INTERVAL_SECS;
-   static const QString UPDATE_CHECK_URL;
-   static const QString UPDATE_FOLDER_NAME;
-   static const QString BACKUP_FOLDER_NAME;
-   static const char PUBLIC_KEY[];
-
 signals:
    void updateCompleted();
    void updateAvailable(bool requested);

@@ -6,13 +6,6 @@
 
 using namespace std;
 
-const unsigned int UpdateTask::INITIAL_DELAY_SECS = 60;
-const unsigned int UpdateTask::RETRY_INTERVAL_SECS = 7200;
-const QString UpdateTask::UPDATE_CHECK_URL = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
-const QString UpdateTask::UPDATE_FOLDER_NAME = QString::fromAscii("update");
-const QString UpdateTask::BACKUP_FOLDER_NAME = QString::fromAscii("backup");
-const char UpdateTask::PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyiAfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
-
 UpdateTask::UpdateTask(QObject *parent) :
     QObject(parent)
 {
@@ -51,21 +44,21 @@ void UpdateTask::startUpdateThread()
 
     QString basePath = MegaApplication::applicationDirPath() + QDir::separator();
     appFolder = QDir(basePath);
-    updateFolder = QDir(basePath + UPDATE_FOLDER_NAME);
+    updateFolder = QDir(basePath + Preferences::UPDATE_FOLDER_NAME);
     m_WebCtrl = new QNetworkAccessManager();
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
-    int len = strlen(PUBLIC_KEY)/4*3+3;
+    int len = strlen(Preferences::UPDATE_PUBLIC_KEY)/4*3+3;
     string pubks;
     pubks.resize(len);
-    pubks.resize(Base64::atob(PUBLIC_KEY, (byte *)pubks.data(), len));
+    pubks.resize(Base64::atob(Preferences::UPDATE_PUBLIC_KEY, (byte *)pubks.data(), len));
     asymkey.setkey(AsymmCipher::PUBKEY,(byte*)pubks.data(), pubks.size());
 
     signatureChecker = new HashSignature(new Hash());
     preferences = Preferences::instance();
 
-    updateTimer->start(INITIAL_DELAY_SECS*1000);
+    updateTimer->start(Preferences::UPDATE_INITIAL_DELAY_SECS*1000);
 }
 
 void UpdateTask::tryUpdate()
@@ -76,7 +69,7 @@ void UpdateTask::tryUpdate()
     running = true;
     updateTimer->stop();
     initialCleanup();
-    downloadFile(UPDATE_CHECK_URL);
+    downloadFile(Preferences::UPDATE_CHECK_URL);
 }
 
 void UpdateTask::initialCleanup()
@@ -85,7 +78,7 @@ void UpdateTask::initialCleanup()
     QStringList subdirs = appFolder.entryList(QDir::Dirs);
     for(int i=0; i<subdirs.size(); i++)
     {
-        if(subdirs[i].startsWith(BACKUP_FOLDER_NAME))
+        if(subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
             Utilities::removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
     }
 
@@ -115,7 +108,7 @@ void UpdateTask::postponeUpdate()
     else
         emit updateNotFound(forceCheck);
 
-    updateTimer->start(RETRY_INTERVAL_SECS*1000);
+    updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     forceInstall = false;
     running = false;
     forceCheck = false;
@@ -263,7 +256,7 @@ bool UpdateTask::performUpdate()
     LOG("performUpdate");
 
     //Create backup folder
-    backupFolder = QDir(appFolder.absoluteFilePath(BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
+    backupFolder = QDir(appFolder.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
     backupFolder.mkdir(QString::fromAscii("."));
 
     for(int i=0; i<localPaths.size(); i++)
@@ -422,7 +415,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
         emit updateAvailable(forceCheck);
         preferences->setLastUpdateTime(QDateTime::currentMSecsSinceEpoch());
         preferences->setLastUpdateVersion(updateVersion);
-        updateTimer->start(RETRY_INTERVAL_SECS*1000);
+        updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     }
     forceInstall = false;
     forceCheck = false;
