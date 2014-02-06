@@ -144,6 +144,12 @@ public:
     static const int REBOOT_DELAY_MS;
     static const int STATE_REFRESH_INTERVAL_MS;
     static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
+    static const unsigned int UPDATE_INITIAL_DELAY_SECS;
+    static const unsigned int UPDATE_RETRY_INTERVAL_SECS;
+    static const QString UPDATE_CHECK_URL;
+    static const QString UPDATE_FOLDER_NAME;
+    static const QString UPDATE_BACKUP_FOLDER_NAME;
+    static const char UPDATE_PUBLIC_KEY[];
 
 protected:
 

@@ -646,7 +646,7 @@ bool SettingsDialog::saveSettings()
         }
         else LOG("No proxy");
 
-        QNetworkRequest proxyTestRequest(QString::fromAscii("https://mega.co.nz"));
+        QNetworkRequest proxyTestRequest(Preferences::UPDATE_CHECK_URL);
         networkAccess = new QNetworkAccessManager();
         connect(networkAccess, SIGNAL(finished(QNetworkReply*)),
                 this, SLOT(onProxyTestFinished(QNetworkReply*)));
