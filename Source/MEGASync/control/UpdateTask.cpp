@@ -73,14 +73,6 @@ void UpdateTask::tryUpdate()
     LOG("tryUpdate");
     if(running) return;
 
-    if(!forceInstall && !forceCheck &&
-       (!preferences->updateAutomatically()) &&
-       ((QDateTime::currentMSecsSinceEpoch()-preferences->lastUpdateTime())
-            < Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS))
-    {
-        postponeUpdate();
-    }
-
     running = true;
     updateTimer->stop();
     initialCleanup();
@@ -427,9 +419,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     else
     {
         LOG("Update ready");
-        emit updateAvailable(forceCheck ||
-           (QDateTime::currentMSecsSinceEpoch()-preferences->lastUpdateTime())
-                >= Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS);
+        emit updateAvailable(forceCheck);
         preferences->setLastUpdateTime(QDateTime::currentMSecsSinceEpoch());
         preferences->setLastUpdateVersion(updateVersion);
         updateTimer->start(RETRY_INTERVAL_SECS*1000);

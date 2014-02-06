@@ -167,6 +167,7 @@ protected:
     bool indexing;
     bool waiting;
     bool updated;
+    bool updateBlocked;
 };
 
 #endif // MEGAAPPLICATION_H

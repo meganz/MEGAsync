@@ -13,7 +13,7 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
-const int MegaApplication::VERSION_CODE = 1005;
+const int MegaApplication::VERSION_CODE = 1004;
 const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.5b");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -152,6 +152,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     updateAction = NULL;
+    updateBlocked = false;
 }
 
 MegaApplication::~MegaApplication()
@@ -283,8 +284,19 @@ void MegaApplication::updateTrayIcon()
     else if(paused)
     {
         LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused"));
+        QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
+        if(!updateAction)
+        {
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+            trayIcon->setToolTip(tooltip);
+        }
+        else
+        {
+            //TODO: Change icon
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+            tooltip += QString::fromAscii("\n") + tr("Update available!");
+            trayIcon->setToolTip(tooltip);
+        }
     }
     else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
     {
@@ -304,17 +316,41 @@ void MegaApplication::updateTrayIcon()
             LOG(QString::number(megaApi->getNumPendingDownloads()));
         }
 
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-        if(indexing) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning"));
-        else if(waiting) trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting"));
-        else trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing"));
+        QString tooltip;
+        if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
+        else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
+        else tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing");
+
+        if(!updateAction)
+        {
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+            trayIcon->setToolTip(tooltip);
+        }
+        else
+        {
+            //TODO: Change icon
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+            tooltip += QString::fromAscii("\n") + tr("Update available!");
+            trayIcon->setToolTip(tooltip);
+        }
     }
     else
     {
         LOG("STATE: Setting the \"synced\" tray icon (default).");
+        if(!updateAction)
+        {
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+        }
+        else
+        {
+            //TODO: Change icon
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
+        }
 
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+        if(reboot)
+            QTimer::singleShot(Preferences::REBOOT_DELAY_MS, this, SLOT(rebootApplication()));
     }
 }
 
@@ -480,8 +516,15 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
 
 void MegaApplication::rebootApplication()
 {
-    if(megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads())
+    if(megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting())
+    {
+        if(!updateBlocked)
+        {
+            updateBlocked = true;
+            showInfoMessage(tr("An update will be applied in the next application restart"));
+        }
         return;
+    }
 
     QString app = MegaApplication::applicationFilePath();
     QStringList args = QStringList();
@@ -545,11 +588,6 @@ void MegaApplication::onDupplicateUpload(QString localPath, QString name, long l
 
 void MegaApplication::onInstallUpdateClicked()
 {
-    if(trayMenu)
-        trayMenu->removeAction(updateAction);
-    delete updateAction;
-    updateAction = NULL;
-
     showInfoMessage(tr("Installing update..."));
     emit installUpdate();
 }
@@ -866,8 +904,12 @@ void MegaApplication::onRequestLinksFinished()
 void MegaApplication::onUpdateCompleted()
 {
     LOG("Update completed. Initializing a silent reboot...");
+    if(trayMenu)
+        trayMenu->removeAction(updateAction);
+    delete updateAction;
+    updateAction = NULL;
     reboot = true;
-    QTimer::singleShot(Preferences::REBOOT_DELAY_MS, this, SLOT(rebootApplication()));
+    rebootApplication();
 }
 
 void MegaApplication::onUpdateAvailable(bool requested)
@@ -889,23 +931,18 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
 void MegaApplication::onUpdateNotFound(bool requested)
 {
-    if(updateAction && (trayIcon->contextMenu()==trayMenu))
-    {
-        if(trayMenu->actions().contains(updateAction))
-        {
-            trayMenu->removeAction(updateAction);
-            delete updateAction;
-            updateAction = NULL;
-        }
-    }
-
     if(requested)
-        showInfoMessage(tr("No updates available"));
+    {
+        if(!updateAction)
+            showInfoMessage(tr("No updates available"));
+        else
+            showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync"));
+    }
 }
 
 void MegaApplication::onUpdateError()
 {
-    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from https://mega.co.nz/#sync"));
+    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync"));
 }
 
 //Called when users click in the tray icon
@@ -964,13 +1001,7 @@ void MegaApplication::onMessageClicked()
 {
     LOG("onMessageClicked");
     if(lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
-    {
-        if(trayMenu)
-            trayMenu->removeAction(updateAction);
-        delete updateAction;
-        updateAction = NULL;
         emit installUpdate();
-    }
     else
         trayIconActivated(QSystemTrayIcon::Trigger);
 }
@@ -1329,10 +1360,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 		totalUploadedSize = totalDownloadedSize = 0;
 		uploadSpeed = downloadSpeed = 0;
         onSyncStateChanged(megaApi);
-        if(reboot)
-        {
-            QTimer::singleShot(Preferences::REBOOT_DELAY_MS, this, SLOT(rebootApplication()));
-        }
 	}
 }
 
