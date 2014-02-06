@@ -25,14 +25,12 @@
 #include "types.h"
 
 namespace mega {
-
 // 64-bit int serialization/unserialization
 struct MEGA_API Serialize64
 {
-	static int serialize(byte*, int64_t);
-	static int unserialize(byte*, int, int64_t*);
+    static int serialize(byte *, int64_t);
+    static int unserialize(byte*, int, int64_t*);
 };
-
 } // namespace
 
 #endif

@@ -22,11 +22,9 @@
 #include "mega/waiter.h"
 
 namespace mega {
-
 // add events to wakeup criteria
 void Waiter::wakeupby(EventTrigger* et, int flags)
 {
-	et->addevents(this,flags);
+    et->addevents(this, flags);
 }
-
 } // namespace

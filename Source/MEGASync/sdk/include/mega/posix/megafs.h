@@ -22,104 +22,107 @@
 #ifndef FSACCESS_CLASS
 #define FSACCESS_CLASS PosixFileSystemAccess
 
+#ifdef  __APPLE__
+// Apple calls it sendfile, but it isn't
+#undef HAVE_SENDFILE
+#define O_DIRECT 0
+#endif
+
 #include "mega.h"
 
 namespace mega {
-
-struct PosixDirAccess : public DirAccess
+struct MEGA_API PosixDirAccess : public DirAccess
 {
-	DIR* dp;
-	bool globbing;
-	glob_t globbuf;
-	unsigned globindex;
+    DIR* dp;
+    bool globbing;
+    glob_t globbuf;
+    unsigned globindex;
 
-	bool dopen(string*, FileAccess*, bool);
-	bool dnext(string*, nodetype_t* = NULL);
+    bool dopen(string*, FileAccess*, bool);
+    bool dnext(string*, nodetype_t* = NULL);
 
-	PosixDirAccess();
-	virtual ~PosixDirAccess();
+    PosixDirAccess();
+    virtual ~PosixDirAccess();
 };
 
-class PosixFileSystemAccess : public FileSystemAccess
+class MEGA_API PosixFileSystemAccess : public FileSystemAccess
 {
 public:
 #ifdef USE_INOTIFY
-	int notifyfd;
+    int notifyfd;
 
-	bool notifyerr, notifyfailed;
-
-	typedef map<int,LocalNode*> wdlocalnode_map;
-	wdlocalnode_map wdnodes;
+    typedef map<int, LocalNode*> wdlocalnode_map;
+    wdlocalnode_map wdnodes;
 #endif
+    bool notifyerr, notifyfailed;
 
-	FileAccess* newfileaccess();
-	DirAccess* newdiraccess();
-	DirNotify* newdirnotify(string*, string*);
+    FileAccess* newfileaccess();
+    DirAccess* newdiraccess();
+    DirNotify* newdirnotify(string*, string*);
 
-	void tmpnamelocal(string*);
+    void tmpnamelocal(string*);
 
-	void local2path(string*, string*);
-	void path2local(string*, string*);
+    void local2path(string*, string*);
+    void path2local(string*, string*);
 
-	void name2local(string*, const char* = NULL);
-	void local2name(string*);
+    void name2local(string*, const char* = NULL);
+    void local2name(string*);
 
-	bool getsname(string*, string*);
+    bool getsname(string*, string*);
 
-	bool renamelocal(string*, string*, bool);
-	bool copylocal(string*, string*);
-	bool rubbishlocal(string*);
-	bool unlinklocal(string*);
-	bool rmdirlocal(string*);
-	bool mkdirlocal(string*, bool);
-	bool setmtimelocal(string*, time_t);
-	bool chdirlocal(string*);
-	size_t lastpartlocal(string*);
+    bool renamelocal(string*, string*, bool);
+    bool copylocal(string*, string*);
+    bool rubbishlocal(string*);
+    bool unlinklocal(string*);
+    bool rmdirlocal(string*);
+    bool mkdirlocal(string*, bool);
+    bool setmtimelocal(string *, time_t);
+    bool chdirlocal(string*);
+    size_t lastpartlocal(string*);
 
-	void addevents(Waiter*, int);
-	int checkevents(Waiter*);
+    void addevents(Waiter*, int);
+    int checkevents(Waiter*);
 
-	void osversion(string*);
-	
-	PosixFileSystemAccess();
-	~PosixFileSystemAccess();
+    void osversion(string*);
+
+    PosixFileSystemAccess();
+    ~PosixFileSystemAccess();
 };
 
-class PosixFileAccess : public FileAccess
+class MEGA_API PosixFileAccess : public FileAccess
 {
 public:
-	int fd;
+    int fd;
 
 #ifndef USE_FDOPENDIR
-	DIR* dp;
+    DIR* dp;
 #endif
 
-	bool fopen(string*, bool, bool);
-	void updatelocalname(string*);
-	bool fread(string*, unsigned, unsigned, m_off_t);
-	bool frawread(byte*, unsigned, m_off_t);
-	bool fwrite(const byte*, unsigned, m_off_t);
+    bool fopen(string*, bool, bool);
+    void updatelocalname(string*);
+    bool fread(string *, unsigned, unsigned, m_off_t);
+    bool frawread(byte *, unsigned, m_off_t);
+    bool fwrite(const byte *, unsigned, m_off_t);
 
-	bool sysread(byte*, unsigned, m_off_t);
-	bool sysstat(time_t*, m_off_t*);
-	bool sysopen();
-	void sysclose();
+    bool sysread(byte *, unsigned, m_off_t);
+    bool sysstat(time_t*, m_off_t*);
+    bool sysopen();
+    void sysclose();
 
-	PosixFileAccess();
-	~PosixFileAccess();
+    PosixFileAccess();
+    ~PosixFileAccess();
 };
 
-class PosixDirNotify : public DirNotify
+class MEGA_API PosixDirNotify : public DirNotify
 {
 public:
-	PosixFileSystemAccess* fsaccess;
+    PosixFileSystemAccess* fsaccess;
 
-	void addnotify(LocalNode*, string*);
-	void delnotify(LocalNode*);
+    void addnotify(LocalNode*, string*);
+    void delnotify(LocalNode*);
 
-	PosixDirNotify(string*, string*);
+    PosixDirNotify(string*, string*);
 };
-
 } // namespace
 
 #endif

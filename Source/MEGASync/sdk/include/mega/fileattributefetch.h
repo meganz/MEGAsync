@@ -31,32 +31,31 @@ namespace mega {
 // file attribute fetching for a specific source cluster
 struct MEGA_API FileAttributeFetchChannel
 {
-	handle fahref;
-	BackoffTimer bt;
-	HttpReq req;
+    handle fahref;
+    BackoffTimer bt;
+    HttpReq req;
 
-	// post request to target URL
-	void dispatch(MegaClient*, int, const char*);
+    // post request to target URL
+    void dispatch(MegaClient*, int, const char*);
 
-	// parse fetch result and remove completed attributes from pending
-	void parse(MegaClient*, int, string*);
+    // parse fetch result and remove completed attributes from pending
+    void parse(MegaClient*, int, string*);
 
-	FileAttributeFetchChannel();
+    FileAttributeFetchChannel();
 };
 
 // pending individual attribute fetch
 struct MEGA_API FileAttributeFetch
 {
-	handle nodehandle;
-	fatype type;
-	int fac;		// attribute cluster ID
-	unsigned char dispatched;
-	unsigned char retries;
-	int tag;
+    handle nodehandle;
+    fatype type;
+    int fac;        // attribute cluster ID
+    unsigned char dispatched;
+    unsigned char retries;
+    int tag;
 
-	FileAttributeFetch(handle, fatype, int, int);
+    FileAttributeFetch(handle, fatype, int, int);
 };
-
 } // namespace
 
 #endif

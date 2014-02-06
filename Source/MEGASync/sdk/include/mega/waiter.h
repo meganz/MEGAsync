@@ -29,38 +29,41 @@ namespace mega {
 // interface enabling a class to add its wakeup criteria to the waiter
 struct MEGA_API EventTrigger
 {
-	// add wakeup criterion
-	virtual void addevents(Waiter*, int) = 0;
+    // add wakeup criterion
+    virtual void addevents(Waiter*, int) = 0;
 
-	// process events after wakeup
-	virtual int checkevents(Waiter*) { return 0; }
+    // process events after wakeup
+    virtual int checkevents(Waiter*)
+    {
+        return 0;
+    }
 };
 
 // wait for events
 struct MEGA_API Waiter
 {
-	// current time
-	dstime ds;
+    // current time
+    dstime ds;
 
-	// wait ceiling
-	dstime maxds;
+    // wait ceiling
+    dstime maxds;
 
-	// current time in deciseconds
-	virtual dstime getdstime() = 0;
+    // current time in deciseconds
+    virtual dstime getdstime() = 0;
 
-	// beging waiting cycle
-	virtual void init(dstime) = 0;
+    // beging waiting cycle
+    virtual void init(dstime) = 0;
 
-	// add wakeup events
-	void wakeupby(EventTrigger*, int);
+    // add wakeup events
+    void wakeupby(EventTrigger*, int);
 
-	// wait for all added wakeup criteria (plus the host app's own), up to the specified number of deciseconds
-	virtual int wait() = 0;
+    // wait for all added wakeup criteria (plus the host app's own), up to the
+    // specified number of deciseconds
+    virtual int wait() = 0;
 
-	static const int NEEDEXEC = 1;
-	static const int HAVESTDIN = 2;
+    static const int NEEDEXEC = 1;
+    static const int HAVESTDIN = 2;
 };
-
 } // namespace
 
 #endif

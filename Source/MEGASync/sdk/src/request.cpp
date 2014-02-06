@@ -23,63 +23,67 @@
 #include "mega/command.h"
 
 namespace mega {
-
 void Request::add(Command* c)
 {
-	cmds.push_back(c);
+    cmds.push_back(c);
 }
 
 int Request::cmdspending()
 {
-	return cmds.size();
+    return cmds.size();
 }
 
 void Request::get(string* req)
 {
-	// concatenate all command objects, resulting in an API request
-	*req = "[";
+    // concatenate all command objects, resulting in an API request
+    *req = "[";
 
-	for (int i = 0; i < (int)cmds.size(); i++)
-	{
-		req->append(i ? ",{" : "{");
-		req->append(cmds[i]->getstring());
-		req->append("}");
-	}
+    for (int i = 0; i < (int)cmds.size(); i++)
+    {
+        req->append(i ? ",{" : "{");
+        req->append(cmds[i]->getstring());
+        req->append("}");
+    }
 
-	req->append("]");
+    req->append("]");
 }
 
 void Request::procresult(MegaClient* client)
 {
-	client->json.enterarray();
+    client->json.enterarray();
 
-	for (int i = 0; i < (int)cmds.size(); i++)
-	{
-		client->restag = cmds[i]->tag;
+    for (int i = 0; i < (int)cmds.size(); i++)
+    {
+        client->restag = cmds[i]->tag;
 
-		cmds[i]->client = client;
+        cmds[i]->client = client;
 
-		if (client->json.enterobject())
-		{
-			cmds[i]->procresult();
-			client->json.leaveobject();
-		}
-		else if (client->json.enterarray())
-		{
-			cmds[i]->procresult();
-			client->json.leavearray();
-		}
-		else cmds[i]->procresult();
+        if (client->json.enterobject())
+        {
+            cmds[i]->procresult();
+            client->json.leaveobject();
+        }
+        else if (client->json.enterarray())
+        {
+            cmds[i]->procresult();
+            client->json.leavearray();
+        }
+        else
+        {
+            cmds[i]->procresult();
+        }
 
-		if (!cmds[i]->persistent) delete cmds[i];
-	}
+        if (!cmds[i]->persistent)
+        {
+            delete cmds[i];
+        }
+    }
 
-	cmds.clear();
+    cmds.clear();
 }
 
 void Request::clear()
 {
-	cmds.clear();
+    cmds.clear();
 }
-
 } // namespace

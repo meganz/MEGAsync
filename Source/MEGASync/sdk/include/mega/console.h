@@ -23,15 +23,13 @@
 #define MEGA_CONSOLE_H 1
 
 namespace mega {
-
 struct MEGA_API Console
 {
-	virtual void readpwchar(char*, int, int* pw_buf_pos, char**) = 0;
-	virtual void setecho(bool) = 0;
+    virtual void readpwchar(char*, int, int* pw_buf_pos, char**) = 0;
+    virtual void setecho(bool) = 0;
 
-	virtual ~Console() { }
+    virtual ~Console() { }
 };
-
 } // namespace
 
 #endif

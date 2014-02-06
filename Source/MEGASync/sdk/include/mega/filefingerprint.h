@@ -26,37 +26,35 @@
 #include "filesystem.h"
 
 namespace mega {
-
 // sparse file fingerprint, including size and mtime
 struct MEGA_API FileFingerprint
 {
-	m_off_t size;
-	time_t mtime;
-	int32_t crc[4];
+    m_off_t size;
+    time_t mtime;
+    int32_t crc[4];
 
-	static const int MAXFULL = 8192;
+    static const int MAXFULL = 8192;
 
-	// if true, represents actual file data
-	// if false, constructed from node ctime/key
-	bool isvalid;
+    // if true, represents actual file data
+    // if false, constructed from node ctime/key
+    bool isvalid;
 
-	bool genfingerprint(FileAccess*, bool = false);
-	void serializefingerprint(string*);
-	int unserializefingerprint(string*);
+    bool genfingerprint(FileAccess*, bool = false);
+    void serializefingerprint(string*);
+    int unserializefingerprint(string*);
 
-	FileFingerprint& operator=(FileFingerprint&);
+    FileFingerprint& operator=(FileFingerprint&);
 
-	FileFingerprint();
+    FileFingerprint();
 };
 
 // orders transfers by file fingerprints, ordered by size / mtime / sparse CRC
 struct MEGA_API FileFingerprintCmp
 {
-    bool operator() (const FileFingerprint* a, const FileFingerprint* b) const;
+    bool operator()(const FileFingerprint* a, const FileFingerprint* b) const;
 };
 
 bool operator==(FileFingerprint&, FileFingerprint&);
-
 } // namespace
 
 #endif

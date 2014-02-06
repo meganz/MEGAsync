@@ -27,50 +27,48 @@
 #include "mega/node.h"
 
 namespace mega {
-
 // action to be performed upon arrival of a user's public key
 class MEGA_API PubKeyAction
 {
 public:
-	int tag;
+    int tag;
 
-	virtual void proc(MegaClient*, User*) = 0;
+    virtual void proc(MegaClient*, User*) = 0;
 
-	virtual ~PubKeyAction() { }
+    virtual ~PubKeyAction() { }
 };
 
 class MEGA_API PubKeyActionCreateShare : public PubKeyAction
 {
-	handle h;	// node to create share on
-	accesslevel_t a;	// desired access level
+    handle h;   // node to create share on
+    accesslevel_t a;    // desired access level
 
 public:
-	void proc(MegaClient*, User*);
+    void proc(MegaClient*, User*);
 
-	PubKeyActionCreateShare(handle, accesslevel_t, int);
+    PubKeyActionCreateShare(handle, accesslevel_t, int);
 };
 
 class MEGA_API PubKeyActionSendShareKey : public PubKeyAction
 {
-	handle sh;	// share node the key was requested on
+    handle sh;  // share node the key was requested on
 
 public:
-	void proc(MegaClient*, User*);
+    void proc(MegaClient*, User*);
 
-	PubKeyActionSendShareKey(handle);
+    PubKeyActionSendShareKey(handle);
 };
 
 class MEGA_API PubKeyActionPutNodes : public PubKeyAction
 {
-	NewNode* nn;	// nodes to add
-	int nc;			// number of nodes to add
+    NewNode* nn;    // nodes to add
+    int nc;         // number of nodes to add
 
 public:
-	void proc(MegaClient*, User*);
+    void proc(MegaClient*, User*);
 
-	PubKeyActionPutNodes(NewNode*, int, int);
+    PubKeyActionPutNodes(NewNode*, int, int);
 };
-
 } // namespace
 
 #endif

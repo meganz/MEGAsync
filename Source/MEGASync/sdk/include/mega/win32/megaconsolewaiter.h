@@ -31,7 +31,7 @@ class MEGA_API WinConsoleWaiter : public WinWaiter
 public:
     int wait();
 
-	WinConsoleWaiter();
+    WinConsoleWaiter();
 };
 
 } // namespace

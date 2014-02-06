@@ -22,30 +22,34 @@
 #include "mega/serialize64.h"
 
 namespace mega {
-
 int Serialize64::serialize(byte* b, int64_t v)
 {
-	int p = 0;
+    int p = 0;
 
-	while (v)
-	{
-		b[++p] = (byte)v;
-		v >>= 8;
-	}
+    while (v)
+    {
+        b[++p] = (byte)v;
+        v >>= 8;
+    }
 
-	return (*b = p)+1;
+    return ( *b = p ) + 1;
 }
 
 int Serialize64::unserialize(byte* b, int blen, int64_t* v)
 {
-	byte p = *b;
+    byte p = *b;
 
-	if (p > sizeof(*v) || p >= blen) return -1;
+    if (( p > sizeof( *v )) || ( p >= blen ))
+    {
+        return -1;
+    }
 
-	*v = 0;
-	while (p) *v = (*v<<8)+b[(int)p--];
+    *v = 0;
+    while (p)
+    {
+        *v = ( *v << 8 ) + b[(int)p--];
+    }
 
-	return *b+1;
+    return *b + 1;
 }
-
 } // namespace

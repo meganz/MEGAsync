@@ -27,70 +27,68 @@
 #include "transfer.h"
 
 namespace mega {
-
 // node tree processor
 class MEGA_API TreeProc
 {
 public:
-	virtual void proc(MegaClient*, Node*) = 0;
+    virtual void proc(MegaClient*, Node*) = 0;
 
-	virtual ~TreeProc() { }
+    virtual ~TreeProc() { }
 };
 
 class MEGA_API TreeProcDel : public TreeProc
 {
 public:
-	void proc(MegaClient*, Node*);
+    void proc(MegaClient*, Node*);
 };
 
 class TreeProcListOutShares : public TreeProc
 {
 public:
-	void proc(MegaClient*, Node*);
+    void proc(MegaClient*, Node*);
 };
 
 class TreeProcCopy : public TreeProc
 {
 public:
-	NewNode* nn;
-	unsigned nc;
+    NewNode* nn;
+    unsigned nc;
 
-	void allocnodes(void);
+    void allocnodes(void);
 
-	void proc(MegaClient*, Node*);
-	TreeProcCopy();
-	~TreeProcCopy();
+    void proc(MegaClient*, Node*);
+    TreeProcCopy();
+    ~TreeProcCopy();
 };
 
 class MEGA_API TreeProcDU : public TreeProc
 {
 public:
-	m_off_t numbytes;
-	int numfiles;
-	int numfolders;
+    m_off_t numbytes;
+    int numfiles;
+    int numfolders;
 
-	void proc(MegaClient*, Node*);
-	TreeProcDU();
+    void proc(MegaClient*, Node*);
+    TreeProcDU();
 };
 
 class MEGA_API TreeProcShareKeys : public TreeProc
 {
-	ShareNodeKeys snk;
-	Node* sn;
+    ShareNodeKeys snk;
+    Node* sn;
 
 public:
-	void proc(MegaClient*, Node*);
-	void get(Command*);
+    void proc(MegaClient*, Node*);
+    void get(Command*);
 
-	TreeProcShareKeys(Node* = NULL);
+    TreeProcShareKeys(Node* = NULL);
 };
 
 class MEGA_API TreeProcDelSyncGet : public TreeProc
 {
 public:
-	void proc(MegaClient*, Node*);
+    void proc(MegaClient*, Node*);
 };
-
 } // namespace
 
 #endif

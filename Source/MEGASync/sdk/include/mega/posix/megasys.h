@@ -41,7 +41,7 @@
 //#define _LARGEFILE64_SOURCE
 //#define _GNU_SOURCE 1
 //#define _FILE_OFFSET_BITS 64
-#define __DARWIN_C_LEVEL 199506L
+//#define __DARWIN_C_LEVEL 199506L
 
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -62,7 +62,9 @@
 #endif
 
 #ifdef HAVE_SENDFILE
+#ifndef  __APPLE__
 #include <sys/sendfile.h>
+#endif
 #endif
 
 #ifdef USE_INOTIFY
@@ -75,25 +77,7 @@
 //#endif // end of Linux specific includes
 
 #ifndef FD_COPY
-#define FD_COPY(s, d) (memcpy ((d), (s), sizeof (fd_set)))
+#define FD_COPY(s, d) ( memcpy(( d ), ( s ), sizeof( fd_set )))
 #endif
 
-#ifdef __MACH__
-
-// FIXME: revisit OS X support
-#include <machine/endian.h>
-#include <strings.h>
-#include <sys/time.h>
-#define CLOCK_MONOTONIC 0
-int clock_gettime(int, struct timespec* t)
-{
-    struct timeval now;
-    int rv = gettimeofday(&now,NULL);
-    if (rv) return rv;
-    t->tv_sec  = now.tv_sec;
-    t->tv_nsec = now.tv_usec*1000;
-    return 0;
-}
-
-#endif
 #endif // MEGA_POSIX_OS_H

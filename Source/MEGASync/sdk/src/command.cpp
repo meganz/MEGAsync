@@ -23,211 +23,221 @@
 #include "mega/base64.h"
 
 namespace mega {
-
 Command::Command()
 {
-	persistent = false;
-	level = -1;
-	canceled = false;
+    persistent = false;
+    level = -1;
+    canceled = false;
 }
 
 void Command::cancel()
 {
-	canceled = true;
+    canceled = true;
 }
 
 // returns completed command JSON string
 const char* Command::getstring()
 {
-	return json.c_str();
+    return json.c_str();
 }
 
 // add opcode
 void Command::cmd(const char* cmd)
 {
-	json.append("\"a\":\"");
-	json.append(cmd);
-	json.append("\"");
+    json.append("\"a\":\"");
+    json.append(cmd);
+    json.append("\"");
 }
 
 void Command::notself(MegaClient *client)
 {
-	json.append(",\"i\":\"");
-	json.append(client->sessionid,sizeof client->sessionid);
-	json.append("\"");
+    json.append(",\"i\":\"");
+    json.append(client->sessionid, sizeof client->sessionid);
+    json.append("\"");
 }
 
 // add comma separator unless first element
 void Command::addcomma()
 {
-	if (json.size() && !strchr("[{",json[json.size()-1])) json.append(",");
+    if (json.size() && !strchr("[{", json[json.size() - 1]))
+    {
+        json.append(",");
+    }
 }
 
 // add command argument name:value pair (FIXME: add proper JSON escaping)
 void Command::arg(const char* name, const char* value, int quotes)
 {
-	addcomma();
-	json.append("\"");
-	json.append(name);
-	json.append(quotes ? "\":\"" : "\":");
-	json.append(value);
-	if (quotes) json.append("\"");
+    addcomma();
+    json.append("\"");
+    json.append(name);
+    json.append(quotes ? "\":\"" : "\":");
+    json.append(value);
+    if (quotes)
+    {
+        json.append("\"");
+    }
 }
 
 // binary data
 void Command::arg(const char* name, const byte* value, int len)
 {
-	char* buf = new char[len*4/3+4];
+    char* buf = new char[len * 4 / 3 + 4];
 
-	Base64::btoa(value,len,buf);
+    Base64::btoa(value, len, buf);
 
-	arg(name,buf);
+    arg(name, buf);
 
-	delete[] buf;
+    delete[] buf;
 }
 
 // 64-bit signed integer
 void Command::arg(const char* name, m_off_t n)
 {
-	char buf[32];
+    char buf[32];
 
-	sprintf(buf,"%" PRId64,n);
+    sprintf(buf, "%" PRId64, n);
 
-	arg(name,buf,0);
+    arg(name, buf, 0);
 }
 
 // raw JSON data
 void Command::appendraw(const char* s)
 {
-	json.append(s);
+    json.append(s);
 }
 
 // raw JSON data with length specifier
 void Command::appendraw(const char* s, int len)
 {
-	json.append(s,len);
+    json.append(s, len);
 }
 
 // begin array
 void Command::beginarray()
 {
-	addcomma();
-	json.append("[");
-	openobject();
+    addcomma();
+    json.append("[");
+    openobject();
 }
 
 // begin array member
 void Command::beginarray(const char* name)
 {
-	addcomma();
-	json.append("\"");
-	json.append(name);
-	json.append("\":[");
-	openobject();
+    addcomma();
+    json.append("\"");
+    json.append(name);
+    json.append("\":[");
+    openobject();
 }
 
 // close array
 void Command::endarray()
 {
-	json.append("]");
-	closeobject();
+    json.append("]");
+    closeobject();
 }
 
 // begin JSON object
 void Command::beginobject()
 {
-	addcomma();
-	json.append("{");
+    addcomma();
+    json.append("{");
 }
 
 // end JSON object
 void Command::endobject()
 {
-	json.append("}");
+    json.append("}");
 }
 
 // add integer
 void Command::element(int n)
 {
-	char buf[24];
+    char buf[24];
 
-	sprintf(buf,"%d",n);
+    sprintf(buf, "%d", n);
 
-	if (elements()) json.append(",");
-	json.append(buf);
+    if (elements())
+    {
+        json.append(",");
+    }
+    json.append(buf);
 }
 
 // add handle (with size specifier)
 void Command::element(handle h, int len)
 {
-	char buf[12];
+    char buf[12];
 
-	Base64::btoa((const byte*)&h,len,buf);
+    Base64::btoa((const byte*)&h, len, buf);
 
-	json.append(elements() ? ",\"" : "\"");
-	json.append(buf);
-	json.append("\"");
+    json.append(elements() ? ",\"" : "\"");
+    json.append(buf);
+    json.append("\"");
 }
 
 // add binary data
 void Command::element(const byte* data, int len)
 {
-	char* buf = new char[len*4/3+4];
+    char* buf = new char[len * 4 / 3 + 4];
 
-	len = Base64::btoa(data,len,buf);
+    len = Base64::btoa(data, len, buf);
 
-	json.append(elements() ? ",\"" : "\"");
-	json.append(buf,len);
+    json.append(elements() ? ",\"" : "\"");
+    json.append(buf, len);
 
-	delete[] buf;
+    delete[] buf;
 
-	json.append("\"");
+    json.append("\"");
 }
 
 // open object
 void Command::openobject()
 {
-	levels[(int)++level] = 0;
+    levels[(int) ++level] = 0;
 }
 
 // close object
 void Command::closeobject()
 {
-	level--;
+    level--;
 }
 
 // number of elements present in this level
 int Command::elements()
 {
-	if (!levels[(int)level])
-	{
-		levels[(int)level] = 1;
-		return 0;
-	}
+    if (!levels[(int)level])
+    {
+        levels[(int)level] = 1;
+        return 0;
+    }
 
-	return 1;
+    return 1;
 }
 
 // default command result handler: ignore & skip
 void Command::procresult()
 {
-	if (client->json.isnumeric())
-	{
-		client->json.getint();
-		return;
-	}
+    if (client->json.isnumeric())
+    {
+        client->json.getint();
+        return;
+    }
 
-	for (;;)
-	{
-		switch (client->json.getnameid())
-		{
-			case EOO:
-				return;
+    for (; ; )
+    {
+        switch (client->json.getnameid())
+        {
+            case EOO:
+                return;
 
-			default:
-				if (!client->json.storeobject()) return;
-		}
-	}
+            default:
+                if (!client->json.storeobject())
+                {
+                    return;
+                }
+        }
+    }
 }
-
 } // namespace

@@ -22,25 +22,30 @@
 #include "megaconsolewaiter.h"
 
 namespace mega {
-
 int PosixConsoleWaiter::wait()
 {
-	int numfd;
+    int numfd;
 
-	// application's own wakeup criteria:
-	// wake up upon user input
-	FD_SET(STDIN_FILENO,&rfds);
+    // application's own wakeup criteria:
+    // wake up upon user input
+    FD_SET(STDIN_FILENO, &rfds);
+    bumpmaxfd(STDIN_FILENO);
 
-	numfd = select ();
+    numfd = select();
 
-	// timeout or error
-	if (numfd <= 0) return NEEDEXEC;
+    // timeout or error
+    if (numfd <= 0)
+    {
+        return NEEDEXEC;
+    }
 
-	// application's own event processing:
-	// user interaction from stdin?
-	if (FD_ISSET(STDIN_FILENO,&rfds)) return (numfd == 1) ? HAVESTDIN : (HAVESTDIN | NEEDEXEC);
+    // application's own event processing:
+    // user interaction from stdin?
+    if (FD_ISSET(STDIN_FILENO, &rfds))
+    {
+        return ( numfd == 1 ) ? HAVESTDIN : ( HAVESTDIN | NEEDEXEC );
+    }
 
-	return NEEDEXEC;
+    return NEEDEXEC;
 }
-
 } // namespace
