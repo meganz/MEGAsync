@@ -434,6 +434,39 @@ Exit anyway?</source>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation>[$1885]</translation>
     </message>
+    <message>
+        <source>Update available!</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>An update will be applied in the next application restart</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>XXXXX</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -532,6 +565,10 @@ Exit anyway?</source>
     <message>
         <source>Unknown error</source>
         <translation>[$1679]</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>[$1578]</translation>
     </message>
 </context>
 <context>
@@ -983,6 +1020,10 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translation>[$142]</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
