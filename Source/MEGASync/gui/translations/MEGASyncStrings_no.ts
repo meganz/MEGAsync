@@ -428,11 +428,44 @@ Avslutt uansett?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Mappen (%1) ble ikke lastet opp fordi den er ekstremt stor. Vi gjør denne kontrollen for å hindre opplasting av hele oppstartsvolumer, noe som er ineffektivt og potensielt farlig.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 mapper ble ikke lastet opp fordi de er ekstremt store. Vi gjør denne kontrollen for å hindre opplasting av hele oppstartsvolumer, noe som er ineffektivt og potensielt farlig.</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -533,6 +566,10 @@ Avslutt uansett?</translation>
         <source>Unknown error</source>
         <translation>Ukjent feil</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Feil</translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -545,7 +582,7 @@ Avslutt uansett?</translation>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). Dersom du fortsetter, vil den gamle filen bli overskrevet.Er du sikker?</translation>
+        <translation>Målmappen er synkronisert, og du allerede har en fil i mappen med det samme navn (%1). Dersom du fortsetter, vil den gamle filen bli overskrevet.Er du sikker?</translation>
     </message>
 </context>
 <context>
@@ -958,7 +995,7 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>De nye ekskluderte filnavnene vil tre i kraft neste gang programmet starter.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -983,6 +1020,10 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translation>Vennligst vent...</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
     </message>
 </context>
 <context>

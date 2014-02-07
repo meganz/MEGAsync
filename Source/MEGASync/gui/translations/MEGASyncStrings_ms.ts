@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Anda mencuba untuk menyegerak folder yang sangat besar. Untuk mencegah penyegerakan keseluruhan jumlah but, yang tidak cekap dan berbahaya, kami meminta anda untuk memulakan dengan folder yang lebih kecil dan menambah lebih banyak data ketika MEGAsync sedang berjalan.</translation>
     </message>
 </context>
 <context>
@@ -284,7 +284,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Pilih sama ada anda ingin memasang $(^NameDA) untuk diri sendiri sahaja atau untuk semua pengguna komputer ini. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -428,11 +428,44 @@ Keluar juga?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Folder (%1) tidak dimuat naik kerana ianya terlalu besar. Kami melakukan pemeriksaan ini untuk mengelakkan muat naik keseluruhan jumlah but, yang tidak cekap dan berbahaya.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 folder tidak dimuat naik kerana terlalu besar. Kami melakukan semakan ini untuk mengelakkan muat naik keseluruhan jumlah but, yang mana tidak cekap dan berbahaya.</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -533,6 +566,10 @@ Keluar juga?</translation>
         <source>Unknown error</source>
         <translation>Ralat tidak diketahui</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Ralat</translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -545,7 +582,7 @@ Keluar juga?</translation>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation>Destinasi folder telah disegerak dan anda sudah memiliki fail yang mempunyai nama (%1) di dalamnya. Jika anda meneruskan muat naik, fail terdahulu akan diganti.</translation>
     </message>
 </context>
 <context>
@@ -958,7 +995,7 @@ Adakah anda pasti untuk menyegerak ia?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>Nama fail yang baru dikecualikan akan diambil kira apabila aplikasi bermula lagi.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -978,11 +1015,15 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>Tetapan proksi anda tidak sah atau proksi tidak bertindak balas</translation>
     </message>
     <message>
         <source>Please wait...</source>
         <translation>Sila tunggu...</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Anda mencuba untuk menyegerak folder yang sangat besar. Untuk mencegah penyegerakan keseluruhan jumlah but, yang tidak cekap dan berbahaya, kami meminta anda untuk memulakan dengan folder yang lebih kecil dan menambah lebih banyak data ketika MEGAsync sedang berjalan.</translation>
     </message>
 </context>
 <context>

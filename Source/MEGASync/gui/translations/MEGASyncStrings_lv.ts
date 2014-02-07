@@ -5,7 +5,7 @@
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
-        <translation>Pievienot sinhronizēšanas mapi</translation>
+        <translation>Pievienot sinhronizēto mapi</translation>
     </message>
     <message>
         <source></source>
@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>Lūdzu, izvēlaties vietējo mapi vai MEGA mapi</translation>
+        <translation>Lūdzu, izvēlaties lokālo mapi vai MEGA mapi</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
-        <translation>Izvēlētā vietējā mape jau ir sinhronizēta</translation>
+        <translation>Izvēlētā lokālā mape jau ir sinhronizēta</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
@@ -80,7 +80,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>Jūs varat palīdzēt mums uzlabot MEGAsync nosūtot šo kļūdas ziņojumu. Taā nesatur nekādu personisku informāciju. Ja jūs vēlaties dot mums vairāk informācijas, lūdzu, uzrakstiet to zemāk:</translation>
+        <translation>Jūs varat palīdzēt mums uzlabot MEGAsync nosūtot šo kļūdas ziņojumu. Nesatur nekādu personisku informāciju. Ja jūs vēlaties sniegt mums vairāk informācijas lūdzu uzrakstiet zemāk:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -92,14 +92,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Send report</source>
-        <translation>Sūtīt atskaiti</translation>
+        <translation>Sūtīt ziņojumu</translation>
     </message>
 </context>
 <context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
-        <translation>Vietējā mape:</translation>
+        <translation>Lokālā mape:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -107,26 +107,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Izvēlaties vietējo mapi</translation>
+        <translation>Izvēlieties lokālo mapi</translation>
     </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
-        <translation>Ienest saites</translation>
+        <translation>Importēt saites</translation>
     </message>
     <message>
         <source>Download to my computer</source>
-        <translation>Lejupielādēt uz savu datoru</translation>
+        <translation>Lejupielādēt uz mana datora</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
-        <translation>Ienest uz manu datu krātuvi</translation>
+        <translation>Importēt uz manu datu krātuvi</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Labi</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -142,7 +142,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Izvēlēties vietējo mapi: </translation>
+        <translation>Izvēlēties lokālo mapi: </translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -173,7 +173,7 @@ Are you sure?</source>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync aktualizēts</translation>
+        <translation>MEGAsync ir atjaunināts</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -185,7 +185,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Syncs</source>
-        <translation>Sinhronizācijas</translation>
+        <translation>Sinhronizācija</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -269,14 +269,14 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
-        <translation>MEGAsync pašreiz uzgaida</translation>
+        <translation>MEGAsync pašreiz gaida</translation>
     </message>
 </context>
 <context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translation>Izvēlaties Lietotājus</translation>
+        <translation>Izvēlieties Lietotājus</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
@@ -330,7 +330,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Kļūda: Kļūdaina mērķa mapes. Augšupielāde ir atcelta</translation>
+        <translation>Kļūda: Nederīga mērķa mape. Augšupielāde ir atcelta</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -346,7 +346,7 @@ Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
         <translation>Sinhronizēšana apturēta.
-Atcelšanas, kas tiek veidotas ielādes procesā, netiks attiecinātas uz pārējiem failiem.
+Izdzēšana kamēr klients nebūs aktīvs netiks veikta.
 
 Vienalga iziet?</translation>
     </message>
@@ -392,11 +392,11 @@ Vienalga iziet?</translation>
     </message>
     <message>
         <source>Import links</source>
-        <translation>Ienest saites</translation>
+        <translation>Importēt saites</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translation>Aktuāls</translation>
+        <translation>Atjaunināts</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -420,7 +420,7 @@ Vienalga iziet?</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
-        <translation>MEGAsync tika atjaunots</translation>
+        <translation>MEGAsync tika atjaunināts</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -428,11 +428,44 @@ Vienalga iziet?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Šī mape (%1) netika augšupielādēta, jo tā ir pārāk liela. Mēs veicam šo pārbaudi, lai izslēgtu iespēju, ka tiek augšupielādētas visas datu krātuves, kas ir neefektīvi un pat bīstami. </translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 mapes netika augšupielādētas, jo ir pārāk lielas. Mēs veicam šo pārbaudi, lai izslēgtu iespēju, ka tiek augšupielādētas visas datu krātuves, kas ir neefektīvi un pat bīstami. </translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -533,6 +566,10 @@ Vienalga iziet?</translation>
         <source>Unknown error</source>
         <translation>Nezināma kļūda</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Kļūda</translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -606,7 +643,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     <name>PasteMegaLinksDialog</name>
     <message>
         <source>Import links</source>
-        <translation>Ienest saites</translation>
+        <translation>Importēt saites</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -723,7 +760,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">Galvenais</translation>
+        <translation type="obsolete">Vispārīgi</translation>
     </message>
     <message>
         <source>Account</source>
@@ -731,7 +768,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     </message>
     <message>
         <source>Syncs</source>
-        <translation>Sinhronizācijas</translation>
+        <translation>Sinhronizācija</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -739,7 +776,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Paplašināti</translation>
+        <translation>Papildu</translation>
     </message>
     <message>
         <source>Help</source>
@@ -759,15 +796,15 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     </message>
     <message>
         <source>Show notifications</source>
-        <translation>Parādīt paziņojumus</translation>
+        <translation>Rādīt paziņojumus</translation>
     </message>
     <message>
         <source>Start on startup</source>
-        <translation>Palaist sākumā</translation>
+        <translation>Startēt sākumā</translation>
     </message>
     <message>
         <source>Update automatically</source>
-        <translation>Atjaunots automātiski</translation>
+        <translation>Atjaunināt automātiski</translation>
     </message>
     <message>
         <source>Language</source>
@@ -811,7 +848,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     </message>
     <message>
         <source>Local Folder</source>
-        <translation>Vietējā mape</translation>
+        <translation>Lokālā mape</translation>
     </message>
     <message>
         <source>MEGA folder</source>
@@ -984,6 +1021,10 @@ when the application starts again.</source>
         <source>Please wait...</source>
         <translation>Lūdzu, uzgaidiet...</translation>
     </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1061,7 +1102,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Local folder:</source>
-        <translation>Vietējā mape:</translation>
+        <translation>Lokālā mape:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -1077,7 +1118,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Jūsu vietējā mape:</translation>
+        <translation>Jūsu lokālā mape:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
@@ -1175,7 +1216,7 @@ Vai esat pārliecināts, ka vēlaties sinhronizēt visu Jūsu Datu Krātuvi?</tr
     </message>
     <message>
         <source>Please, select a local folder</source>
-        <translation>Lūdzu,  izvēlaties vietējo mapi</translation>
+        <translation>Lūdzu,  izvēlaties lokālo mapi</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
@@ -1188,7 +1229,7 @@ Please, select another folder.</source>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Izvēlēties vietējo mapi</translation>
+        <translation>Izvēlēties lokālo mapi</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -1252,7 +1293,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
-        <translation>Lūdzu, izvēlaties augšupielādes mapi saviem failiem:</translation>
+        <translation>Lūdzu, izvēlieties augšupielādes mapi saviem failiem:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -1283,7 +1324,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
-        <translation>MEGA sinhronizācijas mape</translation>
+        <translation>MEGA sinhronizētā mape</translation>
     </message>
 </context>
 </TS>

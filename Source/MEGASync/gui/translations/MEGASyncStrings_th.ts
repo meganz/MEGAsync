@@ -59,13 +59,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่%1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
+        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>คุณพยายามที่จะซิงค์โฟลเดอร์ขนาดใหญ่เกินไป เพื่อป้องกันการซิงค์ของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้ เราขอให้คุณเริ่มต้น ด้วยโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลขณะเรียกใช้ MEGAsync</translation>
     </message>
 </context>
 <context>
@@ -428,11 +428,44 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>โฟลเดอร์ (%1) ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 โฟลเดอร์ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -467,7 +500,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Out of range</source>
-        <translation>Out of range</translation>
+        <translation>เกินขอบเขตที่กำหนด</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -532,6 +565,10 @@ Exit anyway?</source>
     <message>
         <source>Unknown error</source>
         <translation>ข้อผิดพลาดที่ไม่รู้จัก</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>ผิดพลาด</translation>
     </message>
 </context>
 <context>
@@ -984,6 +1021,10 @@ when the application starts again.</source>
         <source>Please wait...</source>
         <translation>กรุณารอสักครู่...</translation>
     </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1184,7 +1225,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่%1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
+        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1198,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>คุณพยายามที่จะซิงค์โฟลเดอร์ขนาดใหญ่เกินไป เพื่อป้องกันการซิงค์ของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้ เราขอให้คุณเริ่มต้น ด้วยโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลขณะเรียกใช้ MEGAsync</translation>
     </message>
 </context>
 <context>
