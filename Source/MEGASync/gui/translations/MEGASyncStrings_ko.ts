@@ -428,11 +428,44 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>폴더(%1)가 너무 커서 업로드되지 않았습니다. 매우 비효율적이고 위험한 부트 볼륨 전체를 업로드하는 것을 막기 위함입니다.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>폴더 %1개가 너무 커서 업로드되지 않았습니다. 매우 비효율적이고 위험한 부트 볼륨 전체를 업로드하는 것을 막기 위함입니다.</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -532,6 +565,10 @@ Exit anyway?</source>
     <message>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>오류</translation>
     </message>
 </context>
 <context>
@@ -983,6 +1020,10 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translation>잠시만 기다리세요...</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
     </message>
 </context>
 <context>

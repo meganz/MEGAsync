@@ -436,36 +436,36 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>XXXXX</translation>
+        <translation>[$1900]</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>XXXXX</translation>
+        <translation>[$1901]</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>XXXXX</translation>
+        <translation>[$1902]</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>XXXXX</translation>
+        <translation>[$1903]</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>XXXXX</translation>
+        <translation>[$1904]</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>XXXXX</translation>
+        <translation>[$1905]</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>XXXXX</translation>
+        <translation>[$1906]</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>XXXXX</translation>
+        <translation>[$1907]</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>XXXXX</translation>
+        <translation>[$1908]</translation>
     </message>
 </context>
 <context>

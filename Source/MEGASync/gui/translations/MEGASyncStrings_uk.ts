@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Ви намагаєтесь синхронізувати надзвичайно велику теку. Щоб запобігти синхронізацію тому великого розміру, що неефективно і небезпечно, ми просимо вас почати з менших тек і додавати файли, під час роботи MEGAsync.</translation>
+        <translation>Ви намагаєтесь синхронізувати надзвичайно велику теку. Щоб запобігти синхронізацію томів великого розміру, що неефективно і небезпечно, ми просимо вас почати з менших тек і додавати файли, під час роботи MEGAsync.</translation>
     </message>
 </context>
 <context>
@@ -428,11 +428,44 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Теку (%1) не закачана через занадто великий розмір. Ми робимо цю перевірку, щоб запобігти закачування цілих томів даних, що неефективно та небезпечно.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 теки не закачані через занадто великий розмір. Ми робимо цю перевірку, щоб запобігти закачування цілих томів даних, що неефективно та небезпечно.</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -532,6 +565,10 @@ Exit anyway?</source>
     <message>
         <source>Unknown error</source>
         <translation>Невідома помилка</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Помилка</translation>
     </message>
 </context>
 <context>
@@ -984,6 +1021,10 @@ when the application starts again.</source>
         <source>Please wait...</source>
         <translation>Будь ласка, зачекайте…</translation>
     </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1198,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Ви намагаєтесь синхронізувати надзвичайно велику теку. Щоб запобігти синхронізацію тому великого розміру, що неефективно і небезпечно, ми просимо вас почати з менших тек і додавати файли, під час роботи MEGAsync.</translation>
+        <translation>Ви намагаєтесь синхронізувати надзвичайно велику теку. Щоб запобігти синхронізацію томів великого розміру, що неефективно і небезпечно, ми просимо вас почати з менших тек і додавати файли, під час роботи MEGAsync.</translation>
     </message>
 </context>
 <context>

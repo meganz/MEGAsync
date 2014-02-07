@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Karpeta oso handi bat sinkronizatzen saiatzen ari zara. Bolumen osoen sinkronizazioa saihestu ahal izateko, ez-eraginkorra  eta arriskutsua dena, karpeta txikiago batekin hastea eta MEGAsync martxan dagoen bitartean datu gehiago gehitzen joatea eskatzen dizuzu.</translation>
     </message>
 </context>
 <context>
@@ -80,7 +80,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>MEGAsync hobetzen lagun diezakiguzu errore  mezuak bidaliz. Ez darama inolako informazio pertsonala. Xehetasun gehiago eman nahi izanez gero, arren idatz itzazu hemen:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -284,15 +284,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Aukeratu norentzako instalatu nahi duzun $(^NameDA), zuretzako soilik edo ordenagailu honetako erabiltzaile guztientzako. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
-        <translation>Install for anyone using this computer</translation>
+        <translation>Instalatu ordenagailu hau erabiltzen duen edonorentzako</translation>
     </message>
     <message>
         <source>Install just for me</source>
-        <translation>Install just for me</translation>
+        <translation>Instalatu niretzako soilik</translation>
     </message>
 </context>
 <context>
@@ -330,7 +330,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
+        <translation>Errorea: Karpeta helbide okerra. Igoera bertan behera utzi da</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -428,11 +428,44 @@ Irten nolanahi ere?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>(%1) karpeta ez da igo handiegia delako. Bolumen osoen igoera saihesteko egiten dugu hau, ez-eraginkorra eta arriskutsua dena.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 karpetak ez dira igo handiegiak direlako. Bolumen osoen igoera saihesteko egiten dugu hau, ez-eraginkorra eta arriskutsua dena.</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -533,6 +566,10 @@ Irten nolanahi ere?</translation>
         <source>Unknown error</source>
         <translation>Errore ezezaguna</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Errorea</translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -545,7 +582,7 @@ Irten nolanahi ere?</translation>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation>Helmuga karpeta sinkronizatua dago eta baduzu jada fitxategi bat barnean izen berarekin (%1).  Igoera jarraituz gero, aurreko fitxategia berridatzia izango da.</translation>
     </message>
 </context>
 <context>
@@ -958,19 +995,19 @@ Ziur zaude sinkronizatu nahi duzula?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>Baztertutako fitxategi izenak kontuan hartuko dira aplikazioa berriro martxan jartzean.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation>Cachea</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Current cache size: %1</translation>
+        <translation>Uneko cache tamaina: %1</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Garbitu</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -978,11 +1015,15 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>Zure proxy aukerak ez dira baliozkoak edo proxy-ak ez du erantzuten</translation>
     </message>
     <message>
         <source>Please wait...</source>
         <translation>Itxaron mesedez...</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Karpeta oso handi bat sinkronizatzen saiatzen ari zara. Bolumen osoen sinkronizazioa saihestu ahal izateko, ez-eraginkorra  eta arriskutsua dena, karpeta txikiago batekin hastea eta MEGAsync martxan dagoen bitartean datu gehiago gehitzen joatea eskatzen dizuzu.</translation>
     </message>
 </context>
 <context>

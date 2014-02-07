@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Está a tentar sincronizar uma pasta extremamente grande. Para evitar a sincronização de volumes de boot inteiros, o que é ineficiente e perigoso, nós pedimos-lhe para começar com uma pasta pequena e para adicionar mais dados à medida que o MEGAsync está em execução.</translation>
     </message>
 </context>
 <context>
@@ -428,11 +428,44 @@ Sair de qualquer maneira?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>A pasta (%1) não foi carregada porque é extremamente grande. Nós fazemos esta verificação para prevenir o carregamento de volumes de boot inteiros, o que é ineficiente e perigoso.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 pastas não foram carregadas porque são extremamente grandes. Nós fazemos esta verificação para prevenir o carregamento de volumes de boot inteiros, o que é ineficiente e perigoso.</translation>
+    </message>
+    <message>
+        <source>Update available!</source>
+        <translation>Update available!</translation>
+    </message>
+    <message>
+        <source>An update will be applied during the next application restart</source>
+        <translation>An update will be applied during the next application restart</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Installing update...</translation>
+    </message>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Checking for updates...</translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Install update</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+    </message>
+    <message>
+        <source>No updates available</source>
+        <translation>No updates available</translation>
+    </message>
+    <message>
+        <source>There was a problem installing the update. Please try again later or download the last version from:
+https://mega.co.nz/#sync</source>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -532,6 +565,10 @@ Sair de qualquer maneira?</translation>
     <message>
         <source>Unknown error</source>
         <translation>Erro desconhecido</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erro</translation>
     </message>
 </context>
 <context>
@@ -851,11 +888,11 @@ Tem a certeza que pretende sincronizá-lo?</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Pasta para carregamentos a partir do Windows Explorer</translation>
+        <translation>Pasta para carregamentos a partir do Explorador do Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
-        <translation>nomes de ficheiros excluidos</translation>
+        <translation>Nomes de ficheiros excluidos</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
@@ -899,7 +936,7 @@ Tem a certeza que pretende sincronizá-lo?</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation>Dados tempoariamente indisponíveis</translation>
+        <translation>Dados temporariamente indisponíveis</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
@@ -983,6 +1020,10 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translation>Por favor aguarde...</translation>
+    </message>
+    <message>
+        <source>Check for updates</source>
+        <translation>Check for updates</translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Está a tentar sincronizar uma pasta extremamente grande. Para evitar a sincronização de volumes de boot inteiros, o que é ineficiente e perigoso, nós pedimos-lhe para começar com uma pasta pequena e para adicionar mais dados à medida que o MEGAsync está em execução.</translation>
     </message>
 </context>
 <context>
