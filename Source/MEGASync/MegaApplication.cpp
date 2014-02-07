@@ -521,7 +521,7 @@ void MegaApplication::rebootApplication()
         if(!updateBlocked)
         {
             updateBlocked = true;
-            showInfoMessage(tr("An update will be applied in the next application restart"));
+            showInfoMessage(tr("An update will be applied during the next application restart"));
         }
         return;
     }

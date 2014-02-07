@@ -439,7 +439,7 @@ Exit anyway?</source>
         <translation>XXXXX</translation>
     </message>
     <message>
-        <source>An update will be applied in the next application restart</source>
+        <source>An update will be applied during the next application restart</source>
         <translation>XXXXX</translation>
     </message>
     <message>
