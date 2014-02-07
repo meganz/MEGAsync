@@ -1,4 +1,5 @@
 #include "LinkProcessor.h"
+#include "Utilities.h"
 #include <QDir>
 
 LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener()
@@ -54,6 +55,12 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
 {
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
+        LOG("Public node");
+        LOG(QString::number(currentIndex));
+        LOG(QString::number(e->getErrorCode()));
+        if(!request->getPublicNode())
+            LOG("NULL");
+
         if(e->getErrorCode() != API_OK)  linkNode[currentIndex] = NULL;
         else linkNode[currentIndex] = new MegaNode(request->getPublicNode());
 
@@ -116,23 +123,30 @@ void LinkProcessor::importLinks(MegaNode *node)
 
 	for(int i=0; i<linkList.size(); i++)
 	{
-        bool dupplicate = false;
-        long long dupplicateHandle;
-        const char* name = linkNode[i]->getName();
-        long long size = linkNode[i]->getSize();
-
-        for(int j=0; j<children->size(); j++)
+        if(!linkNode[i])
         {
-            MegaNode *child = children->get(j);
-            if(!strcmp(name, child->getName()) && (size == child->getSize()))
-            {
-                dupplicate = true;
-                dupplicateHandle = child->getHandle();
-            }
+            LOG("TRYING TO IMPORT A NULL NODE");
+            LOG(QString::number(i));
+            LOG(QString::number(linkError[i]));
         }
 
         if(linkNode[i] && linkSelected[i] && !linkError[i])
-		{
+        {
+            bool dupplicate = false;
+            long long dupplicateHandle;
+            const char* name = linkNode[i]->getName();
+            long long size = linkNode[i]->getSize();
+
+            for(int j=0; j<children->size(); j++)
+            {
+                MegaNode *child = children->get(j);
+                if(!strcmp(name, child->getName()) && (size == child->getSize()))
+                {
+                    dupplicate = true;
+                    dupplicateHandle = child->getHandle();
+                }
+            }
+
             if(!dupplicate)
             {
                 remainingNodes++;

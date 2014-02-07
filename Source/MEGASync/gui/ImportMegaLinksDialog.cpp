@@ -214,7 +214,6 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 {
 	ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
     MegaNode *node = linkProcessor->getNode(id);
-	item->setNode(node);
 
     int e = linkProcessor->getError(id);
     if(node && (e == MegaError::API_OK))
