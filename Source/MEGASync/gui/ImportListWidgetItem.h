@@ -18,7 +18,6 @@ public:
 	explicit ImportListWidgetItem(QString link, int id, QWidget *parent = 0);
 	~ImportListWidgetItem();
 
-    void setNode(MegaNode *node);
 	void setData(QString fileName, linkstatus status, long long size=0);
 	void updateGui();
 	bool isSelected();
@@ -32,7 +31,6 @@ signals:
 
 private:
 	Ui::ImportListWidgetItem *ui;
-    MegaNode *node;
 	QString fileName;
 	linkstatus status;
 	long long fileSize;

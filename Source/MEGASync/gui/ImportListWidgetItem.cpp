@@ -10,7 +10,6 @@ ImportListWidgetItem::ImportListWidgetItem(QString link, int id, QWidget *parent
 {
 	ui->setupUi(this);
 	this->id = id;
-	node = NULL;
 	this->link = link;
 	status = LOADING;
 	fileName = link;
@@ -20,11 +19,6 @@ ImportListWidgetItem::ImportListWidgetItem(QString link, int id, QWidget *parent
 ImportListWidgetItem::~ImportListWidgetItem()
 {
 	delete ui;
-}
-
-void ImportListWidgetItem::setNode(MegaNode *node)
-{
-	this->node = node;
 }
 
 void ImportListWidgetItem::setData(QString fileName, linkstatus status, long long size)
