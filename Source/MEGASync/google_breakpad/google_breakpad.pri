@@ -50,12 +50,14 @@ win32 {
   SOURCES += $$PWD/common/windows/string_utils.cc
   SOURCES += $$PWD/common/windows/guid_string.cc
   SOURCES += $$PWD/client/windows/crash_generation/crash_generation_client.cc
+
+  LIBS += -lkernel32 -lpsapi
 }
 
 QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
 QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
 INCLUDEPATH += $$PWD
 
-#debug {
+debug {
     DEFINES += CREATE_COMPATIBLE_MINIDUMPS
-#}
+}

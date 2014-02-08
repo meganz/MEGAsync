@@ -1,6 +1,7 @@
 #include "MegaApplication.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
+#include "gui/CrashReportDialog.h"
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
@@ -199,6 +200,12 @@ void MegaApplication::initialize()
         if(fi.fileName().startsWith(QString::fromAscii(".tmp.")))
             QFile::remove(di.filePath());
     }
+#endif
+
+    string tmpPath = basePath.toStdString();
+    megaApi = new MegaApi(delegateListener, &tmpPath);
+    uploader = new MegaUploader(megaApi);
+    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
     if(preferences->isCrashed())
     {
@@ -210,13 +217,19 @@ void MegaApplication::initialize()
             if(fi.fileName().endsWith(QString::fromAscii(".db")))
                 QFile::remove(di.filePath());
         }
-    }
-#endif
 
-    string tmpPath = basePath.toStdString();
-    megaApi = new MegaApi(delegateListener, &tmpPath);
-    uploader = new MegaUploader(megaApi);
-    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
+        QStringList reports = CrashHandler::instance()->getPendingCrashReports();
+        if(reports.size())
+        {
+            CrashReportDialog crashDialog(reports.join(QString::fromAscii("------------------------------\n")));
+            if(crashDialog.exec() == QDialog::Accepted)
+            {
+                applyProxySettings();
+                CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
+                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
+            }
+        }
+    }
 
     //Create GUI elements
     trayIcon = new QSystemTrayIcon();
