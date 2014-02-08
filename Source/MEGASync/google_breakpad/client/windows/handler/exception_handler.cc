@@ -28,6 +28,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <ObjBase.h>
+#include <Psapi.h>
 
 #include <algorithm>
 #include <cassert>
@@ -932,10 +933,18 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     if(nameIndex+1<nameSize) nameIndex++;
     oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
   }
-  oss << "Base address: " << GetModuleHandle(NULL) << "\n";
+
+  MODULEINFO moduleInfo;
+  GetModuleInformation(GetCurrentProcess(), module, &moduleInfo, sizeof(moduleInfo));
+
+  //oss << "Base address: " << GetModuleHandle(NULL) << "\n";
+  DWORD64 offset = (DWORD64)exinfo->ExceptionRecord->ExceptionAddress - (DWORD64)moduleInfo.lpBaseOfDll;
+  if((offset<0) || (offset > (DWORD64)moduleInfo.SizeOfImage))
+      offset = 0;
+
   oss << "Error info:\n";
   oss << "Unhandled exception 0x" << std::uppercase << std::hex << exinfo->ExceptionRecord->ExceptionCode
-      << " at 0x" << exinfo->ExceptionRecord->ExceptionAddress << "\n";
+      << " at 0x" << std::hex << offset << "\n";
 
   if(dbghelp_module_)
   {
@@ -987,7 +996,13 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
                   break;
               }
 
-              oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << s.AddrPC.Offset << "\n";
+              DWORD64 offset = s.AddrPC.Offset - (DWORD64)moduleInfo.lpBaseOfDll;
+              if((offset<0) || (offset > (DWORD64)moduleInfo.SizeOfImage))
+                  offset = 0;
+              if(offset)
+                oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << "\n";
+              else
+                oss << "#" << frame_number << " ----------\n";
               ++frame_number;
           } while (s.AddrReturn.Offset != 0);
       }

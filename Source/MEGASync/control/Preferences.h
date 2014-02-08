@@ -106,6 +106,10 @@ public:
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
+    QStringList getPreviousCrashes();
+    void setPreviousCrashes(QStringList crashes);
+    long long getLastReboot();
+    void setLastReboot(long long value);
 
     int getNumUsers();
     void enterUser(int i);
@@ -147,9 +151,11 @@ public:
     static const unsigned int UPDATE_INITIAL_DELAY_SECS;
     static const unsigned int UPDATE_RETRY_INTERVAL_SECS;
     static const QString UPDATE_CHECK_URL;
+    static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
     static const char UPDATE_PUBLIC_KEY[];
+    static const long long MIN_REBOOT_INTERVAL_MS;
 
 protected:
 
@@ -220,6 +226,8 @@ protected:
     static const QString wasPausedKey;
     static const QString lastUpdateTimeKey;
     static const QString lastUpdateVersionKey;
+    static const QString previousCrashesKey;
+    static const QString lastRebootKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
