@@ -199,24 +199,39 @@ typedef uint64_t nameid;
 // RDWR - cannot rename or delete
 // FULL - all operations that do not require ownership permitted
 // OWNER - node is in caller's ROOT, INCOMING or RUBBISH trees
-typedef enum { ACCESS_UNKNOWN = -1, RDONLY = 0, RDWR, FULL, OWNER, OWNERPRELOGIN } accesslevel_t;
+typedef enum
+{
+    ACCESS_UNKNOWN = -1, RDONLY = 0, RDWR, FULL, OWNER, OWNERPRELOGIN
+} accesslevel_t;
 
 typedef vector<struct Node*> node_vector;
 
 // contact visibility:
 // HIDDEN - not shown
 // VISIBLE - shown
-typedef enum { VISIBILITY_UNKNOWN = -1, HIDDEN = 0, VISIBLE, ME } visibility_t;
+typedef enum
+{
+    VISIBILITY_UNKNOWN = -1, HIDDEN = 0, VISIBLE, ME
+} visibility_t;
 
-typedef enum { PUTNODES_APP, PUTNODES_SYNC, PUTNODES_SYNCDEBRIS } putsource_t;
+typedef enum
+{
+    PUTNODES_APP, PUTNODES_SYNC, PUTNODES_SYNCDEBRIS
+} putsource_t;
 
 // maps handle-index pairs to file attribute handle
 typedef map<pair<handle, fatype>, pair<handle, int> > fa_map;
 
-typedef enum { SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED } syncstate_t;
+typedef enum
+{
+    SYNC_CANCELED = -1, SYNC_INITIALSCAN = 0, SYNC_ACTIVE, SYNC_FAILED
+} syncstate_t;
 
-typedef enum { SYNCDEL_NONE, SYNCDEL_DELETED, SYNCDEL_INFLIGHT, SYNCDEL_BIN,
-               SYNCDEL_DEBRIS, SYNCDEL_DEBRISDAY } syncdel_t;
+typedef enum
+{
+    SYNCDEL_NONE, SYNCDEL_DELETED, SYNCDEL_INFLIGHT, SYNCDEL_BIN,
+    SYNCDEL_DEBRIS, SYNCDEL_DEBRISDAY
+} syncdel_t;
 
 typedef vector<LocalNode*> localnode_vector;
 
