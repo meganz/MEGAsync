@@ -14,8 +14,8 @@ protected:
 
 public:
     void setProxy(MegaProxySettings *proxySettings);
+    MegaProxySettings *getAutoProxySettings();
     void post(HttpReq* req, const char* data, unsigned len);
-    MegaProxySettings *MegaApiCurlHttpIO::getAutoProxySettings();
 };
 
 
