@@ -169,7 +169,19 @@ CommandAttachFA::CommandAttachFA(handle nh, fatype t, handle ah, int ctag)
 
 void CommandAttachFA::procresult()
 {
-    client->app->putfa_result(h, type, client->json.isnumeric() ? (error)client->json.getint() : API_EINTERNAL);
+    error e;
+
+    if (client->json.isnumeric())
+    {
+         e = (error)client->json.getint();
+    }
+    else
+    {
+         client->json.storeobject();
+         e = API_EINTERNAL;
+    }
+
+    client->app->putfa_result(h, type, e);
 }
 
 // request upload target URL
