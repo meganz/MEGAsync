@@ -1574,7 +1574,7 @@ void MegaClient::logout()
         reqs[i].clear();
     }
 
-    for (putfa_list::iterator it = newfa.begin(); it != newfa.end(); )
+    for (putfa_list::iterator it = newfa.begin(); it != newfa.end(); it++)
     {
         delete *it;
     }
