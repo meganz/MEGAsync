@@ -354,6 +354,11 @@ void WinHttpIO::cancel(HttpReq* req)
         req->status = REQ_FAILURE;
         req->httpiohandle = NULL;
 
+        if (httpctx->hConnect)
+        {
+            WinHttpCloseHandle(httpctx->hConnect);
+        }
+
         if (httpctx->hRequest)
         {
             WinHttpCloseHandle(httpctx->hRequest);

@@ -177,7 +177,13 @@ void CommandAttachFA::procresult()
     }
     else
     {
-         client->json.storeobject();
+         string fa;
+
+         if (client->json.storeobject(&fa))
+         {
+               return client->app->putfa_result(h, type, fa.c_str());
+         }
+
          e = API_EINTERNAL;
     }
 
