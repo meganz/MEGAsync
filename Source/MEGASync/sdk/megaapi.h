@@ -822,7 +822,7 @@ public:
     bool isIndexing();
     bool isWaiting();
     bool isSynced(MegaNode *n);
-
+    void setExcludedNames(vector<string> *excludedNames);
 
 	//Filesystem
     NodeList* getChildren(MegaNode *parent, int order=1);
@@ -900,6 +900,7 @@ protected:
 	set<MegaListener *> listeners;
     bool waiting;
     bool waitingRequest;
+    vector<string> excludedNames;
 
     DECLARE_MUTEX(listenerMutex);
     DECLARE_MUTEX(transferListenerMutex);

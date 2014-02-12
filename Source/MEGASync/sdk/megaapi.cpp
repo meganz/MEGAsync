@@ -3860,13 +3860,57 @@ void MegaApi::sendPendingTransfers()
     }
 }
 
+bool WildcardMatch(const char *pszString, const char *pszMatch)
+//  cf. http://www.planet-source-code.com/vb/scripts/ShowCode.asp?txtCodeId=1680&lngWId=3
+{
+    const char *cp;
+    const char *mp;
+
+    while ((*pszString) && (*pszMatch != '*'))
+    {
+        if ((*pszMatch != *pszString) && (*pszMatch != '?'))
+        {
+            return false;
+        }
+        pszMatch++;
+        pszString++;
+    }
+
+    while (*pszString)
+    {
+        if (*pszMatch == '*')
+        {
+            if (!*++pszMatch)
+            {
+                return true;
+            }
+            mp = pszMatch;
+            cp = pszString + 1;
+        }
+        else if ((*pszMatch == *pszString) || (*pszMatch == '?'))
+        {
+            pszMatch++;
+            pszString++;
+        }
+        else
+        {
+            pszMatch = mp;
+            pszString = cp++;
+        }
+    }
+    while (*pszMatch == '*')
+    {
+        pszMatch++;
+    }
+    return !*pszMatch;
+}
+
 bool MegaApi::is_syncable(const char *name)
 {
-    QStringList excludedNames = Preferences::instance()->getExcludedSyncNames();
     for(int i=0; i< excludedNames.size(); i++)
     {
-        QRegExp matcher(excludedNames[i], Qt::CaseInsensitive, QRegExp::Wildcard);
-        if(matcher.exactMatch(QString::fromUtf8(name))) return false;
+        if(WildcardMatch(name, excludedNames[i].c_str()))
+            return false;
     }
 
     return true;
@@ -4444,6 +4488,13 @@ bool MegaApi::isSynced(MegaNode *n)
     bool result = (node->localnode!=NULL);
     MUTEX_UNLOCK(sdkMutex);
     return result;
+}
+
+void MegaApi::setExcludedNames(vector<string> *excludedNames)
+{
+    MUTEX_LOCK(sdkMutex);
+    this->excludedNames = *excludedNames;
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 char* MegaApi::strdup(const char* buffer)

@@ -395,11 +395,24 @@ void MegaApplication::start()
             ::exit(0);
         delete setupWizard;
         setupWizard = NULL;
+
+        QStringList exclusions = preferences->getExcludedSyncNames();
+        vector<string> vExclusions;
+        for(int i=0; i<exclusions.size(); i++)
+            vExclusions.push_back(exclusions[i].toUtf8().constData());
+        megaApi->setExcludedNames(&vExclusions);
+
         loggedIn();
         startSyncs();
     }
 	else
 	{
+        QStringList exclusions = preferences->getExcludedSyncNames();
+        vector<string> vExclusions;
+        for(int i=0; i<exclusions.size(); i++)
+            vExclusions.push_back(exclusions[i].toUtf8().constData());
+        megaApi->setExcludedNames(&vExclusions);
+
         //Otherwise, login in the account
         megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
