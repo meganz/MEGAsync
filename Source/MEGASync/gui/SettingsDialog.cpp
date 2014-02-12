@@ -581,6 +581,11 @@ bool SettingsDialog::saveSettings()
                 excludedNames.append(ui->lExcludedNames->item(i)->text());
             preferences->setExcludedSyncNames(excludedNames);
 
+            vector<string> vExclusions;
+            for(int i=0; i<excludedNames.size(); i++)
+                vExclusions.push_back(excludedNames[i].toUtf8().constData());
+            megaApi->setExcludedNames(&vExclusions);
+
             QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
                                                                             "when the application starts again."), QMessageBox::Ok);
             excludedNamesChanged = false;
