@@ -3907,6 +3907,9 @@ bool WildcardMatch(const char *pszString, const char *pszMatch)
 
 bool MegaApi::is_syncable(const char *name)
 {
+    MUTEX_UNLOCK(sdkMutex);
+    MUTEX_LOCK(sdkMutex);
+
     for(int i=0; i< excludedNames.size(); i++)
     {
         if(WildcardMatch(name, excludedNames[i].c_str()))
