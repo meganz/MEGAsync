@@ -283,7 +283,12 @@ void InfoDialog::updateTransfers()
 
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
     if(!remainingDownloads && !remainingUploads)
+    {
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        app->updateUserStats();
+        app->showNotificationMessage(tr("All transfers have been completed"));
+        app->onSyncStateChanged(megaApi);
+    }
 }
 
 void InfoDialog::updateSyncsButton()

@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>[$82]</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>[$1867]</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>[$1868]</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>[$1619]</translation>
+        <translation type="obsolete">[$1619]</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>[$1620]</translation>
+        <translation type="obsolete">[$1620]</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>[$1621]</translation>
+        <translation type="obsolete">[$1621]</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>[$1622]</translation>
+        <translation type="obsolete">[$1622]</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>[$1623] </translation>
+        <translation type="obsolete">[$1623] </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>[$1907]</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">[$1867]</translation>
     </message>
 </context>
 <context>
