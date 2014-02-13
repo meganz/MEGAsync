@@ -2565,7 +2565,6 @@ void MegaApi::clearing()
 void MegaApi::notify_retry(dstime dsdelta)
 {
     LOG("notify_retry ");
-    LOG(dsdelta*100);
 
     bool previousFlag = waitingRequest;
     if(!dsdelta)
