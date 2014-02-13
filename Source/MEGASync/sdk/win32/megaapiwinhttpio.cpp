@@ -232,7 +232,7 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                                   (LPWSTR)proxyUsername.data(), (LPWSTR)proxyPassword.data(), NULL);
                 }
 
-                WinHttpSetTimeouts(httpctx->hRequest, 0, 20000, 20000, 1800000);
+                WinHttpSetTimeouts(httpctx->hRequest, 0, 20000, 20000, 300000);
 
                 WinHttpSetStatusCallback(httpctx->hRequest, asynccallback,
                                          WINHTTP_CALLBACK_FLAG_DATA_AVAILABLE
