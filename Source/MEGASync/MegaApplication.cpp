@@ -14,6 +14,10 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
+#ifdef Q_OS_UNIX
+ #include <signal.h>
+#endif
+
 const int MegaApplication::VERSION_CODE = 1006;
 const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.6");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
@@ -21,6 +25,12 @@ const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASync
 
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
+
+QSharedMemory singleInstanceChecker;
+
+#ifdef Q_OS_UNIX
+static void on_sigint(int sig);
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +40,6 @@ int main(int argc, char *argv[])
     if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
     CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
 
-    QSharedMemory singleInstanceChecker;
     singleInstanceChecker.setKey(QString::fromAscii("MEGAsyncSingleInstanceChecker"));
     if((argc == 2) && !strcmp("/reboot", argv[1]))
     {
@@ -253,6 +262,11 @@ void MegaApplication::initialize()
 
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
+
+#ifdef Q_OS_UNIX
+    // instal signal handler
+    signal(SIGINT, on_sigint);
+#endif
 }
 
 QString MegaApplication::applicationFilePath()
@@ -421,7 +435,7 @@ void MegaApplication::start()
 }
 
 void MegaApplication::loggedIn()
-{    
+{
     if(settingsDialog)
         settingsDialog->setProxyOnly(false);
 
@@ -528,7 +542,7 @@ void MegaApplication::processUploadQueue(handle nodeHandle)
     if(notUploaded.size())
     {
         if(notUploaded.size()==1)
-        {            
+        {
             showInfoMessage(tr("The folder (%1) wasn't uploaded because it's extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.")
                 .arg(notUploaded[0]));
         }
@@ -593,6 +607,20 @@ void MegaApplication::refreshTrayIcon()
     if(trayIcon) trayIcon->show();
 }
 
+#ifdef Q_OS_UNIX
+// signal handler
+static void on_sigint(int sig)
+{
+    // delete shared memory key
+    singleInstanceChecker.detach();
+
+    // reset the default handler
+    signal(SIGINT, SIG_DFL);
+    // call again
+    raise(SIGINT);
+}
+#endif
+
 void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
@@ -601,6 +629,9 @@ void MegaApplication::cleanAll()
     Platform::stopShellDispatcher();
     megaApi->removeListener(delegateListener);
     delete megaApi;
+
+    // remove shared memory key
+    singleInstanceChecker.detach();
 }
 
 void MegaApplication::onDupplicateLink(QString link, QString name, long long handle)
@@ -628,7 +659,7 @@ void MegaApplication::unlink()
     stopUpdateTask();
     Platform::stopShellDispatcher();
     megaApi->logout();
-}  
+}
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
@@ -1323,7 +1354,7 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, M
 
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
-{	
+{
     //Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -1425,7 +1456,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
-{    
+{
     //Show information to users
     showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
     onSyncStateChanged(megaApi);
