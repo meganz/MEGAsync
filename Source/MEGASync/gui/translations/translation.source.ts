@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">[$1867]</translation>
+        <translation>[$1867]</translation>
     </message>
 </context>
 <context>

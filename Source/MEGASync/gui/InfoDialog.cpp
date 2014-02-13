@@ -287,7 +287,6 @@ void InfoDialog::updateTransfers()
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         app->updateUserStats();
         app->showNotificationMessage(tr("All transfers have been completed"));
-        app->onSyncStateChanged(megaApi);
     }
 }
 
