@@ -173,7 +173,7 @@ Are you sure?</source>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
-        <translation>A MEGAsync napra kész</translation>
+        <translation>A MEGAsync naprakész</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -436,36 +436,36 @@ Akkor is kilép?</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Frissítés elérhető!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Az alkalmazás következő újraindítása során alkalmazva lesz egy frissítés</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Frissítés telepítése...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Frissítések keresése...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Frissítés telepítése</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Elérhető a MEGAsync egy új verziója! Kattintson erre az üzenetre a feltelepítéséhez</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Nincs elérhető frissítés</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Hiba történt a frissítés telepítésekor. Kérem később próbálja újra, vagy töltse le a legújabb verziót erről a címről: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Frissítések keresése</translation>
     </message>
 </context>
 <context>

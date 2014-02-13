@@ -436,36 +436,36 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>พร้อมแล้วสำหรับการอัปเดต!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>การอัปเดตจะถูกนำไปใช้ได้ ก็ต่อเมื่อคุณทำการรีสตาร์ทแอปพลิเคชันใหม่</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>กำลังติดตั้งการอัปเดต...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>กำลังตรวจสอบการอัปเดต...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>ติดตั้ง</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>MEGAsync มีเวอร์ชันใหม่พร้อมใช้งานแล้ว! คลิกที่ข้อความนี้เพื่อติดตั้ง</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>ยังไม่มีการอัปเดตขณะนี้</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>มีปัญหาในการติดตั้งการอัปเดต กรุณาลองอีกครั้งในภายหลัง หรือดาวน์โหลดเวอร์ชันล่าสุดได้จาก: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>ตรวจสอบการอัปเดต</translation>
     </message>
 </context>
 <context>

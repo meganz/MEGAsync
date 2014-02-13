@@ -428,44 +428,44 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>यह बहुत बड़ी बात है क्योंकि फ़ोल्डर (%1) अपलोड नहीं किया गया था. हम अक्षम और खतरनाक है जो पूरे बूट संस्करणों की अपलोडिंग रोकने के लिए यह चेक करते हैं.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>वे बहुत बड़े हैं क्योंकि %1 फ़ोल्डरों अपलोड नहीं किया गया. हम अक्षम और खतरनाक है जो पूरे बूट संस्करणों की अपलोडिंग रोकने के लिए यह चेक करते हैं.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>उपलब्ध अद्यतन!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>एक अद्यतन अगले आवेदन को पुनः आरंभ के दौरान लागू किया जाएगा</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>अपडेट स्थापित किया ...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>अद्यतन के लिए जाँच हो रही है ...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>अद्यतन स्थापित करें</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>मेगा सिंक का एक नया संस्करण उपलब्ध है! यह स्थापित करने के लिए इस संदेश पर क्लिक करें</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>कोई अद्यतन उपलब्ध नहीं</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>अद्यतन को स्थापित करने में कोई समस्या थी. बाद में फिर कोशिश करें या से पिछले संस्करण को डाउनलोड करें: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>अद्यतन देखें</translation>
     </message>
 </context>
 <context>

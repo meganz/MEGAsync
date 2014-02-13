@@ -59,7 +59,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Paikallinen kansio on liian suuri (tämä versio on rajoitettu %1 kansioon tai %2 tiedostoon. Ole hyvä ja valitse toinen kansio.</translation>
+        <translation type="obsolete">Paikallinen kansio on liian suuri (tämä versio on rajoitettu %1 kansioon tai %2 tiedostoon). Ole hyvä ja valitse toinen kansio.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -436,36 +436,36 @@ Lopeta silti?</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Päivitys saatavilla!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Ohjelma päivitetään sen seuraavalla käynnistyskerralla</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Päivitetään...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Tarkistetaan päivityksiä...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Uusi versio MEGAsyncistä on saatavilla! Klikkaa tätä viestiä asentaaksesi sen</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Ei päivityksiä</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Päivityksen asennus ei onnistunut. Yritä uudestaan tai lataa viimeisin versio osoitteesta:  https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Tarkista päivitykset</translation>
     </message>
 </context>
 <context>
@@ -1225,7 +1225,7 @@ Haluatko varmasti synkronoida pilviasemasi kokonaan?</translation>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Paikallinen kansio on liian suuri (tämä versio on rajoitettu %1 kansioon tai %2 tiedostoon. Ole hyvä ja valitse toinen kansio.</translation>
+        <translation type="obsolete">Paikallinen kansio on liian suuri (tämä versio on rajoitettu %1 kansioon tai %2 tiedostoon). Ole hyvä ja valitse toinen kansio.</translation>
     </message>
     <message>
         <source>Select local folder</source>

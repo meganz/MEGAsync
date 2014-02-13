@@ -65,22 +65,22 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>你正在试图同步一个特别大的文件，为了避免不必要的风险，我们建议您先同步较小的文件并在MEGAsync运行的时候添加更多的内容</translation>
     </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
-        <translation>Error report</translation>
+        <translation>错误报告</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
-        <translation>MEGAsync has detected a problem. These are the details:</translation>
+        <translation>MEGA 同步出现了一个问题，这些是具体的细节</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>请发送这份错误报告以帮住我们改进MEGA同步功能，这不会包含任何个人信息，如果您还有其他细节要告之我们请写在下面：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -88,11 +88,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation>Thank you for your collaboration!</translation>
+        <translation>谢谢您的合作！</translation>
     </message>
     <message>
         <source>Send report</source>
-        <translation>Send report</translation>
+        <translation>发送报告</translation>
     </message>
 </context>
 <context>
@@ -276,23 +276,23 @@ Are you sure?</source>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translation>Choose Users</translation>
+        <translation>选择用户</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translation>Choose for which users you want to install $(^NameDA).</translation>
+        <translation>请选择您要安装到哪个用户下</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>选择您是要  $(^NameDA)仅为自己安装 还是$(^ClickNext) 为所有在台电脑上的用户安装</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
-        <translation>Install for anyone using this computer</translation>
+        <translation>为任何使用这台电脑的用户安装</translation>
     </message>
     <message>
         <source>Install just for me</source>
-        <translation>Install just for me</translation>
+        <translation>只为自己安装</translation>
     </message>
 </context>
 <context>
@@ -330,7 +330,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
+        <translation>错误：不可用的目标文件夹。上传失败</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -428,44 +428,44 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>这个文件 (%1) 不能被上传，因为它太大了会导致一定的风险。</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 文件 不能被上传因为他们太大了会导致一定的风险。</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>更新成功</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>等下个应用开始的时候才能更新</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>安装更新...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>检查更新</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>安装更新</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>MEGAsync 有更新！点击此处</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>已经到最新版本</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>更新出问题，请稍后重试或者点击此处获得最新版本https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -582,7 +582,7 @@ https://mega.co.nz/#sync</source>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation>目标文件已经同步，现在你已经有了一个同名文件在里面 继续上传，上一个文件将被覆盖</translation>
     </message>
 </context>
 <context>
@@ -995,19 +995,19 @@ Are you sure you want to sync it?</source>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>新的排除出的文件名将在应用重启后被添加到账户</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation>缓存</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Current cache size: %1</translation>
+        <translation>当前缓存：%1</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>清除</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1015,7 +1015,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>你的代理设置有问题或者是代理不可用</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>检查更新</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>你正在试图同步一个特别大的文件，为了避免不必要的风险，我们建议您先同步较小的文件并在MEGAsync运行的时候添加更多的内容</translation>
     </message>
 </context>
 <context>

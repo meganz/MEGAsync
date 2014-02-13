@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Je probeert een extreem grote map te synchroniseren. Om synchronisatie van volledige boot volumes te voorkomen, wat inefficiënt en gevaarlijk is, willen we je vragen om te beginnen met een kleinere map en meer data toe te voegen terwijl MEGAsync bezig is. </translation>
     </message>
 </context>
 <context>
@@ -428,44 +428,44 @@ Toch sluiten?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>De map (%1) is niet geüpload omdat hij extreem groot is. We voeren deze controle uit om te voorkomen dat volledige boot volumes worden gesynchroniseerd, wat inefficiënt en gevaarlijk is.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 mappen zijn niet geüpload omdat ze extreem groot zijn. We voeren deze controle uit om te voorkomen dat volledige boot volumes worden gesynchroniseerd, wat inefficiënt en gevaarlijk is.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Update beschikbaar!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Een update zal toegepast worden tijdens de volgende applicatie herstart</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Update installeren...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Controleren voor updates...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Installeer update</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Een nieuwe versie van MEGAsync is beschikbaar! Klik op dit bericht om hem te installeren</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Geen updates beschikbaar</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Er was een probleem bij het installeren van de update. Probeer later opnieuw of download de laatste versie van: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Controleer voor updates</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Je probeert een extreem grote map te synchroniseren. Om synchronisatie van volledige boot volumes te voorkomen, wat inefficiënt en gevaarlijk is, willen we je vragen om te beginnen met een kleinere map en meer data toe te voegen terwijl MEGAsync bezig is. </translation>
     </message>
 </context>
 <context>

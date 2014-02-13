@@ -436,36 +436,36 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>განახლება ხელმისაწვდომია!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>განახლება დაყენდება აპლიკაციის გადატვირთვის შემდეგ</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>მიმდინარეობს განახლების ინსტალაცია...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>მიმდინარეობს განახლების შემოწმება...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>განახლების ინსტალაცია</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>MEGAsync-ის ახალი ვერსია ხელმისაწვდომია! დააჭირეთ ამ შეტყობინებას რომ დაინსტალირდეს ეს განახლება.</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>ჯერჯერობით არანაირი განახლება არ არის</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>ამ განახლების ინსტალაცია ვერ მოხერხდა რაღაც პრობლემის გამო. გთხოვთ სცადოთ მოგვიანებით ან გადმოწეროთ ამ აპლიკაციის ბოლო ვერსია აქედან: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>განახლების შემოწმება</translation>
     </message>
 </context>
 <context>
@@ -1070,7 +1070,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>გთხოვთ შეამოწმოთ თქვენი ელ-ფოსტა და დააკლიკოთ გამოგზავნილ დადასტურების ლინკს, რათა დაადასტუროთ თქვენი იმეილი</translation>
+        <translation>გთხოვთ შეამოწმოთ თქვენი ელ-ფოსტა (იმეილი) და დააკლიკოთ გამოგზავნილ დადასტურების ლინკს, რათა დაადასტუროთ თქვენი იმეილი</translation>
     </message>
     <message>
         <source>Logging in ...</source>
