@@ -586,6 +586,7 @@ void MegaApplication::refreshTrayIcon()
     if(megaApi)
     {
         LOG("STATE: Refreshing state");
+        megaApi->update();
         megaApi->updateStatics();
         onSyncStateChanged(megaApi);
     }
@@ -1001,6 +1002,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
             QRect screenGeometry = QApplication::desktop()->availableGeometry();
             infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+            infoDialog->updateTransfers();
             infoDialog->updateDialog();
 
             //Show the dialog
@@ -1312,8 +1314,6 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //Send statics to the information dialog
     if(infoDialog)
         infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
-
-    onSyncStateChanged(megaApi);
 }
 
 //Called when there is a temporal problem in a request

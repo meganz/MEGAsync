@@ -20,10 +20,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //Install event filters to show custom tooltips
-    //ui->bDownloads->installEventFilter(this);
-    //ui->bUploads->installEventFilter(this);
-
     //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
 
@@ -45,8 +41,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     effectiveUploadSpeed = 200000;
     ui->lDownloads->setText(QString::fromAscii(""));
     ui->lUploads->setText(QString::fromAscii(""));
-    //ui->bUploads->hide();
-    //ui->bUploads->hide();
     indexing = false;
     waiting = false;
     transfer1 = NULL;
@@ -92,7 +86,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay = new QPushButton(this);
     overlay->setIcon(QPixmap(QString::fromAscii("://images/tray_paused_large_ico.png")));
     overlay->setIconSize(QSize(64, 64));
-    //overlay->setAlignment(Qt::AlignCenter);
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(255, 255, 255, 200);"
                                               "border: none; "
                                               "margin-left: 4px; "
@@ -177,54 +170,53 @@ void InfoDialog::updateTransfers()
     remainingDownloads = megaApi->getNumPendingDownloads();
     totalUploads = megaApi->getTotalUploads();
     totalDownloads = megaApi->getTotalDownloads();
-
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
 
     if(remainingDownloads)
     {
-        ui->wDownloadDesc->show();
-        QString fullPattern = QString::fromAscii("<span style=\"color: rgb(120, 178, 66); \">%1</span>%2");
-        QString operation = tr("Downloading ");
-        QString pattern(tr("%1 of %2 (%3/s)"));
-        QString pausedPattern(tr("%1 of %2 (paused)"));
-        QString downloadString;
-
-        if(downloadSpeed >= 0)  downloadString = pattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
-        else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
-
-        ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
-
         long long remainingBytes = totalDownloadSize-totalDownloadedSize;
         long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
         if(timeIncrement < 1000) elapsedDownloadTime += timeIncrement;
         double effectiveSpeed = totalDownloadedSize/(elapsedDownloadTime/1000+1);
         effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/10; //Smooth the effective speed
 
-        int totalRemainingSeconds = (effectiveDownloadSpeed>0) ? remainingBytes/effectiveDownloadSpeed : 0;
-        int remainingHours = totalRemainingSeconds/3600;
-        int remainingMinutes = (totalRemainingSeconds%3600)/60;
-        int remainingSeconds =  (totalRemainingSeconds%60);
-        QString remainingTime;
-        if(totalRemainingSeconds)
+        if(isVisible())
         {
-            remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
-                .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
-                .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
-        }
-        else
-        {
-            remainingTime = QString::fromAscii("--:--:--");
-        }
+            int totalRemainingSeconds = (effectiveDownloadSpeed>0) ? remainingBytes/effectiveDownloadSpeed : 0;
+            int remainingHours = totalRemainingSeconds/3600;
+            int remainingMinutes = (totalRemainingSeconds%3600)/60;
+            int remainingSeconds =  (totalRemainingSeconds%60);
+            QString remainingTime;
+            if(totalRemainingSeconds)
+            {
+                remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
+                    .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
+                    .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+            }
+            else
+            {
+                remainingTime = QString::fromAscii("--:--:--");
+            }
 
-        ui->lRemainingTimeD->setText(remainingTime);
-        //ui->bDownloads->show();
+            ui->lRemainingTimeD->setText(remainingTime);
+            ui->wDownloadDesc->show();
+            QString fullPattern = QString::fromAscii("<span style=\"color: rgb(120, 178, 66); \">%1</span>%2");
+            QString operation = tr("Downloading ");
+            QString pattern(tr("%1 of %2 (%3/s)"));
+            QString pausedPattern(tr("%1 of %2 (paused)"));
+            QString downloadString;
+
+            if(downloadSpeed >= 0)  downloadString = pattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
+            else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
+
+            ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
+        }
     }
     else
     {
         ui->wTransfer1->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
-        //ui->bDownloads->hide();
         ui->wDownloadDesc->hide();
         downloadStartTime = 0;
         downloadSpeed = 0;
@@ -237,50 +229,48 @@ void InfoDialog::updateTransfers()
 
     if(remainingUploads)
     {
-        ui->wUploadDesc->show();
-        QString fullPattern = QString::fromAscii("<span style=\"color: rgb(119, 185, 217); \">%1</span>%2");
-        QString operation = tr("Uploading ");
-        QString pattern(tr("%1 of %2 (%3/s)"));
-        QString pausedPattern(tr("%1 of %2 (paused)"));
-        QString uploadString;
-
-        if(uploadSpeed >= 0) uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
-        else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
-
-        ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
-
         long long remainingBytes = totalUploadSize-totalUploadedSize;
         long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
         if(timeIncrement < 1000) elapsedUploadTime += timeIncrement;
         double effectiveSpeed = totalUploadedSize/(elapsedUploadTime/1000+1);
         effectiveUploadSpeed += (effectiveSpeed-effectiveUploadSpeed)/10; //Smooth the effective speed
 
-        int totalRemainingSeconds = (effectiveUploadSpeed>0) ? remainingBytes/effectiveUploadSpeed : 0;
-
-        int remainingHours = totalRemainingSeconds/3600;
-        int remainingMinutes = (totalRemainingSeconds%3600)/60;
-        int remainingSeconds =  (totalRemainingSeconds%60);
-        QString remainingTime;
-        if(totalRemainingSeconds)
+        if(isVisible())
         {
-            remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
-                .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
-                .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
-        }
-        else
-        {
-            remainingTime = QString::fromAscii("--:--:--");
-        }
+            int totalRemainingSeconds = (effectiveUploadSpeed>0) ? remainingBytes/effectiveUploadSpeed : 0;
+            int remainingHours = totalRemainingSeconds/3600;
+            int remainingMinutes = (totalRemainingSeconds%3600)/60;
+            int remainingSeconds =  (totalRemainingSeconds%60);
+            QString remainingTime;
+            if(totalRemainingSeconds)
+            {
+                remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
+                    .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
+                    .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+            }
+            else
+            {
+                remainingTime = QString::fromAscii("--:--:--");
+            }
 
-        ui->lRemainingTimeU->setText(remainingTime);
+            ui->lRemainingTimeU->setText(remainingTime);
+            ui->wUploadDesc->show();
+            QString fullPattern = QString::fromAscii("<span style=\"color: rgb(119, 185, 217); \">%1</span>%2");
+            QString operation = tr("Uploading ");
+            QString pattern(tr("%1 of %2 (%3/s)"));
+            QString pausedPattern(tr("%1 of %2 (paused)"));
+            QString uploadString;
 
-        //ui->bUploads->show();
+            if(uploadSpeed >= 0) uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+            else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
+
+            ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
+        }
     }
     else
     {
         ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
-        //ui->bUploads->hide();
         ui->wUploadDesc->hide();
         uploadStartTime = 0;
         uploadSpeed = 0;
@@ -292,19 +282,8 @@ void InfoDialog::updateTransfers()
     }
 
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
-
-    //if(ui->bDownloads->underMouse())
-    //    showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)),true);
-    //else if(ui->bUploads->underMouse())
-    //    showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
-
-    if((ui->sActiveTransfers->currentWidget() != ui->pUpdated) && !remainingDownloads && !remainingUploads)
-    {
+    if(!remainingDownloads && !remainingUploads)
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        app->updateUserStats();
-        app->showNotificationMessage(tr("All transfers have been completed"));
-        app->onSyncStateChanged(megaApi);
-    }
 }
 
 void InfoDialog::updateSyncsButton()
@@ -367,20 +346,12 @@ void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long tot
 {
 	this->totalDownloadedSize = totalDownloadedSize;
 	this->totalUploadedSize = totalUploadedSize;
-    //if(ui->bDownloads->underMouse())
-    //	showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
-    //else if(ui->bUploads->underMouse())
-    //	showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 }
 
 void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize)
 {
 	this->totalDownloadSize = totalDownloadSize;
 	this->totalUploadSize = totalUploadSize;
-    //if(ui->bDownloads->underMouse())
-    //	showPopup(ui->bDownloads->mapToGlobal(QPoint(-130, -102)), true);
-    //else if(ui->bUploads->underMouse())
-    //    showPopup(ui->bUploads->mapToGlobal(QPoint(-130, -102)), false);
 }
 
 void InfoDialog::setPaused(bool paused)
@@ -513,140 +484,6 @@ void InfoDialog::openFolder(QString path)
 {
     this->hide();
 	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
-}
-
-/*
-bool InfoDialog::eventFilter(QObject *obj, QEvent *event)
-{
-	if (event->type() != QEvent::ToolTip) return false;
-
-	bool download;
-	QPoint globalpos;
-	if(obj == ui->bDownloads)
-	{
-		globalpos = ui->bDownloads->mapToGlobal(QPoint(-130, -102));
-		download = true;
-	}
-	else
-	{
-		globalpos = ui->bUploads->mapToGlobal(QPoint(-130, -102));
-		download = false;
-	}
-
-	showPopup(globalpos, download);
-    return true;
-}
-*/
-
-void InfoDialog::showPopup(QPoint globalpos, bool download)
-{
-	if(lastPopupUpdate.isNull()) lastPopupUpdate = QDateTime::currentDateTime();
-
-	QDateTime now = QDateTime::currentDateTime();
-	if(lastPopupUpdate.secsTo(now)<1) return;
-	lastPopupUpdate = now;
-
-	QString operation;
-    QString oneFile = tr("one file at %1/s");
-    QString oneFilePaused = tr("one file (paused)");
-	QString xOfxFilesPattern(tr("%1 of %2 files at %3/s"));
-    QString xOfxFilesPausedPattern(tr("%1 of %2 files (paused)"));
-	QString totalRemaining(tr("Total Remaining: "));
-	QString remainingSize;
-	QString xOfxFiles;
-	long long totalRemainingSeconds;
-
-	if(download)
-	{
-		if(!totalDownloads) return;
-		operation = tr("Downloading ");
-		long long remainingBytes = totalDownloadSize-totalDownloadedSize;
-        remainingSize = Utilities::getSizeString(remainingBytes);
-        if(totalDownloads == 1)
-        {
-            if(downloadSpeed>=0)
-                xOfxFiles = oneFile.arg(Utilities::getSizeString(downloadSpeed));
-            else
-                xOfxFiles = oneFilePaused;
-        }
-        else
-        {
-            if(downloadSpeed>=0)
-                xOfxFiles = xOfxFilesPattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
-            else
-                xOfxFiles = xOfxFilesPausedPattern.arg(currentDownload).arg(totalDownloads);
-        }
-        totalRemainingSeconds = (downloadSpeed>0) ? remainingBytes/downloadSpeed : 0;
-	}
-	else
-	{
-		if(!totalUploads) return;
-
-		operation = tr("Uploading ");
-		long long remainingBytes = totalUploadSize-totalUploadedSize;
-        remainingSize = Utilities::getSizeString(totalUploadSize-totalUploadedSize);
-
-        if(totalUploads == 1)
-        {
-            if(uploadSpeed>=0)
-                xOfxFiles = oneFile.arg(Utilities::getSizeString(uploadSpeed));
-            else
-                xOfxFiles = oneFilePaused;
-        }
-        else
-        {
-            if(uploadSpeed>=0)
-                xOfxFiles = xOfxFilesPattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
-            else
-                xOfxFiles = xOfxFilesPausedPattern.arg(currentUpload).arg(totalUploads);
-        }
-
-        totalRemainingSeconds = (uploadSpeed>0) ? remainingBytes/uploadSpeed : 0;
-	}
-
-	int remainingHours = totalRemainingSeconds/3600;
-	int remainingMinutes = (totalRemainingSeconds%3600)/60;
-	int remainingSeconds =  (totalRemainingSeconds%60);
-    QString remainingTime;
-    if(totalRemainingSeconds)
-    {
-        remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
-            .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
-            .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
-    }
-    else
-    {
-        remainingTime = QString::fromAscii("--:--:--");
-    }
-
-	QString popupHtml(
-QString::fromUtf8("<table border=\"0\" height=\"75\" width=\"280\" cellspacing=\"12\">"
-			"<tr width=\"280\">"
-				"<td colspan=\"2\"><font color=\"#78B240\">%1</font>"
-				"<font color=\"white\">%2</font></td>"
-			"</tr>"
-
-			"<tr height=\"50\" style=\"vertical-align:middle;\">"
-				"<td width=\"160\"><font color=\"#FF2823\">%3</font>"
-					"<font color=\"white\">%4</font>"
-				"</td>"
-				"<td width=\"70\" style=\"vertical-align:middle; align=\"right\">"
-					"<table>"
-						"<tr>"
-							"<td>"
-								"<img src=\"://images/tray_tooltip_clock_ico.png\"></img>"
-							"</td>"
-							"<td>"
-								"<font color=\"white\">%5</font>"
-							"</td>"
-						"</tr>"
-					"</table>"
-				"</td>"
-			"</tr>"
-        "</table>"));
-	QString popupText = popupHtml.arg(operation).arg(xOfxFiles).arg(totalRemaining).arg(remainingSize).arg(remainingTime);
-
-	QToolTip::showText(globalpos,popupText);
 }
 
 void InfoDialog::updateRecentFiles()
