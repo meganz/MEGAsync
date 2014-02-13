@@ -980,7 +980,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
     dbAccess = new MegaDbAccess(basePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.5");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.6");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2564,7 +2564,9 @@ void MegaApi::clearing()
 
 void MegaApi::notify_retry(dstime dsdelta)
 {
-    cout << "notify_retry " << dsdelta*100 << " ms..." << endl;
+    LOG("notify_retry ");
+    LOG(dsdelta*100);
+
     bool previousFlag = waitingRequest;
     if(!dsdelta)
     {
