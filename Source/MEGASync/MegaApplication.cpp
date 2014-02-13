@@ -14,8 +14,8 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
-const int MegaApplication::VERSION_CODE = 1005;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.5b");
+const int MegaApplication::VERSION_CODE = 1006;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.6");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1395,26 +1395,29 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
-        if(!transfer->getTransferredBytes()) lastStartedDownload = transfer->getStartTime();
+        if(downloadSpeed && (transfer->getTransferredBytes() == transfer->getDeltaSize()))
+            lastStartedDownload = transfer->getStartTime();
 		downloadSpeed = transfer->getSpeed();
 		totalDownloadedSize += transfer->getDeltaSize();
 	}
 	else
 	{
-        if(!transfer->getTransferredBytes()) lastStartedUpload = transfer->getStartTime();
+        if(uploadSpeed && (transfer->getTransferredBytes() == transfer->getDeltaSize()))
+            lastStartedUpload = transfer->getStartTime();
 		uploadSpeed = transfer->getSpeed();
 		totalUploadedSize += transfer->getDeltaSize();
 	}
 
     //Send updated statics to the information dialog
-    if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
-        ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
+    if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && downloadSpeed && (transfer->getStartTime()>=lastStartedDownload)) ||
+        ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && uploadSpeed && (transfer->getStartTime()>=lastStartedUpload)))
     {
         if(infoDialog)
         {
             infoDialog->setTransfer(transfer);
             infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
             infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+            infoDialog->updateTransfers();
             infoDialog->updateDialog();
         }
     }
