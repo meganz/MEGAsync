@@ -282,7 +282,7 @@ void InfoDialog::updateTransfers()
     }
 
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
-    if(!remainingDownloads && !remainingUploads)
+    if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
     {
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         app->updateUserStats();
