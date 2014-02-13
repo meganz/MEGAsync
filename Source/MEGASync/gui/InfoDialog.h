@@ -84,8 +84,6 @@ protected:
     void changeEvent(QEvent * event);
 
 protected:
-    //bool eventFilter(QObject *obj, QEvent *ev);
-	void showPopup(QPoint globalpos, bool download);
 	void updateRecentFiles();
     virtual void focusOutEvent(QFocusEvent * event);
 

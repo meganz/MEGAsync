@@ -182,8 +182,14 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
     {
         cout << "POST target URL: " << req->posturl << endl;
 
-        if (req->binary) cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
-        else cout << "Sending: " << *req->out << endl;
+        if (req->binary)
+        {
+            cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
+        }
+        else
+        {
+            cout << "Sending: " << *req->out << endl;
+        }
     }
 
     WinHttpContext* httpctx;
@@ -193,7 +199,7 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
     URL_COMPONENTS urlComp = { sizeof urlComp };
 
     urlComp.lpszHostName = szHost;
-    urlComp.dwHostNameLength = sizeof szHost/sizeof *szHost;
+    urlComp.dwHostNameLength = sizeof szHost / sizeof *szHost;
     urlComp.dwUrlPathLength = (DWORD)-1;
     urlComp.dwSchemeLength = (DWORD)-1;
 
@@ -203,11 +209,19 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
     httpctx->req = req;
     req->httpiohandle = (void*)httpctx;
 
-    if (MultiByteToWideChar(CP_UTF8,0,req->posturl.c_str(),-1,szURL,sizeof szURL/sizeof *szURL) && WinHttpCrackUrl(szURL,0,0,&urlComp))
+    if (MultiByteToWideChar(CP_UTF8, 0, req->posturl.c_str(), -1, szURL,
+                            sizeof szURL / sizeof *szURL)
+            && WinHttpCrackUrl(szURL, 0, 0, &urlComp))
     {
-        if ((httpctx->hConnect = WinHttpConnect(hSession,szHost,urlComp.nPort,0)))
+        if (( httpctx->hConnect = WinHttpConnect(hSession, szHost, urlComp.nPort, 0)))
         {
-            httpctx->hRequest = WinHttpOpenRequest(httpctx->hConnect,L"POST",urlComp.lpszUrlPath,NULL,WINHTTP_NO_REFERER,WINHTTP_DEFAULT_ACCEPT_TYPES,(urlComp.nScheme == INTERNET_SCHEME_HTTPS) ? WINHTTP_FLAG_SECURE : 0);
+            httpctx->hRequest = WinHttpOpenRequest(httpctx->hConnect, L"POST",
+                                                   urlComp.lpszUrlPath, NULL,
+                                                   WINHTTP_NO_REFERER,
+                                                   WINHTTP_DEFAULT_ACCEPT_TYPES,
+                                                   ( urlComp.nScheme == INTERNET_SCHEME_HTTPS )
+                                                   ? WINHTTP_FLAG_SECURE
+                                                   : 0);
 
             if (httpctx->hRequest)
             {
@@ -218,25 +232,47 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                                   (LPWSTR)proxyUsername.data(), (LPWSTR)proxyPassword.data(), NULL);
                 }
 
-                WinHttpSetTimeouts(httpctx->hRequest,0,20000,20000,1800000);
+                WinHttpSetTimeouts(httpctx->hRequest, 0, 20000, 20000, 1800000);
 
-                WinHttpSetStatusCallback(httpctx->hRequest,asynccallback,WINHTTP_CALLBACK_FLAG_DATA_AVAILABLE | WINHTTP_CALLBACK_FLAG_READ_COMPLETE | WINHTTP_CALLBACK_FLAG_HEADERS_AVAILABLE | WINHTTP_CALLBACK_FLAG_REQUEST_ERROR | WINHTTP_CALLBACK_FLAG_SECURE_FAILURE | WINHTTP_CALLBACK_FLAG_SENDREQUEST_COMPLETE | WINHTTP_CALLBACK_FLAG_WRITE_COMPLETE | WINHTTP_CALLBACK_FLAG_HANDLES ,0);
+                WinHttpSetStatusCallback(httpctx->hRequest, asynccallback,
+                                         WINHTTP_CALLBACK_FLAG_DATA_AVAILABLE
+                                         | WINHTTP_CALLBACK_FLAG_READ_COMPLETE
+                                         | WINHTTP_CALLBACK_FLAG_HEADERS_AVAILABLE
+                                         | WINHTTP_CALLBACK_FLAG_REQUEST_ERROR
+                                         | WINHTTP_CALLBACK_FLAG_SECURE_FAILURE
+                                         | WINHTTP_CALLBACK_FLAG_SENDREQUEST_COMPLETE
+                                         | WINHTTP_CALLBACK_FLAG_WRITE_COMPLETE
+                                         | WINHTTP_CALLBACK_FLAG_HANDLES,
+                                         0);
 
-                LPCWSTR pwszHeaders = req->type == REQ_JSON ? L"Content-Type: application/json" : L"Content-Type: application/octet-stream";
+                LPCWSTR pwszHeaders = ( req->type == REQ_JSON )
+                                      ? L"Content-Type: application/json"
+                                      : L"Content-Type: application/octet-stream";
 
-                // data is sent in HTTP_POST_CHUNK_SIZE instalments to ensure semi-smooth UI progress info
+                // data is sent in HTTP_POST_CHUNK_SIZE instalments to ensure
+                // semi-smooth UI progress info
                 httpctx->postlen = data ? len : req->out->size();
                 httpctx->postdata = data ? data : req->out->data();
-                httpctx->postpos = (httpctx->postlen < HTTP_POST_CHUNK_SIZE) ? httpctx->postlen : HTTP_POST_CHUNK_SIZE;
+                httpctx->postpos = ( httpctx->postlen < HTTP_POST_CHUNK_SIZE )
+                                   ? httpctx->postlen
+                                   : HTTP_POST_CHUNK_SIZE;
 
-                if (WinHttpSendRequest(httpctx->hRequest,pwszHeaders,wcslen(pwszHeaders),(LPVOID)httpctx->postdata,httpctx->postpos,httpctx->postlen,(DWORD_PTR)httpctx))
+                if (WinHttpSendRequest(httpctx->hRequest, pwszHeaders,
+                                       wcslen(pwszHeaders),
+                                       (LPVOID)httpctx->postdata,
+                                       httpctx->postpos,
+                                       httpctx->postlen,
+                                       (DWORD_PTR)httpctx))
                 {
                     req->status = REQ_INFLIGHT;
                     return;
                 }
             }
         }
-        else httpctx->hRequest = NULL;
+        else
+        {
+            httpctx->hRequest = NULL;
+        }
     }
     else
     {

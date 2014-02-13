@@ -819,6 +819,7 @@ public:
     void resetTotalUploads();
     string getLocalPath(MegaNode *node);
     void updateStatics();
+    void update();
     bool isIndexing();
     bool isWaiting();
     bool isSynced(MegaNode *n);

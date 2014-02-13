@@ -2147,6 +2147,9 @@ void MegaApi::transfer_update(Transfer *tr)
 
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
+    MUTEX_UNLOCK(sdkMutex);
+    MUTEX_LOCK(sdkMutex);
+
     updateStatics();
 
     if(transferMap.find(tr) == transferMap.end()) return;
@@ -4442,6 +4445,11 @@ void MegaApi::updateStatics()
 
     pendingDownloads = downloadCount;
     pendingUploads = uploadCount;
+}
+
+void MegaApi::update()
+{
+    waiter->notify();
 }
 
 bool MegaApi::isIndexing()
