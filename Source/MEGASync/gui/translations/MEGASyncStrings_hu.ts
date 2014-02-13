@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Mégse</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Köszönjük a közreműködést!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Jelentés küldése</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>egy fájl %1/s-mal</translation>
+        <translation type="obsolete">egy fájl %1/s-mal</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>egy fájl (megállítva)</translation>
+        <translation type="obsolete">egy fájl (megállítva)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%2 db-ból %1 %3/s-mal</translation>
+        <translation type="obsolete">%2 db-ból %1 %3/s-mal</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%2 fájlból %1 (megállítva)</translation>
+        <translation type="obsolete">%2 fájlból %1 (megállítva)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Összes hátralévő: </translation>
+        <translation type="obsolete">Összes hátralévő: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Akkor is kilép?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Hiba történt a frissítés telepítésekor. Kérem később próbálja újra, vagy töltse le a legújabb verziót erről a címről: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Köszönjük a közreműködést!</translation>
     </message>
 </context>
 <context>

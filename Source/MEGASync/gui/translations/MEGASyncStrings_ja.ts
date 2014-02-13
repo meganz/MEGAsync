@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>キャンセル</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>ご協力有難うございます！</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>レポートを送る</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>%1/sでファイル１個</translation>
+        <translation type="obsolete">%1/sでファイル１個</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>ファイル１個（一時停止）</translation>
+        <translation type="obsolete">ファイル１個（一時停止）</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%3/sで%2中%1個のファイル</translation>
+        <translation type="obsolete">%3/sで%2中%1個のファイル</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%2中%1個のファイル（一時停止）</translation>
+        <translation type="obsolete">%2中%1個のファイル（一時停止）</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>残量合計： </translation>
+        <translation type="obsolete">残量合計： </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>最新版インストール中に問題がありました。再度トライするか、https://mega.co.nz/#syncから現行版をダウンロードして下さい。</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">ご協力有難うございます！</translation>
     </message>
 </context>
 <context>

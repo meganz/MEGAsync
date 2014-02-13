@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Diddymu</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Diolch i chi am eich cydweithrediad!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Anfon adroddiad</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>un ffeil ar %1/s</translation>
+        <translation type="obsolete">un ffeil ar %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>one file (seibio)</translation>
+        <translation type="obsolete">one file (seibio)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 o %2 ffeiliau ar %3/s</translation>
+        <translation type="obsolete">%1 o %2 ffeiliau ar %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 o %2 files (seibio)</translation>
+        <translation type="obsolete">%1 o %2 files (seibio)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Cyfanswm sy&apos;n Weddill: </translation>
+        <translation type="obsolete">Cyfanswm sy&apos;n Weddill: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Gadael beth bynnag?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Diolch i chi am eich cydweithrediad!</translation>
     </message>
 </context>
 <context>

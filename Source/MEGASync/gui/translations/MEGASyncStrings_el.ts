@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Σας ευχαριστούμε για τη συνεργασία σας!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Αποστολή αναφοράς</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>ένα αρχείο στα %1/s</translation>
+        <translation type="obsolete">ένα αρχείο στα %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>ένα αρχείο (παύση)</translation>
+        <translation type="obsolete">ένα αρχείο (παύση)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 από %2 αρχεία στα %3/s</translation>
+        <translation type="obsolete">%1 από %2 αρχεία στα %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 από %2 αρχεία (παύση)</translation>
+        <translation type="obsolete">%1 από %2 αρχεία (παύση)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Σύνολο που απομένει: </translation>
+        <translation type="obsolete">Σύνολο που απομένει: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Υπήρξε ένα πρόβλημα κατά την εγκατάσταση της ενημέρωσης. Παρακαλώ δοκιμάστε ξανά αργότερα ή να κατεβάσετε την τελευταία έκδοση από: https://mega.co.nz/ # sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Σας ευχαριστούμε για τη συνεργασία σας!</translation>
     </message>
 </context>
 <context>

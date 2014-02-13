@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Otkažite</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Hvala Vam na saradnji.</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Pošaljite izvještaj</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>jedan fajl na %1/s</translation>
+        <translation type="obsolete">jedan fajl na %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>jedan fajl (pauza u toku)</translation>
+        <translation type="obsolete">jedan fajl (pauza u toku)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 od %2 fajlova na %3 po sekundi</translation>
+        <translation type="obsolete">%1 od %2 fajlova na %3 po sekundi</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 od %2 fajla (pauza u toku)</translation>
+        <translation type="obsolete">%1 od %2 fajla (pauza u toku)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Ukupno preostalo </translation>
+        <translation type="obsolete">Ukupno preostalo </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Izlazite ?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Hvala Vam na saradnji.</translation>
     </message>
 </context>
 <context>

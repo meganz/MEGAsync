@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Kanselahin</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Maraming salamat para sa inyong pagtulong!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Magpadala ng report</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>isang file sa %1/s</translation>
+        <translation type="obsolete">isang file sa %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>isang file (itinigil)</translation>
+        <translation type="obsolete">isang file (itinigil)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 ng %2 files sa %3/s</translation>
+        <translation type="obsolete">%1 ng %2 files sa %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 ng %2 files (itinigil)</translation>
+        <translation type="obsolete">%1 ng %2 files (itinigil)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Nalalabi: </translation>
+        <translation type="obsolete">Nalalabi: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Umalis na?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Nagkaroon problema sa paglalagay ng update. Muling subukan mamaya o magdownload ng pinakahuling bersyon sa: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Maraming salamat para sa inyong pagtulong!</translation>
     </message>
 </context>
 <context>

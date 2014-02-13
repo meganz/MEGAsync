@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Batal</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Terima kasih atas kerja sama anda!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Kirim laporan</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>satu file dengan kecepatan %1/s</translation>
+        <translation type="obsolete">satu file dengan kecepatan %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>satu file (paused)</translation>
+        <translation type="obsolete">satu file (paused)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 dari %2 file  dengan kecepatan %3/s</translation>
+        <translation type="obsolete">%1 dari %2 file  dengan kecepatan %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 dari %2 file (paused)</translation>
+        <translation type="obsolete">%1 dari %2 file (paused)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Total Tersisa: </translation>
+        <translation type="obsolete">Total Tersisa: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Tetap ingin keluar?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Terdapat masalah saat meng-install update. Harap coba kembali beberapa saat lagi atau download versi terakhir dari: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Terima kasih atas kerja sama anda!</translation>
     </message>
 </context>
 <context>

@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Скасувати</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Дякуємо за співпрацю!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Надіслати звіт</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>один файл на %1/с</translation>
+        <translation type="obsolete">один файл на %1/с</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>один файл (припинено)</translation>
+        <translation type="obsolete">один файл (припинено)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 з %2 файлів на %3/с</translation>
+        <translation type="obsolete">%1 з %2 файлів на %3/с</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 з %2 файлів (припинено)</translation>
+        <translation type="obsolete">%1 з %2 файлів (припинено)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Всього залишилося: </translation>
+        <translation type="obsolete">Всього залишилося: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Дякуємо за співпрацю!</translation>
     </message>
 </context>
 <context>

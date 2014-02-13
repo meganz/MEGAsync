@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>בטל</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Thank you for your collaboration!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Send report</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>קובץ אחד ב-%1 לשניה</translation>
+        <translation type="obsolete">קובץ אחד ב-%1 לשניה</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>קובץ אחד (מושהה)</translation>
+        <translation type="obsolete">קובץ אחד (מושהה)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 מתוך %2 קבצים ב-%3 לשניה</translation>
+        <translation type="obsolete">%1 מתוך %2 קבצים ב-%3 לשניה</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 מתוך %2 קבצים (מושהה)</translation>
+        <translation type="obsolete">%1 מתוך %2 קבצים (מושהה)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>סך הכל נשאר: </translation>
+        <translation type="obsolete">סך הכל נשאר: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Thank you for your collaboration!</translation>
     </message>
 </context>
 <context>

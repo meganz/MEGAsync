@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>إلغاء</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>شكرا لكم على تعاونكم!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>أرسل التقرير</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>ملف واحد في %1/ث</translation>
+        <translation type="obsolete">ملف واحد في %1/ث</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>ملف واحد (متوقف)</translation>
+        <translation type="obsolete">ملف واحد (متوقف)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 من %2 ملفات في %3/ث</translation>
+        <translation type="obsolete">%1 من %2 ملفات في %3/ث</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 من %2 ملفات (متوقفة)</translation>
+        <translation type="obsolete">%1 من %2 ملفات (متوقفة)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>مجموع المتبقي: </translation>
+        <translation type="obsolete">مجموع المتبقي: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">شكرا لكم على تعاونكم!</translation>
     </message>
 </context>
 <context>

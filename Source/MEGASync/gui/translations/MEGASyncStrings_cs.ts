@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Storno</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Děkujeme za vaši spolupráci!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Odeslat zprávu</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>jeden soubor rychlostí %1/s</translation>
+        <translation type="obsolete">jeden soubor rychlostí %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>jeden soubor (pozastaveno)</translation>
+        <translation type="obsolete">jeden soubor (pozastaveno)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 z %2 souborů rychlostí %3/s</translation>
+        <translation type="obsolete">%1 z %2 souborů rychlostí %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 z %2 souborů (pozastaveno)</translation>
+        <translation type="obsolete">%1 z %2 souborů (pozastaveno)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Celkem zbývá: </translation>
+        <translation type="obsolete">Celkem zbývá: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Přesto ukončit?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Došlo k problému s instalací aktualizace. Zkuste to znovu později nebo si stáhněte poslední verzi z: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Děkujeme za vaši spolupráci!</translation>
     </message>
 </context>
 <context>

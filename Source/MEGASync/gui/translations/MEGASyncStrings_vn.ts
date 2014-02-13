@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Hủy bỏ</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Cám ơn sự hợp tác của bạn!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Gửi báo cáo</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>một tệp đang ở %1/giây</translation>
+        <translation type="obsolete">một tệp đang ở %1/giây</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>một tệp (dừng)</translation>
+        <translation type="obsolete">một tệp (dừng)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 trong tổng %2 tệp đang ở %3/giây</translation>
+        <translation type="obsolete">%1 trong tổng %2 tệp đang ở %3/giây</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 trong tổng %2 tệp (dừng)</translation>
+        <translation type="obsolete">%1 trong tổng %2 tệp (dừng)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Tổng cộng còn lại: </translation>
+        <translation type="obsolete">Tổng cộng còn lại: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Vẫn quyết định thoát chương trình?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Phát sinh lỗi khi cài đặt bản cập nhật. Xin vui lòng thử lại sau hoặc tải về phiên bản mới nhất tại: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Cám ơn sự hợp tác của bạn!</translation>
     </message>
 </context>
 <context>

@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Anuluj</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Dziękujemy za współpracę!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Wyślij raport</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>jeden plik na %1/s</translation>
+        <translation type="obsolete">jeden plik na %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>jeden plik (zatrzymane)</translation>
+        <translation type="obsolete">jeden plik (zatrzymane)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 z %2 plików na %3/s</translation>
+        <translation type="obsolete">%1 z %2 plików na %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 z %2 plików (zatrzymane)</translation>
+        <translation type="obsolete">%1 z %2 plików (zatrzymane)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Pozostało: </translation>
+        <translation type="obsolete">Pozostało: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Wyjść?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Wystąpił problem podczas instalacji aktualizacji. Spróbuj ponowanie lub pobierz najnowszą wersję ze strony: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Dziękujemy za współpracę!</translation>
     </message>
 </context>
 <context>
