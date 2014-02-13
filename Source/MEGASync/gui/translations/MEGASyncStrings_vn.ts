@@ -436,36 +436,36 @@ Vẫn quyết định thoát chương trình?</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Có bản cập nhật mới!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Bản cập nhật sẽ được áp dụng vào lần khởi động tiếp theo</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Đang cài đặt bản cập nhật...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Đang tìm bản cập nhật mới...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Cài bản cập nhật</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>MEGAsync hiện có một bản cập nhật mới! Nhấp vào khung hội thoại này để cài đặt </translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Không có bản cập nhật mới khả dụng</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Phát sinh lỗi khi cài đặt bản cập nhật. Xin vui lòng thử lại sau hoặc tải về phiên bản mới nhất tại: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Kiểm tra các bản cập nhật mới</translation>
     </message>
 </context>
 <context>

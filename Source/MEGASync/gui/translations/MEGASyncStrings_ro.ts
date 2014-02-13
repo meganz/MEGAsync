@@ -330,7 +330,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Eroare: folderul de destinaţie invalid. Încărcarea a fost anulată</translation>
+        <translation>Eroare: Folderul de destinaţie invalid. Încărcarea a fost anulată</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -436,36 +436,36 @@ Ieşi oricum?</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Actualizare disponibilă!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>O actualizare va fi aplicată următoarea dată când aplicaţia va fi pornită</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Se instalează actualizarea...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Se caută actualizări...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Instalează actualizarea</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>O nouă versiune MEGAsync este disponibilă! Clic pe acest mesaj pentru a o instala</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Nicio actualizare disponibilă</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>A apărut o problemă la instalarea actualizării. Te rugăm să încerci din nou mai târziu sau descarcă ultima versiune de pe: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Caută actualizări</translation>
     </message>
 </context>
 <context>

@@ -436,36 +436,36 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Διαθέσιμη ενημερωμένη έκδοση!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Μια ενημερωμένη έκδοση θα εφαρμοστεί κατά την επόμενη επανεκκίνηση της εφαρμογής</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Η εγκατάσταση της ενημέρωσης...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Έλεγχος για ενημερώσεις ...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Εγκαταστήστε την ενημέρωση</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Μια νέα έκδοση του MEGAsync είναι διαθέσιμη! Κάντε κλικ σε αυτό το μήνυμα να το εγκαταστήσετε</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Δεν υπάρχουν διαθέσιμες ενημερώσεις</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Υπήρξε ένα πρόβλημα κατά την εγκατάσταση της ενημέρωσης. Παρακαλώ δοκιμάστε ξανά αργότερα ή να κατεβάσετε την τελευταία έκδοση από: https://mega.co.nz/ # sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Έλεγχος για ενημερώσεις</translation>
     </message>
 </context>
 <context>

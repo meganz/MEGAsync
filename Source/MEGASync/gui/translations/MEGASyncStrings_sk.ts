@@ -436,36 +436,36 @@ Odísť aj tak?</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Dostupná aktualizácia!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Aktualizácia sa prejaví pri najbližšom reštarte aplikácie</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Inštalácia aktualizácie...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Kontrola aktualizácií...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Nainštalovať update</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Je dostupná nová verzia MEGAsync! Kliknite na túto správu pre jej inštaláciu</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Nie sú dostupné žiadne aktualizácie</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Pri inštalácii aktualizácie sa vyskytol problém. Prosíme, skúste to neskôr, alebo stiahnite najnovšiu verziu z: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Skontrolovať aktualizácie</translation>
     </message>
 </context>
 <context>

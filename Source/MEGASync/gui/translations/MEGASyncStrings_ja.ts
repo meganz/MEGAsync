@@ -428,44 +428,44 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>フォルダ(%1)は大きすぎるので、アップロードされませんでした。過大データのアップロードは効率が悪く危険であるため、防止機能が設けられています。</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1フォルダは大きすぎるので、アップロードされませんでした。多大データのアップロードは効率が悪く危険であるため、防止機能が設けられています。</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>最新版です！</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>次回のリスタート時、最新版がアプリが稼働します。</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>最新版インストール中…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>最新版を確認中…</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>最新版をインストールする</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>MEGAsyncの最新版です。ここをクリックするとインストールできます。</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>最新版はまだです。</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>最新版インストール中に問題がありました。再度トライするか、https://mega.co.nz/#syncから現行版をダウンロードして下さい。</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>最新版を確認する</translation>
     </message>
 </context>
 <context>

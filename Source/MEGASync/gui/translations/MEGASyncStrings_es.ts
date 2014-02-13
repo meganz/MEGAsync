@@ -284,7 +284,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Selecciona si quieres instalar $(^NameDA) solo para ti o para todos los usuarios de este PC. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -436,36 +436,36 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>¡Actualización disponible!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>La actualización se aplicará durante el próximo reinicio de la aplicación</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Instalando actualización...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Buscando actualizaciones...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Instalar actualización</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>¡Hay disponible una nueva versión de MEGAsync! Pulsa en este mensaje para instalarla</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>No hay actualizaciones</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Hubo un problema al instalar la actualización. Por favor, inténtalo de nuevo más tarde o descarga la última versión desde: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -582,7 +582,7 @@ https://mega.co.nz/#sync</source>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). Si continúas con la subida, se sobrescribirá el archivo anterior.</translation>
+        <translation>La carpeta de destino ya está sincronizada y tiene un archivo en su interior con el mismo nombre (%1). Si continúas con la subida, se sobrescribirá el archivo anterior.</translation>
     </message>
 </context>
 <context>
@@ -995,7 +995,7 @@ Estás seguro que quieres sincronizarlo?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>Los nuevos nombres de archivo excluidos se tendrán en cuenta en el próximo inicio de la aplicación.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Buscar actualizaciones</translation>
     </message>
 </context>
 <context>

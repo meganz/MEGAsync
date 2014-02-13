@@ -436,36 +436,36 @@ Irten nolanahi ere?</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Eguneraketa bat eskuragarri!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Eguneraketa aplikazioaren hurrengo berrabiaraziarazketan ezarriko da.</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Eguneraketa instalatzen...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Eguneraketak bilatzen...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Eguneraketa instalatu</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>MEGAsync-en bertsio berri bat eskuragarri dago! Klik egin mezu honetan instalatzeko</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Ez dago eguneraketarik</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Arazo bat egon da eguneraketa instalatzean. Mesedez, saiatu berriro beranduago edo jeitsi azkeneko bertsioa hemendik: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Eguneraketak bilatu</translation>
     </message>
 </context>
 <context>

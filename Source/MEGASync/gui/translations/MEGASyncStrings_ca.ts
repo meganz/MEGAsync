@@ -428,44 +428,44 @@ Sortir de totes maneres?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>La carpeta (%1) no s&apos;ha pujat perquè és extremadament gran. Fem aquesta comprovació per evitar pujar particions d&apos;inici senceres, cosa ineficient i perillosa.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>No s&apos;han pujat %1 carpetes perquè són massa grans. Fem aquesta comprovació per evitar la pujada de particions d&apos;inici senceres, cosa ineficient i perillosa.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Actualització disponible!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>S&apos;instal·larà una actualització durant el proper reinici de l&apos;aplicació.</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Instal·lant l&apos;actualització...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Comprovant actualitzacions...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Instal·la l&apos;actualització</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Hi ha una nova versió disponible del MEGAsync! Fes clic en aquest missatge per instal·lar-la</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>No hi ha actualitzacions disponibles</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Ha hagut un problema instal·lannt l&apos;actualització. Si us plau, intenta-ho més tard o descarrega la versió més recent a:https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Cerca actualitzacions</translation>
     </message>
 </context>
 <context>

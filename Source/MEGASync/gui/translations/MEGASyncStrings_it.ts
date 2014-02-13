@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Stai tentando di sincronizzare una cartella molto grande. Per impedire la sincronizzazione di interi volumi di avvio, che è inefficiente e pericoloso, ti chiediamo di iniziare con una cartella più piccola e aggiungere altri dati mentre MEGAsync è in esecuzione.</translation>
     </message>
 </context>
 <context>
@@ -428,44 +428,44 @@ Uscire comunque?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>La cartella (%1) non è stata caricata perché troppo grande. Facciamo questi controlli per prevenire il caricamento di interi volumi di avvio, che risulta esser inefficiente e pericoloso.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 cartelle non sono state caricate perché troppo grandi. Facciamo questi controlli per prevenire il caricamento di interi volumi di avvio, che risulta esser inefficiente e pericoloso.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Aggiornamento disponibile!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Un aggiornamento verrà applicato durante il prossimo avvio dell&apos;applicazione.</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Installazione aggiornamento...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Controllo aggiornamenti...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Installa aggiornamento</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
+        <translation>Una nuova versione di MEGAsync è disponibile! Clicca su questo messaggio per installarla</translation>
     </message>
     <message>
         <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Nessun aggiornamento disponibile</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Sono stati riscontrati problemi durante l&apos;installazione dell&apos;aggiornamento. Per favore, riprova in seguito o scarica l&apos;ultima versione da: https://mega.co.nz/#sync</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Controlla aggiornamenti</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1239,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Stai tentando di sincronizzare una cartella molto grande. Per impedire la sincronizzazione di interi volumi di avvio, che è inefficiente e pericoloso, ti chiediamo di iniziare con una cartella più piccola e aggiungere altri dati mentre MEGAsync è in esecuzione.</translation>
     </message>
 </context>
 <context>
