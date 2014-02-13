@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Annullér</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Tak for dit samarbejde!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Send rapport</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>en fil med %1/s</translation>
+        <translation type="obsolete">en fil med %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>en fil (pauset)</translation>
+        <translation type="obsolete">en fil (pauset)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 af %2 filer med %3/s</translation>
+        <translation type="obsolete">%1 af %2 filer med %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 af %2 filer (pauset)</translation>
+        <translation type="obsolete">%1 af %2 filer (pauset)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Samlet Tilbage: </translation>
+        <translation type="obsolete">Samlet Tilbage: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Afbryd alligevel?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Der var et problem med at installere af opdateringen. Prøv igen senere, eller hent den seneste version på: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Tak for dit samarbejde!</translation>
     </message>
 </context>
 <context>

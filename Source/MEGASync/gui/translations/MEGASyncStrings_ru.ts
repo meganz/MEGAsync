@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Отмена</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Спасибо за сотрудничество!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Отослать отчёт</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>один файл при %1/с</translation>
+        <translation type="obsolete">один файл при %1/с</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>один файл (на паузе)</translation>
+        <translation type="obsolete">один файл (на паузе)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 из %2 файлов при %3/с</translation>
+        <translation type="obsolete">%1 из %2 файлов при %3/с</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 из %2 файлов (на паузе)</translation>
+        <translation type="obsolete">%1 из %2 файлов (на паузе)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Всего Осталось: </translation>
+        <translation type="obsolete">Всего Осталось: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Спасибо за сотрудничество!</translation>
     </message>
 </context>
 <context>

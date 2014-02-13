@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>ยกเลิก</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>ส่งรายงาน</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>หนึ่งไฟล์ความเร็วจะอยู่ที่ %1/s</translation>
+        <translation type="obsolete">หนึ่งไฟล์ความเร็วจะอยู่ที่ %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>หนึ่งไฟล์ (พักชั่วคราว)</translation>
+        <translation type="obsolete">หนึ่งไฟล์ (พักชั่วคราว)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 จาก %2 ไฟล์ความเร็วจะอยู่ที่ %3/s</translation>
+        <translation type="obsolete">%1 จาก %2 ไฟล์ความเร็วจะอยู่ที่ %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 จาก %2 ไฟล์ (พักชั่วคราว)</translation>
+        <translation type="obsolete">%1 จาก %2 ไฟล์ (พักชั่วคราว)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>รวมที่เหลืออยู่: </translation>
+        <translation type="obsolete">รวมที่เหลืออยู่: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>มีปัญหาในการติดตั้งการอัปเดต กรุณาลองอีกครั้งในภายหลัง หรือดาวน์โหลดเวอร์ชันล่าสุดได้จาก: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">ขอบคุณสำหรับความร่วมมือของคุณ</translation>
     </message>
 </context>
 <context>

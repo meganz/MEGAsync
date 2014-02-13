@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>¡Gracias por tu colaboración!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Enviar informe</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>un archivo a %1/sec</translation>
+        <translation type="obsolete">un archivo a %1/sec</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>un archivo (en pausa)</translation>
+        <translation type="obsolete">un archivo (en pausa)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 de %2 archivos a %3/sec</translation>
+        <translation type="obsolete">%1 de %2 archivos a %3/sec</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 de %2 archivos (en pausa)</translation>
+        <translation type="obsolete">%1 de %2 archivos (en pausa)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Total Restante: </translation>
+        <translation type="obsolete">Total Restante: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Hubo un problema al instalar la actualización. Por favor, inténtalo de nuevo más tarde o descarga la última versión desde: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">¡Gracias por tu colaboración!</translation>
     </message>
 </context>
 <context>

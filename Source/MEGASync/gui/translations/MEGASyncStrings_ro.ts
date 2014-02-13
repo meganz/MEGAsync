@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Renunță</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Îţi mulţumim pentru colaborare!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Trimite raportul</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>un fişier la %1/s</translation>
+        <translation type="obsolete">un fişier la %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>un fişier (pus pe pauză)</translation>
+        <translation type="obsolete">un fişier (pus pe pauză)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 din %2 fişiere la %3/s</translation>
+        <translation type="obsolete">%1 din %2 fişiere la %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 din %2 fişiere (puse pe pauză)</translation>
+        <translation type="obsolete">%1 din %2 fişiere (puse pe pauză)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Rămase în total: </translation>
+        <translation type="obsolete">Rămase în total: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Ieşi oricum?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>A apărut o problemă la instalarea actualizării. Te rugăm să încerci din nou mai târziu sau descarcă ultima versiune de pe: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Îţi mulţumim pentru colaborare!</translation>
     </message>
 </context>
 <context>

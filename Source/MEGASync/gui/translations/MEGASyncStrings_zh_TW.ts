@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>取消</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>謝謝您的合作!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>傳送報告</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>一個檔案於 %1/s</translation>
+        <translation type="obsolete">一個檔案於 %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>一個檔案(暫停)</translation>
+        <translation type="obsolete">一個檔案(暫停)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 / %2 檔案於 %3/s</translation>
+        <translation type="obsolete">%1 / %2 檔案於 %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 / %2檔案(暫停)</translation>
+        <translation type="obsolete">%1 / %2檔案(暫停)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>尚餘: </translation>
+        <translation type="obsolete">尚餘: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>安裝更新時發生問題。請稍後再試一次或從這裡下載最新版本: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">謝謝您的合作!</translation>
     </message>
 </context>
 <context>

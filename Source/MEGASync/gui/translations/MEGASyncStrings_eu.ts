@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ezeztatu</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Eskerrak laguntzeagatik!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Txostena bidali</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>Fitxategi bat %1/s-ra</translation>
+        <translation type="obsolete">Fitxategi bat %1/s-ra</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>Fitxategi bat (etendua)</translation>
+        <translation type="obsolete">Fitxategi bat (etendua)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 fitxategi %2 -tik %3/s-ra</translation>
+        <translation type="obsolete">%1 fitxategi %2 -tik %3/s-ra</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 fitxategi %2 -tik (etendua)</translation>
+        <translation type="obsolete">%1 fitxategi %2 -tik (etendua)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Gainontzeko Totala: </translation>
+        <translation type="obsolete">Gainontzeko Totala: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Irten nolanahi ere?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Arazo bat egon da eguneraketa instalatzean. Mesedez, saiatu berriro beranduago edo jeitsi azkeneko bertsioa hemendik: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Eskerrak laguntzeagatik!</translation>
     </message>
 </context>
 <context>

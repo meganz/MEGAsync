@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Obrigado por sua colaboração!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Enviar relatório</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>um arquivo a %1/s</translation>
+        <translation type="obsolete">um arquivo a %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>um arquivo (pausado)</translation>
+        <translation type="obsolete">um arquivo (pausado)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 de %2 arquivos a %3/s</translation>
+        <translation type="obsolete">%1 de %2 arquivos a %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 de %2 arquivos (pausados)</translation>
+        <translation type="obsolete">%1 de %2 arquivos (pausados)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Total restante: </translation>
+        <translation type="obsolete">Total restante: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Sair mesmo assim?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Aconteceu um problema durante a atualização. Por favor, tente novamente mais tarde ou baixe manualmente em: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Obrigado por sua colaboração!</translation>
     </message>
 </context>
 <context>

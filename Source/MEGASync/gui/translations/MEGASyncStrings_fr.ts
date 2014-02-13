@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Merci pour votre collaboration !</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Envoyer le rapport</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>un fichier à %1/s</translation>
+        <translation type="obsolete">un fichier à %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>un fichier (en pause)</translation>
+        <translation type="obsolete">un fichier (en pause)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 sur %2 fichiers à %3/s</translation>
+        <translation type="obsolete">%1 sur %2 fichiers à %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 sur %2 fichiers (en pause)</translation>
+        <translation type="obsolete">%1 sur %2 fichiers (en pause)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Total restant : </translation>
+        <translation type="obsolete">Total restant : </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Quitter quand même ?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Il y a eu u problème lors de l&apos;installation de la mise à jour. Veuillez réessayer ou télécharger la dernière version : https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Merci pour votre collaboration !</translation>
     </message>
 </context>
 <context>

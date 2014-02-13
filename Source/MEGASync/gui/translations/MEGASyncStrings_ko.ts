@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>취소</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>협조에 감사드립니다.</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>보고서 발송</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>파일 한개 %1/s</translation>
+        <translation type="obsolete">파일 한개 %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>파일 한개 (일시정지)</translation>
+        <translation type="obsolete">파일 한개 (일시정지)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%2개 중 %1개의 파일 %3/s</translation>
+        <translation type="obsolete">%2개 중 %1개의 파일 %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%2개 중 %1개의 파일 (일시정지)</translation>
+        <translation type="obsolete">%2개 중 %1개의 파일 (일시정지)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>전체 잔여량: </translation>
+        <translation type="obsolete">전체 잔여량: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>업데이트 설치에 문제가 있었습니다. 나중에 다시 시도하거나 최신 버전을 https://mega.co.nz/#sync 에서 다운로드하세요.</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">협조에 감사드립니다.</translation>
     </message>
 </context>
 <context>

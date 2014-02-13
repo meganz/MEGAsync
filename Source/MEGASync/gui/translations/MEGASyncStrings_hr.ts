@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Otkaži</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>Hvala Vam na suradnji!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Pošalji izvješće</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>datoteka na %1/s</translation>
+        <translation type="obsolete">datoteka na %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>datoteka (pauzirana)</translation>
+        <translation type="obsolete">datoteka (pauzirana)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 od %2 datoteka na %3/s</translation>
+        <translation type="obsolete">%1 od %2 datoteka na %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 od %2 datoteka (pauzirano)</translation>
+        <translation type="obsolete">%1 od %2 datoteka (pauzirano)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Ukupno preostaje: </translation>
+        <translation type="obsolete">Ukupno preostaje: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Ipak izaći?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Problem sa instalacijom ažuriranja. Molimo pokušajte kasnije ili preuzmite najnoviju verziju sa: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">Hvala Vam na suradnji!</translation>
     </message>
 </context>
 <context>

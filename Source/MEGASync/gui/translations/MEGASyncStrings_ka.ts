@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>გაუქმება</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>მადლობას გიხდით თანამშრომლობისთვის!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>შეტყობინების გაგზავნა</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>ერთი ფაილი %1/წმ-ში</translation>
+        <translation type="obsolete">ერთი ფაილი %1/წმ-ში</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>ერთი ფაილი (დაპაუზებული)</translation>
+        <translation type="obsolete">ერთი ფაილი (დაპაუზებული)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%2-დან %1 ფაილი %3/წმ-ში</translation>
+        <translation type="obsolete">%2-დან %1 ფაილი %3/წმ-ში</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%2-დან %1 ფაილი (დაპაუზებული)</translation>
+        <translation type="obsolete">%2-დან %1 ფაილი (დაპაუზებული)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>სულ დარჩენილია: </translation>
+        <translation type="obsolete">სულ დარჩენილია: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>ამ განახლების ინსტალაცია ვერ მოხერხდა რაღაც პრობლემის გამო. გთხოვთ სცადოთ მოგვიანებით ან გადმოწეროთ ამ აპლიკაციის ბოლო ვერსია აქედან: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">მადლობას გიხდით თანამშრომლობისთვის!</translation>
     </message>
 </context>
 <context>

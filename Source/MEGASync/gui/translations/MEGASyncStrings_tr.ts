@@ -87,10 +87,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>İptal Et</translation>
     </message>
     <message>
-        <source>Thank you for your collaboration!</source>
-        <translation>İşbirliğiniz için teşekkür ederiz!</translation>
-    </message>
-    <message>
         <source>Send report</source>
         <translation>Raporu gönder</translation>
     </message>
@@ -241,23 +237,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation>bir dosya %1/s</translation>
+        <translation type="obsolete">bir dosya %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation>bir dosya (duraklatıldı)</translation>
+        <translation type="obsolete">bir dosya (duraklatıldı)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation>%1 / %2 dosya %3/s</translation>
+        <translation type="obsolete">%1 / %2 dosya %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation>%1 / %2 dosya (duraklatıldı)</translation>
+        <translation type="obsolete">%1 / %2 dosya (duraklatıldı)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation>Toplam Kalan: </translation>
+        <translation type="obsolete">Toplam Kalan: </translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -466,6 +462,10 @@ Yine de çıkılsın mı?</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+    </message>
+    <message>
+        <source>Thank you for your collaboration!</source>
+        <translation type="unfinished">İşbirliğiniz için teşekkür ederiz!</translation>
     </message>
 </context>
 <context>
