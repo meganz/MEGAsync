@@ -301,7 +301,7 @@ void InfoDialog::updateSyncsButton()
     long long rootHandle = rootNode->getHandle();
     long long firstSyncHandle = 0;
     if(num == 1)
-        preferences->getMegaFolderHandle(0);
+        firstSyncHandle = preferences->getMegaFolderHandle(0);
 
     if((num == 1) && (firstSyncHandle==rootHandle))
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
