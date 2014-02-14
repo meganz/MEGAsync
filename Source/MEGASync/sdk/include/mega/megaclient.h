@@ -68,7 +68,7 @@ public:
 
     // ephemeral session support
     void createephemeral();
-    void resumeephemeral(handle, const byte*);
+    void resumeephemeral(handle, const byte*, int = 0);
 
     // full account confirmation/creation support
     void sendsignuplink(const char*, const char*, const byte*);

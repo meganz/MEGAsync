@@ -1956,11 +1956,11 @@ void CommandCreateEphemeralSession::procresult()
     }
     else
     {
-        client->resumeephemeral(client->json.gethandle(MegaClient::USERHANDLE), pw);
+        client->resumeephemeral(client->json.gethandle(MegaClient::USERHANDLE), pw, tag);
     }
 }
 
-CommandResumeEphemeralSession::CommandResumeEphemeralSession(MegaClient* client, handle cuh, const byte* cpw)
+CommandResumeEphemeralSession::CommandResumeEphemeralSession(MegaClient* client, handle cuh, const byte* cpw, int ctag)
 {
     memcpy(pw, cpw, sizeof pw);
     uh = cuh;
@@ -1968,7 +1968,7 @@ CommandResumeEphemeralSession::CommandResumeEphemeralSession(MegaClient* client,
     cmd("us");
     arg("user", (byte*)&uh, MegaClient::USERHANDLE);
 
-    tag = client->reqtag;
+    tag = ctag;
 }
 
 void CommandResumeEphemeralSession::procresult()

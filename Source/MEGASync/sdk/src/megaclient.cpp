@@ -4343,9 +4343,9 @@ void MegaClient::createephemeral()
     reqs[r].add(new CommandCreateEphemeralSession(this, keybuf, pwbuf, sscbuf));
 }
 
-void MegaClient::resumeephemeral(handle uh, const byte* pw)
+void MegaClient::resumeephemeral(handle uh, const byte* pw, int ctag)
 {
-    reqs[r].add(new CommandResumeEphemeralSession(this, uh, pw));
+    reqs[r].add(new CommandResumeEphemeralSession(this, uh, pw, ctag ? ctag : reqtag));
 }
 
 void MegaClient::sendsignuplink(const char* email, const char* name, const byte* pwhash)
