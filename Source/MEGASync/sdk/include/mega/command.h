@@ -143,7 +143,7 @@ class MEGA_API CommandResumeEphemeralSession : public Command
 public:
     void procresult();
 
-    CommandResumeEphemeralSession(MegaClient*, handle, const byte*);
+    CommandResumeEphemeralSession(MegaClient*, handle, const byte*, int);
 };
 
 class MEGA_API CommandSendSignupLink : public Command
