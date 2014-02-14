@@ -110,6 +110,8 @@ public:
     void setPreviousCrashes(QStringList crashes);
     long long getLastReboot();
     void setLastReboot(long long value);
+    long long getLastExit();
+    void setLastExit(long long value);
 
     int getNumUsers();
     void enterUser(int i);
@@ -228,6 +230,7 @@ protected:
     static const QString lastUpdateVersionKey;
     static const QString previousCrashesKey;
     static const QString lastRebootKey;
+    static const QString lastExitKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

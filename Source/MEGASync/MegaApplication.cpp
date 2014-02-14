@@ -189,6 +189,7 @@ void MegaApplication::initialize()
 
     preferences = Preferences::instance();
     preferences->setLastStatsRequest(0);
+    lastExit = preferences->getLastExit();
 
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
     Utilities::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
@@ -433,7 +434,7 @@ void MegaApplication::start()
         megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
                        preferences->privatePw().toUtf8().constData());
-	}
+    }
 }
 
 void MegaApplication::loggedIn()
@@ -633,6 +634,8 @@ void MegaApplication::cleanAll()
     delete uploadFolderSelector;
     delete delegateListener;
     delete megaApi;
+
+    preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
 
     // remove shared memory key
     singleInstanceChecker.detach();
@@ -1505,7 +1508,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
             }
         }
 
-        if(!node->getTag() && !node->isRemoved() && !node->isSyncDeleted())
+        if(!node->getTag() && !node->isRemoved() && !node->isSyncDeleted() && ((lastExit/1000)<node->getCreationTime()))
             externalNodes++;
 
         if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==FILENODE))
