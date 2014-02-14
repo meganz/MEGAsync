@@ -43,7 +43,12 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
 				ui->sPages->setCurrentWidget(ui->pLogin);
+                ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
 				ui->lVerify->setVisible(true);
+                ui->eName->clear();
+                ui->eEmail->clear();
+                ui->ePassword->clear();
+                ui->eRepeatPassword->clear();
 			}
 			else if (error->getErrorCode() == MegaError::API_EEXIST)
 			{
@@ -362,15 +367,21 @@ void SetupWizard::on_bBack_clicked()
     {
         ui->sPages->setCurrentWidget(ui->pSetup);
         ui->bBack->setVisible(false);
+        ui->eLoginPassword->clear();
     }
     if(w == ui->pNewAccount)
     {
         ui->sPages->setCurrentWidget(ui->pSetup);
         ui->bBack->setVisible(false);
+        ui->eName->clear();
+        ui->eEmail->clear();
+        ui->ePassword->clear();
+        ui->eRepeatPassword->clear();
     }
     else if(w == ui->pSetupType)
     {
         ui->sPages->setCurrentWidget(ui->pLogin);
+        ui->eLoginPassword->clear();
         ui->lVerify->hide();
         wTypicalSetup_clicked();
         megaApi->logout();
