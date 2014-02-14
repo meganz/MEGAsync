@@ -1215,10 +1215,11 @@ void MegaApi::loop()
         MUTEX_UNLOCK(sdkMutex);
 	}
 
-    delete client;
+    delete dbAccess; //Warning, it's deleted in MegaClient's destructor
+    //delete client;
     //delete httpio;
-    delete waiter;
-    delete fsAccess;
+    //delete waiter;
+    //delete fsAccess;
     if(loginRequest) delete loginRequest;
     MUTEX_DELETE(sdkMutex);
 }
