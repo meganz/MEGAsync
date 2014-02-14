@@ -200,12 +200,16 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 	nodeSelector->nodesReady();
 	int result = nodeSelector->exec();
 	if(result != QDialog::Accepted)
-		return;
+    {
+        delete nodeSelector;
+        return;
+    }
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     const char *fPath = megaApi->getNodePath(selectedFolder);
     ui->eMegaFolder->setText(QString::fromUtf8(fPath));
+    delete nodeSelector;
     delete selectedFolder;
     delete fPath;
 }

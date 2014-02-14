@@ -56,14 +56,17 @@ void FolderBinder::on_bMegaFolder_clicked()
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
-
     if(result != QDialog::Accepted)
+    {
+        delete nodeSelector;
         return;
+    }
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     const char *fPath = megaApi->getNodePath(selectedFolder);
     ui->eMegaFolder->setText(QString::fromUtf8(fPath));
+    delete nodeSelector;
     delete selectedFolder;
     delete fPath;
 }

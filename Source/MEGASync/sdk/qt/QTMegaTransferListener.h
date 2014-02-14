@@ -9,7 +9,8 @@ class QTMegaTransferListener : public QObject, public MegaTransferListener
 	Q_OBJECT
 
 public:
-	QTMegaTransferListener(MegaTransferListener *listener);
+    QTMegaTransferListener(MegaApi *megaApi,MegaTransferListener *listener);
+    virtual ~QTMegaTransferListener();
 
 public:
 	virtual void onTransferStart(MegaApi *api, MegaTransfer *transfer);
@@ -30,6 +31,7 @@ public slots:
 	virtual void QTonTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e);
 
 protected:
+    MegaApi *megaApi;
 	MegaTransferListener *listener;
 };
 

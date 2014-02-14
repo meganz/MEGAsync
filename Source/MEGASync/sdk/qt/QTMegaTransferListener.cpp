@@ -1,7 +1,8 @@
 #include "QTMegaTransferListener.h"
 
-QTMegaTransferListener::QTMegaTransferListener(MegaTransferListener *listener) : QObject()
+QTMegaTransferListener::QTMegaTransferListener(MegaApi *megaApi, MegaTransferListener *listener) : QObject()
 {
+    this->megaApi = megaApi;
 	this->listener = listener;
 	connect(this, SIGNAL(QTonTransferStartSignal(MegaApi *, MegaTransfer *)),
 			this, SLOT(QTonTransferStart(MegaApi *, MegaTransfer *)));
@@ -10,7 +11,13 @@ QTMegaTransferListener::QTMegaTransferListener(MegaTransferListener *listener) :
 	connect(this, SIGNAL(QTonTransferUpdateSignal(MegaApi *, MegaTransfer *)),
 			this, SLOT(QTonTransferUpdate(MegaApi *, MegaTransfer *)));
 	connect(this, SIGNAL(QTonTransferTemporaryErrorSignal(MegaApi *, MegaTransfer *, MegaError *)),
-			this, SLOT(QTonTransferTemporaryError(MegaApi *, MegaTransfer *, MegaError *)));
+            this, SLOT(QTonTransferTemporaryError(MegaApi *, MegaTransfer *, MegaError *)));
+}
+
+QTMegaTransferListener::~QTMegaTransferListener()
+{
+    this->listener = NULL;
+    megaApi->removeTransferListener(this);
 }
 
 void QTMegaTransferListener::onTransferStart(MegaApi *api, MegaTransfer *transfer)

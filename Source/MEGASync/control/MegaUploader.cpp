@@ -4,9 +4,15 @@
 #include <QMessageBox>
 #include <QtCore>
 
-MegaUploader::MegaUploader(MegaApi *megaApi) : QObject(), delegateListener(this)
+MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
+    delegateListener = new QTMegaRequestListener(megaApi, this);
+}
+
+MegaUploader::~MegaUploader()
+{
+    delete delegateListener;
 }
 
 void MegaUploader::upload(QString path, MegaNode *parent)
@@ -78,7 +84,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     else if(info.isDir())
     {
         folders.enqueue(info);
-        megaApi->createFolder(info.fileName().toUtf8().constData(), parent, &delegateListener);
+        megaApi->createFolder(info.fileName().toUtf8().constData(), parent, delegateListener);
     }
 }
 
@@ -101,7 +107,7 @@ void MegaUploader::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError
                         folders.enqueue(info);
                         megaApi->createFolder(info.fileName().toUtf8().constData(),
                                               parent,
-                                              &delegateListener);
+                                              delegateListener);
                     }
                 }
                 delete parent;

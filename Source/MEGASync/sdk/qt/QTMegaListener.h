@@ -9,7 +9,8 @@ class QTMegaListener : public QObject, public MegaListener
 	Q_OBJECT
 
 public:
-	explicit QTMegaListener(MegaListener *parent=NULL);
+    explicit QTMegaListener(MegaApi *megaApi, MegaListener *parent=NULL);
+    virtual ~QTMegaListener();
 
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
@@ -50,6 +51,7 @@ public slots:
     virtual void QTonSyncStateChanged(MegaApi* api);
 
 protected:
+    MegaApi *megaApi;
 	MegaListener *listener;
 };
 

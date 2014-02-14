@@ -23,11 +23,12 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     preferences = Preferences::instance();
     selectedMegaFolderHandle = UNDEF;
     ui->bNext->setFocus();
-	delegateListener = new QTMegaRequestListener(this);
+    delegateListener = new QTMegaRequestListener(megaApi, this);
 }
 
 SetupWizard::~SetupWizard()
 {
+    delete delegateListener;
     delete ui;
 }
 
@@ -447,14 +448,17 @@ void SetupWizard::on_bMegaFolder_clicked()
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
-
     if(result != QDialog::Accepted)
+    {
+        delete nodeSelector;
         return;
+    }
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     const char *nPath = megaApi->getNodePath(node);
     ui->eMegaFolder->setText(QString::fromUtf8(nPath));
+    delete nodeSelector;
     delete nPath;
     delete node;
 }

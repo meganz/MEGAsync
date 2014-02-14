@@ -343,7 +343,7 @@ class MegaRequest
         void setParamType(int type);
         void setFlag(bool flag);
         void setTransfer(Transfer *transfer);
-
+        void setListener(MegaRequestListener *listener);
 		MegaRequestListener *getListener() const;
         Transfer * getTransfer() const;
 		AccountDetails * getAccountDetails() const;
@@ -661,6 +661,22 @@ class RequestQueue
         MUTEX_UNLOCK(mutex);
 	    return request;
 	}
+
+    void removeListener(MegaRequestListener *listener)
+    {
+        MUTEX_LOCK(mutex);
+
+        std::deque<MegaRequest *>::iterator it = requests.begin();
+        while(it != requests.end())
+        {
+            MegaRequest *request = (*it);
+            if(request->getListener()==listener)
+                request->setListener(NULL);
+            it++;
+        }
+
+        MUTEX_UNLOCK(mutex);
+    }
 };
 
 
@@ -728,7 +744,7 @@ public:
     static bool nodeComparatorAlphabeticalDESC  (MegaNode *i, MegaNode *j);
 	static bool userComparatorDefaultASC (User *i, User *j);
 
-    MegaApi(MegaListener *listener = NULL, string *basePath = NULL);
+    MegaApi(string *basePath = NULL);
 	virtual ~MegaApi();
 
 	//Multiple listener management.
@@ -903,10 +919,6 @@ protected:
     bool waitingRequest;
     vector<string> excludedNames;
 
-    DECLARE_MUTEX(listenerMutex);
-    DECLARE_MUTEX(transferListenerMutex);
-    DECLARE_MUTEX(requestListenerMutex);
-    DECLARE_MUTEX(globalListenerMutex);
     DECLARE_MUTEX(sdkMutex);
 
 	MegaRequest *loginRequest;

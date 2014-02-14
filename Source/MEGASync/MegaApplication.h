@@ -139,7 +139,7 @@ protected:
     Preferences *preferences;
     MegaApi *megaApi;
     HTTPServer *httpServer;
-    UploadToMegaDialog uploadFolderSelector;
+    UploadToMegaDialog *uploadFolderSelector;
 	QQueue<QString> uploadQueue;
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
