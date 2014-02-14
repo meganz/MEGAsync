@@ -68,6 +68,7 @@ const QString Preferences::lastUpdateTimeKey        = QString::fromAscii("lastUp
 const QString Preferences::lastUpdateVersionKey     = QString::fromAscii("lastUpdateVersion");
 const QString Preferences::previousCrashesKey       = QString::fromAscii("previousCrashes");
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
+const QString Preferences::lastExitKey            = QString::fromAscii("lastExit");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -807,8 +808,8 @@ void Preferences::setExcludedSyncNames(QStringList names)
 
 QStringList Preferences::getPreviousCrashes()
 {
-    QStringList previousCrashes;
     mutex.lock();
+    QStringList previousCrashes;
     QString currentAccount;
     if(logged())
     {
@@ -843,6 +844,7 @@ void Preferences::setPreviousCrashes(QStringList crashes)
 
 long long Preferences::getLastReboot()
 {
+    mutex.lock();
     QString currentAccount;
     if(logged())
     {
@@ -860,6 +862,7 @@ long long Preferences::getLastReboot()
 
 void Preferences::setLastReboot(long long value)
 {
+    mutex.lock();
     QString currentAccount;
     if(logged())
     {
@@ -868,6 +871,42 @@ void Preferences::setLastReboot(long long value)
     }
 
     settings->setValue(lastRebootKey, value);
+
+    if(!currentAccount.isEmpty())
+        settings->beginGroup(currentAccount);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getLastExit()
+{
+    mutex.lock();
+    QString currentAccount;
+    if(logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    long long value = settings->value(lastExitKey).toLongLong();
+
+    if(!currentAccount.isEmpty())
+        settings->beginGroup(currentAccount);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastExit(long long value)
+{
+    mutex.lock();
+    QString currentAccount;
+    if(logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(lastExitKey, value);
 
     if(!currentAccount.isEmpty())
         settings->beginGroup(currentAccount);

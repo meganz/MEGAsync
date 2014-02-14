@@ -168,6 +168,7 @@ protected:
     bool waiting;
     bool updated;
     bool updateBlocked;
+    long long lastExit;
 };
 
 #endif // MEGAAPPLICATION_H
