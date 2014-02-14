@@ -979,7 +979,7 @@ MegaApi::MegaApi(string *basePath)
     waiter = new MegaWaiter();
     fsAccess = new MegaFileSystemAccess();
     dbAccess = new MegaDbAccess(basePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.6");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.7");
 
     //Start blocking thread
 	threadExit = 0;
