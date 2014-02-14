@@ -15,6 +15,7 @@ class MegaUploader : public QObject, public MegaRequestListener
 
 public:
     MegaUploader(MegaApi *megaApi);
+    virtual ~MegaUploader();
     void upload(QString path, MegaNode *parent);
     virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
 
@@ -25,7 +26,7 @@ protected:
     void upload(QFileInfo info, MegaNode *parent);
 
     MegaApi *megaApi;
-    QTMegaRequestListener delegateListener;
+    QTMegaRequestListener *delegateListener;
     QQueue<QFileInfo> folders;
 };
 

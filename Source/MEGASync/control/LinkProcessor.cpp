@@ -2,7 +2,7 @@
 #include "Utilities.h"
 #include <QDir>
 
-LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener()
+LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener(megaApi)
 {
 	this->megaApi = megaApi;
 	this->linkList = linkList;

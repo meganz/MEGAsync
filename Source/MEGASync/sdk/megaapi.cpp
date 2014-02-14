@@ -550,6 +550,11 @@ void MegaRequest::setTransfer(Transfer *transfer)
     this->transfer = transfer;
 }
 
+void MegaRequest::setListener(MegaRequestListener *listener)
+{
+    this->listener = listener;
+}
+
 void MegaRequest::setPublicNode(MegaNode *publicNode)
 {
     if(this->publicNode) delete this->publicNode;
@@ -948,7 +953,7 @@ void *MegaApi::threadEntryPoint(void *param)
 	return 0;
 }
 
-MegaApi::MegaApi(MegaListener *listener, string *basePath)
+MegaApi::MegaApi(string *basePath)
 {
 #ifdef SHOW_LOGS
     debug = true;
@@ -956,13 +961,7 @@ MegaApi::MegaApi(MegaListener *listener, string *basePath)
     debug = false;
 #endif
 
-    INIT_MUTEX(listenerMutex);
-    INIT_MUTEX(transferListenerMutex);
-    INIT_MUTEX(requestListenerMutex);
-    INIT_MUTEX(globalListenerMutex);
     INIT_RECURSIVE_MUTEX(sdkMutex);
-
-	addListener(listener);
 	maxRetries = 3;
 	loginRequest = NULL;
 	updatingSID = 0;
@@ -1221,10 +1220,6 @@ void MegaApi::loop()
     delete waiter;
     delete fsAccess;
     if(loginRequest) delete loginRequest;
-    MUTEX_DELETE(listenerMutex);
-    MUTEX_DELETE(transferListenerMutex);
-    MUTEX_DELETE(requestListenerMutex);
-    MUTEX_DELETE(globalListenerMutex);
     MUTEX_DELETE(sdkMutex);
 }
 
@@ -3085,85 +3080,93 @@ void MegaApi::addListener(MegaListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(listenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	listeners.insert(listener);
-    MUTEX_UNLOCK(listenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::addRequestListener(MegaRequestListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(requestListenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	requestListeners.insert(listener);
-    MUTEX_UNLOCK(requestListenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::addTransferListener(MegaTransferListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(transferListenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	transferListeners.insert(listener);
-    MUTEX_UNLOCK(transferListenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::addGlobalListener(MegaGlobalListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(globalListenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	globalListeners.insert(listener);
-    MUTEX_UNLOCK(globalListenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::removeListener(MegaListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(listenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	listeners.erase(listener);
-    MUTEX_UNLOCK(listenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::removeRequestListener(MegaRequestListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(requestListenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	requestListeners.erase(listener);
-    MUTEX_UNLOCK(requestListenerMutex);
+
+    std::map<int,MegaRequest*>::iterator it=requestMap.begin();
+    while(it != requestMap.end())
+    {
+        MegaRequest* request = it->second;
+        if(request->getListener() == listener)
+            request->setListener(NULL);
+
+        it++;
+    }
+
+    requestQueue.removeListener(listener);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::removeTransferListener(MegaTransferListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(transferListenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	transferListeners.erase(listener);
-    MUTEX_UNLOCK(transferListenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::removeGlobalListener(MegaGlobalListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(globalListenerMutex);
+    MUTEX_LOCK(sdkMutex);
 	globalListeners.erase(listener);
-    MUTEX_UNLOCK(globalListenerMutex);
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::fireOnRequestStart(MegaApi* api, MegaRequest *request)
 {
-    MUTEX_LOCK(requestListenerMutex);
 	for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
 		(*it)->onRequestStart(api, request);
-    MUTEX_UNLOCK(requestListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onRequestStart(api, request);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaRequestListener* listener = request->getListener();
 	if(listener) listener->onRequestStart(api, request);
@@ -3205,15 +3208,11 @@ void MegaApi::fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError 
 
 	MegaError *megaError = new MegaError(e);
 
-    MUTEX_LOCK(requestListenerMutex);
 	for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
 		(*it)->onRequestFinish(api, request, megaError);
-    MUTEX_UNLOCK(requestListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onRequestFinish(api, request, megaError);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaRequestListener* listener = request->getListener();
 	if(listener) listener->onRequestFinish(api, request, megaError);
@@ -3227,15 +3226,11 @@ void MegaApi::fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, Me
 {
 	MegaError *megaError = new MegaError(e);
 
-    MUTEX_LOCK(requestListenerMutex);
 	for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
 		(*it)->onRequestTemporaryError(api, request, megaError);
-    MUTEX_UNLOCK(requestListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onRequestTemporaryError(api, request, megaError);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaRequestListener* listener = request->getListener();
 	if(listener) listener->onRequestTemporaryError(api, request, megaError);
@@ -3244,15 +3239,11 @@ void MegaApi::fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, Me
 
 void MegaApi::fireOnTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferStart(api, transfer);
-    MUTEX_UNLOCK(transferListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onTransferStart(api, transfer);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferStart(api, transfer);
@@ -3262,15 +3253,11 @@ void MegaApi::fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaErr
 {
 	MegaError *megaError = new MegaError(e);
 
-    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferFinish(api, transfer, megaError);
-    MUTEX_UNLOCK(transferListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onTransferFinish(api, transfer, megaError);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferFinish(api, transfer, megaError);
@@ -3284,15 +3271,11 @@ void MegaApi::fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer,
 {
 	MegaError *megaError = new MegaError(e);
 
-    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferTemporaryError(api, transfer, megaError);
-    MUTEX_UNLOCK(transferListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onTransferTemporaryError(api, transfer, megaError);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferTemporaryError(api, transfer, megaError);
@@ -3301,15 +3284,11 @@ void MegaApi::fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer,
 
 void MegaApi::fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
-    MUTEX_LOCK(transferListenerMutex);
 	for(set<MegaTransferListener *>::iterator it = transferListeners.begin(); it != transferListeners.end() ; it++)
 		(*it)->onTransferUpdate(api, transfer);
-    MUTEX_UNLOCK(transferListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onTransferUpdate(api, transfer);
-    MUTEX_UNLOCK(listenerMutex);
 
 	MegaTransferListener* listener = transfer->getListener();
 	if(listener) listener->onTransferUpdate(api, transfer);
@@ -3317,49 +3296,35 @@ void MegaApi::fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void MegaApi::fireOnUsersUpdate(MegaApi* api, UserList *users)
 {
-    MUTEX_LOCK(globalListenerMutex);
 	for(set<MegaGlobalListener *>::iterator it = globalListeners.begin(); it != globalListeners.end() ; it++)
 		(*it)->onUsersUpdate(api, users);
-    MUTEX_UNLOCK(globalListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onUsersUpdate(api, users);
-    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::fireOnNodesUpdate(MegaApi* api, NodeList *nodes)
 {
-    MUTEX_LOCK(globalListenerMutex);
 	for(set<MegaGlobalListener *>::iterator it = globalListeners.begin(); it != globalListeners.end() ; it++)
 		(*it)->onNodesUpdate(api, nodes);
-    MUTEX_UNLOCK(globalListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onNodesUpdate(api, nodes);
-    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::fireOnReloadNeeded(MegaApi* api)
 {
-    MUTEX_LOCK(globalListenerMutex);
 	for(set<MegaGlobalListener *>::iterator it = globalListeners.begin(); it != globalListeners.end() ; it++)
 		(*it)->onReloadNeeded(api);
-    MUTEX_UNLOCK(globalListenerMutex);
 
-    MUTEX_LOCK(listenerMutex);
 	for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
 		(*it)->onReloadNeeded(api);
-    MUTEX_UNLOCK(listenerMutex);
 }
 
 void MegaApi::fireOnSyncStateChanged(MegaApi* api)
 {
-    MUTEX_LOCK(listenerMutex);
     for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
         (*it)->onSyncStateChanged(api);
-    MUTEX_UNLOCK(listenerMutex);
 }
 
 
@@ -4397,7 +4362,6 @@ void MegaApi::sendPendingRequests()
         }
         case MegaRequest::TYPE_DELETE:
             threadExit = 1;
-            client->logout();
             break;
 		}
 

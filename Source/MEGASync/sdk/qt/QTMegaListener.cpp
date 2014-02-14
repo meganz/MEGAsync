@@ -1,7 +1,8 @@
 #include "QTMegaListener.h"
 
-QTMegaListener::QTMegaListener(MegaListener *listener) : QObject()
+QTMegaListener::QTMegaListener(MegaApi *megaApi, MegaListener *listener) : QObject()
 {
+    this->megaApi = megaApi;
 	this->listener = listener;
 	connect(this, SIGNAL(QTonRequestStartSignal(MegaApi *, MegaRequest *)),
 			this, SLOT(QTonRequestStart(MegaApi *, MegaRequest *)));
@@ -27,6 +28,12 @@ QTMegaListener::QTMegaListener(MegaListener *listener) : QObject()
 			this, SLOT(QTonReloadNeeded(MegaApi *)));
     connect(this, SIGNAL(QTonSyncStateChangedSignal(MegaApi *)),
             this, SLOT(QTonSyncStateChanged(MegaApi *)));
+}
+
+QTMegaListener::~QTMegaListener()
+{
+    this->listener = NULL;
+    megaApi->removeListener(this);
 }
 
 void QTMegaListener::onRequestStart(MegaApi *api, MegaRequest *request)

@@ -190,7 +190,6 @@ void MegaApplication::initialize()
     preferences = Preferences::instance();
     preferences->setLastStatsRequest(0);
 
-    delegateListener = new QTMegaListener(this);
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
     Utilities::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
 
@@ -212,8 +211,11 @@ void MegaApplication::initialize()
 #endif
 
     string tmpPath = basePath.toStdString();
-    megaApi = new MegaApi(delegateListener, &tmpPath);
+    megaApi = new MegaApi(&tmpPath);
+    delegateListener = new QTMegaListener(megaApi, this);
+    megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
+    uploadFolderSelector = new UploadToMegaDialog(megaApi);
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
     if(preferences->isCrashed())
@@ -627,7 +629,9 @@ void MegaApplication::cleanAll()
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
-    megaApi->removeListener(delegateListener);
+    delete uploader;
+    delete uploadFolderSelector;
+    delete delegateListener;
     delete megaApi;
 
     // remove shared memory key
@@ -884,13 +888,13 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
     //If the dialog to select the upload folder is active, return.
     //Files will be uploaded when the user selects the upload folder
-    if(uploadFolderSelector.isVisible())
+    if(uploadFolderSelector->isVisible())
     {
-        uploadFolderSelector.showMinimized();
-        uploadFolderSelector.setWindowState(Qt::WindowActive);
-        uploadFolderSelector.showNormal();
-        uploadFolderSelector.raise();
-        uploadFolderSelector.activateWindow();
+        uploadFolderSelector->showMinimized();
+        uploadFolderSelector->setWindowState(Qt::WindowActive);
+        uploadFolderSelector->showNormal();
+        uploadFolderSelector->raise();
+        uploadFolderSelector->activateWindow();
         return;
     }
 
@@ -918,19 +922,19 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::showUploadDialog()
 {
-    uploadFolderSelector.initialize(megaApi);
-    uploadFolderSelector.showMinimized();
-    uploadFolderSelector.setWindowState(Qt::WindowActive);
-    uploadFolderSelector.showNormal();
-    uploadFolderSelector.raise();
-    uploadFolderSelector.activateWindow();
-    uploadFolderSelector.exec();
+    uploadFolderSelector->initialize();
+    uploadFolderSelector->showMinimized();
+    uploadFolderSelector->setWindowState(Qt::WindowActive);
+    uploadFolderSelector->showNormal();
+    uploadFolderSelector->raise();
+    uploadFolderSelector->activateWindow();
+    uploadFolderSelector->exec();
 
-    if(uploadFolderSelector.result()==QDialog::Accepted)
+    if(uploadFolderSelector->result()==QDialog::Accepted)
 	{
         //If the dialog is accepted, get the destination node
-        handle nodeHandle = uploadFolderSelector.getSelectedHandle();
-        if(uploadFolderSelector.isDefaultFolder())
+        handle nodeHandle = uploadFolderSelector->getSelectedHandle();
+        if(uploadFolderSelector->isDefaultFolder())
             preferences->setUploadFolder(nodeHandle);
         processUploadQueue(nodeHandle);
 	}

@@ -1,14 +1,21 @@
 #include "QTMegaRequestListener.h"
 
-QTMegaRequestListener::QTMegaRequestListener(MegaRequestListener *listener) : QObject()
+QTMegaRequestListener::QTMegaRequestListener(MegaApi *megaApi, MegaRequestListener *listener) : QObject()
 {
+    this->megaApi = megaApi;
 	this->listener = listener;
-	connect(this, SIGNAL(QTonRequestStartSignal(MegaApi *, MegaRequest *)),
-			this, SLOT(QTonRequestStart(MegaApi *, MegaRequest *)));
-	connect(this, SIGNAL(QTonRequestFinishSignal(MegaApi *, MegaRequest *, MegaError *)),
-			this, SLOT(QTonRequestFinish(MegaApi *, MegaRequest *, MegaError *)));
-	connect(this, SIGNAL(QTonRequestTemporaryErrorSignal(MegaApi *, MegaRequest *, MegaError *)),
-			this, SLOT(QTonRequestTemporaryError(MegaApi *, MegaRequest *, MegaError *)));
+    connect(this, SIGNAL(QTonRequestStartSignal(MegaApi *, MegaRequest *)),
+            this, SLOT(QTonRequestStart(MegaApi *, MegaRequest *)));
+    connect(this, SIGNAL(QTonRequestFinishSignal(MegaApi *, MegaRequest *, MegaError *)),
+            this, SLOT(QTonRequestFinish(MegaApi *, MegaRequest *, MegaError *)));
+    connect(this, SIGNAL(QTonRequestTemporaryErrorSignal(MegaApi *, MegaRequest *, MegaError *)),
+            this, SLOT(QTonRequestTemporaryError(MegaApi *, MegaRequest *, MegaError *)));
+}
+
+QTMegaRequestListener::~QTMegaRequestListener()
+{
+    this->listener = NULL;
+    megaApi->removeRequestListener(this);
 }
 
 //Parameters are copied because when the signal is processed the request could be finished
@@ -44,5 +51,5 @@ void QTMegaRequestListener::QTonRequestTemporaryError(MegaApi *api, MegaRequest 
 {
 	if(listener) listener->onRequestTemporaryError(api, request, e);
 	delete request;
-	delete e;
+    delete e;
 }

@@ -1,7 +1,7 @@
 #include "ExportProcessor.h"
 
 ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) :
-    QTMegaRequestListener()
+    QTMegaRequestListener(megaApi)
 {
     this->megaApi = megaApi;
     this->fileList = fileList;

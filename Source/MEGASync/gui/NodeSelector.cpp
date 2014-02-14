@@ -15,7 +15,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     selectedItem = NULL;
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;
-	delegateListener = new QTMegaRequestListener(this);
+    delegateListener = new QTMegaRequestListener(megaApi, this);
 }
 
 NodeSelector::~NodeSelector()

@@ -811,14 +811,17 @@ void SettingsDialog::on_bUploadFolder_clicked()
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, false, this);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
-
     if(result != QDialog::Accepted)
+    {
+        delete nodeSelector;
         return;
+    }
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     const char *nPath = megaApi->getNodePath(node);
     QString newPath = QString::fromUtf8(nPath);
+    delete nodeSelector;
     delete nPath;
     delete node;
     if(newPath.compare(ui->eUploadFolder->text()))
