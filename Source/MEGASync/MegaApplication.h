@@ -15,6 +15,7 @@
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
+#include "gui/PasteMegaLinksDialog.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
@@ -153,6 +154,7 @@ protected:
     MegaUploader *uploader;
     QTimer *refreshTimer;
     QTranslator *translator;
+    PasteMegaLinksDialog *pasteMegaLinksDialog;
     QString lastTrayMessage;
 
     static QString appPath;

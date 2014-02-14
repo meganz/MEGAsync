@@ -1,5 +1,4 @@
 #include "MegaApplication.h"
-#include "gui/PasteMegaLinksDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
 #include "gui/CrashReportDialog.h"
 #include "control/Utilities.h"
@@ -162,6 +161,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     updateAction = NULL;
+    pasteMegaLinksDialog = NULL;
     updateBlocked = false;
 }
 
@@ -630,6 +630,9 @@ void MegaApplication::cleanAll()
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
+    if(pasteMegaLinksDialog)
+        delete pasteMegaLinksDialog;
+
     delete uploader;
     delete uploadFolderSelector;
     delete delegateListener;
@@ -838,15 +841,26 @@ void MegaApplication::resumeSync()
 //Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
 {
+    if(pasteMegaLinksDialog)
+    {
+        pasteMegaLinksDialog->setVisible(true);
+        pasteMegaLinksDialog->activateWindow();
+        pasteMegaLinksDialog->raise();
+        pasteMegaLinksDialog->setFocus();
+        return;
+    }
+
     //Show the dialog to paste public links
-	PasteMegaLinksDialog dialog;
-	dialog.exec();
+    pasteMegaLinksDialog = new PasteMegaLinksDialog();
+    pasteMegaLinksDialog->exec();
 
     //If the dialog isn't accepted, return
-	if(dialog.result()!=QDialog::Accepted) return;
+    if(pasteMegaLinksDialog->result()!=QDialog::Accepted) return;
 
     //Get the list of links from the dialog
-    QStringList linkList = dialog.getLinks();
+    QStringList linkList = pasteMegaLinksDialog->getLinks();
+    delete pasteMegaLinksDialog;
+    pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
 	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
