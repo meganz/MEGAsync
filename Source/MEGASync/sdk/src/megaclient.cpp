@@ -4502,13 +4502,12 @@ void MegaClient::purgenodesusersabortsc()
 
     syncs.clear();
 
-    todebris.clear();
-
     for (node_map::iterator it = nodes.begin(); it != nodes.end(); it++)
     {
         delete it->second;
     }
 
+    todebris.clear();
     nodes.clear();
 
     for (newshare_list::iterator it = newshares.begin(); it != newshares.end(); it++)
