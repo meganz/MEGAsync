@@ -28,8 +28,13 @@ DEALINGS IN THE SOFTWARE.
 #define USE_VARARGS
 #define PREFER_STDARG
 #include "megaapi.h"
-#include "platform/Platform.h"
-#include "control/Utilities.h"
+
+#ifdef USE_QT
+    #include "platform/Platform.h"
+    #include "control/Utilities.h"
+#else
+    #define QT_TR_NOOP(x) (x)
+#endif
 
 #ifdef _WIN32
 #define snprintf _snprintf
@@ -809,10 +814,12 @@ const char* MegaError::getErrorString() const
     return MegaError::getErrorString(errorCode);
 }
 
+#ifdef USE_QT
 QString MegaError::QgetErrorString() const
 {
     return QCoreApplication::translate("MegaError", getErrorString());
 }
+#endif
 
 const char* MegaError::getErrorString(int errorCode)
 {
@@ -873,10 +880,12 @@ const char* MegaError::getErrorString(int errorCode)
     return "HTTP Error";
 }
 
+#ifdef USE_QT
 QString MegaError::QgetErrorString(int errorCode)
 {
     return QCoreApplication::translate("MegaError", getErrorString(errorCode));
 }
+#endif
 
 const char* MegaError::toString() const { return getErrorString(); }
 const char* MegaError::__str__() const { return getErrorString(); }
@@ -2304,8 +2313,10 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
 #else
     QString localPath = QString::fromUtf8(path.data());
 #endif
-    Platform::notifyItemChange(localPath);
 
+#ifdef USE_QT
+    Platform::notifyItemChange(localPath);
+#endif
     MUTEX_LOCK(sdkMutex);
 }
 
@@ -2409,6 +2420,7 @@ void MegaApi::fetchnodes_result(error e)
 
     fireOnRequestFinish(this, request, megaError);
 
+#ifdef USE_QT
     Preferences *preferences = Preferences::instance();
     if(preferences->logged() && preferences->wasPaused())
         this->pauseTransfers(true);
@@ -2444,6 +2456,7 @@ void MegaApi::fetchnodes_result(error e)
             fireOnRequestFinish(this, syncRequest, MegaError(syncError));
         }
     }
+#endif
 }
 
 void MegaApi::putnodes_result(error e, targettype_t t, NewNode* nn)
@@ -2591,7 +2604,9 @@ void MegaApi::notify_retry(dstime dsdelta)
 void MegaApi::request_error(error e)
 {
 	MegaError megaError(e);
+#ifdef USE_QT
     ((MegaApplication *)qApp)->showErrorMessage(QCoreApplication::translate("MegaError", "Error") + QString::fromAscii(":") + megaError.QgetErrorString());
+#endif
 }
 
 // login result
