@@ -202,6 +202,7 @@ QString Utilities::languageCodeToString(QString code)
     if(languageNames.isEmpty())
     {
         languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
+        languageNames[QString::fromAscii("cs")] = QString::fromUtf8("Čeština");
         languageNames[QString::fromAscii("zh_CN")] = QString::fromUtf8("简体中文");
         languageNames[QString::fromAscii("zh_TW")] = QString::fromUtf8("中文繁體");
         languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
