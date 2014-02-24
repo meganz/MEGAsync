@@ -44,7 +44,7 @@ struct MEGA_API HttpIO : public EventTrigger
     // track Internet connectivity issues
     dstime noinetds;
     bool inetback;
-    void inetstatus(bool, dstime);
+    void inetstatus(bool);
     bool inetisback();
 
     // set useragent (must be called exactly once)

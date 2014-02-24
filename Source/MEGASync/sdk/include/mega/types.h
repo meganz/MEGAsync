@@ -62,7 +62,11 @@ typedef int64_t m_off_t;
 // monotonously increasing time in deciseconds
 typedef uint32_t dstime;
 
+#ifdef USE_CRYPTOPP
 #include "crypto/cryptopp.h"
+#else
+#include "megacrypto.h"
+#endif
 
 namespace mega {
 using namespace std;
@@ -337,6 +341,7 @@ typedef enum { TREESTATE_NONE, TREESTATE_SYNCED, TREESTATE_PENDING, TREESTATE_SY
 
 struct Notification
 {
+	dstime timestamp;
     string path;
     LocalNode* localnode;
 };

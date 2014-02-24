@@ -251,7 +251,7 @@ private:
     bool moretransfers(direction_t);
 
     // update time at which next deferred transfer retry kicks in
-    void nexttransferretry(direction_t d, dstime* dsmin, dstime ds);
+    void nexttransferretry(direction_t d, dstime*);
 
     // fetch state serialize from local cache
     bool fetchsc(DbTable*);

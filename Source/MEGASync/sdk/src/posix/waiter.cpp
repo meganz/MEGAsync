@@ -40,7 +40,7 @@ int clock_gettime(int, struct timespec* t)
 namespace mega {
 void PosixWaiter::init(dstime ds)
 {
-    maxds = ds;
+    Waiter::init(ds);
 
     maxfd = -1;
 
@@ -50,13 +50,13 @@ void PosixWaiter::init(dstime ds)
 }
 
 // update monotonously increasing timestamp in deciseconds
-dstime PosixWaiter::getdstime()
+void Waiter::bumpds()
 {
     timespec ts;
 
     clock_gettime(CLOCK_MONOTONIC, &ts);
 
-    return ds = ts.tv_sec * 10 + ts.tv_nsec / 100000000;
+    ds = ts.tv_sec * 10 + ts.tv_nsec / 100000000;
 }
 
 // update maxfd for select()

@@ -42,6 +42,7 @@ DirNotify::DirNotify(string* clocalbasepath, string* cignore)
 void DirNotify::notify(notifyqueue q, LocalNode* l, const char* localpath, size_t len)
 {
     notifyq[q].resize(notifyq[q].size() + 1);
+    notifyq[q].back().timestamp = Waiter::ds;
     notifyq[q].back().localnode = l;
     notifyq[q].back().path.assign(localpath, len);
 }

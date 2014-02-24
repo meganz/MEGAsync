@@ -2130,15 +2130,15 @@ void MegaApi::transfer_update(Transfer *tr)
         }
 #endif
 		transfer->setTime(tr->slot->lastdata);
-        if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
+        if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
 		transfer->setTransferredBytes(tr->slot->progressreported);
 
-        if(waiter->getdstime()<transfer->getStartTime())
+        if(Waiter::ds<transfer->getStartTime())
             transfer->setStartTime(waiter->ds);
 
         transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->ds-transfer->getStartTime()+1));
-		transfer->setUpdateTime(waiter->getdstime());
+        transfer->setUpdateTime(Waiter::ds);
 
         //string th;
         //if (tr->type == GET) th = "TD ";
@@ -2194,8 +2194,8 @@ void MegaApi::transfer_complete(Transfer* tr)
 
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
-    if(!transfer->getStartTime()) transfer->setStartTime(waiter->getdstime());
-    if(waiter->getdstime()<transfer->getStartTime())
+    if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
+    if(Waiter::ds<transfer->getStartTime())
         transfer->setStartTime(waiter->ds);
 
     transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->ds-transfer->getStartTime()+1));
@@ -4280,7 +4280,7 @@ void MegaApi::sendPendingRequests()
             bool pause = request->getFlag();
             if(pause)
             {
-                if(!pausetime) pausetime = waiter->getdstime();
+                if(!pausetime) pausetime = Waiter::ds;
             }
             else if(pausetime)
             {
@@ -4290,7 +4290,7 @@ void MegaApi::sendPendingRequests()
                     dstime starttime = transfer->getStartTime();
                     if(starttime)
                     {
-                        dstime timepaused = waiter->getdstime() - pausetime;
+                        dstime timepaused = Waiter::ds - pausetime;
                         iter->second->setStartTime(starttime + timepaused);
                     }
                 }

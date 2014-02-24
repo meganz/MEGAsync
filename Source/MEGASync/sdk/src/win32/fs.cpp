@@ -565,8 +565,11 @@ void WinDirNotify::process(DWORD dwBytes)
 
         readchanges();
 
+        // ensure accuracy of the notification timestamps
+        Waiter::bumpds();
+
         // we trust the OS to always return conformant data
-        for (; ; )
+        for (;;)
         {
             FILE_NOTIFY_INFORMATION* fni = (FILE_NOTIFY_INFORMATION*)ptr;
 
@@ -606,15 +609,13 @@ void WinDirNotify::readchanges()
     {
         if (GetLastError() == ERROR_NOTIFY_ENUM_DIR)
         {
-            error = true;                                           //
-                                                                    //
-                                                                    // notification
-                                                                    // buffer
-                                                                    // overflow
+            // notification buffer overflow
+            error = true;
         }
         else
         {
-            failed = true;  // permanent failure
+            // permanent failure
+            failed = true;
         }
     }
 }

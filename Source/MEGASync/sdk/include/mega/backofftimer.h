@@ -36,28 +36,28 @@ public:
     void reset();
 
     // trigger exponential backoff
-    void backoff(dstime);
+    void backoff();
 
     // set absolute backoff
-    void backoff(dstime, dstime);
+    void backoff(dstime);
 
     // check if timer has elapsed
-    bool armed(dstime) const;
+    bool armed() const;
 
     // arm timer
-    bool arm(dstime);
+    bool arm();
 
     // time left for event to become armed
-    dstime retryin(dstime);
+    dstime retryin();
 
     // current backoff delta
-    dstime backoff();
+    dstime backoffdelta();
 
     // time of next trigger or 0 if no trigger since last backoff
     dstime nextset() const;
 
     // update time to wait
-    void update(dstime, dstime*);
+    void update(dstime*);
 
     BackoffTimer();
 };

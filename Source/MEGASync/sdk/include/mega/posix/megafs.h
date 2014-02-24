@@ -30,6 +30,8 @@
 
 #include "mega.h"
 
+#define DEBRISFOLDER ".debris"
+
 namespace mega {
 struct MEGA_API PosixDirAccess : public DirAccess
 {

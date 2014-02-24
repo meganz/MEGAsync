@@ -126,7 +126,7 @@ void TransferSlot::doio(MegaClient* client)
     if (!fa)
     {
         // this is a pending completion, retry every 200 ms
-        transfer->bt.backoff(client->waiter->ds, 2);
+        transfer->bt.backoff(2);
         return transfer->complete();
     }
 
@@ -149,7 +149,7 @@ void TransferSlot::doio(MegaClient* client)
                     break;
 
                 case REQ_SUCCESS:
-                    lastdata = client->waiter->ds;
+                    lastdata = Waiter::ds;
 
                     progresscompleted += reqs[i]->size;
 
@@ -281,12 +281,12 @@ void TransferSlot::doio(MegaClient* client)
     if (p != progressreported)
     {
         progressreported = p;
-        lastdata = client->waiter->ds;
+        lastdata = Waiter::ds;
 
         progress();
     }
 
-    if (( client->waiter->ds - lastdata >= XFERTIMEOUT ) || ( errorcount > 10 ))
+    if (( Waiter::ds - lastdata >= XFERTIMEOUT ) || ( errorcount > 10 ))
     {
         return transfer->failed(API_EFAILED);
     }
@@ -295,10 +295,10 @@ void TransferSlot::doio(MegaClient* client)
         if (!backoff)
         {
             // no other backoff: check again at XFERMAXFAIL
-            backoff = XFERTIMEOUT - ( client->waiter->ds - lastdata );
+            backoff = XFERTIMEOUT - ( Waiter::ds - lastdata );
         }
 
-        transfer->bt.backoff(client->waiter->ds, backoff);
+        transfer->bt.backoff(backoff);
     }
 }
 

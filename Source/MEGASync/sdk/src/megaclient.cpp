@@ -58,8 +58,7 @@ bool MegaClient::decryptkey(const char* sk, byte* tk, int tl, SymmCipher* sc, in
 
     if (sl > 4 * FILENODEKEYLENGTH / 3 + 1)
     {
-        // RSA-encrypted key - decrypt and update on the server to save CPU
-        // time next time
+        // RSA-encrypted key - decrypt and update on the server to save space & client CPU time
         sl = sl / 4 * 3 + 3;
 
         if (sl > 4096)
@@ -202,7 +201,7 @@ void MegaClient::mergenewshares(bool notify)
 
                             if (notify)
                             {
-                                    notifynode(n);
+                                notifynode(n);
                             }
                         }
                     }
@@ -443,7 +442,7 @@ MegaClient::~MegaClient()
 // nonblocking state machine executing all operations currently in progress
 void MegaClient::exec()
 {
-    dstime ds = waiter->getdstime();
+    waiter->bumpds();
 
     if (httpio->inetisback())
     {
@@ -451,8 +450,7 @@ void MegaClient::exec()
         abortbackoff();
     }
 
-    do
-    {
+    do {
         // file attribute puts (handled sequentially, newest-to-oldest)
         if (curfa != newfa.end())
         {
@@ -504,14 +502,14 @@ void MegaClient::exec()
                 case REQ_FAILURE:
                     // repeat request with exponential backoff
                     curfa = newfa.end();
-                    btpfa.backoff(ds);
+                    btpfa.backoff();
 
                 default:
                     ;
             }
         }
 
-        if (newfa.size() && ( curfa == newfa.end()) && btpfa.armed(ds))
+        if (newfa.size() && ( curfa == newfa.end()) && btpfa.armed())
         {
             // dispatch most recent file attribute put
             curfa = newfa.begin();
@@ -543,13 +541,13 @@ void MegaClient::exec()
 
                     case REQ_FAILURE:
                         faf_failed(it->first);
-                        it->second->bt.backoff(ds);
+                        it->second->bt.backoff();
 
                     default:
                         ;
                 }
 
-                if (( it->second->req.status != REQ_INFLIGHT ) && it->second->bt.armed(ds))
+                if (( it->second->req.status != REQ_INFLIGHT ) && it->second->bt.armed())
                 {
                     // no request in flight, but ready for next request - check
                     // for remaining fetches for this cluster
@@ -649,8 +647,8 @@ void MegaClient::exec()
                         delete pendingcs;
                         pendingcs = NULL;
 
-                        btcs.backoff(ds);
-                        app->notify_retry(btcs.retryin(ds));
+                        btcs.backoff();
+                        app->notify_retry(btcs.retryin());
                         csretrying = true;
 
                     default:
@@ -663,7 +661,7 @@ void MegaClient::exec()
                 }
             }
 
-            if (btcs.armed(ds))
+            if (btcs.armed())
             {
                 if (btcs.nextset())
                 {
@@ -766,7 +764,7 @@ void MegaClient::exec()
                             delete pendingsc;
                             pendingsc = NULL;
 
-                            btsc.backoff(ds);
+                            btsc.backoff();
 
                         default:
                             ;
@@ -779,7 +777,7 @@ void MegaClient::exec()
                 }
             }
 
-            if (*scsn && btsc.armed(ds))
+            if (*scsn && btsc.armed())
             {
                 pendingsc = new HttpReq();
 
@@ -863,28 +861,29 @@ void MegaClient::exec()
         notifypurge();
 
         // rescan everything
-        if (syncscanfailed && syncscanbt.armed(ds))
+        if (syncscanfailed && syncscanbt.armed())
         {
             syncscanfailed = false;
         }
 
         // retry syncdown() ops
-        if (syncdownretry && syncdownbt.armed(ds))
+        if (syncdownretry && syncdownbt.armed())
         {
             syncdownretry = false;
             syncops = true;
         }
 
         // file change timeouts
-        if (syncnagleretry && syncnaglebt.armed(ds))
+        if (syncnagleretry && syncnaglebt.armed())
         {
             syncnagleretry = false;
             syncops = true;
         }
 
-        if (syncfslockretry && syncfslockretrybt.armed(ds))
+        if (syncfslockretry && syncfslockretrybt.armed())
         {
-            syncfslockretrybt.backoff(ds, 5);
+
+            syncfslockretrybt.backoff(1);
         }
 
         syncactivity = false;
@@ -899,48 +898,60 @@ void MegaClient::exec()
             if (syncs.size() || syncactivity)
             {
                 bool syncscanning = false;
-                int q = syncfslockretry ? DirNotify::RETRY : DirNotify::DIREVENTS;
-
-                syncfslockretry = false;
                 unsigned totalpending = 0;
 
-                if (!syncfsopsfailed)
+                for (int q = syncfslockretry ? DirNotify::RETRY : DirNotify::DIREVENTS; q >= DirNotify::DIREVENTS; q--)
                 {
-                    // no retrying local operations: process pending notifyqs
-                    for (it = syncs.begin(); it != syncs.end(); )
+                    syncfslockretry = false;
+
+                    if (!syncfsopsfailed)
                     {
-                        Sync* sync = *it++;
-
-                        if (sync->state == SYNC_CANCELED)
+                        // not retrying local operations: process pending notifyqs
+                        for (it = syncs.begin(); it != syncs.end(); )
                         {
-                            delete sync;
-                        }
-                        else if (( sync->state == SYNC_INITIALSCAN ) || ( sync->state == SYNC_ACTIVE ))
-                        {
-                            // process items from the notifyq until depleted
-                            if (sync->dirnotify->notifyq[q].size())
-                            {
-                                sync->procscanq(q);
-                                syncops = true;
-                            }
+                            Sync* sync = *it++;
 
-                            if (sync->dirnotify->notifyq[q].size())
+                            if (sync->state == SYNC_CANCELED)
                             {
-                                syncscanning = true;
+                                delete sync;
                             }
-                            else if (( sync->state == SYNC_INITIALSCAN ) && ( q == DirNotify::DIREVENTS ))
+                            else if (sync->state == SYNC_INITIALSCAN || sync->state == SYNC_ACTIVE)
                             {
-                                sync->changestate(SYNC_ACTIVE);
-                            }
+                                // process items from the notifyq until depleted
+                                if (sync->dirnotify->notifyq[q].size())
+                                {
+                                    // only start syncing 500 ms after a notification was triggered -
+                                    // this accomodates software saving files in a convoluted manner
+                                    if (sync->state == SYNC_ACTIVE
+                                        && q == DirNotify::DIREVENTS
+                                        && Waiter::ds - sync->dirnotify->notifyq[DirNotify::DIREVENTS].front().timestamp < 5)
+                                    {
+                                        syncfslockretry = true;
+                                        continue;
+                                    }
 
-                            if (!syncfslockretry && sync->dirnotify->notifyq[DirNotify::RETRY].size())
-                            {
-                                syncfslockretry = true;
-                            }
+                                    sync->procscanq(q);
+                                    syncops = true;
+                                }
 
-                            if (q == DirNotify::DIREVENTS)
-                            {
-                                totalpending += sync->dirnotify->notifyq[DirNotify::DIREVENTS].size();
+                                if (sync->dirnotify->notifyq[q].size())
+                                {
+                                    syncscanning = true;
+                                }
+                                else if (sync->state == SYNC_INITIALSCAN && q == DirNotify::DIREVENTS)
+                                {
+                                    sync->changestate(SYNC_ACTIVE);
+                                }
+
+                                if (!syncfslockretry && sync->dirnotify->notifyq[DirNotify::RETRY].size())
+                                {
+                                    syncfslockretry = true;
+                                }
+
+                                if (q == DirNotify::DIREVENTS)
+                                {
+                                    totalpending += sync->dirnotify->notifyq[DirNotify::DIREVENTS].size();
+                                }
                             }
                         }
                     }
@@ -979,7 +990,7 @@ void MegaClient::exec()
                         }
 
                         syncdownretry = true;
-                        syncdownbt.backoff(ds, 50);
+                        syncdownbt.backoff(50);
                     }
                     else
                     {
@@ -991,23 +1002,20 @@ void MegaClient::exec()
                     }
                 }
 
-                if (q == DirNotify::DIREVENTS)
+                if (totalpending < 4)
                 {
-                    if (totalpending < 4)
+                    if (syncscanstate)
                     {
-                        if (syncscanstate)
-                        {
-                            app->syncupdate_scanning(false);
-                            syncscanstate = false;
-                        }
+                        app->syncupdate_scanning(false);
+                        syncscanstate = false;
                     }
-                    else if (totalpending > 10)
+                }
+                else if (totalpending > 10)
+                {
+                    if (!syncscanstate)
                     {
-                        if (!syncscanstate)
-                        {
-                            app->syncupdate_scanning(true);
-                            syncscanstate = true;
-                        }
+                        app->syncupdate_scanning(true);
+                        syncscanstate = true;
                     }
                 }
 
@@ -1015,7 +1023,7 @@ void MegaClient::exec()
                 // pending items were processed
                 if (syncfslockretry)
                 {
-                    syncfslockretrybt.backoff(ds, 2);
+                    syncfslockretrybt.backoff(2);
                 }
 
                 // do we have pending local deletions? (don't process while
@@ -1092,7 +1100,7 @@ void MegaClient::exec()
 
                     // rescan full trees in case fs notification is currently
                     // unreliable or unavailable
-                    if (syncscanbt.armed(ds))
+                    if (syncscanbt.armed())
                     {
                         unsigned totalnodes = 0;
 
@@ -1115,7 +1123,7 @@ void MegaClient::exec()
                         // size)
                         if (syncscanfailed)
                         {
-                            syncscanbt.backoff(ds, 10 + totalnodes / 128);
+                            syncscanbt.backoff(10 + totalnodes / 128);
                         }
                     }
 
@@ -1135,7 +1143,7 @@ void MegaClient::exec()
 
                         if (nds + 1)
                         {
-                            syncnaglebt.backoff(ds, nds - ds);
+                            syncnaglebt.backoff(nds - Waiter::ds);
                             syncnagleretry = true;
                         }
 
@@ -1153,47 +1161,47 @@ void MegaClient::exec()
             }
         }
     }
-    while (httpio->doio() || ( !pendingcs && reqs[r].cmdspending() && btcs.armed(ds)));
+    while (httpio->doio() || ( !pendingcs && reqs[r].cmdspending() && btcs.armed()));
 }
 
 // get next event time from all subsystems, then invoke the waiter if needed
 // returns true if an engine-relevant event has occurred, false otherwise
 int MegaClient::wait()
 {
-    dstime ds, nds;
+    dstime nds;
 
     // get current dstime and clear wait events
-    ds = waiter->getdstime();
+    waiter->bumpds();
 
     // sync directory scans in progress? don't wait.
     if (syncactivity)
     {
-        nds = ds;
+        nds = Waiter::ds;
     }
     else
     {
         // next retry of a failed transfer
         nds = ~(dstime)0;
 
-        nexttransferretry(PUT, &nds, ds);
-        nexttransferretry(GET, &nds, ds);
+        nexttransferretry(PUT, &nds);
+        nexttransferretry(GET, &nds);
 
         // retry failed client-server requests
         if (!pendingcs)
         {
-            btcs.update(ds, &nds);
+            btcs.update(&nds);
         }
 
         // retry failed server-client requests
         if (!pendingsc && *scsn)
         {
-            btsc.update(ds, &nds);
+            btsc.update(&nds);
         }
 
         // retry failed file attribute puts
         if (curfa == newfa.end())
         {
-            btpfa.update(ds, &nds);
+            btpfa.update(&nds);
         }
 
         // retry failed file attribute gets
@@ -1201,32 +1209,32 @@ int MegaClient::wait()
         {
             if (it->second->req.status != REQ_INFLIGHT)
             {
-                it->second->bt.update(ds, &nds);
+                it->second->bt.update(&nds);
             }
         }
 
         // sync rescan
         if (syncscanfailed)
         {
-            syncscanbt.update(ds, &nds);
+            syncscanbt.update(&nds);
         }
 
         // retrying of transient failed read ops
         if (syncfslockretry)
         {
-            syncfslockretrybt.update(ds, &nds);
+            syncfslockretrybt.update(&nds);
         }
 
         // retrying of transiently failed syncdown() updates
         if (syncdownretry)
         {
-            syncdownbt.update(ds, &nds);
+            syncdownbt.update(&nds);
         }
 
         // triggering of Nagle-delayed sync PUTs
         if (syncnagleretry)
         {
-            syncnaglebt.update(ds, &nds);
+            syncnaglebt.update(&nds);
         }
     }
 
@@ -1236,10 +1244,10 @@ int MegaClient::wait()
         return Waiter::NEEDEXEC;
     }
 
-    // nds is either MAX_INT (== no pending events) or > ds
+    // nds is either MAX_INT (== no pending events) or > Waiter::ds
     if (nds + 1)
     {
-        nds -= ds;
+        nds -= Waiter::ds;
     }
 
     waiter->init(nds);
@@ -1262,7 +1270,8 @@ int MegaClient::wait()
 bool MegaClient::abortbackoff()
 {
     bool r = false;
-    dstime ds = waiter->getdstime();
+
+    waiter->bumpds();
 
     for (int d = GET; d == GET || d == PUT; d += PUT - GET)
     {
@@ -1271,7 +1280,7 @@ bool MegaClient::abortbackoff()
             if (it->second->failcount)
             {
                 it->second->failcount = 0;
-                if (it->second->bt.arm(ds))
+                if (it->second->bt.arm())
                 {
                     r = true;
                 }
@@ -1279,24 +1288,24 @@ bool MegaClient::abortbackoff()
         }
     }
 
-    if (btcs.arm(ds))
+    if (btcs.arm())
     {
         r = true;
     }
 
-    if (!pendingsc && btsc.arm(ds))
+    if (!pendingsc && btsc.arm())
     {
         r = true;
     }
 
-    if (( curfa == newfa.end()) && btpfa.arm(ds))
+    if (( curfa == newfa.end()) && btpfa.arm())
     {
         r = true;
     }
 
     for (fafc_map::iterator it = fafcs.begin(); it != fafcs.end(); it++)
     {
-        if (( it->second->req.status != REQ_INFLIGHT ) && it->second->bt.arm(ds))
+        if (( it->second->req.status != REQ_INFLIGHT ) && it->second->bt.arm())
         {
             r = true;
         }
@@ -1317,18 +1326,17 @@ bool MegaClient::dispatch(direction_t d)
     }
 
     transfer_map::iterator nextit;
-    dstime ds = waiter->getdstime();
     TransferSlot *ts = NULL;
 
-    for (; ; )
+    for (;;)
     {
         nextit = transfers[d].end();
 
         for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); it++)
         {
-            if (!it->second->slot && it->second->bt.armed(ds)
+            if (!it->second->slot && it->second->bt.armed()
                 && (( nextit == transfers[d].end())
-                    || ( it->second->bt.retryin(ds) < nextit->second->bt.retryin(ds))))
+                    || ( it->second->bt.retryin() < nextit->second->bt.retryin())))
             {
                 nextit = it;
             }
@@ -1458,8 +1466,6 @@ bool MegaClient::dispatch(direction_t d)
                     }
                 }
 
-                // uploads always start at position 0, downloads resume at the
-                // p
                 // dispatch request for temporary source/target URL
                 reqs[r].add(( ts->pendingcmd = ( d == PUT )
                         ? (Command*)new CommandPutFile(ts, putmbpscap)
@@ -1508,13 +1514,13 @@ void MegaClient::freeq(direction_t d)
 // determine next scheduled transfer retry
 // FIXME: make this an ordered set and only check the first element instead of
 // scanning the full map!
-void MegaClient::nexttransferretry(direction_t d, dstime* dsmin, dstime ds)
+void MegaClient::nexttransferretry(direction_t d, dstime* dsmin)
 {
     for (transfer_map::iterator it = transfers[d].begin(); it != transfers[d].end(); it++)
     {
         if (( !it->second->slot || !it->second->slot->fa )
             && it->second->bt.nextset()
-            && ( it->second->bt.nextset() >= ds )
+            && ( it->second->bt.nextset() >= Waiter::ds )
             && ( it->second->bt.nextset() < *dsmin ))
         {
             *dsmin = it->second->bt.nextset();
@@ -2011,7 +2017,7 @@ bool MegaClient::moretransfers(direction_t d)
         {
             if (( *it )->starttime)
             {
-                t += waiter->ds - ( *it )->starttime;
+                t += Waiter::ds - ( *it )->starttime;
             }
             c += ( *it )->progressreported;
             r += ( *it )->transfer->size - ( *it )->progressreported;
@@ -2049,8 +2055,7 @@ void MegaClient::dispatchmore(direction_t d)
 {
     // keep pipeline full by dispatching additional queued transfers, if
     // appropriate and available
-    while (moretransfers(d) && dispatch(d))
-    {}
+    while (moretransfers(d) && dispatch(d));
 }
 
 // server-client node update processing
@@ -3711,21 +3716,29 @@ void MegaClient::mapuser(handle uh, const char* email)
     }
 }
 
-// sharekey distribution request - walk array consisting of node/user handles
+// sharekey distribution request - walk array consisting of {node,user+}+ handle tuples
 // and submit public key requests
 void MegaClient::procsr(JSON* j)
 {
     User* u;
-    handle sh, uh;
+    handle sh = UNDEF, uh = UNDEF;
 
     if (!j->enterarray())
     {
         return;
     }
 
-    while (!ISUNDEF(sh = j->gethandle()) && !ISUNDEF(uh = j->gethandle()))
+    for (;;)
     {
-        if (nodebyhandle(sh) && ( u = finduser(uh)))
+		if (ISUNDEF(sh) && ISUNDEF(sh = j->gethandle())) break;
+
+        if (ISUNDEF(uh = j->gethandle(USERHANDLE)))
+        {
+            sh = UNDEF;
+            continue;
+        }
+
+        if (nodebyhandle(sh) && (u = finduser(uh)))
         {
             queuepubkeyreq(u, new PubKeyActionSendShareKey(sh));
         }
@@ -4641,11 +4654,12 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
     for (node_list::iterator it = l->node->children.begin(); it != l->node->children.end(); it++)
     {
         // node must be syncable, alive, decrypted and have its name defined to
-        // be considered
-        if (app->sync_syncable(*it)
+        // be considered - also, prevent clashes with the local debris folder
+        if ((app->sync_syncable(*it)
                 && (( *it )->syncdeleted == SYNCDEL_NONE )
                 && !( *it )->attrstring.size()
                 && (( ait = ( *it )->attrs.map.find('n')) != ( *it )->attrs.map.end()))
+			&& (l->parent || l->sync->debris != ait->second))
         {
             addchild(&nchildren, &ait->second, *it, &strings);
         }
@@ -4867,7 +4881,6 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
 // for creation
 void MegaClient::syncup(LocalNode* l, dstime* nds)
 {
-    dstime ds = waiter->ds;
     bool insync = true;
 
     list<string> strings;
@@ -4973,7 +4986,7 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
                 continue;
             }
 
-            if (ds < ll->nagleds)
+            if (Waiter::ds < ll->nagleds)
             {
                 if (ll->nagleds < *nds)
                 {
@@ -5247,7 +5260,7 @@ void MegaClient::pausexfers(direction_t d, bool pause, bool hard)
 
     if (!pause || hard)
     {
-        waiter->getdstime();
+        waiter->bumpds();
 
         for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); )
         {
@@ -5262,7 +5275,7 @@ void MegaClient::pausexfers(direction_t d, bool pause, bool hard)
                 }
                 else
                 {
-                    ( *it )->lastdata = waiter->ds;
+                    ( *it )->lastdata = Waiter::ds;
                     ( *it++ )->doio(this);
                 }
             }
