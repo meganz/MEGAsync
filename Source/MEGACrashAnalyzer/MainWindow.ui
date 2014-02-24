@@ -87,7 +87,7 @@
     <item>
      <widget class="QSpinBox" name="sReports">
       <property name="readOnly">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </item>
