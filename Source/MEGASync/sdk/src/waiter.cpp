@@ -22,6 +22,11 @@
 #include "mega/waiter.h"
 
 namespace mega {
+void Waiter::init(dstime ds)
+{
+    maxds = ds;
+}
+
 // add events to wakeup criteria
 void Waiter::wakeupby(EventTrigger* et, int flags)
 {

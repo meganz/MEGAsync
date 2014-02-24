@@ -30,8 +30,6 @@ struct PosixWaiter : public Waiter
     int maxfd;
     fd_set rfds, wfds, efds;
 
-    dstime getdstime();
-
     void init(dstime);
     int wait();
     void bumpmaxfd(int);

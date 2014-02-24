@@ -188,7 +188,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
                 }
                 else if (httpio->waiter && httpio->noinetds)
                 {
-                    httpio->inetstatus(true, httpio->waiter->getdstime());
+                    httpio->inetstatus(true);
                 }
             }
         }
@@ -197,7 +197,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
         case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
             if (httpio->waiter)
             {
-                httpio->inetstatus(false, httpio->waiter->getdstime());
+                httpio->inetstatus(false);
             }
 
         // fall through

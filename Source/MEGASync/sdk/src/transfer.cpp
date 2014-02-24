@@ -53,7 +53,7 @@ void Transfer::failed(error e)
 {
     bool defer = false;
 
-    bt.backoff(client->waiter->ds);
+    bt.backoff();
 
     client->app->transfer_failed(this, e);
 
@@ -234,7 +234,7 @@ void Transfer::complete()
         delete slot->fa;
         slot->fa = NULL;
 
-        bt.backoff(client->waiter->ds, 11);
+        bt.backoff(11);
     }
 }
 } // namespace

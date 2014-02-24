@@ -44,7 +44,7 @@ SOURCES += $$PWD/src/win32/net.cpp  \
 unix:!mac {
 SOURCES += $$PWD/src/posix/net.cpp  \
     $$PWD/src/posix/fs.cpp  \
-    $$PWD/src/posix/posixwaiter.cpp \
+    $$PWD/src/posix/waiter.cpp \
     $$PWD/linux/megaapiwait.cpp \
     $$PWD/linux/megaapiposixhttpio.cpp
 }

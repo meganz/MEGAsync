@@ -22,6 +22,8 @@
 #ifndef FSACCESS_CLASS
 #define FSACCESS_CLASS WinFileSystemAccess
 
+#define DEBRISFOLDER "Debris"
+
 namespace mega {
 struct MEGA_API WinDirAccess : public DirAccess
 {

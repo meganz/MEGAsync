@@ -31,11 +31,11 @@ HttpIO::HttpIO()
 
 // signal Internet status - if the Internet was down for more than one minute,
 // set the inetback flag to trigger a reconnect
-void HttpIO::inetstatus(bool up, dstime ds)
+void HttpIO::inetstatus(bool up)
 {
     if (up)
     {
-        if (noinetds && ( ds - noinetds > 600 ))
+        if (noinetds && ( Waiter::ds - noinetds > 600 ))
         {
             inetback = true;
         }
@@ -43,7 +43,7 @@ void HttpIO::inetstatus(bool up, dstime ds)
     }
     else if (!noinetds)
     {
-        noinetds = ds;
+        noinetds = Waiter::ds;
     }
 }
 

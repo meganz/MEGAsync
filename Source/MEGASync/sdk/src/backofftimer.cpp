@@ -19,6 +19,7 @@
  * program.
  */
 
+#include "mega/waiter.h"
 #include "mega/backofftimer.h"
 
 namespace mega {
@@ -34,32 +35,34 @@ void BackoffTimer::reset()
     delta = 1;
 }
 
-void BackoffTimer::backoff(dstime ds)
+void BackoffTimer::backoff()
 {
-    next = ds + delta;
+    next = Waiter::ds + delta;
+
     delta <<= 1;
+
     if (delta > 36000)
     {
         delta = 36000;
     }
 }
 
-void BackoffTimer::backoff(dstime ds, dstime newdelta)
+void BackoffTimer::backoff(dstime newdelta)
 {
-    next = ds + newdelta;
+    next = Waiter::ds + newdelta;
     delta = newdelta;
 }
 
-bool BackoffTimer::armed(dstime ds) const
+bool BackoffTimer::armed() const
 {
-    return !next || ds >= next;
+    return !next || Waiter::ds >= next;
 }
 
-bool BackoffTimer::arm(dstime ds)
+bool BackoffTimer::arm()
 {
-    if (next + delta > ds)
+    if (next + delta > Waiter::ds)
     {
-        next = ds;
+        next = Waiter::ds;
         delta = 1;
 
         return true;
@@ -68,17 +71,17 @@ bool BackoffTimer::arm(dstime ds)
     return false;
 }
 
-dstime BackoffTimer::retryin(dstime ds)
+dstime BackoffTimer::retryin()
 {
-    if (armed(ds))
+    if (armed())
     {
         return 0;
     }
 
-    return next - ds;
+    return next - Waiter::ds;
 }
 
-dstime BackoffTimer::backoff()
+dstime BackoffTimer::backoffdelta()
 {
     return delta;
 }
@@ -90,11 +93,11 @@ dstime BackoffTimer::nextset() const
 
 // event in the future: potentially updates waituntil
 // event in the past: zeros out waituntil and clears event
-void BackoffTimer::update(dstime ds, dstime* waituntil)
+void BackoffTimer::update(dstime* waituntil)
 {
     if (next)
     {
-        if (next <= ds)
+        if (next <= Waiter::ds)
         {
             *waituntil = 0;
             next = 1;
