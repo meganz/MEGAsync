@@ -29,8 +29,8 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     {
         MegaNode *child = children->get(i);
         if(!strcmp(utf8name.constData(), child->getName()) &&
-            ((info.isDir() && (child->getType()==FOLDERNODE)) ||
-            (info.isFile() && (child->getType()==FILENODE) && (info.size() == child->getSize()))))
+            ((info.isDir() && (child->getType()==MegaNode::TYPE_FOLDER)) ||
+            (info.isFile() && (child->getType()==MegaNode::TYPE_FILE) && (info.size() == child->getSize()))))
         {
             dupplicate = new MegaNode(child);
             break;
@@ -40,11 +40,11 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
 
     if(dupplicate)
     {
-        if(dupplicate->getType() == FILENODE)
+        if(dupplicate->getType() == MegaNode::TYPE_FILE)
         {
             emit dupplicateUpload(info.absoluteFilePath(), info.fileName(), dupplicate->getHandle());
         }
-        if(dupplicate->getType() == FOLDERNODE)
+        if(dupplicate->getType() == MegaNode::TYPE_FOLDER)
         {
             QDir dir(info.absoluteFilePath());
             QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);

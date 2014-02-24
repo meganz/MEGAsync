@@ -52,10 +52,10 @@ void UpdateTask::startUpdateThread()
     int len = strlen(Preferences::UPDATE_PUBLIC_KEY)/4*3+3;
     string pubks;
     pubks.resize(len);
-    pubks.resize(Base64::atob(Preferences::UPDATE_PUBLIC_KEY, (byte *)pubks.data(), len));
-    asymkey.setkey(AsymmCipher::PUBKEY,(byte*)pubks.data(), pubks.size());
+    pubks.resize(mega::Base64::atob(Preferences::UPDATE_PUBLIC_KEY, (byte *)pubks.data(), len));
+    asymkey.setkey(mega::AsymmCipher::PUBKEY,(byte*)pubks.data(), pubks.size());
 
-    signatureChecker = new HashSignature(new Hash());
+    signatureChecker = new mega::HashSignature(new mega::Hash());
     preferences = Preferences::instance();
 
     updateTimer->start(Preferences::UPDATE_INITIAL_DELAY_SECS*1000);
@@ -307,7 +307,7 @@ void UpdateTask::initSignature()
 
 bool UpdateTask::checkSignature(QString value)
 {
-    int l = Base64::atob(value.toAscii().constData(), (byte *)signature, sizeof(signature));
+    int l = mega::Base64::atob(value.toAscii().constData(), (byte *)signature, sizeof(signature));
     if(l != sizeof(signature))
     {
         LOG(QString::fromAscii("Invalid signature size: ") + QString::number(l));
@@ -333,9 +333,9 @@ bool UpdateTask::alreadyDownloaded(QString relativePath, QString fileSignature)
 
 bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
 {
-    HashSignature tmpHash(new Hash());
+    mega::HashSignature tmpHash(new mega::Hash());
     char tmpSignature[512];
-    if(Base64::atob(fileSignature.toAscii().constData(), (byte *)tmpSignature, sizeof(tmpSignature)) != sizeof(tmpSignature))
+    if(mega::Base64::atob(fileSignature.toAscii().constData(), (byte *)tmpSignature, sizeof(tmpSignature)) != sizeof(tmpSignature))
         return false;
 
     QFile file(absolutePath);

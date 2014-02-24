@@ -649,7 +649,7 @@ long long Preferences::getMegaFolderHandle(int num)
     if(num >= megaFolderHandles.size())
     {
         mutex.unlock();
-        return UNDEF;
+        return mega::UNDEF;
     }
     long long value = megaFolderHandles.at(num);
     mutex.unlock();

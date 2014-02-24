@@ -21,7 +21,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     this->app = app;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
-    selectedMegaFolderHandle = UNDEF;
+    selectedMegaFolderHandle = mega::UNDEF;
     ui->bNext->setFocus();
     delegateListener = new QTMegaRequestListener(megaApi, this);
 }
@@ -528,7 +528,7 @@ void SetupWizard::on_bFinalMegaFolder_clicked()
     MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
     if(node)
     {
-        const char *handle = MegaApi::getBase64Handle(node);
+        const char *handle = node->getBase64Handle();
         QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
         QDesktopServices::openUrl(QUrl(url));
         delete handle;

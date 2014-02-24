@@ -47,9 +47,9 @@ protected:
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;
-   AsymmCipher asymkey;
+   mega::AsymmCipher asymkey;
    QNetworkAccessManager *m_WebCtrl;
-   HashSignature *signatureChecker;
+   mega::HashSignature *signatureChecker;
    char signature[512];
    int updateVersion;
    int currentFile;

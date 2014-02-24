@@ -13,7 +13,7 @@ LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaReq
 		linkError.append(MegaError::API_ENOENT);
 	}
 
-	importParentFolder = UNDEF;
+    importParentFolder = mega::UNDEF;
 	currentIndex = 0;
 	remainingNodes = 0;
 	importSuccess = 0;
@@ -61,7 +61,7 @@ void LinkProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
         if(!request->getPublicNode())
             LOG("NULL");
 
-        if(e->getErrorCode() != API_OK)  linkNode[currentIndex] = NULL;
+        if(e->getErrorCode() != MegaError::API_OK)  linkNode[currentIndex] = NULL;
         else linkNode[currentIndex] = new MegaNode(request->getPublicNode());
 
 		linkError[currentIndex] = e->getErrorCode();
@@ -161,7 +161,7 @@ void LinkProcessor::importLinks(MegaNode *node)
     delete children;
 }
 
-handle LinkProcessor::getImportParentFolder()
+mega::handle LinkProcessor::getImportParentFolder()
 {
 	return importParentFolder;
 }

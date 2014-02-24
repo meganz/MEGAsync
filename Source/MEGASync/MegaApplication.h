@@ -93,7 +93,7 @@ public slots:
     void pauseSync();
     void resumeSync();
 	void importLinks();
-	void copyFileLink(handle fileHandle);
+    void copyFileLink(mega::handle fileHandle);
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
 	void showUploadDialog();
@@ -119,7 +119,7 @@ protected:
     void loggedIn();
     void startSyncs();
 	void stopSyncs();
-	void processUploadQueue(handle nodeHandle);
+    void processUploadQueue(mega::handle nodeHandle);
 
     QSystemTrayIcon *trayIcon;
     QMenu *initialMenu;
@@ -148,7 +148,7 @@ protected:
     long long lastStartedDownload;
     long long lastStartedUpload;
     int exportOps;
-    syncstate_t syncState;
+    mega::syncstate_t syncState;
 	QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;

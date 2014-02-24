@@ -92,8 +92,8 @@ protected:
     MegaApplication *app;
     Preferences *preferences;
     MegaApi *megaApi;
-    Transfer *transfer1;
-    Transfer *transfer2;
+    MegaTransfer *transfer1;
+    MegaTransfer *transfer2;
     m_off_t totalBytes;
     m_off_t usedBytes;
 };

@@ -38,7 +38,7 @@ void ExportProcessor::QTonRequestFinish(MegaApi *api, MegaRequest *request, Mega
 {
     currentIndex++;
     remainingNodes--;
-    if(e->getErrorCode() != API_OK)
+    if(e->getErrorCode() != MegaError::API_OK)
     {
         publicLinks.append(QString());
         importFailed++;
