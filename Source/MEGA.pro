@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync MEGAUpdater
+SUBDIRS += MEGASync MEGAUpdater MEGACrashAnalyzer
 
 win32 {
     SUBDIRS += MEGAShellExt
