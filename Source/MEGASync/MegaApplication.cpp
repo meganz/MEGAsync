@@ -211,8 +211,7 @@ void MegaApplication::initialize()
     }
 #endif
 
-    string tmpPath = basePath.toStdString();
-    megaApi = new MegaApi(&tmpPath);
+    megaApi = new MegaApi(basePath.toUtf8().constData());
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
@@ -513,13 +512,13 @@ void MegaApplication::stopSyncs()
 
 //This function is called to upload all files in the uploadQueue field
 //to the Mega node that is passed as parameter
-void MegaApplication::processUploadQueue(handle nodeHandle)
+void MegaApplication::processUploadQueue(mega::handle nodeHandle)
 {
     MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
     QStringList notUploaded;
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
-    if(!node || node->getType()==FILENODE)
+    if(!node || node->isFile())
 	{
 		uploadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The upload has been cancelled"));
@@ -891,7 +890,7 @@ void MegaApplication::importLinks()
 }
 
 //Called when the user wants to generate the public link for a node
-void MegaApplication::copyFileLink(handle fileHandle)
+void MegaApplication::copyFileLink(mega::handle fileHandle)
 {
     //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
@@ -950,7 +949,7 @@ void MegaApplication::showUploadDialog()
     if(uploadFolderSelector->result()==QDialog::Accepted)
 	{
         //If the dialog is accepted, get the destination node
-        handle nodeHandle = uploadFolderSelector->getSelectedHandle();
+        mega::handle nodeHandle = uploadFolderSelector->getSelectedHandle();
         if(uploadFolderSelector->isDefaultFolder())
             preferences->setUploadFolder(nodeHandle);
         processUploadQueue(nodeHandle);
@@ -1258,7 +1257,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 			break;
 
         //Account details retrieved, update the preferences and the information dialog
-        AccountDetails *details = request->getAccountDetails();
+        mega::AccountDetails *details = request->getAccountDetails();
         preferences->setAccountType(details->pro_level);
         preferences->setTotalStorage(details->storage_max);
         preferences->setUsedStorage(details->storage_used);
@@ -1507,7 +1506,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         localPath.clear();
         MegaNode *node = nodes->get(i);
 
-        if(node->isRemoved() && (node->getType()==FOLDERNODE))
+        if(node->isRemoved() && (node->getType()==MegaNode::TYPE_FOLDER))
         {
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
@@ -1525,7 +1524,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
         if(!node->getTag() && !node->isRemoved() && !node->isSyncDeleted() && ((lastExit/1000)<node->getCreationTime()))
             externalNodes++;
 
-        if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==FILENODE))
+        if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==MegaNode::TYPE_FILE))
         {
             //Get the associated local node
             LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->getName())).arg(node->getTag()));

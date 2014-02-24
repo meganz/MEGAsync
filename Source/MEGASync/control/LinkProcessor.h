@@ -23,7 +23,7 @@ public:
 	void requestLinkInfo();
 	void importLinks(QString nodePath);
     void importLinks(MegaNode *node);
-	handle getImportParentFolder();
+    mega::handle getImportParentFolder();
 
 	void downloadLinks(QString localPath);
 	void setSelected(int linkId, bool selected);
@@ -42,7 +42,7 @@ protected:
 	int remainingNodes;
 	int importSuccess;
 	int importFailed;
-	handle importParentFolder;
+    mega::handle importParentFolder;
 
 signals:
 	void onLinkInfoAvailable(int i);

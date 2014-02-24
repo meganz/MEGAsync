@@ -11,7 +11,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     ui->setupUi(this);
     this->megaApi = megaApi;
     folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
-    selectedFolder = UNDEF;
+    selectedFolder = mega::UNDEF;
     selectedItem = NULL;
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;
@@ -84,7 +84,7 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode
     for(int i=0; i<children->size(); i++)
     {
         MegaNode *node = children->get(i);
-        if(node->getType() == FOLDERNODE)
+        if(node->getType() == MegaNode::TYPE_FOLDER)
         {
             QTreeWidgetItem *item = new QTreeWidgetItem();
             item->setText(0, QString::fromUtf8(node->getName()));
@@ -117,7 +117,7 @@ void NodeSelector::on_bNewFolder_clicked()
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
-        if(!node || (node->getType()==FILENODE))
+        if(!node || (node->isFile()))
         {
             ui->tMegaFolders->setEnabled(false);
 			megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);

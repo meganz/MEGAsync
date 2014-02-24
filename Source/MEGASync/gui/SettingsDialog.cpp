@@ -797,7 +797,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
         if(node)
         {
-            const char *handle = MegaApi::getBase64Handle(node);
+            const char *handle = node->getBase64Handle();
             QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
             QDesktopServices::openUrl(QUrl(url));
             delete handle;

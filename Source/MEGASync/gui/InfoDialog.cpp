@@ -55,21 +55,21 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Initialize the "recently updated" list with stored values
     preferences = Preferences::instance();
-    if(preferences->getRecentFileHandle(0) != UNDEF)
+    if(preferences->getRecentFileHandle(0) != mega::UNDEF)
     {
         ui->wRecent1->setFile(preferences->getRecentFileName(0),
                           preferences->getRecentFileHandle(0),
                           preferences->getRecentLocalPath(0),
                           preferences->getRecentFileTime(0));
 
-        if(preferences->getRecentFileHandle(1) != UNDEF)
+        if(preferences->getRecentFileHandle(1) != mega::UNDEF)
         {
             ui->wRecent2->setFile(preferences->getRecentFileName(1),
                                   preferences->getRecentFileHandle(1),
                                   preferences->getRecentLocalPath(1),
                                   preferences->getRecentFileTime(1));
 
-            if(preferences->getRecentFileHandle(2) != UNDEF)
+            if(preferences->getRecentFileHandle(2) != mega::UNDEF)
             {
                 ui->wRecent3->setFile(preferences->getRecentFileName(2),
                                       preferences->getRecentFileHandle(2),
@@ -129,7 +129,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     if(type == MegaTransfer::TYPE_DOWNLOAD)
     {
         wTransfer = ui->wTransfer1;
-        transfer1 = transfer->getTransfer();
+        transfer1 = transfer->copy();
         if(!downloadStartTime)
         {
             downloadStartTime = QDateTime::currentMSecsSinceEpoch();
@@ -140,7 +140,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     else
     {
         wTransfer = ui->wTransfer2;
-        transfer2 = transfer->getTransfer();
+        transfer2 = transfer->copy();
         if(!uploadStartTime)
         {
             uploadStartTime = QDateTime::currentMSecsSinceEpoch();
@@ -150,7 +150,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     }
 
     wTransfer->setFileName(fileName);
-    wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer->getTransfer()));
+    wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer));
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
@@ -419,12 +419,12 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 
 void InfoDialog::cancelAllUploads()
 {
-    megaApi->cancelRegularTransfers(1);
+    megaApi->cancelTransfers(1);
 }
 
 void InfoDialog::cancelAllDownloads()
 {
-    megaApi->cancelRegularTransfers(0);
+    megaApi->cancelTransfers(0);
 }
 
 void InfoDialog::cancelCurrentUpload()

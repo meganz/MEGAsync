@@ -21,14 +21,14 @@ UploadToMegaDialog::~UploadToMegaDialog()
 
 void UploadToMegaDialog::initialize()
 {
-    selectedHandle = UNDEF;
+    selectedHandle = mega::UNDEF;
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
     ui->cDefaultPath->setChecked(false);
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
 }
 
-handle UploadToMegaDialog::getSelectedHandle()
+mega::handle UploadToMegaDialog::getSelectedHandle()
 {
 	return selectedHandle;
 }
@@ -88,7 +88,7 @@ void UploadToMegaDialog::changeEvent(QEvent *event)
 void UploadToMegaDialog::on_bOK_clicked()
 {
     MegaNode *node = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
-    if(node && node->getType()!=FILENODE)
+    if(node && node->isFolder())
     {
         selectedHandle = node->getHandle();
         delete node;

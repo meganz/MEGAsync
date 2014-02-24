@@ -102,7 +102,6 @@ protected:
 #endif
 
 using namespace std;
-using namespace mega;
 
 #ifdef WIN32
 
@@ -113,24 +112,29 @@ using namespace mega;
 #include "MegaProxySettings.h"
 
 
-class MegaHttpIO : public MegaApiWinHttpIO {};
-class MegaFileSystemAccess : public WinFileSystemAccess {};
-class MegaWaiter : public MegaApiWinWaiter {};
+class MegaHttpIO : public mega::MegaApiWinHttpIO {};
+class MegaFileSystemAccess : public mega::WinFileSystemAccess {};
+class MegaWaiter : public mega::MegaApiWinWaiter {};
 
 #else
 
+#ifdef __ANDROID__
+#include "android/megaapiandroidhttpio.h"
+#else
 #include "linux/megaapiposixhttpio.h"
+#endif
+
 #include "mega/posix/meganet.h"
 #include "mega/posix/megafs.h"
 #include "linux/megaapiwait.h"
 
-class MegaHttpIO : public MegaApiCurlHttpIO {};
-class MegaFileSystemAccess : public PosixFileSystemAccess {};
-class MegaWaiter : public MegaApiLinuxWaiter {};
+class MegaHttpIO : public mega::MegaApiCurlHttpIO {};
+class MegaFileSystemAccess : public mega::PosixFileSystemAccess {};
+class MegaWaiter : public mega::MegaApiLinuxWaiter {};
 
 #endif
 
-class MegaDbAccess : public SqliteDbAccess
+class MegaDbAccess : public mega::SqliteDbAccess
 {
 public:
     MegaDbAccess(string *basePath = NULL) : SqliteDbAccess(basePath){}
@@ -140,34 +144,51 @@ class MegaApi;
 class MegaNode
 {
     public:
-        MegaNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, handle nodehandle, string *nodekey, string *attrstring);
+
+		enum {
+			TYPE_UNKNOWN = -1,
+			TYPE_FILE = 0,
+			TYPE_FOLDER,
+			TYPE_ROOT,
+			TYPE_INCOMING,
+			TYPE_RUBBISH,
+			TYPE_MAIL
+		};
+
+        MegaNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, mega::handle nodehandle, string *nodekey, string *attrstring);
         MegaNode(MegaNode *node);
         ~MegaNode();
 
-        static MegaNode *fromNode(Node *node);
+        MegaNode *copy();
+        static MegaNode *fromNode(mega::Node *node);
 
         int getType();
         const char* getName();
+        const char *getBase64Handle();
         m_off_t getSize();
         time_t getCreationTime();
         time_t getModificationTime();
-        handle getHandle();
+        mega::handle getHandle();
         string* getNodeKey();
         string* getAttrString();
         int getTag();
+        bool isFile();
+        bool isFolder();
         bool isRemoved();
         bool isSyncDeleted();
         string getLocalPath();
+        bool hasThumbnail();
+        bool hasPreview();
 
     private:
-        MegaNode(Node *node);
+        MegaNode(mega::Node *node);
 
         int type;
         const char *name;
         m_off_t size;
         time_t ctime;
         time_t mtime;
-        handle nodehandle;
+        mega::handle nodehandle;
         string nodekey;
         string attrstring;
         string localPath;
@@ -175,30 +196,32 @@ class MegaNode
         int tag;
         bool removed;
         bool syncdeleted;
+        bool thumbnailAvailable;
+        bool previewAvailable;
 };
 
-struct MegaFile : public File
+struct MegaFile : public mega::File
 {
     // app-internal sequence number for queue management
     int seqno;
     static int nextseqno;
 
-    bool failed(error e);
+    bool failed(mega::error e);
     MegaFile();
 };
 
 struct MegaFileGet : public MegaFile
 {
-    void completed(Transfer*, LocalNode*);
-	MegaFileGet(MegaClient *client, Node* n, string dstPath);
-    MegaFileGet(MegaClient *client, MegaNode* n, string dstPath);
+    void completed(mega::Transfer*, mega::LocalNode*);
+	MegaFileGet(mega::MegaClient *client, mega::Node* n, string dstPath);
+    MegaFileGet(mega::MegaClient *client, MegaNode* n, string dstPath);
 	~MegaFileGet() {}
 };
 
 struct MegaFilePut : public MegaFile
 {
-    void completed(Transfer* t, LocalNode*);
-    MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser);
+    void completed(mega::Transfer* t, mega::LocalNode*);
+    MegaFilePut(mega::MegaClient *client, string* clocalname, mega::handle ch, const char* ctargetuser);
     ~MegaFilePut() {}
 };
 
@@ -266,7 +289,7 @@ class ArrayWrapper
 };
 
 typedef ArrayWrapper<MegaNode*> NodeList;
-typedef ArrayWrapper<User*> UserList;
+typedef ArrayWrapper<mega::User*> UserList;
 //typedef ArrayWrapper<AccountBalance> BalanceList;
 //typedef ArrayWrapper<AccountSession> SessionList;
 //typedef ArrayWrapper<AccountPurchase> PurchaseList;
@@ -308,9 +331,9 @@ class MegaRequest
 		const char* toString() const;
 		const char* __str__() const;
 
-		handle getNodeHandle() const;
+		mega::handle getNodeHandle() const;
 		const char* getLink() const;
-		handle getParentHandle() const;
+		mega::handle getParentHandle() const;
 		const char* getUserHandle() const;
 		const char* getName() const;
 		const char* getEmail() const;
@@ -325,9 +348,9 @@ class MegaRequest
         int getParamType() const;
         bool getFlag() const;
 
-		void setNodeHandle(handle nodeHandle);
+		void setNodeHandle(mega::handle nodeHandle);
 		void setLink(const char* link);
-		void setParentHandle(handle parentHandle);
+		void setParentHandle(mega::handle parentHandle);
 		void setUserHandle(const char* userHandle);
 		void setName(const char* name);
 		void setEmail(const char* email);
@@ -342,19 +365,19 @@ class MegaRequest
 		void setFile(const char* file);
         void setParamType(int type);
         void setFlag(bool flag);
-        void setTransfer(Transfer *transfer);
+        void setTransfer(mega::Transfer *transfer);
         void setListener(MegaRequestListener *listener);
 		MegaRequestListener *getListener() const;
-        Transfer * getTransfer() const;
-		AccountDetails * getAccountDetails() const;
+        mega::Transfer * getTransfer() const;
+		mega::AccountDetails * getAccountDetails() const;
 		int getNumDetails() const;
 
 	protected:
 		int type;
-		handle nodeHandle;
+		mega::handle nodeHandle;
 		const char* link;
 		const char* name;
-		handle parentHandle;
+		mega::handle parentHandle;
 		const char* userHandle;
 		const char* email;
 		const char* password;
@@ -366,8 +389,8 @@ class MegaRequest
         bool flag;
 
 		MegaRequestListener *listener;
-        Transfer *transfer;
-		AccountDetails *accountDetails;
+        mega::Transfer *transfer;
+		mega::AccountDetails *accountDetails;
 		int numDetails;
         MegaNode* publicNode;
 		int numRetry;
@@ -396,8 +419,8 @@ class MegaTransfer
 		long long getTotalBytes() const;
 		const char* getPath() const;
 		const char* getParentPath() const;
-		handle getNodeHandle() const;
-		handle getParentHandle() const;
+		mega::handle getNodeHandle() const;
+		mega::handle getParentHandle() const;
 		int getNumConnections() const;
 		long long getStartPos() const;
 		long long getEndPos() const;
@@ -409,7 +432,7 @@ class MegaTransfer
 		long long getTime() const;
 		const char* getBase64Key() const;
 		int getTag() const;
-        Transfer *getTransfer() const;
+        mega::Transfer *getTransfer() const;
 		long long getSpeed() const;
 		long long getDeltaSize() const;
 		long long getUpdateTime() const;
@@ -421,8 +444,8 @@ class MegaTransfer
 		void setTotalBytes(long long totalBytes);
 		void setPath(const char* path);
 		void setParentPath(const char* path);
-		void setNodeHandle(handle nodeHandle);
-		void setParentHandle(handle parentHandle);
+		void setNodeHandle(mega::handle nodeHandle);
+		void setParentHandle(mega::handle parentHandle);
 		void setNumConnections(int connections);
 		void setStartPos(long long startPos);
 		void setEndPos(long long endPos);
@@ -434,7 +457,7 @@ class MegaTransfer
 		void setSlot(int id);
 		void setBase64Key(const char* base64Key);
 		void setTag(int tag);
-        void setTransfer(Transfer *transfer);
+        void setTransfer(mega::Transfer *transfer);
 		void setSpeed(long long speed);
 		void setDeltaSize(long long deltaSize);
 		void setUpdateTime(long long updateTime);
@@ -453,8 +476,8 @@ class MegaTransfer
 		long long totalBytes;
 		long long speed;
 		long long deltaSize;
-		handle nodeHandle;
-		handle parentHandle;
+		mega::handle nodeHandle;
+		mega::handle parentHandle;
 		const char* path;
 		const char* parentPath;
 		const char* fileName;
@@ -468,7 +491,7 @@ class MegaTransfer
 		int retry;
 		int maxRetries;
 
-        Transfer *transfer;
+        mega::Transfer *transfer;
 
 		MegaTransferListener *listener;
 
@@ -514,7 +537,6 @@ class MegaError
 		MegaError* copy();
 		int getErrorCode() const;
 		const char* getErrorString() const;
-        QString QgetErrorString() const;
         const char* toString() const;
 		const char* __str__() const;
 
@@ -523,7 +545,12 @@ class MegaError
 		void setNextAttempt(long nextAttempt);
 
         static const char *getErrorString(int errorCode);
+        
+	#ifdef USE_QT
+        QString QgetErrorString() const;
         static QString QgetErrorString(int errorCode);
+	#endif
+	
 	protected:
         //< 0 = API error code, > 0 = http error, 0 = No error
 		int errorCode;
@@ -534,7 +561,7 @@ class MegaError
 class TreeProcessor
 {
 	public:
-	virtual int processNode(Node* node);
+	virtual int processNode(mega::Node* node);
 	virtual ~TreeProcessor();
 };
 
@@ -542,7 +569,7 @@ class SearchTreeProcessor : public TreeProcessor
 {
     public:
 	SearchTreeProcessor(const char *search);
-	virtual int processNode(Node* node);
+	virtual int processNode(mega::Node* node);
     virtual ~SearchTreeProcessor() {}
     vector<MegaNode *> &getResults();
 
@@ -556,7 +583,7 @@ class SizeProcessor : public TreeProcessor
     long long totalBytes;
 public:
     SizeProcessor();
-    virtual int processNode(Node* node);
+    virtual int processNode(mega::Node* node);
     long long getTotalBytes();
 };
 
@@ -591,8 +618,13 @@ class MegaGlobalListener
 {
 	public:
 	//Global callbacks
-	virtual void onUsersUpdate(MegaApi* api, UserList *users);
-	virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
+#ifdef __ANDROID__
+	virtual void onUsersUpdate(MegaApi* api);
+	virtual void onNodesUpdate(MegaApi* api);
+#else
+    virtual void onUsersUpdate(MegaApi* api, UserList *users);
+    virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
+#endif
 	virtual void onReloadNeeded(MegaApi* api);
 	virtual ~MegaGlobalListener();
 };
@@ -608,8 +640,13 @@ class MegaListener
 	virtual void onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);
 	virtual void onTransferUpdate(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e);
-	virtual void onUsersUpdate(MegaApi* api, UserList *users);
-	virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
+#ifdef __ANDROID__
+	virtual void onUsersUpdate(MegaApi* api);
+	virtual void onNodesUpdate(MegaApi* api);
+#else
+    virtual void onUsersUpdate(MegaApi* api, UserList *users);
+    virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
+#endif
 	virtual void onReloadNeeded(MegaApi* api);
     virtual void onSyncStateChanged(MegaApi *api);
 
@@ -722,7 +759,7 @@ class TransferQueue
 	}
 };
 
-class MegaApi : public MegaApp
+class MegaApi : public mega::MegaApp
 {
 
 public:
@@ -742,9 +779,9 @@ public:
     static bool nodeComparatorModificationDESC  (MegaNode *i, MegaNode *j);
     static bool nodeComparatorAlphabeticalASC  (MegaNode *i, MegaNode *j);
     static bool nodeComparatorAlphabeticalDESC  (MegaNode *i, MegaNode *j);
-	static bool userComparatorDefaultASC (User *i, User *j);
+	static bool userComparatorDefaultASC (mega::User *i, mega::User *j);
 
-    MegaApi(string *basePath = NULL);
+    MegaApi(const char *basePath = NULL);
 	virtual ~MegaApi();
 
 	//Multiple listener management.
@@ -761,7 +798,7 @@ public:
 	//Utils
 	const char* getBase64PwKey(const char *password);
 	const char* getStringHash(const char* base64pwkey, const char* inBuf);
-	static handle base64ToHandle(const char* base64Handle);
+	static mega::handle base64ToHandle(const char* base64Handle);
 	static const char* ebcEncryptKey(const char* encryptionKey, const char* plainKey);
 	void retryPendingConnections();
 
@@ -783,48 +820,40 @@ public:
     void copyNode(MegaNode* node, MegaNode *newParent, MegaRequestListener *listener = NULL);
     void renameNode(MegaNode* node, const char* newName, MegaRequestListener *listener = NULL);
     void remove(MegaNode* node, MegaRequestListener *listener = NULL);
-    void share(MegaNode *node, User* user, const char *level, MegaRequestListener *listener = NULL);
+    void share(MegaNode *node, mega::User* user, const char *level, MegaRequestListener *listener = NULL);
     void share(MegaNode* node, const char* email, const char *level, MegaRequestListener *listener = NULL);
 	void folderAccess(const char* megaFolderLink, MegaRequestListener *listener = NULL);
-	void importFileLink(const char* megaFileLink, Node* parent, MegaRequestListener *listener = NULL);
+	void importFileLink(const char* megaFileLink, MegaNode* parent, MegaRequestListener *listener = NULL);
     void importPublicNode(MegaNode *publicNode, MegaNode *parent, MegaRequestListener *listener = NULL);
 	void getPublicNode(const char* megaFileLink, MegaRequestListener *listener = NULL);
-    void exportNode(MegaNode *node, MegaRequestListener *listener = NULL);
+	void getThumbnail(MegaNode* node, char *dstFilePath, MegaRequestListener *listener = NULL);
+	void setThumbnail(MegaNode* node, char *srcFilePath, MegaRequestListener *listener = NULL);
+	void getPreview(MegaNode* node, char *dstFilePath, MegaRequestListener *listener = NULL);
+	void setPreview(MegaNode* node, char *srcFilePath, MegaRequestListener *listener = NULL);
+	void exportNode(MegaNode *node, MegaRequestListener *listener = NULL);
 	void fetchNodes(MegaRequestListener *listener = NULL);
 	void getAccountDetails(MegaRequestListener *listener = NULL);
-	void getAccountDetails(int storage, int transfer, int pro, int transactions, int purchases, int sessions, MegaRequestListener *listener = NULL);
 	void changePassword(const char *oldPassword, const char *newPassword, MegaRequestListener *listener = NULL);
-	void logout(MegaRequestListener *listener = NULL);
-    void getNodeAttribute(MegaNode* node, int type, char *dstFilePath, MegaRequestListener *listener = NULL);
-    void setNodeAttribute(MegaNode* node, int type, char *srcFilePath, MegaRequestListener *listener = NULL);
 	void addContact(const char* email, MegaRequestListener* listener=NULL);
+	void logout(MegaRequestListener *listener = NULL);
+
+	//Transfers
+    void startUpload(const char* localPath, MegaNode *parent, MegaTransferListener *listener=NULL);
+    void startUpload(const char* localPath, MegaNode* parent, const char* fileName, MegaTransferListener *listener = NULL);
+    void startDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
+    void startPublicDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
+    //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
+    bool isRegularTransfer(MegaTransfer *transfer);
+    void cancelTransfer(MegaTransfer *transfer, MegaRequestListener *listener=NULL);
+    void cancelTransfers(int direction, MegaRequestListener *listener=NULL);
     void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);
     void setUploadLimit(int bpslimit);
 
-	//Transfers (MegaTransfer returned in MegaError if MegaError.getErrorCode()==API_OK)
-    void startUpload(const char* localPath, MegaNode* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
-    void startUpload(const char* localPath, MegaNode *parent, MegaTransferListener *listener=NULL);
-    void startUpload(const char* localPath, MegaNode* parent, const char* fileName, MegaTransferListener *listener = NULL);
-    void startUpload(const char* localPath, MegaNode* parent, int maxSpeed, MegaTransferListener *listener = NULL);
-
-	void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
-    void startDownload(MegaNode* node, const char* localFolder, int connections=1, long startPos = 0, long endPos = 0, const char* base64key = NULL, MegaTransferListener *listener = NULL);
-    void startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
-    void startDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener);
-    void startPublicDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
-    //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
-
-    bool checkTransfer(Transfer *transfer);
-    void cancelTransfer(MegaTransfer *transfer, MegaRequestListener *listener=NULL);
-    void cancelTransfer(Transfer *t, MegaRequestListener *listener=NULL);
-    void cancelRegularTransfers(int direction, MegaRequestListener *listener=NULL);
-    bool isRegularTransfer(Transfer *transfer);
-    bool isRegularTransfer(MegaTransfer *transfer);
-
-    treestate_t syncPathState(string *path);
+    //Sync
+    mega::treestate_t syncPathState(string *path);
     MegaNode *getSyncedNode(string *path);
     void syncFolder(const char *localFolder, MegaNode *megaFolder);
-    void removeSync(handle nodehandle, MegaRequestListener *listener=NULL);
+    void removeSync(mega::handle nodehandle, MegaRequestListener *listener=NULL);
     int getNumActiveSyncs();
     void stopSyncs(MegaRequestListener *listener=NULL);
     int getNumPendingUploads();
@@ -843,23 +872,19 @@ public:
 
 	//Filesystem
     NodeList* getChildren(MegaNode *parent, int order=1);
-	Node* getChildNode(Node *parent, const char* name);
     MegaNode *getParentNode(MegaNode *node);
     const char* getNodePath(MegaNode *node);
     MegaNode *getNodeByPath(const char *path, MegaNode *n = NULL);
-    MegaNode *getNodeByHandle(handle handler);
+    MegaNode *getNodeByHandle(mega::handle handler);
     //UserList* getContacts();
     //User* getContact(const char* email);
-	NodeList *getInShares(User* user);
+	NodeList *getInShares(mega::User* user);
     //ShareList *getOutShares(Node *node);
-	const char *getAccess(Node* node);
-	bool processTree(Node* node, TreeProcessor* processor, bool recursive = 1);
-	NodeList* search(Node* node, const char* searchString, bool recursive = 1);
+	const char *getAccess(MegaNode* node);
     long long getSize(MegaNode *node);
-    static const char *getBase64Handle(MegaNode *node);
 
-	MegaError checkAccess(Node* node, const char *level);
-	MegaError checkMove(Node* node, Node* target);
+	MegaError checkAccess(MegaNode* node, const char *level);
+	MegaError checkMove(MegaNode* node, MegaNode* target);
 
     MegaNode *getRootNode();
     MegaNode* getInboxNode();
@@ -891,13 +916,13 @@ protected:
 	void fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError e);
 	void fireOnTransferUpdate(MegaApi *api, MegaTransfer *transfer);
 	void fireOnTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError e);
-	void fireOnUsersUpdate(MegaApi* api, UserList *users);
-	void fireOnNodesUpdate(MegaApi* api, NodeList *nodes);
+    void fireOnUsersUpdate(MegaApi* api, UserList *users);
+    void fireOnNodesUpdate(MegaApi* api, NodeList *nodes);
 	void fireOnReloadNeeded(MegaApi* api);
     void fireOnSyncStateChanged(MegaApi* api);
 
     DECLARE_THREAD(thread);
-	MegaClient *client;
+	mega::MegaClient *client;
     MegaHttpIO *httpio;
     MegaWaiter *waiter;
     MegaFileSystemAccess *fsAccess;
@@ -906,7 +931,7 @@ protected:
 	RequestQueue requestQueue;
 	TransferQueue transferQueue;
 	map<int, MegaRequest *> requestMap;
-    map<Transfer*, MegaTransfer *> transferMap;
+    map<mega::Transfer*, MegaTransfer *> transferMap;
     int pendingUploads;
     int pendingDownloads;
     int totalUploads;
@@ -932,104 +957,104 @@ protected:
 	int maxRetries;
 
     // a request-level error occurred
-    virtual void request_error(error);
+    virtual void request_error(mega::error);
 
     // login result
-	virtual void login_result(error);
+	virtual void login_result(mega::error);
 
     // ephemeral session creation/resumption result
-    virtual void ephemeral_result(error);
-    virtual void ephemeral_result(handle, const byte*);
+    virtual void ephemeral_result(mega::error);
+    virtual void ephemeral_result(mega::handle, const byte*);
 
     // account creation
-    virtual void sendsignuplink_result(error);
-    virtual void querysignuplink_result(error);
-    virtual void querysignuplink_result(handle, const char*, const char*, const byte*, const byte*, const byte*, size_t);
-    virtual void confirmsignuplink_result(error);
-    virtual void setkeypair_result(error);
+    virtual void sendsignuplink_result(mega::error);
+    virtual void querysignuplink_result(mega::error);
+    virtual void querysignuplink_result(mega::handle, const char*, const char*, const byte*, const byte*, const byte*, size_t);
+    virtual void confirmsignuplink_result(mega::error);
+    virtual void setkeypair_result(mega::error);
 
     // account credentials, properties and history
-    virtual void account_details(AccountDetails*,  bool, bool, bool, bool, bool, bool);
-	virtual void account_details(AccountDetails*, error);
+    virtual void account_details(mega::AccountDetails*,  bool, bool, bool, bool, bool, bool);
+	virtual void account_details(mega::AccountDetails*, mega::error);
 
-	virtual void setattr_result(handle, error);
-	virtual void rename_result(handle, error);
-	virtual void unlink_result(handle, error);
-	virtual void nodes_updated(Node**, int);
-	virtual void users_updated(User**, int);
+	virtual void setattr_result(mega::handle, mega::error);
+	virtual void rename_result(mega::handle, mega::error);
+	virtual void unlink_result(mega::handle, mega::error);
+	virtual void nodes_updated(mega::Node**, int);
+	virtual void users_updated(mega::User**, int);
 
     // password change result
-    virtual void changepw_result(error);
+    virtual void changepw_result(mega::error);
 
     // user attribute update notification
-    virtual void userattr_update(User*, int, const char*);
+    virtual void userattr_update(mega::User*, int, const char*);
 
 
-	virtual void fetchnodes_result(error);
-    virtual void putnodes_result(error, targettype_t, NewNode*);
+	virtual void fetchnodes_result(mega::error);
+    virtual void putnodes_result(mega::error, mega::targettype_t, mega::NewNode*);
 
     // share update result
-	virtual void share_result(error);
-	virtual void share_result(int, error);
+	virtual void share_result(mega::error);
+	virtual void share_result(int, mega::error);
 
     // file attribute fetch result
-	virtual void fa_complete(Node*, fatype, const char*, uint32_t);
-	virtual int fa_failed(handle, fatype, int);
+	virtual void fa_complete(mega::Node*, mega::fatype, const char*, uint32_t);
+	virtual int fa_failed(mega::handle, mega::fatype, int);
 
     // file attribute modification result
-	virtual void putfa_result(handle, fatype, error);
+	virtual void putfa_result(mega::handle, mega::fatype, mega::error);
 
     // purchase transactions
-    virtual void enumeratequotaitems_result(handle, unsigned, unsigned, unsigned, unsigned, unsigned, const char*) { }
-    virtual void enumeratequotaitems_result(error) { }
-    virtual void additem_result(error) { }
-    virtual void checkout_result(error) { }
+    virtual void enumeratequotaitems_result(mega::handle, unsigned, unsigned, unsigned, unsigned, unsigned, const char*) { }
+    virtual void enumeratequotaitems_result(mega::error) { }
+    virtual void additem_result(mega::error) { }
+    virtual void checkout_result(mega::error) { }
     virtual void checkout_result(const char*) { }
 
-	virtual void checkfile_result(handle h, error e);
-	virtual void checkfile_result(handle h, error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring);
+	virtual void checkfile_result(mega::handle h, mega::error e);
+	virtual void checkfile_result(mega::handle h, mega::error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring);
 
 	// user invites/attributes
-    virtual void invite_result(error);
-    virtual void putua_result(error);
-    virtual void getua_result(error);
+    virtual void invite_result(mega::error);
+    virtual void putua_result(mega::error);
+    virtual void getua_result(mega::error);
     virtual void getua_result(byte*, unsigned);
 
     // file node export result
-	virtual void exportnode_result(error);
-	virtual void exportnode_result(handle, handle);
+	virtual void exportnode_result(mega::error);
+	virtual void exportnode_result(mega::handle, mega::handle);
 
     // exported link access result
-	virtual void openfilelink_result(error);
-	virtual void openfilelink_result(handle, const byte*, m_off_t, string*, const char*, time_t, time_t, int);
+	virtual void openfilelink_result(mega::error);
+	virtual void openfilelink_result(mega::handle, const byte*, m_off_t, string*, const char*, time_t, time_t, int);
 
     // global transfer queue updates (separate signaling towards the queued objects)
-    virtual void transfer_added(Transfer*);
-    virtual void transfer_removed(Transfer*);
-    virtual void transfer_prepare(Transfer*);
-    virtual void transfer_failed(Transfer*, error error);
-    virtual void transfer_update(Transfer*);
-    virtual void transfer_limit(Transfer*);
-    virtual void transfer_complete(Transfer*);
+    virtual void transfer_added(mega::Transfer*);
+    virtual void transfer_removed(mega::Transfer*);
+    virtual void transfer_prepare(mega::Transfer*);
+    virtual void transfer_failed(mega::Transfer*, mega::error error);
+    virtual void transfer_update(mega::Transfer*);
+    virtual void transfer_limit(mega::Transfer*);
+    virtual void transfer_complete(mega::Transfer*);
 
 	// sync status updates and events
-    virtual void syncupdate_state(Sync*, syncstate_t);
+    virtual void syncupdate_state(mega::Sync*, mega::syncstate_t);
     virtual void syncupdate_scanning(bool scanning);
 	virtual void syncupdate_stuck(string*);
-	virtual void syncupdate_local_folder_addition(Sync*, const char*);
-	virtual void syncupdate_local_folder_deletion(Sync*, const char*);
-	virtual void syncupdate_local_file_addition(Sync*, const char*);
-	virtual void syncupdate_local_file_deletion(Sync*, const char*);
-	virtual void syncupdate_get(Sync*, const char*);
-	virtual void syncupdate_put(Sync*, const char*);
-	virtual void syncupdate_remote_file_addition(Node*);
-	virtual void syncupdate_remote_file_deletion(Node*);
-	virtual void syncupdate_remote_folder_addition(Node*);
-	virtual void syncupdate_remote_folder_deletion(Node*);
-	virtual void syncupdate_remote_copy(Sync*, const char*);
+	virtual void syncupdate_local_folder_addition(mega::Sync*, const char*);
+	virtual void syncupdate_local_folder_deletion(mega::Sync*, const char*);
+	virtual void syncupdate_local_file_addition(mega::Sync*, const char*);
+	virtual void syncupdate_local_file_deletion(mega::Sync*, const char*);
+	virtual void syncupdate_get(mega::Sync*, const char*);
+	virtual void syncupdate_put(mega::Sync*, const char*);
+	virtual void syncupdate_remote_file_addition(mega::Node*);
+	virtual void syncupdate_remote_file_deletion(mega::Node*);
+	virtual void syncupdate_remote_folder_addition(mega::Node*);
+	virtual void syncupdate_remote_folder_deletion(mega::Node*);
+	virtual void syncupdate_remote_copy(mega::Sync*, const char*);
 	virtual void syncupdate_remote_move(string*, string*);
-    virtual void syncupdate_treestate(LocalNode*);
-	virtual bool sync_syncable(Node*);
+    virtual void syncupdate_treestate(mega::LocalNode*);
+	virtual bool sync_syncable(mega::Node*);
     virtual bool sync_syncable(const char*name, string*, string*);
     virtual void syncupdate_local_lockretry(bool);
 
@@ -1050,6 +1075,22 @@ protected:
 	void sendPendingTransfers();
     bool is_syncable(const char* name);
 	char *stringToArray(string &buffer);
+
+	//Pending
+	mega::Node* getChildNode(mega::Node *parent, const char* name);
+	bool processTree(mega::Node* node, TreeProcessor* processor, bool recursive = 1);
+	NodeList* search(mega::Node* node, const char* searchString, bool recursive = 1);
+	void getAccountDetails(int storage, int transfer, int pro, int transactions, int purchases, int sessions, MegaRequestListener *listener = NULL);
+    void getNodeAttribute(MegaNode* node, int type, char *dstFilePath, MegaRequestListener *listener = NULL);
+    void setNodeAttribute(MegaNode* node, int type, char *srcFilePath, MegaRequestListener *listener = NULL);
+    void startUpload(const char* localPath, MegaNode* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
+    void startUpload(const char* localPath, MegaNode* parent, int maxSpeed, MegaTransferListener *listener = NULL);
+	void startDownload(mega::handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
+    void startDownload(MegaNode* node, const char* localFolder, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
+    void startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
+    bool checkTransfer(mega::Transfer *transfer);
+    void cancelTransfer(mega::Transfer *t, MegaRequestListener *listener=NULL);
+    bool isRegularTransfer(mega::Transfer *transfer);
 };
 
 

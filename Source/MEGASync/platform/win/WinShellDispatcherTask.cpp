@@ -434,7 +434,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         case L'P':
         {
             if(lstrlen(pipe->chRequest)<3) break;
-            treestate_t state;
+            mega::treestate_t state;
             QString temp = QString::fromWCharArray(content);
             if(temp.startsWith(QString::fromAscii("\\\\?\\")))
                 temp = temp.mid(4);
@@ -457,19 +457,19 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             switch(state)
             {
-                case TREESTATE_SYNCED:
+                case mega::TREESTATE_SYNCED:
                     //cout << "Synced: " << lastPath.toStdString() << endl;
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
-                 case TREESTATE_SYNCING:
+                 case mega::TREESTATE_SYNCING:
                      //cout << "Syncing: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
-                case TREESTATE_PENDING:
+                case mega::TREESTATE_PENDING:
                      //cout << "Pending: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
-                 case TREESTATE_NONE:
+                 case mega::TREESTATE_NONE:
                  default:
                      //cout << "Not found: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );

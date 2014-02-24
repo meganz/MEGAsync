@@ -7,7 +7,7 @@ FolderBinder::FolderBinder(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FolderBinder)
 {
-    selectedMegaFolderHandle = UNDEF;
+    selectedMegaFolderHandle = mega::UNDEF;
     ui->setupUi(this);
     app = (MegaApplication *)qApp;
     megaApi = app->getMegaApi();
