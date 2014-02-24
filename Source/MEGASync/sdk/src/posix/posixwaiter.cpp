@@ -38,6 +38,8 @@ int clock_gettime(int, struct timespec* t)
 #endif
 
 namespace mega {
+dstime Waiter::ds;
+
 void PosixWaiter::init(dstime ds)
 {
     Waiter::init(ds);
