@@ -62,6 +62,7 @@
 #include <rpc.h>
 #include <sstream>
 #include <QApplication>
+#include <QStringList>
 
 #pragma warning(push)
 // Disable exception handler warnings.

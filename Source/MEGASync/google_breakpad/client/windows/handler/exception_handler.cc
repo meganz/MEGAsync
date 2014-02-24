@@ -920,8 +920,10 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   std::ostringstream oss;
   oss << "MEGAprivate ERROR DUMP\n";
   int frame_number=0;
-  oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-  oss << "Version code: " << QApplication::applicationVersion().toStdString() << "\n";
+
+  QStringList appData = QApplication::applicationName().split(QString::fromAscii(" "));
+  oss << "Application: " << appData[0].toStdString() << "\n";
+  oss << "Version: " << appData[1].toStdString() << "\n";
 
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
