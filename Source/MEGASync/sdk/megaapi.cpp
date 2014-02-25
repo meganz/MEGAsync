@@ -750,7 +750,7 @@ void MegaTransfer::setUpdateTime(long long updateTime) { this->updateTime = upda
 
 void MegaTransfer::setPublicNode(MegaNode *publicNode)
 {
-    if(this->publicNode) delete publicNode;
+    if(this->publicNode) delete this->publicNode;
     if(!publicNode) this->publicNode = NULL;
     else this->publicNode = new MegaNode(publicNode);
 }
@@ -1582,8 +1582,12 @@ void MegaApi::startPublicDownload(MegaNode* node, const char* localFolder, MegaT
         transfer->setParentPath(path.data());
     }
 
-    transfer->setNodeHandle(node->getHandle());
-    transfer->setPublicNode(node);
+    if(node)
+    {
+        transfer->setNodeHandle(node->getHandle());
+        transfer->setPublicNode(node);
+    }
+
 	transferQueue.push(transfer);
     waiter->notify();
 }
