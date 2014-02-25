@@ -64,7 +64,22 @@ void FolderBinder::on_bMegaFolder_clicked()
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    if(!selectedFolder)
+    {
+        selectedMegaFolderHandle = mega::UNDEF;
+        delete nodeSelector;
+        return;
+    }
+
     const char *fPath = megaApi->getNodePath(selectedFolder);
+    if(!fPath)
+    {
+        selectedMegaFolderHandle = mega::UNDEF;
+        delete nodeSelector;
+        delete selectedFolder;
+        return;
+    }
+
     ui->eMegaFolder->setText(QString::fromUtf8(fPath));
     delete nodeSelector;
     delete selectedFolder;

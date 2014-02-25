@@ -484,7 +484,20 @@ void SetupWizard::on_bMegaFolder_clicked()
 
     selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    if(!node)
+    {
+        delete nodeSelector;
+        return;
+    }
+
     const char *nPath = megaApi->getNodePath(node);
+    if(!nPath)
+    {
+        delete nodeSelector;
+        delete node;
+        return;
+    }
+
     ui->eMegaFolder->setText(QString::fromUtf8(nPath));
     delete nodeSelector;
     delete nPath;

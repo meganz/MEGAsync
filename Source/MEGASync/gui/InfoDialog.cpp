@@ -390,6 +390,12 @@ void InfoDialog::addSync()
     }
 
    const char *nPath = megaApi->getNodePath(node);
+   if(!nPath)
+   {
+       delete node;
+       return;
+   }
+
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
    delete nPath;
    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);

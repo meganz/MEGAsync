@@ -59,10 +59,26 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	ui->eLocalFolder->setText(defaultFolderPath);
 
     MegaNode *testNode = megaApi->getNodeByHandle(preferences->importFolder());
-    const char *tPath = megaApi->getNodePath(testNode);
-    if(testNode) ui->eMegaFolder->setText(QString::fromUtf8(tPath));
-    else ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-    delete tPath;
+    if(testNode)
+    {
+        const char *tPath = megaApi->getNodePath(testNode);
+        if(tPath)
+        {
+            ui->eMegaFolder->setText(QString::fromUtf8(tPath));
+            delete tPath;
+        }
+        else
+        {
+            delete testNode;
+            testNode = NULL;
+            ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
+        }
+    }
+    else
+    {
+        ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
+    }
+
     MegaNode *p = testNode;
     while(p)
     {
@@ -207,7 +223,20 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    if(!selectedFolder)
+    {
+        delete nodeSelector;
+        return;
+    }
+
     const char *fPath = megaApi->getNodePath(selectedFolder);
+    if(!fPath)
+    {
+        delete nodeSelector;
+        delete selectedFolder;
+        return;
+    }
+
     ui->eMegaFolder->setText(QString::fromUtf8(fPath));
     delete nodeSelector;
     delete selectedFolder;

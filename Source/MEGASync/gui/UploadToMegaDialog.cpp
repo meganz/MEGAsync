@@ -69,7 +69,20 @@ void UploadToMegaDialog::on_bChange_clicked()
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    if(!node)
+    {
+        delete nodeSelector;
+        return;
+    }
+
     const char *nPath = megaApi->getNodePath(node);
+    if(!nPath)
+    {
+        delete nodeSelector;
+        delete node;
+        return;
+    }
+
     ui->eFolderPath->setText(QString::fromUtf8(nPath));
     delete nodeSelector;
     delete nPath;
@@ -95,7 +108,7 @@ void UploadToMegaDialog::on_bOK_clicked()
         accept();
         return;
     }
-
+    delete node;
     if(!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
     {
         ui->bChange->setEnabled(false);
@@ -103,12 +116,10 @@ void UploadToMegaDialog::on_bOK_clicked()
         MegaNode *rootNode = megaApi->getRootNode();
         megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
         delete rootNode;
-        delete node;
         return;
     }
 
     LOG("ERROR: FOLDER NOT FOUND");
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
-    delete node;
     return;
 }

@@ -55,15 +55,18 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 	if(e->getErrorCode() == MegaError::API_OK)
 	{
         MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
-		QTreeWidgetItem *item = new QTreeWidgetItem();
-        item->setText(0, QString::fromUtf8(node->getName()));
-		item->setIcon(0, folderIcon);
-        item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
-		selectedItem->addChild(item);
-		selectedItem->sortChildren(0,  Qt::AscendingOrder);
-		ui->tMegaFolders->setCurrentItem(item);
-		ui->tMegaFolders->update();
-        delete node;
+        if(node)
+        {
+            QTreeWidgetItem *item = new QTreeWidgetItem();
+            item->setText(0, QString::fromUtf8(node->getName()));
+            item->setIcon(0, folderIcon);
+            item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
+            selectedItem->addChild(item);
+            selectedItem->sortChildren(0,  Qt::AscendingOrder);
+            ui->tMegaFolders->setCurrentItem(item);
+            ui->tMegaFolders->update();
+            delete node;
+        }
 	}
     ui->tMegaFolders->setEnabled(true);
 }

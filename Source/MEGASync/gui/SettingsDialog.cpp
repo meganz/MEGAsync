@@ -382,8 +382,15 @@ void SettingsDialog::loadSettings()
         else
         {
             const char *nPath = megaApi->getNodePath(node);
-            ui->eUploadFolder->setText(QString::fromUtf8(nPath));
-            delete nPath;
+            if(!nPath)
+            {
+                ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+            }
+            else
+            {
+                ui->eUploadFolder->setText(QString::fromUtf8(nPath));
+                delete nPath;
+            }
         }
         delete node;
 
@@ -754,6 +761,12 @@ void SettingsDialog::on_bAdd_clicked()
    localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
    QTableWidgetItem *megaFolder = new QTableWidgetItem();
    const char *nPath = megaApi->getNodePath(node);
+   if(!nPath)
+   {
+       delete node;
+       return;
+   }
+
    megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(nPath) + QString::fromAscii("  "));
    int pos = ui->tSyncs->rowCount();
    ui->tSyncs->setRowCount(pos+1);
@@ -819,7 +832,20 @@ void SettingsDialog::on_bUploadFolder_clicked()
 
     mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    if(!node)
+    {
+        delete nodeSelector;
+        return;
+    }
+
     const char *nPath = megaApi->getNodePath(node);
+    if(!nPath)
+    {
+        delete nodeSelector;
+        delete node;
+        return;
+    }
+
     QString newPath = QString::fromUtf8(nPath);
     delete nodeSelector;
     delete nPath;
