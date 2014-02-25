@@ -14,12 +14,16 @@ UpdateTask::UpdateTask(QObject *parent) :
     forceInstall = false;
     running = false;
     forceCheck = false;
+    updateTimer = NULL;
+    timeoutTimer = NULL;
 }
 
 UpdateTask::~UpdateTask()
 {
     delete m_WebCtrl;
     delete signatureChecker;
+    delete updateTimer;
+    delete timeoutTimer;
 }
 
 void UpdateTask::installUpdate()
@@ -39,8 +43,11 @@ void UpdateTask::startUpdateThread()
     if(m_WebCtrl) return;
 
     updateTimer = new QTimer();
-    updateTimer->setSingleShot(true);
+    updateTimer->setSingleShot(false);
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(tryUpdate()));
+    timeoutTimer = new QTimer();
+    timeoutTimer->setSingleShot(true);
+    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
     QString basePath = MegaApplication::applicationDirPath() + QDir::separator();
     appFolder = QDir(basePath);
@@ -67,9 +74,19 @@ void UpdateTask::tryUpdate()
     if(running) return;
 
     running = true;
-    updateTimer->stop();
     initialCleanup();
     downloadFile(Preferences::UPDATE_CHECK_URL);
+}
+
+void UpdateTask::onTimeout()
+{
+    timeoutTimer->stop();
+    delete m_WebCtrl;
+    m_WebCtrl = new QNetworkAccessManager();
+    connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
+    connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
+
+    postponeUpdate();
 }
 
 void UpdateTask::initialCleanup()
@@ -108,7 +125,6 @@ void UpdateTask::postponeUpdate()
     else
         emit updateNotFound(forceCheck);
 
-    updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     forceInstall = false;
     running = false;
     forceCheck = false;
@@ -118,7 +134,10 @@ void UpdateTask::downloadFile(QString url)
 {
     LOG(QString::fromAscii("downloadFile ") + url);
     QNetworkRequest request(url);
+    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                         QVariant( int(QNetworkRequest::AlwaysNetwork)));
     m_WebCtrl->get(request);
+    timeoutTimer->start(Preferences::UPDATE_TIMEOUT_SECS*1000);
 }
 
 QString UpdateTask::readNextLine(QNetworkReply *reply)
@@ -351,6 +370,7 @@ bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
 
 void UpdateTask::downloadFinished(QNetworkReply *reply)
 {
+    timeoutTimer->stop();
     reply->deleteLater();
 
     //Check if the request has been successful
@@ -415,7 +435,6 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
         emit updateAvailable(forceCheck);
         preferences->setLastUpdateTime(QDateTime::currentMSecsSinceEpoch());
         preferences->setLastUpdateVersion(updateVersion);
-        updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     }
     forceInstall = false;
     forceCheck = false;
