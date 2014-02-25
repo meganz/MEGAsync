@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1007;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.7");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.7a");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -220,6 +220,8 @@ void MegaApplication::initialize()
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
+    //TODO: Remove this, only for test installer 1.0.7a
+    preferences->setCrashed(false);
     if(preferences->isCrashed())
     {
         preferences->setCrashed(false);
@@ -1245,15 +1247,22 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
-                //If we have got the filesystem, start the app
-                loggedIn();
+                if(megaApi->getRootNode())
+                {
+                    //If we have got the filesystem, start the app
+                    loggedIn();
+                }
+                else
+                {
+                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                               "Please contact bug@mega.co.nz"), QMessageBox::Ok);
+                    unlink();
+                }
 			}
             else
             {
-                //Problem fetching nodes.
-                //This shouldn't happen -> logout
                 LOG("Error fetching nodes");
-                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem"), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), e->QgetErrorString(), QMessageBox::Ok);
                 unlink();
             }
 		}
