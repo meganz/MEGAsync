@@ -89,10 +89,22 @@ void BindFolderDialog::on_bOK_clicked()
         if(n)
         {
             const char *cPath = megaApi->getNodePath(node);
+            if(!cPath)
+            {
+                delete n;
+                continue;
+            }
+
             QString megaPath = QString::fromUtf8(cPath);
             delete cPath;
 
             const char *nPath = megaApi->getNodePath(n);
+            if(!nPath)
+            {
+                delete n;
+                continue;
+            }
+
             QString p = QString::fromUtf8(nPath);
             delete nPath;
 
