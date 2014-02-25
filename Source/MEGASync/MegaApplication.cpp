@@ -398,15 +398,14 @@ void MegaApplication::start()
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
 
     if(updated)
-    {
         showInfoMessage(tr("MEGAsync has been updated"));
-        updated = false;
-    }
+
     applyProxySettings();
 
     //Start the initial setup wizard if needed
     if(!preferences->logged())
     {
+        updated = false;
         setupWizard = new SetupWizard(this);
 		setupWizard->exec();
         if(!preferences->logged())
@@ -454,7 +453,7 @@ void MegaApplication::loggedIn()
     //Show the tray icon
     createTrayIcon();
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
-    else showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
+    else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     infoDialog = new InfoDialog(this);
