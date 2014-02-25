@@ -45,6 +45,7 @@ typedef int64_t m_off_t;
 
 #define INIT_RECURSIVE_MUTEX(mutex)                             \
 {                                                               \
+    mutex = new pthread_mutex_t;                                \
     pthread_mutexattr_t attr;                                   \
     pthread_mutexattr_init(&attr);                              \
     pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);  \

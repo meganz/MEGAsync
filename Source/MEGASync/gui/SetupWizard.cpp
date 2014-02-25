@@ -117,37 +117,54 @@ void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError 
 		}
         case MegaRequest::TYPE_FETCH_NODES:
 		{
-            QString email = ui->eLoginEmail->text().toLower().trimmed();
-            if(preferences->hasEmail(email))
+            if(error->getErrorCode() != MegaError::API_OK)
             {
-                int proxyType = preferences->proxyType();
-                QString proxyServer = preferences->proxyServer();
-                int proxyPort = preferences->proxyPort();
-                int proxyProtocol = preferences->proxyProtocol();
-                bool proxyAuth = preferences->proxyRequiresAuth();
-                QString proxyUsername = preferences->getProxyUsername();
-                QString proxyPassword = preferences->getProxyPassword();
-
-                QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
-                QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
-                preferences->setEmail(email);
-                preferences->setCredentials(emailHash, privatePw);
-
-                preferences->setProxyType(proxyType);
-                preferences->setProxyServer(proxyServer);
-                preferences->setProxyPort(proxyPort);
-                preferences->setProxyProtocol(proxyProtocol);
-                preferences->setProxyRequiresAuth(proxyAuth);
-                preferences->setProxyUsername(proxyUsername);
-                preferences->setProxyPassword(proxyPassword);
-
-                close();
-                return;
+                ui->bBack->setEnabled(true);
+                ui->bNext->setEnabled(true);
+                ui->sPages->setCurrentWidget(ui->pLogin);
+                QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
             }
+            else if(megaApi->getRootNode() == NULL)
+            {
+                ui->bBack->setEnabled(true);
+                ui->bNext->setEnabled(true);
+                ui->sPages->setCurrentWidget(ui->pLogin);
+                QMessageBox::warning(this, tr("Error"), tr("Unable to get the filesystem"), QMessageBox::Ok);
+            }
+            else
+            {
+                QString email = ui->eLoginEmail->text().toLower().trimmed();
+                if(preferences->hasEmail(email))
+                {
+                    int proxyType = preferences->proxyType();
+                    QString proxyServer = preferences->proxyServer();
+                    int proxyPort = preferences->proxyPort();
+                    int proxyProtocol = preferences->proxyProtocol();
+                    bool proxyAuth = preferences->proxyRequiresAuth();
+                    QString proxyUsername = preferences->getProxyUsername();
+                    QString proxyPassword = preferences->getProxyPassword();
 
-			ui->bBack->setEnabled(true);
-			ui->bNext->setEnabled(true);
-			ui->sPages->setCurrentWidget(ui->pSetupType);
+                    QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
+                    QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
+                    preferences->setEmail(email);
+                    preferences->setCredentials(emailHash, privatePw);
+
+                    preferences->setProxyType(proxyType);
+                    preferences->setProxyServer(proxyServer);
+                    preferences->setProxyPort(proxyPort);
+                    preferences->setProxyProtocol(proxyProtocol);
+                    preferences->setProxyRequiresAuth(proxyAuth);
+                    preferences->setProxyUsername(proxyUsername);
+                    preferences->setProxyPassword(proxyPassword);
+
+                    close();
+                    return;
+                }
+
+                ui->bBack->setEnabled(true);
+                ui->bNext->setEnabled(true);
+                ui->sPages->setCurrentWidget(ui->pSetupType);
+            }
 
 			break;
 		}
