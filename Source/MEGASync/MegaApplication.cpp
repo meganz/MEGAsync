@@ -1238,13 +1238,15 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
 			{
                 //If we have got the filesystem, start the app
                 loggedIn();
-                break;
 			}
-
-            //Problem fetching nodes.
-            //This shouldn't happen -> logout
-            LOG("Error fetching nodes");
-            unlink();
+            else
+            {
+                //Problem fetching nodes.
+                //This shouldn't happen -> logout
+                LOG("Error fetching nodes");
+                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem"), QMessageBox::Ok);
+                unlink();
+            }
 		}
 
 		break;
