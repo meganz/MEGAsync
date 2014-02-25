@@ -27,6 +27,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include "MegaApplication.h"
 #include <ObjBase.h>
 #include <Psapi.h>
 
@@ -921,9 +922,8 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   oss << "MEGAprivate ERROR DUMP\n";
   int frame_number=0;
 
-  QStringList appData = QApplication::applicationName().split(QString::fromAscii(" "));
-  oss << "Application: " << appData[0].toStdString() << "\n";
-  oss << "Version: " << appData[1].toStdString() << "\n";
+  oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
+  oss << "Version code: " << QString::number(MegaApplication::VERSION_CODE).toStdString() << "\n";
 
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];

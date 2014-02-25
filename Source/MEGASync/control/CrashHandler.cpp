@@ -182,12 +182,11 @@ QStringList CrashHandler::getPendingCrashReports()
         QString crashReport = QString::fromUtf8(file.readAll());
         file.close();
 
-        QStringList appData = QApplication::applicationName().split(QString::fromAscii(" "));
         QStringList lines = crashReport.split(QString::fromAscii("\n"));
         if((lines.size()<3) ||
          (lines.at(0) != QString::fromAscii("MEGAprivate ERROR DUMP")) ||
-                (!lines.at(1).startsWith(QString::fromAscii("Application: ") + appData[0])) ||
-                (!lines.at(2).startsWith(QString::fromAscii("Version: ") + appData[1])))
+                (!lines.at(1).startsWith(QString::fromAscii("Application: ") + QApplication::applicationName())) ||
+                (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(MegaApplication::VERSION_CODE))))
         {
             LOG(QString::fromAscii("Invalid or outdated dump file: ") + file.fileName());
             LOG(crashReport);

@@ -120,7 +120,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
-    setApplicationName(QString::fromAscii("MEGAsync ") + MegaApplication::VERSION_STRING);
+    setApplicationName(QString::fromAscii("MEGAsync"));
     setApplicationVersion(QString::number(VERSION_CODE));
     appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
     appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
@@ -310,12 +310,12 @@ void MegaApplication::updateTrayIcon()
     {
         LOG("STATE: Logging in...");
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Logging in"));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     }
     else if(paused)
     {
         LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
-        QString tooltip = QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Paused");
+        QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
         if(!updateAction)
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
@@ -348,9 +348,9 @@ void MegaApplication::updateTrayIcon()
         }
 
         QString tooltip;
-        if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Scanning");
-        else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Waiting");
-        else tooltip = QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Syncing");
+        if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
+        else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
+        else tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing");
 
         if(!updateAction)
         {
@@ -371,13 +371,13 @@ void MegaApplication::updateTrayIcon()
         if(!updateAction)
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Up to date"));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
         }
         else
         {
             //TODO: Change icon
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Update available!"));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
         }
 
         if(reboot)
@@ -392,7 +392,7 @@ void MegaApplication::start()
 
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
     trayIcon->setContextMenu(initialMenu);
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii("\n") + tr("Logging in"));
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
     if(!preferences->lastExecutionTime())
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
