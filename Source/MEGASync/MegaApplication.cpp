@@ -163,6 +163,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateAction = NULL;
     pasteMegaLinksDialog = NULL;
     updateBlocked = false;
+    updateThread = NULL;
+    updateTask = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -629,10 +631,9 @@ void MegaApplication::cleanAll()
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
-    if(pasteMegaLinksDialog)
-        delete pasteMegaLinksDialog;
 
     delete uploader;
+    delete pasteMegaLinksDialog;
     delete uploadFolderSelector;
     delete delegateListener;
     delete megaApi;
@@ -715,28 +716,37 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
-    if(!updateThread.isRunning() && preferences->canUpdate())
+    if(!updateThread && preferences->canUpdate())
     {
-        updateTask.moveToThread(&updateThread);
+        updateThread = new QThread();
+        updateTask = new UpdateTask();
+        updateTask->moveToThread(updateThread);
 
-        connect(this, SIGNAL(startUpdaterThread()), &updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);
-        connect(this, SIGNAL(tryUpdate()), &updateTask, SLOT(checkForUpdates()), Qt::UniqueConnection);
-        connect(this, SIGNAL(installUpdate()), &updateTask, SLOT(installUpdate()), Qt::UniqueConnection);
+        connect(this, SIGNAL(startUpdaterThread()), updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);
+        connect(this, SIGNAL(tryUpdate()), updateTask, SLOT(checkForUpdates()), Qt::UniqueConnection);
+        connect(this, SIGNAL(installUpdate()), updateTask, SLOT(installUpdate()), Qt::UniqueConnection);
 
-        connect(&updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
-        connect(&updateTask, SIGNAL(updateAvailable(bool)), this, SLOT(onUpdateAvailable(bool)), Qt::UniqueConnection);
-        connect(&updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
-        connect(&updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(updateAvailable(bool)), this, SLOT(onUpdateAvailable(bool)), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
 
-        updateThread.start();
+        connect(updateThread, SIGNAL(finished()), updateTask, SLOT(deleteLater()), Qt::UniqueConnection);
+        connect(updateThread, SIGNAL(finished()), updateThread, SLOT(deleteLater()), Qt::UniqueConnection);
+
+        updateThread->start();
         emit startUpdaterThread();
     }
 }
 
 void MegaApplication::stopUpdateTask()
 {
-    if(updateThread.isRunning())
-        updateThread.quit();
+    if(updateThread)
+    {
+        updateThread->quit();
+        updateThread = NULL;
+        updateTask = NULL;
+    }
 }
 
 void MegaApplication::applyProxySettings()

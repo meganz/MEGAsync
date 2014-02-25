@@ -160,8 +160,8 @@ protected:
     static QString appPath;
     static QString appDirPath;
 
-    QThread updateThread;
-    UpdateTask updateTask;
+    QThread *updateThread;
+    UpdateTask *updateTask;
 
     bool reboot;
     bool syncActive;

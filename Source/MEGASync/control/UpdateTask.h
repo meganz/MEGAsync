@@ -57,6 +57,7 @@ protected:
    QDir backupFolder;
    QDir appFolder;
    QTimer *updateTimer;
+   QTimer *timeoutTimer;
    bool forceInstall;
    bool running;
    bool forceCheck;
@@ -76,6 +77,7 @@ public slots:
    void installUpdate();
    void checkForUpdates();
    void tryUpdate();
+   void onTimeout();
 };
 
 #endif // UPDATETASK_H
