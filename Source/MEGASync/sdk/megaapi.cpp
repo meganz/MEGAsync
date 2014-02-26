@@ -181,12 +181,12 @@ bool MegaFile::failed(error e)
     return e != API_EKEY && e != API_EBLOCKED && transfer->failcount < 10;
 }
 
-MegaFile::MegaFile()
+MegaFile::MegaFile() : File()
 {
     seqno = ++nextseqno;
 }
 
-MegaFileGet::MegaFileGet(MegaClient *client, Node *n, string dstPath)
+MegaFileGet::MegaFileGet(MegaClient *client, Node *n, string dstPath) : MegaFile()
 {
     h = n->nodehandle;
     *(FileFingerprint*)this = *n;
@@ -214,7 +214,7 @@ MegaFileGet::MegaFileGet(MegaClient *client, Node *n, string dstPath)
     hprivate = true;
 }
 
-MegaFileGet::MegaFileGet(MegaClient *client, MegaNode *n, string dstPath)
+MegaFileGet::MegaFileGet(MegaClient *client, MegaNode *n, string dstPath) : MegaFile()
 {
     h = n->getHandle();
     name = n->getName();
@@ -242,7 +242,7 @@ void MegaFileGet::completed(Transfer*, LocalNode*)
     delete this;
 }
 
-MegaFilePut::MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser)
+MegaFilePut::MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser) : MegaFile()
 {
     // this assumes that the local OS uses an ASCII path separator, which should be true for most
     string separator = client->fsaccess->localseparator;
