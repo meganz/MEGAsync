@@ -1466,31 +1466,30 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
-        if(downloadSpeed && (transfer->getTransferredBytes() == transfer->getDeltaSize()))
+        downloadSpeed = transfer->getSpeed();
+        if(!transfer->getTransferredBytes())
             lastStartedDownload = transfer->getStartTime();
-		downloadSpeed = transfer->getSpeed();
 		totalDownloadedSize += transfer->getDeltaSize();
 	}
 	else
 	{
-        if(uploadSpeed && (transfer->getTransferredBytes() == transfer->getDeltaSize()))
+        uploadSpeed = transfer->getSpeed();
+        if(!transfer->getTransferredBytes())
             lastStartedUpload = transfer->getStartTime();
-		uploadSpeed = transfer->getSpeed();
 		totalUploadedSize += transfer->getDeltaSize();
 	}
 
     //Send updated statics to the information dialog
-    if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && downloadSpeed && (transfer->getStartTime()>=lastStartedDownload)) ||
-        ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && uploadSpeed && (transfer->getStartTime()>=lastStartedUpload)))
+    if(infoDialog)
     {
-        if(infoDialog)
-        {
+        if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
+            ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
             infoDialog->setTransfer(transfer);
-            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-            infoDialog->updateTransfers();
-            infoDialog->updateDialog();
-        }
+
+        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+        infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+        infoDialog->updateTransfers();
+        infoDialog->updateDialog();
     }
 }
 
