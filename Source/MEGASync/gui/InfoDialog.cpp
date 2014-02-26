@@ -334,15 +334,25 @@ void InfoDialog::updateState()
         setTransferSpeeds(-1, -1);
         ui->lSyncUpdated->setText(tr("File transfers paused"));
     }
-    else if(indexing) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-    else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
-    else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+    else
+    {
+        if((downloadSpeed<0) && (uploadSpeed<0))
+            setTransferSpeeds(0, 0);
+
+        if(indexing) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+        else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+        else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+    }
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
 {
-	this->downloadSpeed = downloadSpeed;
-	this->uploadSpeed = uploadSpeed;
+    if(downloadSpeed || this->downloadSpeed<0)
+        this->downloadSpeed = downloadSpeed;
+
+    if(uploadSpeed || this->uploadSpeed<0)
+        this->uploadSpeed = uploadSpeed;
+
     updateTransfers();
 }
 
