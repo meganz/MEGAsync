@@ -63,11 +63,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
-    connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
-    QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
-    cacheSizeWatcher.setFuture(futureCacheSize);
-    ui->gCache->setVisible(false);
+    if(!proxyOnly && preferences->logged())
+    {
+        connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
+        QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
+        cacheSizeWatcher.setFuture(futureCacheSize);
+    }
 
+    ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
 }
 
