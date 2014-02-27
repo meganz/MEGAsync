@@ -273,7 +273,7 @@ QImage Utilities::createThumbnail(QString imagePath, int size)
     QImage image(imagePath);
     int w = image.width();
     int h = image.height();
-    if(!(w >= 20 && w >= 20)) return QImage();
+    if((w < 20) || (h < 20)) return QImage();
 
     if (w < h)
     {

@@ -112,7 +112,7 @@ static void createthumbnail(string* filename, unsigned size, string* result)
 				h = FreeImage_GetHeight(dib);
 		}
 
-		if (w >= 20 && w >= 20)
+        if (w >= 20 && h >= 20)
 		{
 				if (w < h)
 				{
