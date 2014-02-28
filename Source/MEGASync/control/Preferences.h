@@ -157,6 +157,7 @@ public:
     static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
+    static const QString PROXY_TEST_URL;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
 
