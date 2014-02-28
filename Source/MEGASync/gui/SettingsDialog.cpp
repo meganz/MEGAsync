@@ -662,7 +662,9 @@ bool SettingsDialog::saveSettings()
         }
         else LOG("No proxy");
 
-        QNetworkRequest proxyTestRequest(Preferences::UPDATE_CHECK_URL);
+        QNetworkRequest proxyTestRequest(Preferences::PROXY_TEST_URL);
+        proxyTestRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                             QVariant( int(QNetworkRequest::AlwaysNetwork)));
         networkAccess = new QNetworkAccessManager();
         connect(networkAccess, SIGNAL(finished(QNetworkReply*)),
                 this, SLOT(onProxyTestFinished(QNetworkReply*)));
