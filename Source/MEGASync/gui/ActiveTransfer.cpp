@@ -31,7 +31,9 @@ void ActiveTransfer::setFileName(QString fileName)
 
 void ActiveTransfer::setProgress(long long completedSize, long long totalSize, bool cancellable)
 {
-    int permil = (1000*completedSize)/(totalSize+1);
+    int permil = 0;
+    if((totalSize>0) && (completedSize>0))
+        permil = (1000*completedSize)/totalSize;
     regular = cancellable;
     ui->pProgress->setProgress(permil, cancellable);
     ui->lPercentage->setText(QString::number((permil+5)/10) + QString::fromAscii("%"));

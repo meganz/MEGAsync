@@ -2208,17 +2208,21 @@ void MegaApi::transfer_update(Transfer *tr)
 		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
 		transfer->setTransferredBytes(tr->slot->progressreported);
 
-        if(Waiter::ds<transfer->getStartTime())
-            transfer->setStartTime(waiter->ds);
+        unsigned long long currentTime = Waiter::ds;
+        if(currentTime<transfer->getStartTime())
+            transfer->setStartTime(currentTime);
 
-        transfer->setSpeed((10*transfer->getTransferredBytes())/(waiter->ds-transfer->getStartTime()+1));
-		transfer->setUpdateTime(Waiter::ds);
+        long long speed = 0;
+        if(((currentTime-transfer->getStartTime()) > 0) && (transfer->getTransferredBytes()>0))
+            speed = (10*transfer->getTransferredBytes())/(currentTime-transfer->getStartTime());
+        transfer->setSpeed(speed);
+        transfer->setUpdateTime(currentTime);
 
         //string th;
         //if (tr->type == GET) th = "TD ";
         //else th = "TU ";
         //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
-        //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(waiter->ds-transfer->getStartTime())+1) << " KB/s" << endl;
+        //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(Waiter::ds-transfer->getStartTime())+1) << " KB/s" << endl;
 
         fireOnTransferUpdate(this, transfer);
 	}
@@ -2268,12 +2272,18 @@ void MegaApi::transfer_complete(Transfer* tr)
 
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr);
-    if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
-    if(Waiter::ds<transfer->getStartTime())
-        transfer->setStartTime(waiter->ds);
 
-    transfer->setSpeed((10*transfer->getTotalBytes())/(waiter->ds-transfer->getStartTime()+1));
-    transfer->setTime(waiter->ds);
+    unsigned long long currentTime = Waiter::ds;
+    if(!transfer->getStartTime())
+        transfer->setStartTime(currentTime);
+    if(currentTime<transfer->getStartTime())
+        transfer->setStartTime(currentTime);
+
+    long long speed = 0;
+    if(((currentTime-transfer->getStartTime()) > 0) && (transfer->getTransferredBytes()>0))
+        speed = (10*transfer->getTotalBytes())/(currentTime-transfer->getStartTime());
+    transfer->setSpeed(speed);
+    transfer->setTime(currentTime);
     transfer->setDeltaSize(tr->size - transfer->getTransferredBytes());
     transfer->setTransferredBytes(tr->size);
 

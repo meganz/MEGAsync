@@ -407,14 +407,15 @@ void SettingsDialog::loadSettings()
         ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
         ui->eLimit->setEnabled(ui->rLimit->isChecked());
 
-        if(preferences->totalBandwidth() == 0)
+        double totalBandwidth = preferences->totalBandwidth();
+        if(totalBandwidth == 0)
         {
             ui->pUsedBandwidth->setValue(0);
             ui->lBandwidth->setText(tr("Data temporarily unavailable"));
         }
         else
         {
-            int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/preferences->totalBandwidth());
+            int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/totalBandwidth);
             ui->pUsedBandwidth->setValue(bandwidthPercentage);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                     .arg(Utilities::getSizeString(preferences->usedBandwidth()))

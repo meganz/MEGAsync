@@ -61,15 +61,15 @@ private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 
-	long long downloadSpeed;
-	long long uploadSpeed;
-    long long effectiveDownloadSpeed;
-    long long effectiveUploadSpeed;
-    long long uploadStartTime;
-    long long downloadStartTime;
-    long long elapsedDownloadTime;
-    long long elapsedUploadTime;
-    long long lastUpdate;
+    unsigned long long downloadSpeed;
+    unsigned long long uploadSpeed;
+    unsigned long long effectiveDownloadSpeed;
+    unsigned long long effectiveUploadSpeed;
+    unsigned long long uploadStartTime;
+    unsigned long long downloadStartTime;
+    unsigned long long elapsedDownloadTime;
+    unsigned long long elapsedUploadTime;
+    unsigned long long lastUpdate;
 	int currentUpload;
 	int currentDownload;
 	int totalUploads;
