@@ -2439,14 +2439,10 @@ void MegaApi::syncupdate_local_lockretry(bool waiting)
 void MegaApi::users_updated(User** u, int count)
 {
 #ifdef __ANDROID__
-    MUTEX_UNLOCK(sdkMutex);
     fireOnUsersUpdate(this, NULL);
-    MUTEX_LOCK(sdkMutex);
 #else
     UserList* userList = new UserList(u, count);
-    MUTEX_UNLOCK(sdkMutex);
     fireOnUsersUpdate(this, userList);
-    MUTEX_LOCK(sdkMutex);
     delete userList;
 #endif
 }
@@ -2946,9 +2942,7 @@ void MegaApi::debug_log(const char* message)
 void MegaApi::nodes_updated(Node** n, int count)
 {
 #ifdef __ANDROID__
-    MUTEX_UNLOCK(sdkMutex);
     fireOnNodesUpdate(this, NULL);
-    MUTEX_LOCK(sdkMutex);
 #else
     NodeList *nodeList = NULL;
     if(n != NULL)
@@ -2958,9 +2952,7 @@ void MegaApi::nodes_updated(Node** n, int count)
             list.push_back(MegaNode::fromNode(n[i]));
         nodeList = new NodeList(list.data(), count, true);
     }
-    MUTEX_UNLOCK(sdkMutex);
     fireOnNodesUpdate(this, nodeList);
-    MUTEX_LOCK(sdkMutex);
 #endif
 }
 
