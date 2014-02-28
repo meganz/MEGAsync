@@ -176,14 +176,20 @@ void InfoDialog::updateTransfers()
     if(remainingDownloads)
     {
         long long remainingBytes = totalDownloadSize-totalDownloadedSize;
-        long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-        if(timeIncrement < 1000) elapsedDownloadTime += timeIncrement;
-        double effectiveSpeed = totalDownloadedSize/(elapsedDownloadTime/1000+1);
+        if(remainingBytes < 0)
+            remainingBytes = 0;
+        unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
+        if(timeIncrement < 1000)
+            elapsedDownloadTime += timeIncrement;
+        double effectiveSpeed = effectiveDownloadSpeed;
+        double elapsedDownloadTimeSecs = elapsedDownloadTime/1000.0;
+        if(elapsedDownloadTimeSecs)
+            effectiveSpeed = totalDownloadedSize/elapsedDownloadTimeSecs;
         effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/10; //Smooth the effective speed
 
         if(isVisible())
         {
-            int totalRemainingSeconds = (effectiveDownloadSpeed>0) ? remainingBytes/effectiveDownloadSpeed : 0;
+            int totalRemainingSeconds = (effectiveDownloadSpeed) ? remainingBytes/effectiveDownloadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             int remainingMinutes = (totalRemainingSeconds%3600)/60;
             int remainingSeconds =  (totalRemainingSeconds%60);
@@ -230,14 +236,20 @@ void InfoDialog::updateTransfers()
     if(remainingUploads)
     {
         long long remainingBytes = totalUploadSize-totalUploadedSize;
-        long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-        if(timeIncrement < 1000) elapsedUploadTime += timeIncrement;
-        double effectiveSpeed = totalUploadedSize/(elapsedUploadTime/1000+1);
+        if(remainingBytes<0)
+            remainingBytes = 0;
+        unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
+        if(timeIncrement < 1000)
+            elapsedUploadTime += timeIncrement;
+        double effectiveSpeed = effectiveUploadSpeed;
+        double elapsedUploadTimeSecs = elapsedUploadTime/1000.0;
+        if(elapsedUploadTimeSecs)
+            effectiveSpeed = totalUploadedSize/elapsedUploadTimeSecs;
         effectiveUploadSpeed += (effectiveSpeed-effectiveUploadSpeed)/10; //Smooth the effective speed
 
         if(isVisible())
         {
-            int totalRemainingSeconds = (effectiveUploadSpeed>0) ? remainingBytes/effectiveUploadSpeed : 0;
+            int totalRemainingSeconds = (effectiveUploadSpeed) ? remainingBytes/effectiveUploadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             int remainingMinutes = (totalRemainingSeconds%3600)/60;
             int remainingSeconds =  (totalRemainingSeconds%60);
