@@ -65,7 +65,8 @@ void UpdateTask::startUpdateThread()
     signatureChecker = new mega::HashSignature(new mega::Hash());
     preferences = Preferences::instance();
 
-    updateTimer->start(Preferences::UPDATE_INITIAL_DELAY_SECS*1000);
+    updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
+    QTimer::singleShot(Preferences::UPDATE_INITIAL_DELAY_SECS*1000, this, SLOT(tryUpdate()));
 }
 
 void UpdateTask::tryUpdate()
