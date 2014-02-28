@@ -582,7 +582,7 @@ void MegaClient::exec()
         }
 
         // handle API client-server requests
-        for (; ; )
+        for (;;)
         {
             // do we have an API request outstanding?
             if (pendingcs)
@@ -697,7 +697,7 @@ void MegaClient::exec()
         }
 
         // handle API server-client requests
-        for (; ; )
+        for (;;)
         {
             if (pendingsc)
             {
@@ -1618,11 +1618,18 @@ void MegaClient::procsc()
 
     jsonsc.enterobject();
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
             case 'w':
+                if (!statecurrent)
+                {
+                    // NULL vector: "notify all nodes"
+                    app->nodes_current();
+                    statecurrent = true;
+                }
+            
                 if (!jsonsc.storeobject(&scnotifyurl))
                 {
                     return;
@@ -2066,7 +2073,7 @@ void MegaClient::sc_updatenode()
     const char* a = NULL;
     time_t ts = -1, tm = -1;
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2136,7 +2143,7 @@ void MegaClient::readtree(JSON* j)
 {
     if (j->enterobject())
     {
-        for (; ; )
+        for (;;)
         {
             switch (jsonsc.getnameid())
             {
@@ -2165,7 +2172,7 @@ void MegaClient::readtree(JSON* j)
 // server-client newnodes processing
 void MegaClient::sc_newnodes()
 {
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2208,7 +2215,7 @@ bool MegaClient::sc_shares()
     time_t ts = 0;
     int outbound;
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2319,7 +2326,7 @@ bool MegaClient::sc_shares()
 // u:[{c/m/ts}*] - Add/modify user/contact
 void MegaClient::sc_contacts()
 {
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2347,7 +2354,7 @@ void MegaClient::sc_keys()
     node_vector kshares;
     node_vector knodes;
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2399,7 +2406,7 @@ void MegaClient::sc_fileattr()
     Node* n = NULL;
     const char* fa = NULL;
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2438,7 +2445,7 @@ void MegaClient::sc_userattr()
     string ua;
     handle uh = UNDEF;
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2575,7 +2582,7 @@ void MegaClient::sc_deltree()
 {
     Node* n = NULL;
 
-    for (; ; )
+    for (;;)
     {
         switch (jsonsc.getnameid())
         {
@@ -2733,7 +2740,7 @@ error MegaClient::checkmove(Node* fn, Node* tn)
     }
 
     // condition #4: tn must not be below fn (would create circular linkage)
-    for (; ; )
+    for (;;)
     {
         if (tn == fn)
         {
@@ -2748,7 +2755,7 @@ error MegaClient::checkmove(Node* fn, Node* tn)
 
     // condition #5: fn and tn must be in the same tree (same ultimate parent
     // node or shared by the same user)
-    for (; ; )
+    for (;;)
     {
         if (fn->inshare || !fn->parent)
         {
@@ -3283,7 +3290,7 @@ void MegaClient::readokelement(JSON* j)
     int have_ha = 0;
     const char* k = NULL;
 
-    for (; ; )
+    for (;;)
     {
         switch (j->getnameid())
         {
@@ -3357,7 +3364,7 @@ void MegaClient::readoutshareelement(JSON* j)
     accesslevel_t r = ACCESS_UNKNOWN;
     time_t ts = 0;
 
-    for (; ; )
+    for (;;)
     {
         switch (j->getnameid())
         {
@@ -3918,7 +3925,7 @@ void MegaClient::proccr(JSON* j)
 
     if (j->enterobject())
     {
-        for (; ; )
+        for (;;)
         {
             switch (j->getnameid())
             {
@@ -4108,7 +4115,7 @@ void MegaClient::cr_response(node_vector* shares, node_vector* nodes, JSON* sele
 
     crkeys.reserve(shares->size() * nodes->size() * ( 32 * 4 / 3 + 10 ));
 
-    for (; ; )
+    for (;;)
     {
         if (selector)
         {
@@ -4481,6 +4488,8 @@ bool MegaClient::fetchsc(DbTable* sctable)
 
 void MegaClient::fetchnodes()
 {
+    statecurrent = false;
+
     // only initial load from local cache
     if (!nodes.size() && sctable && !ISUNDEF(cachedscsn) && fetchsc(sctable))
     {

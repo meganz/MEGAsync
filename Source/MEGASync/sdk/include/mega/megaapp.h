@@ -76,6 +76,9 @@ struct MEGA_API MegaApp
     // node fetch result
     virtual void fetchnodes_result(error) { }
 
+    // nodes now (nearly) current
+    virtual void nodes_current() { }
+
     // node addition has failed
     virtual void putnodes_result(error, targettype_t, NewNode*) { }
 

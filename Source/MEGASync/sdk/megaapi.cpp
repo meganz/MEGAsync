@@ -1047,7 +1047,7 @@ MegaApi::MegaApi(const char *basePath)
     fsAccess = new MegaFileSystemAccess();
     string sBasePath = basePath;
     dbAccess = new MegaDbAccess(&sBasePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.7");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.8");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2213,8 +2213,12 @@ void MegaApi::transfer_update(Transfer *tr)
             transfer->setStartTime(currentTime);
 
         long long speed = 0;
-        if(((currentTime-transfer->getStartTime()) > 0) && (transfer->getTransferredBytes()>0))
-            speed = (10*transfer->getTransferredBytes())/(currentTime-transfer->getStartTime());
+        long long deltaTime = currentTime-transfer->getStartTime();
+        if(deltaTime<=0)
+            deltaTime = 1;
+        if(transfer->getTransferredBytes()>0)
+            speed = (10*transfer->getTransferredBytes())/deltaTime;
+
         transfer->setSpeed(speed);
         transfer->setUpdateTime(currentTime);
 
@@ -2280,8 +2284,12 @@ void MegaApi::transfer_complete(Transfer* tr)
         transfer->setStartTime(currentTime);
 
     long long speed = 0;
-    if(((currentTime-transfer->getStartTime()) > 0) && (transfer->getTransferredBytes()>0))
-        speed = (10*transfer->getTotalBytes())/(currentTime-transfer->getStartTime());
+    long long deltaTime = currentTime-transfer->getStartTime();
+    if(deltaTime<=0)
+        deltaTime = 1;
+    if(transfer->getTotalBytes()>0)
+        speed = (10*transfer->getTotalBytes())/deltaTime;
+
     transfer->setSpeed(speed);
     transfer->setTime(currentTime);
     transfer->setDeltaSize(tr->size - transfer->getTransferredBytes());

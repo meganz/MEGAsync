@@ -185,12 +185,13 @@ void InfoDialog::updateTransfers()
         double elapsedDownloadTimeSecs = elapsedDownloadTime/1000.0;
         if(elapsedDownloadTimeSecs)
             effectiveSpeed = totalDownloadedSize/elapsedDownloadTimeSecs;
-        effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/10; //Smooth the effective speed
-
+        effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/3; //Smooth the effective speed
         if(isVisible())
         {
             int totalRemainingSeconds = (effectiveDownloadSpeed) ? remainingBytes/effectiveDownloadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
+            if(remainingHours<0)
+                totalRemainingSeconds = 0;
             int remainingMinutes = (totalRemainingSeconds%3600)/60;
             int remainingSeconds =  (totalRemainingSeconds%60);
             QString remainingTime;
@@ -245,12 +246,14 @@ void InfoDialog::updateTransfers()
         double elapsedUploadTimeSecs = elapsedUploadTime/1000.0;
         if(elapsedUploadTimeSecs)
             effectiveSpeed = totalUploadedSize/elapsedUploadTimeSecs;
-        effectiveUploadSpeed += (effectiveSpeed-effectiveUploadSpeed)/10; //Smooth the effective speed
+        effectiveUploadSpeed += (effectiveSpeed-effectiveUploadSpeed)/3; //Smooth the effective speed
 
         if(isVisible())
         {
             int totalRemainingSeconds = (effectiveUploadSpeed) ? remainingBytes/effectiveUploadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
+            if(remainingHours<0)
+                totalRemainingSeconds = 0;
             int remainingMinutes = (totalRemainingSeconds%3600)/60;
             int remainingSeconds =  (totalRemainingSeconds%60);
             QString remainingTime;
