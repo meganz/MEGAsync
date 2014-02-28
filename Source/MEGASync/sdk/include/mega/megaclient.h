@@ -314,6 +314,9 @@ public:
     // scsn as read from sctable
     handle cachedscsn;
 
+    // have we just completed fetching new nodes?
+    bool statecurrent;
+
     // record type indicator for sctable
     enum { CACHEDSCSN, CACHEDNODE, CACHEDUSER } sctablerectype;
 

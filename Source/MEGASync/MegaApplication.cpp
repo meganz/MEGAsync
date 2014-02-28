@@ -17,8 +17,8 @@
  #include <signal.h>
 #endif
 
-const int MegaApplication::VERSION_CODE = 1007;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.7a");
+const int MegaApplication::VERSION_CODE = 1008;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.8");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1497,7 +1497,8 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
     //Show information to users
-    showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
+    if(megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+        showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
     onSyncStateChanged(megaApi);
 }
 
