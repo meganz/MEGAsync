@@ -2234,11 +2234,7 @@ void MegaApi::transfer_update(Transfer *tr)
 
 void MegaApi::transfer_failed(Transfer* tr, error e)
 {
-    MUTEX_UNLOCK(sdkMutex);
-    MUTEX_LOCK(sdkMutex);
-
     updateStatics();
-
     if(transferMap.find(tr) == transferMap.end()) return;
     MegaError megaError(e);
     MegaTransfer* transfer = transferMap.at(tr);
@@ -2397,8 +2393,6 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     string path;
     l->getlocalpath(&path, true);
 
-    MUTEX_UNLOCK(sdkMutex);
-
 #ifdef USE_QT
 	#ifdef WIN32
 		path.append("", 1);
@@ -2409,7 +2403,6 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     Platform::notifyItemChange(localPath);
 #endif
 
-    MUTEX_LOCK(sdkMutex);
 }
 
 bool MegaApi::sync_syncable(Node *node)
@@ -4011,9 +4004,6 @@ bool WildcardMatch(const char *pszString, const char *pszMatch)
 
 bool MegaApi::is_syncable(const char *name)
 {
-    MUTEX_UNLOCK(sdkMutex);
-    MUTEX_LOCK(sdkMutex);
-
     for(int i=0; i< excludedNames.size(); i++)
     {
         if(WildcardMatch(name, excludedNames[i].c_str()))
