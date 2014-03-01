@@ -220,8 +220,6 @@ void MegaApplication::initialize()
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
-    //TODO: Remove this, only for test installer 1.0.7a
-    preferences->setCrashed(false);
     if(preferences->isCrashed())
     {
         preferences->setCrashed(false);
