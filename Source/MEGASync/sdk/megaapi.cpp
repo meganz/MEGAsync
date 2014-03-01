@@ -1047,7 +1047,7 @@ MegaApi::MegaApi(const char *basePath)
     fsAccess = new MegaFileSystemAccess();
     string sBasePath = basePath;
     dbAccess = new MegaDbAccess(&sBasePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.8");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.9");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2393,6 +2393,8 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     string path;
     l->getlocalpath(&path, true);
 
+    MUTEX_UNLOCK(sdkMutex);
+
 #ifdef USE_QT
 	#ifdef WIN32
 		path.append("", 1);
@@ -2403,6 +2405,7 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     Platform::notifyItemChange(localPath);
 #endif
 
+    MUTEX_LOCK(sdkMutex);
 }
 
 bool MegaApi::sync_syncable(Node *node)
