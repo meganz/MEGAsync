@@ -1383,6 +1383,9 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //Send statics to the information dialog
     if(infoDialog)
         infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+
+    if((megaApi->getNumPendingDownloads() + megaApi->getNumPendingDownloads()) == 1)
+        onSyncStateChanged(megaApi);
 }
 
 //Called when there is a temporal problem in a request
@@ -1454,7 +1457,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
 		uploadSpeed = downloadSpeed = 0;
-        onSyncStateChanged(megaApi);
+        if(e->getErrorCode() == MegaError::API_OK)
+            onSyncStateChanged(megaApi);
 	}
 }
 
@@ -1497,7 +1501,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
     //Show information to users
     if(megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
         showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
-    onSyncStateChanged(megaApi);
+    else
+        onSyncStateChanged(megaApi);
 }
 
 //Called when contacts have been updated in MEGA
