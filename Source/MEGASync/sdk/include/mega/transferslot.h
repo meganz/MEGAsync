@@ -24,6 +24,7 @@
 
 #include "http.h"
 #include "node.h"
+#include "backofftimer.h"
 
 namespace mega {
 // active transfer
@@ -80,6 +81,10 @@ struct MEGA_API TransferSlot
     // tslots list position
     transferslot_list::iterator slots_it;
 
+    // slot operation retry timer
+    bool retrying;
+    BackoffTimer retrybt;
+    
     TransferSlot(Transfer*);
     ~TransferSlot();
 };

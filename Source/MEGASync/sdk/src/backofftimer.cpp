@@ -88,7 +88,7 @@ dstime BackoffTimer::backoffdelta()
 
 dstime BackoffTimer::nextset() const
 {
-    return (int)next;
+    return next;
 }
 
 // event in the future: potentially updates waituntil

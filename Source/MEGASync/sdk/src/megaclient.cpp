@@ -807,13 +807,13 @@ void MegaClient::exec()
         // handle active unpaused transfers
         for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); )
         {
-            if (xferpaused[( *it )->transfer->type])
+            if (!xferpaused[( *it )->transfer->type] && (!( *it )->retrying || ( *it )->retrybt.armed()))
             {
-                it++;
+                ( *it++ )->doio(this);
             }
             else
             {
-                ( *it++ )->doio(this);
+                it++;
             }
         }
 
@@ -1186,6 +1186,15 @@ int MegaClient::wait()
         nexttransferretry(PUT, &nds);
         nexttransferretry(GET, &nds);
 
+        // retry transferslots
+        for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++)
+        {
+            if (( *it )->retrying && !( *it )->retrybt.armed())
+            {
+                ( *it )->retrybt.update(&nds);
+            }
+        }
+
         // retry failed client-server requests
         if (!pendingcs)
         {
@@ -1212,7 +1221,7 @@ int MegaClient::wait()
                 it->second->bt.update(&nds);
             }
         }
-
+        
         // sync rescan
         if (syncscanfailed)
         {
@@ -1496,8 +1505,7 @@ handle MegaClient::getuploadhandle()
 {
     byte* ptr = (byte*)( &nextuh + 1 );
 
-    while (!++( *--ptr ))
-    {}
+    while (!++( *--ptr ));
 
     return nextuh;
 }
@@ -4820,11 +4828,8 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
                         }
                         else if (success && fsaccess->transient_error)
                         {
-                            success = false;  //
-                                              //
-                                              // schedule
-                                              //
-                                              // retry
+                            // schedule retry
+                            success = false;
                         }
                     }
                 }
@@ -5324,8 +5329,7 @@ void MegaClient::movetosyncdebris(Node* dn)
     Node* n = dn;
 
     // at least one parent node already on the way to SyncDebris?
-    while (( n = n->parent ) && n->syncdeleted == SYNCDEL_NONE)
-    {}
+    while (( n = n->parent ) && n->syncdeleted == SYNCDEL_NONE);
 
     // no: enqueue this one
     if (!n)
@@ -5389,8 +5393,7 @@ void MegaClient::execmovetosyncdebris()
                 || ( n->syncdeleted == SYNCDEL_BIN )
                 || ( n->syncdeleted == SYNCDEL_DEBRIS ))
         {
-            while (( n = n->parent ) && n->syncdeleted == SYNCDEL_NONE)
-            {}
+            while (( n = n->parent ) && n->syncdeleted == SYNCDEL_NONE);
 
             if (!n)
             {
