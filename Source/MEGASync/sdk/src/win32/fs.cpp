@@ -167,7 +167,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     // (race condition between GetFileAttributesEx()/FindFirstFile() possible -
     // fixable with the current Win32 API?)
-
     hFile = CreateFileW((LPCWSTR)name->data(),
                         read ? GENERIC_READ : GENERIC_WRITE,
                         FILE_SHARE_WRITE | FILE_SHARE_READ,
@@ -321,10 +320,8 @@ void WinFileSystemAccess::name2local(string* filename, const char* badchars)
                                                                filename->size() / sizeof( wchar_t ) + 1) - 1 ));
 }
 
-// convert Windows 16-bit UNICODE to UTF-8, then unescape escaped forbidden
-// characters
-// by replacing occurrences of %xx (x being a lowercase hex digit) with the
-// encoded character
+// convert Windows 16-bit UNICODE to UTF-8, then unescape escaped forbidden characters
+// by replacing occurrences of %xx (x being a lowercase hex digit) with the encoded character
 void WinFileSystemAccess::local2name(string* filename)
 {
     char c;
@@ -727,20 +724,19 @@ bool WinDirAccess::dnext(string* name, nodetype_t* type)
     for (; ; )
     {
         if (ffdvalid
-                && !( ffd.dwFileAttributes & ( FILE_ATTRIBUTE_TEMPORARY
-                                             | FILE_ATTRIBUTE_SYSTEM
-                                             | FILE_ATTRIBUTE_OFFLINE
-                                             | FILE_ATTRIBUTE_HIDDEN ))
-                && ( !( ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
-                        || ( *ffd.cFileName != '.' )
-                        || ( ffd.cFileName[1] && (( ffd.cFileName[1] != '.' ) || ffd.cFileName[2] ))))
+                && !(ffd.dwFileAttributes & ( FILE_ATTRIBUTE_TEMPORARY
+                                            | FILE_ATTRIBUTE_SYSTEM
+                                            | FILE_ATTRIBUTE_OFFLINE))
+                && ( !(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                        || (*ffd.cFileName != '.')
+                        || (ffd.cFileName[1] && (( ffd.cFileName[1] != '.' ) || ffd.cFileName[2]))))
         {
             name->assign((char*)ffd.cFileName, sizeof( wchar_t ) * wcslen(ffd.cFileName));
             name->insert(0, globbase);
 
             if (type)
             {
-                *type = ( ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) ? FOLDERNODE : FILENODE;
+                *type = (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? FOLDERNODE : FILENODE;
             }
 
             ffdvalid = false;

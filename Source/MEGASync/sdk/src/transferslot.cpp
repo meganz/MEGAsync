@@ -37,6 +37,8 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
     lastdata = 0;
     errorcount = 0;
 
+    retrying = false;
+    
     fileattrsmutable = 0;
 
     reqs = NULL;
@@ -125,10 +127,14 @@ void TransferSlot::doio(MegaClient* client)
 {
     if (!fa)
     {
-        // this is a pending completion, retry every 200 ms
-        transfer->bt.backoff(2);
+        // this is a pending completion, retry every 200 ms by default
+        retrybt.backoff(2);
+        retrying = true;
+
         return transfer->complete();
     }
+
+    retrying = false;
 
     if (!tempurl.size())
     {

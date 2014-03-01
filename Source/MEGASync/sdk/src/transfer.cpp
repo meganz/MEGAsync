@@ -91,8 +91,8 @@ void Transfer::complete()
         delete slot->fa;
         slot->fa = NULL;
 
-        // FIXME: multiple overwrite race conditions below (make all copies
-        // from already open file!)
+        // FIXME: multiple overwrite race conditions below (make copies
+        // from open file instead of closing/reopening!)
 
         // set timestamp (subsequent moves & copies are assumed not to alter
         // mtime)
@@ -179,9 +179,8 @@ void Transfer::complete()
             {
                 if (success)
                 {
-                    ( *it )->transfer = NULL;     // prevent deletion of
-                                                  // associated Transfer object
-                                                  // in completed()
+                    // prevent deletion of associated Transfer object in completed()
+                    ( *it )->transfer = NULL;
                     ( *it )->completed(this, NULL);
                 }
 
@@ -234,7 +233,8 @@ void Transfer::complete()
         delete slot->fa;
         slot->fa = NULL;
 
-        bt.backoff(11);
+        slot->retrying = true;
+        slot->retrybt.backoff(11);
     }
 }
 } // namespace
