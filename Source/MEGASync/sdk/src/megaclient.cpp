@@ -804,16 +804,18 @@ void MegaClient::exec()
         dispatchmore(PUT);
         dispatchmore(GET);
 
+        slotit = tslots.begin();
+
         // handle active unpaused transfers
-        for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); )
+        while (slotit != tslots.end())
         {
+            transferslot_list::iterator it = slotit;
+
+            slotit++;
+
             if (!xferpaused[( *it )->transfer->type] && (!( *it )->retrying || ( *it )->retrybt.armed()))
             {
-                ( *it++ )->doio(this);
-            }
-            else
-            {
-                it++;
+                ( *it )->doio(this);
             }
         }
 

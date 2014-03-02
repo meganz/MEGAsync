@@ -369,6 +369,9 @@ public:
     // transfer tslots
     transferslot_list tslots;
 
+    // next TransferSlot to doio() on
+    transferslot_list::iterator slotit;
+
     // FileFingerprint to node mapping
     fingerprint_set fingerprints;
 
