@@ -1435,17 +1435,27 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 	}
 
     //Send updated statics to the information dialog
-    if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
-        ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
+    if(infoDialog)
     {
-        if(infoDialog)
-        {
+        if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
+            ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
             infoDialog->setTransfer(transfer);
-            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-            infoDialog->updateTransfers();
-            infoDialog->updateDialog();
-        }
+
+        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+        infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+        infoDialog->updateTransfers();
+        infoDialog->updateDialog();
+    }
+
+    if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
+    {
+        if(lastStartedDownload == transfer->getStartTime())
+            lastStartedDownload = 0;
+    }
+    else
+    {
+        if(lastStartedUpload == transfer->getStartTime())
+            lastStartedUpload = 0;
     }
 
     if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
@@ -1469,14 +1479,14 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
         downloadSpeed = transfer->getSpeed();
-        if(!transfer->getTransferredBytes())
+        if(!lastStartedDownload || !transfer->getTransferredBytes())
             lastStartedDownload = transfer->getStartTime();
 		totalDownloadedSize += transfer->getDeltaSize();
 	}
 	else
 	{
         uploadSpeed = transfer->getSpeed();
-        if(!transfer->getTransferredBytes())
+        if(!lastStartedUpload || !transfer->getTransferredBytes())
             lastStartedUpload = transfer->getStartTime();
 		totalUploadedSize += transfer->getDeltaSize();
 	}
