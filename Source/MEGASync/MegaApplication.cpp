@@ -136,6 +136,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     if(!currentDir.exists()) currentDir.mkpath(QString::fromAscii("."));
     QDir::setCurrent(dataPath);
 
+    finished = false;
     lastStartedDownload = 0;
     lastStartedUpload = 0;
     trayIcon = NULL;
@@ -627,6 +628,7 @@ static void on_sigint(int sig)
 void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
+    finished = true;
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
@@ -908,6 +910,8 @@ void MegaApplication::copyFileLink(mega::handle fileHandle)
 //Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 {
+    if(finished) return;
+
     //Append the list of files to the upload queue
 	uploadQueue.append(newUploadQueue);
 
@@ -939,6 +943,8 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
+    if(finished) return;
+
     ExportProcessor *processor = new ExportProcessor(megaApi, newExportQueue);
     connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
     processor->requestLinks();
