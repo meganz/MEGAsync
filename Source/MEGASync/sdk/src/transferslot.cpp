@@ -65,7 +65,7 @@ TransferSlot::~TransferSlot()
     if (slots_it != transfer->client->tslots.end())
     {
         // advance main loop iterator if deleting next in line
-        if (*transfer->client->slotit == this)
+        if (transfer->client->slotit != transfer->client->tslots.end() && *transfer->client->slotit == this)
         {
             transfer->client->slotit++;
         }
