@@ -385,6 +385,8 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 
     a->client = this;
 
+    slotit = tslots.end();
+
     userid = 0;
 
     connections[PUT] = 3;
