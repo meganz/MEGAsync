@@ -1587,7 +1587,7 @@ void MegaClient::logout()
 
     purgenodesusersabortsc();
 
-    for (i = 2; i--; )
+    for (i = sizeof(reqs)/sizeof(*reqs); i--; )
     {
         reqs[i].clear();
     }

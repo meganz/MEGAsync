@@ -26,7 +26,7 @@
 
 namespace mega {
 // new Syncs are automatically inserted into the session's syncs list
-// a full read of the subtree is initiated
+// and a full read of the subtree is initiated
 Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris,
            string* clocaldebris, Node* remotenode, int ctag)
 {
