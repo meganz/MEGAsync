@@ -280,6 +280,7 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
         httpctx->hConnect = NULL;
     }
 
+    cout << "REQ_FAILURE  WinHttpIO::post()" << endl;
     req->status = REQ_FAILURE;
 }
 

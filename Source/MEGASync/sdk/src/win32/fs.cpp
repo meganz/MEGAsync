@@ -158,7 +158,9 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
         {
             name->resize(name->size() - 1);
-            retry = WinFileSystemAccess::istransient(GetLastError());
+            DWORD e = GetLastError();
+            retry = WinFileSystemAccess::istransient(e);
+            cout << "Error getting attributes: " << e << endl;
             return false;
         }
 
@@ -167,6 +169,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         if (fad.dwFileAttributes & SKIPATTRIBUTES)
         {
             retry = false;
+            cout << "File skipped due to special attributes" << endl;
             return false;
         }
 
@@ -190,7 +193,13 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        retry = WinFileSystemAccess::istransient(GetLastError());
+        DWORD e = GetLastError();
+        if( type == FOLDERNODE )
+            cout << "Error opening folder: " << e << endl;
+        else
+            cout << "Error opening file: " << e << endl;
+
+        retry = WinFileSystemAccess::istransient(e);
         return false;
     }
 
@@ -202,7 +211,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     }
 
     if (type == FOLDERNODE)
-    {
+    {        
         // enumerate directory
         name->append((char*)L"\\*", 5);
 
@@ -211,7 +220,9 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
         if (hFind == INVALID_HANDLE_VALUE)
         {
-            retry = WinFileSystemAccess::istransient(GetLastError());
+            DWORD e = GetLastError();
+            cout << "Error enumerating folder: " << e << endl;
+            retry = WinFileSystemAccess::istransient(e);
             return false;
         }
 

@@ -65,6 +65,7 @@ void HttpReq::disconnect()
 {
     if (httpio)
     {
+        cout << "DISCONNECT!!" << endl;
         httpio->cancel(this);
     }
 }

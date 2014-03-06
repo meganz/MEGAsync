@@ -4569,11 +4569,11 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    if(waiting) LOG("STATE: SDK waiting = true");
-    else LOG("STATE: SDK waiting = false");
+    //if(waiting) LOG("STATE: SDK waiting = true");
+    //else LOG("STATE: SDK waiting = false");
 
-    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
-    else LOG("STATE: SDK waitingForRequest = false");
+    //if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
+    //else LOG("STATE: SDK waitingForRequest = false");
 
     return waiting || waitingRequest;
 }
