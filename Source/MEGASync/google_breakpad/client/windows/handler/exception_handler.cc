@@ -919,11 +919,11 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   if (dump_file == INVALID_HANDLE_VALUE) return false;
 
   std::ostringstream oss;
-  oss << "MEGAprivate ERROR DUMP\n";
+  cout << "MEGAprivate ERROR DUMP\n";
   int frame_number=0;
 
-  oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-  oss << "Version code: " << QString::number(MegaApplication::VERSION_CODE).toStdString() << "\n";
+  //cout << "Application: " << QApplication::applicationName().toStdString() << "\n";
+  //cout << "Version code: " << QString::number(MegaApplication::VERSION_CODE).toStdString() << "\n";
 
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
@@ -944,8 +944,8 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   if((offset<0) || (offset > (DWORD64)moduleInfo.SizeOfImage))
       offset = 0;
 
-  oss << "Error info:\n";
-  oss << "Unhandled exception 0x" << std::uppercase << std::hex << exinfo->ExceptionRecord->ExceptionCode
+  cout << "Error info:\n";
+  cout << "Unhandled exception 0x" << std::uppercase << std::hex << exinfo->ExceptionRecord->ExceptionCode
       << " at 0x" << std::hex << offset << "\n";
 
   if(dbghelp_module_)
@@ -987,14 +987,14 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
               #error "Unsupported platform"
           #endif
 
-          oss << "Stacktrace:\n";
+          cout << "Stacktrace:\n";
           do {
               if (!StackWalk64_(machineType, process, hThread, &s,
                                 exinfo->ContextRecord, NULL,
                                 SymFunctionTableAccess64_,
                                 SymGetModuleBase64_, NULL))
               {
-                  oss << "Error getting stacktrace\n";
+                  cout << "Error getting stacktrace\n";
                   break;
               }
 
@@ -1002,14 +1002,15 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
               if((offset<0) || (offset > (DWORD64)moduleInfo.SizeOfImage))
                   offset = 0;
               if(offset)
-                oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << "\n";
+                cout << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << "\n";
               else
-                oss << "#" << frame_number << " ----------\n";
+                cout << "#" << frame_number << " ----------\n";
               ++frame_number;
           } while (s.AddrReturn.Offset != 0);
       }
   }
 
+  Sleep(30000);
   DWORD dwBytesWritten = 0;
   bool bErrorFlag = WriteFile(
           dump_file,           // open file handle
