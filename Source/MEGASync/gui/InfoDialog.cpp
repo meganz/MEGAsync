@@ -121,7 +121,11 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 void InfoDialog::setTransfer(MegaTransfer *transfer)
 {
     int type = transfer->getType();
-    QString fileName = QString::fromUtf8(transfer->getFileName());
+    QString fileName = QString::fromAscii("Invalid name");
+
+    if(transfer->getFileName())
+        fileName = QString::fromUtf8(transfer->getFileName());
+
     long long completedSize = transfer->getTransferredBytes();
     long long totalSize = transfer->getTotalBytes();
 

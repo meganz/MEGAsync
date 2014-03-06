@@ -2176,6 +2176,11 @@ void MegaApi::transfer_prepare(Transfer *t)
 				}
 			}
 		}
+        else
+        {
+            cout << "INVALID FILE NAME" << endl;
+            Sleep(20000);
+        }
 	}
 
     string path;
