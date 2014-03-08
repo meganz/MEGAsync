@@ -4744,8 +4744,6 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
         else if (rubbish && ll->deleted)    // no corresponding remote node:
                                             // delete local item
         {
-            cout << "DELETING LOCAL ITEM" << endl;
-
             if (ll->type == FILENODE)
             {
                 // only delete the file if it is unchanged
@@ -5028,8 +5026,6 @@ void MegaClient::syncup(LocalNode* l, dstime* nds)
                 {
                     if (t)
                     {
-                        cout << "MODIFYING LL: Waiter::ds >= ll->nagleds" << endl;
-
                         ll->sync->localbytes -= ll->size;
                         ll->size = fa->size;
                         ll->mtime = fa->mtime;

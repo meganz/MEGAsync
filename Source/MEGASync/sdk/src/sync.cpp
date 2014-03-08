@@ -23,7 +23,6 @@
 #include "mega/megaapp.h"
 #include "mega/transfer.h"
 #include "mega/megaclient.h"
-#include "control/Utilities.h"
 
 namespace mega {
 // new Syncs are automatically inserted into the session's syncs list
@@ -322,10 +321,6 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 
     if (fa->fopen(localname ? localpath : &tmppath, true, false))
     {
-        LOG(QString::fromAscii("FOPEN OK: ") + QString::fromUtf16(localname ? (const ushort *)localpath->data() : (const ushort *)tmppath.data()) +
-            QString::fromAscii("  Size: ") + QString::number(fa->size) + QString::fromAscii("  MTIME: ") +
-            QString::number(fa->mtime));
-
         if (!isroot)
         {
             if (l)
@@ -507,21 +502,17 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
     }
     else
     {
-        LOG(QString::fromAscii("FOPEN FAIL: ") + QString::fromUtf16(localname ? (const ushort *)localpath->data() : (const ushort *)tmppath.data()));
         if (fa->retry)
         {
-            LOG("Trasient error");
             // fopen() signals that the failure is potentially transient - do
             // nothing and request a recheck
             dirnotify->notify(DirNotify::RETRY, ll, localpath->data(), localpath->size());
         }
         else if (l)
         {
-            LOG("Permanent error");
             // immediately stop outgoing transfer, if any
             if (l->transfer)
             {
-                LOG("Stop transfer");
                 client->stopxfer(l);
             }
 

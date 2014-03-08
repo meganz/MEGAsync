@@ -58,7 +58,6 @@ void HttpReqCommandPutFA::procresult()
     if (client->json.isnumeric())
     {
         status = REQ_FAILURE;
-        cout << "HttpReqCommandPutFA FAILED. Response: " << client->json.pos << endl;
     }
     else
     {
@@ -75,7 +74,6 @@ void HttpReqCommandPutFA::procresult()
                 case EOO:
                     if (!p)
                     {
-                        cout << "ERROR parsing HttpReqCommandPutFA response" << endl;
                         status = REQ_FAILURE;
                     }
                     else

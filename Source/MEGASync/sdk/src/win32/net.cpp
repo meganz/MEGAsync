@@ -133,9 +133,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
                 }
 
                 req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
-                if(req->httpstatus != 200)
-                    cout << "REQUEST FAILED! HTTPCODE: " << req->httpstatus << endl;
-
                 httpio->httpevent();
             }
             else
@@ -144,7 +141,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 
                 if (!WinHttpReadData(hInternet, ptr, size, NULL))
                 {
-                    cout << "REQUEST FAILED! WinHttpReadData" << endl;
                     httpio->cancel(req);
                 }
             }
@@ -160,8 +156,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 
                 if (!WinHttpQueryDataAvailable(httpctx->hRequest, NULL))
                 {
-                    cout << "REQUEST FAILED! WinHttpQueryDataAvailable" << endl;
-
                     httpio->cancel(req);
                     httpio->httpevent();
                 }
@@ -180,8 +174,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
                                      &statusCodeSize,
                                      WINHTTP_NO_HEADER_INDEX))
             {
-                cout << "REQUEST FAILED! WinHttpQueryHeaders" << endl;
-
                 httpio->cancel(req);
                 httpio->httpevent();
             }
@@ -191,8 +183,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 
                 if (!WinHttpQueryDataAvailable(httpctx->hRequest, NULL))
                 {
-                    cout << "REQUEST FAILED! WinHttpQueryDataAvailable" << endl;
-
                     httpio->cancel(req);
                     httpio->httpevent();
                 }
@@ -209,13 +199,9 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
             {
                 httpio->inetstatus(false);
             }
-            cout << "REQUEST FAILED! WINHTTP_CALLBACK_STATUS_REQUEST_ERROR" << endl;
 
         // fall through
         case WINHTTP_CALLBACK_STATUS_SECURE_FAILURE:
-            if(dwInternetStatus == WINHTTP_CALLBACK_STATUS_SECURE_FAILURE)
-                cout << "REQUEST FAILED! WINHTTP_CALLBACK_STATUS_SECURE_FAILURE" << endl;
-
             httpio->cancel(req);
             httpio->httpevent();
             break;
@@ -236,8 +222,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 
                 if (!WinHttpWriteData(httpctx->hRequest, (LPVOID)( httpctx->postdata + pos ), t, NULL))
                 {
-                    cout << "REQUEST FAILED! WinHttpWriteData" << endl;
-
                     req->httpio->cancel(req);
                 }
 
@@ -247,8 +231,6 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
             {
                 if (!WinHttpReceiveResponse(httpctx->hRequest, NULL))
                 {
-                    cout << "REQUEST FAILED! WinHttpReceiveResponse" << endl;
-
                     httpio->cancel(req);
                     httpio->httpevent();
                 }
@@ -356,7 +338,6 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
         httpctx->hConnect = NULL;
     }
 
-    cout << "REQ_FAILURE  WinHttpIO::post" << endl;
     req->status = REQ_FAILURE;
 }
 

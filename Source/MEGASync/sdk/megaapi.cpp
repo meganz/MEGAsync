@@ -34,7 +34,7 @@ DEALINGS IN THE SOFTWARE.
     #include "control/Utilities.h"
 #else
     #define QT_TR_NOOP(x) (x)
-    #define LOG(x)
+    #define LOG(x) 
 #endif
 
 #ifdef _WIN32
@@ -2176,15 +2176,6 @@ void MegaApi::transfer_prepare(Transfer *t)
 				}
 			}
 		}
-        else
-        {
-            cout << "INVALID FILE NAME" << endl;
-#ifdef WIN32
-            Sleep(20000);
-#else
-            sleep(20);
-#endif
-        }
 	}
 
     string path;
@@ -4578,11 +4569,11 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    //if(waiting) LOG("STATE: SDK waiting = true");
-    //else LOG("STATE: SDK waiting = false");
+    if(waiting) LOG("STATE: SDK waiting = true");
+    else LOG("STATE: SDK waiting = false");
 
-    //if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
-    //else LOG("STATE: SDK waitingForRequest = false");
+    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
+    else LOG("STATE: SDK waitingForRequest = false");
 
     return waiting || waitingRequest;
 }

@@ -215,7 +215,6 @@ void TransferSlot::doio(MegaClient* client)
                         else
                         {
                             errorcount++;
-                            cout << "Transfer error detected: INCORRECT_SIZE. errorcount: " << errorcount << endl;
                             reqs[i]->status = REQ_PREPARED;
                             break;
                         }
@@ -235,7 +234,6 @@ void TransferSlot::doio(MegaClient* client)
                     else
                     {
                         errorcount++;
-                        cout << "Transfer error detected. TRANSFER_FAILURE. errorcount: " << errorcount << endl;
                         reqs[i]->status = REQ_PREPARED;
                     }
 
@@ -300,14 +298,8 @@ void TransferSlot::doio(MegaClient* client)
         progress();
     }
 
-    if (( Waiter::ds - lastdata >= XFERTIMEOUT ) || ( errorcount > 20 ))
+    if (( Waiter::ds - lastdata >= XFERTIMEOUT ) || ( errorcount > 10 ))
     {
-        cout << "TRANSFER_FAILED Cause: " << endl;
-        if(Waiter::ds - lastdata >= XFERTIMEOUT )
-            cout << "Max idle time exceeded" << endl;
-        if ( errorcount > 10 )
-            cout << "Max error count exceeded" << endl;
-
         return transfer->failed(API_EFAILED);
     }
     else

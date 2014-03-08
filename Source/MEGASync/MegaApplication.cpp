@@ -17,10 +17,8 @@
  #include <signal.h>
 #endif
 
-#define LOG(x)
-
 const int MegaApplication::VERSION_CODE = 1011;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11b");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1413,18 +1411,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //Show the transfer in the "recently updated" list
         if(e->getErrorCode() == MegaError::API_OK)
         {
-            if(transfer->getPath())
-            {
-                QString localPath = QString::fromUtf8(transfer->getPath());
-                #ifdef WIN32
-                    if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
-                #endif
-                addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
-            }
-            else
-            {
-                this->showErrorMessage(QString::fromAscii("ERROR 1"));
-            }
+            QString localPath = QString::fromUtf8(transfer->getPath());
+            #ifdef WIN32
+                if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+            #endif
+            addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
         }
 	}
 	else
@@ -1439,19 +1430,12 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //so we save the path of the file to show it later
         if((e->getErrorCode() == MegaError::API_OK) && (!transfer->isSyncTransfer()))
         {
-            if(transfer->getPath())
-            {
-                LOG(QString::fromAscii("Putting: %1 TAG: %2").arg(QString::fromUtf8(transfer->getPath())).arg(transfer->getTag()));
-                QString localPath = QString::fromUtf8(transfer->getPath());
-                #ifdef WIN32
-                    if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
-                #endif
-                uploadLocalPaths[transfer->getTag()]=localPath;
-            }
-            else
-            {
-                this->showErrorMessage(QString::fromAscii("ERROR 2"));
-            }
+            LOG(QString::fromAscii("Putting: %1 TAG: %2").arg(QString::fromUtf8(transfer->getPath())).arg(transfer->getTag()));
+            QString localPath = QString::fromUtf8(transfer->getPath());
+            #ifdef WIN32
+                if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+            #endif
+            uploadLocalPaths[transfer->getTag()]=localPath;
         }
         else LOG("Sync Transfer");
 	}
@@ -1532,12 +1516,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 {
     //Show information to users
     if(megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
-    {
-        if(transfer->getFileName())
-            showErrorMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
-        else
-            showErrorMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8("BAD_NAME"));
-    }
+        showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
     else
         onSyncStateChanged(megaApi);
 }
@@ -1595,8 +1574,8 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 //The SDK provides its local path
                 LOG("Sync upload");
             #ifdef WIN32
-                //localPath = QString::fromWCharArray((const wchar_t *)path.data());
-                //if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
+                localPath = QString::fromWCharArray((const wchar_t *)path.data());
+                if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
             #else
                 localPath = QString::fromUtf8(path.data());
             #endif
