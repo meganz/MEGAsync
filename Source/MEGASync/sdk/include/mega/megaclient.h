@@ -253,6 +253,9 @@ private:
     // update time at which next deferred transfer retry kicks in
     void nexttransferretry(direction_t d, dstime*);
 
+    // a TransferSlot chunk failed
+    bool chunkfailed;
+    
     // fetch state serialize from local cache
     bool fetchsc(DbTable*);
 
@@ -515,6 +518,9 @@ public:
     // file attribute fetch failed
     void faf_failed(int);
 
+    // transfer chunk failed
+    void setchunkfailed();
+    
     // process object arrays by the API server
     int readnodes(JSON *, int, putsource_t = PUTNODES_APP, NewNode * = NULL, int = 0);
 

@@ -29,6 +29,9 @@ namespace mega {
 // generic host HTTP I/O interface
 struct MEGA_API HttpIO : public EventTrigger
 {
+    // set whenever a network request completes successfully
+    bool success;
+
     // post request to target URL
     virtual void post(struct HttpReq*, const char* = NULL, unsigned = 0) = 0;
 

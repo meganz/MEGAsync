@@ -84,6 +84,9 @@ struct MEGA_API TransferSlot
     // slot operation retry timer
     bool retrying;
     BackoffTimer retrybt;
+
+    // transfer failure flag
+    bool failure;
     
     TransferSlot(Transfer*);
     ~TransferSlot();

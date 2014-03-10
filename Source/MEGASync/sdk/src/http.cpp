@@ -25,6 +25,7 @@
 namespace mega {
 HttpIO::HttpIO()
 {
+    success = false;
     noinetds = 0;
     inetback = false;
 }
@@ -35,7 +36,7 @@ void HttpIO::inetstatus(bool up)
 {
     if (up)
     {
-        if (noinetds && ( Waiter::ds - noinetds > 600 ))
+        if (noinetds && (Waiter::ds - noinetds > 600))
         {
             inetback = true;
         }
@@ -51,7 +52,7 @@ void HttpIO::inetstatus(bool up)
 // returns true once if an outage just ended
 bool HttpIO::inetisback()
 {
-    return inetback ? !( inetback = false ) : false;
+    return inetback ? !(inetback = false) : false;
 }
 
 void HttpReq::post(MegaClient* client, const char* data, unsigned len)
@@ -171,9 +172,9 @@ bool HttpReqDL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key,
     setreq(urlbuf, REQ_BINARY);
 
     dlpos = pos;
-    size = (unsigned)( npos - pos );
+    size = (unsigned)(npos - pos);
 
-    if (!buf || ( buflen != size ))
+    if (!buf || (buflen != size))
     {
         // (re)allocate buffer
         if (buf)
@@ -181,7 +182,7 @@ bool HttpReqDL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key,
             delete[] buf;
         }
 
-        buf = new byte[( size + SymmCipher::BLOCKSIZE - 1 ) & - SymmCipher::BLOCKSIZE];
+        buf = new byte[(size + SymmCipher::BLOCKSIZE - 1) & - SymmCipher::BLOCKSIZE];
         buflen = size;
     }
 
@@ -208,7 +209,7 @@ void HttpReqDL::finalize(FileAccess* fa, SymmCipher* key, chunkmac_map* macs,
     {
         if (startpos > dlpos)
         {
-            skip = (unsigned)( startpos - dlpos );
+            skip = (unsigned)(startpos - dlpos);
         }
         else
         {
@@ -217,7 +218,7 @@ void HttpReqDL::finalize(FileAccess* fa, SymmCipher* key, chunkmac_map* macs,
 
         if (dlpos + bufpos > endpos)
         {
-            prune = (unsigned)( dlpos + bufpos - endpos );
+            prune = (unsigned)(dlpos + bufpos - endpos);
         }
         else
         {
@@ -227,7 +228,7 @@ void HttpReqDL::finalize(FileAccess* fa, SymmCipher* key, chunkmac_map* macs,
 
     fa->fwrite(buf + skip, bufpos - skip - prune, dlpos + skip);
 
-    memcpy(( *macs )[dlpos].mac, mac, sizeof mac);
+    memcpy((*macs)[dlpos].mac, mac, sizeof mac);
 }
 
 // prepare chunk for uploading: mac and encrypt
@@ -235,10 +236,10 @@ bool HttpReqUL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key,
                         chunkmac_map* macs, uint64_t ctriv, m_off_t pos,
                         m_off_t npos)
 {
-    size = (unsigned)( npos - pos );
+    size = (unsigned)(npos - pos);
 
     // FIXME: check return value and abort upload in case file read fails
-    if (!fa->fread(out, size, ( -(int)size ) & ( SymmCipher::BLOCKSIZE - 1 ), pos))
+    if (!fa->fread(out, size, (-(int)size) & (SymmCipher::BLOCKSIZE - 1), pos))
     {
         return false;
     }
@@ -251,7 +252,7 @@ bool HttpReqUL::prepare(FileAccess* fa, const char* tempurl, SymmCipher* key,
 
     key->ctr_crypt((byte*)out->data(), size, pos, ctriv, mac, 1);
 
-    memcpy(( *macs )[pos].mac, mac, sizeof mac);
+    memcpy((*macs)[pos].mac, mac, sizeof mac);
 
     // unpad for POSTing
     out->resize(size);
