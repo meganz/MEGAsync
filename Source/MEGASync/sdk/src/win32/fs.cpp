@@ -210,7 +210,18 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        retry = WinFileSystemAccess::istransient(GetLastError());
+        DWORD er = GetLastError();
+        retry = WinFileSystemAccess::istransient(er);
+
+        name->append("", 1);
+
+        QString title = QString::fromAscii("MEGAsync");
+        QString desc = QString::fromAscii("Error opening ") +
+                QString::fromWCharArray((LPCWSTR)name->data()) +
+                QString::fromAscii("  ") + QString::number(er);
+
+        MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
+        name->resize(name->size() - 1);
         return false;
     }
 
@@ -224,14 +235,39 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     if (type == FOLDERNODE)
     {
         // enumerate directory
-        name->append((char*)L"\\*", 5);
+        bool special = false;
+        string localseparator;
+        localseparator.assign((char*)L"\\", sizeof(wchar_t));
+        if (name->size() >= localseparator.size()
+            && !memcmp(name->data() + (name->size() & -localseparator.size()) - localseparator.size(),
+                       localseparator.data(),
+                       localseparator.size()))
+        {
+            special = true;
+        }
+
+        if(!special)
+            name->append((char*)L"\\*", 5);
+        else
+            name->append((char*)L"*", 3);
 
         hFind = FindFirstFileW((LPCWSTR)name->data(), &ffd);
-        name->resize(name->size() - 5);
+
+        if(!special)
+            name->resize(name->size() - 5);
+        else
+            name->resize(name->size() - 3);
 
         if (hFind == INVALID_HANDLE_VALUE)
         {
-            retry = WinFileSystemAccess::istransient(GetLastError());
+            DWORD er = GetLastError();
+            retry = WinFileSystemAccess::istransient(er);
+
+            QString title = QString::fromAscii("MEGAsync");
+            QString desc = QString::fromAscii("Error enumerating folder ") +
+                    QString::fromAscii("  ") + QString::number(er);
+
+            MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
             return false;
         }
 
