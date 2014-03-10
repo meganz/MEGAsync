@@ -725,7 +725,7 @@ void Preferences::removeAllFolders()
     mutex.lock();
     assert(logged());
     for(int i=0; i<localFolders.size(); i++)
-        Platform::syncFolderRemoved(localFolders[i]);
+        Platform::syncFolderRemoved(localFolders[i], syncNames[i]);
 
     syncNames.clear();
     localFolders.clear();

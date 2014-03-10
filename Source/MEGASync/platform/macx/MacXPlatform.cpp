@@ -40,7 +40,7 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
 }
 
-void MacXPlatform::syncFolderRemoved(QString syncPath)
+void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
 
 }
