@@ -2,7 +2,7 @@
  * @file db.cpp
  * @brief Database access interface
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -48,7 +48,7 @@ bool DbTable::put(uint32_t type, Cachable* record, SymmCipher* key)
 
     if (!record->dbid)
     {
-        record->dbid = ( nextid += IDSPACING ) | type;
+        record->dbid = (nextid += IDSPACING) | type;
     }
 
     return put(record->dbid, &data);

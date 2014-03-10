@@ -2,7 +2,7 @@
  * @file utils.cpp
  * @brief Mega SDK various utilities and helper classes
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -33,14 +33,14 @@ void PaddedCBC::encrypt(string* data, SymmCipher* key)
 {
     // pad to blocksize and encrypt
     data->append("E");
-    data->resize(( data->size() + key->BLOCKSIZE - 1 ) & - key->BLOCKSIZE, 'P');
+    data->resize((data->size() + key->BLOCKSIZE - 1) & - key->BLOCKSIZE, 'P');
     key->cbc_encrypt((byte*)data->data(), data->size());
 }
 
 // CBC-decrypt and unpad
 bool PaddedCBC::decrypt(string* data, SymmCipher* key)
 {
-    if (( data->size() & ( key->BLOCKSIZE - 1 )))
+    if ((data->size() & (key->BLOCKSIZE - 1)))
     {
         return false;
     }
@@ -70,14 +70,14 @@ m_off_t ChunkedHash::chunkfloor(m_off_t p)
     for (unsigned i = 1; i <= 8; i++)
     {
         np = cp + i * SEGSIZE;
-        if (( p >= cp ) && ( p < np ))
+        if ((p >= cp) && (p < np))
         {
             return cp;
         }
         cp = np;
     }
 
-    return (( p - cp ) & - ( 8 * SEGSIZE )) + cp;
+    return ((p - cp) & - (8 * SEGSIZE)) + cp;
 }
 
 // end of chunk (== start of next chunk)
@@ -90,14 +90,16 @@ m_off_t ChunkedHash::chunkceil(m_off_t p)
     for (unsigned i = 1; i <= 8; i++)
     {
         np = cp + i * SEGSIZE;
-        if (( p >= cp ) && ( p < np ))
+
+        if ((p >= cp) && (p < np))
         {
             return np;
         }
+
         cp = np;
     }
 
-    return (( p - cp ) & - ( 8 * SEGSIZE )) + cp + 8 * SEGSIZE;
+    return ((p - cp) & - (8 * SEGSIZE)) + cp + 8 * SEGSIZE;
 }
 
 

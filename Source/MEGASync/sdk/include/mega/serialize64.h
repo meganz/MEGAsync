@@ -2,7 +2,7 @@
  * @file mega/serialize64.h
  * @brief 64-bit int serialization/unserialization
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -28,8 +28,8 @@ namespace mega {
 // 64-bit int serialization/unserialization
 struct MEGA_API Serialize64
 {
-    static int serialize(byte *, int64_t);
-    static int unserialize(byte*, int, int64_t*);
+    static int serialize(byte *, uint64_t);
+    static int unserialize(byte*, int, uint64_t*);
 };
 } // namespace
 

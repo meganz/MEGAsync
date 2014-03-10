@@ -2,7 +2,7 @@
  * @file mega/win32/megasys.h
  * @brief Mega SDK platform-specific includes (Win32)
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -27,7 +27,7 @@
 #include "mega/config.h"
 #endif
 
-// XXX: move to autoconf
+// FIXME: move to autoconf
 #define __STDC_FORMAT_MACROS
 
 #include <stdio.h>
@@ -48,10 +48,10 @@
 #define snprintf _snprintf
 #define _CRT_SECURE_NO_WARNINGS
 
-// XXX: move to auto-generated file
-#define MEGA_MAJOR_VERSION 0
-#define MEGA_MINOR_VERSION 2
-#define MEGA_MICRO_VERSION 3
+// FIXME: move to auto-generated file
+#define MEGA_MAJOR_VERSION 2
+#define MEGA_MINOR_VERSION 0
+#define MEGA_MICRO_VERSION 0
 
 #include <conio.h>
 

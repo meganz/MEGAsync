@@ -2,7 +2,7 @@
  * @file mega/transfer.h
  * @brief pending/active up/download ordered by file fingerprint
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -26,8 +26,7 @@
 #include "backofftimer.h"
 
 namespace mega {
-// pending/active up/download ordered by file fingerprint (size - mtime -
-// sparse CRC)
+// pending/active up/download ordered by file fingerprint (size - mtime - sparse CRC)
 struct MEGA_API Transfer : public FileFingerprint
 {
     // PUT or GET

@@ -2,7 +2,7 @@
  * @file share.cpp
  * @brief Classes for manipulating share credentials
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -43,16 +43,16 @@ void Share::serialize(string* d)
 bool Share::unserialize(MegaClient* client, int direction, handle h,
                         const byte* key, const char** ptr, const char* end)
 {
-    if (*ptr + sizeof( handle ) + sizeof( time_t ) + 2 > end)
+    if (*ptr + sizeof(handle) + sizeof(time_t) + 2 > end)
     {
         return 0;
     }
 
-    client->newshares.push_back(new NewShare(h, direction, *(handle*)*ptr,
-                                             (accesslevel_t)( *ptr )[sizeof( handle ) + sizeof( time_t )],
-                                             *(time_t*)( *ptr + sizeof( handle )), key));
+    client->newshares.push_back(new NewShare(h, direction, MemAccess::get<handle>(*ptr),
+                                             (accesslevel_t)(*ptr)[sizeof(handle) + sizeof(time_t)],
+                                             MemAccess::get<time_t>(*ptr + sizeof(handle)), key));
 
-    *ptr += sizeof( handle ) + sizeof( time_t ) + 2;
+    *ptr += sizeof(handle) + sizeof(time_t) + 2;
 
     return true;
 }
@@ -83,7 +83,7 @@ NewShare::NewShare(handle ch, int coutgoing, handle cpeer, accesslevel_t caccess
         have_key = 0;
     }
 
-    if (( outgoing > 0 ) && cauth)
+    if ((outgoing > 0) && cauth)
     {
         memcpy(auth, cauth, sizeof auth);
         have_auth = 1;

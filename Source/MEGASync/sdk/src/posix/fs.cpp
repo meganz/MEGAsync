@@ -2,7 +2,7 @@
  * @file posix/fs.cpp
  * @brief POSIX filesystem/directory access/notification
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -62,7 +62,7 @@ bool PosixFileAccess::sysstat(time_t* mtime, m_off_t* size)
 
 bool PosixFileAccess::sysopen()
 {
-    return ( fd = open(localname.c_str(), O_RDONLY)) >= 0;
+    return (fd = open(localname.c_str(), O_RDONLY)) >= 0;
 }
 
 void PosixFileAccess::sysclose()
@@ -97,14 +97,14 @@ bool PosixFileAccess::fwrite(const byte* data, unsigned len, m_off_t pos)
 bool PosixFileAccess::fopen(string* f, bool read, bool write)
 {
 #ifndef HAVE_FDOPENDIR
-    if (( dp = opendir(f->c_str())))
+    if ((dp = opendir(f->c_str())))
     {
         type = FOLDERNODE;
         return true;
     }
 #endif
 
-    if (( fd = open(f->c_str(), write ? ( read ? O_RDWR : O_WRONLY | O_CREAT | O_TRUNC ) : O_RDONLY, 0600)) >= 0)
+    if ((fd = open(f->c_str(), write ? (read ? O_RDWR : O_WRONLY | O_CREAT | O_TRUNC) : O_RDONLY, 0600)) >= 0)
     {
         struct stat statbuf;
 
@@ -131,7 +131,7 @@ PosixFileSystemAccess::PosixFileSystemAccess()
     localseparator = "/";
 
 #ifdef USE_INOTIFY
-    if (( notifyfd = inotify_init1(IN_NONBLOCK)) >= 0)
+    if ((notifyfd = inotify_init1(IN_NONBLOCK)) >= 0)
     {
         notifyerr = false;
         notifyfailed = false;
@@ -175,27 +175,27 @@ int PosixFileSystemAccess::checkevents(Waiter* w)
 
     if (FD_ISSET(notifyfd, &pw->rfds))
     {
-        char buf[sizeof( struct inotify_event ) + NAME_MAX + 1];
+        char buf[sizeof(struct inotify_event) + NAME_MAX + 1];
         int p, l;
         inotify_event* in;
         wdlocalnode_map::iterator it;
         string localpath;
 
-        while (( l = read(notifyfd, buf, sizeof buf)) > 0)
+        while ((l = read(notifyfd, buf, sizeof buf)) > 0)
         {
             for (p = 0; p < l; p += offsetof(inotify_event, name) + in->len)
             {
-                in = (inotify_event*)( buf + p );
+                in = (inotify_event*)(buf + p);
 
-                if (in->mask & ( IN_Q_OVERFLOW | IN_UNMOUNT ))
+                if (in->mask & (IN_Q_OVERFLOW | IN_UNMOUNT))
                 {
                     notifyerr = true;
                 }
 
-                if (in->mask & ( IN_CREATE | IN_DELETE | IN_MOVED_FROM
-                                 | IN_MOVED_TO | IN_CLOSE_WRITE | IN_EXCL_UNLINK ))
+                if (in->mask & (IN_CREATE | IN_DELETE | IN_MOVED_FROM
+                                 | IN_MOVED_TO | IN_CLOSE_WRITE | IN_EXCL_UNLINK))
                 {
-                    if (( in->mask & ( IN_CREATE | IN_ISDIR )) != IN_CREATE)
+                    if ((in->mask & (IN_CREATE | IN_ISDIR)) != IN_CREATE)
                     {
                         it = wdnodes.find(in->wd);
 
@@ -246,11 +246,11 @@ void PosixFileSystemAccess::name2local(string* filename, const char* badchars)
     }
 
     // replace all occurrences of a badchar with %xx
-    for (int i = filename->size(); i--; )
+    for (int i = filename->size(); i--;)
     {
-        if (((unsigned char)( *filename )[i] < ' ' ) || strchr(badchars, ( *filename )[i]))
+        if (((unsigned char)(*filename)[i] < ' ') || strchr(badchars, (*filename)[i]))
         {
-            sprintf(buf, "%%%02x", (unsigned char)( *filename )[i]);
+            sprintf(buf, "%%%02x", (unsigned char)(*filename)[i]);
             filename->replace(i, 1, buf);
         }
     }
@@ -263,11 +263,11 @@ void PosixFileSystemAccess::local2name(string* filename)
 {
     char c;
 
-    for (int i = filename->size() - 2; i-- > 0; )
+    for (int i = filename->size() - 2; i-- > 0;)
     {
-        if ((( *filename )[i] == '%' ) && islchex(( *filename )[i + 1]) && islchex(( *filename )[i + 2]))
+        if (((*filename)[i] == '%') && islchex((*filename)[i + 1]) && islchex((*filename)[i + 2]))
         {
-            c = ( MegaClient::hexval(( *filename )[i + 1]) << 4 ) + MegaClient::hexval(( *filename )[i + 2]);
+            c = (MegaClient::hexval((*filename)[i + 1]) << 4) + MegaClient::hexval((*filename)[i + 2]);
             filename->replace(i, 3, &c, 1);
         }
     }
@@ -291,28 +291,24 @@ bool PosixFileSystemAccess::copylocal(string* oldname, string* newname)
 
 #ifdef HAVE_SENDFILE
     // Linux-specific - kernel 2.6.33+ required
-    if (( sfd = open(oldname->c_str(), O_RDONLY | O_DIRECT)) >= 0)
+    if ((sfd = open(oldname->c_str(), O_RDONLY | O_DIRECT)) >= 0)
     {
-        if (( tfd = open(newname->c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_DIRECT, 0600)) >= 0)
+        if ((tfd = open(newname->c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_DIRECT, 0600)) >= 0)
         {
-            while (( t = sendfile(tfd, sfd, NULL, 1024 * 1024 * 1024)) > 0)
-            {}
-
+            while ((t = sendfile(tfd, sfd, NULL, 1024 * 1024 * 1024)) > 0);
 #else
     char buf[16384];
 
-    if (( sfd = open(oldname->c_str(), O_RDONLY)) >= 0)
+    if ((sfd = open(oldname->c_str(), O_RDONLY)) >= 0)
     {
-        if (( tfd = open(newname->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600)) >= 0)
+        if ((tfd = open(newname->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600)) >= 0)
         {
-            while ((( t = read(sfd, buf, sizeof buf)) > 0 ) && write(tfd, buf, t) == t)
-            {}
-
+            while (((t = read(sfd, buf, sizeof buf)) > 0) && write(tfd, buf, t) == t);
 #endif
             close(tfd);
         }
 
-            close(sfd);
+        close(sfd);
     }
 
     return !t;
@@ -362,7 +358,7 @@ size_t PosixFileSystemAccess::lastpartlocal(string* localname)
 {
     const char* ptr = localname->data();
 
-    if (( ptr = strrchr(ptr, '/')))
+    if ((ptr = strrchr(ptr, '/')))
     {
         return ptr - localname->data();
     }
@@ -451,11 +447,11 @@ bool PosixDirAccess::dopen(string* path, FileAccess* f, bool doglob)
     if (f)
     {
 #ifdef HAVE_FDOPENDIR
-        dp = fdopendir(((PosixFileAccess*)f )->fd);
-        ((PosixFileAccess*)f )->fd = -1;
+        dp = fdopendir(((PosixFileAccess*)f)->fd);
+        ((PosixFileAccess*)f)->fd = -1;
 #else
-        dp = ((PosixFileAccess*)f )->dp;
-        ((PosixFileAccess*)f )->dp = NULL;
+        dp = ((PosixFileAccess*)f)->dp;
+        ((PosixFileAccess*)f)->dp = NULL;
 #endif
     }
     else
@@ -476,10 +472,10 @@ bool PosixDirAccess::dnext(string* name, nodetype_t* type)
         {
             if (!stat(globbuf.gl_pathv[globindex++], &statbuf))
             {
-                if (statbuf.st_mode & ( S_IFREG | S_IFDIR ))
+                if (statbuf.st_mode & (S_IFREG | S_IFDIR))
                 {
                     *name = globbuf.gl_pathv[globindex - 1];
-                    *type = ( statbuf.st_mode & S_IFREG ) ? FILENODE : FOLDERNODE;
+                    *type = (statbuf.st_mode & S_IFREG) ? FILENODE : FOLDERNODE;
 
                     return true;
                 }
@@ -491,13 +487,13 @@ bool PosixDirAccess::dnext(string* name, nodetype_t* type)
 
     dirent* d;
 
-    while (( d = readdir(dp)))
+    while ((d = readdir(dp)))
     {
-        if ((( d->d_type == DT_DIR )
-                || ( d->d_type == DT_REG ))
-                && (( d->d_type != DT_DIR )
-                        || ( *d->d_name != '.' )
-                        || ( d->d_name[1] && (( d->d_name[1] != '.' ) || d->d_name[2] ))))
+        if (((d->d_type == DT_DIR)
+                || (d->d_type == DT_REG))
+                && ((d->d_type != DT_DIR)
+                        || (*d->d_name != '.')
+                        || (d->d_name[1] && ((d->d_name[1] != '.') || d->d_name[2]))))
         {
             *name = d->d_name;
             if (type)

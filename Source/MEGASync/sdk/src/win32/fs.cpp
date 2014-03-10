@@ -66,19 +66,24 @@ bool WinFileAccess::fwrite(const byte* data, unsigned len, m_off_t pos)
     return WriteFile(hFile, (LPCVOID)data, (DWORD)len, &dwWritten, NULL) && dwWritten == len;
 }
 
-time_t FileTime_to_POSIX(FILETIME* ft) // NS (suppress style error)
+time_t FileTime_to_POSIX(FILETIME* ft)
 {
-    // takes the last modified date
     LARGE_INTEGER date;
 
     date.HighPart = ft->dwHighDateTime;
     date.LowPart = ft->dwLowDateTime;
 
-    // removes the diff between 1970 and 1601
-    date.QuadPart -= 11644473600000 * 10000;
+    // remove the diff between 1970 and 1601 and convert back from 100-nanoseconds to seconds
+    int64_t t = date.QuadPart - 11644473600000 * 10000;
 
-    // converts back from 100-nanoseconds to seconds
-    return date.QuadPart / 10000000;
+    // clamp
+    if (t < 0) return 0;
+    
+    t /= 10000000;
+    
+    if (t > (uint32_t)-1) t = (uint32_t)-1;
+
+    return t;
 }
 
 bool WinFileAccess::sysstat(time_t* mtime, m_off_t* size)

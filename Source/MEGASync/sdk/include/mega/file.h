@@ -2,7 +2,7 @@
  * @file mega/file.h
  * @brief Classes for transferring files
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -45,9 +45,7 @@ struct MEGA_API File: public FileFingerprint
     virtual bool failed(error);
 
     // update localname
-    virtual void updatelocalname()
-    {
-    }
+    virtual void updatelocalname() { }
 
     // generic filename for this transfer
     void displayname(string*);

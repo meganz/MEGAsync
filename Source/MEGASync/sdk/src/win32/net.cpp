@@ -2,7 +2,7 @@
  * @file win32/net.cpp
  * @brief Win32 network access layer (using WinHTTP)
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -42,12 +42,12 @@ void WinHttpIO::setuseragent(string* useragent)
 {
     string wuseragent;
 
-    wuseragent.resize(( useragent->size() + 1 ) * sizeof( wchar_t ));
-    wuseragent.resize(sizeof( wchar_t )
-                      * ( MultiByteToWideChar(CP_UTF8, 0, useragent->c_str(),
+    wuseragent.resize((useragent->size() + 1) * sizeof(wchar_t));
+    wuseragent.resize(sizeof(wchar_t)
+                      * (MultiByteToWideChar(CP_UTF8, 0, useragent->c_str(),
                                               -1, (wchar_t*)wuseragent.data(),
-                                              wuseragent.size() / sizeof( wchar_t ) + 1)
-                          - 1 ));
+                                              wuseragent.size() / sizeof(wchar_t) + 1)
+                          - 1));
 
     // create the session handle using the default settings.
     hSession = WinHttpOpen((LPCWSTR)wuseragent.data(),
@@ -165,7 +165,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
         case WINHTTP_CALLBACK_STATUS_HEADERS_AVAILABLE:
         {
             DWORD statusCode = 0;
-            DWORD statusCodeSize = sizeof( statusCode );
+            DWORD statusCodeSize = sizeof(statusCode);
 
             if (!WinHttpQueryHeaders(httpctx->hRequest,
                                      WINHTTP_QUERY_STATUS_CODE | WINHTTP_QUERY_FLAG_NUMBER,
@@ -220,7 +220,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 
                 httpctx->postpos += t;
 
-                if (!WinHttpWriteData(httpctx->hRequest, (LPVOID)( httpctx->postdata + pos ), t, NULL))
+                if (!WinHttpWriteData(httpctx->hRequest, (LPVOID)(httpctx->postdata + pos), t, NULL))
                 {
                     req->httpio->cancel(req);
                 }
@@ -278,19 +278,19 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                             sizeof szURL / sizeof *szURL)
             && WinHttpCrackUrl(szURL, 0, 0, &urlComp))
     {
-        if (( httpctx->hConnect = WinHttpConnect(hSession, szHost, urlComp.nPort, 0)))
+        if ((httpctx->hConnect = WinHttpConnect(hSession, szHost, urlComp.nPort, 0)))
         {
             httpctx->hRequest = WinHttpOpenRequest(httpctx->hConnect, L"POST",
                                                    urlComp.lpszUrlPath, NULL,
                                                    WINHTTP_NO_REFERER,
                                                    WINHTTP_DEFAULT_ACCEPT_TYPES,
-                                                   ( urlComp.nScheme == INTERNET_SCHEME_HTTPS )
+                                                   (urlComp.nScheme == INTERNET_SCHEME_HTTPS)
                                                    ? WINHTTP_FLAG_SECURE
                                                    : 0);
 
             if (httpctx->hRequest)
             {
-                WinHttpSetTimeouts(httpctx->hRequest, 0, 20000, 20000, 300000);
+                WinHttpSetTimeouts(httpctx->hRequest, 0, 20000, 20000, 1800000);
 
                 WinHttpSetStatusCallback(httpctx->hRequest, asynccallback,
                                          WINHTTP_CALLBACK_FLAG_DATA_AVAILABLE
@@ -303,7 +303,7 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                                          | WINHTTP_CALLBACK_FLAG_HANDLES,
                                          0);
 
-                LPCWSTR pwszHeaders = ( req->type == REQ_JSON )
+                LPCWSTR pwszHeaders = (req->type == REQ_JSON)
                                       ? L"Content-Type: application/json"
                                       : L"Content-Type: application/octet-stream";
 
@@ -311,7 +311,7 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                 // semi-smooth UI progress info
                 httpctx->postlen = data ? len : req->out->size();
                 httpctx->postdata = data ? data : req->out->data();
-                httpctx->postpos = ( httpctx->postlen < HTTP_POST_CHUNK_SIZE )
+                httpctx->postpos = (httpctx->postlen < HTTP_POST_CHUNK_SIZE)
                                    ? httpctx->postlen
                                    : HTTP_POST_CHUNK_SIZE;
 
@@ -346,7 +346,7 @@ void WinHttpIO::cancel(HttpReq* req)
 {
     WinHttpContext* httpctx;
 
-    if (( httpctx = (WinHttpContext*)req->httpiohandle ))
+    if ((httpctx = (WinHttpContext*)req->httpiohandle))
     {
         httpctx->req = NULL;
 
@@ -369,7 +369,7 @@ void WinHttpIO::cancel(HttpReq* req)
 // supply progress information on POST data
 m_off_t WinHttpIO::postpos(void* handle)
 {
-    return ((WinHttpContext*)handle )->postpos;
+    return ((WinHttpContext*)handle)->postpos;
 }
 
 // process events

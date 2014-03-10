@@ -2,7 +2,7 @@
  * @file win32/console.cpp
  * @brief Win32 console I/O
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -44,19 +44,19 @@ void WinConsole::readpwchar(char* pw_buf, int pw_buf_size, int* pw_buf_pos, char
 
     if (ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &c, 1, &cread, NULL) == 1)
     {
-        if (( c == 8 ) && *pw_buf_pos)
+        if ((c == 8) && *pw_buf_pos)
         {
-            ( *pw_buf_pos )--;
+            (*pw_buf_pos)--;
         }
         else if (c == 13)
         {
             *line = (char*)malloc(*pw_buf_pos + 1);
             memcpy(*line, pw_buf, *pw_buf_pos);
-            ( *line )[*pw_buf_pos] = 0;
+            (*line)[*pw_buf_pos] = 0;
         }
         else if (*pw_buf_pos < pw_buf_size)
         {
-            pw_buf[( *pw_buf_pos )++] = c;
+            pw_buf[(*pw_buf_pos)++] = c;
         }
     }
 }
@@ -67,14 +67,16 @@ void WinConsole::setecho(bool echo)
     DWORD mode;
 
     GetConsoleMode(hCon, &mode);
+
     if (echo)
     {
         mode |= ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT;
     }
     else
     {
-        mode &= ~( ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT );
+        mode &= ~(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT);
     }
+
     SetConsoleMode(hCon, mode);
 }
 } // namespace

@@ -2,7 +2,7 @@
  * @file mega/megaapp.h
  * @brief Mega SDK callback interface
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -157,6 +157,7 @@ struct MEGA_API MegaApp
     {
         return true;
     }
+
     virtual bool sync_syncable(const char*, string*, string*)
     {
         return true;

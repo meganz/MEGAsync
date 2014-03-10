@@ -176,6 +176,7 @@ MegaProxySettings *MegaApiWinHttpIO::getAutoProxySettings()
     return proxySettings;
 }
 
+// POST request to URL
 void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
 {
     if (debug)
@@ -213,13 +214,13 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                             sizeof szURL / sizeof *szURL)
             && WinHttpCrackUrl(szURL, 0, 0, &urlComp))
     {
-        if (( httpctx->hConnect = WinHttpConnect(hSession, szHost, urlComp.nPort, 0)))
+        if ((httpctx->hConnect = WinHttpConnect(hSession, szHost, urlComp.nPort, 0)))
         {
             httpctx->hRequest = WinHttpOpenRequest(httpctx->hConnect, L"POST",
                                                    urlComp.lpszUrlPath, NULL,
                                                    WINHTTP_NO_REFERER,
                                                    WINHTTP_DEFAULT_ACCEPT_TYPES,
-                                                   ( urlComp.nScheme == INTERNET_SCHEME_HTTPS )
+                                                   (urlComp.nScheme == INTERNET_SCHEME_HTTPS)
                                                    ? WINHTTP_FLAG_SECURE
                                                    : 0);
 
@@ -245,7 +246,7 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                                          | WINHTTP_CALLBACK_FLAG_HANDLES,
                                          0);
 
-                LPCWSTR pwszHeaders = ( req->type == REQ_JSON )
+                LPCWSTR pwszHeaders = (req->type == REQ_JSON)
                                       ? L"Content-Type: application/json"
                                       : L"Content-Type: application/octet-stream";
 
@@ -253,7 +254,7 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                 // semi-smooth UI progress info
                 httpctx->postlen = data ? len : req->out->size();
                 httpctx->postdata = data ? data : req->out->data();
-                httpctx->postpos = ( httpctx->postlen < HTTP_POST_CHUNK_SIZE )
+                httpctx->postpos = (httpctx->postlen < HTTP_POST_CHUNK_SIZE)
                                    ? httpctx->postlen
                                    : HTTP_POST_CHUNK_SIZE;
 

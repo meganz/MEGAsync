@@ -2,7 +2,7 @@
  * @file sharenodekeys.cpp
  * @brief cr element share/node map key generator
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -29,7 +29,7 @@ namespace mega {
 // add share node and return its index
 int ShareNodeKeys::addshare(Node* sn)
 {
-    for (int i = shares.size(); i--; )
+    for (int i = shares.size(); i--;)
     {
         if (shares[i] == sn)
         {
@@ -52,8 +52,7 @@ void ShareNodeKeys::add(Node* n, Node* sn, int specific)
     add((NodeCore*)n, sn, specific);
 }
 
-// add a nodecore (!sn: all relevant shares, otherwise starting from sn, fixed:
-// only sn)
+// add a nodecore (!sn: all relevant shares, otherwise starting from sn, fixed: only sn)
 void ShareNodeKeys::add(NodeCore* n, Node* sn, int specific, const byte* item, int itemlen)
 {
     char buf[96];
@@ -79,7 +78,7 @@ void ShareNodeKeys::add(NodeCore* n, Node* sn, int specific, const byte* item, i
             addnode = 1;
         }
     }
-    while (!specific && ( sn = sn->parent ));
+    while (!specific && (sn = sn->parent));
 
     if (addnode)
     {

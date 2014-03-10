@@ -2,7 +2,7 @@
  * @file sync.cpp
  * @brief Class for synchronizing local and remote trees
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -137,7 +137,7 @@ LocalNode* Sync::localnodebypath(LocalNode* l, string* localpath, LocalNode** pa
 
     for (;;)
     {
-        if (( nptr == end ) || !memcmp(nptr, client->fsaccess->localseparator.data(), separatorlen))
+        if ((nptr == end) || !memcmp(nptr, client->fsaccess->localseparator.data(), separatorlen))
         {
             if (parent)
             {
@@ -145,8 +145,8 @@ LocalNode* Sync::localnodebypath(LocalNode* l, string* localpath, LocalNode** pa
             }
 
             t.assign(ptr, nptr - ptr);
-            if ((( it = l->children.find(&t)) == l->children.end())
-                && (( it = l->schildren.find(&t)) == l->schildren.end()))
+            if (((it = l->children.find(&t)) == l->children.end())
+                && ((it = l->schildren.find(&t)) == l->schildren.end()))
             {
                 // no full match: store residual path, return NULL with the
                 // matching component LocalNode in parent
@@ -183,9 +183,9 @@ LocalNode* Sync::localnodebypath(LocalNode* l, string* localpath, LocalNode** pa
 // localpath must be prefixed with Sync
 bool Sync::scan(string* localpath, FileAccess* fa)
 {
-	if (( localpath->size() < localdebris.size())
+	if ((localpath->size() < localdebris.size())
 		|| memcmp(localpath->data(), localdebris.data(), localdebris.size())
-		|| (( localpath->size() != localdebris.size())
+		|| ((localpath->size() != localdebris.size())
 			&& memcmp(localpath->data() + localdebris.size(),
 					  client->fsaccess->localseparator.data(),
 					  client->fsaccess->localseparator.size())))
@@ -205,7 +205,7 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 		da = client->fsaccess->newdiraccess();
 
 		// scan the dir, mark all items with a unique identifier
-		if (( success = da->dopen(localpath, fa, false)))
+		if ((success = da->dopen(localpath, fa, false)))
 		{
 			size_t t = localpath->size();
 
@@ -224,9 +224,9 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 					localpath->append(localname);
 
 					// skip the sync's debris folder
-					if (( localpath->size() < localdebris.size())
+					if ((localpath->size() < localdebris.size())
 						|| memcmp(localpath->data(), localdebris.data(), localdebris.size())
-						|| (( localpath->size() != localdebris.size())
+						|| ((localpath->size() != localdebris.size())
 							&& memcmp(localpath->data() + localdebris.size(),
 									  client->fsaccess->localseparator.data(),
 									  client->fsaccess->localseparator.size())))
@@ -291,6 +291,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
             {
                 tmppath.append(client->fsaccess->localseparator);
             }
+
             tmppath.append(*localpath);
         }
 
@@ -306,6 +307,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 
         string name = newname;
         client->fsaccess->local2name(&name);
+
         if (!client->app->sync_syncable(name.c_str(), &tmppath, &newname))
         {
             return NULL;
@@ -344,7 +346,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
 
                             // was the file overwritten by moving an existing
                             // file over it?
-                            if (( it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end())
+                            if ((it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end())
                             {
                                 client->app->syncupdate_local_move(this, it->second->name.c_str(), path.c_str());
 
@@ -370,9 +372,9 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
                     }
 
                     // no fsid change detected or overwrite with unknown file:
-                    if (( fa->mtime != l->mtime ) || ( fa->size != l->size ))
+                    if ((fa->mtime != l->mtime) || (fa->size != l->size))
                     {
-                        if (fa->fsidvalid && ( l->fsid != fa->fsid ))
+                        if (fa->fsidvalid && (l->fsid != fa->fsid))
                         {
                             l->setfsid(fa->fsid);
                         }
@@ -413,7 +415,7 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
                 // rename or move of existing node?
                 handlelocalnode_map::iterator it;
 
-                if (fa->fsidvalid && (( it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end()))
+                if (fa->fsidvalid && ((it = client->fsidnode.find(fa->fsid)) != client->fsidnode.end()))
                 {
                     client->app->syncupdate_local_move(this, it->second->name.c_str(), path.c_str());
 
@@ -433,10 +435,12 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
                     // this is a new node: add
                     l = new LocalNode;
                     l->init(this, fa->type, parent, localname ? localname : &newname, localname ? localpath : &tmppath);
+
                     if (fa->fsidvalid)
                     {
                         l->setfsid(fa->fsid);
                     }
+
                     newnode = true;
                 }
             }
@@ -543,7 +547,7 @@ void Sync::procscanq(int q)
         // we return control to the application in case a filenode was added
         // (in order to avoid lengthy blocking episodes due to multiple
         // consecutive fingerprint calculations)
-        if (l && ( l->type == FILENODE ))
+        if (l && (l->type == FILENODE))
         {
             break;
         }
@@ -569,7 +573,7 @@ bool Sync::movetolocaldebris(string* localpath)
 
     for (int i = -3; i < 100; i++)
     {
-        if (( i == -2 ) || ( i > 95 ))
+        if ((i == -2) || (i > 95))
         {
             client->fsaccess->mkdirlocal(&localdebris);
         }

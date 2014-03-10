@@ -2,7 +2,7 @@
  * @file bdb.cpp
  * @brief Berkeley DB access layer
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -19,8 +19,7 @@
  * program.
  */
 
-// FIXME: close in a way that does not require logfile merging upon the next
-// open()
+// FIXME: close in a way that does not require logfile merging upon the next open()
 
 #ifdef USE_BDB
 
@@ -36,8 +35,8 @@ BdbAccess::BdbAccess(string* cdbpathprefix)
     }
     else
     {
-        dbpathprefix = "megaclient_statecache_";    // FIXME: Unicode support
-                                                    // for default prefix?
+        // FIXME: Unicode support for default prefix?
+        dbpathprefix = "megaclient_statecache_";
     }
     env = NULL;
 }
@@ -130,7 +129,7 @@ bool BdbTable::next(uint32_t* index, string* data)
         return false;
     }
 
-    if (sizeof( *index ) != key.get_size())
+    if (sizeof(*index) != key.get_size())
     {
         return false;
     }

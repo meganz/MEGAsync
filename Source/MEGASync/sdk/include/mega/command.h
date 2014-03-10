@@ -2,7 +2,7 @@
  * @file mega/command.h
  * @brief Request command component
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -67,7 +67,7 @@ public:
     void beginobject();
     void endobject();
     void element(int);
-    void element(handle, int = sizeof( handle ));
+    void element(handle, int = sizeof(handle));
     void element(const byte*, int);
 
     void openobject();
