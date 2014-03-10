@@ -2,7 +2,7 @@
  * @file json.cpp
  * @brief Linear non-strict JSON scanner
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -43,13 +43,13 @@ bool JSON::storeobject(string* s)
 
     ptr = pos;
 
-    for (; ; )
+    for (;;)
     {
-        if (( *ptr == '[' ) || ( *ptr == '{' ))
+        if ((*ptr == '[') || (*ptr == '{'))
         {
             openobject[*ptr == '[']++;
         }
-        else if (( *ptr == ']' ) || ( *ptr == '}' ))
+        else if ((*ptr == ']') || (*ptr == '}'))
         {
             openobject[*ptr == ']']--;
         }
@@ -61,17 +61,17 @@ bool JSON::storeobject(string* s)
                 ptr++;
             }
         }
-        else if ((( *ptr >= '0' ) && ( *ptr <= '9' )) || ( *ptr == '-' ) || ( *ptr == '.' ))
+        else if (((*ptr >= '0') && (*ptr <= '9')) || (*ptr == '-') || (*ptr == '.'))
         {
             ptr++;
-            while (( *ptr >= '0' && *ptr <= '9' ) || *ptr == '.' || *ptr == 'e' || *ptr == 'E')
+            while ((*ptr >= '0' && *ptr <= '9') || *ptr == '.' || *ptr == 'e' || *ptr == 'E')
             {
                 ptr++;
             }
 
             ptr--;
         }
-        else if (( *ptr != ':' ) && ( *ptr != ',' ))
+        else if ((*ptr != ':') && (*ptr != ','))
         {
             return false;
         }
@@ -120,7 +120,7 @@ nameid JSON::getnameid(const char* ptr)
 
     while (*ptr && *ptr != '"')
     {
-        id = ( id << 8 ) + *ptr++;
+        id = (id << 8) + *ptr++;
     }
 
     return id;
@@ -134,7 +134,7 @@ nameid JSON::getnameid()
     const char* ptr = pos;
     nameid id = 0;
 
-    if (( *ptr == ',' ) || ( *ptr == ':' ))
+    if ((*ptr == ',') || (*ptr == ':'))
     {
         ptr++;
     }
@@ -143,7 +143,7 @@ nameid JSON::getnameid()
     {
         while (*ptr && *ptr != '"')
         {
-            id = ( id << 8 ) + *ptr++;
+            id = (id << 8) + *ptr++;
         }
 
         pos = ptr + 2;
@@ -167,7 +167,7 @@ bool JSON::is(const char* value)
 
     int t = strlen(value);
 
-    if (memcmp(pos + 1, value, t) || ( pos[t + 1] != '"' ))
+    if (memcmp(pos + 1, value, t) || (pos[t + 1] != '"'))
     {
         return false;
     }
@@ -210,16 +210,16 @@ bool JSON::storebinary(string* dst)
     {
         const char* ptr;
 
-        if (!( ptr = strchr(pos + 1, '"')))
+        if (!(ptr = strchr(pos + 1, '"')))
         {
             return false;
         }
 
-        dst->resize(( ptr - pos - 1 ) / 4 * 3 + 3);
+        dst->resize((ptr - pos - 1) / 4 * 3 + 3);
         dst->resize(Base64::atob(pos + 1, (byte*)dst->data(), dst->size()));
 
         // skip string
-            storeobject();
+        storeobject();
     }
 
     return true;
@@ -234,7 +234,7 @@ handle JSON::gethandle(int size)
     // no endianness issues
     if (storebinary(buf, sizeof buf) == size)
     {
-        return *(handle*)buf;
+        return MemAccess::get<handle>((const char*)buf);
     }
 
     return UNDEF;
@@ -245,7 +245,7 @@ m_off_t JSON::getint()
 {
     const char* ptr;
 
-    if (( *pos == ':' ) || ( *pos == ',' ))
+    if ((*pos == ':') || (*pos == ','))
     {
         pos++;
     }
@@ -256,7 +256,7 @@ m_off_t JSON::getint()
         ptr++;
     }
 
-    if ((( *ptr < '0' ) || ( *ptr > '9' )) && ( *ptr != '-' ))
+    if (((*ptr < '0') || (*ptr > '9')) && (*ptr != '-'))
     {
         return -1;
     }
@@ -270,19 +270,19 @@ m_off_t JSON::getint()
 // decode float
 double JSON::getfloat()
 {
-    if (( *pos == ':' ) || ( *pos == ',' ))
+    if ((*pos == ':') || (*pos == ','))
     {
         pos++;
     }
 
-    if ((( *pos < '0' ) || ( *pos > '9' )) && ( *pos != '-' ) && ( *pos != '.' ))
+    if (((*pos < '0') || (*pos > '9')) && (*pos != '-') && (*pos != '.'))
     {
         return -1;
     }
 
     double r = atof(pos);
 
-            storeobject();
+    storeobject();
 
     return r;
 }
@@ -292,7 +292,7 @@ const char* JSON::getvalue()
 {
     const char* r;
 
-    if (( *pos == ':' ) || ( *pos == ',' ))
+    if ((*pos == ':') || (*pos == ','))
     {
         pos++;
     }
@@ -364,18 +364,18 @@ bool JSON::enterobject()
 // leave object (skip remainder)
 bool JSON::leaveobject()
 {
-    for (; ; )
+    for (; ;)
     {
-        if (( *pos == ':' ) || ( *pos == ',' ))
+        if ((*pos == ':') || (*pos == ','))
         {
             pos++;
         }
-        else if (( *pos == '"' )
-                || (( *pos >= '0' )
-                        && ( *pos <= '9' ))
-                        || ( *pos == '-' )
-                        || ( *pos == '[' )
-                        || ( *pos == '{' ))
+        else if ((*pos == '"')
+                || ((*pos >= '0')
+                        && (*pos <= '9'))
+                        || (*pos == '-')
+                        || (*pos == '[')
+                        || (*pos == '{'))
         {
             storeobject();
         }
@@ -402,9 +402,9 @@ void JSON::unescape(string* s)
 
     for (unsigned i = 0; i + 1 < s->size(); i++)
     {
-        if (( *s )[i] == '\\')
+        if ((*s)[i] == '\\')
         {
-            switch (( *s )[i + 1])
+            switch ((*s)[i + 1])
             {
                 case 'n':
                     c = '\n';
@@ -432,12 +432,12 @@ void JSON::unescape(string* s)
                     break;
 
                 case 'u':
-                    c = ( MegaClient::hexval(( *s )[i + 4]) << 4 ) | MegaClient::hexval(( *s )[i + 5]);
+                    c = (MegaClient::hexval((*s)[i + 4]) << 4) | MegaClient::hexval((*s)[i + 5]);
                     l = 6;
                     break;
 
                 default:
-                    c = ( *s )[i + 1];
+                    c = (*s)[i + 1];
                     l = 2;
             }
 

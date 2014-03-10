@@ -2,7 +2,7 @@
  * @file mega/types.h
  * @brief Mega SDK types and includes
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -34,20 +34,19 @@
  #define MEGA_API
 #endif
 
-// inttypes.h is not present in Microsoft Visual Studio
+// (inttypes.h is not present in Microsoft Visual Studio)
 #ifdef _MSC_VER
- #define PRIu32       "I32u" // NS (suppress style error)
- #define PRIu64       "I64u" // NS (suppress style error)
- #define PRId64       "I64d" // NS (suppress style error)
+ #define PRIu32 "I32u" 
+ #define PRIu64 "I64u"
+ #define PRId64 "I64d"
 #else
-// FIXME: #define PRI*64 is missing
  #define __STDC_FORMAT_MACROS
  #include <inttypes.h>
 #endif
 
 #include <iostream>
 #include <algorithm>
-#include <string>   // the code assumes writable, contiguous string::data()
+#include <string>   // the MEGA SDK assumes writable, contiguous string::data()
 #include <sstream>
 #include <map>
 #include <set>
@@ -254,7 +253,7 @@ typedef list<Node*> node_list;
 // undefined node handle
 const handle UNDEF = ~(handle)0;
 
-#define ISUNDEF(h) ( !(( h ) + 1 ))
+#define ISUNDEF(h) (!((h) + 1))
 
 typedef list<struct TransferSlot*> transferslot_list;
 

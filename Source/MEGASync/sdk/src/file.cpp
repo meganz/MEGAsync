@@ -2,7 +2,7 @@
  * @file file.cpp
  * @brief Classes for transferring files
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -49,10 +49,12 @@ void File::prepare()
 }
 
 void File::start()
-{}
+{
+}
 
 void File::progress()
-{}
+{
+}
 
 void File::completed(Transfer* t, LocalNode* l)
 {
@@ -75,7 +77,7 @@ void File::completed(Transfer* t, LocalNode* l)
         newnode->type = FILENODE;
         newnode->parenthandle = UNDEF;
 
-        if (( newnode->localnode = l ))
+        if ((newnode->localnode = l))
         {
             newnode->syncid = l->syncid;
         }
@@ -113,6 +115,7 @@ void File::completed(Transfer* t, LocalNode* l)
             {
                 t->client->syncadding++;
             }
+
             t->client->reqs[t->client->r].add(new CommandPutNodes(t->client,
                                                                   th, NULL,
                                                                   newnode, 1,
@@ -139,7 +142,7 @@ void File::displayname(string* dname)
     {
         Node* n;
 
-        if (( n = transfer->client->nodebyhandle(h)))
+        if ((n = transfer->client->nodebyhandle(h)))
         {
             *dname = n->displayname();
         }
@@ -183,7 +186,7 @@ void SyncFileGet::prepare()
         {
             sync->tmpfa = sync->client->fsaccess->newfileaccess();
 
-            for (i = 3; i--; )
+            for (i = 3; i--;)
             {
                 transfer->localfilename = sync->localdebris;
                 sync->client->fsaccess->mkdirlocal(&transfer->localfilename, true);
@@ -250,7 +253,7 @@ void SyncFileGet::updatelocalname()
 {
     attr_map::iterator ait;
 
-    if (( ait = n->attrs.map.find('n')) != n->attrs.map.end())
+    if ((ait = n->attrs.map.find('n')) != n->attrs.map.end())
     {
         if (n->parent && n->parent->localnode)
         {

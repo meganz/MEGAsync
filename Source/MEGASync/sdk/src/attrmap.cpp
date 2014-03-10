@@ -1,8 +1,8 @@
 /**
  * @file attrmap.cpp
- * @brief Class for manipulating file attributes
+ * @brief Class for manipulating node attributes
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -40,9 +40,9 @@ int AttrMap::nameid2string(nameid id, char* buf)
 {
     char* ptr = buf;
 
-    for (int i = 64; ( i -= 8 ) >= 0; )
+    for (int i = 64; (i -= 8) >= 0;)
     {
-        if (( *ptr = (( id >> i ) & 0xff )))
+        if ((*ptr = ((id >> i) & 0xff)))
         {
             ptr++;
         }
@@ -60,7 +60,7 @@ void AttrMap::serialize(string* d)
 
     for (attr_map::iterator it = map.begin(); it != map.end(); it++)
     {
-        if (( l = nameid2string(it->first, buf)))
+        if ((l = nameid2string(it->first, buf)))
         {
             d->append((char*)&l, sizeof l);
             d->append(buf, l);
@@ -80,15 +80,16 @@ const char* AttrMap::unserialize(const char* ptr, unsigned len)
     unsigned short ll;
     nameid id;
 
-    while (( l = *ptr++ ))
+    while ((l = *ptr++))
     {
         id = 0;
+
         while (l--)
         {
-            id = ( id << 8 ) + (unsigned char)*ptr++;
+            id = (id << 8) + (unsigned char)*ptr++;
         }
 
-        ll = *(short*)ptr;
+        ll = MemAccess::get<short>(ptr);
         ptr += sizeof ll;
         map[id].assign(ptr, ll);
         ptr += ll;
@@ -113,7 +114,7 @@ void AttrMap::getjson(string* s)
     {
         s->append(s->size() ? ",\"" : "\"");
 
-        if (( id = it->first ))
+        if ((id = it->first))
         {
             // no JSON escaping here, as no escape characters are allowed in
             // attribute names
@@ -126,7 +127,7 @@ void AttrMap::getjson(string* s)
 
             for (int i = it->second.size(); i-- >= 0; ptr++)
             {
-                if (( i < 0 ) || (( *ptr >= 0 ) && ( *ptr < ' ' )) || ( *ptr == '"' ) || ( *ptr == '\\' ))
+                if ((i < 0) || ((*ptr >= 0) && (*ptr < ' ')) || (*ptr == '"') || (*ptr == '\\'))
                 {
                     if (ptr > pptr)
                     {

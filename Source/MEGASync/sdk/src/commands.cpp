@@ -2,7 +2,7 @@
  * @file commands.cpp
  * @brief Implementation of various commands
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -63,7 +63,7 @@ void HttpReqCommandPutFA::procresult()
     {
         const char* p = NULL;
 
-        for (; ; )
+        for (;;)
         {
             switch (client->json.getnameid())
             {
@@ -119,7 +119,7 @@ void CommandGetFA::procresult()
 
     const char* p = NULL;
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -159,7 +159,7 @@ CommandAttachFA::CommandAttachFA(handle nh, fatype t, handle ah, int ctag)
     char buf[64];
 
     sprintf(buf, "%u*", t);
-    Base64::btoa((byte*)&ah, sizeof( ah ), strchr(buf + 2, 0));
+    Base64::btoa((byte*)&ah, sizeof(ah), strchr(buf + 2, 0));
     arg("fa", buf);
 
     h = nh;
@@ -223,7 +223,7 @@ void CommandPutFile::procresult()
         return tslot->transfer->failed((error)client->json.getint());
     }
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -292,6 +292,7 @@ void CommandGetFile::procresult()
         {
             return tslot->transfer->failed((error)client->json.getint());
         }
+
         return client->app->checkfile_result(ph, (error)client->json.getint());
     }
 
@@ -307,7 +308,7 @@ void CommandGetFile::procresult()
     string filenamestring;
     string filefingerprint;
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -384,7 +385,7 @@ void CommandGetFile::procresult()
 
                         json.begin((char*)buf + 5);
 
-                        for (; ; )
+                        for (;;)
                         {
                             switch (json.getnameid())
                             {
@@ -418,7 +419,7 @@ void CommandGetFile::procresult()
                                     if (tslot)
                                     {
                                         tslot->starttime = tslot->lastdata = client->waiter->ds;
-                                        if (tslot->tempurl.size() && ( s >= 0 ))
+                                        if (tslot->tempurl.size() && (s >= 0))
                                         {
                                             return tslot->progress();
                                         }
@@ -560,23 +561,23 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th,
 
         if (!ISUNDEF(nn[i].parenthandle))
         {
-                    arg("p", (byte*)&nn[i].parenthandle, MegaClient::NODEHANDLE);
+            arg("p", (byte*)&nn[i].parenthandle, MegaClient::NODEHANDLE);
         }
 
-                    arg("t", nn[i].type);
-                    arg("a", (byte*)nn[i].attrstring.data(), nn[i].attrstring.size());
+        arg("t", nn[i].type);
+        arg("a", (byte*)nn[i].attrstring.data(), nn[i].attrstring.size());
 
         if (nn[i].nodekey.size() <= sizeof key)
         {
             client->key.ecb_encrypt((byte*)nn[i].nodekey.data(), key, nn[i].nodekey.size());
-                    arg("k", key, nn[i].nodekey.size());
+            arg("k", key, nn[i].nodekey.size());
         }
         else
         {
-                    arg("k",  (const byte*)nn[i].nodekey.data(), nn[i].nodekey.size());
+            arg("k",  (const byte*)nn[i].nodekey.data(), nn[i].nodekey.size());
         }
 
-                    arg("ts", nn[i].clienttimestamp);
+        arg("ts", nn[i].clienttimestamp);
 
         endobject();
     }
@@ -588,7 +589,7 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th,
     {
         Node* tn;
 
-        if (( tn = client->nodebyhandle(th)))
+        if ((tn = client->nodebyhandle(th)))
         {
             ShareNodeKeys snk;
 
@@ -597,11 +598,11 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th,
                 switch (nn[i].source)
                 {
                     case NEW_NODE:
-                        snk.add((NodeCore*)( nn + i ), tn, 0);
+                        snk.add((NodeCore*)(nn + i), tn, 0);
                         break;
 
                     case NEW_UPLOAD:
-                        snk.add((NodeCore*)( nn + i ), tn, 0, nn[i].uploadtoken, (int)sizeof nn->uploadtoken);
+                        snk.add((NodeCore*)(nn + i), tn, 0, nn[i].uploadtoken, (int)sizeof nn->uploadtoken);
                         break;
 
                     case NEW_PUBLIC:
@@ -641,7 +642,7 @@ void CommandPutNodes::procresult()
 
     e = API_EINTERNAL;
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -687,12 +688,12 @@ CommandMoveNode::CommandMoveNode(MegaClient* client, Node* n, Node* t, syncdel_t
 
     h = n->nodehandle;
 
-    if (( syncdel = csyncdel ) != SYNCDEL_NONE)
+    if ((syncdel = csyncdel) != SYNCDEL_NONE)
     {
         syncn = n;
     }
 
-    arg("n", (byte*)&h,             MegaClient::NODEHANDLE);
+    arg("n", (byte*)&h, MegaClient::NODEHANDLE);
     arg("t", (byte*)&t->nodehandle, MegaClient::NODEHANDLE);
 
     TreeProcShareKeys tpsk;
@@ -723,11 +724,11 @@ void CommandMoveNode::procresult()
                     {
                         if (n == syncn)
                         {
-                            ( *it )->syncdeleted = syncdel;
+                            (*it)->syncdeleted = syncdel;
                             break;
                         }
                     }
-                    while (( n = n->parent ));
+                    while ((n = n->parent));
                 }
             }
             else
@@ -774,7 +775,7 @@ CommandLogin::CommandLogin(MegaClient* client, const char* e, uint64_t emailhash
 {
     cmd("us");
         arg("user", e);
-        arg("uh",   (byte*)&emailhash, sizeof emailhash);
+        arg("uh", (byte*)&emailhash, sizeof emailhash);
 
     if (client->cachedscsn != UNDEF)
     {
@@ -798,7 +799,7 @@ void CommandLogin::procresult()
     int len_k = 0, len_privk = 0, len_csid = 0, len_tsid = 0;
     handle me = UNDEF;
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -833,7 +834,7 @@ void CommandLogin::procresult()
                 break;
 
             case EOO:
-                if (ISUNDEF(me) || ( len_k != sizeof hash ))
+                if (ISUNDEF(me) || (len_k != sizeof hash))
                 {
                     client->app->login_result(API_EINTERNAL);
                 }
@@ -861,7 +862,7 @@ void CommandLogin::procresult()
                 {
                     // account has RSA keypair: decrypt server-provided session
                     // ID
-                    if (( len_csid < 32 ) || ( len_privk < 256 ))
+                    if ((len_csid < 32) || (len_privk < 256))
                     {
                         return client->app->login_result(API_EINTERNAL);
                     }
@@ -900,9 +901,9 @@ CommandShareKeyUpdate::CommandShareKeyUpdate(MegaClient* client, handle sh, cons
     cmd("k");
     beginarray("sr");
 
-    element(sh,         MegaClient::NODEHANDLE);
+    element(sh, MegaClient::NODEHANDLE);
     element((byte*)uid, strlen(uid));
-    element(key,        len);
+    element(key, len);
 
     endarray();
 }
@@ -915,11 +916,11 @@ CommandShareKeyUpdate::CommandShareKeyUpdate(MegaClient* client, handle_vector* 
     cmd("k");
     beginarray("sr");
 
-    for (int i = v->size(); i--; )
+    for (int i = v->size(); i--;)
     {
-        handle h = ( *v )[i];
+        handle h = (*v)[i];
 
-        if (( n = client->nodebyhandle(h)) && n->sharekey)
+        if ((n = client->nodebyhandle(h)) && n->sharekey)
         {
             client->key.ecb_encrypt(n->sharekey->key, sharekey, SymmCipher::KEYLENGTH);
 
@@ -974,11 +975,12 @@ CommandSetShare::CommandSetShare(MegaClient* client, Node* n, User* u, accesslev
     beginarray("s");
     beginobject();
 
-            arg("u", u ? u->uid.c_str() : MegaClient::EXPORTEDLINK);
+    arg("u", u ? u->uid.c_str() : MegaClient::EXPORTEDLINK);
 
     if (a != ACCESS_UNKNOWN)
     {
-            arg("r", a);
+        arg("r", a);
+
         if (u)
         {
             arg("k", asymmkey, t);
@@ -1007,7 +1009,7 @@ bool CommandSetShare::procuserresult(MegaClient* client)
         handle uh = UNDEF;
         const char* m = NULL;
 
-        for (; ; )
+        for (;;)
         {
             switch (client->json.getnameid())
             {
@@ -1046,7 +1048,7 @@ void CommandSetShare::procresult()
         return client->app->share_result((error)client->json.getint());
     }
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -1059,7 +1061,7 @@ void CommandSetShare::procresult()
                 {
                     Node* n;
 
-                    if (( n = client->nodebyhandle(sh)) && n->sharekey)
+                    if ((n = client->nodebyhandle(sh)) && n->sharekey)
                     {
                         client->key.ecb_decrypt(key);
                         n->sharekey->setkey(key);
@@ -1142,13 +1144,13 @@ void CommandEnumerateQuotaItems::procresult()
 
     while (client->json.enterarray())
     {
-        if (ISUNDEF(( product = client->json.gethandle()))
-                || (( prolevel = client->json.getint()) < 0 )
-                || (( gbstorage = client->json.getint()) < 0 )
-                || (( gbtransfer = client->json.getint()) < 0 )
-                || (( months = client->json.getint()) < 0 )
-                || !( a = client->json.getvalue())
-                || !( c = client->json.getvalue()))
+        if (ISUNDEF((product = client->json.gethandle()))
+                || ((prolevel = client->json.getint()) < 0)
+                || ((gbstorage = client->json.getint()) < 0)
+                || ((gbtransfer = client->json.getint()) < 0)
+                || ((months = client->json.getint()) < 0)
+                || !(a = client->json.getvalue())
+                || !(c = client->json.getvalue()))
         {
             return client->app->enumeratequotaitems_result(API_EINTERNAL);
         }
@@ -1157,15 +1159,15 @@ void CommandEnumerateQuotaItems::procresult()
         Node::copystring(&currency, c);
 
         amount = atoi(a) * 100;
-        if (( c = strchr(a, '.')))
+        if ((c = strchr(a, '.')))
         {
             c++;
-            if (( *c >= '0' ) && ( *c <= '9' ))
+            if ((*c >= '0') && (*c <= '9'))
             {
-                amount += ( *c - '0' ) * 10;
+                amount += (*c - '0') * 10;
             }
             c++;
-            if (( *c >= '0' ) && ( *c <= '9' ))
+            if ((*c >= '0') && (*c <= '9'))
             {
                 amount += *c - '0';
             }
@@ -1202,7 +1204,7 @@ CommandPurchaseCheckout::CommandPurchaseCheckout(MegaClient* client, int gateway
     beginarray("s");
     for (handle_vector::iterator it = client->purchase_basket.begin(); it != client->purchase_basket.end(); it++)
     {
-        element((byte*)&*it, sizeof( handle ));
+        element((byte*)&*it, sizeof(handle));
     }
 
     endarray();
@@ -1303,12 +1305,12 @@ void CommandGetUA::procresult()
         const char* ptr;
         const char* end;
 
-        if (!( ptr = client->json.getvalue()) || !( end = strchr(ptr, '"')))
+        if (!(ptr = client->json.getvalue()) || !(end = strchr(ptr, '"')))
         {
             return client->app->getua_result(API_EINTERNAL);
         }
 
-        int l = ( end - ptr ) / 4 * 3 + 3;
+        int l = (end - ptr) / 4 * 3 + 3;
 
         byte* data = new byte[l];
 
@@ -1341,13 +1343,13 @@ CommandNodeKeyUpdate::CommandNodeKeyUpdate(MegaClient* client, handle_vector* v)
     cmd("k");
     beginarray("nk");
 
-    for (int i = v->size(); i--; )
+    for (int i = v->size(); i--;)
     {
-        handle h = ( *v )[i];
+        handle h = (*v)[i];
 
         Node* n;
 
-        if (( n = client->nodebyhandle(h)))
+        if ((n = client->nodebyhandle(h)))
         {
             client->key.ecb_encrypt((byte*)n->nodekey.data(), nodekey, n->nodekey.size());
 
@@ -1389,7 +1391,7 @@ CommandKeyCR::CommandKeyCR(MegaClient* client, node_vector* rshares, node_vector
     beginarray();
     for (int i = 0; i < (int)rshares->size(); i++)
     {
-        element(( *rshares )[i]->nodehandle, MegaClient::NODEHANDLE);
+        element((*rshares)[i]->nodehandle, MegaClient::NODEHANDLE);
     }
 
     endarray();
@@ -1397,7 +1399,7 @@ CommandKeyCR::CommandKeyCR(MegaClient* client, node_vector* rshares, node_vector
     beginarray();
     for (int i = 0; i < (int)rnodes->size(); i++)
     {
-        element(( *rnodes )[i]->nodehandle, MegaClient::NODEHANDLE);
+        element((*rnodes)[i]->nodehandle, MegaClient::NODEHANDLE);
     }
 
     endarray();
@@ -1433,7 +1435,7 @@ void CommandPubKeyRequest::procresult()
         // FIXME: handle users without public key / unregistered users
     }
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -1541,7 +1543,7 @@ void CommandGetUserQuota::procresult()
 
     details->transfer_limit = 0;
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -1563,7 +1565,7 @@ void CommandGetUserQuota::procresult()
                 {
                     m_off_t t;
 
-                    while (( t = client->json.getint()) >= 0)
+                    while ((t = client->json.getint()) >= 0)
                     {
                         details->transfer_hist.push_back(t);
                     }
@@ -1597,75 +1599,60 @@ void CommandGetUserQuota::procresult()
                 details->transfer_srv_reserved += client->json.getint();
                 break;
 
-            case MAKENAMEID5('c', 's', 't', 'r', 'g'):      // storage used
+            case MAKENAMEID5('c', 's', 't', 'r', 'g'):
+                // storage used
                 details->storage_used = client->json.getint();
                 break;
 
-            case MAKENAMEID5('m', 's', 't', 'r', 'g'):      // total storage
-                                                            // quota
+            case MAKENAMEID5('m', 's', 't', 'r', 'g'):
+                // total storage quota
                 details->storage_max = client->json.getint();
                 got_storage = true;
                 break;
 
-            case MAKENAMEID6('c', 'a', 'x', 'f', 'e', 'r'):  // own transfer
-                                                             // quota used
+            case MAKENAMEID6('c', 'a', 'x', 'f', 'e', 'r'):
+                // own transfer quota used
                 details->transfer_own_used += client->json.getint();
                 break;
 
-            case MAKENAMEID6('c', 's', 'x', 'f', 'e', 'r'):      // third-party
-                                                                 // transfer
-                                                                 // quota used
+            case MAKENAMEID6('c', 's', 'x', 'f', 'e', 'r'):
+                // third-party transfer quota used
                 details->transfer_srv_used += client->json.getint();
                 break;
 
-            case MAKENAMEID5('m', 'x', 'f', 'e', 'r'):      // total transfer
-                                                            // quota
+            case MAKENAMEID5('m', 'x', 'f', 'e', 'r'):
+                // total transfer quota
                 details->transfer_max = client->json.getint();
                 got_transfer = true;
                 break;
 
-            case MAKENAMEID8('s', 'r', 'v', 'r', 'a', 't', 'i', 'o'):      //
-                                                                           //
-                                                                           // percentage
-                                                                           //
-                                                                           // of
-                                                                           //
-                                                                           // transfer
-                                                                           //
-                                                                           // allocated
-                                                                           //
-                                                                           // for
-                                                                           //
-                                                                           // serving
+            case MAKENAMEID8('s', 'r', 'v', 'r', 'a', 't', 'i', 'o'):
+                // percentage of transfer quota allocated to serving
                 details->srv_ratio = client->json.getfloat();
                 break;
 
-            case MAKENAMEID5('u', 't', 'y', 'p', 'e'):          // Pro level (0
-                                                                // == none)
+            case MAKENAMEID5('u', 't', 'y', 'p', 'e'):
+                // Pro plan (0 == none)
                 details->pro_level = (int)client->json.getint();
                 got_pro = 1;
                 break;
 
-            case MAKENAMEID5('s', 't', 'y', 'p', 'e'):          // subscription
-                                                                // type
+            case MAKENAMEID5('s', 't', 'y', 'p', 'e'):
+                // subscription type
                 const char* ptr;
-                if (( ptr = client->json.getvalue()))
+                if ((ptr = client->json.getvalue()))
                 {
                     details->subscription_type = *ptr;
                 }
                 break;
 
-            case MAKENAMEID6('s', 'u', 'n', 't', 'i', 'l'):          // Pro
-                                                                     // level
-                                                                     // until
+            case MAKENAMEID6('s', 'u', 'n', 't', 'i', 'l'):
+                // expiry of last active Pro plan (may be different from current one)
                 details->pro_until = client->json.getint();
                 break;
 
-            case MAKENAMEID7('b', 'a', 'l', 'a', 'n', 'c', 'e'):      //
-                                                                      //
-                                                                      // account
-                                                                      //
-                                                                      // balances
+            case MAKENAMEID7('b', 'a', 'l', 'a', 'n', 'c', 'e'):
+                // account balances
                 if (client->json.enterarray())
                 {
                     const char* cur;
@@ -1673,7 +1660,7 @@ void CommandGetUserQuota::procresult()
 
                     while (client->json.enterarray())
                     {
-                        if (( amount = client->json.getvalue()) && ( cur = client->json.getvalue()))
+                        if ((amount = client->json.getvalue()) && (cur = client->json.getvalue()))
                         {
                             int t = details->balances.size();
                             details->balances.resize(t + 1);
@@ -1721,7 +1708,7 @@ void CommandGetUserTransactions::procresult()
         const char* delta = client->json.getvalue();
         const char* cur = client->json.getvalue();
 
-        if (handle && ( ts > 0 ) && delta && cur)
+        if (handle && (ts > 0) && delta && cur)
         {
             int t = details->transactions.size();
             details->transactions.resize(t + 1);
@@ -1761,7 +1748,7 @@ void CommandGetUserPurchases::procresult()
         const char* cur = client->json.getvalue();
         int method = (int)client->json.getint();
 
-        if (handle && ( ts > 0 ) && amount && cur && ( method >= 0 ))
+        if (handle && (ts > 0) && amount && cur && (method >= 0))
         {
             int t = details->purchases.size();
             details->purchases.resize(t + 1);
@@ -1817,7 +1804,8 @@ void CommandGetUserSessions::procresult()
 CommandSetPH::CommandSetPH(MegaClient* client, Node* n, int del)
 {
     cmd("l");
-        arg("n", (byte*)&n->nodehandle, MegaClient::NODEHANDLE);
+    arg("n", (byte*)&n->nodehandle, MegaClient::NODEHANDLE);
+
     if (del)
     {
         arg("d", 1);
@@ -1866,7 +1854,7 @@ void CommandGetPH::procresult()
     time_t ts = 0, tm = 0;
     string a, fa;
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -1982,7 +1970,7 @@ void CommandResumeEphemeralSession::procresult()
         return client->app->ephemeral_result((error)client->json.getint());
     }
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
@@ -2028,7 +2016,7 @@ void CommandResumeEphemeralSession::procresult()
 CommandSendSignupLink::CommandSendSignupLink(MegaClient* client, const char* email, const char* name, byte* c)
 {
     cmd("uc");
-    arg("c", c,            2 * SymmCipher::KEYLENGTH);
+    arg("c", c, 2 * SymmCipher::KEYLENGTH);
     arg("n", (byte*)name,  strlen(name));
     arg("m", (byte*)email, strlen(email));
 
@@ -2074,12 +2062,12 @@ void CommandQuerySignupLink::procresult()
     }
 
     if (client->json.storebinary(&name) && client->json.storebinary(&email)
-        && ( uh = client->json.gethandle(MegaClient::USERHANDLE))
-        && ( kc = client->json.getvalue()) && ( pwcheck = client->json.getvalue()))
+        && (uh = client->json.gethandle(MegaClient::USERHANDLE))
+        && (kc = client->json.getvalue()) && (pwcheck = client->json.getvalue()))
     {
         if (!ISUNDEF(uh)
-            && ( Base64::atob(pwcheck, pwcheckbuf, sizeof pwcheckbuf) == sizeof pwcheckbuf )
-            && ( Base64::atob(kc, kcbuf, sizeof kcbuf) == sizeof kcbuf ))
+            && (Base64::atob(pwcheck, pwcheckbuf, sizeof pwcheckbuf) == sizeof pwcheckbuf)
+            && (Base64::atob(kc, kcbuf, sizeof kcbuf) == sizeof kcbuf))
         {
             client->json.leavearray();
 
@@ -2100,7 +2088,7 @@ CommandConfirmSignupLink::CommandConfirmSignupLink(MegaClient* client,
                                                    uint64_t emailhash)
 {
     cmd("up");
-    arg("c",  code,              len);
+    arg("c", code, len);
     arg("uh", (byte*)&emailhash, sizeof emailhash);
 
     tag = client->reqtag;
@@ -2161,41 +2149,48 @@ void CommandFetchNodes::procresult()
         return client->app->fetchnodes_result((error)client->json.getint());
     }
 
-    for (; ; )
+    for (;;)
     {
         switch (client->json.getnameid())
         {
-            case 'f':   // nodes
+            case 'f':
+                // nodes
                 if (!client->readnodes(&client->json, 0))
                 {
                     return client->app->fetchnodes_result(API_EINTERNAL);
                 }
                 break;
 
-            case MAKENAMEID2('o', 'k'):  // outgoing sharekeys
+            case MAKENAMEID2('o', 'k'):
+                // outgoing sharekeys
                 client->readok(&client->json);
                 break;
 
-            case 's':   // outgoing shares
+            case 's':
+                // outgoing shares
                 client->readoutshares(&client->json);
                 break;
 
-            case 'u':   // users/contacts
+            case 'u':
+                // users/contacts
                 if (!client->readusers(&client->json))
                 {
                     return client->app->fetchnodes_result(API_EINTERNAL);
                 }
                 break;
 
-            case MAKENAMEID2('c', 'r'):  // crypto key request
+            case MAKENAMEID2('c', 'r'):
+                // crypto key request
                 client->proccr(&client->json);
                 break;
 
-            case MAKENAMEID2('s', 'r'):  // sharekey distribution request
+            case MAKENAMEID2('s', 'r'):
+                // sharekey distribution request
                 client->procsr(&client->json);
                 break;
 
-            case MAKENAMEID2('s', 'n'):  // share node
+            case MAKENAMEID2('s', 'n'):
+                // share node
                 if (!client->setscsn(&client->json))
                 {
                     return client->app->fetchnodes_result(API_EINTERNAL);

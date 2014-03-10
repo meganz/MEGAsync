@@ -2,7 +2,7 @@
  * @file mega/posix/megasys.h
  * @brief Mega SDK platform-specific includes (Posix)
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -32,16 +32,6 @@
 #include <assert.h>
 #include <memory.h>
 #include <time.h>
-
-// Linux specific includes
-
-// XXX: posix
-//#define _POSIX_SOURCE
-//#define _LARGE_FILES
-//#define _LARGEFILE64_SOURCE
-//#define _GNU_SOURCE 1
-//#define _FILE_OFFSET_BITS 64
-//#define __DARWIN_C_LEVEL 199506L
 
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -74,7 +64,6 @@
 #include <sys/select.h>
 
 #include <curl/curl.h>
-//#endif // end of Linux specific includes
 
 #ifndef FD_COPY
 #define FD_COPY(s, d) ( memcpy(( d ), ( s ), sizeof( fd_set )))

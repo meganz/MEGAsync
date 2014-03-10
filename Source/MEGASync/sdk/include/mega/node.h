@@ -2,7 +2,7 @@
  * @file mega/node.h
  * @brief Classes for accessing local and remote nodes
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -32,8 +32,7 @@ struct MEGA_API NodeCore
     // node's own handle
     handle nodehandle;
 
-    // parent node handle (in a Node context, temporary placeholder until
-    // parent is set)
+    // parent node handle (in a Node context, temporary placeholder until parent is set)
     handle parenthandle;
 
     // node type
@@ -244,7 +243,7 @@ struct MEGA_API LocalNode : public File
 
     void setnameparent(LocalNode*, string*);
 
-    void init(Sync *, nodetype_t, LocalNode *, string *, string*);
+    void init(Sync*, nodetype_t, LocalNode*, string*, string*);
 
     ~LocalNode();
 };

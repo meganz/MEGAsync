@@ -1,8 +1,8 @@
 /**
  * @file transfer.cpp
- * @brief pending/active up/download ordered by file fingerprint
+ * @brief Pending/active up/download ordered by file fingerprint
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -40,7 +40,7 @@ Transfer::~Transfer()
 {
     for (file_list::iterator it = files.begin(); it != files.end(); it++)
     {
-        ( *it )->transfer = NULL;
+        (*it)->transfer = NULL;
     }
 
     client->transfers[type].erase(transfers_it);
@@ -59,7 +59,7 @@ void Transfer::failed(error e)
 
     for (file_list::iterator it = files.begin(); it != files.end(); it++)
     {
-        if (( *it )->failed(e) && !defer)
+        if ((*it)->failed(e) && !defer)
         {
             defer = true;
         }
@@ -108,7 +108,7 @@ void Transfer::complete()
             fingerprint.genfingerprint(fa);
             delete fa;
 
-            if (isvalid && !( fingerprint == *(FileFingerprint*)this ))
+            if (isvalid && !(fingerprint == *(FileFingerprint*)this))
             {
                 client->fsaccess->unlinklocal(&localfilename);
                 return failed(API_EWRITE);
@@ -118,7 +118,7 @@ void Transfer::complete()
         // set FileFingerprint on source node(s) if missing
         for (file_list::iterator it = files.begin(); it != files.end(); it++)
         {
-            if (( *it )->hprivate && ( n = client->nodebyhandle(( *it )->h)))
+            if ((*it)->hprivate && (n = client->nodebyhandle((*it)->h)))
             {
                 if (!n->isvalid)
                 {
@@ -135,7 +135,7 @@ void Transfer::complete()
         // in case they have changed during the upload
         for (file_list::iterator it = files.begin(); it != files.end(); it++)
         {
-            ( *it )->updatelocalname();
+            (*it)->updatelocalname();
         }
 
         string tmplocalname;
@@ -144,16 +144,16 @@ void Transfer::complete()
         // place file in all target locations - use up to one renames, copy
         // operations for the rest
         // remove and complete successfully completed files
-        for (file_list::iterator it = files.begin(); it != files.end(); )
+        for (file_list::iterator it = files.begin(); it != files.end();)
         {
             transient_error = false;
             success = false;
 
             if (!tmplocalname.size())
             {
-                if (client->fsaccess->renamelocal(&localfilename, &( *it )->localname))
+                if (client->fsaccess->renamelocal(&localfilename, &(*it)->localname))
                 {
-                    tmplocalname = ( *it )->localname;
+                    tmplocalname = (*it)->localname;
                     success = true;
                 }
                 else if (client->fsaccess->transient_error)
@@ -165,7 +165,7 @@ void Transfer::complete()
             if (!success)
             {
                 if (client->fsaccess->copylocal(tmplocalname.size() ? &tmplocalname : &localfilename,
-                                               &( *it )->localname))
+                                               &(*it)->localname))
                 {
                     success = true;
                 }
@@ -180,11 +180,11 @@ void Transfer::complete()
                 if (success)
                 {
                     // prevent deletion of associated Transfer object in completed()
-                    ( *it )->transfer = NULL;
-                    ( *it )->completed(this, NULL);
+                    (*it)->transfer = NULL;
+                    (*it)->completed(this, NULL);
                 }
 
-                if (success || !( *it )->failed(API_EAGAIN))
+                if (success || !(*it)->failed(API_EAGAIN))
                 {
                     files.erase(it++);
                 }
@@ -213,11 +213,11 @@ void Transfer::complete()
         }
 
         // notify all files and give them an opportunity to self-destruct
-        for (file_list::iterator it = files.begin(); it != files.end(); )
+        for (file_list::iterator it = files.begin(); it != files.end();)
         {
-            ( *it )->transfer = NULL;     // prevent deletion of associated
+            (*it)->transfer = NULL;     // prevent deletion of associated
                                           // Transfer object in completed()
-            ( *it )->completed(this, NULL);
+            (*it)->completed(this, NULL);
             files.erase(it++);
         }
     }

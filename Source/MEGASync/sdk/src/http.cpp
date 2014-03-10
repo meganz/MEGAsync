@@ -2,7 +2,7 @@
  * @file http.cpp
  * @brief Generic host HTTP I/O interfaces
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -39,6 +39,7 @@ void HttpIO::inetstatus(bool up)
         {
             inetback = true;
         }
+
         noinetds = 0;
     }
     else if (!noinetds)
@@ -125,6 +126,7 @@ byte* HttpReq::reserveput(unsigned* len)
         {
             *len = buflen - bufpos;
         }
+
         return buf + bufpos;
     }
     else
@@ -133,6 +135,7 @@ byte* HttpReq::reserveput(unsigned* len)
         {
             in.resize(bufpos + *len);
         }
+
         *len = in.size() - bufpos;
         return (byte*)in.data() + bufpos;
     }

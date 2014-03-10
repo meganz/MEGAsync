@@ -2,7 +2,7 @@
  * @file user.cpp
  * @brief Class for manipulating user / contact data
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -29,6 +29,7 @@ User::User(const char* cemail)
     show = VISIBILITY_UNKNOWN;
     ctime = 0;
     pubkrequested = 0;
+
     if (cemail)
     {
         email = cemail;
@@ -74,18 +75,18 @@ User* User::unserialize(MegaClient* client, string* d)
     const char* end = ptr + d->size();
     int i;
 
-    if (ptr + sizeof( handle ) + sizeof( time_t ) + sizeof( visibility_t ) + 2 > end)
+    if (ptr + sizeof(handle) + sizeof(time_t) + sizeof(visibility_t) + 2 > end)
     {
         return NULL;
     }
 
-    uh = *(handle*)ptr;
+    uh = MemAccess::get<handle>(ptr);
     ptr += sizeof uh;
 
-    ts = *(time_t*)ptr;
+    ts = MemAccess::get<time_t>(ptr);
     ptr += sizeof ts;
 
-    v = *(visibility_t*)ptr;
+    v = MemAccess::get<visibility_t>(ptr);
     ptr += sizeof v;
 
     l = *ptr++;
@@ -95,15 +96,15 @@ User* User::unserialize(MegaClient* client, string* d)
     }
     ptr += l;
 
-    for (i = 8; i--; )
+    for (i = 8; i--;)
     {
-        if (ptr + *(unsigned char*)ptr < end)
+        if (ptr + MemAccess::get<unsigned char>(ptr) < end)
         {
-            ptr += *(unsigned char*)ptr + 1;
+            ptr += MemAccess::get<unsigned char>(ptr) + 1;
         }
     }
 
-    if (( i >= 0 ) || !( u = client->finduser(uh, 1)))
+    if ((i >= 0) || !(u = client->finduser(uh, 1)))
     {
         return NULL;
     }
@@ -112,15 +113,16 @@ User* User::unserialize(MegaClient* client, string* d)
     {
         client->me = uh;
     }
+
     client->mapuser(uh, m.c_str());
     u->set(v, ts);
 
-    if (( ptr < end ) && !( ptr = u->attrs.unserialize(ptr, end - ptr)))
+    if ((ptr < end) && !(ptr = u->attrs.unserialize(ptr, end - ptr)))
     {
         return NULL;
     }
 
-    if (( ptr < end ) && !u->pubk.setkey(AsymmCipher::PUBKEY, (byte*)ptr, end - ptr))
+    if ((ptr < end) && !u->pubk.setkey(AsymmCipher::PUBKEY, (byte*)ptr, end - ptr))
     {
         return NULL;
     }

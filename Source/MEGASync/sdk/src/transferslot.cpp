@@ -2,7 +2,7 @@
  * @file transferslot.cpp
  * @brief Class for active transfer
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -81,7 +81,8 @@ TransferSlot::~TransferSlot()
     if (fa)
     {
         delete fa;
-        if (( transfer->type == GET ) && transfer->localfilename.size())
+
+        if ((transfer->type == GET) && transfer->localfilename.size())
         {
             transfer->client->fsaccess->unlinklocal(&transfer->localfilename);
         }
@@ -98,7 +99,7 @@ TransferSlot::~TransferSlot()
 // abort all HTTP connections
 void TransferSlot::disconnect()
 {
-    for (int i = connections; i--; )
+    for (int i = connections; i--;)
     {
         if (reqs[i])
         {
@@ -125,7 +126,7 @@ int64_t TransferSlot::macsmac(chunkmac_map* macs)
     m[0] ^= m[1];
     m[1] = m[2] ^ m[3];
 
-    return *(int64_t*)mac;
+    return MemAccess::get<int64_t>((const char*)mac);
 }
 
 // file transfer state machine
@@ -150,7 +151,7 @@ void TransferSlot::doio(MegaClient* client)
     time_t backoff = 0;
     m_off_t p = 0;
 
-    for (int i = connections; i--; )
+    for (int i = connections; i--;)
     {
         if (reqs[i])
         {
@@ -179,8 +180,8 @@ void TransferSlot::doio(MegaClient* client)
                                     == NewNode::UPLOADTOKENLEN)
                                 {
                                     memcpy(transfer->filekey, transfer->key.key, sizeof transfer->key.key);
-                                    ((int64_t*)transfer->filekey )[2] = transfer->ctriv;
-                                    ((int64_t*)transfer->filekey )[3] = macsmac(&transfer->chunkmacs);
+                                    ((int64_t*)transfer->filekey)[2] = transfer->ctriv;
+                                    ((int64_t*)transfer->filekey)[3] = macsmac(&transfer->chunkmacs);
                                     SymmCipher::xorblock(transfer->filekey + SymmCipher::KEYLENGTH, transfer->filekey);
 
                                     return transfer->complete();
@@ -202,7 +203,7 @@ void TransferSlot::doio(MegaClient* client)
                             if (progresscompleted == transfer->size)
                             {
                                 // verify meta MAC
-                                if (!progresscompleted || ( macsmac(&transfer->chunkmacs) == transfer->metamac ))
+                                if (!progresscompleted || (macsmac(&transfer->chunkmacs) == transfer->metamac))
                                 {
                                     return transfer->complete();
                                 }
@@ -242,7 +243,7 @@ void TransferSlot::doio(MegaClient* client)
             }
         }
 
-        if (!reqs[i] || ( reqs[i]->status == REQ_READY ))
+        if (!reqs[i] || (reqs[i]->status == REQ_READY))
         {
             m_off_t npos = ChunkedHash::chunkceil(transfer->pos);
 
@@ -251,7 +252,7 @@ void TransferSlot::doio(MegaClient* client)
                 npos = transfer->size;
             }
 
-            if (( npos > transfer->pos ) || !transfer->size)
+            if ((npos > transfer->pos) || !transfer->size)
             {
                 if (!reqs[i])
                 {
@@ -282,7 +283,7 @@ void TransferSlot::doio(MegaClient* client)
             }
         }
 
-        if (reqs[i] && ( reqs[i]->status == REQ_PREPARED ))
+        if (reqs[i] && (reqs[i]->status == REQ_PREPARED))
         {
             reqs[i]->post(client);
         }
@@ -298,7 +299,7 @@ void TransferSlot::doio(MegaClient* client)
         progress();
     }
 
-    if (( Waiter::ds - lastdata >= XFERTIMEOUT ) || ( errorcount > 10 ))
+    if ((Waiter::ds - lastdata >= XFERTIMEOUT) || (errorcount > 10))
     {
         return transfer->failed(API_EFAILED);
     }
@@ -307,7 +308,7 @@ void TransferSlot::doio(MegaClient* client)
         if (!backoff)
         {
             // no other backoff: check again at XFERMAXFAIL
-            backoff = XFERTIMEOUT - ( Waiter::ds - lastdata );
+            backoff = XFERTIMEOUT - (Waiter::ds - lastdata);
         }
 
         transfer->bt.backoff(backoff);
@@ -321,7 +322,7 @@ void TransferSlot::progress()
 
     for (file_list::iterator it = transfer->files.begin(); it != transfer->files.end(); it++)
     {
-        ( *it )->progress();
+        (*it)->progress();
     }
 }
 } // namespace

@@ -2,7 +2,7 @@
  * @file posix/consolewaiter.cpp
  * @brief POSIX event/timeout handling, listens for stdin
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -43,7 +43,7 @@ int PosixConsoleWaiter::wait()
     // user interaction from stdin?
     if (FD_ISSET(STDIN_FILENO, &rfds))
     {
-        return ( numfd == 1 ) ? HAVESTDIN : ( HAVESTDIN | NEEDEXEC );
+        return (numfd == 1) ? HAVESTDIN : (HAVESTDIN | NEEDEXEC);
     }
 
     return NEEDEXEC;

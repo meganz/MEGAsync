@@ -2,7 +2,7 @@
  * @file win32/wait.cpp
  * @brief Win32 event/timeout handling
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -25,7 +25,7 @@
 namespace mega {
 dstime Waiter::ds;
 
-typedef ULONGLONG ( WINAPI * PGTC )();
+typedef ULONGLONG (WINAPI * PGTC)();
 
 static PGTC pGTC;
 static ULONGLONG tickhigh;
@@ -62,7 +62,7 @@ void Waiter::bumpds()
 
         prevt = t;
 
-        ds = ( t + tickhigh ) / 100;
+        ds = (t + tickhigh) / 100;
     }
 }
 
@@ -82,18 +82,18 @@ int WinWaiter::wait()
         LeaveCriticalSection(pcsHTTP);
     }
 
-    DWORD dwWaitResult = ::WaitForMultipleObjectsEx((DWORD)handles.size(), &handles.front(), FALSE, maxds * 100, TRUE);
+    DWORD dwWaitResult = WaitForMultipleObjectsEx((DWORD)handles.size(), &handles.front(), FALSE, maxds * 100, TRUE);
 
     if (pcsHTTP)
     {
         EnterCriticalSection(pcsHTTP);
     }
 
-    if (( dwWaitResult == WAIT_TIMEOUT ) || ( dwWaitResult == WAIT_IO_COMPLETION ))
+    if ((dwWaitResult == WAIT_TIMEOUT) || (dwWaitResult == WAIT_IO_COMPLETION))
     {
         r = NEEDEXEC;
     }
-    else if (( dwWaitResult >= WAIT_OBJECT_0 ) && ( dwWaitResult < WAIT_OBJECT_0 + flags.size()))
+    else if ((dwWaitResult >= WAIT_OBJECT_0) && (dwWaitResult < WAIT_OBJECT_0 + flags.size()))
     {
         r = flags[dwWaitResult - WAIT_OBJECT_0];
     }

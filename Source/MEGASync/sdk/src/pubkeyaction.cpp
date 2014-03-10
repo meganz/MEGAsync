@@ -1,8 +1,8 @@
 /**
  * @file pubkeyaction.cpp
- * @brief Classes for manipulating user's public key
+ * @brief Classes for managing public keys
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -39,9 +39,9 @@ void PubKeyActionPutNodes::proc(MegaClient* client, User* u)
         int t;
 
         // re-encrypt all node keys to the user's public key
-        for (int i = nc; i--; )
+        for (int i = nc; i--;)
         {
-            if (!( t = u->pubk.encrypt((const byte*)nn[i].nodekey.data(), nn[i].nodekey.size(), buf, sizeof buf)))
+            if (!(t = u->pubk.encrypt((const byte*)nn[i].nodekey.data(), nn[i].nodekey.size(), buf, sizeof buf)))
             {
                 return client->app->putnodes_result(API_EINTERNAL, USER_HANDLE, nn);
             }
@@ -68,12 +68,12 @@ void PubKeyActionSendShareKey::proc(MegaClient* client, User* u)
     Node* n;
 
     // only the share owner distributes share keys
-    if (u && ( n = client->nodebyhandle(sh)) && n->sharekey && client->checkaccess(n, OWNER))
+    if (u && (n = client->nodebyhandle(sh)) && n->sharekey && client->checkaccess(n, OWNER))
     {
         int t;
         byte buf[AsymmCipher::MAXKEYLENGTH];
 
-        if (( t = u->pubk.encrypt(n->sharekey->key, SymmCipher::KEYLENGTH, buf, sizeof buf)))
+        if ((t = u->pubk.encrypt(n->sharekey->key, SymmCipher::KEYLENGTH, buf, sizeof buf)))
         {
             client->reqs[client->r].add(new CommandShareKeyUpdate(client, sh, u->uid.c_str(), buf, t));
         }
@@ -86,13 +86,13 @@ void PubKeyActionCreateShare::proc(MegaClient* client, User* u)
     int newshare;
 
     // node vanished: bail
-    if (!( n = client->nodebyhandle(h)))
+    if (!(n = client->nodebyhandle(h)))
     {
         return client->app->share_result(API_ENOENT);
     }
 
     // do we already have a share key for this node?
-    if (( newshare = !n->sharekey ))
+    if ((newshare = !n->sharekey))
     {
         // no: create
         byte key[SymmCipher::KEYLENGTH];

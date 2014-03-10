@@ -2,7 +2,7 @@
  * @file sqlite.cpp
  * @brief SQLite DB access layer
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -29,6 +29,7 @@ SqliteDbAccess::SqliteDbAccess(string* path)
     {
         dbpath = *path;
     }
+
     db = NULL;
 }
 
@@ -59,7 +60,7 @@ DbTable* SqliteDbAccess::open(FileSystemAccess* fsaccess, string* name)
         return NULL;
     }
 
-    const char *sql = "CREATE TABLE IF NOT EXISTS statecache ( id INTEGER PRIMARY KEY ASC NOT NULL, content BLOB NOT NULL)";
+    const char *sql = "CREATE TABLE IF NOT EXISTS statecache (id INTEGER PRIMARY KEY ASC NOT NULL, content BLOB NOT NULL)";
 
     rc = sqlite3_exec(db, sql, NULL, NULL, NULL);
 
@@ -151,7 +152,7 @@ bool SqliteDbTable::get(uint32_t index, string* data)
 
     data->assign((char*)sqlite3_column_blob(stmt, 0), sqlite3_column_bytes(stmt, 0));
 
-        sqlite3_finalize(stmt);
+    sqlite3_finalize(stmt);
 
     return true;
 }
@@ -161,31 +162,35 @@ bool SqliteDbTable::put(uint32_t index, char* data, unsigned len)
 {
     sqlite3_stmt *stmt;
 
-    int rc = sqlite3_prepare(db, "INSERT OR REPLACE INTO statecache ( id, content ) VALUES ( ?, ? )", -1, &stmt, NULL);
+    int rc = sqlite3_prepare(db, "INSERT OR REPLACE INTO statecache (id, content) VALUES (?, ?)", -1, &stmt, NULL);
+
     if (rc)
     {
         return false;
     }
 
     rc = sqlite3_bind_int(stmt, 1, index);
+
     if (rc)
     {
         return false;
     }
 
     rc = sqlite3_bind_blob(stmt, 2, data, len, SQLITE_STATIC);
+
     if (rc)
     {
         return false;
     }
 
     rc = sqlite3_step(stmt);
+
     if (rc != SQLITE_DONE)
     {
         return false;
     }
 
-        sqlite3_finalize(stmt);
+    sqlite3_finalize(stmt);
     return true;
 }
 

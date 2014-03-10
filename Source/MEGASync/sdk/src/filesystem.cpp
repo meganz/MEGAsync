@@ -2,7 +2,7 @@
  * @file filesystem.cpp
  * @brief Generic host filesystem access interfaces
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -25,7 +25,7 @@
 namespace mega {
 bool FileSystemAccess::islchex(char c)
 {
-    return ( c >= '0' && c <= '9' ) || ( c >= 'a' && c <= 'z' );
+    return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z');
 }
 
 // default DirNotify: no notification available
@@ -72,7 +72,7 @@ bool FileAccess::openf()
     time_t curr_mtime;
     m_off_t curr_size;
 
-    if (!sysstat(&curr_mtime, &curr_size) || ( curr_mtime != mtime ) || ( curr_size != size ))
+    if (!sysstat(&curr_mtime, &curr_size) || (curr_mtime != mtime) || (curr_size != size))
     {
         return false;
     }
@@ -99,7 +99,7 @@ bool FileAccess::fread(string* dst, unsigned len, unsigned pad, m_off_t pos)
 
     dst->resize(len + pad);
 
-    if (( r = sysread((byte*)dst->data(), len, pos)))
+    if ((r = sysread((byte*)dst->data(), len, pos)))
     {
         memset((char*)dst->data() + len, 0, pad);
     }

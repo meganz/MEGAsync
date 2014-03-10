@@ -2,7 +2,7 @@
  * @file posix/console.cpp
  * @brief POSIX console/terminal control
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -22,7 +22,6 @@
 #include "mega.h"
 
 namespace mega {
-
 PosixConsole::PosixConsole()
 {
     // set up the console
@@ -83,5 +82,4 @@ void PosixConsole::readpwchar(char* pw_buf, int pw_buf_size, int* pw_buf_pos, ch
 void PosixConsole::setecho(bool echo)
 {
 }
-
 } // namespace

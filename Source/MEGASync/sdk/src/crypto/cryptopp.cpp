@@ -2,7 +2,7 @@
  * @file cryptopp.cpp
  * @brief Crypto layer using Crypto++
  *
- * (c) 2013 by Mega Limited, Wellsford, New Zealand
+ * (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
  *
  * This file is part of the MEGA SDK - Client Access Engine.
  *
@@ -23,7 +23,7 @@
 
 namespace mega {
 #ifndef htobe64
-#define htobe64(x) (((uint64_t)htonl((uint32_t)(( x ) >> 32 ))) | (((uint64_t)htonl((uint32_t)x)) << 32 ))
+#define htobe64(x) (((uint64_t)htonl((uint32_t)((x) >> 32))) | (((uint64_t)htonl((uint32_t)x)) << 32))
 #endif
 
 using namespace CryptoPP;
@@ -43,7 +43,7 @@ uint32_t PrnGen::genuint32(uint64_t max)
 
     genblock((byte*)&t, sizeof t);
 
-    return (uint32_t)(((uint64_t)t ) / ((((uint64_t)( ~(uint32_t)0 )) + 1 ) / max ));
+    return (uint32_t)(((uint64_t)t) / ((((uint64_t)(~(uint32_t)0)) + 1) / max));
 }
 
 SymmCipher::SymmCipher()
@@ -114,7 +114,7 @@ void SymmCipher::xorblock(const byte* src, byte* dst)
     long* lsrc = (long*)src;
     long* ldst = (long*)dst;
 
-    for (int i = BLOCKSIZE / sizeof( long ); i--; )
+    for (int i = BLOCKSIZE / sizeof(long); i--;)
     {
         ldst[i] ^= lsrc[i];
     }
@@ -144,14 +144,14 @@ void SymmCipher::incblock(byte* dst, unsigned len)
 // len must be < 2^31
 void SymmCipher::ctr_crypt(byte* data, unsigned len, m_off_t pos, ctr_iv ctriv, byte* mac, int encrypt)
 {
-    assert(!( pos & ( KEYLENGTH - 1 )));
+    assert(!(pos & (KEYLENGTH - 1)));
 
     byte ctr[BLOCKSIZE], tmp[BLOCKSIZE];
 
-    *(uint64_t*)ctr = ctriv;
+    MemAccess::set<int64_t>(ctr,ctriv);
     setint64(pos / BLOCKSIZE, ctr + sizeof ctriv);
 
-    memcpy(mac,                ctr, sizeof ctriv);
+    memcpy(mac, ctr, sizeof ctriv);
     memcpy(mac + sizeof ctriv, ctr, sizeof ctriv);
 
     while ((int)len > 0)
@@ -234,7 +234,7 @@ int AsymmCipher::encrypt(const byte* plain, int plainlen, byte* buf, int buflen)
 
     byte* ptr = buf;
 
-    *ptr++ = (byte)( i >> 8 );
+    *ptr++ = (byte)(i >> 8);
     *ptr++ = (byte)i;
 
     i = t.ByteCount();
@@ -250,19 +250,19 @@ int AsymmCipher::encrypt(const byte* plain, int plainlen, byte* buf, int buflen)
 static void rsadecrypt(Integer* key, Integer* m)
 {
     Integer xp = a_exp_b_mod_c(*m % key[AsymmCipher::PRIV_P],
-                               key[AsymmCipher::PRIV_D] % ( key[AsymmCipher::PRIV_P] - Integer::One()),
+                               key[AsymmCipher::PRIV_D] % (key[AsymmCipher::PRIV_P] - Integer::One()),
                                key[AsymmCipher::PRIV_P]);
     Integer xq = a_exp_b_mod_c(*m % key[AsymmCipher::PRIV_Q],
-                               key[AsymmCipher::PRIV_D] % ( key[AsymmCipher::PRIV_Q] - Integer::One()),
+                               key[AsymmCipher::PRIV_D] % (key[AsymmCipher::PRIV_Q] - Integer::One()),
                                key[AsymmCipher::PRIV_Q]);
 
     if (xp > xq)
     {
-        *m = key[AsymmCipher::PRIV_Q] - ((( xp - xq ) * key[AsymmCipher::PRIV_U] ) % key[AsymmCipher::PRIV_Q] );
+        *m = key[AsymmCipher::PRIV_Q] - (((xp - xq) * key[AsymmCipher::PRIV_U]) % key[AsymmCipher::PRIV_Q]);
     }
     else
     {
-        *m = (( xq - xp ) * key[AsymmCipher::PRIV_U] ) % key[AsymmCipher::PRIV_Q];
+        *m = ((xq - xp) * key[AsymmCipher::PRIV_U]) % key[AsymmCipher::PRIV_Q];
     }
 
     *m = *m * key[AsymmCipher::PRIV_P] + xp;
@@ -332,7 +332,7 @@ void AsymmCipher::serializeintarray(Integer* t, int numints, string* d)
     unsigned size = 0;
     char c;
 
-    for (int i = numints; i--; )
+    for (int i = numints; i--;)
     {
         size += t[i].ByteCount() + 2;
     }
@@ -347,7 +347,7 @@ void AsymmCipher::serializeintarray(Integer* t, int numints, string* d)
         c = (char)t[i].BitCount();
         d->append(&c, sizeof c);
 
-        for (int j = t[i].ByteCount(); j--; )
+        for (int j = t[i].ByteCount(); j--;)
         {
             c = t[i].GetByte(j);
             d->append(&c, sizeof c);
@@ -368,7 +368,7 @@ int AsymmCipher::decodeintarray(Integer* t, int numints, const byte* data, int l
             break;
         }
 
-        n = (( data[p] << 8 ) + data[p + 1] + 7 ) >> 3;
+        n = ((data[p] << 8) + data[p + 1] + 7) >> 3;
 
         p += 2;
         if (p + n > len)
@@ -397,7 +397,7 @@ class RSAPrimeSelector : public PrimeSelector
 public:
     RSAPrimeSelector(const Integer &e) : m_e(e) { }
 
-    bool IsAcceptable(const Integer &candidate) const // NS (suppress style error)
+    bool IsAcceptable(const Integer &candidate) const
     {
         return RelativelyPrime(m_e, candidate - Integer::One());
     }
