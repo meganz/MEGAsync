@@ -37,6 +37,7 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
     lastdata = 0;
     errorcount = 0;
 
+    failure = false;
     retrying = false;
     
     fileattrsmutable = 0;
@@ -151,7 +152,7 @@ void TransferSlot::doio(MegaClient* client)
     time_t backoff = 0;
     m_off_t p = 0;
 
-    for (int i = connections; i--;)
+    for (int i = connections; i--; )
     {
         if (reqs[i])
         {
@@ -234,7 +235,12 @@ void TransferSlot::doio(MegaClient* client)
                     }
                     else
                     {
-                        errorcount++;
+                        if (!failure)
+                        {
+                            failure = true;
+                            client->setchunkfailed();
+                        }
+
                         reqs[i]->status = REQ_PREPARED;
                     }
 
@@ -243,49 +249,52 @@ void TransferSlot::doio(MegaClient* client)
             }
         }
 
-        if (!reqs[i] || (reqs[i]->status == REQ_READY))
+        if (!failure)
         {
-            m_off_t npos = ChunkedHash::chunkceil(transfer->pos);
-
-            if (npos > transfer->size)
+            if (!reqs[i] || (reqs[i]->status == REQ_READY))
             {
-                npos = transfer->size;
-            }
+                m_off_t npos = ChunkedHash::chunkceil(transfer->pos);
 
-            if ((npos > transfer->pos) || !transfer->size)
-            {
-                if (!reqs[i])
+                if (npos > transfer->size)
                 {
-                    reqs[i] = transfer->type == PUT ? (HttpReqXfer*)new HttpReqUL() : (HttpReqXfer*)new HttpReqDL();
+                    npos = transfer->size;
                 }
 
-                if (reqs[i]->prepare(fa, tempurl.c_str(), &transfer->key,
-                                     &transfer->chunkmacs, transfer->ctriv,
-                                     transfer->pos, npos))
+                if ((npos > transfer->pos) || !transfer->size)
                 {
-                    reqs[i]->status = REQ_PREPARED;
-                    transfer->pos = npos;
-                }
-                else
-                {
-                    if (!fa->retry)
+                    if (!reqs[i])
                     {
-                        return transfer->failed(API_EREAD);
+                        reqs[i] = transfer->type == PUT ? (HttpReqXfer*)new HttpReqUL() : (HttpReqXfer*)new HttpReqDL();
                     }
 
-                    // retry the read shortly
-                    backoff = 2;
+                    if (reqs[i]->prepare(fa, tempurl.c_str(), &transfer->key,
+                                         &transfer->chunkmacs, transfer->ctriv,
+                                         transfer->pos, npos))
+                    {
+                        reqs[i]->status = REQ_PREPARED;
+                        transfer->pos = npos;
+                    }
+                    else
+                    {
+                        if (!fa->retry)
+                        {
+                            return transfer->failed(API_EREAD);
+                        }
+
+                        // retry the read shortly
+                        backoff = 2;
+                    }
+                }
+                else if (reqs[i])
+                {
+                    reqs[i]->status = REQ_DONE;
                 }
             }
-            else if (reqs[i])
-            {
-                reqs[i]->status = REQ_DONE;
-            }
-        }
 
-        if (reqs[i] && (reqs[i]->status == REQ_PREPARED))
-        {
-            reqs[i]->post(client);
+            if (reqs[i] && (reqs[i]->status == REQ_PREPARED))
+            {
+                reqs[i]->post(client);
+            }
         }
     }
 

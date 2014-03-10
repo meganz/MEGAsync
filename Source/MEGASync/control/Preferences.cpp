@@ -694,7 +694,11 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long 
 {
     mutex.lock();
     assert(logged());
+
     if(syncName.isEmpty()) syncName = QFileInfo(localFolder).fileName();
+    if(syncName.isEmpty()) syncName = localFolder;
+    syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+
     syncNames.append(syncName);
     localFolders.append(QDir::toNativeSeparators(localFolder));
     megaFolders.append(megaFolder);

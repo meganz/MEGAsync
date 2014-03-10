@@ -324,6 +324,7 @@ void MegaClient::init()
     warned = false;
     csretrying = false;
     fetchingnodes = false;
+    chunkfailed = false;
 
     noinetds = 0;
 
@@ -449,6 +450,22 @@ void MegaClient::exec()
     {
         app->debug_log("Internet connectivity returned - resetting all backoff timers");
         abortbackoff();
+    }
+
+    // successful network operation with a failed transfer chunk: increment error count
+    // and continue transfers
+    if (httpio->success && chunkfailed)
+    {
+        chunkfailed = false;
+        
+        for (transferslot_list::iterator it = tslots.begin(); it != tslots.end(); it++)
+        {
+            if ((*it)->failure)
+            {
+                (*it)->errorcount++;
+                (*it)->failure = false;
+            }
+        }
     }
 
     do {
@@ -5529,6 +5546,14 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
         }
     } while ((n = n->parent));
 
+    if (rootpath->size() >= fsaccess->localseparator.size()
+        && !memcmp(rootpath->data() + (rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size(),
+                   fsaccess->localseparator.data(),
+                   fsaccess->localseparator.size()))
+    {
+        rootpath->resize((rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size());
+    }
+    
     FileAccess* fa = fsaccess->newfileaccess();
     error e;
 
@@ -5579,6 +5604,18 @@ void MegaClient::putnodes_syncdebris_result(error e, NewNode* nn)
     delete[] nn;
 
     syncdebrisadding = false;
+}
+
+// a chunk transfer request failed
+void MegaClient::setchunkfailed()
+{
+    if (!chunkfailed)
+    {
+        chunkfailed = true;
+        httpio->success = false;
+
+        // FIXME: perform dummy API request
+    }
 }
 
 bool MegaClient::toggledebug()

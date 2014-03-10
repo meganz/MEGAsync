@@ -1507,7 +1507,7 @@ void MegaApi::startUpload(const char* localPath, MegaNode* parent, int connectio
     {
         string path(localPath);
 #ifdef WIN32
-        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<2) || path.compare(0, 2, "\\\\"))
             path.insert(0, "\\\\?\\");
 #endif
         transfer->setPath(path.data());
@@ -1539,7 +1539,7 @@ void MegaApi::startDownload(handle nodehandle, const char* target, int connectio
     {
 #ifdef WIN32
         string path(target);
-        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<2) || path.compare(0, 2, "\\\\"))
             path.insert(0, "\\\\?\\");
         target = path.data();
 #endif
@@ -1576,7 +1576,7 @@ void MegaApi::startPublicDownload(MegaNode* node, const char* localFolder, MegaT
     {
         string path(localFolder);
 #ifdef WIN32
-        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<2) || path.compare(0, 2, "\\\\"))
             path.insert(0, "\\\\?\\");
 #endif
         transfer->setParentPath(path.data());
@@ -1677,7 +1677,7 @@ treestate_t MegaApi::syncPathState(string* path)
     string prefix("\\\\?\\");
     string localPrefix;
     fsAccess->path2local(&prefix, &localPrefix);
-    if(path->size()<8 || memcmp(path->data(), localPrefix.data(), 8))
+    if(path->size()<4 || memcmp(path->data(), localPrefix.data(), 4))
         path->insert(0, localPrefix);
 #endif
 
@@ -1731,7 +1731,7 @@ void MegaApi::syncFolder(const char *localFolder, MegaNode *megaFolder)
     {
         string path(localFolder);
 #ifdef WIN32
-        if((path.size()<4) || path.compare(0, 4, "\\\\?\\"))
+        if((path.size()<2) || path.compare(0, 2, "\\\\"))
             path.insert(0, "\\\\?\\");
 #endif
         request->setFile(path.data());
@@ -2532,7 +2532,7 @@ void MegaApi::fetchnodes_result(error e)
             string localname;
             string utf8name(localFolder.toUtf8().constData());
     #ifdef WIN32
-            if((utf8name.size()<4) || utf8name.compare(0, 4, "\\\\?\\"))
+            if((utf8name.size()<2) || utf8name.compare(0, 2, "\\\\"))
                 utf8name.insert(0, "\\\\?\\");
     #endif
             client->fsaccess->path2local(&utf8name, &localname);

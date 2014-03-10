@@ -133,6 +133,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
                 }
 
                 req->status = req->httpstatus == 200 ? REQ_SUCCESS : REQ_FAILURE;
+                httpio->success = true;
                 httpio->httpevent();
             }
             else
@@ -195,7 +196,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
         break;
 
         case WINHTTP_CALLBACK_STATUS_REQUEST_ERROR:
-            if (httpio->waiter)
+            if (httpio->waiter && GetLastError() != ERROR_WINHTTP_TIMEOUT)
             {
                 httpio->inetstatus(false);
             }

@@ -23,11 +23,9 @@
 #define HTTPIO_CLASS WinHttpIO
 
 #include "mega/megaclient.h"
-
 #include "megawaiter.h"
 
 namespace mega {
-
 extern bool debug;
 
 class MEGA_API WinHttpIO: public HttpIO
@@ -80,7 +78,6 @@ struct MEGA_API WinHttpContext
     unsigned postlen;
     const char* postdata;
 };
-
 } // namespace
 
 #endif

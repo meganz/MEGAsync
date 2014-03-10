@@ -17,7 +17,7 @@ void ExportProcessor::requestLinks()
     for(int i=0; i<fileList.size(); i++)
     {
 #ifdef WIN32
-        if(!fileList[i].startsWith(QString::fromAscii("\\\\?\\")))
+        if(!fileList[i].startsWith(QString::fromAscii("\\\\")))
             fileList[i].insert(0, QString::fromAscii("\\\\?\\"));
         string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
 #else
