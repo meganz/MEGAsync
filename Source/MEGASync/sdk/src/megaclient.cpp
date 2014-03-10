@@ -5549,19 +5549,17 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
     FileAccess* fa = fsaccess->newfileaccess();
     error e;
 
-    if (rootpath->size() >= fsaccess->localseparator.size()
-        && !memcmp(rootpath->data() + (rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size(),
-                   fsaccess->localseparator.data(),
-                   fsaccess->localseparator.size()))
-    {
-        rootpath->resize((rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size());
-    }
-
     if (fa->fopen(rootpath, true, false))
     {
         if (fa->type == FOLDERNODE)
         {
-
+            if (rootpath->size() >= fsaccess->localseparator.size()
+                && !memcmp(rootpath->data() + (rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size(),
+                           fsaccess->localseparator.data(),
+                           fsaccess->localseparator.size()))
+            {
+                rootpath->resize((rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size());
+            }
 
             Sync* sync = new Sync(this, rootpath, debris, localdebris, remotenode, tag);
 
