@@ -577,7 +577,8 @@ void MegaRequest::setAccess(const char* access)
 
 void MegaRequest::setFile(const char* file)
 {
-	if(this->file) delete [] this->file;
+    if(this->file)
+        delete [] this->file;
 	this->file = MegaApi::strdup(file);
 }
 
@@ -1735,6 +1736,7 @@ void MegaApi::syncFolder(const char *localFolder, MegaNode *megaFolder)
             path.insert(0, "\\\\?\\");
 #endif
         request->setFile(path.data());
+        path.clear();
     }
     requestQueue.push(request);
     waiter->notify();
@@ -4603,7 +4605,8 @@ void MegaApi::setExcludedNames(vector<string> *excludedNames)
 
 char* MegaApi::strdup(const char* buffer)
 {
-	if(!buffer) return NULL;
+    if(!buffer)
+        return NULL;
 	int tam = strlen(buffer)+1;
 	char *newbuffer = new char[tam];
 	memcpy(newbuffer, buffer, tam);

@@ -20,6 +20,8 @@
  */
 
 #include "mega.h"
+#include <QString>
+#include <windows.h>
 
 namespace mega {
 WinFileAccess::WinFileAccess()
@@ -162,8 +164,14 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     {
         if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
         {
-            name->resize(name->size() - 1);
             retry = WinFileSystemAccess::istransient(GetLastError());
+            QString title = QString::fromAscii("MEGAsync");
+            QString desc = QString::fromAscii("Error getting attributes: ") +
+                    QString::fromWCharArray((LPCWSTR)name->data());
+
+            MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
+            cout << "Error getting attributes" << endl;
+            name->resize(name->size() - 1);
             return false;
         }
 
@@ -171,6 +179,13 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         // also, ignore some other obscure filesystem object categories
         if (fad.dwFileAttributes & SKIPATTRIBUTES)
         {
+            QString title = QString::fromAscii("MEGAsync");
+            QString desc = QString::fromAscii("Unsupported attributes: ") +
+                    QString::fromWCharArray((LPCWSTR)name->data()) +
+                    QString::fromAscii("  ") + QString::number(fad.dwFileAttributes);
+
+            MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
+            cout << "Unsupported attributes" << endl;
             retry = false;
             return false;
         }
