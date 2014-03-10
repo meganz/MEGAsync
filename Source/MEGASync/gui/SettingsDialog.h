@@ -37,6 +37,7 @@ public:
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly=false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
+    void loadSettings();
 
 public slots:
     void stateChanged();
@@ -111,7 +112,6 @@ private:
     bool shouldClose;
 
     void loadSyncSettings();
-    void loadSettings();
     bool saveSettings();
     void updateAddButton();
 };
