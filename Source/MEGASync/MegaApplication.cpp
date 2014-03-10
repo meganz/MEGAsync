@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1011;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11g");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         {
             preferences->enterUser(i);
             for(int j=0; j<preferences->getNumSyncedFolders(); j++)
-                Platform::syncFolderRemoved(preferences->getLocalFolder(j));
+                Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
             preferences->leaveUser();
         }
 
@@ -1348,7 +1348,7 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
                     delete rubbishNode;
 
                     LOG("Sync error! Removed");
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
                     if(settingsDialog)
                         settingsDialog->loadSettings();
@@ -1365,10 +1365,27 @@ void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaEr
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
-        if(infoDialog) infoDialog->updateSyncsButton();
-        LOG("Sync removed");
-        Platform::syncFolderRemoved(QString::fromUtf8(request->getFile()));
-        onSyncStateChanged(megaApi);
+        if(e->getErrorCode() == MegaError::API_OK)
+        {
+            for(int i=preferences->getNumSyncedFolders()-1; i>=0; i--)
+            {
+                if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
+                {
+                    if(infoDialog) infoDialog->updateSyncsButton();
+                    LOG("Sync removed");
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    preferences->removeSyncedFolder(i);
+                    onSyncStateChanged(megaApi);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            showErrorMessage(e->QgetErrorString());
+            if(settingsDialog)
+                settingsDialog->loadSettings();
+        }
         break;
     }
     default:
@@ -1557,7 +1574,7 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
                 if(preferences->getMegaFolderHandle(i) == node->getHandle())
                 {
                     LOG("Remote sync deletion detected!");
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
                     if(infoDialog) infoDialog->updateSyncsButton();
                     onSyncStateChanged(megaApi);

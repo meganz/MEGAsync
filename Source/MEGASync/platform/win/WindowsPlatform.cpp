@@ -203,7 +203,7 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
-void WindowsPlatform::syncFolderRemoved(QString syncPath)
+void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
     if(!syncPath.size()) return;
 
@@ -224,8 +224,7 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath)
     QFileInfo info(linksPath);
     if(!info.isDir()) return;
 
-    QFileInfo syncPathInfo(syncPath);
-    QString linkPath = linksPath + QString::fromAscii("\\") + syncPathInfo.fileName() + QString::fromAscii(".lnk");
+    QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
 
     QFile::remove(linkPath);
 

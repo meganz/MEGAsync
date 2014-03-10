@@ -40,7 +40,7 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
 }
 
-void LinuxPlatform::syncFolderRemoved(QString syncPath)
+void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
 
 }
