@@ -141,7 +141,7 @@ win32 {
 	}
     }
 
-    LIBS += -lwinhttp -lws2_32
+    LIBS += -lwinhttp -lws2_32 -luser32
 }
 
 unix {

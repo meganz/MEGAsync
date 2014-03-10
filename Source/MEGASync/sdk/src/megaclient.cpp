@@ -5545,6 +5545,9 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
             }
         }
     } while ((n = n->parent));
+    
+    FileAccess* fa = fsaccess->newfileaccess();
+    error e;
 
     if (rootpath->size() >= fsaccess->localseparator.size()
         && !memcmp(rootpath->data() + (rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size(),
@@ -5553,14 +5556,13 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
     {
         rootpath->resize((rootpath->size() & -fsaccess->localseparator.size()) - fsaccess->localseparator.size());
     }
-    
-    FileAccess* fa = fsaccess->newfileaccess();
-    error e;
 
     if (fa->fopen(rootpath, true, false))
     {
         if (fa->type == FOLDERNODE)
         {
+
+
             Sync* sync = new Sync(this, rootpath, debris, localdebris, remotenode, tag);
 
             if (sync->scan(rootpath, fa))
