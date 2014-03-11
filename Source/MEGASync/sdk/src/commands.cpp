@@ -257,7 +257,7 @@ CommandGetFile::CommandGetFile(TransferSlot* ctslot, byte* key, handle h, bool p
 {
     cmd("g");
     arg(p ? "n" : "p", (byte*)&h, MegaClient::NODEHANDLE);
-    arg("g",           1);
+    arg("g", 1);
 
     tslot = ctslot;
 
@@ -281,6 +281,7 @@ void CommandGetFile::procresult()
     {
         tslot->pendingcmd = NULL;
     }
+
     if (canceled)
     {
         return;
@@ -658,11 +659,13 @@ void CommandPutNodes::procresult()
                 {
                     continue;
                 }
+
                 e = API_EINTERNAL;
 
             // fall through
             case EOO:
                 client->applykeys();
+
                 if (source == PUTNODES_SYNC)
                 {
                     client->putnodes_sync_result(e, nn);
@@ -675,6 +678,7 @@ void CommandPutNodes::procresult()
                 {
                     client->putnodes_syncdebris_result(e, nn);
                 }
+
                 client->notifypurge();
                 return;
         }
@@ -720,15 +724,13 @@ void CommandMoveNode::procresult()
                 {
                     n = *it;
 
-                    do
-                    {
+                    do {
                         if (n == syncn)
                         {
                             (*it)->syncdeleted = syncdel;
                             break;
                         }
-                    }
-                    while ((n = n->parent));
+                    } while ((n = n->parent));
                 }
             }
             else
@@ -924,9 +926,9 @@ CommandShareKeyUpdate::CommandShareKeyUpdate(MegaClient* client, handle_vector* 
         {
             client->key.ecb_encrypt(n->sharekey->key, sharekey, SymmCipher::KEYLENGTH);
 
-            element(h,          MegaClient::NODEHANDLE);
+            element(h, MegaClient::NODEHANDLE);
             element(client->me, 8);
-            element(sharekey,   SymmCipher::KEYLENGTH);
+            element(sharekey, SymmCipher::KEYLENGTH);
         }
     }
 
@@ -956,8 +958,8 @@ CommandSetShare::CommandSetShare(MegaClient* client, Node* n, User* u, accesslev
         // securely store/transmit share key
         // by creating a symmetrically (for the sharer) and an asymmetrically
         // (for the sharee) encrypted version
-        memcpy(key,      n->sharekey->key, sizeof key);
-        memcpy(asymmkey, key,              sizeof key);
+        memcpy(key, n->sharekey->key, sizeof key);
+        memcpy(asymmkey, key, sizeof key);
 
         client->key.ecb_encrypt(key);
         arg("ok", key, sizeof key);
@@ -1903,9 +1905,9 @@ void CommandGetPH::procresult()
 CommandSetMasterKey::CommandSetMasterKey(MegaClient* client, const byte* oldkey, const byte* newkey, uint64_t hash)
 {
     cmd("up");
-    arg("currk", oldkey,       SymmCipher::KEYLENGTH);
-    arg("k",     newkey,       SymmCipher::KEYLENGTH);
-    arg("uh",    (byte*)&hash, sizeof hash);
+    arg("currk", oldkey, SymmCipher::KEYLENGTH);
+    arg("k", newkey, SymmCipher::KEYLENGTH);
+    arg("uh", (byte*)&hash, sizeof hash);
 
     tag = client->reqtag;
 }
@@ -2112,7 +2114,7 @@ CommandSetKeyPair::CommandSetKeyPair(MegaClient* client, const byte* privk,
 {
     cmd("up");
     arg("privk", privk, privklen);
-    arg("pubk",  pubk,  pubklen);
+    arg("pubk", pubk, pubklen);
 
     tag = client->reqtag;
 }

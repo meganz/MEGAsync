@@ -41,6 +41,8 @@ FileAttributeFetch::FileAttributeFetch(handle h, fatype t, int c, int ctag)
 // post pending requests for this cluster to supplied URL
 void FileAttributeFetchChannel::dispatch(MegaClient* client, int fac, const char* targeturl)
 {
+    req.out->clear();
+
     // dispatch all pending fetches for this channel's cluster
     for (faf_map::iterator it = client->fafs.begin(); it != client->fafs.end(); it++)
     {
@@ -50,6 +52,7 @@ void FileAttributeFetchChannel::dispatch(MegaClient* client, int fac, const char
             req.out->reserve(client->fafs.size() * sizeof(handle));
 
             it->second->dispatched = 1;
+
             req.out->append((char*)&it->first, sizeof(handle));
         }
     }

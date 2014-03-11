@@ -538,8 +538,7 @@ void MegaClient::exec()
 
         if (fafcs.size())
         {
-            // file attribute fetching (handled in parallel on a per-cluster
-            // basis)
+            // file attribute fetching (handled in parallel on a per-cluster basis)
             fafc_map::iterator it;
 
             for (it = fafcs.begin(); it != fafcs.end();)
@@ -1953,17 +1952,19 @@ error MegaClient::getfa(Node* n, fatype t, int cancel)
     {
         int c = atoi(n->fileattrstring.c_str() + pp);
 
-        // add file atttribute cluster channel and set cluster reference node
-        // handle
+        // add file atttribute cluster channel and set cluster reference node handle
         FileAttributeFetchChannel** fafcp = &fafcs[c];
+
         if (!*fafcp)
         {
             *fafcp = new FileAttributeFetchChannel();
         }
+cout<< "Requesting attribute fah=" << hex << fah << endl;
         (*fafcp)->fahref = fah;
 
         // map returned handle to type/node upon retrieval response
         FileAttributeFetch** fafp = &fafs[fah];
+
         if (!*fafp)
         {
             *fafp = new FileAttributeFetch(n->nodehandle, t, c, reqtag);
