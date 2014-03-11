@@ -20,8 +20,6 @@
  */
 
 #include "mega.h"
-#include <QString>
-#include <windows.h>
 
 namespace mega {
 WinFileAccess::WinFileAccess()
@@ -156,6 +154,18 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     name->append("", 1);
 
+    // enumerate directory
+    bool special = false;
+    string localseparator;
+    localseparator.assign((char*)L"\\", sizeof(wchar_t));
+    if (name->size() >= localseparator.size()
+        && !memcmp(name->data() + (name->size() & -localseparator.size()) - localseparator.size(),
+                   localseparator.data(),
+                   localseparator.size()))
+    {
+        special = true;
+    }
+
     if (write)
     {
         type = FILENODE;
@@ -165,29 +175,14 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
         {
             retry = WinFileSystemAccess::istransient(GetLastError());
-            QString title = QString::fromAscii("MEGAsync");
-            QString desc = QString::fromAscii("Error getting attributes: ") +
-                    QString::fromWCharArray((LPCWSTR)name->data());
-
-            MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
-            cout << "Error getting attributes" << endl;
-
             name->resize(name->size() - 1);
             return false;
         }
 
         // ignore symlinks - they would otherwise be treated as moves
         // also, ignore some other obscure filesystem object categories
-        if (fad.dwFileAttributes & SKIPATTRIBUTES)
+        if (!special && fad.dwFileAttributes & SKIPATTRIBUTES)
         {
-            QString title = QString::fromAscii("MEGAsync");
-            QString desc = QString::fromAscii("Unsupported attributes: ") +
-                    QString::fromWCharArray((LPCWSTR)name->data()) +
-                    QString::fromAscii("  ") + QString::number(fad.dwFileAttributes);
-
-            MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
-            cout << "Unsupported attributes" << endl;
-
             name->resize(name->size() - 1);
             retry = false;
             return false;
@@ -213,19 +208,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        DWORD er = GetLastError();
-        retry = WinFileSystemAccess::istransient(er);
-
-        name->append("", 1);
-
-        QString title = QString::fromAscii("MEGAsync");
-        QString desc = QString::fromAscii("Error opening ") +
-                QString::fromWCharArray((LPCWSTR)name->data()) +
-                QString::fromAscii("  ") + QString::number(er);
-
-        MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
-        name->resize(name->size() - 1);
-
+        retry = WinFileSystemAccess::istransient(GetLastError());
         return false;
     }
 
@@ -238,18 +221,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     if (type == FOLDERNODE)
     {
-        // enumerate directory
-        bool special = false;
-        string localseparator;
-        localseparator.assign((char*)L"\\", sizeof(wchar_t));
-        if (name->size() >= localseparator.size()
-            && !memcmp(name->data() + (name->size() & -localseparator.size()) - localseparator.size(),
-                       localseparator.data(),
-                       localseparator.size()))
-        {
-            special = true;
-        }
-
         if(!special)
             name->append((char*)L"\\*", 5);
         else
@@ -263,15 +234,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
         if (hFind == INVALID_HANDLE_VALUE)
         {
-            DWORD er = GetLastError();
-            retry = WinFileSystemAccess::istransient(er);
-
-            QString title = QString::fromAscii("MEGAsync");
-            QString desc = QString::fromAscii("Error enumerating folder ") +
-                    QString::fromAscii("  ") + QString::number(er);
-
-            MessageBoxW(NULL, desc.utf16(), title.utf16(), MB_OK);
-
+            retry = WinFileSystemAccess::istransient(GetLastError());
             return false;
         }
 
