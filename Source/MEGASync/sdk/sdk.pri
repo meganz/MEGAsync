@@ -27,7 +27,6 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/crypto/cryptopp.cpp  \
     $$PWD/src/db/sqlite.cpp  \
     $$PWD/megaapi.cpp \
-    $$PWD/sqlite3.c \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp \
@@ -94,6 +93,8 @@ win32 {
             $$PWD/include/mega/win32/megawaiter.h  \
 	    $$PWD/win32/megaapiwait.h \
 	    $$PWD/win32/megaapiwinhttpio.h
+
+    SOURCES += $$PWD/sqlite3.c
 }
 
 
@@ -148,5 +149,5 @@ unix {
    INCLUDEPATH += $$PWD/include
    INCLUDEPATH += $$PWD/include/mega/posix
    INCLUDEPATH += /usr/include/cryptopp
-   LIBS += -L$$PWD/3rdparty/libs/x64 -lssl -lcurl -ldl
+   LIBS += -L$$PWD/3rdparty/libs/x64 -lcurl -lsqlite3
 }
