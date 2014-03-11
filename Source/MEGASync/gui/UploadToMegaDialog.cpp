@@ -38,7 +38,7 @@ bool UploadToMegaDialog::isDefaultFolder()
 	return ui->cDefaultPath->isChecked();
 }
 
-void UploadToMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);

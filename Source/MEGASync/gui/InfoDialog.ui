@@ -678,7 +678,6 @@ color: rgb(102, 102, 102);</string>
           <height>50</height>
          </size>
         </property>
-        <zorder>wRecent3</zorder>
        </widget>
       </item>
       <item>
@@ -695,7 +694,6 @@ color: rgb(102, 102, 102);</string>
           <height>50</height>
          </size>
         </property>
-        <zorder>wRecent3</zorder>
        </widget>
       </item>
       <item>

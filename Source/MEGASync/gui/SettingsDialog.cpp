@@ -516,7 +516,7 @@ bool SettingsDialog::saveSettings()
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
                 QString localPath = preferences->getLocalFolder(i);
-                long long megaHandle = preferences->getMegaFolderHandle(i);
+                mega::handle megaHandle = preferences->getMegaFolderHandle(i);
 
                 int j;
                 for(j=0; j<ui->tSyncs->rowCount(); j++)
@@ -553,7 +553,7 @@ bool SettingsDialog::saveSettings()
                 for(j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
                     QString previousLocalPath = preferences->getLocalFolder(j);
-                    long long previousMegaHandle = preferences->getMegaFolderHandle(j);
+                    mega::handle previousMegaHandle = preferences->getMegaFolderHandle(j);
 
                     if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
                         break;

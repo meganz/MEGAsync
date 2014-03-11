@@ -384,7 +384,7 @@ int ExceptionHandler::ThreadEntry(void *arg) {
 
 // This function runs in a compromised context: see the top of the file.
 // Runs on the crashing thread.
-bool ExceptionHandler::HandleSignal(int sig, siginfo_t* info, void* uc) {
+bool ExceptionHandler::HandleSignal(int, siginfo_t* info, void* uc) {
   if (filter_ && !filter_(callback_context_))
     return false;
 
@@ -421,7 +421,7 @@ bool ExceptionHandler::HandleSignal(int sig, siginfo_t* info, void* uc) {
 // This is a public interface to HandleSignal that allows the client to
 // generate a crash dump. This function may run in a compromised context.
 bool ExceptionHandler::SimulateSignalDelivery(int sig) {
-  siginfo_t siginfo = {};
+  siginfo_t siginfo = {0, 0, 0, {0}};
   // Mimic a trusted signal to allow tracing the process (see
   // ExceptionHandler::HandleSignal().
   siginfo.si_code = SI_USER;

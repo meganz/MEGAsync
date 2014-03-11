@@ -107,11 +107,18 @@ int main(int argc, char *argv[])
     app.start();
     return app.exec();
 
+#if 0 //Strings for the translation system. These lines don't need to be built
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&No");
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&OK");
+    QT_TRANSLATE_NOOP("QDialogButtonBox", "&Cancel");
     QT_TRANSLATE_NOOP("Installer", "Choose Users");
     QT_TRANSLATE_NOOP("Installer", "Choose for which users you want to install $(^NameDA).");
     QT_TRANSLATE_NOOP("Installer", "Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)");
     QT_TRANSLATE_NOOP("Installer", "Install for anyone using this computer");
     QT_TRANSLATE_NOOP("Installer", "Install just for me");
+#endif
+
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
@@ -177,11 +184,6 @@ void MegaApplication::initialize()
     if(megaApi != NULL) return;
 
     setQuitOnLastWindowClosed(false);
-
-    QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
-    QT_TRANSLATE_NOOP("QDialogButtonBox", "&No");
-    QT_TRANSLATE_NOOP("QDialogButtonBox", "&OK");
-    QT_TRANSLATE_NOOP("QDialogButtonBox", "&Cancel");
 
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
@@ -613,7 +615,7 @@ void MegaApplication::refreshTrayIcon()
 
 #ifdef Q_OS_UNIX
 // signal handler
-static void on_sigint(int sig)
+static void on_sigint(int)
 {
     // delete shared memory key
     singleInstanceChecker.detach();
@@ -645,7 +647,7 @@ void MegaApplication::cleanAll()
     singleInstanceChecker.detach();
 }
 
-void MegaApplication::onDupplicateLink(QString link, QString name, long long handle)
+void MegaApplication::onDupplicateLink(QString, QString name, long long handle)
 {
     addRecentFile(name, handle);
 }
@@ -1195,13 +1197,13 @@ void MegaApplication::createTrayIcon()
 }
 
 //Called when a request is about to start
-void MegaApplication::onRequestStart(MegaApi* api, MegaRequest *request)
+void MegaApplication::onRequestStart(MegaApi* , MegaRequest *)
 {
 
 }
 
 //Called when a request has finished
-void MegaApplication::onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e)
+void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 {
     switch (request->getType()) {
 	case MegaRequest::TYPE_EXPORT:
@@ -1417,7 +1419,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 }
 
 //Called when there is a temporal problem in a request
-void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
+void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaError* )
 {
 }
 
@@ -1544,13 +1546,13 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 }
 
 //Called when contacts have been updated in MEGA
-void MegaApplication::onUsersUpdate(MegaApi* api, UserList *users)
+void MegaApplication::onUsersUpdate(MegaApi* , UserList *)
 {
 
 }
 
 //Called when nodes have been updated in MEGA
-void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
+void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
 {
     if(!infoDialog) return;
 
@@ -1629,12 +1631,12 @@ void MegaApplication::onNodesUpdate(MegaApi* api, NodeList *nodes)
     }
 }
 
-void MegaApplication::onReloadNeeded(MegaApi* api)
+void MegaApplication::onReloadNeeded(MegaApi*)
 {
     megaApi->fetchNodes();
 }
 
-void MegaApplication::onSyncStateChanged(MegaApi *api)
+void MegaApplication::onSyncStateChanged(MegaApi *)
 {
     if(megaApi)
     {

@@ -644,7 +644,7 @@ QString Preferences::getMegaFolder(int num)
     return value;
 }
 
-long long Preferences::getMegaFolderHandle(int num)
+mega::handle Preferences::getMegaFolderHandle(int num)
 {
     mutex.lock();
     assert(logged() && (megaFolderHandles.size()>num));
@@ -690,7 +690,7 @@ QList<long long> Preferences::getMegaFolderHandles()
     return value;
 }
 
-void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName)
+void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::handle megaFolderHandle, QString syncName)
 {
     mutex.lock();
     assert(logged());
@@ -763,7 +763,7 @@ QString Preferences::getRecentFileName(int num)
     return value;
 }
 
-long long Preferences::getRecentFileHandle(int num)
+mega::handle Preferences::getRecentFileHandle(int num)
 {
     mutex.lock();
     assert(logged() && recentFileHandles.size()>num);

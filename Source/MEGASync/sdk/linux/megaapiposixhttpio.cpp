@@ -5,7 +5,7 @@
 
 namespace mega {
 
-void MegaApiCurlHttpIO::setProxy(MegaProxySettings *proxySettings)
+void MegaApiCurlHttpIO::setProxy(MegaProxySettings *)
 {
 }
 

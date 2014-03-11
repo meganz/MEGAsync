@@ -88,7 +88,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     }
 }
 
-void MegaUploader::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void MegaUploader::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     switch(request->getType())
     {

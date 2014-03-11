@@ -56,7 +56,7 @@ void BindFolderDialog::on_bOK_clicked()
 {
     QString localFolderPath = QDir::toNativeSeparators(QDir(ui->wBinder->selectedLocalFolder()).canonicalPath());
     MegaApi *megaApi = app->getMegaApi();
-    long long handle = ui->wBinder->selectedMegaFolder();
+    mega::handle handle = ui->wBinder->selectedMegaFolder();
 
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)

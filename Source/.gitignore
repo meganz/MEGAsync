@@ -5,3 +5,10 @@ MegaShellExt.vcxproj.user
 Release
 x64
 Thumbs.db
+moc_*
+ui_*
+qrc_*
+*.autosave
+MEGASync/MEGAsync
+MEGACrashAnalyzer/MEGACrashAnalyzer
+
