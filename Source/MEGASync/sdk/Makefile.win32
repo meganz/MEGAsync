@@ -1,0 +1,130 @@
+##
+# @file Makefile.win32
+# @brief compilation rules to build Mega SDK dll and apps on MinGW
+#
+# (c) 2013-2014 by Mega Limited, Wellsford, New Zealand
+#
+# This file is part of the MEGA SDK - Client Access Engine.
+#
+# Applications using the MEGA API must present a valid application key
+# and comply with the the rules set forth in the Terms of Service.
+#
+# The MEGA SDK is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#
+# @copyright Simplified (2-clause) BSD License.
+#
+# You should have received a copy of the license along with this
+# program.
+##
+
+# In order to build Mega SDK dll on MinGW environment, the following directory structure is required:
+# \cryptoapp		compiled Crypto++ library, http://www.cryptopp.com/
+# \sqlite3			Sqlite3 sources, http://www.sqlite.org/
+# \db				(Optional) Berkeley DB, http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/overview/index.html
+# \sdk				Mega SDK sources, https://github.com/meganz/sdk
+# \winhttp.h		WinHTTP header file
+# \winhttp.lib		WinHTTP lib file
+# \winhttp.dll		WinHTTP dll
+#
+# To compile Mega DLL:
+# 	make -f Makefile.win32
+#
+#
+# In order to build megacli application, additional libraries are required:
+# \FreeImage		compiled FreeImage library, http://freeimage.sourceforge.net/
+# \readline			compiled The GNU Readline Library, http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
+# \termcap			compiled The Termcap Library, http://ftp.gnu.org/gnu/termcap/
+#
+# To compile Mega DLL and all applications:
+# 	make -f Makefile.win32 all
+
+
+CXX=g++
+CC=gcc
+
+# common compilation flags for all apps
+CXXFLAGS=-DUSE_SQLITE -DUSE_CRYPTOPP -D_WIN32=1 -g -Wall -I. -Iinclude -Iinclude/mega -Iinclude/mega/win32 -isystem ../cryptopp -isystem ../db/build_windows -Idb  -isystem .. -isystem ../sqlite3
+# megacli specific compilation flags
+
+MEGACLI_CXXFLAGS=-isystem ../FreeImage/Dist
+
+# common linked libraries for all apps
+LIB=-lwinhttp -lws2_32 -L../cryptopp -lcryptopp -L../db/build_windows -L../
+# megacli specific linked libraries
+MEGACLI_LIB=-L../FreeImage/Dist -lfreeimage -L../readline -lreadline -L../termcap -ltermcap
+
+LDFLAGS=
+
+COMMON_SRC=\
+		src/attrmap.cpp  \
+		src/backofftimer.cpp  \
+		src/base64.cpp  \
+		src/command.cpp  \
+		src/commands.cpp  \
+		src/db.cpp  \
+		src/fileattributefetch.cpp  \
+		src/file.cpp  \
+		src/filefingerprint.cpp  \
+		src/filesystem.cpp  \
+		src/http.cpp  \
+		src/json.cpp  \
+		src/node.cpp  \
+		src/pubkeyaction.cpp  \
+		src/request.cpp  \
+		src/serialize64.cpp  \
+		src/share.cpp  \
+		src/sharenodekeys.cpp  \
+		src/sync.cpp  \
+		src/transfer.cpp  \
+		src/transferslot.cpp  \
+		src/treeproc.cpp  \
+		src/user.cpp  \
+		src/utils.cpp  \
+		src/waiter.cpp  \
+		src/megaclient.cpp  \
+		src/crypto/cryptopp.cpp \
+		src/win32/fs.cpp src/win32/console.cpp src/win32/net.cpp src/win32/waiter.cpp src/win32/consolewaiter.cpp \
+		src/db/sqlite.cpp
+
+MEGACLI_SRC=examples/megacli.cpp
+MEGASYNC_SRC=examples/megasync.cpp
+
+COMMON_OBJ=$(COMMON_SRC:.cpp=.o)
+MEGACLI_OBJ=$(MEGACLI_SRC:.cpp=.o)
+MEGASYNC_OBJ=$(MEGASYNC_SRC:.cpp=.o)
+
+SQLITE_SRC=../sqlite3/sqlite3.c
+SQLITE_OBJ=$(SQLITE_SRC:.c=.o)
+
+# Targets
+MEGA=mega
+PROGS=megacli megasync
+
+# build rules
+$(MEGA).dll: $(COMMON_OBJ) $(SQLITE_OBJ)
+	$(CXX) -shared $(COMMON_OBJ) $(SQLITE_OBJ) $(CXXFLAGS) $(LDFLAGS)  $(LIB) -Wl,-no-undefined,--enable-runtime-pseudo-reloc,--out-implib,$(MEGA).lib -o $(MEGA).dll
+
+all: $(MEGA).dll $(PROGS)
+
+megacli: $(MEGACLI_OBJ)
+	$(CXX) $(LDFLAGS) $^ -o $@ $(MEGACLI_LIB) -L. -lmega
+
+megasync:  $(MEGASYNC_OBJ)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@ $(LIB) -L. -lmega
+
+$(SQLITE_SRC):
+	$(CC) -c $< -o $@
+$(COMMON_SRC):
+	$(CXX) -c $(CXXFLAGS) $< -o $@
+$(MEGACLI_OBJ):
+	$(CXX) $(CXXFLAGS) $(MEGACLI_CXXFLAGS) -c $(MEGACLI_SRC) -o $@
+
+clean:
+	-rm $(COMMON_OBJ)
+	-rm $(MEGACLI_OBJ)
+	-rm $(MEGASYNC_OBJ)
+	-rm $(SQLITE_OBJ)
+	-rm $(PROGS:=.exe)
+	-rm $(MEGA).dll $(MEGA).lib

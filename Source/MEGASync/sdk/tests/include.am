@@ -1,0 +1,14 @@
+# applications
+TESTS = tests/api_test
+
+if BUILD_TESTS
+noinst_PROGRAMS += $(TESTS)
+endif
+
+# depends on libmega
+$(TESTS): $(top_builddir)/src/libmega.la
+
+# rules
+tests_api_test_SOURCES = tests/tests.cpp
+tests_api_test_CXXFLAGS = -I $(GTEST_DIR)/include $(LIBCURL_FLAGS) $(CRYPTO_CXXFLAGS)
+tests_api_test_LDADD = $(GTEST_DIR)/lib/libgtest.la $(GTEST_DIR)/lib/libgtest_main.la $(CRYPTO_LIBS) $(LIBCURL_LIBS) $(top_builddir)/src/libmega.la
