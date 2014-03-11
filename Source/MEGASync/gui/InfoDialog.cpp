@@ -528,7 +528,7 @@ void InfoDialog::updateRecentFiles()
     ui->wRecent3->updateWidget();
 }
 
-void InfoDialog::focusOutEvent(QFocusEvent *event)
+void InfoDialog::focusOutEvent(QFocusEvent *)
 {
     QPoint p = mapFromGlobal(QCursor::pos());
     if(p.x()<0 || p.y()<0 || p.x()>this->width() || p.y()>this->height())

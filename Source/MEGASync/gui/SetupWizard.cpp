@@ -32,7 +32,7 @@ SetupWizard::~SetupWizard()
     delete ui;
 }
 
-void SetupWizard::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *error)
+void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
 {
 	switch(request->getType())
 	{

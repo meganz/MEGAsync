@@ -61,8 +61,8 @@ private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 
-    unsigned long long downloadSpeed;
-    unsigned long long uploadSpeed;
+    long long downloadSpeed;
+    long long uploadSpeed;
     unsigned long long effectiveDownloadSpeed;
     unsigned long long effectiveUploadSpeed;
     unsigned long long uploadStartTime;

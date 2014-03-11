@@ -8,6 +8,7 @@
 #include <QMutex>
 
 #include "control/EncryptedSettings.h"
+#include "megaapi.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
 
@@ -88,19 +89,19 @@ public:
     QString getSyncName(int num);
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
-    long long getMegaFolderHandle(int num);
+    mega::handle getMegaFolderHandle(int num);
     QStringList getSyncNames();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
     QList<long long> getMegaFolderHandles();
 
-    void addSyncedFolder(QString localFolder, QString megaFolder, long long megaFolderHandle, QString syncName = QString());
+    void addSyncedFolder(QString localFolder, QString megaFolder, mega::handle megaFolderHandle, QString syncName = QString());
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
     void addRecentFile(QString fileName, long long fileHandle, QString localPath);
     QString getRecentFileName(int num);
-    long long getRecentFileHandle(int num);
+    mega::handle getRecentFileHandle(int num);
     QString getRecentLocalPath(int num);
     long long getRecentFileTime(int num);
 

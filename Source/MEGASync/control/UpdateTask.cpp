@@ -145,7 +145,7 @@ QString UpdateTask::readNextLine(QNetworkReply *reply)
 {
     char line[4096];
     int len = reply->readLine(line, sizeof(line));
-    if((len <= 0) || (len >= (sizeof(line)-1)))
+    if((len <= 0) || ((unsigned int)(len-1) >= sizeof(line)))
         return QString();
 
     QString qLine(QString::fromUtf8(line));
