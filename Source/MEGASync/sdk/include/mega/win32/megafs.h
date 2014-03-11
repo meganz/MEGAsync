@@ -114,6 +114,7 @@ public:
 
     // file attributes we skip for a variety of excellent reasons
     static const DWORD SKIPATTRIBUTES = FILE_ATTRIBUTE_REPARSE_POINT
+                                        | FILE_ATTRIBUTE_SYSTEM
                                         | FILE_ATTRIBUTE_TEMPORARY
                                         | FILE_ATTRIBUTE_OFFLINE;
 
