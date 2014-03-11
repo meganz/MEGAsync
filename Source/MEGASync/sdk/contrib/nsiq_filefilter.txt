@@ -1,0 +1,66 @@
+## File filters.
+* default
+- /
++ src/
++ include/
++ examples/
+- include/mega/config.h
+
+## Rules documented here:
+## http://nsiqcppstyle.appspot.com/rule_doc/
+~ RULE_3_1_A_do_not_start_filename_with_underbar
+##~ RULE_3_2_B_do_not_use_same_filename_more_than_once
+~ RULE_3_2_CD_do_not_use_special_characters_in_filename
+##~ RULE_3_2_F_use_representitive_classname_for_cpp_filename
+~ RULE_3_2_H_do_not_use_underbars_for_cpp_filename
+~ RULE_3_2_H_do_not_use_uppercase_for_c_filename
+##~ RULE_3_3_A_start_function_name_with_is_or_has_when_return_bool
+~ RULE_3_3_A_start_function_name_with_lowercase_unix
+##~ RULE_3_3_A_start_function_name_with_upperrcase_windows
+##~ RULE_3_3_B_start_private_function_name_with_underbar
+##~ RULE_4_1_A_A_use_tab_for_indentation
+~ RULE_4_1_A_B_use_space_for_indentation
+~ RULE_4_1_B_indent_each_enum_item_in_enum_block
+##~ RULE_4_1_B_locate_each_enum_item_in_seperate_line
+~ RULE_4_1_C_align_long_function_parameter_list
+##~ RULE_4_1_E_align_conditions
+~ RULE_4_2_A_A_space_around_operator
+~ RULE_4_2_A_B_space_around_word
+~ RULE_4_4_A_do_not_write_over_120_columns_per_line
+##~ RULE_4_5_A_brace_for_namespace_should_be_located_in_seperate_line
+~ RULE_4_5_A_braces_for_function_definition_should_be_located_in_seperate_line
+~ RULE_4_5_A_braces_for_type_definition_should_be_located_in_seperate_line
+##~ RULE_4_5_A_braces_inside_of_function_should_be_located_in_end_of_line
+~ RULE_4_5_A_indent_blocks_inside_of_function
+~ RULE_4_5_A_matching_braces_inside_of_function_should_be_located_same_column
+# should turn this one on:
+~ RULE_4_5_B_use_braces_even_for_one_statement
+#~ RULE_5_2_C_provide_doxygen_class_comment_on_class_def
+#~ RULE_5_2_C_provide_doxygen_namespace_comment_on_namespace_def
+#~ RULE_5_2_C_provide_doxygen_struct_comment_on_struct_def
+#~ RULE_5_3_A_provide_doxygen_function_comment_on_function_in_header
+#~ RULE_5_3_A_provide_doxygen_function_comment_on_function_in_impl
+~ RULE_6_1_A_do_not_omit_function_parameter_names
+# will have to see on this one:
+##~ RULE_6_1_E_do_not_use_more_than_5_paramters_in_function
+# will have to see on this one:
+~ RULE_6_1_G_write_less_than_200_lines_for_function
+# will have to see on this one:
+##~ RULE_6_2_A_do_not_use_system_dependent_type
+# will have to see on this one:
+##~ RULE_6_4_B_initialize_first_item_of_enum
+~ RULE_6_5_B_do_not_use_lowercase_for_macro_constants
+# will have to see on this one:
+~ RULE_6_5_B_do_not_use_macro_for_constants
+# will have to see on this one:
+~ RULE_7_1_B_A_do_not_use_double_assignment
+#~ RULE_7_1_C_do_not_use_question_keyword
+~ RULE_7_2_B_do_not_use_goto_statement
+# might require different comment character style (/// or /**):
+~ RULE_8_1_A_provide_file_info_comment
+~ RULE_9_1_A_do_not_use_hardcorded_include_path
+~ RULE_9_2_D_use_reentrant_function
+~ RULE_10_1_A_do_not_use_bufferoverflow_risky_function_for_unix
+~ RULE_10_1_B_do_not_use_bufferoverflow_risky_function_for_windows
+# will have to see on this one:
+~ RULE_A_3_avoid_too_deep_blocks

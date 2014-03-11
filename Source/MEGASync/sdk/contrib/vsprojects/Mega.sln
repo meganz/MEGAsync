@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mega", "Mega.vcxproj", "{93FED8CC-E7A0-4EC7-BC79-3589F469A75B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "megasync", "megasync.vcxproj", "{1F18FD59-A6AE-4689-9431-2D0288FF7763}"
+	ProjectSection(ProjectDependencies) = postProject
+		{93FED8CC-E7A0-4EC7-BC79-3589F469A75B} = {93FED8CC-E7A0-4EC7-BC79-3589F469A75B}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93FED8CC-E7A0-4EC7-BC79-3589F469A75B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{93FED8CC-E7A0-4EC7-BC79-3589F469A75B}.Debug|Win32.Build.0 = Debug|Win32
+		{93FED8CC-E7A0-4EC7-BC79-3589F469A75B}.Release|Win32.ActiveCfg = Release|Win32
+		{93FED8CC-E7A0-4EC7-BC79-3589F469A75B}.Release|Win32.Build.0 = Release|Win32
+		{1F18FD59-A6AE-4689-9431-2D0288FF7763}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1F18FD59-A6AE-4689-9431-2D0288FF7763}.Debug|Win32.Build.0 = Debug|Win32
+		{1F18FD59-A6AE-4689-9431-2D0288FF7763}.Release|Win32.ActiveCfg = Release|Win32
+		{1F18FD59-A6AE-4689-9431-2D0288FF7763}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

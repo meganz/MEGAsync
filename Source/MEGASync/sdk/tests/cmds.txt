@@ -1,0 +1,31 @@
+# scenario describes action with an object (file or directory)
+# valid commands:
+# create moveout movein rename filldir delete sleep
+#
+# [create] randomly creates file or directory with a random name
+# [moveout] moves object out of sync tree
+# [movein] moves object into sync tree
+# [rename] gives a new random name
+# [filldir] if a directory: creates a random number of files (up to 100)
+# [delete] deletes object
+# [sleep] sleeps for 2 secs
+#
+# scenario must start with [create]
+
+create
+moveout
+movein
+rename
+rename
+rename
+rename
+#filldir
+sleep
+moveout
+sleep
+sleep
+sleep
+movein
+rename
+sleep
+rename
