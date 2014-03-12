@@ -867,7 +867,12 @@ void MegaApplication::importLinks()
     pasteMegaLinksDialog->exec();
 
     //If the dialog isn't accepted, return
-    if(pasteMegaLinksDialog->result()!=QDialog::Accepted) return;
+    if(pasteMegaLinksDialog->result()!=QDialog::Accepted)
+    {
+        delete pasteMegaLinksDialog;
+        pasteMegaLinksDialog = NULL;
+        return;
+    }
 
     //Get the list of links from the dialog
     QStringList linkList = pasteMegaLinksDialog->getLinks();
