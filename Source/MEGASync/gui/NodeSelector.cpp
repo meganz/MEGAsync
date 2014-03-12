@@ -156,6 +156,17 @@ void NodeSelector::on_bOk_clicked()
     }
     delete rootNode;
 
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    MegaNode *check = megaApi->getNodeByPath(megaApi->getNodePath(node));
+    delete node;
+    if(!check)
+    {
+        QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
+                                                     "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
+                             QMessageBox::Ok);
+        return;
+    }
+
     if(sizeWarning)
     {
         long long totalSize = megaApi->getSize(megaApi->getNodeByHandle(selectedFolder));
