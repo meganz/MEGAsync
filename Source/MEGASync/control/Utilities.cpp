@@ -3,6 +3,9 @@
 
 #include <QImageReader>
 #include <QDirIterator>
+#include <QDesktopServices>
+#include <QTextStream>
+#include <QDateTime>
 #include <iostream>
 
 using namespace std;
@@ -347,17 +350,26 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath, bool overwrite
 
 void Utilities::log(QString message)
 {
-    cout << "LOG: " << message.toUtf8().constData() << endl;
+    Utilities::log(message.toUtf8().constData());
 }
 
 void Utilities::log(const char *message)
 {
-    cout << "LOG: " << message << endl;
-}
+#ifdef LOG_TO_FILE
+    static QString filePath;
+    if(filePath.isEmpty())
+    {
+        QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+        filePath = dataPath + QString::fromAscii("\\MEGAsync.log");
+    }
 
-void Utilities::log(std::ostream *message)
-{
-    cout << "LOG: " << message << endl;
+    QFile file(filePath);
+    file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+    QTextStream out(&file);
+    out << "LOG " << QDateTime::currentMSecsSinceEpoch() << ": " << message << endl;
+#else
+    cout << "LOG " << QDateTime::currentMSecsSinceEpoch() << ": " << message << endl;
+#endif
 }
 
 bool Utilities::verifySyncedFolderLimits(QString path)
