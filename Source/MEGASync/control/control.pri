@@ -25,4 +25,5 @@ HEADERS  +=  $$PWD/HTTPServer.h \
 
 debug {
     DEFINES += SHOW_LOGS
+#    DEFINES += LOG_TO_FILE
 }

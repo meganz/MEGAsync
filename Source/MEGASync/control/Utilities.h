@@ -37,7 +37,6 @@ public:
     static void getFolderSize(QString folderPath, long long *size);
     static void log(QString message);
     static void log(const char *message);
-    static void log(std::ostream *message);
 };
 
 #endif // UTILITIES_H
