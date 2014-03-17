@@ -79,7 +79,7 @@ void RecentFile::updateWidget()
         else
             ui->lTime->setText(tr("%1 hours ago").arg(hours));
     }
-    else if(secs < 292000)
+    else if(secs < 2592000)
     {
         int days = secs/86400;
         if(days == 1)
@@ -89,7 +89,7 @@ void RecentFile::updateWidget()
     }
     else if(secs < 31536000)
     {
-        int months = secs/292000;
+        int months = secs/2592000;
         if(months == 1)
             ui->lTime->setText(tr("1 month ago"));
         else
