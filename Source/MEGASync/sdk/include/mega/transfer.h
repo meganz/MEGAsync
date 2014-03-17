@@ -61,8 +61,7 @@ struct MEGA_API Transfer : public FileFingerprint
 
     chunkmac_map chunkmacs;
 
-    // upload handle for file attribute attachment (only set if file attribute
-    // queued)
+    // upload handle for file attribute attachment (only set if file attribute queued)
     handle uploadhandle;
 
     // signal failure

@@ -30,10 +30,10 @@
 #include "mega/user.h"
 
 namespace mega {
-HttpReqCommandPutFA::HttpReqCommandPutFA(MegaClient* client, handle cth, fatype ctype, byte* cdata, unsigned clen)
+HttpReqCommandPutFA::HttpReqCommandPutFA(MegaClient* client, handle cth, fatype ctype, string* cdata)
 {
     cmd("ufa");
-    arg("s", clen);
+    arg("s", cdata->size());
 
     persistent = true;  // object will be recycled either for retry or for
                         // posting to the file attribute server
@@ -41,7 +41,6 @@ HttpReqCommandPutFA::HttpReqCommandPutFA(MegaClient* client, handle cth, fatype 
     th = cth;
     type = ctype;
     data = cdata;
-    len = clen;
 
     binary = true;
 
@@ -50,7 +49,7 @@ HttpReqCommandPutFA::HttpReqCommandPutFA(MegaClient* client, handle cth, fatype 
 
 HttpReqCommandPutFA::~HttpReqCommandPutFA()
 {
-    delete[] data;
+    delete data;
 }
 
 void HttpReqCommandPutFA::procresult()
@@ -79,7 +78,7 @@ void HttpReqCommandPutFA::procresult()
                     else
                     {
                         Node::copystring(&posturl, p);
-                        post(client, (char*)data, len);
+                        post(client, data->data(), data->size());
                     }
                     return;
 
@@ -196,7 +195,7 @@ CommandPutFile::CommandPutFile(TransferSlot* ctslot, int ms)
     tslot = ctslot;
 
     cmd("u");
-    arg("s",  tslot->fa->size);
+    arg("s", tslot->fa->size);
     arg("ms", ms);
 }
 
@@ -487,8 +486,8 @@ CommandSetAttr::CommandSetAttr(MegaClient* client, Node* n)
     n->attrs.getjson(&at);
     client->makeattr(&n->key, &at, at.c_str(), at.size());
 
-    arg("n",  (byte*)&n->nodehandle, MegaClient::NODEHANDLE);
-    arg("at", (byte*)at.c_str(),     at.size());
+    arg("n", (byte*)&n->nodehandle, MegaClient::NODEHANDLE);
+    arg("at", (byte*)at.c_str(), at.size());
 
     h = n->nodehandle;
     tag = client->reqtag;
@@ -575,7 +574,7 @@ CommandPutNodes::CommandPutNodes(MegaClient* client, handle th,
         }
         else
         {
-            arg("k",  (const byte*)nn[i].nodekey.data(), nn[i].nodekey.size());
+            arg("k", (const byte*)nn[i].nodekey.data(), nn[i].nodekey.size());
         }
 
         arg("ts", nn[i].clienttimestamp);
@@ -1289,7 +1288,7 @@ CommandGetUA::CommandGetUA(MegaClient* client, const char* uid, const char* an, 
     priv = p;
 
     cmd("uga");
-    arg("u",  uid);
+    arg("u", uid);
     arg("ua", an);
 
     tag = client->reqtag;
@@ -1355,7 +1354,7 @@ CommandNodeKeyUpdate::CommandNodeKeyUpdate(MegaClient* client, handle_vector* v)
         {
             client->key.ecb_encrypt((byte*)n->nodekey.data(), nodekey, n->nodekey.size());
 
-            element(h,       MegaClient::NODEHANDLE);
+            element(h, MegaClient::NODEHANDLE);
             element(nodekey, n->nodekey.size());
         }
     }
@@ -1932,7 +1931,7 @@ CommandCreateEphemeralSession::CommandCreateEphemeralSession(MegaClient* client,
     memcpy(pw, cpw, sizeof pw);
 
     cmd("up");
-    arg("k",  key, SymmCipher::KEYLENGTH);
+    arg("k", key, SymmCipher::KEYLENGTH);
     arg("ts", ssc, 2 * SymmCipher::KEYLENGTH);
 
     tag = client->reqtag;
@@ -2019,7 +2018,7 @@ CommandSendSignupLink::CommandSendSignupLink(MegaClient* client, const char* ema
 {
     cmd("uc");
     arg("c", c, 2 * SymmCipher::KEYLENGTH);
-    arg("n", (byte*)name,  strlen(name));
+    arg("n", (byte*)name, strlen(name));
     arg("m", (byte*)email, strlen(email));
 
     tag = client->reqtag;

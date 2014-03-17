@@ -238,7 +238,7 @@ void TransferSlot::doio(MegaClient* client)
                         if (!failure)
                         {
                             failure = true;
-                            client->setchunkfailed();
+                            client->setchunkfailed(&reqs[i]->posturl);
                         }
 
                         reqs[i]->status = REQ_PREPARED;

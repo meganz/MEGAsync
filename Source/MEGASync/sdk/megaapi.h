@@ -65,6 +65,7 @@ typedef int64_t m_off_t;
 #elif USE_QT
 #include <QThread>
 #include <QMutex>
+#include "qt/gfxqt.h"
 
 class MegaThread: public QThread
 {
@@ -100,6 +101,8 @@ protected:
 #define JOIN_THREAD(thread) thread->wait();
 #define DELETE_THREAD(thread) delete thread;
 
+class MegaGfxProc : public mega::GfxProcQT {};
+
 #endif
 
 using namespace std;
@@ -111,7 +114,6 @@ using namespace std;
 #include "win32/megaapiwait.h"
 #include "mega.h"
 #include "MegaProxySettings.h"
-
 
 class MegaHttpIO : public mega::MegaApiWinHttpIO {};
 class MegaFileSystemAccess : public mega::WinFileSystemAccess {};
@@ -928,6 +930,7 @@ protected:
     MegaWaiter *waiter;
     MegaFileSystemAccess *fsAccess;
     MegaDbAccess *dbAccess;
+    MegaGfxProc *gfxAccess;
 
 	RequestQueue requestQueue;
 	TransferQueue transferQueue;

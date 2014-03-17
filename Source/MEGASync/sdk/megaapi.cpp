@@ -48,132 +48,6 @@ extern bool mega::debug;
 
 using namespace mega;
 
-#ifdef USE_FREEIMAGE
-#include <FreeImage.h>
-
-// attempt to create a size*size JPEG thumbnail using FreeImage
-// thumbnail specs:
-// - largest square crop at the center (landscape) or at 1/6 of the height above center (portrait)
-// - must respect JPEG EXIF rotation tag
-// - must save at 85% quality
-// returns result as string
-#ifdef _WIN32
-#define FreeImage_GetFileTypeX FreeImage_GetFileTypeU
-#define FreeImage_LoadX FreeImage_LoadU
-typedef const wchar_t freeimage_filename_char_t;
-#else
-#define FreeImage_GetFileTypeX FreeImage_GetFileType
-#define FreeImage_LoadX FreeImage_Load
-typedef const char freeimage_filename_char_t;
-#endif
-
-#elif USE_QT
-#include <QImageReader>
-#include <QImage>
-#include <QByteArray>
-#include <QBuffer>
-#include <QIODevice>
-#endif
-
-static void createthumbnail(string* filename, unsigned size, string* result)
-{
-
-
-#ifdef USE_FREEIMAGE
-
-		FIBITMAP* dib;
-		FIBITMAP* tdib;
-		FIMEMORY* hmem;
-		int w, h;
-
-		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeX((freeimage_filename_char_t*)filename->data());
-
-		if (fif == FIF_UNKNOWN) return;
-
-		if (fif == FIF_JPEG)
-		{
-				// load JPEG (scale & EXIF-rotate)
-				FITAG *tag;
-
-				if (!(dib = FreeImage_LoadX(fif,(freeimage_filename_char_t*)filename->data(),JPEG_EXIFROTATE | JPEG_FAST | (size << 16)))) return;
-
-				if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGWidth",&tag)) w = atoi((char*)FreeImage_GetTagValue(tag));
-				else w = FreeImage_GetWidth(dib);
-
-				if (FreeImage_GetMetadata(FIMD_COMMENTS,dib,"OriginalJPEGHeight",&tag)) h = atoi((char*)FreeImage_GetTagValue(tag));
-				else h = FreeImage_GetHeight(dib);
-		}
-		else
-		{
-				// load all other image types - for RAW formats, rely on embedded preview
-				if (!(dib = FreeImage_LoadX(fif,(freeimage_filename_char_t*)filename->data(),(fif == FIF_RAW) ? RAW_PREVIEW : 0))) return;
-
-				w = FreeImage_GetWidth(dib);
-				h = FreeImage_GetHeight(dib);
-		}
-
-        if (w >= 20 && h >= 20)
-		{
-				if (w < h)
-				{
-						h = h*size/w;
-						w = size;
-				}
-				else
-				{
-						w = w*size/h;
-						h = size;
-				}
-
-				if ((tdib = FreeImage_Rescale(dib,w,h,FILTER_BILINEAR)))
-				{
-						FreeImage_Unload(dib);
-
-						dib = tdib;
-
-                        if ((tdib = FreeImage_Copy(dib,(w-size)/2,(h-size)/3,size+(w-size)/2,size+(h-size)/3)))
-						{
-								FreeImage_Unload(dib);
-
-								dib = tdib;
-
-								if ((hmem = FreeImage_OpenMemory()))
-								{
-										if (FreeImage_SaveToMemory(FIF_JPEG,dib,hmem,JPEG_BASELINE | JPEG_OPTIMIZE | 85))
-										{
-												BYTE* tdata;
-												DWORD tlen;
-
-												FreeImage_AcquireMemory(hmem,&tdata,&tlen);
-												result->assign((char*)tdata,tlen);
-										}
-
-										FreeImage_CloseMemory(hmem);
-								}
-						}
-				}
-		}
-
-		FreeImage_Unload(dib);
-
-#elif USE_QT
-
-#ifdef WIN32
-    QString filePath = QString::fromWCharArray((wchar_t *)filename->data());
-#else
-    QString filePath = QString::fromUtf8(filename->data());
-#endif
-
-    QImage image = Utilities::createThumbnail(filePath, size);
-    if(image.isNull()) return;
-    QByteArray ba;
-    QBuffer buffer(&ba);
-    buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "JPG", 85);
-    result->assign(ba.constData(), ba.size());
-#endif
-}
-
 int MegaFile::nextseqno = 0;
 
 bool MegaFile::failed(error e)
@@ -1048,7 +922,8 @@ MegaApi::MegaApi(const char *basePath)
     fsAccess = new MegaFileSystemAccess();
     string sBasePath = basePath;
     dbAccess = new MegaDbAccess(&sBasePath);
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, "FhMgXbqb", "MEGAsync/1.0.11");
+    gfxAccess = new MegaGfxProc();
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.11");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2152,32 +2027,6 @@ void MegaApi::transfer_prepare(Transfer *t)
             fsAccess->name2local(&suffix);
             t->localfilename.append(suffix);
         }
-	}
-	else
-	{
-		if (t->localfilename.size())
-		{
-			if (!t->uploadhandle)
-			{
-				string thumbnail;
-
-				// (thumbnail creation should be performed in subthreads to keep the app nonblocking)
-				// to guard against file overwrite race conditions, production applications
-				// should use the same file handle for uploading and creating the thumbnail
-				t->localfilename.append("",1);
-				createthumbnail(&t->localfilename,120,&thumbnail);
-				t->localfilename.resize(t->localfilename.size()-1);
-				if (thumbnail.size())
-				{
-                        LOG("Image detected and thumbnail extracted");
-
-						// (store the file attribute data - it will be attached to the file
-						// immediately if the upload has already completed; otherwise, once
-						// the upload completes)
-						client->putfa(t,THUMBNAIL120X120,(const byte*)thumbnail.data(),thumbnail.size());
-				}
-			}
-		}
 	}
 
     string path;
@@ -4009,12 +3858,18 @@ bool WildcardMatch(const char *pszString, const char *pszMatch)
 
 bool MegaApi::is_syncable(const char *name)
 {
+    MUTEX_UNLOCK(sdkMutex);
+
     for(int i=0; i< excludedNames.size(); i++)
     {
         if(WildcardMatch(name, excludedNames[i].c_str()))
+        {
+            MUTEX_LOCK(sdkMutex);
             return false;
+        }
     }
 
+    MUTEX_LOCK(sdkMutex);
     return true;
 }
 

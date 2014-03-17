@@ -24,6 +24,7 @@
 
 #include "json.h"
 #include "db.h"
+#include "gfx.h"
 #include "filefingerprint.h"
 #include "request.h"
 #include "treeproc.h"
@@ -73,7 +74,7 @@ public:
     // full account confirmation/creation support
     void sendsignuplink(const char*, const char*, const byte*);
     void querysignuplink(const byte*, unsigned);
-    void confirmsignuplink(const byte *, unsigned, uint64_t);
+    void confirmsignuplink(const byte*, unsigned, uint64_t);
     void setkeypair();
 
     // user login: e-mail, pwkey
@@ -104,7 +105,7 @@ public:
     void makeattr(SymmCipher*, string*, const char*, int = -1);
 
     // check node access level
-    int checkaccess(Node *, accesslevel_t);
+    int checkaccess(Node*, accesslevel_t);
 
     // check if a move operation would succeed
     error checkmove(Node*, Node*);
@@ -113,7 +114,7 @@ public:
     error unlink(Node*);
 
     // move node to new parent folder
-    error rename(Node *, Node *, syncdel_t = SYNCDEL_NONE);
+    error rename(Node*, Node*, syncdel_t = SYNCDEL_NONE);
 
     // start/stop/pause file transfer
     bool startxfer(direction_t, File*);
@@ -138,16 +139,16 @@ public:
 
     // add nodes to specified parent node (complete upload, copy files, make
     // folders)
-    void putnodes(handle, NewNode *, int);
+    void putnodes(handle, NewNode*, int);
 
     // send files/folders to user
     void putnodes(const char*, NewNode*, int);
 
-    // attach file attribute
-    void putfa(Transfer *, fatype, const byte *, unsigned);
+    // attach file attribute to upload or node handle
+    void putfa(handle, fatype, SymmCipher*, string*);
 
     // queue file attribute retrieval
-    error getfa(Node *, fatype, int = 0);
+    error getfa(Node*, fatype, int = 0);
 
     // attach/update/delete user attribute
     void putua(const char*, const byte* = NULL, unsigned = 0, int = 0);
@@ -159,7 +160,7 @@ public:
     error invite(const char*, visibility_t = VISIBLE);
 
     // add/remove/update outgoing share
-    void setshare(Node *, const char*, accesslevel_t);
+    void setshare(Node*, const char*, accesslevel_t);
 
     // export node link or remove existing exported link for this node
     error exportnode(Node*, int);
@@ -205,6 +206,9 @@ private:
     // server-client command trigger connection
     HttpReq* pendingsc;
     BackoffTimer btsc;
+
+    // badhost report
+    HttpReq* badhostcs;
 
     // root URL for API requestrs
     static const char* const APIURL;
@@ -284,7 +288,7 @@ private:
     void readtree(JSON*);
 
     // used by wait() to handle event timing
-    void checkevent(dstime, dstime *, dstime*);
+    void checkevent(dstime, dstime*, dstime*);
 
     // converts UTF-8 to 32-bit word array
     static char* str_to_a32(const char*, int*);
@@ -308,6 +312,9 @@ public:
     // directory change notification
     struct FileSystemAccess* fsaccess;
 
+    // bitmap graphics handling
+    GfxProc* gfx;
+    
     // DB access
     DbAccess* dbaccess;
 
@@ -359,8 +366,7 @@ public:
     // file attribute fetches
     faf_map fafs;
 
-    // generate attribute string based on the pending attributes for this
-    // upload
+    // generate attribute string based on the pending attributes for this upload
     void pendingattrstring(handle, string*);
 
     // merge newly received share into nodes
@@ -519,10 +525,11 @@ public:
     void faf_failed(int);
 
     // transfer chunk failed
-    void setchunkfailed();
+    void setchunkfailed(string*);
+    string badhosts;
     
     // process object arrays by the API server
-    int readnodes(JSON *, int, putsource_t = PUTNODES_APP, NewNode * = NULL, int = 0);
+    int readnodes(JSON*, int, putsource_t = PUTNODES_APP, NewNode* = NULL, int = 0);
 
     void readok(JSON*);
     void readokelement(JSON*);
@@ -536,7 +543,7 @@ public:
     void procsuk(JSON*);
 
     void setkey(SymmCipher*, const char*);
-    bool decryptkey(const char*, byte *, int, SymmCipher *, int, handle);
+    bool decryptkey(const char*, byte*, int, SymmCipher*, int, handle);
 
     void handleauth(handle, byte*);
 
@@ -599,7 +606,7 @@ public:
     // convert hex digit to number
     static int hexval(char);
 
-    MegaClient(MegaApp*, Waiter*, HttpIO*, FileSystemAccess*, DbAccess*, const char*, const char*);
+    MegaClient(MegaApp*, Waiter*, HttpIO*, FileSystemAccess*, DbAccess*, GfxProc*, const char*, const char*);
     ~MegaClient();
 };
 } // namespace

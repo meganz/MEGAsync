@@ -3,16 +3,16 @@ lib_LTLIBRARIES = src/libmega.la
 
 # CXX flags
 if WIN32
-src_libmega_la_CXXFLAGS = -D_WIN32=1 -Iinclude/ -Iinclude/mega/win32 $(LIBS_EXTRA) $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS) $(CXXFLAGS) $(WINHTTP_CXXFLAGS)
+src_libmega_la_CXXFLAGS = -D_WIN32=1 -Iinclude/ -Iinclude/mega/win32 $(LIBS_EXTRA) $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS) $(CXXFLAGS) $(WINHTTP_CXXFLAGS) $(FI_CXXFLAGS)
 else
-src_libmega_la_CXXFLAGS = $(LIBCURL_FLAGS) $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS)
+src_libmega_la_CXXFLAGS = $(LIBCURL_FLAGS) $(CRYPTO_CXXFLAGS) $(DB_CXXFLAGS) $(FI_CXXFLAGS)
 endif
 
 # Libs
 if WIN32
-src_libmega_la_LIBADD = $(LIBS_EXTRA) $(CRYPTO_LDFLAGS) $(CRYPTO_LIBS) $(DB_LDFLAGS) $(DB_LIBS) $(WINHTTP_LDFLAGS) $(WINHTTP_LIBS)
+src_libmega_la_LIBADD = $(LIBS_EXTRA) $(CRYPTO_LDFLAGS) $(CRYPTO_LIBS) $(DB_LDFLAGS) $(DB_LIBS) $(WINHTTP_LDFLAGS) $(WINHTTP_LIBS) $(FI_LDFLAGS) $(FI_LIBS)
 else
-src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LDFLAGS) $(CRYPTO_LIBS) $(DB_LDFLAGS) $(DB_LIBS)
+src_libmega_la_LIBADD =  $(LIBCURL_LIBS) $(CRYPTO_LDFLAGS) $(CRYPTO_LIBS) $(DB_LDFLAGS) $(DB_LIBS) $(FI_LDFLAGS) $(FI_LIBS)
 endif
 
 # add library version
@@ -30,6 +30,7 @@ src_libmega_la_SOURCES += src/fileattributefetch.cpp
 src_libmega_la_SOURCES += src/file.cpp
 src_libmega_la_SOURCES += src/filefingerprint.cpp
 src_libmega_la_SOURCES += src/filesystem.cpp
+src_libmega_la_SOURCES += src/gfx.cpp
 src_libmega_la_SOURCES += src/http.cpp
 src_libmega_la_SOURCES += src/json.cpp
 src_libmega_la_SOURCES += src/node.cpp
@@ -47,6 +48,7 @@ src_libmega_la_SOURCES += src/utils.cpp
 src_libmega_la_SOURCES += src/waiter.cpp
 src_libmega_la_SOURCES += src/crypto/cryptopp.cpp
 src_libmega_la_SOURCES += src/db/sqlite.cpp
+src_libmega_la_SOURCES += src/gfx/freeimage.cpp
 
 # win32 sources
 if WIN32

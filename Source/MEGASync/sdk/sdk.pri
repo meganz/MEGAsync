@@ -4,6 +4,7 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/command.cpp \
     $$PWD/src/commands.cpp \
     $$PWD/src/db.cpp \
+    $$PWD/src/gfx.cpp \
     $$PWD/src/file.cpp \
     $$PWD/src/fileattributefetch.cpp \
     $$PWD/src/filefingerprint.cpp \
@@ -30,6 +31,7 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp \
+    $$PWD/qt/gfxqt.cpp \
     $$PWD/MegaProxySettings.cpp
 
 win32 {
@@ -56,6 +58,7 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/command.h \
 	    $$PWD/include/mega/console.h \
 	    $$PWD/include/mega/db.h \
+	    $$PWD/include/mega/gfx.h \
 	    $$PWD/include/mega/file.h \
 	    $$PWD/include/mega/fileattributefetch.h \
 	    $$PWD/include/mega/filefingerprint.h \
@@ -84,6 +87,7 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
 	    $$PWD/qt/QTMegaListener.h \
+	    $$PWD/qt/gfxqt.h \
 	    $$PWD/MegaProxySettings.h
 
 win32 {

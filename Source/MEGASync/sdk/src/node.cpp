@@ -528,7 +528,7 @@ const char* Node::displayname()
 // returns position of file attribute or 0 if not present
 int Node::hasfileattribute(fatype t) const
 {
-    char buf[16];
+    char buf[24];
 
     sprintf(buf, ":%u*", t);
     return fileattrstring.find(buf) + 1;

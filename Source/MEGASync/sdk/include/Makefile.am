@@ -10,6 +10,7 @@ nobase_libmegainclude_HEADERS = \
 	mega/console.h \
 	mega/command.h \
 	mega/db.h \
+	mega/gfx.h \
 	mega/fileattributefetch.h \
 	mega/filefingerprint.h \
 	mega/file.h \
@@ -34,7 +35,8 @@ nobase_libmegainclude_HEADERS = \
 	mega/waiter.h \
     mega/crypto/cryptopp.h \
     mega/db/sqlite.h \
-    mega/db/bdb.h
+    mega/db/bdb.h \
+    mega/gfx/freeimage.h
 
 if WIN32
 nobase_libmegainclude_HEADERS += \

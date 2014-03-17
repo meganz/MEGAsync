@@ -95,7 +95,6 @@ struct User;
 struct Waiter;
 
 #define EOO 0
-#define THUMBNAIL120X120 0
 
 #define STRINGIFY(x) # x
 #define TOSTRING(x) STRINGIFY(x)
