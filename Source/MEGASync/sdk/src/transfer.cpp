@@ -94,8 +94,7 @@ void Transfer::complete()
         // FIXME: multiple overwrite race conditions below (make copies
         // from open file instead of closing/reopening!)
 
-        // set timestamp (subsequent moves & copies are assumed not to alter
-        // mtime)
+        // set timestamp (subsequent moves & copies are assumed not to alter mtime)
         client->fsaccess->setmtimelocal(&localfilename, mtime);
 
         // verify integrity of file
@@ -115,11 +114,24 @@ void Transfer::complete()
             }
         }
 
+        int missingattr = 0;
+        handle attachh;
+        SymmCipher* key;
+
         // set FileFingerprint on source node(s) if missing
         for (file_list::iterator it = files.begin(); it != files.end(); it++)
         {
             if ((*it)->hprivate && (n = client->nodebyhandle((*it)->h)))
             {
+                if (client->gfx && client->gfx->isgfx(&n->attrs.map['n']))
+                {
+                    // check for missing imagery
+                    if (!n->hasfileattribute(GfxProc::THUMBNAIL120X120)) missingattr |= 1 << GfxProc::THUMBNAIL120X120;
+                    if (!n->hasfileattribute(GfxProc::PREVIEW1000x1000)) missingattr |= 1 << GfxProc::PREVIEW1000x1000;
+                    attachh = n->nodehandle;
+                    key = &n->key;
+                }
+        
                 if (!n->isvalid)
                 {
                     *(FileFingerprint*)n = fingerprint;
@@ -130,9 +142,14 @@ void Transfer::complete()
             }
         }
 
+        if (missingattr)
+        {
+            // FIXME: do this while file is still open
+            client->gfx->gendimensionsputfa(NULL, &localfilename, attachh, key, missingattr);
+        }
+
         // ...and place it in all target locations. first, update the files'
-        // local target filenames,
-        // in case they have changed during the upload
+        // local target filenames, in case they have changed during the upload
         for (file_list::iterator it = files.begin(); it != files.end(); it++)
         {
             (*it)->updatelocalname();
@@ -215,8 +232,8 @@ void Transfer::complete()
         // notify all files and give them an opportunity to self-destruct
         for (file_list::iterator it = files.begin(); it != files.end();)
         {
-            (*it)->transfer = NULL;     // prevent deletion of associated
-                                          // Transfer object in completed()
+            // prevent deletion of associated Transfer object in completed()
+            (*it)->transfer = NULL;
             (*it)->completed(this, NULL);
             files.erase(it++);
         }
@@ -228,8 +245,7 @@ void Transfer::complete()
     }
     else
     {
-        // some files are still pending completion, close fa and set retry
-        // timer
+        // some files are still pending completion, close fa and set retry timer
         delete slot->fa;
         slot->fa = NULL;
 

@@ -62,8 +62,7 @@ void ShareNodeKeys::add(NodeCore* n, Node* sn, int specific, const byte* item, i
     int addnode = 0;
 
     // emit all share nodekeys for known shares
-    do
-    {
+    do {
         if (sn->sharekey)
         {
             sprintf(buf, ",%d,%d,\"", addshare(sn), (int)items.size());
@@ -77,8 +76,7 @@ void ShareNodeKeys::add(NodeCore* n, Node* sn, int specific, const byte* item, i
             keys.append(buf, ptr - buf);
             addnode = 1;
         }
-    }
-    while (!specific && (sn = sn->parent));
+    } while (!specific && (sn = sn->parent));
 
     if (addnode)
     {
@@ -112,6 +110,7 @@ void ShareNodeKeys::get(Command* c)
 
         // emit item handles (can be node handles or upload tokens)
         c->beginarray();
+
         for (unsigned i = 0; i < items.size(); i++)
         {
             c->element((const byte*)items[i].c_str(), items[i].size());

@@ -70,4 +70,6 @@
 #include "mega/db/sqlite.h"
 #include "mega/db/bdb.h"
 
+#include "mega/gfx/freeimage.h"
+
 #endif
