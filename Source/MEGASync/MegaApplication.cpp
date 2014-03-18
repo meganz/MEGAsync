@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1011;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11q");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11r");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
