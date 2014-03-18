@@ -65,7 +65,7 @@ typedef int64_t m_off_t;
 #elif USE_QT
 #include <QThread>
 #include <QMutex>
-#include "qt/gfxqt.h"
+#include "mega/gfx/qt.h"
 
 class MegaThread: public QThread
 {

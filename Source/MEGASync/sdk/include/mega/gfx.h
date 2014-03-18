@@ -39,7 +39,7 @@ class MEGA_API GfxProc
 
 protected:
     // coordinate transformation
-    void transform(int&, int&, int&, int&, int&, int&);
+    static void transform(int&, int&, int&, int&, int&, int&);
 
 public:
     // check whether the filename looks like a supported image type

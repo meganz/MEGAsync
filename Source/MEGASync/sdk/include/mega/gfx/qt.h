@@ -29,20 +29,43 @@
 #include <QBuffer>
 #include <QIODevice>
 #include <QSize>
+#include <QFile>
 
 namespace mega {
+
 // bitmap graphics processor
 class MEGA_API GfxProcQT : public GfxProc
 {
+    enum {
+        ROTATION_UP = 1,
+        ROTATION_UP_MIRRORED = 2,
+        ROTATION_DOWN = 3,
+        ROTATION_DOWN_MIRRORED = 4,
+        ROTATION_LEFT_MIRRORED = 5,
+        ROTATION_LEFT = 6,
+        ROTATION_RIGHT_MIRRORED = 7,
+        ROTATION_RIGHT = 8
+    };
+
     QImageReader *image;
+    int orientation;
     int w, h;
 
     bool readbitmap(FileAccess*, string*, int);
     bool resizebitmap(int, int, string*);
     void freebitmap();
 
+protected:
+    static int processEXIF(QByteArray *barr, int itemlen);
+    static int processEXIFDir(const char *dirStart, const char *offsetBase, uint32_t size, uint32_t nesting, int MotorolaOrder);
+    static QImageReader *GfxProcQT::readbitmapQT(int &w, int &h, int &orientation, QString imagePath);
+    static QImage resizebitmapQT(QImageReader *image, int orientation, int w, int h, int rw, int rh);
+
 public:
     bool isgfx(string*);
+    static int getExifOrientation(QString &filePath);
+    static QImage createThumbnail(QString imagePath);
+
 };
 } // namespace
 

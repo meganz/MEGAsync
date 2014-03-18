@@ -20,7 +20,7 @@
  */
 
 #include "mega.h"
-#include "gfx/freeimage.h"
+#include "mega/gfx/freeimage.h"
 
 #ifdef _WIN32
 #define FreeImage_GetFileTypeX FreeImage_GetFileTypeU
@@ -61,7 +61,7 @@ bool GfxProcFreeImage::isgfx(string* name)
 bool GfxProcFreeImage::readbitmap(FileAccess* fa, string* localname, int size)
 {
 #ifdef _WIN32
-    localname->append("");
+    localname->append("", 1);
 #endif
 
     // FIXME: race condition, need to use open file instead of filename

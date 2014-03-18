@@ -27,11 +27,11 @@ SOURCES += $$PWD/src/attrmap.cpp \
     $$PWD/src/waiter.cpp  \
     $$PWD/src/crypto/cryptopp.cpp  \
     $$PWD/src/db/sqlite.cpp  \
+    $$PWD/src/gfx/qt.cpp \
     $$PWD/megaapi.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp \
-    $$PWD/qt/gfxqt.cpp \
     $$PWD/MegaProxySettings.cpp
 
 win32 {
@@ -83,11 +83,11 @@ HEADERS  += $$PWD/include/mega.h \
 	    $$PWD/include/mega/waiter.h \
 	    $$PWD/include/mega/crypto/cryptopp.h  \
 	    $$PWD/include/mega/db/sqlite.h  \
+	    $$PWD/include/mega/gfx/qt.h \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
 	    $$PWD/qt/QTMegaListener.h \
-	    $$PWD/qt/gfxqt.h \
 	    $$PWD/MegaProxySettings.h
 
 win32 {
