@@ -46,7 +46,7 @@ void RecentFile::updateWidget()
 
         if(!localPath.isEmpty())
         {
-            QImage image = Utilities::createThumbnail(localPath, 120);
+            QImage image = mega::GfxProcQT::createThumbnail(localPath);
             if(!image.isNull())
                 ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
             else

@@ -265,34 +265,6 @@ QPixmap Utilities::getExtensionPixmapMedium(QString fileName)
     return getExtensionPixmap(fileName, QString::fromAscii("://images/drag_"));
 }
 
-QImage Utilities::createThumbnail(QString imagePath, int size)
-{
-#ifdef WIN32
-    if(imagePath.startsWith(QString::fromAscii("\\\\?\\")))
-        imagePath = imagePath.mid(4);
-#endif
-    if(QImageReader::imageFormat(imagePath).isEmpty()) return QImage();
-
-    QImage image(imagePath);
-    int w = image.width();
-    int h = image.height();
-    if((w < 20) || (h < 20)) return QImage();
-
-    if (w < h)
-    {
-        h = h*size/w;
-        w = size;
-    }
-    else
-    {
-        w = w*size/h;
-        h = size;
-    }
-
-    return image.scaled(w, h, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)
-            .copy((w-size)/2,(h-size)/3,size,size);
-}
-
 bool Utilities::removeRecursively(QDir dir)
 {
     if (!dir.exists())

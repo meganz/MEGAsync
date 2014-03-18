@@ -193,7 +193,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
         // ignore symlinks - they would otherwise be treated as moves
         // also, ignore some other obscure filesystem object categories
-        if (!isDrive && fad.dwFileAttributes & SKIPATTRIBUTES)
+        if (!isDrive && (fad.dwFileAttributes & SKIPATTRIBUTES))
         {
             name->resize(name->size() - 1);
             retry = false;
