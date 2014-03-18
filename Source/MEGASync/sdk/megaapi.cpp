@@ -1602,7 +1602,12 @@ MegaNode *MegaApi::getSyncedNode(string *path)
 void MegaApi::syncFolder(const char *localFolder, MegaNode *megaFolder)
 {
     MegaRequest *request = new MegaRequest(MegaRequest::TYPE_ADD_SYNC);
-    if(megaFolder) request->setNodeHandle(megaFolder->getHandle());
+    cout << "ADDING SYNCED FOLDER" << endl;
+    cout << "LOCAL FOLDER: " << localFolder << endl;
+    cout << "MEGA FOLDER: " << this->getNodePath(megaFolder);
+
+    if(megaFolder)
+        request->setNodeHandle(megaFolder->getHandle());
     if(localFolder)
     {
         string path(localFolder);
@@ -1613,6 +1618,7 @@ void MegaApi::syncFolder(const char *localFolder, MegaNode *megaFolder)
         request->setFile(path.data());
         path.clear();
     }
+
     requestQueue.push(request);
     waiter->notify();
 }
@@ -4235,7 +4241,7 @@ void MegaApi::sendPendingRequests()
             string utf8name(localPath);
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
-            LOG("addSync");
+            LOG("\naddSync");
             e = client->addsync(&localname, "Rubbish", NULL, node, -1);
             if(!e)
             {
@@ -4426,11 +4432,11 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    if(waiting) LOG("STATE: SDK waiting = true");
-    else LOG("STATE: SDK waiting = false");
+    //if(waiting) LOG("STATE: SDK waiting = true");
+    //else LOG("STATE: SDK waiting = false");
 
-    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
-    else LOG("STATE: SDK waitingForRequest = false");
+    //if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
+    //else LOG("STATE: SDK waitingForRequest = false");
 
     return waiting || waitingRequest;
 }

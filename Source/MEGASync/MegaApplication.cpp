@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1011;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11r");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11s");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -30,6 +30,8 @@ QSharedMemory singleInstanceChecker;
 #ifdef Q_OS_UNIX
 static void on_sigint(int sig);
 #endif
+
+#define LOG(x)
 
 int main(int argc, char *argv[])
 {
