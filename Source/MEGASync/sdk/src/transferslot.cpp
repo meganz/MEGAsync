@@ -34,7 +34,7 @@ TransferSlot::TransferSlot(Transfer* ctransfer)
     starttime = 0;
     progressreported = 0;
     progresscompleted = 0;
-    lastdata = 0;
+    lastdata = Waiter::ds;
     errorcount = 0;
 
     failure = false;

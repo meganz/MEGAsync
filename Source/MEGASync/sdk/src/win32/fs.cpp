@@ -244,7 +244,7 @@ WinFileSystemAccess::WinFileSystemAccess()
 // append \ to bare Windows drive letter paths
 int WinFileSystemAccess::sanitizedriveletter(string* localpath)
 {
-    if (localpath->size() == 2*sizeof(wchar_t) && !memcmp(localpath->data() + sizeof(wchar_t), (char*)L":", sizeof(wchar_t)))
+    if (localpath->size() > sizeof(wchar_t) && !memcmp(localpath->data() + localpath->size() - sizeof(wchar_t), (char*)L":", sizeof(wchar_t)))
     {
         localpath->append((char*)L"\\", sizeof(wchar_t));
         return sizeof(wchar_t);
