@@ -56,6 +56,8 @@ public:
 
     void name2local(string*, const char* = NULL);
     void local2name(string*);
+    
+    static int sanitizedriveletter(string*);
 
     bool getsname(string*, string*);
 
@@ -76,7 +78,6 @@ public:
     void osversion(string*);
 
     WinFileSystemAccess();
-    ~WinFileSystemAccess();
 };
 
 struct MEGA_API WinDirNotify : public DirNotify

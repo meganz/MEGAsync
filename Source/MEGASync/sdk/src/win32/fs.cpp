@@ -138,17 +138,6 @@ void WinFileAccess::updatelocalname(string* name)
     if (localname.size())
     {
         localname = *name;
-
-        string driveidentifier;
-        driveidentifier.assign((char*)L":", sizeof(wchar_t));
-        if (localname.size() >= driveidentifier.size()
-            && !memcmp(localname.data() + (localname.size() & -driveidentifier.size()) - driveidentifier.size(),
-                       driveidentifier.data(),
-                       driveidentifier.size()))
-        {
-            localname.append((char *)L"\\", sizeof(wchar_t));
-        }
-
         localname.append("", 1);
     }
 }
@@ -163,18 +152,8 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     WIN32_FILE_ATTRIBUTE_DATA fad;
     BY_HANDLE_FILE_INFORMATION bhfi;
 
-    // enumerate directory
-    bool isDrive = false;
-    string driveidentifier;
-    driveidentifier.assign((char*)L":", sizeof(wchar_t));
-    if (name->size() >= driveidentifier.size()
-        && !memcmp(name->data() + (name->size() & -driveidentifier.size()) - driveidentifier.size(),
-                   driveidentifier.data(),
-                   driveidentifier.size()))
-    {
-        isDrive = true;
-        name->append((char *)L"\\", sizeof(wchar_t));
-    }
+    int added = WinFileSystemAccess::sanitizedriveletter(name);
+    
     name->append("", 1);
 
     if (write)
@@ -186,14 +165,13 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
         {
             retry = WinFileSystemAccess::istransient(GetLastError());
-            if(isDrive) name->resize(name->size() - sizeof(wchar_t));
-            name->resize(name->size() - 1);
+            name->resize(name->size() - added - 1);
             return false;
         }
 
         // ignore symlinks - they would otherwise be treated as moves
         // also, ignore some other obscure filesystem object categories
-        if (!isDrive && (fad.dwFileAttributes & SKIPATTRIBUTES))
+        if (!added && (fad.dwFileAttributes & SKIPATTRIBUTES))
         {
             name->resize(name->size() - 1);
             retry = false;
@@ -213,8 +191,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
                         ((type == FOLDERNODE) ? FILE_FLAG_BACKUP_SEMANTICS : 0),
                         NULL);
 
-    if(isDrive) name->resize(name->size() - sizeof(wchar_t));
-    name->resize(name->size() - 1);
+    name->resize(name->size() - added - 1);
 
     // FIXME: verify that keeping the directory opened quashes the possibility
     // of a race condition between CreateFile() and FindFirstFile()
@@ -264,8 +241,17 @@ WinFileSystemAccess::WinFileSystemAccess()
     localseparator.assign((char*)L"\\", sizeof(wchar_t));
 }
 
-WinFileSystemAccess::~WinFileSystemAccess()
-{}
+// append \ to bare Windows drive letter paths
+int WinFileSystemAccess::sanitizedriveletter(string* localpath)
+{
+    if (localpath->size() == 2*sizeof(wchar_t) && !memcmp(localpath->data() + sizeof(wchar_t), (char*)L":", sizeof(wchar_t)))
+    {
+        localpath->append((char*)L"\\", sizeof(wchar_t));
+        return sizeof(wchar_t);
+    }
+
+    return 0;
+}
 
 bool WinFileSystemAccess::istransient(DWORD e)
 {
@@ -665,17 +651,7 @@ WinDirNotify::WinDirNotify(string* localbasepath, string* ignore) : DirNotify(lo
     notifybuf[0].resize(65534);
     notifybuf[1].resize(65534);
 
-    bool isDrive = false;
-    string driveidentifier;
-    driveidentifier.assign((char*)L":", sizeof(wchar_t));
-    if (localbasepath->size() >= driveidentifier.size()
-        && !memcmp(localbasepath->data() + (localbasepath->size() & -driveidentifier.size()) - driveidentifier.size(),
-                   driveidentifier.data(),
-                   driveidentifier.size()))
-    {
-        isDrive = true;
-        localbasepath->append((char *)L"\\", sizeof(wchar_t));
-    }
+    int added = WinFileSystemAccess::sanitizedriveletter(localbasepath);
 
     localbasepath->append("", 1);
     if ((hDirectory = CreateFileW((LPCWSTR)localbasepath->data(),
@@ -689,8 +665,7 @@ WinDirNotify::WinDirNotify(string* localbasepath, string* ignore) : DirNotify(lo
         readchanges();
     }
 
-    if(isDrive) localbasepath->resize(localbasepath->size() - sizeof(wchar_t));
-    localbasepath->resize(localbasepath->size() - 1);
+    localbasepath->resize(localbasepath->size() - added - 1);
 }
 
 WinDirNotify::~WinDirNotify()
@@ -728,24 +703,9 @@ bool WinDirAccess::dopen(string* name, FileAccess* f, bool glob)
     }
     else
     {
-        bool isDrive = false;
-        string driveidentifier;
-        driveidentifier.assign((char*)L":", sizeof(wchar_t));
-        if (name->size() >= driveidentifier.size()
-            && !memcmp(name->data() + (name->size() & -driveidentifier.size()) - driveidentifier.size(),
-                       driveidentifier.data(),
-                       driveidentifier.size()))
-        {
-            isDrive = true;
-        }
-
         if (!glob)
         {
             name->append((char*)L"\\*", 5);
-        }
-        else if(isDrive)
-        {
-            name->append((char*)L"\\", 3);
         }
         else
         {
@@ -779,18 +739,7 @@ bool WinDirAccess::dopen(string* name, FileAccess* f, bool glob)
             }
         }
 
-        if (!glob)
-        {
-            name->resize(name->size() - 5);
-        }
-        else if(isDrive)
-        {
-            name->resize(name->size() - 3);
-        }
-        else
-        {
-            name->resize(name->size() - 1);
-        }
+        name->resize(name->size() - (glob ? 1 : 5));
     }
 
     if (!(ffdvalid = (hFind != INVALID_HANDLE_VALUE)))

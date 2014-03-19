@@ -58,7 +58,7 @@ class MEGA_API GfxProcQT : public GfxProc
 protected:
     static int processEXIF(QByteArray *barr, int itemlen);
     static int processEXIFDir(const char *dirStart, const char *offsetBase, uint32_t size, uint32_t nesting, int MotorolaOrder);
-    static QImageReader *GfxProcQT::readbitmapQT(int &w, int &h, int &orientation, QString imagePath);
+    static QImageReader *readbitmapQT(int &w, int &h, int &orientation, QString imagePath);
     static QImage resizebitmapQT(QImageReader *image, int orientation, int w, int h, int rw, int rh);
 
 public:
