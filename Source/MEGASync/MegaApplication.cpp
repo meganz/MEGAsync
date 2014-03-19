@@ -1075,7 +1075,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
             QRect screenGeometry = QApplication::desktop()->availableGeometry();
             infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
-            infoDialog->updateTransfers();
+            infoDialog->transferFinished();
             infoDialog->updateDialog();
 
             //Show the dialog
@@ -1420,7 +1420,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
         infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
 
     if((megaApi->getNumPendingDownloads() + megaApi->getNumPendingDownloads()) == 1)
-        onSyncStateChanged(megaApi);
+        infoDialog->setWaiting(true);
 }
 
 //Called when there is a temporal problem in a request
@@ -1431,6 +1431,9 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
+    if(e->getErrorCode() != MegaError::API_OK)
+        return;
+
     //Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -1655,7 +1658,6 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
         infoDialog->setWaiting(waiting);
         infoDialog->setPaused(paused);
         infoDialog->updateState();
-        infoDialog->updateTransfers();
         infoDialog->transferFinished();
         infoDialog->updateDialog();
     }

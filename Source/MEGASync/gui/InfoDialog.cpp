@@ -363,7 +363,7 @@ void InfoDialog::updateState()
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        if(indexing) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+        if(indexing || remainingUploads || remainingDownloads) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
         else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
         else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
     }
