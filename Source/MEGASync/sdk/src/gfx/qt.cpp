@@ -340,9 +340,9 @@ bool GfxProcQT::readbitmap(FileAccess*, string* localname, int)
 
 bool GfxProcQT::resizebitmap(int rw, int rh, string* jpegout)
 {
-    jpegout->clear();
     QImage result = resizebitmapQT(image, orientation, w, h, rw, rh);
     if(result.isNull()) return false;
+    jpegout->clear();
 
     QByteArray ba;
     QBuffer buffer(&ba);
@@ -392,18 +392,16 @@ QImageReader *GfxProcQT::readbitmapQT(int &w, int &h, int &orientation, QString 
         h = s.width();
     }
 
-    if(w && h) return image;
-    else
-    {
-        delete image;
-        return NULL;
-    }
+    return image;
 }
 
 QImage GfxProcQT::resizebitmapQT(QImageReader *image, int orientation, int w, int h, int rw, int rh)
 {
     int px, py;
+
+    if (!w || !h) return QImage();
     transform(w, h, rw, rh, px, py);
+    if (!w || !h) return QImage();
 
     //Assuming that the thumbnail is centered horizontally.
     //That is the case of MEGA thumbnails and makes the extraction easier and more efficient.
