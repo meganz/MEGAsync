@@ -104,8 +104,7 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
 
     HttpReq* req = httpctx->req;
 
-    // request cancellations that occur after asynccallback() was entered are
-    // caught here
+    // request cancellations that occured after asynccallback() was entered are caught here
     if (!req)
     {
         httpio->leavecs();
