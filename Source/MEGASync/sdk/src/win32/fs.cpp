@@ -185,9 +185,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     {
         if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
         {
-            DWORD er;
-            retry = WinFileSystemAccess::istransient(er);
-            wprintf(L"ERROR OPENING FILE/FOLDER (%s). UNABLE TO GET ATTRIBUTES: %d\n", name->data(), er);
+            retry = WinFileSystemAccess::istransient(GetLastError());
             if(isDrive) name->resize(name->size() - sizeof(wchar_t));
             name->resize(name->size() - 1);
             return false;
@@ -197,7 +195,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         // also, ignore some other obscure filesystem object categories
         if (!isDrive && (fad.dwFileAttributes & SKIPATTRIBUTES))
         {
-            wprintf(L"ERROR OPENING FILE/FOLDER (%s). INVALID ATTRIBUTES: %d\n", name->data(), fad.dwFileAttributes);
             name->resize(name->size() - 1);
             retry = false;
             return false;
@@ -216,20 +213,17 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
                         ((type == FOLDERNODE) ? FILE_FLAG_BACKUP_SEMANTICS : 0),
                         NULL);
 
+    if(isDrive) name->resize(name->size() - sizeof(wchar_t));
+    name->resize(name->size() - 1);
+
     // FIXME: verify that keeping the directory opened quashes the possibility
     // of a race condition between CreateFile() and FindFirstFile()
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        DWORD er = GetLastError();
-        wprintf(L"ERROR OPENING FILE/FOLDER (%s). ERROR IN CREATEFILE: %d\n", name->data(), er);
-        retry = WinFileSystemAccess::istransient(er);
-        if(isDrive) name->resize(name->size() - sizeof(wchar_t));
-        name->resize(name->size() - 1);
+        retry = WinFileSystemAccess::istransient(GetLastError());
         return false;
     }
-    if(isDrive) name->resize(name->size() - sizeof(wchar_t));
-    name->resize(name->size() - 1);
 
     mtime = FileTime_to_POSIX(&fad.ftLastWriteTime);
 
@@ -242,17 +236,14 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     {
         name->append((char*)L"\\*", 5);
         hFind = FindFirstFileW((LPCWSTR)name->data(), &ffd);
+        name->resize(name->size() - 5);
 
         if (hFind == INVALID_HANDLE_VALUE)
         {
-            DWORD er = GetLastError();
-            wprintf(L"ERROR OPENING FILE/FOLDER (%s). ERROR IN FindFirstFileW: %d\n", name->data(), er);
-            retry = WinFileSystemAccess::istransient(er);
-            name->resize(name->size() - 5);
+            retry = WinFileSystemAccess::istransient(GetLastError());
             return false;
         }
 
-        name->resize(name->size() - 5);
         CloseHandle(hFile);
         hFile = INVALID_HANDLE_VALUE;
         retry = false;
@@ -762,10 +753,6 @@ bool WinDirAccess::dopen(string* name, FileAccess* f, bool glob)
         }
 
         hFind = FindFirstFileW((LPCWSTR)name->data(), &ffd);
-        if(hFind == INVALID_HANDLE_VALUE)
-        {
-            wprintf(L"ERROR IN FindFirstFileW OPENING %s ERROR CODE: %s", (LPCWSTR)name->data(), GetLastError());
-        }
 
         if (glob)
         {
