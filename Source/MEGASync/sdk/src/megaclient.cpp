@@ -158,6 +158,7 @@ void MegaClient::mergenewshares(bool notify)
                     // outgoing share to user u deleted
                     if (n->outshares.erase(s->peer) && notify)
                     {
+                        n->changed.outshares = true;
                         notifynode(n);
                     }
 
@@ -199,6 +200,7 @@ void MegaClient::mergenewshares(bool notify)
 
                             if (notify)
                             {
+                                n->changed.outshares = true;
                                 notifynode(n);
                             }
                         }
@@ -222,6 +224,7 @@ void MegaClient::mergenewshares(bool notify)
 
                                 if (notify)
                                 {
+                                    n->changed.inshare = true;
                                     notifynode(n);
                                 }
                             }
@@ -2148,18 +2151,25 @@ void MegaClient::sc_updatenode()
                         if (u)
                         {
                             n->owner = u;
+                            n->changed.owner = true;
                         }
+
                         if (a)
                         {
                             Node::copystring(&n->attrstring, a);
+                            n->changed.attrs = true;
                         }
+
                         if (tm + 1)
                         {
                             n->clienttimestamp = tm;
+                            n->changed.clienttimestamp = true;
                         }
+
                         if (ts + 1)
                         {
                             n->ctime = ts;
+                            n->changed.ctime = true;
                         }
 
                         n->applykey();
@@ -2467,6 +2477,7 @@ void MegaClient::sc_fileattr()
                 if (fa && n)
                 {
                     Node::copystring(&n->fileattrstring, fa);
+                    n->changed.fileattrstring = true;
                     notifynode(n);
                 }
                 return;
@@ -2700,6 +2711,7 @@ error MegaClient::setattr(Node* n, const char** newattr)
         }
     }
 
+    n->changed.attrs = true;
     notifynode(n);
 
     reqs[r].add(new CommandSetAttr(this, n));
@@ -2836,6 +2848,7 @@ error MegaClient::rename(Node* n, Node* p, syncdel_t syncdel)
 
     if (n->setparent(p))
     {
+        n->changed.parent = true;
         notifynode(n);
 
         reqs[r].add(new CommandMoveNode(this, n, p, syncdel));

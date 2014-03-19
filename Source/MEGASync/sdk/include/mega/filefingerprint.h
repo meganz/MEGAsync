@@ -36,7 +36,7 @@ struct MEGA_API FileFingerprint
     static const int MAXFULL = 8192;
 
     // if true, represents actual file data
-    // if false, constructed from node ctime/key
+    // if false, is constructed from node ctime/key
     bool isvalid;
 
     bool genfingerprint(FileAccess*, bool = false);

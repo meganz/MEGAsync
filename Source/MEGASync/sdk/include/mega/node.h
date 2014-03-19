@@ -127,6 +127,18 @@ struct MEGA_API Node : public NodeCore, Cachable, FileFingerprint
 
     bool removed;
 
+    struct
+    {
+        bool attrs;
+        bool owner;
+        bool ctime;
+        bool clienttimestamp;
+        bool fileattrstring;
+        bool inshare;
+        bool outshares;
+        bool parent;
+    } changed;
+    
     void setkey(const byte* = NULL);
 
     void setfingerprint();

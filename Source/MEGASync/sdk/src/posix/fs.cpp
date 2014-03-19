@@ -284,7 +284,7 @@ bool PosixFileSystemAccess::renamelocal(string* oldname, string* newname, bool)
     return !rename(oldname->c_str(), newname->c_str());
 }
 
-bool PosixFileSystemAccess::copylocal(string* oldname, string* newname)
+bool PosixFileSystemAccess::copylocal(string* oldname, string* newname, time_t mtime)
 {
     int sfd, tfd;
     ssize_t t = -1;
@@ -309,6 +309,11 @@ bool PosixFileSystemAccess::copylocal(string* oldname, string* newname)
         }
 
         close(sfd);
+    }
+
+    if (!t)
+    {
+        setmtimelocal(newname,mtime);    
     }
 
     return !t;

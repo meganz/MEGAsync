@@ -151,7 +151,6 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
     wTransfer->setFileName(fileName);
     wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer));
-    ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 }
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
@@ -296,7 +295,17 @@ void InfoDialog::updateTransfers()
         megaApi->resetTotalUploads();
     }
 
+    if(remainingUploads || remainingDownloads)
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
+
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
+}
+
+void InfoDialog::transferFinished()
+{
+    remainingUploads = megaApi->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads();
+
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
     {
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -367,8 +376,6 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 
     if(uploadSpeed || this->uploadSpeed<0)
         this->uploadSpeed = uploadSpeed;
-
-    updateTransfers();
 }
 
 void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize)

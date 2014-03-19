@@ -923,7 +923,7 @@ MegaApi::MegaApi(const char *basePath)
     string sBasePath = basePath;
     dbAccess = new MegaDbAccess(&sBasePath);
     gfxAccess = new MegaGfxProc();
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.11");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.12");
 
     //Start blocking thread
 	threadExit = 0;
@@ -2042,7 +2042,8 @@ void MegaApi::transfer_update(Transfer *tr)
     MegaTransfer* transfer = transferMap.at(tr);
 
     //LOG("transfer_update");
-	if(tr->slot)
+
+    if(tr->slot)
     {
 #ifdef WIN32
         if(!tr->files.front()->syncxfer && !tr->slot->progressreported && (tr->type==GET))
@@ -2796,8 +2797,15 @@ void MegaApi::nodes_updated(Node** n, int count)
     {
         vector<MegaNode *> list;
         for(int i=0; i<count; i++)
-            list.push_back(MegaNode::fromNode(n[i]));
-        nodeList = new NodeList(list.data(), count, true);
+        {
+            if(n[i]->changed.parent || n[i]->changed.attrs)
+            {
+                n[i]->changed.parent = false;
+                n[i]->changed.attrs = false;
+                list.push_back(MegaNode::fromNode(n[i]));
+            }
+        }
+        nodeList = new NodeList(list.data(), list.size(), true);
     }
     fireOnNodesUpdate(this, nodeList);
 #endif

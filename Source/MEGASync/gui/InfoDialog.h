@@ -30,6 +30,7 @@ public:
     void setPaused(bool paused);
 	void updateDialog();
     void updateTransfers();
+    void transferFinished();
     void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);

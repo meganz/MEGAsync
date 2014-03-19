@@ -168,8 +168,8 @@ struct MEGA_API FileSystemAccess : public EventTrigger
     // rename file, overwrite target
     virtual bool renamelocal(string*, string*, bool = true) = 0;
 
-    // copy file, overwrite target
-    virtual bool copylocal(string*, string*) = 0;
+    // copy file, overwrite target, set mtime
+    virtual bool copylocal(string*, string*, time_t) = 0;
 
     // delete file
     virtual bool unlinklocal(string*) = 0;

@@ -17,8 +17,8 @@
  #include <signal.h>
 #endif
 
-const int MegaApplication::VERSION_CODE = 1011;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.11q");
+const int MegaApplication::VERSION_CODE = 1012;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1480,6 +1480,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
         infoDialog->updateTransfers();
         infoDialog->updateDialog();
+        infoDialog->transferFinished();
     }
 
     if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
@@ -1536,7 +1537,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
         infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
         infoDialog->updateTransfers();
-        infoDialog->updateDialog();
     }
 }
 
@@ -1651,12 +1651,13 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
 
     if(infoDialog)
     {
-        infoDialog->updateTransfers();
-        infoDialog->updateDialog();
         infoDialog->setIndexing(indexing);
         infoDialog->setWaiting(waiting);
         infoDialog->setPaused(paused);
         infoDialog->updateState();
+        infoDialog->updateTransfers();
+        infoDialog->transferFinished();
+        infoDialog->updateDialog();
     }
 
     LOG("Current state: ");
