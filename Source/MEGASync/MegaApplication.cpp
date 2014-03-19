@@ -1671,12 +1671,6 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     else LOG("Waiting = false");
 
     updateTrayIcon();
-
-    if(preferences->logged())
-    {
-        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-            Platform::notifyItemChange(preferences->getLocalFolder(i));
-    }
 }
 
 //TODO: Manage sync callbacks here
