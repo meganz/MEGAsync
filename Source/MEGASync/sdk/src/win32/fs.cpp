@@ -508,7 +508,7 @@ bool WinFileSystemAccess::setmtimelocal(string* name, time_t mtime)
         return false;
     }
 
-    ll = Int32x32To64(mtime, 10000000) + 116444736000000000;
+    ll = mtime * 10000000 + 116444736000000000;
     lwt.dwLowDateTime = (DWORD)ll;
     lwt.dwHighDateTime = ll >> 32;
 
