@@ -123,7 +123,7 @@ bool GfxProcFreeImage::readbitmap(FileAccess* fa, string* localname, int size)
         h = FreeImage_GetHeight(dib);
     }
     
-    return w && h;
+    return true;
 }
 
 bool GfxProcFreeImage::resizebitmap(int rw, int rh, string* jpegout)
@@ -132,9 +132,13 @@ bool GfxProcFreeImage::resizebitmap(int rw, int rh, string* jpegout)
     FIMEMORY* hmem;
     int px, py;
 
-    jpegout->clear();
-
+    if (!w || !h) return false;
+    
     transform(w, h, rw, rh, px, py);
+
+    if (!w || !h) return false;
+
+    jpegout->clear();
 
     if ((tdib = FreeImage_Rescale(dib, w, h, FILTER_BILINEAR)))
     {
