@@ -5575,7 +5575,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
     {
         if (fa->type == FOLDERNODE)
         {
-            cout << "FOLDER OPEN OK" << endl;
             Sync* sync = new Sync(this, rootpath, debris, localdebris, remotenode, tag);
 
             if (sync->scan(rootpath, fa))
@@ -5584,7 +5583,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
             }
             else
             {
-                cout << "ERROR SCANNING FOLDER" << endl;
                 delete sync;
                 e = API_ENOENT;
             }
@@ -5598,7 +5596,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
     }
     else
     {
-        cout << "ERROR OPENING FOLDER" << endl;
         e = fa->retry ? API_ETEMPUNAVAIL : API_ENOENT;
     }
 

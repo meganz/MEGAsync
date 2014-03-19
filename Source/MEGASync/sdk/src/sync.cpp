@@ -245,13 +245,7 @@ bool Sync::scan(string* localpath, FileAccess* fa)
 
 		return success;
 	}
-    else
-    {
-        cout << "ERROR OPENING FILE/FOLDER (%s). ERROR SCANNING" << endl;
-        cout << "ERROR CODE 1: " << localpath->size() << endl;
-        cout << "ERROR CODE 2: " << localdebris.size() << endl;
-        return false;
-    }
+	else return false;
 }
 
 // check local path - if !localname, localpath is relative to l, with l == NULL
