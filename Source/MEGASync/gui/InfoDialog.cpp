@@ -219,19 +219,7 @@ void InfoDialog::updateTransfers()
             ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
         }
     }
-    else
-    {
-        ui->wTransfer1->hideTransfer();
-        ui->lDownloads->setText(QString::fromAscii(""));
-        ui->wDownloadDesc->hide();
-        downloadStartTime = 0;
-        downloadSpeed = 0;
-        currentDownload = 0;
-        totalDownloads = 0;
-        totalDownloadedSize = 0;
-        totalDownloadSize = 0;
-        megaApi->resetTotalDownloads();
-    }
+
 
     if(remainingUploads)
     {
@@ -281,7 +269,33 @@ void InfoDialog::updateTransfers()
             ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
         }
     }
-    else
+
+    if(remainingUploads || remainingDownloads)
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
+
+    lastUpdate = QDateTime::currentMSecsSinceEpoch();
+}
+
+void InfoDialog::transferFinished()
+{
+    remainingUploads = megaApi->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads();
+
+    if(!remainingDownloads)
+    {
+        ui->wTransfer1->hideTransfer();
+        ui->lDownloads->setText(QString::fromAscii(""));
+        ui->wDownloadDesc->hide();
+        downloadStartTime = 0;
+        downloadSpeed = 0;
+        currentDownload = 0;
+        totalDownloads = 0;
+        totalDownloadedSize = 0;
+        totalDownloadSize = 0;
+        megaApi->resetTotalDownloads();
+    }
+
+    if(!remainingUploads)
     {
         ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
@@ -294,17 +308,6 @@ void InfoDialog::updateTransfers()
         totalUploadSize = 0;
         megaApi->resetTotalUploads();
     }
-
-    if(remainingUploads || remainingDownloads)
-        ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
-
-    lastUpdate = QDateTime::currentMSecsSinceEpoch();
-}
-
-void InfoDialog::transferFinished()
-{
-    remainingUploads = megaApi->getNumPendingUploads();
-    remainingDownloads = megaApi->getNumPendingDownloads();
 
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
     {
