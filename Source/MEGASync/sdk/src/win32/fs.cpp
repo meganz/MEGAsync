@@ -1,6 +1,6 @@
 /**
  * @file win32/fs.cpp
- * @brief Win32 filesystem/directory access/notification (UNICODE)
+ * @brief Win32 filesystem/directory access/notification
  *
  * (c) 2013 by Mega Limited, Wellsford, New Zealand
  *
@@ -425,7 +425,7 @@ bool WinFileSystemAccess::renamelocal(string* oldname, string* newname, bool rep
     return r;
 }
 
-bool WinFileSystemAccess::copylocal(string* oldname, string* newname)
+bool WinFileSystemAccess::copylocal(string* oldname, string* newname, time_t)
 {
     oldname->append("", 1);
     newname->append("", 1);
@@ -508,7 +508,8 @@ bool WinFileSystemAccess::setmtimelocal(string* name, time_t mtime)
         return false;
     }
 
-    ll = mtime * 10000000 + 116444736000000000;
+    ll = (mtime + 11644473600) * 10000000;
+
     lwt.dwLowDateTime = (DWORD)ll;
     lwt.dwHighDateTime = ll >> 32;
 

@@ -62,7 +62,7 @@ public:
     bool getsname(string*, string*);
 
     bool renamelocal(string*, string*, bool);
-    bool copylocal(string*, string*);
+    bool copylocal(string*, string*, time_t);
     bool unlinklocal(string*);
     bool rmdirlocal(string*);
     bool mkdirlocal(string*, bool);
