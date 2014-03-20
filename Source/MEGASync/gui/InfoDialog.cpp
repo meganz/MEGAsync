@@ -497,7 +497,14 @@ void InfoDialog::on_bSyncFolder_clicked()
     int num = preferences->getNumSyncedFolders();
 
     MegaNode *rootNode = megaApi->getRootNode();
-    if(num == 1 && preferences->getMegaFolderHandle(0)==rootNode->getHandle())
+    if(!rootNode)
+    {
+        preferences->setCrashed(true);
+        megaApi->fetchNodes();
+        return;
+    }
+
+    if((num == 1) && (preferences->getMegaFolderHandle(0) == rootNode->getHandle()))
     {
         openFolder(preferences->getLocalFolder(0));
     }
