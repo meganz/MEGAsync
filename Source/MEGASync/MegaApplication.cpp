@@ -384,7 +384,7 @@ void MegaApplication::updateTrayIcon()
         }
 
         if(reboot)
-            QTimer::singleShot(Preferences::REBOOT_DELAY_MS, this, SLOT(rebootApplication()));
+            rebootApplication();
     }
 }
 
@@ -560,9 +560,10 @@ void MegaApplication::processUploadQueue(mega::handle nodeHandle)
     }
 }
 
-void MegaApplication::rebootApplication()
+void MegaApplication::rebootApplication(bool update)
 {
-    if(megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting())
+    reboot = true;
+    if(update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()))
     {
         if(!updateBlocked)
         {
@@ -1008,7 +1009,6 @@ void MegaApplication::onUpdateCompleted()
         trayMenu->removeAction(updateAction);
     delete updateAction;
     updateAction = NULL;
-    reboot = true;
     rebootApplication();
 }
 
@@ -1266,8 +1266,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 else
                 {
                     QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                               "Please contact bug@mega.co.nz"), QMessageBox::Ok);
-                    unlink();
+                                                               "Please, try again. If the problem persists "
+                                                               "please contact bug@mega.co.nz"), QMessageBox::Ok);
+                    preferences->setCrashed(true);
+                    preferences->unlink();
+                    rebootApplication(false);
                 }
 			}
             else
@@ -1641,6 +1644,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    preferences->setCrashed(true);
     megaApi->fetchNodes();
 }
 

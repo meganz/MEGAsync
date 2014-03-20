@@ -103,7 +103,7 @@ public slots:
     void onUpdateAvailable(bool requested);
     void onUpdateNotFound(bool requested);
     void onUpdateError();
-    void rebootApplication();
+    void rebootApplication(bool update = true);
     void exitApplication();
     void pauseTransfers(bool pause);
     void aboutDialog();

@@ -10,7 +10,6 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 80000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 15000;
-const int Preferences::REBOOT_DELAY_MS                  = 10000;
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;

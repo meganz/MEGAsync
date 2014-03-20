@@ -129,8 +129,11 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->bBack->setEnabled(true);
                 ui->bNext->setEnabled(true);
                 ui->sPages->setCurrentWidget(ui->pLogin);
-                QMessageBox::warning(this, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please contact bug@mega.co.nz"), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                           "Please, try again. If the problem persists "
+                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+                preferences->setCrashed(true);
+                app->rebootApplication(false);
             }
             else
             {
