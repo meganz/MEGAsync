@@ -308,7 +308,20 @@ void TransferSlot::doio(MegaClient* client)
         progress();
     }
 
-    if ((Waiter::ds - lastdata >= XFERTIMEOUT) || (errorcount > 10))
+    if (Waiter::ds - lastdata >= XFERTIMEOUT && !failure)
+    {
+        failure = true;
+
+        for (int i = connections; i--; )
+        {
+            if (reqs[i])
+            {
+                client->setchunkfailed(&reqs[i]->posturl);
+            }
+        }
+    }
+
+    if (errorcount > 10)
     {
         return transfer->failed(API_EFAILED);
     }
