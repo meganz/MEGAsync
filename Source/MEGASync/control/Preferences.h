@@ -148,7 +148,6 @@ public:
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
-    static const int REBOOT_DELAY_MS;
     static const int STATE_REFRESH_INTERVAL_MS;
     static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
     static const unsigned int UPDATE_INITIAL_DELAY_SECS;
