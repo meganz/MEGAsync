@@ -189,7 +189,7 @@ void InfoDialog::updateTransfers()
         {
             int totalRemainingSeconds = (effectiveDownloadSpeed) ? remainingBytes/effectiveDownloadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
-            if(remainingHours<0)
+            if((remainingHours<0) || (remainingHours>99))
                 totalRemainingSeconds = 0;
             int remainingMinutes = (totalRemainingSeconds%3600)/60;
             int remainingSeconds =  (totalRemainingSeconds%60);
@@ -239,7 +239,7 @@ void InfoDialog::updateTransfers()
         {
             int totalRemainingSeconds = (effectiveUploadSpeed) ? remainingBytes/effectiveUploadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
-            if(remainingHours<0)
+            if((remainingHours<0) || (remainingHours>99))
                 totalRemainingSeconds = 0;
             int remainingMinutes = (totalRemainingSeconds%3600)/60;
             int remainingSeconds =  (totalRemainingSeconds%60);
