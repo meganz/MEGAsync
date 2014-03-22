@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta local y una carpeta MEGA</translation>
+        <translation>Por favor, selecciona una carpeta local y una carpeta en MEGA</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>Una carpeta sincronizada no puede encontrarse dentro de otra carpeta que ya se está sincronizando</translation>
+        <translation>Una carpeta sincronizada no puede estar dentro de otra carpeta que ya se está sincronizando</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>La sincronización completa de tu cuenta es posible solo cuando no existen sincronizaciones selectivas</translation>
+        <translation>La sincronización completa de tu cuenta es posible sólo cuando no existen sincronizaciones selectivas</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -42,7 +42,7 @@
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>El nombre &quot;%1&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar está carpeta sincronizada:</translation>
+        <translation>El nombre &quot;%1&quot; ya está en uso para otra sincronización Por favor, escribe un nombre diferente para identificar esta carpeta sincronizada:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -80,7 +80,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>Puedes ayudarnos a mejorar MEGAsync enviando este informe de errores. No contiene ninguna información personal. Si deseas darnos más detalles, por favor escríbelo abajo:</translation>
+        <translation>Puedes ayudarnos a mejorar MEGAsync enviando este informe de error. No contiene ninguna información personal. Si deseas darnos más detalles, por favor escríbelos debajo:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -122,7 +122,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -276,7 +276,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translation>Selecciona para que usuarios deseas instalar $(^NameDA).</translation>
+        <translation>Selecciona para qué usuarios deseas instalar $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
@@ -288,7 +288,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Install just for me</source>
-        <translation>Instalar solo para mi</translation>
+        <translation>Instalar sólo para mi</translation>
     </message>
 </context>
 <context>
@@ -307,7 +307,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync ahora se está ejecutando. Clic aquí para abrir la ventana de estado.</translation>
+        <translation>MEGAsync se está ejecutando. Haz clic aquí para abrir la ventana de estado.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -317,7 +317,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation>Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -352,7 +352,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>MEGAsync version code %1</source>
-        <translation>Código de la versión de MEGAsync: %1</translation>
+        <translation>Código de versión de MEGAsync: %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -408,7 +408,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>Temporary transmission error: </source>
-        <translation>Error temporal de transmisión: </translation>
+        <translation>Error en la transmisión: </translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -416,7 +416,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>MEGAsync has been updated</source>
-        <translation>MEGAsync ha sido actualizado</translation>
+        <translation>MEGAsync se ha actualizado</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -424,11 +424,11 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>La carpeta (%1) no se ha subido porque es extremadamente grande. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1  carpetas no se han subido porque son extremadamente grandes. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -436,7 +436,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>La actualización se aplicará durante el próximo reinicio de la aplicación</translation>
+        <translation>La actualización se aplicará durante el próximo inicio de la aplicación</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -455,17 +455,31 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
         <translation>¡Hay disponible una nueva versión de MEGAsync! Pulsa en este mensaje para instalarla</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>No hay actualizaciones</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Hubo un problema al instalar la actualización. Por favor, inténtalo de nuevo más tarde o descarga la última versión desde: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">¡Gracias por tu colaboración!</translation>
+        <translation>¡Gracias por tu colaboración!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>No hay actualizaciones</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -492,7 +506,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Failed permanently</source>
-        <translation>Fallo permanente</translation>
+        <translation>Archivo no disponible temporalmente</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -548,7 +562,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Connection overflow</source>
-        <translation>Desbordamiento de conexión </translation>
+        <translation>Demasiadas conexiones</translation>
     </message>
     <message>
         <source>Write error</source>
@@ -636,7 +650,13 @@ Please, select a subfolder.</source>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
         <translation>Tienes %1 en esta carpeta
-Estás seguro que quieres sincronizarlo?</translation>
+¿Estás seguro que quieres sincronizarlo?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -647,11 +667,11 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Escribe uno o varios enlaces de archivos MEGA</translation>
+        <translation>Introduce uno o varios enlaces de MEGA</translation>
     </message>
     <message>
         <source>Submit</source>
-        <translation>Acceptar</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -663,11 +683,11 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
-        <translation>Escribe uno o más enlaces de archivos MEGA</translation>
+        <translation>Escribe uno o más enlaces de MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Se han encontrado enlaces no válidos. (enlaces a carpetas no disponibles de momento)</translation>
+        <translation>Se han encontrado enlaces no válidos. (los enlaces a carpetas no están soportados en esta versión)</translation>
     </message>
 </context>
 <context>
@@ -697,11 +717,11 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>Obtener enlace de MEGA</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation>justo ahora</translation>
+        <translation>Justo ahora</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -856,11 +876,11 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
-        <translation>Limite de velocidad de las subidas</translation>
+        <translation>Límite de velocidad de las subidas</translation>
     </message>
     <message>
         <source>Don&apos;t limit</source>
-        <translation>Sin limite</translation>
+        <translation>Sin límite</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -876,15 +896,15 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>aproximadamente 90% del ancho de banda</translation>
+        <translation>aproximadamente el 90% del ancho de banda</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
-        <translation>Cuota del ancho de banda</translation>
+        <translation>Cuota de ancho de banda</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Las limitaciones de las subidas son determinadas por el servidor y se aplicarán cuando empezará a realizar subidas</translation>
+        <translation>Las limitación en la velocidad de subida es gestionada por el servidor y se aplica al inicio de las subidas</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -904,7 +924,7 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>Auto-detect</source>
-        <translation>Auto-detectar</translation>
+        <translation>Autodetectar</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -964,7 +984,7 @@ Estás seguro que quieres sincronizarlo?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Ya estás sincronizando toda tu cuenta.</translation>
+        <translation type="obsolete">Ya estás sincronizando toda tu cuenta.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1003,7 +1023,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Tamaño actual del caché: %1</translation>
+        <translation>Tamaño actual de la caché: %1</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1025,6 +1045,30 @@ when the application starts again.</source>
         <source>Check for updates</source>
         <translation>Buscar actualizaciones</translation>
     </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1034,15 +1078,15 @@ when the application starts again.</source>
     </message>
     <message>
         <source>I have a MEGA account</source>
-        <translation>Tengo una cuenta MEGA</translation>
+        <translation>Tengo una cuenta de MEGA</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>No tengo una cuenta MEGA</translation>
+        <translation>No tengo una cuenta de MEGA</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
-        <translation>Crear una nueva cuenta MEGA</translation>
+        <translation>Crear una nueva cuenta de MEGA</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -1066,11 +1110,11 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Login to your MEGA account</source>
-        <translation>Iniciar sesión en tu cuenta MEGA</translation>
+        <translation>Iniciar sesión en tu cuenta de MEGA</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Por favor, verifica tu cuenta usando el enlace de confirmación que hemos enviado al correo electrónico usado durante el registro</translation>
+        <translation>Por favor, verifica tu cuenta usando el enlace de confirmación que hemos enviado a tu correo electrónico</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1126,7 +1170,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>serán actualizadas automáticamente.</translation>
+        <translation>se sincronizarán automáticamente.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1190,7 +1234,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>Las contraseñas escritas no coinciden</translation>
+        <translation>Las contraseñas no coinciden</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -1220,7 +1264,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta MEGA</translation>
+        <translation>Por favor, selecciona una carpeta de MEGA</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -1241,6 +1285,12 @@ To prevent the syncing of entire boot volumes, which is inefficient and dangerou
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos al tiempo que MEGAsync está funcionado.</translation>
     </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1250,15 +1300,15 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation>Obtener enlace MEGA</translation>
+        <translation>Obtener enlace de MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
-        <translation>Compartir con un usuario MEGA</translation>
+        <translation>Compartir con un usuario de MEGA</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>
-        <translation>Enviar a un usuario MEGA</translation>
+        <translation>Enviar a un usuario de MEGA</translation>
     </message>
     <message>
         <source>1 file</source>

@@ -65,22 +65,22 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>אתה מנסה לסנכרן תיקייה גדולה במיוחד. על מנת למנוע סנכרון של תקיות גדולות באתחול, דבר לא יעיל ומסוכן, אנו מבקשים ממך להתחיל עם תיקיה קטנה יותר ולהוסיף אליה קבצים בזמן שMEGAsync רץ.</translation>
     </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
-        <translation>Error report</translation>
+        <translation>דו&quot;ח שגיאה</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
-        <translation>MEGAsync has detected a problem. These are the details:</translation>
+        <translation>MEGAsync נתקל בבעיה. אלו הם הפרטים:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>באפשרותך לעזור לנו לשפר את MEGAsync על ידי שליחת דו&quot;ח השגיאה. דו&quot;ח זה איננו מכיל פרטים אישיים. אם ברצונך לתת לנו עוד פרטים, אנא הוסף כעת:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -88,7 +88,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Send report</source>
-        <translation>Send report</translation>
+        <translation>שלח דו&quot;ח</translation>
     </message>
 </context>
 <context>
@@ -272,23 +272,23 @@ Are you sure?</source>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
-        <translation>Choose Users</translation>
+        <translation>בחר משתמשים</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translation>Choose for which users you want to install $(^NameDA).</translation>
+        <translation>בחר משתמשים אשר ברצונך להתקין אצלם $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>בחר אם אתה רוצה להתקין $(^NameDA) בשבילך בלבד או עבור כל המשתמשים של מחשב זה. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
-        <translation>Install for anyone using this computer</translation>
+        <translation>התקן לכל המשתמשים במחשב זה</translation>
     </message>
     <message>
         <source>Install just for me</source>
-        <translation>Install just for me</translation>
+        <translation>התקן רק במשתמש שלי</translation>
     </message>
 </context>
 <context>
@@ -326,7 +326,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
+        <translation>שגיאה: תיקיית יעד בלתי תקינה. ההעלאה בוטלה</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -424,48 +424,62 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>התיקייה (%l) לא הועלאה מכיוון שהיא גדולה במיוחד. אנו עושים את הבדיקה הזאת על מנת למנוע העלאה של קבצי אתחול שלמים, אשר אינם יעילים ומסוכנים.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 תיקיות לא עודכנו מכיוון שהם גדולים במיוחד. אנו עורכים את הבדיקה הזאת על מנת למנוע העלאה של קבצי אתחול שלמים, אשר אינן יעילים ומסוכנים.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>קיים עדכון!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>העדכון ייושם במהלך האתחול הבא של היישום.</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>מתקין עדכונים...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>בודק עדכונים...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>התקן עדכון</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
-    </message>
-    <message>
-        <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>קיימת גרסא חדשה של MEGAsync! לחץ על הודעה זו על מנת להתקין אותה</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>אירעה שגיאה במהלך התקנת העדכון. אנא נסה שוב מאוחר יותר או הורד את הגרסא העדכנית ביותר: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Thank you for your collaboration!</translation>
+        <translation>תודה על שיתוף הפעולה!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>אין עדכונים זמינים</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>שגיאה</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -582,7 +596,7 @@ https://mega.co.nz/#sync</source>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation>תיקיית היעד מסונכרנת ויש בפנים כבר קובץ עם אותו השם (%1). אם תמשיך בהעלאה, הקובץ הקודם ישוכתב.</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>יש לך %1 בתיקייה זו.
 האם אתה בטוח שברצונך לסנכרן תיקייה זו?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>אתה כבר מסנכרן את כל החשבון שלך.</translation>
+        <translation type="obsolete">אתה כבר מסנכרן את כל החשבון שלך.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -995,19 +1015,19 @@ Are you sure you want to sync it?</source>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>שמות הקבצים שלא נבחרו יילקחו בחשבון רק כאשר האפליקציה תאותחל.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation>מטמון</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Current cache size: %1</translation>
+        <translation>זכרון מטמון עדכני: %1</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>נקה</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1015,7 +1035,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>הגדרות הפרוקסי שלך לא תקפות או ששרת הפרוקסי לא מגיב</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1023,7 +1043,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>בדוק עדכונים</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1283,13 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>אתה מנסה לסנכרן תיקייה גדולה במיוחד. על מנת למנוע סנכרון של תקיות גדולות באתחול, דבר לא יעיל ומסוכן, אנו מבקשים ממך להתחיל עם תיקיה קטנה יותר ולהוסיף אליה קבצים בזמן שMEGAsync רץ.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

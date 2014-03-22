@@ -455,17 +455,31 @@ Välju niikuinii?</translation>
         <translation>MEGAsünki uus versioon on saadaval! Paigaldamiseks vajutage sellele kirjale</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>Uuendusi pole saadaval</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Uuenduse paigaldamisel tekkis probleem. Palun proovige hiljem uuesti või laadi alla uusim versioon siit: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Aitäh koostöö eest!</translation>
+        <translation>Aitäh koostöö eest!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Uuendusi pole saadaval</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Viga</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -638,6 +652,12 @@ Are you sure you want to sync it?</source>
         <translation>Teil on kaustas %1 fail.
 Olete kindel, et tahate seda sünkroniseerida?</translation>
     </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -800,7 +820,7 @@ Olete kindel, et tahate seda sünkroniseerida?</translation>
     </message>
     <message>
         <source>Start on startup</source>
-        <translation>Käivita arvuti käivitumisel</translation>
+        <translation>Käivita koos arvutiga</translation>
     </message>
     <message>
         <source>Update automatically</source>
@@ -964,7 +984,7 @@ Olete kindel, et tahate seda sünkroniseerida?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Te juba sünkroniseerite kogu oma kontot.</translation>
+        <translation type="obsolete">Te juba sünkroniseerite kogu oma kontot.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>Kontrollige uuendusi</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Üritate sünkroniseerida eriti mahukat kausta. Käivitusköidete täieliku sünkroniseerimise ennetamiseks, mis on ebatõhus ja ohtlik, palume Teil alustada väiksemast kaustast ning MEGAsünki töötamise ajal lisada rohkem andmeid.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

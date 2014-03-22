@@ -424,48 +424,62 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Папката (%1) не беше качена, защото е изключително голяма. Ние правим тази проверка за да предотвратим качването на цели  дялове, което е неефикасно и опасно.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 папки не бяха качени, защото са изключително големи. Ние правим тази проверка за да предотвратим качването на цели  дялове, което е неефикасно и опасно.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Налична е нова актуализация!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Актуализацията ще се приложи по време на следващото рестартиране на програмата</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Инсталиране на актуализация ...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Проверка за актуализации ...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Инсталирай актуализация</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
-    </message>
-    <message>
-        <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Налична е нова версия на MEGAsync! Кликнете върху това съобщение, за да я инсталирате</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Имаше проблем с инсталирането на актуализацията. Моля, опитайте отново по-късно или изтеглете последната версия от: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Благодарим ви за сътрудничеството!</translation>
+        <translation>Благодарим ви за сътрудничеството!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Няма налични актуализации</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Грешка</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Имате %1 в тази папка.
 Сигурни ли сте, че искате да я синхронизирате?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Вече синхронизирате целия си профил.</translation>
+        <translation type="obsolete">Вече синхронизирате целия си профил.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1023,7 +1043,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Провери за актуализации</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Вие се опитвате да синхронизирате изключително голяма папка. За да се предотврати синхронизиране на цели дялове, което е неефективно и опасно, ние ви молим да започнете с по-малка папка и да добавяте повече данни, докато MEGAsync работи.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

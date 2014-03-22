@@ -455,17 +455,31 @@ Trotzdem beenden?</translation>
         <translation>Eine neue Version von MEGAsync ist verfügbar! Zur Aktualisierung hier klicken</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>Ihre Version ist aktuell</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Aktualisierung fehlgeschlagen. Bitte probieren Sie es noch einmal oder installieren Sie die neue Version von https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Vielen Dank für Ihre Zusammenarbeit!</translation>
+        <translation>Vielen Dank für Ihre Zusammenarbeit!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Ihre Version ist aktuell</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Dieser Ordner enthält %1
 Sind Sie sicher, dass Sie ihn synchronisieren möchten?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Sind Sie sicher, dass Sie ihn synchronisieren möchten?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Sie synchronisieren bereits Ihren gesamten Account</translation>
+        <translation type="obsolete">Sie synchronisieren bereits Ihren gesamten Account</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>Update-Verfügbarkeit prüfen</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Sie versuchen, einen extrem großen Ordner zu synchronisieren. Um das Synchroniseren gesamter Systempartitionen zu vermeiden, was ineffizient und gefährlich ist, bitten wir Sie, mit einem kleineren Ordner zu beginnen und dann weitere Daten hinzuzufügen, während MEGAsync läuft.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
