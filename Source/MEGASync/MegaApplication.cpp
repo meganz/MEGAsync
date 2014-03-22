@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1012;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12b");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1082,8 +1082,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
             QRect screenGeometry = QApplication::desktop()->availableGeometry();
             infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
-            infoDialog->transferFinished();
-            infoDialog->updateDialog();
 
             //Show the dialog
             infoDialog->showMinimized();
@@ -1388,10 +1386,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
                 {
-                    if(infoDialog) infoDialog->updateSyncsButton();
                     LOG("Sync removed");
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
+                    if(infoDialog) infoDialog->updateSyncsButton();
                     onSyncStateChanged(megaApi);
                     break;
                 }
