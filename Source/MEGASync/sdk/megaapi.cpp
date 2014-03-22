@@ -2799,15 +2799,19 @@ void MegaApi::nodes_updated(Node** n, int count)
         for(int i=0; i<count; i++)
         {
             Node *node = n[i];
-            if(node->changed.parent || node->changed.attrs || !node->changed.fileattrstring)
+            if(node->changed.parent || node->changed.attrs)
             {
                 node->changed.parent = false;
                 node->changed.attrs = false;
-                node->changed.fileattrstring = false;
                 list.push_back(MegaNode::fromNode(node));
             }
         }
         nodeList = new NodeList(list.data(), list.size(), true);
+    }
+    else
+    {
+        for (node_map::iterator it = client->nodes.begin(); it != client->nodes.end(); it++)
+            memset(&(it->second->changed), 0,sizeof it->second->changed);
     }
     fireOnNodesUpdate(this, nodeList);
 #endif
