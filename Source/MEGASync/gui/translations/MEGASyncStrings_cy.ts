@@ -424,48 +424,62 @@ Gadael beth bynnag?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Nid yw&apos;r blygell (%1) yn llwytho i fyny gan ei fod yn hynod o fawr. Rydym yn gwneud gwiriad hwn i atal y lanlwytho o gyfrolau esgidiau cyfan, sydd yn aneffeithlon ac yn beryglus.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Nid yw %1 ffolderi yn cael eu llwytho i fyny oherwydd eu bod yn hynod o fawr. Rydym yn gwneud gwiriad hwn i atal y lanlwytho o gyfrolau esgidiau cyfan, sydd yn aneffeithlon ac yn beryglus.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Diweddariad ar gael!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Bydd y wybodaeth ddiweddaraf yn cael eu cymhwyso yn ystod ailgychwyn cais nesaf</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Osod y diweddariad ...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Gwirio am ddiweddariadau ...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Osod y diweddariad</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
-    </message>
-    <message>
-        <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Mae fersiwn newydd o MEGAsync ar gael! Cliciwch ar y neges hon at gorsedda </translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Roedd problem gosod y diweddariad. Os gwelwch yn dda ceisiwch eto yn hwyrach neu lawrlwythwch y fersiwn diwethaf o: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Diolch i chi am eich cydweithrediad!</translation>
+        <translation>Diolch i chi am eich cydweithrediad!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Dim diweddariad ar gael</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Gwall</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Mae gennych %1 yn y ffolder hwn.
 Ydych chi&apos;n siŵr eich bod am i cydamseru?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Ydych chi&apos;n siŵr eich bod am i cydamseru?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Rydych eisoes yn cysoni eich cyfrif cyfan.</translation>
+        <translation type="obsolete">Rydych eisoes yn cysoni eich cyfrif cyfan.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1023,7 +1043,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Gwiriwch am ddiweddariadau</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Yr ydych yn ceisio cydamseru ffolder fawr iawn. Er mwyn atal y syncing o gyfrolau esgidiau cyfan, sydd yn aneffeithlon ac yn beryglus, rydym yn gofyn i chi i ddechrau gyda ffolder llai ac ychwanegu mwy o ddata tra MEGAsync yn rhedeg.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

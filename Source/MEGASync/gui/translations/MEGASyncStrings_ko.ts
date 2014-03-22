@@ -455,17 +455,31 @@ Exit anyway?</source>
         <translation>메가싱크의 새 버전이 이용가능합니다! 설치하려면 이 메시지를 클릭하세요</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>업데이트가 없습니다</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>업데이트 설치에 문제가 있었습니다. 나중에 다시 시도하거나 최신 버전을 https://mega.co.nz/#sync 에서 다운로드하세요.</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">협조에 감사드립니다.</translation>
+        <translation>협조에 감사드립니다.</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>업데이트가 없습니다</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>오류</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>폴더 내용물: %1
 동기화 하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>이미 계정 전체를 동기화중입니다.</translation>
+        <translation type="obsolete">이미 계정 전체를 동기화중입니다.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>업데이트 확인</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>지금 매우 큰 폴더를 동기화하려고 합니다. 비효율적이고 위험한 부트 볼륨 전체를 동기화하는 것을 막으려면, 메가싱크가 작동중일 때 작은 폴더부터 데이터를 추가하는 것을 권장합니다.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

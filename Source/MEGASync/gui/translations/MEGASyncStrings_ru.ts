@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Вы пытаетесь синхронизировать очень большую папку. Чтобы предотвратить синхронизацию всего раздела, что неэффективно и опасно, мы просим Вас начать с небольшой папки и добавлять данные во время работы MEGAsync.</translation>
     </message>
 </context>
 <context>
@@ -326,7 +326,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
+        <translation>Ошибка: Неверная папка назначения. Закачка была остановлена</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -424,48 +424,62 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Папка (%1) не была закачана, поскольку имеет очень большой размер. Мы производим данную проверку, чтобы предотвратить закачку загрузочных разделов, так как это неэффективно и опасно.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 папок не были закачаны, поскольку имеют очень большой размер. Мы производим данную проверку, чтобы предотвратить закачку загрузочных разделов, так как это неэффективно и опасно.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Доступно обновление!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Обновление будет применено во время следующего перезапуска приложения</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Установление обновления...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Проверка обновлений...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Установить обновление</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
-    </message>
-    <message>
-        <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Доступна новая версия MEGAsync! Нажмите на это сообщение, чтобы его установить</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Произошла ошибка при установлении обновления. Пожалуйста, попытайтесь установить заново или скачайте последнюю версию с: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Спасибо за сотрудничество!</translation>
+        <translation>Спасибо за сотрудничество!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Нет новых обновлений</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -582,7 +596,7 @@ https://mega.co.nz/#sync</source>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation>Папка назначения уже синхронизирована и уже имеет файл с таким же именем (%1). Если Вы продолжите закачку, предыдущий файл будет перезаписан.</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>У вас %1 в этой папке.
 Вы уверены, что хотите это синхронизировать?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Вы уже синхронизируете всю свою учётную запись.</translation>
+        <translation type="obsolete">Вы уже синхронизируете всю свою учётную запись.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -995,19 +1015,19 @@ Are you sure you want to sync it?</source>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>Новые исключённые имена файлов будут учитываться после перезапуска приложения.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation>Кэш</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Current cache size: %1</translation>
+        <translation>Текущий размер кэша: %1</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1015,7 +1035,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>Неверные настройки прокси сервера или прокси сервер не отвечает</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1023,7 +1043,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Проверить обновления</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1283,13 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Вы пытаетесь синхронизировать очень большую папку. Чтобы предотвратить синхронизацию всего раздела, что неэффективно и опасно, мы просим Вас начать с небольшой папки и добавлять данные во время работы MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

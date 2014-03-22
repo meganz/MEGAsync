@@ -177,7 +177,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
-        <translation>Lưu lượng: Dữ liệu tạp thời không khả dụng</translation>
+        <translation>Lưu lượng: Các thông số tạm thời không khả dụng</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -185,7 +185,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGA website</source>
-        <translation>Trang MEGA</translation>
+        <translation>Trang web MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -197,15 +197,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
-        <translation>%1 trong tổng %2 (%3/giây)</translation>
+        <translation>%1 trong tổng %2 mục (%3/giây)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
-        <translation>%1 trong tổng %2 (dừng)</translation>
+        <translation>%1 trong tổng %2 mục (dừng)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
-        <translation>Truyền tải tệp bị dừng</translation>
+        <translation>Truyền tải tệp bị tạm dừng</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
@@ -341,10 +341,10 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Việc đồng bộ sẽ dừng.
-Việc xóa bỏ chỉ có thể xảy ra khi trình đồng bộ hóa MEGA đang hoạt động.
+        <translation>Các tiến trình đồng bộ sẽ dừng lại.
+Việc xóa bỏ chỉ có thể thực hiện khi trình đồng bộ hóa MEGA đang hoạt động.
 
-Vẫn quyết định thoát chương trình?</translation>
+Bạn có cuyết định thoát chương trình hay không?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -356,7 +356,7 @@ Vẫn quyết định thoát chương trình?</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
-        <translation>Liên kết đã được sao chép vào bộ nhớ</translation>
+        <translation>Liên kết đã được sao chép vào bộ nhớ. Ấn Ctrl+V khi gõ văn bản để dán liên kết.</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
@@ -384,7 +384,7 @@ Vẫn quyết định thoát chương trình?</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Tiếp tục truyền</translation>
+        <translation>Tiếp tục truyền tải</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -396,7 +396,7 @@ Vẫn quyết định thoát chương trình?</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translation>Đã dừng</translation>
+        <translation>Đã tạm dừng</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -455,17 +455,31 @@ Vẫn quyết định thoát chương trình?</translation>
         <translation>MEGAsync hiện có một bản cập nhật mới! Nhấp vào khung hội thoại này để cài đặt </translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>Không có bản cập nhật mới khả dụng</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Phát sinh lỗi khi cài đặt bản cập nhật. Xin vui lòng thử lại sau hoặc tải về phiên bản mới nhất tại: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Cám ơn sự hợp tác của bạn!</translation>
+        <translation>Cám ơn sự hợp tác của bạn!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Không có bản cập nhật mới khả dụng</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Lỗi</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -638,6 +652,12 @@ Are you sure you want to sync it?</source>
         <translation>Bạn có %1 trong thư mục này.
 Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -647,7 +667,7 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Nhập vào một hay nhiều liên kết MEGA</translation>
+        <translation>Nhập vào đây một hay nhiều liên kết từ MEGA</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -836,7 +856,7 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Thư mục đã đồng bộ</translation>
+        <translation>Các thư mục đã đồng bộ</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -852,7 +872,7 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
     <message>
         <source>MEGA folder</source>
-        <translation>Thư mục MEGA</translation>
+        <translation>Thư mục trên MEGA</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
@@ -884,23 +904,23 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Thiết lập giới hạn tải lên cho mỗi máy chủ được thực hiện mỗi khi bắt đầu các quá trình tải lên mới</translation>
+        <translation>Thiết lập giới hạn tải lên cho mỗi máy chủ sẽ được thực hiện mỗi khi bắt đầu các quá trình tải lên mới</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Các thư mục cho việc tải lên từ Windows Explorer</translation>
+        <translation>Duyệt thư mục cho việc tải lên từ Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
-        <translation>Ngoài trừ tệp có dạng tên được thiết lập</translation>
+        <translation>Các dạng tệp tin bị khai trừ khỏi đồng bộ hóa</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
-        <translation>Thiết lập Proxy</translation>
+        <translation>Các thiết đặt Proxy</translation>
     </message>
     <message>
         <source>No proxy</source>
-        <translation>Không proxy</translation>
+        <translation>Không dùng proxy</translation>
     </message>
     <message>
         <source>Auto-detect</source>
@@ -936,11 +956,11 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation>Dữ liệu tạm thời không khả dụng</translation>
+        <translation>Số liệu tạm thời không khả dụng</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
-        <translation>%1 trong tổng %3 được dùng (%2%)</translation>
+        <translation>%1 đã dùng trong tổng %3 (%2%)</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -964,7 +984,7 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Bạn đang được đồng bộ toàn bộ toàn khoản</translation>
+        <translation type="obsolete">Bạn đang được đồng bộ toàn bộ toàn khoản</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>Kiểm tra các bản cập nhật mới</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1106,7 +1150,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>MEGA folder:</source>
-        <translation>Thư mục MEGA:</translation>
+        <translation>Thư mục trên MEGA:</translation>
     </message>
     <message>
         <source>Change</source>
@@ -1241,6 +1285,12 @@ To prevent the syncing of entire boot volumes, which is inefficient and dangerou
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Bạn đang cố đồng bộ một thư mục rất lớn. Nó ngăn chặn sự đồng bộ của toàn bộ khả năng khởi động của chương trình, điều này nguy hiểm và không hiệu quả, chúng tôi khuyên bạn thử với một thư mục nhỏ hơn và sau đó thêm nhiều dữ liệu hơn trong khi trình MEGAsync đang chạy.</translation>
     </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1324,7 +1374,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
-        <translation>Thư mục MEGA đã đồng bộ</translation>
+        <translation>Thư mục trên MEGA được đồng bộ</translation>
     </message>
 </context>
 </TS>

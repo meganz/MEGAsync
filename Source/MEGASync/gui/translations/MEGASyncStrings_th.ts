@@ -322,7 +322,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ภายในไม่มีอยู่</translation>
+        <translation>การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ในเครื่องพีซีไม่มีอยู่</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -342,7 +342,7 @@ Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
         <translation>การซิงโครไนซ์จะถูกหยุดไว้
-การลบขณะที่ยังไม่ได้มีการทำงานใดๆ จะไม่ถูกเผยแพร่
+การลบไฟล์ขณะที่โปรแกรมยังไม่ได้ทำงาน จะไม่ถูกเผยแพร่
 
 จบการทำงานหรือไม่</translation>
     </message>
@@ -455,17 +455,31 @@ Exit anyway?</source>
         <translation>MEGAsync มีเวอร์ชันใหม่พร้อมใช้งานแล้ว! คลิกที่ข้อความนี้เพื่อติดตั้ง</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>ยังไม่มีการอัปเดตขณะนี้</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>มีปัญหาในการติดตั้งการอัปเดต กรุณาลองอีกครั้งในภายหลัง หรือดาวน์โหลดเวอร์ชันล่าสุดได้จาก: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">ขอบคุณสำหรับความร่วมมือของคุณ</translation>
+        <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>ยังไม่มีการอัปเดตขณะนี้</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -528,7 +542,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
-        <translation>คีย์ผิดพลาด/การถอดรหัสไม่ถูกต้อง</translation>
+        <translation>คีย์ไม่ถูกต้อง/การถอดรหัสผิดพลาด</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>คุณมี %1 ในโฟลเดอร์นี้
 คุณแน่ใจว่าต้องการซิงค์หรือไม่</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -800,7 +820,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Start on startup</source>
-        <translation>เริ่มทันทีเมื่อเริ่มต้นระบบ</translation>
+        <translation>ทำงานทันทีเมื่อเริ่มต้นระบบ</translation>
     </message>
     <message>
         <source>Update automatically</source>
@@ -848,7 +868,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Local Folder</source>
-        <translation>โฟลเดอร์ภายใน</translation>
+        <translation>โฟลเดอร์ในเครื่องพีซี</translation>
     </message>
     <message>
         <source>MEGA folder</source>
@@ -964,7 +984,7 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>คุณมีการซิงค์ทั้งบัญชีของคุณอยู่แล้ว</translation>
+        <translation type="obsolete">คุณมีการซิงค์ทั้งบัญชีของคุณอยู่แล้ว</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -995,7 +1015,7 @@ Are you sure you want to sync it?</source>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>การ</translation>
+        <translation>การยกเว้นชื่อไฟล์ใหม่จะมีผลในบัญชีได้ก็ต่อเมื่อแอปพลิเคชันเริ่มทำงานใหม่แล้ว</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>ตรวจสอบการอัปเดต</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1102,7 +1146,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Local folder:</source>
-        <translation>โฟลเดอร์ภายใน:</translation>
+        <translation>โฟลเดอร์ในเครื่องพีซี:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -1118,7 +1162,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>โฟลเดอร์ภายในของคุณ:</translation>
+        <translation>โฟลเดอร์ในเครื่องพีซีของคุณ:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
@@ -1216,7 +1260,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>Please, select a local folder</source>
-        <translation>กรุณาเลือกโฟลเดอร์ภายใน</translation>
+        <translation>กรุณาเลือกโฟลเดอร์ในเครื่องพีซี</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
@@ -1229,7 +1273,7 @@ Please, select another folder.</source>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>เลือกโฟลเดอร์ภายใน</translation>
+        <translation>เลือกโฟลเดอร์ในเครื่องพีซี</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>คุณพยายามที่จะซิงค์โฟลเดอร์ขนาดใหญ่เกินไป เพื่อป้องกันการซิงค์ของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้ เราขอให้คุณเริ่มต้น ด้วยโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลขณะเรียกใช้ MEGAsync</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Jūs bandote sinchronizuoti labai didelį aplanką. Tam, kad išvengtume ištisų disko skirsnių sinchronizavimo, kas yra neefektyvu ir pavojinga, mes prašome jūsų pradėti nuo mažesnio aplanko, pridedant į jį daugiau duomenų.</translation>
     </message>
 </context>
 <context>
@@ -76,11 +76,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
-        <translation>MEGAsync has detected a problem. These are the details:</translation>
+        <translation>MEGAsync aptiko problemą. Daugiau detalių:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>Jūs galite padėti mums tobulinti MEGAsync siųsdami šį klaidos pranešimą. </translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -88,7 +88,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Send report</source>
-        <translation>Send report</translation>
+        <translation>Siųsti pranešimą</translation>
     </message>
 </context>
 <context>
@@ -156,13 +156,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>You are about to import this file to a synced folder. If you enable downloading, the file will be duplicated on your computer. Are you sure?</translation>
+        <translation>Jūs ketinate importuoti šį failą į sinchronizuotą aplanką. Jeigu įjungsite atsisiuntimą, failas bus dubliuojamas jūsų kompiuteryje. Ar tikrai?</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>You are about to import these files to a synced folder. If you enable downloading, the files will be duplicated on your computer. Are you sure?</translation>
+        <translation>Jūs ketinate importuoti šiuos failus į sinchronizuotą aplanką. Jeigu įjungsite atsisiuntimą, failai bus dubliuojami jūsų kompiuteryje. Ar tikrai?</translation>
     </message>
 </context>
 <context>
@@ -265,7 +265,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
-        <translation>MEGAsync is waiting</translation>
+        <translation>MEGAsync laukia</translation>
     </message>
 </context>
 <context>
@@ -276,11 +276,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translation>Choose for which users you want to install $(^NameDA).</translation>
+        <translation>Pasirinkite, kuriems vartotojams norite įdiegti $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Pasirinkite ką norite įdiegti $(^NameDA) tik sau ar visiems šio kompiuterio vartotojams. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -326,7 +326,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
-        <translation>Error: Invalid destination folder. The upload has been cancelled</translation>
+        <translation>Klaida: Neteisingas paskirties aplankas. Įkėlimas buvo atšauktas.</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -416,7 +416,7 @@ Vistiek išeiti?</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
-        <translation>MEGAsync has been updated</translation>
+        <translation>MEGAsync buvo atnaujintas</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -424,48 +424,62 @@ Vistiek išeiti?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Aplankas (%1) nebuvo įkeltas, nes jis yra labai didelis. Mes atliekame šį patikrinimą tam, kad išvengtume ištisų disko skirsnių įkėlimo, kas yra neefektyvu ir pavojinga.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 aplankai (-ų) nebuvo įkelti, nes jie yra labai dideli. Mes atliekame šį patikrinimą tam, kad išvengtume ištisų disko skirsnių įkėlimo, kas yra neefektyvu ir pavojinga.</translation>
     </message>
     <message>
         <source>Update available!</source>
-        <translation>Update available!</translation>
+        <translation>Galimas atnaujinimas!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
-        <translation>An update will be applied during the next application restart</translation>
+        <translation>Atnaujinimas bus taikomas kito paleidimo metu</translation>
     </message>
     <message>
         <source>Installing update...</source>
-        <translation>Installing update...</translation>
+        <translation>Įdiegiamas atnaujinimas...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation>Checking for updates...</translation>
+        <translation>Ieškoma atnaujinimų...</translation>
     </message>
     <message>
         <source>Install update</source>
-        <translation>Install update</translation>
+        <translation>Įdiegti atnaujinimą</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
-        <translation>A new version of MEGAsync is available! Click on this message to install it</translation>
-    </message>
-    <message>
-        <source>No updates available</source>
-        <translation>No updates available</translation>
+        <translation>Nauja MEGAsync versija jau prieinama! Spauskite šį pranešimą jeigu norite jį įdiegti</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Iškilo problema diegiant šį atnaujinimą. Bandykite dar kartą vėliau arba atsisiųskite naujausią versiją iš: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Thank you for your collaboration!</translation>
+        <translation>Dėkojame už bendradarbiavimą!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Atnaujinimų nėra</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Klaida</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -582,7 +596,7 @@ https://mega.co.nz/#sync</source>
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation>Paskirties aplankas yra sinchronizuotas ir jame jau yra failas pavadinimu (%1). Jeigu jūs tęsite, ankstesnis failas bus užrašytas.</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Jūs turite %1 šiame aplanke.
 Ar jūs tikrai norite sinchronizuoti?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Ar jūs tikrai norite sinchronizuoti?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Jūs jau sinchronizuojate savo paskyrą.</translation>
+        <translation type="obsolete">Jūs jau sinchronizuojate savo paskyrą.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -995,19 +1015,19 @@ Ar jūs tikrai norite sinchronizuoti?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation>Nauji atmesti failų vardai bus įtraukti į paskyrą kito paleidimo metu.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation>Podėlis</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Current cache size: %1</translation>
+        <translation>Dabartinis podėlio dydis: %1</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Išvalyti</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1015,7 +1035,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>Jūsų proxy nustatymai yra neteisingi arba proxy neatsako</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1023,7 +1043,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Check for updates</translation>
+        <translation>Ieškoti atnaujinimų</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1283,13 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Jūs bandote sinchronizuoti labai didelį aplanką. Tam, kad išvengtume ištisų disko skirsnių sinchronizavimo, kas yra neefektyvu ir pavojinga, mes prašome jūsų pradėti nuo mažesnio aplanko, pridedant į jį daugiau duomenų.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

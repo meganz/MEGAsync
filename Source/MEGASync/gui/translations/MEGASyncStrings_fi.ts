@@ -76,11 +76,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
-        <translation>MEGAsync on havainnut ongelman. Yksityiskohdat:</translation>
+        <translation>MEGAsync on havainnut ongelman. Nämä ovat tiedot:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>Voit auttaa parantamaan MEGAsynciä lähettämällä virheraportin. Siihen ei sisällytetä henkilökohtaisia tietoja. Jos haluat, voit lisätä alapuolelle yksityiskohtia:</translation>
+        <translation>Voit auttaa parantamaan MEGAsynciä lähettämällä virheraportin. Siihen ei sisällytetä henkilökohtaisia tietoja. Jos haluat antaa meille lisätietoja, kirjoita ne alle:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -455,17 +455,31 @@ Lopeta silti?</translation>
         <translation>Uusi versio MEGAsyncistä on saatavilla! Klikkaa tätä viestiä asentaaksesi sen</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>Ei päivityksiä</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Päivityksen asennus ei onnistunut. Yritä uudestaan tai lataa viimeisin versio osoitteesta:  https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Kiios yhteistyöstä!</translation>
+        <translation>Kiios yhteistyöstä!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Ei päivityksiä</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Virhe</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Sinulla on %1 tässä kansiossa.
 Haluatko varmasti synkronoida?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -816,11 +836,11 @@ Haluatko varmasti synkronoida?</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Lisätiedot</translation>
+        <translation>Tiedot</translation>
     </message>
     <message>
         <source>FREE</source>
-        <translation>VAPAANA</translation>
+        <translation>FREE</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -888,19 +908,19 @@ Haluatko varmasti synkronoida?</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Kansio Windowsin resurssihallinnasta lähettäville</translation>
+        <translation>Kansio Windowsin resurssienhallinnasta lähteville lähetyksille</translation>
     </message>
     <message>
         <source>Excluded file names</source>
-        <translation>Ei-sisällytettävät tiedostonimet</translation>
+        <translation>Sisällyttämättä jätettävät tiedostonimet</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
-        <translation>Välimuistipalvelimen asetukset</translation>
+        <translation>Välityspalvelimen asetukset</translation>
     </message>
     <message>
         <source>No proxy</source>
-        <translation>Ei välimuistipalvelinta</translation>
+        <translation>Ei välityspalvelinta</translation>
     </message>
     <message>
         <source>Auto-detect</source>
@@ -908,11 +928,11 @@ Haluatko varmasti synkronoida?</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation>Välimuistipalvelin</translation>
+        <translation>Välityspalvelin</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation>Välimuistipalvelimen tyyppi:</translation>
+        <translation>Välityspalvelimen tyyppi:</translation>
     </message>
     <message>
         <source>Server:</source>
@@ -924,7 +944,7 @@ Haluatko varmasti synkronoida?</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
-        <translation>Välimuistipalvelin vaatii salasanan</translation>
+        <translation>Välityspalvelin vaatii salasanan</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -964,7 +984,7 @@ Haluatko varmasti synkronoida?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Synkroinoit jo koko tilisi.</translation>
+        <translation type="obsolete">Synkroinoit jo koko tilisi.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -976,12 +996,12 @@ Haluatko varmasti synkronoida?</translation>
     </message>
     <message>
         <source>Excluded name</source>
-        <translation>Ei-sisällytettävät nimet</translation>
+        <translation>Sisällyttämättä jätetty nimi</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>Mitä ei sisällytetä synkronointiin.
+        <translation>Syötä nimi, jota ei sisällytetä synkronointiin.
 (jokerimerkit * ja ? ovat sallittuja):</translation>
     </message>
     <message>
@@ -995,7 +1015,7 @@ Haluatko varmasti synkronoida?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>Uudet ei-sisällytettävät tiedostonimet huomioidaan kun sovellus käynnistetään uudelleen</translation>
+        <translation>Uudet sisällyttämättä jätettävät tiedostonimet huomioidaan kun sovellus käynnistetään uudelleen</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1015,7 +1035,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Välimuistipalvelimen asetus on epäkelpo tai se ei vastaa</translation>
+        <translation>Välityspalvelimen asetus on epäkelpo tai se ei vastaa</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>Tarkista päivitykset</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Yrität synkronoida erittäin suurta kansiota. Tehottoman ja riskialttiin kokonaisten käynnistyslevyjen synkronoinnin asemesta, aloita pienikokoisella kansiolla ja lisää kohteita samalla kun MEGAsync on käynnissä.  </translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

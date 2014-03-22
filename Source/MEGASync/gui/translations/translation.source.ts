@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>XXXXX</translation>
+        <translation>[$1918]</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -476,9 +476,10 @@ https://mega.co.nz/#sync</source>
         <translation>[$1578]</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem.
-Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>XXXXX</translation>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>[$1919] 
+		[$1920]</translation>
     </message>
 </context>
 <context>
@@ -654,7 +655,8 @@ Are you sure you want to sync it?</source>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>XXXXX</translation>
+        <translation>[$1921]
+[$1922]</translation>
     </message>
 </context>
 <context>
@@ -1045,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>XXXXX</translation>
+        <translation>[$1923]</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>XXXXX</translation>
+        <translation>[$1924]</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>XXXXX</translation>
+        <translation>[$1925]</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>XXXXX</translation>
+        <translation>[$1926]</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>XXXXX</translation>
+        <translation>[$1928]</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>XXXXX</translation>
+        <translation>[$1927]</translation>
     </message>
 </context>
 <context>
@@ -1286,7 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>XXXXX</translation>
+        <translation>[$1919]
+[$1920]</translation>
     </message>
 </context>
 <context>

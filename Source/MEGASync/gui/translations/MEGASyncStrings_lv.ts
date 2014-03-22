@@ -455,17 +455,31 @@ Vienalga iziet?</translation>
         <translation>Pieejama jaunāka MEGAsync versija! Spied uz šī paziņojuma, lai uzstādītu</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>Atjauninājumi nav pieejami</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translation>Radās problēma uzstādot atjauninājumu. Lūdzu, mēģiniet vēlreiz vēlāk vai lejupielādējiet jaunāko versiju no: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Paldies par jūsu sadarbību!</translation>
+        <translation>Paldies par jūsu sadarbību!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>Atjauninājumi nav pieejami</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Kļūda</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Jums ir %1 šajā mapē.
 Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -964,7 +984,7 @@ Vai esat pārliecināts, ka vēlaties to sinhronizēt?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Jūs jau sinhronizējat visu savu kontu.</translation>
+        <translation type="obsolete">Jūs jau sinhronizējat visu savu kontu.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1024,6 +1044,30 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translation>Pārbaudīt atjauninājumus</translation>
+    </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Jūs mēģināt sinhronizēt ļoti lielu mapi. Lai novērstu situāciju, kad tiek sinhronizētas visas galvenās datu glabātuves, kas ir neefektīvi un ļoti bīstami, mēs lūdzam Jūs sākt ar mazāku mapi un pievienot vairāk datu, kad MEGAsync darbojas.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

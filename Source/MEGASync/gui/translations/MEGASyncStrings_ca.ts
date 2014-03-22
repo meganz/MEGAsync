@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation>Alerta</translation>
+        <translation>Avís</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -156,7 +156,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>Estàs a punt d&apos;importar aquest fitxer a una carpeta sincronitzada. Si permets la descàrrega el fitxer estarà duplicat al teu ordinador. N&apos;estàs segur?</translation>
+        <translation>Estàs a punt d&apos;importar aquest fitxer a una carpeta sincronitzada. Si permets la descàrrega, el fitxer estarà duplicat al teu ordinador. N&apos;estàs segur?</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
@@ -169,7 +169,7 @@ Are you sure?</source>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync està al dia</translation>
+        <translation>MEGAsync està actualitzat</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -307,7 +307,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync està treballant. Fés clic per obrir la finestra d&apos;estat.</translation>
+        <translation>MEGAsync està en funcionament. Fés clic per obrir la finestra d&apos;estat.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -392,7 +392,7 @@ Sortir de totes maneres?</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translation>Al dia</translation>
+        <translation>Actualitzat</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -455,17 +455,31 @@ Sortir de totes maneres?</translation>
         <translation>Hi ha una nova versió disponible del MEGAsync! Fes clic en aquest missatge per instal·lar-la</translation>
     </message>
     <message>
-        <source>No updates available</source>
-        <translation>No hi ha actualitzacions disponibles</translation>
-    </message>
-    <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>Ha hagut un problema instal·lannt l&apos;actualització. Si us plau, intenta-ho més tard o descarrega la versió més recent a:https://mega.co.nz/#sync</translation>
+        <translation>Ha hagut un problema instal·lant l&apos;actualització. Si us plau, intenta-ho més tard o descarrega la versió més recent a:https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
-        <translation type="unfinished">Gràcies per la teva col·laboració!</translation>
+        <translation>Gràcies per la teva col·laboració!</translation>
+    </message>
+    <message>
+        <source>Update available. Downloading...</source>
+        <translation>Update available. Downloading...</translation>
+    </message>
+    <message>
+        <source>No update available at this time</source>
+        <translation>No hi ha actualitzacions disponibles</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system. 
+		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -528,7 +542,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
-        <translation>Contrassenya incorrecta/Error de desxifratge</translation>
+        <translation>Contrasenya incorrecta/Error de desxifratge</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -637,6 +651,12 @@ Please, select a subfolder.</source>
 Are you sure you want to sync it?</source>
         <translation>Tens %1 en aquesta carpeta.
 Estàs segur que ho vols sincronitzar?</translation>
+    </message>
+    <message>
+        <source>Invalid folder for synchronization.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translation>Invalid folder for synchronization.
+Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -800,7 +820,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     </message>
     <message>
         <source>Start on startup</source>
-        <translation>Inicia en arrencar l&apos;ordinador</translation>
+        <translation>Inicia a l&apos;engegar l&apos;ordinador</translation>
     </message>
     <message>
         <source>Update automatically</source>
@@ -924,7 +944,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
-        <translation>El servidor proxy demana una contrassenya</translation>
+        <translation>El servidor proxy demana una contrasenya</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -932,7 +952,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Contrassenya:</translation>
+        <translation>Contrasenya:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -964,7 +984,7 @@ Estàs segur que ho vols sincronitzar?</translation>
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation>Ja tens sincronitzat tot el teu compte.</translation>
+        <translation type="obsolete">Ja tens sincronitzat tot el teu compte.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1025,6 +1045,30 @@ when the application starts again.</source>
         <source>Check for updates</source>
         <translation>Cerca actualitzacions</translation>
     </message>
+    <message>
+        <source>Selective sync active</source>
+        <translation>Selective sync active</translation>
+    </message>
+    <message>
+        <source>Enable full account sync</source>
+        <translation>Enable full account sync</translation>
+    </message>
+    <message>
+        <source>Enabling full account sync will disable all your current syncs</source>
+        <translation>Enabling full account sync will disable all your current syncs</translation>
+    </message>
+    <message>
+        <source>Full account sync active</source>
+        <translation>Full account sync active</translation>
+    </message>
+    <message>
+        <source>Disabling full account sync will allow you to set up selective folder syncing</source>
+        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+    </message>
+    <message>
+        <source>Disable full account sync</source>
+        <translation>Disable full account sync</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1054,11 +1098,11 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Contrassenya:</translation>
+        <translation>Contrasenya:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Repeteix la contrassenya:</translation>
+        <translation>Repeteix la contrasenya:</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
@@ -1154,7 +1198,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
-        <translation>Email o contrassenya incorrectes.</translation>
+        <translation>Email o contrasenya incorrectes.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -1178,7 +1222,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please, enter your password</source>
-        <translation>Si us plau, introdueix la contrassenya</translation>
+        <translation>Si us plau, introdueix la contrasenya</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
@@ -1186,11 +1230,11 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation>Si us plau, introdueix una contrassenya més forta</translation>
+        <translation>Si us plau, introdueix una contrasenya més forta</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation>Les contrassenyes no coincideixen</translation>
+        <translation>Les contrasenyes no coincideixen</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -1240,6 +1284,12 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation>Estàs intentant sincronitzar una carpeta massa llarga. Per evitar sincronitzar tota una partició del sistema, cosa ineficient i perillosa, et demanem que comencis amb una carpeta més petita i vagis afegint més fitxers mentre el MEGAsync estigui funcionant.</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Unable to get the file system.
+Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -1301,7 +1351,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always upload to this destination</source>
-        <translation>Puja sempre en aquest lloc</translation>
+        <translation>Puja sempre a aquest lloc</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
