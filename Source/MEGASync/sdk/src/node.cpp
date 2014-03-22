@@ -62,7 +62,7 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph,
     sharekey = NULL;
 
     removed = 0;
-    memset(&changed,0,sizeof changed);
+    memset(&changed,-1,sizeof changed);
 
     if (client)
     {
