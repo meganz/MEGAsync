@@ -2798,11 +2798,13 @@ void MegaApi::nodes_updated(Node** n, int count)
         vector<MegaNode *> list;
         for(int i=0; i<count; i++)
         {
-            if(n[i]->changed.parent || n[i]->changed.attrs)
+            Node *node = n[i];
+            if(node->changed.parent || node->changed.attrs || !node->changed.fileattrstring)
             {
-                n[i]->changed.parent = false;
-                n[i]->changed.attrs = false;
-                list.push_back(MegaNode::fromNode(n[i]));
+                node->changed.parent = false;
+                node->changed.attrs = false;
+                node->changed.fileattrstring = false;
+                list.push_back(MegaNode::fromNode(node));
             }
         }
         nodeList = new NodeList(list.data(), list.size(), true);
