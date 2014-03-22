@@ -101,6 +101,7 @@ public slots:
     void onRequestLinksFinished();
     void onUpdateCompleted();
     void onUpdateAvailable(bool requested);
+    void onInstallingUpdate(bool requested);
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
