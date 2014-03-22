@@ -697,13 +697,16 @@ margin-top: 6px;
       </layout>
      </widget>
      <widget class="QWidget" name="pSyncs">
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0,1">
        <item>
         <widget class="QGroupBox" name="gSyncs">
          <property name="title">
           <string>Synced folders</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QWidget" name="wSyncsButtons" native="true">
             <property name="layoutDirection">
@@ -837,8 +840,96 @@ margin-top: 6px;
             </column>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="lSyncType">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Selective sync active</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="widget_8" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>20</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="bSyncChange">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Enable full account sync</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lSyncText">
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="text">
+             <string>Enabling full account sync will disable all your current syncs</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="margin">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1568,22 +1659,6 @@ padding: 4px;</string>
    </hints>
   </connection>
   <connection>
-   <sender>tSyncs</sender>
-   <signal>itemChanged(QTableWidgetItem*)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>49</x>
-     <y>154</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>rProxyManual</sender>
    <signal>toggled(bool)</signal>
    <receiver>SettingsDialog</receiver>
@@ -1688,6 +1763,22 @@ padding: 4px;</string>
     <hint type="sourcelabel">
      <x>213</x>
      <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tSyncs</sender>
+   <signal>itemChanged(QTableWidgetItem*)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>213</x>

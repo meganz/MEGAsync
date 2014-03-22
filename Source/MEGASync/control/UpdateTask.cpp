@@ -393,6 +393,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
             postponeUpdate();
             return;
         }
+        emit installingUpdate(forceCheck);
     }
     else
     {

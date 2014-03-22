@@ -732,6 +732,7 @@ void MegaApplication::startUpdateTask()
 
         connect(updateTask, SIGNAL(updateCompleted()), this, SLOT(onUpdateCompleted()), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateAvailable(bool)), this, SLOT(onUpdateAvailable(bool)), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(installingUpdate(bool)), this, SLOT(onInstallingUpdate(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
 
@@ -1029,12 +1030,18 @@ void MegaApplication::onUpdateAvailable(bool requested)
         showInfoMessage(tr("A new version of MEGAsync is available! Click on this message to install it"));
 }
 
+void MegaApplication::onInstallingUpdate(bool requested)
+{
+    if(requested)
+        showInfoMessage(tr("Update available. Downloading..."));
+}
+
 void MegaApplication::onUpdateNotFound(bool requested)
 {
     if(requested)
     {
         if(!updateAction)
-            showInfoMessage(tr("No updates available"));
+            showInfoMessage(tr("No update available at this time"));
         else
             showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync"));
     }
@@ -1708,4 +1715,3 @@ void MegaApplication::onSyncPut(Sync *, const char *)
 	//QApplication::postEvent(this, new QEvent(QEvent::User));
 }
 */
-

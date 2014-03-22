@@ -686,15 +686,67 @@ void SettingsDialog::updateAddButton()
 {
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
     {
-        ui->bAdd->setToolTip(tr("You are already syncing your entire account."));
-        ui->bAdd->setEnabled(false);
+        ui->tSyncs->hide();
+        ui->wSyncsButtons->hide();
+        ui->lSyncType->setText(tr("Full account sync active"));
+        ui->lSyncText->setText(tr("Disabling full account sync will allow you to set up selective folder syncing"));
+        ui->bSyncChange->setText(tr("Disable full account sync"));
     }
     else
     {
-        ui->bAdd->setToolTip(QString::fromAscii(""));
-        ui->bAdd->setEnabled(true);
+        ui->tSyncs->show();
+        ui->wSyncsButtons->show();
+        ui->lSyncType->setText(tr("Selective sync active"));
+        ui->lSyncText->setText(tr("Enabling full account sync will disable all your current syncs"));
+        ui->bSyncChange->setText(tr("Enable full account sync"));
     }
 }
+
+void SettingsDialog::on_bSyncChange_clicked()
+{
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        ui->tSyncs->clearContents();
+        ui->tSyncs->setRowCount(0);
+        syncNames.clear();
+        syncsChanged = true;
+        stateChanged();
+    }
+    else
+    {
+        ui->tSyncs->clearContents();
+        ui->tSyncs->setRowCount(0);
+        syncNames.clear();
+        syncsChanged = true;
+        stateChanged();
+
+    #if QT_VERSION < 0x050000
+        QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    #else
+        QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+    #endif
+
+        localFolderPath.append(QString::fromAscii("/MEGA"));
+        localFolderPath = QDir::toNativeSeparators(localFolderPath);
+        QDir defaultFolder(localFolderPath);
+        defaultFolder.mkpath(QString::fromAscii("."));
+
+        QTableWidgetItem *localFolder = new QTableWidgetItem();
+        localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
+
+        QTableWidgetItem *megaFolder = new QTableWidgetItem();
+        megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8("/") + QString::fromAscii("  "));
+
+        int pos = ui->tSyncs->rowCount();
+        ui->tSyncs->setRowCount(pos+1);
+        ui->tSyncs->setItem(pos, 0, localFolder);
+        ui->tSyncs->setItem(pos, 1, megaFolder);
+        syncNames.append(QString::fromAscii("MEGA"));
+    }
+
+    updateAddButton();
+}
+
 
 void SettingsDialog::on_bDelete_clicked()
 {

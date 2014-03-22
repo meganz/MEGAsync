@@ -66,6 +66,7 @@ signals:
    void updateCompleted();
    void updateAvailable(bool requested);
    void updateNotFound(bool requested);
+   void installingUpdate(bool requested);
    void updateError();
 
 private slots:
