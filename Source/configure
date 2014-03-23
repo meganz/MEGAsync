@@ -1,0 +1,42 @@
+#!/bin/bash
+
+export CURL=curl
+export CURL_VERSION=7.32.0
+export CURL_EXTRA="--disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp --disable-gopher --disable-sspi"
+export CURL_SOURCE_FILE=curl-$CURL_VERSION.tar.gz
+export CURL_SOURCE_FOLDER=curl-$CURL_VERSION
+export CURL_CONFIGURED=$CURL/$CURL_SOURCE_FOLDER/curl-config
+export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
+
+echo "Checking if native cURL uses c-ares..."
+if curl-config --configure | grep enable-ares > /dev/null;
+then
+	echo "cURL uses c-ares. We will use it!"
+	rm -rf $CURL
+else
+	echo "cURL doesn't use c-ares. We will use our own build"
+	mkdir $CURL
+	
+	if [ ! -f ../../SOURCES/curl-7.32.0.tar.gz ];
+	then
+	    wget -O ../../SOURCES/curl-7.32.0.tar.gz $CURL_DOWNLOAD_URL
+	fi
+	
+	cd $CURL
+	tar --overwrite -xf ../../../SOURCES/curl-7.32.0.tar.gz
+	ln -sf $CURL_SOURCE_FOLDER $CURL
+	cd $CURL_SOURCE_FOLDER || exit 1
+	./configure --enable-ipv6 --disable-manual --enable-shared=no --with-zlib --enable-ares $CURL_EXTRA || exit 1
+	make || exit 1
+	cd ../..
+	mkdir -p `pwd`/curl/curl/include/curl MEGASync/sdk/3rdparty/include/
+	ln -sf `pwd`/curl/curl/include/curl MEGASync/sdk/3rdparty/include/curl
+	mkdir -p `pwd`/curl/curl/lib/.libs/libcurl.a MEGASync/sdk/3rdparty/libs/
+	ln -sf `pwd`/curl/curl/lib/.libs/libcurl.a MEGASync/sdk/3rdparty/libs/libcurl.a
+fi
+
+cd MEGASync/sdk
+sed -i 's/$adns/AsynchDNS/g' configure.ac
+./autogen.sh || exit 1
+./configure || exit 1
+cd ../..

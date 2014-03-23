@@ -153,5 +153,14 @@ unix {
    INCLUDEPATH += $$PWD/include
    INCLUDEPATH += $$PWD/include/mega/posix
    INCLUDEPATH += /usr/include/cryptopp
-   LIBS += -L$$PWD/3rdparty/libs/x64 -lcurl -lsqlite3
+
+   LIBS += -lsqlite3 -lrt
+
+   exists($$PWD/3rdparty/libs/libcurl.a) {
+    INCLUDEPATH += $$PWD/3rdparty/include/curl
+    LIBS += -L$$PWD/3rdparty/libs/ $$PWD/3rdparty/libs/libcurl.a -lz -lssl -lcrypto -lcares
+   }
+   else {
+    LIBS += -lcurl
+   }
 }

@@ -1,0 +1,12 @@
+<services>
+ <service name="download_url">
+   <param name="protocol">http</param>
+   <param name="host">curl.haxx.se</param>
+   <param name="path">download/curl-7.32.0.tar.gz</param>
+ </service>
+ <service name="verify_file">
+   <param name="file">_service:download_url:curl-7.32.0.tar.gz</param>
+   <param name="verifier">sha256</param>
+   <param name="checksum">c979fe2200fdef4219c75087b08b34aa580606a3bf7fc512b2e6b1f79e6a4e7c</param>
+ </service>
+</services>
