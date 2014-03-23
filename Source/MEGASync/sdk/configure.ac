@@ -162,9 +162,9 @@ SAVE_LDFLAGS=$LDFLAGS
 SAVE_CXXFLAGS=$CXXFLAGS
 SAVE_CPPFLAGS=$CPPFLAGS
 
-#libcrypto++
-CRYPTO_LIBS="-lcrypto++"
-AC_MSG_CHECKING(for libcrypto++)
+#libcryptopp
+CRYPTO_LIBS="-lcryptopp"
+AC_MSG_CHECKING(for libcryptopp)
 cryptopp=false
 AC_ARG_WITH(cryptopp,
   [  --with-cryptopp=PATH       base of libcrypto installation],
@@ -177,8 +177,8 @@ AC_ARG_WITH(cryptopp,
     AC_CHECK_HEADERS([cryptopp/cryptlib.h],, [
         AC_MSG_ERROR([cryptopp/cryptlib.h header not found or not usable])
     ])
-    AC_CHECK_LIB(crypto++, [main], [CRYPTO_LIBS="-lcrypto++"],[
-            AC_MSG_ERROR([Could not find libcrypto++])
+    AC_CHECK_LIB(cryptopp, [main], [CRYPTO_LIBS="-lcryptopp"],[
+            AC_MSG_ERROR([Could not find libcryptopp])
     ])
     cryptopp=true
      ;;
@@ -214,8 +214,8 @@ else
      CRYPTO_LDFLAGS="-L$with_cryptopp/lib",
      AC_MSG_ERROR([cryptopp/cryptlib.h header not found or not usable])
      )
-    AC_CHECK_LIB(crypto++, [main], [CRYPTO_LIBS="-lcrypto++"],[
-            AC_MSG_ERROR([Could not find libcrypto++])
+    AC_CHECK_LIB(cryptopp, [main], [CRYPTO_LIBS="-lcryptopp"],[
+            AC_MSG_ERROR([Could not find libcryptopp])
     ])
 fi
     cryptopp=true
@@ -231,15 +231,15 @@ fi
     AC_CHECK_HEADERS([cryptopp/cryptlib.h],, [
         AC_MSG_ERROR([cryptopp/cryptlib.h header not found or not usable])
     ])
-    AC_CHECK_LIB(crypto++, [main], [CRYPTO_LIBS="-lcrypto++"],[
-            AC_MSG_ERROR([Could not find libcrypto++])
+    AC_CHECK_LIB(cryptopp, [main], [CRYPTO_LIBS="-lcryptopp"],[
+            AC_MSG_ERROR([Could not find libcryptopp])
     ])
   ])
 AC_SUBST(CRYPTO_CXXFLAGS)
 AC_SUBST(CRYPTO_CPPFLAGS)
 AC_SUBST(CRYPTO_LDFLAGS)
 AC_SUBST(CRYPTO_LIBS)
-AC_DEFINE(USE_CRYPTOPP, [1], [Define to use libcrypto++])
+AC_DEFINE(USE_CRYPTOPP, [1], [Define to use libcryptopp])
 
 #
 # ** DB layer **

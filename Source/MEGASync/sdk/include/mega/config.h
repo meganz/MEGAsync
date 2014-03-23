@@ -22,6 +22,9 @@
 /* Define to 1 if you have the <FreeImage.h> header file. */
 /* #undef HAVE_FREEIMAGE_H */
 
+/* Define to 1 if you have the <htonl> header file. */
+/* #undef HAVE_HTONL */
+
 /* Define to 1 if you have the `inotify_init' function. */
 #define HAVE_INOTIFY_INIT 1
 
@@ -55,6 +58,9 @@
 
 /* Define to 1 if you have the <sqlite3.h> header file. */
 #define HAVE_SQLITE3_H 1
+
+/* Define to 1 if the system has the type `ssize_t'. */
+#define HAVE_SSIZE_T 1
 
 /* Define to 1 if stdbool.h conforms to C99. */
 #define HAVE_STDBOOL_H 1
@@ -196,6 +202,9 @@
 
 /* Define to `long int' if <sys/types.h> does not define. */
 /* #undef off_t */
+
+/* Define to `int' if <sys/types.h> does not define. */
+/* #undef pid_t */
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 /* #undef size_t */

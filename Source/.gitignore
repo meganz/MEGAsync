@@ -11,4 +11,5 @@ qrc_*
 *.autosave
 MEGASync/MEGAsync
 MEGACrashAnalyzer/MEGACrashAnalyzer
+curl
 

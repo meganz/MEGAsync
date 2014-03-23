@@ -21,7 +21,13 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+win32 {
 TARGET = MEGAsync
+}
+else {
+TARGET = megasync
+}
+
 TEMPLATE = app
 
 debug {

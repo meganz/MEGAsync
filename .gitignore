@@ -34,3 +34,5 @@ MEGAupdater
 # Generated files
 Makefile
 *.swp
+*.tar.gz
+

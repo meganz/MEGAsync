@@ -1,11 +1,11 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync MEGAUpdater MEGACrashAnalyzer
+SUBDIRS += MEGASync
 
 win32 {
-    SUBDIRS += MEGAShellExt
+    SUBDIRS += MEGAShellExt MEGAUpdater MEGACrashAnalyzer
 }
 
-unix:!macx {
-    SUBDIRS += MEGAShellExtNautilus
-}
+#unix:!macx {
+#    SUBDIRS += MEGAShellExtNautilus
+#}
