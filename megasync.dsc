@@ -6,7 +6,7 @@ Version: 1.0
 Maintainer: Javier Serrano <js@mega.co.nz>
 Homepage: https://mega.co.nz/#sync
 Debtransform-Tar: megasync-1.0.tar.gz
-Build-Depends: debhelper, make, g++, libqt4-dev, libcrypto++-dev, libcurl4-openssl-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf
+Build-Depends: debhelper, make, g++, libqt4-dev, libcrypto++-dev, libcurl4-openssl-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf
 Package-List: 
  megasync deb unknown extra.
 Files: 

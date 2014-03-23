@@ -2,7 +2,7 @@ Source: megasync
 Section: Tools
 Priority: normal
 Maintainer: Javier Serrano <js@mega.co.nz>
-Build-Depends: debhelper, make, g++, libqt4-dev, libcrypto++-dev, libcurl4-openssl-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf
+Build-Depends: debhelper, make, g++, libqt4-dev, libcrypto++-dev, libcurl4-openssl-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf
 
 Package: megasync
 Architecture: any
