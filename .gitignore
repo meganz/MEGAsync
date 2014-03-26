@@ -6,6 +6,10 @@ Release_x32
 Release_x64
 MEGAupdater
 
+# executable on Linux
+Source/MEGASync/megasync
+Source/MEGASync/sdk/core
+
 # Compiled Object files
 *.slo
 *.lo
@@ -36,3 +40,6 @@ Makefile
 *.swp
 *.tar.gz
 
+# tmp files
+*.swn
+*.swo
