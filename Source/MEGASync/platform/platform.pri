@@ -17,8 +17,15 @@ win32 {
 }
 
 unix:!macx {
-    SOURCES += $$PWD/linux/LinuxPlatform.cpp
-    HEADERS += $$PWD/linux/LinuxPlatform.h
+    SOURCES += $$PWD/linux/LinuxPlatform.cpp \
+        $$PWD/linux/ExtServer.cpp
+    HEADERS += $$PWD/linux/LinuxPlatform.h \
+        $$PWD/linux/ExtServer.h
+
+    # desktop
+    desktop.path = /usr/share/applications
+    desktop.files =  $$PWD/linux/megasync.desktop
+    INSTALLS += desktop
 }
 
 macx {

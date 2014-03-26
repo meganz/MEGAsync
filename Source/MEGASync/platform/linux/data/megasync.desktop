@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+GenericName=File Synchronizer
+Name=MEGASync
+Comment=Easy automated syncing between your computers and your MEGA cloud drive.
+TryExec=megasync
+Exec=megasync
+Icon=mega
+Terminal=false
+Terminal=false
+Categories=Network;System;
+StartupNotify=false
+
