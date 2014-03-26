@@ -11,15 +11,16 @@
 #include <QProcess>
 
 #include "MegaApplication.h"
+#include "ExtServer.h"
 
 class LinuxPlatform
 {
 
 private:
-    LinuxPlatform() {}
-
+    static ExtServer *ext_server;
+    LinuxPlatform() {};
 public:
-
+    static QString desktop_file;
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);
