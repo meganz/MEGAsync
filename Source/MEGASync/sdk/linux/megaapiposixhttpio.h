@@ -9,10 +9,13 @@ namespace mega {
 class MegaApiCurlHttpIO : public CurlHttpIO
 {
 protected:
+    bool proxyEnabled;
+    string proxy;
     string proxyUsername;
     string proxyPassword;
 
 public:
+    MegaApiCurlHttpIO();
     void setProxy(MegaProxySettings *proxySettings);
     MegaProxySettings *getAutoProxySettings();
     void post(HttpReq* req, const char* data, unsigned len);
