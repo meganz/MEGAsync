@@ -86,12 +86,22 @@ void PosixFileAccess::updatelocalname(string* name)
 
 bool PosixFileAccess::sysread(byte* dst, unsigned len, m_off_t pos)
 {
+#ifndef __ANDROID__
     return pread(fd, (char*)dst, len, pos) == len;
+#else
+    lseek64(fd, pos, SEEK_SET);
+    return read(fd, (char*)dst, len) == len;
+#endif
 }
 
 bool PosixFileAccess::fwrite(const byte* data, unsigned len, m_off_t pos)
 {
+#ifndef __ANDROID__
     return pwrite(fd, data, len, pos) == len;
+#else
+    lseek64(fd, pos, SEEK_SET);
+    return write(fd, data, len) == len;
+#endif
 }
 
 bool PosixFileAccess::fopen(string* f, bool read, bool write)
@@ -107,8 +117,11 @@ bool PosixFileAccess::fopen(string* f, bool read, bool write)
     if ((fd = open(f->c_str(), write ? (read ? O_RDWR : O_WRONLY | O_CREAT | O_TRUNC) : O_RDONLY, 0600)) >= 0)
     {
         struct stat statbuf;
-
+#ifndef __ANDROID__
         if (!fstat(fd, &statbuf))
+#else
+        if (!fstat64(fd, &statbuf))
+#endif
         {
             size = statbuf.st_size;
             mtime = statbuf.st_mtime;
