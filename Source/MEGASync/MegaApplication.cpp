@@ -720,6 +720,7 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
+#ifdef WIN32
     if(!updateThread && preferences->canUpdate())
     {
         updateThread = new QThread();
@@ -742,6 +743,7 @@ void MegaApplication::startUpdateTask()
         updateThread->start();
         emit startUpdaterThread();
     }
+#endif
 }
 
 void MegaApplication::stopUpdateTask()

@@ -75,7 +75,11 @@ const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const int  Preferences::defaultUploadLimitKB        = -1;
+#ifdef WIN32
 const int  Preferences::defaultProxyType            = PROXY_TYPE_AUTO;
+#else
+const int  Preferences::defaultProxyType            = PROXY_TYPE_NONE;
+#endif
 const QString  Preferences::defaultProxyProtocol    = QString::fromAscii("HTTP");
 const QString  Preferences::defaultProxyServer      = QString::fromAscii("127.0.0.1");
 const int Preferences::defaultProxyPort             = 8080;
