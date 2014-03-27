@@ -118,7 +118,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Import to my cloud drive</source>
-        <translation>Увези во мој облак</translation>
+        <translation>Додај во мој облак</translation>
     </message>
     <message>
         <source>OK</source>
@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Нова верзија е достапна.  Превземање... </translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Не може да се превземе системот за фајлови. 
+		Ве молиме обидете се повторно. Ако проблемот сеуште присуствува тогаш контактирајте bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Are you sure you want to sync it?</source>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Погрешна синхронизација на папка.
+Ве молиме не користете симболи како \ / или : во вашите имиња на дадотеки. </translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Селективна синхронизација е активна </translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Уклучи целокупна  синхронизација на профил </translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Уклучување на целокупна синхронизација ќе ги исклучи сите сегашни синхронизации</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Целокупна синхронизација на профил е улучена</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Исклучување на целокупна синхронизација на профил ќе ви дозволи да наместите селективна синхронизација на датотеки </translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Исклучи целокупна синхронизација на профил </translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Не може да се превземе системот за фајлови.
+Ве молиме обидете се повторно. Ако проблемот сеуште присуствува тогаш контактирајте bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

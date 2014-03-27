@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Frissítés elérhető. Letöltés...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Nem lehet hozzájutni a fájlrendszerhez. 
+		Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel a kapcsolatot a bug@mega.co.nz címen</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Biztosan szeretné szinkronizálni?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Érvénytelen mappa vagy szinkronizáció.
+Kérem ügyeljen rá, hogy ne használjon olyan karaktereket, mint \ / vagy : a mappanevekben.</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>A szelektív szinkron aktív</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Teljes fiókszinkron engedélyezése</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>A teljes fiókszinkron engedélyezésével letiltódik minden aktuális szinkron</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>A teljes fiókszinkron aktív</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>A teljes fiókszinkron letiltása lehetővé teszi szelektív mappa szinkron kiépítését</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Teljes fiókszinkron letiltása</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Nem lehet hozzájutni a fájlrendszerhez.
+Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel a kapcsolatot a bug@mega.co.nz címen</translation>
     </message>
 </context>
 <context>

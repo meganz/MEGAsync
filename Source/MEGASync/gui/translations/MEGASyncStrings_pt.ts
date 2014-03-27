@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Atualização disponível. A descarregar...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Não foi possível aceder ao sistema de ficheiros. 
+		Por favor tenta novamente. Se o problema persistir, contacta-nos através de bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Tem a certeza que pretende sincronizá-lo?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Pasta inválida para a sincronização.
+Verifica que não estás a utilizar caracteres  como \/ ou : no nome das tuas pastas.</translation>
     </message>
 </context>
 <context>
@@ -1039,7 +1039,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation>Por favor aguarde...</translation>
+        <translation>Por favor aguarda...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Sincronização seletiva ativada</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Ativar sincronização completa da conta</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Ao ativares a sincronização completa da conta, todas as tuas sincronizações atuais ficarão desativadas</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Sincronização completa da conta ativada</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Ao desativares a sincronização completa da conta, já poderás configurar a sincronização de pastas específicas</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Desativar sincronização completa da conta</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Não foi possível aceder ao sistema de ficheiros.
+Por favor tenta novamente. Se o problema persistir, contacta-nos através de bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

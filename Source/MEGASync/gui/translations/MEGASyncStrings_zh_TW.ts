@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>有可用的更新。下載中...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>無法連結檔案系統。 
+		請再試一次。如問題仍存在，請連繫: bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Are you sure you want to sync it?</source>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>無效的資料夾同步。
+請確認您在命名資料夾時未使用特殊字元如 \ / or :。 </translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>選擇性啟用同步</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>啟用全帳戶同步</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>啟用全帳戶同步將停用您目前的選擇性同步狀態</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>全帳戶同步已啟用</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>停用全帳戶同步後您將可設定選擇性同步</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>停用全帳戶同步</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>無法連結檔案系統。
+請再試一次。如問題仍存在，請連繫: bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

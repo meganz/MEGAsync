@@ -312,17 +312,17 @@ Are you sure?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Din synkronisering &quot;%1&quot; har avaktiverats därför att fjärrmappen inte existerar</translation>
+        <translation>Din synkronisering &quot;%1&quot; har inaktiverats därför att fjärrmappen inte existerar</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Din synkronisering &quot;%1&quot; har avaktiverats därför att fjärrmappen är i papperskorken.</translation>
+        <translation>Din synkronisering &quot;%1&quot; har inaktiverats därför att fjärrmappen är i papperskorken.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Din synkronisering &quot;%1&quot; har avaktiverats därför att den lokala mappen inte existerar</translation>
+        <translation>Din synkronisering &quot;%1&quot; har inaktiverats därför att den lokala mappen inte existerar</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Uppdatering har hittats. Laddar ner ...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Kan ej hitta filsystemet. 
+		Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Are you sure you want to sync it?</source>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Ogiltig synkroniseringsmapp.
+Använd inte tecken som  \ / eller : i namnet på mappen.</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Synkronisering av utvalda mappar</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Aktivera fullständig synkronisering</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Om du aktiverar fullständig synkronisering inaktiveras alla nuvarande synkroniseringar</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Fullständig synkronisering är aktiverad</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Om du inaktiverar fullständig synkronisering kan du välja selektiv synkronisering av utvalda mappar</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Inaktivera fullständig synkronisering</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Kan ej hitta filsystemet.
+Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Diweddaru!  Ati yn lawrlwytho ...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Methu cael y system ffeil. 
+		Ceisiwch eto os gwelwch yn dda. Os yw&apos;r broblem yn parhau, cysylltwch â bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Ydych chi&apos;n siŵr eich bod am i cydamseru?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Ffolder annilys ar gyfer synchronization.
+Gwnewch yn siŵr nad ydych yn defnyddio cymeriadau fel \ / neu: yn eich enwau ffolder.</translation>
     </message>
 </context>
 <context>
@@ -1051,23 +1051,23 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Galluogi cydamseru ystyriaeth lawn</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Bydd Galluogi cydamseru ystyriaeth lawn analluogi eich holl syncs cyfredol</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Cydamseru ystyriaeth lawn gweithredol</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Bydd analluogi cydamseru ystyried yn llawn yn eich galluogi i sefydlu syncing folder dethol</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Analluoga cydamseru ystyriaeth lawn</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Methu cael y system ffeil.
+Ceisiwch eto os gwelwch yn dda. Os yw&apos;r broblem yn parhau, cysylltwch â bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Oppdatering tilgjengelig. Laster ned...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -479,7 +479,7 @@ https://mega.co.nz/#sync</source>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+		Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -1289,7 +1289,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
