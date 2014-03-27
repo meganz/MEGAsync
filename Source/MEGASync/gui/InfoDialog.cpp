@@ -517,6 +517,7 @@ void InfoDialog::on_bSyncFolder_clicked()
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
         QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
         addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
+        addSyncAction->setIconVisibleInMenu(true);
         menu.addSeparator();
 
         QSignalMapper signalMapper;
@@ -524,6 +525,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         {
             QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
             action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
+            action->setIconVisibleInMenu(true);
             signalMapper.setMapping(action, preferences->getLocalFolder(i));
             connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }

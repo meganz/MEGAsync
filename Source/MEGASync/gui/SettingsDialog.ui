@@ -616,13 +616,7 @@ margin-top: 6px;
              <item>
               <widget class="QWidget" name="widget_6" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_15">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
+                <property name="margin">
                  <number>0</number>
                 </property>
                 <item>
@@ -705,6 +699,9 @@ margin-top: 6px;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -904,14 +901,22 @@ margin-top: 6px;
               <italic>true</italic>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">margin-top: 6px;
+padding-left: 20px;
+padding-right: 20px;</string>
+            </property>
             <property name="text">
              <string>Enabling full account sync will disable all your current syncs</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
             <property name="margin">
-             <number>6</number>
+             <number>0</number>
             </property>
            </widget>
           </item>

@@ -62,6 +62,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->eLimit->setValidator(new QDoubleValidator(this));
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
+#ifndef WIN32
+    ui->cAutoUpdate->hide();
+    ui->bUpdate->hide();
+    ui->rProxyAuto->hide();
+#endif
 
     if(!proxyOnly && preferences->logged())
     {
