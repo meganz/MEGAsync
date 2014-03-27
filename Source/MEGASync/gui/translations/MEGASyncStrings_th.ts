@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>การอัปเดตพร้อมใช้งานแล้ว กำลังดาวน์โหลด...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้ 
+		กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Are you sure you want to sync it?</source>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>โฟลเดอร์สำหรับการซิงค์โครไนส์ไม่ถูกต้อง
+กรุณาตรวจสอบว่าคุณไม่ได้ใช้ตัวอักษร เช่น \ / หรือ : ในชื่อโฟลเดอร์ของคุณ</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>ซิงค์จากการเลือกไว้</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>เปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>การเปิดใช้งานซิงค์บัญชีเต็มรูปแบบ จะปิดใช้งานการซิงค์ในปัจจุบันของคุณ</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>ซิงค์บัญชีเต็มรูปแบบกำลังทำงาน</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>การปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ จะช่วยให้คุณสามารถตั้งค่าการซิงค์โฟลเดอร์ที่คุณได้เลือกไว้</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>ปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้
+กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

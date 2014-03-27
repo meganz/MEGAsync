@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Có bản cập nhật mới. Đang tải về...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Không lấy được tệp tin hệ thống. 
+		Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên hệ bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Bạn có chắc muốn đồng bộ nó?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Thư mục không hợp lệ cho việc đồng bộ hóa.
+Xin hãy chắc rằng bạn không sử dụng các ký tự như \ / hoặc : trong tên thư mục.</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Chế độ đồng bộ riêng lẻ được kích hoạt</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Hiệu hóa đồng bộ cho toàn bộ tài khoản</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Việc đồng bộ toàn bộ tài khoản sẽ vô hiệu hóa hết các việc động bộ riêng rẻ đang chạy của bạn</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Chế độ đồng bộ toàn bộ được kích hoạt</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Việc tắt đồng bộ toàn bộ tài khoản sẽ cho phép bạn thiết lập đồng bộ từng thư mục riêng lẻ</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Vô hiệu chế độ đồng bộ toàn tài khoản</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Không lấy được tệp tin hệ thống.
+Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên hệ bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

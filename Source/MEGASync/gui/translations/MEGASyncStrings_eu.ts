@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Eguneraketa eskuragarri. Deskargatzen...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Ezin izan da fitxategi sistema lortu. 
+		Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz -rekin</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Ziur zaude sinkronizatu nahi duzula?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Karpeta ez da sinkronizatzeko baliozkoa.
+Mesedez, zihurtatu \ / edo : motako karaktererik ez dituzula erabiltzen zure karpeten izenetan</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>SInkronizazio hautakorra gaiturik</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Gaitu erabateko sinkronizazioa</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Kontu osoa sinkronizazioa gaituz gero uneko sinkronizazio guztiak desgaituko dira</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Kontu osoko sinkronizazioa gaiturik</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Kontu osoa sinkronizazioa desgaituz gero karpeten sinkronizazio hautakorra egin ahal izango duzu</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Kontu osoko sinkronizazioa desgaitu</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Ezin izan da fitxategi sistema lortu.
+Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz -rekin</translation>
     </message>
 </context>
 <context>

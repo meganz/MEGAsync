@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Güncelleme var. İndiriliyor...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Dosya sistemi alınamıyor. 
+		Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Senkronize etmek istediğinizden emin misiniz?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Senkronizasyon için geçersiz klasör.
+Klasör isimlerinde \ / veya : gibi karakterler kullanmadığınızdan emin olun.</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Seçmeli senkronizasyon aktif</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Tam hesap senkronizasyonunu etkinleştir</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Tam hesap senkronizasyonunu etkinleştirmek mevcut tüm senkronizasyonları devre dışı bırakır</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Tam hesap senkronizasyonunu aktif</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Tam hesap senkronizasyonunun devre dışı bırakılması seçmeli klasör senkronizasyonu ayarlamak için imkan sağlar</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Tam hesap senkronizasyonunu devre dışı bırak</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Dosya sistemi alınamıyor.
+Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</translation>
     </message>
 </context>
 <context>

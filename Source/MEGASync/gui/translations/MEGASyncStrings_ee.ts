@@ -465,7 +465,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Uuendus on saadaval.  Allalaadimine...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -478,8 +478,8 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to get the filesystem. 
 		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Failisüsteemi ei suudetud ligi pääseda. 
+		Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meiega ühendust  e-posti bug@mega.co.nz kaudu</translation>
     </message>
 </context>
 <context>
@@ -655,8 +655,8 @@ Olete kindel, et tahate seda sünkroniseerida?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Sünkroniseerimiseks valiti vigane kaust
+Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1047,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Valikuline sünkroniseering on sees</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Luba kogu sisu sünkroniseering</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Kogu sisu sünkroniseeringu lubamine keelab kõik praegused sünkroniseeringud</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Kogu sisu sünkroniseering on sees</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Kogu sisu sünkroniseerimise keelamine võimaldab sünkroniseerida ainult valitud kauste</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Keela kogu sisu sünkroniseerimine</translation>
     </message>
 </context>
 <context>
@@ -1288,8 +1288,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Failisüsteemi ei suudetud ligi pääseda.
+Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meiega ühendust  e-posti bug@mega.co.nz kaudu</translation>
     </message>
 </context>
 <context>
