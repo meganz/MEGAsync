@@ -32,11 +32,16 @@ bool operator==(FileFingerprint& lhs, FileFingerprint& rhs)
         return false;
     }
 
+#ifndef __ANDROID__
+    //mtime check disabled on Android due to this bug:
+    // https://code.google.com/p/android/issues/detail?id=18624
+
     // mtime differs - cannot be equal
     if (lhs.mtime != rhs.mtime)
     {
         return false;
     }
+#endif
 
     // FileFingerprints not fully available - give it the benefit of the doubt
     if (!lhs.isvalid || !rhs.isvalid)
