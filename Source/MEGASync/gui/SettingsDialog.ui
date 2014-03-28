@@ -451,7 +451,7 @@ font-style: italic;
    <item row="2" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1021,6 +1021,12 @@ font-style: italic;
           </item>
           <item>
            <widget class="QWidget" name="widget_8" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_14">
              <property name="spacing">
               <number>0</number>
@@ -1040,7 +1046,7 @@ font-style: italic;
              <item>
               <widget class="QPushButton" name="bSyncChange">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>

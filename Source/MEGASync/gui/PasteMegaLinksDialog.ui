@@ -47,8 +47,8 @@ height: 16px;
 
 QPushButton
 {
-    min-height: 24px;
-	height: 24px;
+    min-height: 14px;
+	height: 14px;
 }
 </string>
   </property>
@@ -87,6 +87,12 @@ QPushButton
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>26</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
