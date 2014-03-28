@@ -50,6 +50,11 @@ QPushButton
     min-height: 24px;
 	height: 24px;
 }
+
+#lName
+{
+font-size: 12px;
+}
 </string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0,0">
