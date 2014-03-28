@@ -17,6 +17,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui->rTypicalSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->rAdvancedSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
 
+    ui->sPages->setCurrentWidget(ui->pSetup);
     ui->bBack->setVisible(false);
     this->app = app;
     megaApi = app->getMegaApi();

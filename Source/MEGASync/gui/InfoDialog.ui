@@ -32,6 +32,11 @@ background: white;
 border: 2px solid rgb(100, 100, 100);
 }
 
+QWidget
+{
+font-size: 11px;
+}
+
 #wHeader
 {
 margin-left: 2px;
@@ -64,11 +69,15 @@ background: rgb(178, 178, 178);
 color:  rgb(255, 255, 255);
 border-left: 2px solid rgb(100, 100, 100);
 border-right: 2px solid rgb(100, 100, 100);
+font-size: 14px;
+font-weight: bold;
 }
 
 #lSyncUpdated
 {
 color:  rgb(166, 166, 166);
+font-size: 16px;
+font-weight: bold;
 }
 
 #wBottom
@@ -95,11 +104,13 @@ color: rgb(102, 102, 102);
 #lDownloads
 {
 color: rgb(102, 102, 102);
+font-weight: bold;
 }
 
 #lUploads
 {
 color: rgb(102, 102, 102);
+font-weight: bold;
 }
 
 #bUploads
@@ -115,6 +126,36 @@ color: rgb(102, 102, 102);
 #wDescriptions
 {
 	border-top: 2px solid rgb(241, 240, 240);
+}
+
+#lTotalUsed
+{
+font-size: 12px;
+}
+
+#lPercentageUsed
+{
+font-size: 12px;
+}
+
+#bSyncFolder
+{
+font-size: 12px;
+}
+
+#bOfficialWeb
+{
+font-size: 12px;
+}
+
+#lRemainingTimeD
+{
+font-weight: bold;
+}
+
+#lRemainingTimeU
+{
+font-weight: bold;
 }
 </string>
   </property>
@@ -324,14 +365,6 @@ border: none;</string>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="lSyncUpdated">
-         <property name="font">
-          <font>
-           <family>MS Shell Dlg 2</family>
-           <pointsize>12</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
          <property name="text">
           <string>MEGAsync is up to date</string>
          </property>
@@ -465,12 +498,6 @@ border: none;</string>
              </property>
              <item>
               <widget class="QLabel" name="lUploads">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(102, 102, 102);</string>
                </property>
@@ -509,12 +536,6 @@ border: none;</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
                <property name="styleSheet">
                 <string notr="true">margin-right: 8px;
 color: rgb(102, 102, 102);</string>
@@ -544,12 +565,6 @@ color: rgb(102, 102, 102);</string>
              </property>
              <item>
               <widget class="QLabel" name="lDownloads">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(102, 102, 102);</string>
                </property>
@@ -588,13 +603,6 @@ color: rgb(102, 102, 102);</string>
                  <height>16777215</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <pointsize>8</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
                <property name="styleSheet">
                 <string notr="true">margin-right: 8px;
 color: rgb(102, 102, 102);</string>
@@ -630,13 +638,6 @@ color: rgb(102, 102, 102);</string>
        <width>16777215</width>
        <height>30</height>
       </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
      </property>
      <property name="text">
       <string>RECENTLY UPDATED</string>
@@ -768,13 +769,6 @@ color: rgb(102, 102, 102);</string>
              <height>16777215</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
            <property name="text">
             <string>Usage: Data temporarily unavailable</string>
            </property>
@@ -782,13 +776,6 @@ color: rgb(102, 102, 102);</string>
          </item>
          <item>
           <widget class="QLabel" name="lPercentageUsed">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
            <property name="text">
             <string/>
            </property>
@@ -847,11 +834,6 @@ color: rgb(102, 102, 102);</string>
           <height>45</height>
          </size>
         </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
         <property name="styleSheet">
          <string notr="true">border: none;</string>
         </property>
@@ -899,11 +881,6 @@ color: rgb(102, 102, 102);</string>
           <width>16777215</width>
           <height>45</height>
          </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
         </property>
         <property name="styleSheet">
          <string notr="true">border: none;</string>

@@ -9,15 +9,39 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>460</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Folder Selection</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+
+QCheckBox::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QRadioButton::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QScrollBar:horizontal {
+height: 16px;
+}
+
+QPushButton
+{
+    min-height: 14px;
+	height: 14px;
+}
+</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -30,8 +54,7 @@
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <weight>75</weight>
-       <bold>true</bold>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">
@@ -70,6 +93,12 @@
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>26</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="margin">
        <number>0</number>

@@ -7,11 +7,39 @@
     <x>0</x>
     <y>0</y>
     <width>386</width>
-    <height>306</height>
+    <height>424</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Error report</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+
+QCheckBox::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QRadioButton::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QScrollBar:horizontal {
+height: 16px;
+}
+
+QPushButton
+{
+    min-height: 14px;
+	height: 14px;
+}
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -49,12 +77,30 @@
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>26</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="margin">
        <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>16</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -62,6 +108,18 @@
       </item>
       <item>
        <widget class="QPushButton" name="bOK">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>16</height>
+         </size>
+        </property>
         <property name="text">
          <string>Send report</string>
         </property>
