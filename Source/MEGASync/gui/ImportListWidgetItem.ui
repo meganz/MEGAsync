@@ -26,9 +26,36 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+
+QCheckBox::indicator {
+     height: 16px;
+     width: 16px;
+ }
+
+QRadioButton::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QScrollBar:horizontal {
+height: 16px;
+}
+
+QPushButton
+{
+    min-height: 24px;
+	height: 24px;
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0,0">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>9</number>
    </property>
@@ -43,6 +70,12 @@
    </property>
    <item>
     <widget class="QCheckBox" name="cSelected">
+     <property name="maximumSize">
+      <size>
+       <width>18</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -92,8 +125,7 @@
      </property>
      <property name="font">
       <font>
-       <weight>75</weight>
-       <bold>true</bold>
+       <pointsize>-1</pointsize>
       </font>
      </property>
      <property name="text">

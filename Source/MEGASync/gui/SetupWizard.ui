@@ -13,26 +13,46 @@
   <property name="minimumSize">
    <size>
     <width>550</width>
-    <height>380</height>
+    <height>386</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>550</width>
-    <height>400</height>
+    <height>386</height>
    </size>
-  </property>
-  <property name="font">
-   <font>
-    <weight>50</weight>
-    <bold>false</bold>
-   </font>
   </property>
   <property name="windowTitle">
    <string>Setup Wizard - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#sPages
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+
+QCheckBox::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QRadioButton::indicator {
+     width: 16px;
+     height: 16px;
+ }
+
+QScrollBar:horizontal {
+height: 16px;
+}
+
+QPushButton
+{
+    min-height: 14px;
+	height: 14px;
+}
+
+
+#sPages
 {
 	background-image: url(://images/background.png);
 }
@@ -56,15 +76,32 @@
 
 #lTypicalDesc, #lAdvancedDesc
 {
-	font-size:10pt; 
+	font-size:13px; 
 	color:#666666;
+}
+
+#label, #label_2, #label_6, #lFinalMegaFolderIntro, #bFinalLocalFolder, #bFinalMegaFolder
+{
+	font-size:13px; 
 }
 
 #lTypicalHeader, #lAdvancedHeader
 {
-	font-size:16pt; 
+	font-size:21px; 
 	font-weight:600; 
 	color:#333333;
+}
+
+#lProgress
+{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#lSetupType, #lAdvancedSetup, #lWelcome, #lLogin, #lCreateAccount
+{
+font-size: 16px;
+font-weight: bold;
 }
 
 </string>
@@ -79,7 +116,7 @@
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -157,6 +194,9 @@
      </widget>
      <widget class="QWidget" name="pNewAccount">
       <layout class="QVBoxLayout" name="verticalLayout_8">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <property name="leftMargin">
         <number>100</number>
        </property>
@@ -165,6 +205,9 @@
        </property>
        <property name="rightMargin">
         <number>100</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="lCreateAccountHeader">
@@ -183,7 +226,7 @@
         <widget class="QLabel" name="lCreateAccount">
          <property name="font">
           <font>
-           <pointsize>12</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -201,6 +244,21 @@
          <layout class="QFormLayout" name="formLayout_3">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
+          <property name="topMargin">
+           <number>9</number>
+          </property>
+          <property name="rightMargin">
+           <number>9</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -254,7 +312,7 @@
            </widget>
           </item>
           <item row="4" column="1">
-           <layout class="QHBoxLayout" name="hAcceptTerms">
+           <layout class="QHBoxLayout" name="hAcceptTerms" stretch="0,1">
             <property name="spacing">
              <number>5</number>
             </property>
@@ -273,23 +331,13 @@
               <property name="textFormat">
                <enum>Qt::RichText</enum>
               </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
               <property name="openExternalLinks">
                <bool>true</bool>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="hsTerms">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -342,7 +390,7 @@
         <widget class="QLabel" name="lLogin">
          <property name="font">
           <font>
-           <pointsize>12</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -414,9 +462,7 @@
         <widget class="QLabel" name="lVerify">
          <property name="font">
           <font>
-           <pointsize>8</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
+           <pointsize>-1</pointsize>
           </font>
          </property>
          <property name="text">
@@ -451,13 +497,6 @@
           </property>
           <item>
            <widget class="QLabel" name="lProgress">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
             <property name="text">
              <string>Logging in ...</string>
             </property>
@@ -514,7 +553,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>14</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -552,9 +591,7 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <pointsize>-1</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -619,7 +656,7 @@
                </property>
                <property name="font">
                 <font>
-                 <pointsize>10</pointsize>
+                 <pointsize>-1</pointsize>
                 </font>
                </property>
                <property name="styleSheet">
@@ -667,9 +704,7 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <pointsize>-1</pointsize>
              </font>
             </property>
             <property name="styleSheet">
@@ -727,7 +762,7 @@
                </property>
                <property name="font">
                 <font>
-                 <pointsize>16</pointsize>
+                 <pointsize>-1</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -788,6 +823,9 @@
        <property name="rightMargin">
         <number>50</number>
        </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
        <item>
         <widget class="QLabel" name="lAdvancedSetup">
          <property name="minimumSize">
@@ -798,7 +836,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>14</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -815,9 +853,7 @@
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
+           <pointsize>-1</pointsize>
           </font>
          </property>
          <property name="text">
@@ -828,11 +864,23 @@
        <item>
         <widget class="QWidget" name="wAdvancedConfigForm" native="true">
          <layout class="QFormLayout" name="formLayout_2">
+          <property name="horizontalSpacing">
+           <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>6</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
+          <property name="topMargin">
+           <number>9</number>
+          </property>
           <property name="rightMargin">
            <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>9</number>
           </property>
           <item row="0" column="0">
            <widget class="QLabel" name="lLocalFolder">
@@ -871,6 +919,9 @@
           </item>
           <item row="2" column="1">
            <layout class="QHBoxLayout" name="hLocalFolder">
+            <property name="spacing">
+             <number>6</number>
+            </property>
             <item>
              <widget class="QLineEdit" name="eMegaFolder">
               <property name="enabled">
@@ -947,7 +998,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>14</pointsize>
+           <pointsize>-1</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1062,6 +1113,12 @@
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="margin">
+       <number>9</number>
+      </property>
       <item>
        <spacer name="hsButtons">
         <property name="orientation">

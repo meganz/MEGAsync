@@ -49,8 +49,14 @@ padding-left: 1px;
    <property name="leftMargin">
     <number>15</number>
    </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
    <property name="rightMargin">
     <number>17</number>
+   </property>
+   <property name="bottomMargin">
+    <number>9</number>
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
