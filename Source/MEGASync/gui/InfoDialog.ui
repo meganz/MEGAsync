@@ -69,7 +69,7 @@ background: rgb(178, 178, 178);
 color:  rgb(255, 255, 255);
 border-left: 2px solid rgb(100, 100, 100);
 border-right: 2px solid rgb(100, 100, 100);
-font-size: 14px;
+font-size: 12px;
 font-weight: bold;
 }
 
