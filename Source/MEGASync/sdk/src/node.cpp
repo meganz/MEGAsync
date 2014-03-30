@@ -52,7 +52,7 @@ Node::Node(MegaClient* cclient, node_vector* dp, handle h, handle ph,
 
     size = s;
     owner = u;
-    
+
     copystring(&fileattrstring, fa);
 
     clienttimestamp = tm;
