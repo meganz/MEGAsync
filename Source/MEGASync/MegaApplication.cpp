@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1012;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12b");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12d");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1077,31 +1077,10 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         LOG("Information dialog available");
-        if(!infoDialog->isVisible())
-        {
-            LOG("Information dialog not visible, showing it");
-
-            //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
-            QRect screenGeometry = QApplication::desktop()->availableGeometry();
-            infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
-
-            //Show the dialog
-            infoDialog->showMinimized();
-            infoDialog->setWindowState(Qt::WindowActive);
-            infoDialog->showNormal();
-            infoDialog->raise();
-            infoDialog->activateWindow();
-            infoDialog->setFocus();
-        }
-        else if(!infoDialog->hasFocus())
-        {
-            LOG("Information dialog visible and without focus, hiding it");
-            infoDialog->hide();
-        }
-        else
-        {
-            LOG("Information dialog visible with focus. Nothing to do here");
-        }
+        //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
+        QRect screenGeometry = QApplication::desktop()->availableGeometry();
+        infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+        infoDialog->show();
     }
 }
 

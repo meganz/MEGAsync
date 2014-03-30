@@ -21,7 +21,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->setupUi(this);
 
     //Set window properties
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 
     //Initialize fields
     this->app = app;
@@ -408,7 +408,6 @@ void InfoDialog::updateDialog()
 void InfoDialog::addSync()
 {
     BindFolderDialog *dialog = new BindFolderDialog(app);
-    this->hide();
     int result = dialog->exec();
     if(result != QDialog::Accepted)
         return;
@@ -481,13 +480,11 @@ void InfoDialog::cancelCurrentDownload()
 
 void InfoDialog::on_bSettings_clicked()
 {
-    this->hide();
 	app->openSettings();
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()
 {
-    this->hide();
     QString helpUrl = QString::fromAscii("https://mega.co.nz/");
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
@@ -536,7 +533,6 @@ void InfoDialog::on_bSyncFolder_clicked()
 
 void InfoDialog::openFolder(QString path)
 {
-    this->hide();
 	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
 
@@ -545,15 +541,6 @@ void InfoDialog::updateRecentFiles()
 	ui->wRecent1->updateWidget();
 	ui->wRecent2->updateWidget();
     ui->wRecent3->updateWidget();
-}
-
-void InfoDialog::focusOutEvent(QFocusEvent *)
-{
-    QPoint p = mapFromGlobal(QCursor::pos());
-    if(p.x()<0 || p.y()<0 || p.x()>this->width() || p.y()>this->height())
-        this->hide();
-    else
-        this->setFocus();
 }
 
 void InfoDialog::on_bPause_clicked()

@@ -86,7 +86,6 @@ protected:
 
 protected:
 	void updateRecentFiles();
-    virtual void focusOutEvent(QFocusEvent * event);
 
 	QDateTime lastPopupUpdate;
     QTimer *timer;
