@@ -142,6 +142,17 @@ void WinFileAccess::updatelocalname(string* name)
     }
 }
 
+// true if attribute set should not be considered for syncing
+// (SYSTEM files are only synced if they are not HIDDEN)
+bool WinFileAccess::skipattributes(DWORD dwAttributes)
+{
+    return (dwAttributes & (FILE_ATTRIBUTE_REPARSE_POINT
+                        | FILE_ATTRIBUTE_TEMPORARY
+                        | FILE_ATTRIBUTE_OFFLINE))
+        || (dwAttributes & (FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_HIDDEN))
+            == (FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_HIDDEN);
+}
+
 // emulates Linux open-directory-as-file semantics
 // FIXME #1: How to open files and directories with a single atomic
 // CreateFile() operation without first looking at the attributes?
@@ -171,7 +182,7 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
         // ignore symlinks - they would otherwise be treated as moves
         // also, ignore some other obscure filesystem object categories
-        if (!added && (fad.dwFileAttributes & SKIPATTRIBUTES))
+        if (!added && skipattributes(fad.dwFileAttributes))
         {
             name->resize(name->size() - 1);
             retry = false;
@@ -756,7 +767,7 @@ bool WinDirAccess::dnext(string* name, nodetype_t* type)
     for (; ;)
     {
         if (ffdvalid
-                && !(ffd.dwFileAttributes & WinFileAccess::SKIPATTRIBUTES)
+                && !WinFileAccess::skipattributes(ffd.dwFileAttributes)
                 && (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                         || (*ffd.cFileName != '.')
                         || (ffd.cFileName[1] && ((ffd.cFileName[1] != '.') || ffd.cFileName[2]))))
