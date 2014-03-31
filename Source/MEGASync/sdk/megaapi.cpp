@@ -314,7 +314,7 @@ MegaNode *MegaNode::copy()
 
 MegaNode::~MegaNode()
 {
-    delete name;
+    delete [] name;
 }
 
 MegaNode *MegaNode::fromNode(Node *node)

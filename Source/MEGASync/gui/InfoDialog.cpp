@@ -129,6 +129,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     if(type == MegaTransfer::TYPE_DOWNLOAD)
     {
         wTransfer = ui->wTransfer1;
+        if(transfer1) delete transfer1;
         transfer1 = transfer->copy();
         if(!downloadStartTime)
         {
@@ -140,6 +141,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     else
     {
         wTransfer = ui->wTransfer2;
+        if(transfer2) delete transfer2;
         transfer2 = transfer->copy();
         if(!uploadStartTime)
         {
