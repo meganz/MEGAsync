@@ -12,6 +12,8 @@
     #define LOG(X)
 #endif
 
+extern int enableLogs;
+
 class Utilities
 {
 public:

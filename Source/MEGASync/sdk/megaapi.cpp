@@ -2398,6 +2398,18 @@ void MegaApi::transfer_complete(Transfer* tr)
 void MegaApi::syncupdate_state(Sync *sync, syncstate_t s)
 {
     LOG("syncupdate_state");
+    sync_list::iterator it = client->syncs.begin();
+    while(it != client->syncs.end())
+    {
+        Sync *sy = (*it);
+        if((sy != sync) && (sy->state == SYNC_INITIALSCAN))
+            break;
+        it++;
+    }
+
+    if(it == client->syncs.end())
+        enableLogs++;
+
     fireOnSyncStateChanged(this);
 }
 
@@ -4711,12 +4723,6 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    if(waiting) LOG("STATE: SDK waiting = true");
-    else LOG("STATE: SDK waiting = false");
-
-    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
-    else LOG("STATE: SDK waitingForRequest = false");
-
     return waiting || waitingRequest;
 }
 
