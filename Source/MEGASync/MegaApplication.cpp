@@ -183,6 +183,8 @@ void MegaApplication::initialize()
 {
     if(megaApi != NULL) return;
 
+    paused = false;
+    indexing = false;
     setQuitOnLastWindowClosed(false);
 
     //Register metatypes to use them in signals/slots
@@ -253,10 +255,10 @@ void MegaApplication::initialize()
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
+    initialMenu = new QMenu();
     QString language = preferences->language();
     changeLanguage(language);
 
-    initialMenu = new QMenu();
     changeProxyAction = new QAction(tr("Settings"), this);
     connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
     initialExitAction = new QAction(tr("Exit"), this);
@@ -646,6 +648,8 @@ void MegaApplication::cleanAll()
 
     // remove shared memory key
     singleInstanceChecker.detach();
+    trayIcon->deleteLater();
+    //QFontDatabase::removeAllApplicationFonts();
 }
 
 void MegaApplication::onDupplicateLink(QString, QString name, long long handle)
