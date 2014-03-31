@@ -23,7 +23,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/ExportProcessor.h \
     $$PWD/Utilities.h
 
-#debug {
+debug {
     DEFINES += SHOW_LOGS
 #    DEFINES += LOG_TO_FILE
-#}
+}
