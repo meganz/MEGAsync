@@ -24,6 +24,7 @@
 
 #include "mega.h"
 #include "mega/gfx/qt.h"
+#include "control/Utilities.h"
 
 namespace mega {
 
@@ -361,10 +362,13 @@ QImage GfxProcQT::createThumbnail(QString imagePath)
 {
     int w, h, orientation;
     QImageReader *image = readbitmapQT(w, h, orientation, imagePath);
-    if(!image) return QImage();
+    if(!image)
+    {
+        return QImage();
+    }
 
     QImage result = GfxProcQT::resizebitmapQT(image, orientation, w, h, 120, 0);
-    delete image;
+    delete image;    
     return result;
 }
 

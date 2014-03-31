@@ -23,6 +23,7 @@
 #include "mega/megaclient.h"
 #include "mega/transferslot.h"
 #include "mega/megaapp.h"
+#include "control/Utilities.h"
 
 namespace mega {
 Transfer::Transfer(MegaClient* cclient, direction_t ctype)
@@ -109,6 +110,7 @@ void Transfer::complete()
 
             if (isvalid && !(fingerprint == *(FileFingerprint*)this))
             {
+                LOG(QString::fromAscii("UNLINK3 - %1 - %2 - %3 - %4 - %5 - %6").arg(fingerprint.isvalid).arg(isvalid).arg(fingerprint.mtime).arg(this->mtime).arg(size).arg(this->size));
                 client->fsaccess->unlinklocal(&localfilename);
                 return failed(API_EWRITE);
             }
@@ -218,6 +220,7 @@ void Transfer::complete()
 
         if (!tmplocalname.size() && !files.size())
         {
+            LOG("UNLINK2");
             client->fsaccess->unlinklocal(&localfilename);
         }
     }
