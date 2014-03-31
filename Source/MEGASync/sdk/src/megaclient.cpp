@@ -376,7 +376,7 @@ MegaClient::MegaClient(MegaApp* a, Waiter* w, HttpIO* h, FileSystemAccess* f, Db
 {
     sctable = NULL;
     syncscanstate = false;
-    totalscans = 0;
+
     init();
 
     a->client = this;
@@ -925,36 +925,25 @@ void MegaClient::exec()
 
         // halt all syncing while the local filesystem is pending a lock-blocked operation
         // FIXME: indicate by callback
-
-        cout << "syncdownretry = " << syncdownretry << endl;
-        cout << "syncadding = " << syncadding << endl;
         if (!syncdownretry && !syncadding)
         {
-            cout << "syncs.size = " << syncs.size() << endl;
-            cout << "syncactivity = " << syncactivity << endl;
             // process active syncs, stop doing so while transient local fs ops are pending
             if (syncs.size() || syncactivity)
             {
                 bool syncscanning = false;
                 unsigned totalpending = 0;
 
-                cout << "syncfslockretry = " << syncfslockretry << endl;
                 for (int q = syncfslockretry ? DirNotify::RETRY : DirNotify::DIREVENTS; q >= DirNotify::DIREVENTS; q--)
                 {
                     syncfslockretry = false;
 
-                    cout << "syncfsopsfailed = " << syncfsopsfailed << " q = " << q << endl;
                     if (!syncfsopsfailed)
                     {
-                        int numsync = 0;
                         // not retrying local operations: process pending notifyqs
                         for (it = syncs.begin(); it != syncs.end();)
                         {
                             Sync* sync = *it++;
-                            numsync++;
 
-                            cout << "sync " << numsync << " state " << sync->state << " notifyeventssize: " << sync->dirnotify->notifyq[DirNotify::DIREVENTS].size() << " notifyretrysize: " <<
-                                    sync->dirnotify->notifyq[DirNotify::RETRY].size() << endl;
                             if (sync->state == SYNC_CANCELED)
                             {
                                 delete sync;
@@ -970,13 +959,10 @@ void MegaClient::exec()
                                         && q == DirNotify::DIREVENTS
                                         && Waiter::ds - sync->dirnotify->notifyq[DirNotify::DIREVENTS].front().timestamp < 5)
                                     {
-                                        cout << "syncfslockretry" << endl;
                                         syncfslockretry = true;
                                         continue;
                                     }
 
-                                    totalscans++;
-                                    cout << "TOTAL SCANNED FILES/FOLDERS " << totalscans << endl;
                                     sync->procscanq(q);
                                     syncops = true;
                                 }
@@ -987,7 +973,6 @@ void MegaClient::exec()
                                 }
                                 else if (sync->state == SYNC_INITIALSCAN && q == DirNotify::DIREVENTS)
                                 {
-                                    cout << "CHANGE STATE" << endl;
                                     sync->changestate(SYNC_ACTIVE);
                                 }
 
@@ -999,7 +984,6 @@ void MegaClient::exec()
                                 if (q == DirNotify::DIREVENTS)
                                 {
                                     totalpending += sync->dirnotify->notifyq[DirNotify::DIREVENTS].size();
-                                    cout << "totalpending: " << totalpending << endl;
                                 }
                             }
                         }
