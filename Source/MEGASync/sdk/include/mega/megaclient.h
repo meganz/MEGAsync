@@ -197,6 +197,8 @@ public:
     bool toggledebug();
 
 private:
+    long totalscans;
+
     // API request queue double buffering:
     // reqs[r] is open for adding commands
     // reqs[r^1] is being processed on the API server

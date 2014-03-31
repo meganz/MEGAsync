@@ -30,9 +30,9 @@ TARGET = megasync
 
 TEMPLATE = app
 
-debug {
+#debug {
     CONFIG += console
-}
+#}
 
 include(gui/gui.pri)
 include(sdk/sdk.pri)
