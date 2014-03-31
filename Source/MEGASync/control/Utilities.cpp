@@ -1,5 +1,3 @@
-int enableLogs = 0;
-
 #include "Utilities.h"
 #include "control/Preferences.h"
 

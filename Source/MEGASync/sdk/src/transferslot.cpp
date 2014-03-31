@@ -27,7 +27,6 @@
 #include "mega/base64.h"
 #include "mega/megaapp.h"
 #include "mega/utils.h"
-#include "control/Utilities.h"
 
 namespace mega {
 TransferSlot::TransferSlot(Transfer* ctransfer)
@@ -86,7 +85,6 @@ TransferSlot::~TransferSlot()
 
         if ((transfer->type == GET) && transfer->localfilename.size())
         {
-            LOG("UNLINK1");
             transfer->client->fsaccess->unlinklocal(&transfer->localfilename);
         }
     }

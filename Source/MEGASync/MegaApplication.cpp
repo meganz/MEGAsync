@@ -17,10 +17,8 @@
  #include <signal.h>
 #endif
 
-#define LOG(x)
-
 const int MegaApplication::VERSION_CODE = 1012;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12g");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.12e");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1613,7 +1611,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
                 LOG(QString::fromAscii("Local upload: %1").arg(localPath));
             }
 
-            LOG("ADDING RECENT FILE");
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
         }
 	}
