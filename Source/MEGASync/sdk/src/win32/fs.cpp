@@ -20,7 +20,6 @@
  */
 
 #include "mega.h"
-#include "control/Utilities.h"
 
 namespace mega {
 WinFileAccess::WinFileAccess()
@@ -168,9 +167,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     
     name->append("", 1);
 
-    if(enableLogs)
-        LOG(QString::fromAscii("OPEN FILE: %1").arg(QString::fromWCharArray((LPCWSTR)name->data())));
-
     if (write)
     {
         type = FILENODE;
@@ -218,8 +214,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     }
 
     mtime = FileTime_to_POSIX(&fad.ftLastWriteTime);
-    if(enableLogs)
-        LOG(QString::fromAscii("Timestamp: %1").arg(mtime));
 
     if (read && (fsidvalid = !!GetFileInformationByHandle(hFile, &bhfi)))
     {
@@ -431,19 +425,6 @@ bool WinFileSystemAccess::renamelocal(string* oldname, string* newname, bool rep
     oldname->append("", 1);
     newname->append("", 1);
     bool r = !!MoveFileExW((LPCWSTR)oldname->data(), (LPCWSTR)newname->data(), replace ? MOVEFILE_REPLACE_EXISTING : 0);
-    LOG(QString::fromAscii("renamelocal: %1 -> %2 Result: %3").arg(QString::fromWCharArray((LPCWSTR)oldname->data())).arg(QString::fromWCharArray((LPCWSTR)newname->data())).arg(r));
-
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    if (!GetFileAttributesExW((LPCWSTR)newname->data(), GetFileExInfoStandard, (LPVOID)&fad))
-    {
-        LOG("ERROR READING MTIME!");
-    }
-    else
-    {
-        time_t mtime2 = FileTime_to_POSIX(&fad.ftLastWriteTime);
-        LOG(QString::fromAscii("Final timestamp: %1").arg(mtime2));
-    }
-
     newname->resize(newname->size() - 1);
     oldname->resize(oldname->size() - 1);
 
@@ -455,25 +436,11 @@ bool WinFileSystemAccess::renamelocal(string* oldname, string* newname, bool rep
     return r;
 }
 
-bool WinFileSystemAccess::copylocal(string* oldname, string* newname, time_t desiredTime)
+bool WinFileSystemAccess::copylocal(string* oldname, string* newname, time_t)
 {
     oldname->append("", 1);
     newname->append("", 1);
     bool r = !!CopyFileW((LPCWSTR)oldname->data(), (LPCWSTR)newname->data(), FALSE);
-    LOG(QString::fromAscii("copylocal: %1 -> %2 Result: %3   desiredmtime: %4").arg(QString::fromWCharArray((LPCWSTR)oldname->data())).arg(QString::fromWCharArray((LPCWSTR)newname->data())).arg(r).arg(desiredTime));
-
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    if (!GetFileAttributesExW((LPCWSTR)newname->data(), GetFileExInfoStandard, (LPVOID)&fad))
-    {
-        LOG("ERROR READING MTIME!");
-
-    }
-    else
-    {
-        time_t mtime2 = FileTime_to_POSIX(&fad.ftLastWriteTime);
-        LOG(QString::fromAscii("Final timestamp: %1").arg(mtime2));
-    }
-
     newname->resize(newname->size() - 1);
     oldname->resize(oldname->size() - 1);
 
@@ -488,7 +455,6 @@ bool WinFileSystemAccess::copylocal(string* oldname, string* newname, time_t des
 bool WinFileSystemAccess::rmdirlocal(string* name)
 {
     name->append("", 1);
-    LOG(QString::fromAscii("RMDIR: %1").arg(QString::fromWCharArray((LPCWSTR)name->data())));
     int r = !!RemoveDirectoryW((LPCWSTR)name->data());
     name->resize(name->size() - 1);
 
@@ -503,7 +469,6 @@ bool WinFileSystemAccess::rmdirlocal(string* name)
 bool WinFileSystemAccess::unlinklocal(string* name)
 {
     name->append("", 1);
-    LOG(QString::fromAscii("UNLINK: %1").arg(QString::fromWCharArray((LPCWSTR)name->data())));
     int r = !!DeleteFileW((LPCWSTR)name->data());
     name->resize(name->size() - 1);
 
@@ -547,12 +512,10 @@ bool WinFileSystemAccess::setmtimelocal(string* name, time_t mtime)
 
     name->append("", 1);
     hFile = CreateFileW((LPCWSTR)name->data(), FILE_WRITE_ATTRIBUTES, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
-    LOG(QString::fromAscii("SETTING MTIME FOR %1 -> %2").arg(QString::fromWCharArray((LPCWSTR)name->data())).arg(mtime));
+    name->resize(name->size() - 1);
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        LOG("INVALID HANDLE!");
-        name->resize(name->size() - 1);
         return false;
     }
 
@@ -563,21 +526,8 @@ bool WinFileSystemAccess::setmtimelocal(string* name, time_t mtime)
 
     int r = !!SetFileTime(hFile, NULL, NULL, &lwt);
 
-    LOG(QString::fromAscii("RESULT: %1").arg(r));
-
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
-    {
-        LOG("ERROR READING MTIME!");
-
-    }
-    else
-    {
-        time_t mtime2 = FileTime_to_POSIX(&fad.ftLastWriteTime);
-        LOG(QString::fromAscii("Final timestamp: %1").arg(mtime2));
-    }
-    name->resize(name->size() - 1);
     CloseHandle(hFile);
+
     return r;
 }
 
