@@ -1507,7 +1507,10 @@ bool MegaClient::dispatch(direction_t d)
                             break;
                         }
 
-                        nextit->second->pos = ChunkedHash::chunkceil(nextit->second->pos);
+                        if (nextit->second->size)
+                        {
+                            nextit->second->pos = ChunkedHash::chunkceil(nextit->second->pos);
+                        }
                     }
 
                     for (file_list::iterator it = nextit->second->files.begin();

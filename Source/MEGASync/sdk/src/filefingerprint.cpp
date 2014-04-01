@@ -37,7 +37,7 @@ bool operator==(FileFingerprint& lhs, FileFingerprint& rhs)
     // https://code.google.com/p/android/issues/detail?id=18624
 
     // mtime differs - cannot be equal
-    if (lhs.mtime != rhs.mtime)
+    if (abs(lhs.mtime-rhs.mtime) > 2)
     {
         return false;
     }
