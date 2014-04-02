@@ -4512,7 +4512,7 @@ void MegaApi::sendPendingRequests()
             Node *node = client->nodebyhandle(request->getNodeHandle());
             if(!node || (node->type==FILENODE) || !localPath)
             {
-                LOG("Invalid arguments starting sync");
+                cout << "Invalid arguments starting sync" << endl;
                 e = API_EARGS;
                 break;
             }
@@ -4521,11 +4521,16 @@ void MegaApi::sendPendingRequests()
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
             LOG("addSync");
+            cout << "Sending sync to the SDK: " << utf8name << endl;
             e = client->addsync(&localname, "Rubbish", NULL, node, -1);
             if(!e)
             {
                 client->restag = nextTag;
                 fireOnRequestFinish(this, request, MegaError(API_OK));
+            }
+            else
+            {
+                cout << "Addsync ERROR " << e << endl;
             }
             break;
         }

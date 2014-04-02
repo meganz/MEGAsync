@@ -517,6 +517,8 @@ bool SettingsDialog::saveSettings()
         //Syncs
         if(syncsChanged)
         {
+            cout << "Commiting sync changes" << endl;
+
             //Check for removed folders
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
@@ -567,6 +569,7 @@ bool SettingsDialog::saveSettings()
                 if(j == preferences->getNumSyncedFolders())
                 {
                     LOG(QString::fromAscii("ADDING SYNC: %1 - %2").arg(localFolderPath).arg(megaFolderPath));
+                    cout << "Adding sync - " << localFolderPath.toStdString() << " - " << megaFolderPath.toStdString() << " - " << syncName.toStdString() << endl;
                     preferences->addSyncedFolder(localFolderPath,
                                                  megaFolderPath,
                                                  node->getHandle(),
@@ -811,10 +814,13 @@ void SettingsDialog::on_bAdd_clicked()
         return;
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
+    cout << "Dialog accepted. Local path: " << localFolderPath.toStdString() << endl;
+
     long long handle = dialog->getMegaFolder();
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
     {
+        cout << "Invalid MEGA folder" << endl;
         delete node;
         return;
     }
@@ -824,10 +830,12 @@ void SettingsDialog::on_bAdd_clicked()
    const char *nPath = megaApi->getNodePath(node);
    if(!nPath)
    {
+       cout << "Invalid MEGA folder path" << endl;
        delete node;
        return;
    }
 
+   cout << "MEGA path: " << nPath << endl;
    megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(nPath) + QString::fromAscii("  "));
    int pos = ui->tSyncs->rowCount();
    ui->tSyncs->setRowCount(pos+1);
@@ -837,6 +845,7 @@ void SettingsDialog::on_bAdd_clicked()
    delete node;
    delete nPath;
 
+   cout << "New sync added to the list." << endl;
    syncsChanged = true;
    stateChanged();
    updateAddButton();
