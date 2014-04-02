@@ -4,6 +4,11 @@
 #
 #-------------------------------------------------
 
+#Compiler options for mac OS
+macx {
+QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
+}
+
 debug_and_release {
     CONFIG -= debug_and_release
     CONFIG += debug_and_release
