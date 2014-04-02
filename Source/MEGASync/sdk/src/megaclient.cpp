@@ -5540,7 +5540,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
     // cannot sync files, rubbish bins or inboxes
     if ((remotenode->type != FOLDERNODE) && (remotenode->type != ROOTNODE))
     {
-        cout << "Invalid type of MEGA node" << endl;
         return API_EACCESS;
     }
 
@@ -5556,7 +5555,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
             do {
                 if (n == remotenode)
                 {
-                    cout << "Error: sync already exists below" << endl;
                     return API_EEXIST;
                 }
             } while ((n = n->parent));
@@ -5573,7 +5571,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
                   || ((*it)->state == SYNC_ACTIVE))
                  && (n == (*it)->localroot.node))
             {
-                cout << "Error: sync already exists above" << endl;
                 return API_EEXIST;
             }
         }
@@ -5592,19 +5589,16 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
 
     if (fa->fopen(rootpath, true, false))
     {
-        cout << "FOPEN OK" << endl;
         if (fa->type == FOLDERNODE)
         {
             Sync* sync = new Sync(this, rootpath, debris, localdebris, remotenode, tag);
 
             if (sync->scan(rootpath, fa))
             {
-                cout << "SCAN OK" << endl;
                 e = API_OK;
             }
             else
             {
-                cout << "SCAN error" << endl;
                 delete sync;
                 e = API_ENOENT;
             }
@@ -5618,7 +5612,6 @@ error MegaClient::addsync(string* rootpath, const char* debris, string* localdeb
     }
     else
     {
-        cout << "FOPEN error" << endl;
         e = fa->retry ? API_ETEMPUNAVAIL : API_ENOENT;
     }
 
