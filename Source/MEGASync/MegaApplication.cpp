@@ -18,7 +18,7 @@
 #endif
 
 const int MegaApplication::VERSION_CODE = 1013;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.13b");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.13");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -225,7 +225,6 @@ void MegaApplication::initialize()
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
-    preferences->setCrashed(false);
     if(preferences->isCrashed())
     {
         preferences->setCrashed(false);
