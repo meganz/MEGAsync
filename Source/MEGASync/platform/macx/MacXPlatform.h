@@ -10,6 +10,8 @@
 #include <QDir>
 #include <QProcess>
 
+#include "MegaApplication.h"
+
 class MacXPlatform
 {
 

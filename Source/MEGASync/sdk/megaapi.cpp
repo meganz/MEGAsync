@@ -29,6 +29,12 @@ DEALINGS IN THE SOFTWARE.
 #define PREFER_STDARG
 #include "megaapi.h"
 
+#include "strings.h"
+
+#ifdef __APPLE__
+    #include "xlocale.h"
+#endif
+
 #ifdef USE_QT
     #include "platform/Platform.h"
     #include "control/Utilities.h"
@@ -2171,8 +2177,10 @@ int SearchTreeProcessor::processNode(Node* node)
 	if(!node) return 1;
 	if(!search) return 0;
 #ifndef _WIN32
+#ifndef __APPLE__
     if(strcasestr(node->displayname(), search)!=NULL) results.push_back(node);
-//TODO: Implement this for Windows
+//TODO: Implement this for Windows and MacOS
+#endif
 #endif
 	return 1;
 }
