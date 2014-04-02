@@ -1310,10 +1310,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_ADD_SYNC:
     {
         LOG("Sync added!");
-        cout << "Add sync operation finished" << endl;
-        if(e->getErrorCode() != MegaError::API_OK)
-            cout << "Error code: " << e->getErrorCode() << endl;
-
         for(int i=preferences->getNumSyncedFolders()-1; i>=0; i--)
         {
             if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
@@ -1326,30 +1322,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     MegaNode *rubbishNode = megaApi->getRubbishNode();
                     if(!node)
                     {
-                        cout << "Error: Node not found" << endl;
                         showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                             "because the remote folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(parentNode && (parentNode->getHandle() == rubbishNode->getHandle()))
                     {
-                        cout << "Error: Node deleted" << endl;
                         showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                             "because the remote folder is in the rubbish bin")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(!QFileInfo(localFolder).isDir())
                     {
-                        cout << "Error: Local path not found" << endl;
-
                         showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                             "because the local folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else
                     {
-                        cout << "Unknown error " << e->QgetErrorString().toStdString() << endl;
-
                         showErrorMessage(e->QgetErrorString());
                     }
 
@@ -1358,15 +1348,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete rubbishNode;
 
                     LOG("Sync error! Removed");
-                    cout << "Sync removed" << endl;
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
                     if(settingsDialog)
                         settingsDialog->loadSettings();
-                }
-                else
-                {
-                    cout << "Sync successfully added" << endl;
                 }
                 break;
             }

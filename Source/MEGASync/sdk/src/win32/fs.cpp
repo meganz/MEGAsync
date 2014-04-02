@@ -175,8 +175,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
     {
         if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad))
         {
-            wprintf(L"Opening: %s\n", name->data());
-            cout << "Error getting file attributes" << GetLastError() << endl;
             retry = WinFileSystemAccess::istransient(GetLastError());
             name->resize(name->size() - added - 1);
             return false;
@@ -186,9 +184,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
         // also, ignore some other obscure filesystem object categories
         if (!added && skipattributes(fad.dwFileAttributes))
         {
-            wprintf(L"Opening: %s\n", name->data());
-            cout << "Invalid attributes: " << fad.dwFileAttributes << endl;
-
             name->resize(name->size() - 1);
             retry = false;
             return false;
@@ -214,7 +209,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
     if (hFile == INVALID_HANDLE_VALUE)
     {
-        cout << "Error opening file/folder " << GetLastError() << endl;
         retry = WinFileSystemAccess::istransient(GetLastError());
         return false;
     }
@@ -234,7 +228,6 @@ bool WinFileAccess::fopen(string* name, bool read, bool write)
 
         if (hFind == INVALID_HANDLE_VALUE)
         {
-            cout << "Error FindFirstFile " << GetLastError() << endl;
             retry = WinFileSystemAccess::istransient(GetLastError());
             return false;
         }
