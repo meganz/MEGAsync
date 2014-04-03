@@ -21,6 +21,8 @@
 
 #include "meganet.h"
 
+#include "control/Utilities.h"
+
 namespace mega {
 WinHttpIO::WinHttpIO()
 {
@@ -123,11 +125,11 @@ VOID CALLBACK WinHttpIO::asynccallback(HINTERNET hInternet, DWORD_PTR dwContext,
                 {
                     if (req->binary)
                     {
-                        cout << "[received " << req->bufpos << " bytes of raw data]" << endl;
+                        LOG(QString::fromAscii("[received %1 bytes of raw data]").arg(req->bufpos));
                     }
                     else
                     {
-                        cout << "Received: " << req->in.c_str() << endl;
+                        LOG(QString::fromAscii("Received: %1").arg(QString::fromUtf8(req->in.c_str())));
                     }
                 }
 
@@ -245,15 +247,15 @@ void WinHttpIO::post(HttpReq* req, const char* data, unsigned len)
 {
     if (debug)
     {
-        cout << "POST target URL: " << req->posturl << endl;
+        LOG(QString::fromAscii("POST target URL: %1").arg(QString::fromUtf8(req->posturl.c_str())));
 
         if (req->binary)
         {
-            cout << "[sending " << req->out->size() << " bytes of raw data]" << endl;
+            LOG(QString::fromAscii("[sending %1 bytes of raw data]").arg(req->out->size()));
         }
         else
         {
-            cout << "Sending: " << *req->out << endl;
+            LOG(QString::fromAscii("Sending: %1").arg(QString::fromUtf8(req->out->c_str())));
         }
     }
 
