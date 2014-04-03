@@ -13,12 +13,14 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
+#define LOG(x)
+
 #ifdef Q_OS_UNIX
  #include <signal.h>
 #endif
 
 const int MegaApplication::VERSION_CODE = 1013;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.13");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.13d");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
