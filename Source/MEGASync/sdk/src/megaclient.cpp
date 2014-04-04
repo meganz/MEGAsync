@@ -1009,6 +1009,9 @@ void MegaClient::exec()
                                 && !syncdown(&(*it)->localroot, &localpath, true)
                                 && success)
                             {
+                                localpath.append("", 1);
+                                wprintf(L"Unable to syncdown: %s\n", localpath.data());
+                                localpath.resize(localpath.size()-1);
                                 success = false;
                             }
                         }
@@ -1018,6 +1021,7 @@ void MegaClient::exec()
                     {
                         if (!syncfsopsfailed)
                         {
+                            cout << "syncfsopsfailed" << endl;
                             syncfsopsfailed = true;
                             app->syncupdate_local_lockretry(true);
                         }
@@ -1029,6 +1033,7 @@ void MegaClient::exec()
                     {
                         if (syncfsopsfailed)
                         {
+                            cout << "file unlocked" << endl;
                             syncfsopsfailed = false;
                             app->syncupdate_local_lockretry(false);
                         }
@@ -4835,6 +4840,9 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
                 }
                 else if (success && fsaccess->transient_error)
                 {
+                    localpath->append("", 1);
+                    wprintf(L"syncdown failed deleting file/folder: %s\n", localpath->data());
+                    localpath->resize(localpath->size()-1);
                     success = false;
                     lit++;
                 }
@@ -4888,6 +4896,12 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
                         }
                         else if (success && fsaccess->transient_error)
                         {
+                            localpath->append("", 1);
+                            curpath.append("", 1);
+                            wprintf(L"syncdown failed moving file/folder: %s -> %s\n", localpath->data());
+                            curpath.resize(localpath->size()-1);
+                            localpath->resize(localpath->size()-1);
+
                             // schedule retry
                             success = false;
                         }
@@ -4933,6 +4947,10 @@ bool MegaClient::syncdown(LocalNode* l, string* localpath, bool rubbish)
                         }
                         else if (success && fsaccess->transient_error)
                         {
+                            localpath->append("", 1);
+                            wprintf(L"syncdown failed creating folder: %s\n", localpath->data());
+                            localpath->resize(localpath->size()-1);
+
                             success = false;
                         }
                     }

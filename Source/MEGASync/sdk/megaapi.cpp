@@ -2512,8 +2512,8 @@ void MegaApi::syncupdate_local_lockretry(bool waiting)
 {
     LOG("syncupdate_local_lockretry");
     this->waiting = waiting;
-    if(waiting) LOG("THE SYNC IS WAITING");
-    else LOG("THE SYNC IS NOT WAITING");
+    if(waiting) cout << "Waiting for a local lock" << endl;
+    else cout << "local lock gone" << endl;
 
     this->fireOnSyncStateChanged(this);
 }
@@ -4711,11 +4711,8 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    if(waiting) LOG("STATE: SDK waiting = true");
-    else LOG("STATE: SDK waiting = false");
-
-    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
-    else LOG("STATE: SDK waitingForRequest = false");
+    if(waiting) cout << "Waiting for the SDK" << endl;
+    if(waitingRequest) cout << "Waiting for a response from the MEGA server" << endl;
 
     return waiting || waitingRequest;
 }
