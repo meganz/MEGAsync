@@ -52,6 +52,9 @@ public:
     // all users
     user_map users;
 
+    // Cached email to be read while client is logged in
+    string current_email;
+
     // process API requests and HTTP I/O
     void exec();
 
@@ -328,7 +331,7 @@ public:
     bool statecurrent;
 
     // record type indicator for sctable
-    enum { CACHEDSCSN, CACHEDNODE, CACHEDUSER } sctablerectype;
+    enum { CACHEDSCSN, CACHEDNODE, CACHEDUSER, CACHEDLOCALNODE } sctablerectype;
 
     // initialize/update state cache referenced sctable
     void initsc();

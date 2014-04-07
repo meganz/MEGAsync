@@ -36,6 +36,21 @@ public:
     // current state
     syncstate_t state;
 
+    // deletion queue
+    list<int32_t> deleteq;
+
+    // insertion/update queue
+    list<LocalNode*> insertq;
+
+    // Adds an entry to the delete queue - removes it from insertq
+    void addToDeleteQueue(LocalNode* toDelete);
+
+    // Adds an entry to the insert queue - removes it from deleteq
+    void addToInsertQueue( LocalNode* toInsert );
+
+    // Caches all synchronized LocalNode
+    void cachenodes();
+
     // change state, signal to application
     void changestate(syncstate_t);
 
@@ -74,11 +89,18 @@ public:
     // permanent lock on the debris/tmp folder
     FileAccess* tmpfa;
 
+    // state cache table
+    DbTable* statecachetable;
+
     // move file or folder to localdebris
     bool movetolocaldebris(string* localpath);
 
     Sync(MegaClient*, string*, const char*, string*, Node*, int = 0);
     ~Sync();
+
+protected :
+    bool loadFromCache();
+
 };
 } // namespace
 

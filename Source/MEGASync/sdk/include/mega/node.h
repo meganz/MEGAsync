@@ -182,12 +182,18 @@ struct MEGA_API Node : public NodeCore, Cachable, FileFingerprint
     ~Node();
 };
 
-struct MEGA_API LocalNode : public File
+struct MEGA_API LocalNode : public File, Cachable
 {
     class Sync * sync;
 
     // parent linkage
     LocalNode* parent;
+
+    // cache full path
+    string fullpathcache;
+
+    // stored to rebuild tree after serialization => this must not be a pointer to parent->dbid
+    int32_t parent_dbid;
 
     // children by name
     localnode_map children;
@@ -256,6 +262,9 @@ struct MEGA_API LocalNode : public File
     void setnameparent(LocalNode*, string*);
 
     void init(Sync*, nodetype_t, LocalNode*, string*, string*);
+
+    virtual bool serialize(string*);
+    static LocalNode* unserialize( Sync* sync, string* sData, LocalNode* parent = NULL );
 
     ~LocalNode();
 };
