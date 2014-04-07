@@ -2253,9 +2253,10 @@ void MegaApi::transfer_prepare(Transfer *t)
     LOG("transfer_prepare");
 	if (t->type == GET)
 	{
+        LOG("Download");
         transfer->setNodeHandle(t->files.front()->h);
         if((!t->localfilename.size()) || (!t->files.front()->syncxfer))
-        {
+        {            
             if(!t->localfilename.size())
                 t->localfilename = t->files.front()->localname;
 
@@ -2263,10 +2264,21 @@ void MegaApi::transfer_prepare(Transfer *t)
             fsAccess->name2local(&suffix);
             t->localfilename.append(suffix);
         }
+
+        t->localfilename.append("", 1);
+        LOG(QString::fromUtf8("Download tmp target: %1").arg(QString::fromWCharArray((wchar_t *)t->localfilename.data())));
+        t->localfilename.resize(t->localfilename.size()-1);
 	}
 
     string path;
+    LOG("localpath");
+    t->files.front()->localname.append("", 1);
+    LOG(QString::fromWCharArray((wchar_t *)t->files.front()->localname.data()));
+    t->files.front()->localname.resize(t->files.front()->localname.size()-1);
+
     fsAccess->local2path(&(t->files.front()->localname), &path);
+    LOG(QString::fromUtf8("Path: %1").arg(QString::fromUtf8(path.c_str())));
+    LOG(QString::fromUtf8("Size: %1").arg(t->size));
     transfer->setPath(path.c_str());
     transfer->setTotalBytes(t->size);
 }
@@ -2381,7 +2393,7 @@ void MegaApi::transfer_complete(Transfer* tr)
 
 	string tmpPath;
 	fsAccess->local2path(&tr->localfilename, &tmpPath);
-    //cout << "transfer_complete: TMP: " << tmpPath << "   FINAL: " << transfer->getFileName() << endl;
+    LOG(QString::fromAscii("transfer_complete: TMP: %1    FINAL: %2").arg(QString::fromUtf8(tmpPath.c_str())).arg(QString::fromUtf8(transfer->getFileName())));
 
 #ifdef WIN32
     if((!tr->files.front()->syncxfer) && (tr->type==GET))
