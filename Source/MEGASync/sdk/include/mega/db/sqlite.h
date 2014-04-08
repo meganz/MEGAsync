@@ -29,7 +29,6 @@ namespace mega {
 class MEGA_API SqliteDbAccess : public DbAccess
 {
     string dbpath;
-    sqlite3* db;
 
 public:
     DbTable* open(FileSystemAccess*, string*);
