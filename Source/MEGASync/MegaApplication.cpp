@@ -1489,9 +1489,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if(lastStartedUpload == transfer->getStartTime())
             lastStartedUpload = 0;
         preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
+        if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
     }
-
-    if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
