@@ -92,7 +92,6 @@ void ExtServer::onClientData()
         if (out) {
             qint64 len = client->write(out);
             client->write("\n");
-            cout << "Written: " << len << endl;
         }
     }
 }
