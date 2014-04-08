@@ -1110,7 +1110,10 @@ bool LocalNode::serialize( string* sr ) {
                     fullpathLength
     ;
 
-    getlocalpath( &fullpath );
+    //Force the usage of long file names
+    //When the database is loaded, this path is passed to setnameparent()
+    //that is not compatible with short file names
+    getlocalpath( &fullpath, true );
 
     switch( ts ) {
         case TREESTATE_NONE     : sTs = 0; break;
@@ -1259,10 +1262,11 @@ LocalNode* LocalNode::unserialize( Sync* sync, string* sData, LocalNode* parent 
     uFullPath = ptr;
     ptr += uFullPathLength;
 
-    fullPathStr     = string( uFullPath );
-    localNameStr    = string( uLocalName );
-    gFingerPrint    = string( uSerializedFingerprint );
-    nameStr         = string( uName );
+    //Using assign for compatibility with UTF16 strings
+    fullPathStr.assign(uFullPath, uFullPathLength-1);
+    localNameStr.assign(uLocalName,  uLocalNameLength-1);
+    gFingerPrint.assign(uSerializedFingerprint, uFingerPrintLength-1);
+    nameStr.assign(uName, uNameLength-1);
 
     lnode = new LocalNode();
     lnode->init( sync, uType, parent, NULL, &fullPathStr );

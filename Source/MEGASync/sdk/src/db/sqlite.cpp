@@ -29,26 +29,16 @@ SqliteDbAccess::SqliteDbAccess(string* path)
     {
         dbpath = *path;
     }
-
-    db = NULL;
 }
 
-SqliteDbAccess::~SqliteDbAccess()
-{
-    if (db)
-    {
-        sqlite3_close(db);
-    }
-}
+SqliteDbAccess::~SqliteDbAccess() {}
 
 DbTable* SqliteDbAccess::open(FileSystemAccess* fsaccess, string* name)
 {
-    if (db)
-    {
-        sqlite3_close(db);
-        db = NULL;
-    }
-
+    //Each table will use its own database object and its own file
+    //The previous implementation was closing the first database
+    //when the second one was opened.
+    sqlite3* db;
     string dbdir = dbpath + "megaclient_statecache_" + *name + ".db";
 
     int rc;
@@ -85,6 +75,7 @@ SqliteDbTable::~SqliteDbTable()
         sqlite3_finalize(pStmt);
     }
     abort();
+    sqlite3_close(db);
 }
 
 // set cursor to first record

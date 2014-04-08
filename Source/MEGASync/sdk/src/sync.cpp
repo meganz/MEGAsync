@@ -23,6 +23,7 @@
 #include "mega/megaapp.h"
 #include "mega/transfer.h"
 #include "mega/megaclient.h"
+#include "mega/base64.h"
 
 namespace mega {
 // new Syncs are automatically inserted into the session's syncs list
@@ -65,9 +66,23 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris,
     localroot.init(this, FOLDERNODE, NULL, crootpath, crootpath);
     localroot.setnode(remotenode);
 
+    //client->current_email isn't valid until loggedin is called
+    //It's not called if the MEGA filesystem is loaded from the local storage
+    //so I call it here
+    client->loggedin();
+
     // state cache table
-    dbname = client->current_email + "_" + *crootpath;
-    client->fsaccess->name2local( &dbname );
+    // I use currentmail_localid_remoteid instead of using the local path
+    // because this name is used by SQLite to create a file and paths contain
+    // non valid characters for file names.
+    char remote_id[12];
+    Base64::btoa((byte *)&remotenode->nodehandle, MegaClient::NODEHANDLE, remote_id);
+    char local_id[12];
+    Base64::btoa((byte *)&localroot.fsid, MegaClient::NODEHANDLE, local_id);
+    dbname = client->current_email + "_" + local_id + "_" + remote_id;
+
+    //dbaccess doesn't use local names, it uses UTF8 (see megaclient.cpp:3628)
+    //client->fsaccess->name2local( &dbname );
     statecachetable = client->dbaccess->open( client->fsaccess, &dbname );
 
     sync_it = client->syncs.insert(client->syncs.end(), this);
@@ -121,6 +136,9 @@ bool Sync::loadFromCache() {
         // Restores parent relationship between nodes
         for( map<int32_t, LocalNode*>::iterator it = tempMap.begin(); it != tempMap.end(); ++it ) {
             LocalNode* cur = it->second;
+            //I clear localname to force newnode = true in setnameparent
+            //otherwise, setnameparent could trigger node moves
+            cur->localname.clear();
             if( cur->parent_dbid != 0 ) {
                 map<int32_t, LocalNode*>::iterator pit = tempMap.find(cur->parent_dbid);
                 if( pit != tempMap.end() ) {
@@ -425,9 +443,12 @@ LocalNode* Sync::checkpath(LocalNode* l, string* localpath, string* localname)
         // Tries to load local nodes from cache
         if( SYNC_INITIALSCAN == state ) {
             LocalNode* tmpL = NULL;
+
+            //Fixed extraction of file names (compatible with UTF16)
+            int lastpart = client->fsaccess->lastpartlocal(localname ? localpath : &tmppath);
             string fname = string( localname ? *localpath : tmppath,
-                                   client->fsaccess->lastpartlocal(localname ? localpath : &tmppath) +1,
-                                   string::npos );
+                                   lastpart,
+                                   (localname ? *localpath : tmppath).size()-lastpart );
 
             if( parent ) {
                 tmpL = parent->childbyname( &fname );
