@@ -1172,6 +1172,11 @@ void MegaClient::exec()
                             if ((*it)->state == SYNC_ACTIVE)
                             {
                                 syncup(&(*it)->localroot, &nds);
+
+                                //LocalNode->node could change in syncup
+                                //At least, this is required to save Localnode <-> Node
+                                //associations in the first execution.
+                                (*it)->cachenodes();
                             }
                         }
 
@@ -1905,6 +1910,7 @@ void MegaClient::finalizesc(bool complete)
     if (complete)
     {
         sctable->commit();
+        Base64::atob(scsn, (byte*)&cachedscsn, sizeof cachedscsn);
     }
     else
     {
@@ -2569,9 +2575,15 @@ void MegaClient::notifypurge(void)
     int i, t;
     string localpath;
 
-    if (nodenotify.size() || usernotify.size())
+    handle tscsn = cachedscsn;
+    if(*scsn) Base64::atob(scsn, (byte*)&tscsn, sizeof tscsn);
+    if (nodenotify.size() || usernotify.size() || (cachedscsn != tscsn))
     {
         updatesc();
+
+        //LocalNode <-> Node associations could be changed.
+        for (sync_list::iterator it = syncs.begin(); it != syncs.end(); it++)
+            (*it)->cachenodes();
     }
 
     if ((t = nodenotify.size()))
