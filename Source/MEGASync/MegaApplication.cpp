@@ -1633,8 +1633,11 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    //Don't reload the filesystem here because it's unsafe
+    //and the most probable cause for this callback is a false positive.
+    //Simply set the crashed flag to force a filesystem reload in the next execution.
     preferences->setCrashed(true);
-    megaApi->fetchNodes();
+    //megaApi->fetchNodes();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *)

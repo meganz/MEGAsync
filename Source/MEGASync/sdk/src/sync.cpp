@@ -75,10 +75,15 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris,
     // I use currentmail_localid_remoteid instead of using the local path
     // because this name is used by SQLite to create a file and paths contain
     // non valid characters for file names.
+    char local_id[12];
+    FileAccess *fas = client->fsaccess->newfileaccess();
+    fas->fopen(crootpath, true, false);
+    Base64::btoa((byte *)&fas->fsid, MegaClient::NODEHANDLE, local_id);
+    delete fas;
+
     char remote_id[12];
     Base64::btoa((byte *)&remotenode->nodehandle, MegaClient::NODEHANDLE, remote_id);
-    char local_id[12];
-    Base64::btoa((byte *)&localroot.fsid, MegaClient::NODEHANDLE, local_id);
+
     dbname = client->current_email + "_" + local_id + "_" + remote_id;
 
     //dbaccess doesn't use local names, it uses UTF8 (see megaclient.cpp:3628)
@@ -180,7 +185,7 @@ void Sync::addToInsertQueue( LocalNode* toInsert ) {
 }
 
 void Sync::cachenodes() {
-    if( statecachetable && ( deleteq.size() || insertq.size() ) ) {
+    if( statecachetable && (SYNC_ACTIVE == state) && ( deleteq.size() || insertq.size() ) ) {
 
         statecachetable->begin();
 
@@ -742,9 +747,7 @@ void Sync::procscanq(int q)
     }
     else if (!dirnotify->notifyq[!q].size())
     {
-        if( SYNC_ACTIVE == state ) {
-            cachenodes();
-        }
+        cachenodes();
         scanseqno++;    // all queues empty: new scan sweep begins
     }
 
