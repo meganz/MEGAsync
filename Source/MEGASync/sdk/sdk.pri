@@ -37,9 +37,9 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
 win32 {
 SOURCES += $$PWD/sdk/src/win32/net.cpp  \
     $$PWD/sdk/src/win32/fs.cpp  \
-    $$PWD/sdk/src/win32/winwaiter.cpp  \
-    $$PWD/sdk/win32/megaapiwait.cpp \
-    $$PWD/sdk/win32/megaapiwinhttpio.cpp
+    $$PWD/sdk/src/win32/waiter.cpp  \
+    $$PWD/win32/megaapiwait.cpp \
+    $$PWD/win32/megaapiwinhttpio.cpp
 }
 
 unix:!mac {
@@ -101,7 +101,6 @@ win32 {
     SOURCES += $$PWD/sqlite3.c
 }
 
-
 unix:!macx {
     HEADERS  += $$PWD/sdk/include/mega/posix/meganet.h  \
             $$PWD/sdk/include/mega/posix/megasys.h  \
@@ -109,13 +108,12 @@ unix:!macx {
             $$PWD/sdk/include/mega/posix/megawaiter.h \
             $$PWD/linux/megaapiwait.h  \
             $$PWD/include/mega/config.h
-
-    INCLUDEPATH += $$PWD/sdk/include
 }
 
 DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
 LIBS += -lcryptopp
 INCLUDEPATH += $$PWD/include
+INCLUDEPATH += $$PWD/sdk/include
 
 !release {
     DEFINES += SQLITE_DEBUG
