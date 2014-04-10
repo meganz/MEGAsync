@@ -141,20 +141,35 @@ bool Sync::loadFromCache() {
         // Restores parent relationship between nodes
         for( map<int32_t, LocalNode*>::iterator it = tempMap.begin(); it != tempMap.end(); ++it ) {
             LocalNode* cur = it->second;
-            //I clear localname to force newnode = true in setnameparent
-            //otherwise, setnameparent could trigger node moves
-            cur->localname.clear();
-            if( cur->parent_dbid != 0 ) {
+            LocalNode* pNode = NULL;
+
+            if(cur->parent_dbid)
+            {
                 map<int32_t, LocalNode*>::iterator pit = tempMap.find(cur->parent_dbid);
-                if( pit != tempMap.end() ) {
-                    LocalNode* pNode = pit->second;
-                    if( pNode != cur ) {
-                        cur->setnameparent( pNode, &cur->fullpathcache );
-                    }
-                }
-            } else {
-                cur->setnameparent( &localroot, &cur->fullpathcache );
+                if((pit != tempMap.end()) && (pit->second != cur))
+                    pNode = pit->second;
             }
+            else pNode = &localroot;
+
+            if(pNode) //Adding nodes without a parent breaks filesystem notifications
+            {
+                Node *node = cur->node;
+                int32_t pdbid = cur->parent_dbid;
+                treestate_t ts = cur->ts;
+                handle fsid = cur->fsid;
+                m_off_t size = cur->size;
+
+                //I clear localname to force newnode = true in setnameparent
+                //otherwise, setnameparent could trigger node moves
+                cur->localname.clear();
+                cur->init(this, cur->type, pNode, NULL, &cur->fullpathcache);
+                cur->parent_dbid = pdbid;
+                cur->size = size;
+                cur->setfsid(fsid);
+                cur->setnode(node);
+                cur->treestate(ts);
+            }
+
             cur->setnotseen(1);
         }
 
