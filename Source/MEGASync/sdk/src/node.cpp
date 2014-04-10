@@ -792,7 +792,6 @@ void LocalNode::init(Sync* csync, nodetype_t ctype, LocalNode* cparent, string* 
     syncxfer    = true;
     newnode     = NULL;
     parent_dbid = 0;
-    fullpathcache = ( cfullpath ? *cfullpath : "" );
 
     ts = TREESTATE_NONE;
     dts = TREESTATE_NONE;
@@ -1100,20 +1099,13 @@ bool LocalNode::serialize( string* sr ) {
 
     handle dummynode = 0;
     string sFingerPrint;
-    string fullpath;
 
     unsigned short  sFingerPrintLength,
                     sTs
     ;
     unsigned int    localNameLength,
-                    nameLength,
-                    fullpathLength
+                    nameLength
     ;
-
-    //Force the usage of long file names
-    //When the database is loaded, this path is passed to setnameparent()
-    //that is not compatible with short file names
-    getlocalpath( &fullpath, true );
 
     switch( ts ) {
         case TREESTATE_NONE     : sTs = 0; break;
@@ -1149,10 +1141,6 @@ bool LocalNode::serialize( string* sr ) {
     sr->append( (char*)&nameLength, sizeof(nameLength) );
     sr->append( name.c_str(), nameLength );
 
-    fullpathLength = fullpath.size() + 1;
-    sr->append( (char*)&fullpathLength, sizeof(fullpathLength) );
-    sr->append( fullpath.c_str(), fullpathLength );
-
     return true;
 }
 
@@ -1171,13 +1159,11 @@ LocalNode* LocalNode::unserialize( Sync* sync, string* sData) {
     const char* uLocalName;
     const char* uSerializedFingerprint;
     const char* uName;
-    const char* uFullPath;
 
     string gFingerPrint;
 
     unsigned int    uLocalNameLength,
-                    uNameLength,
-                    uFullPathLength
+                    uNameLength
     ;
 
     // +4 => at least 1 byte for fingerprint, name, fullpath and localName
@@ -1244,16 +1230,7 @@ LocalNode* LocalNode::unserialize( Sync* sync, string* sData) {
     uName = ptr;
     ptr += uNameLength;
 
-    uFullPathLength = MemAccess::get<unsigned int>(ptr);
-    ptr += sizeof(uFullPathLength);
-    if( ptr + uFullPathLength > end ) {
-        return NULL;
-    }
-    uFullPath = ptr;
-    ptr += uFullPathLength;
-
     //Using assign for compatibility with UTF16 strings
-    lnode->fullpathcache.assign(uFullPath, uFullPathLength-1);
     lnode->localname.assign(uLocalName,  uLocalNameLength-1);
 
     if( uNameLength > 1 ) {

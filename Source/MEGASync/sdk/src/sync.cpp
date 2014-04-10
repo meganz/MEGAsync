@@ -72,7 +72,7 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris,
     client->loggedin();
 
     // state cache table
-    // I use currentmail_localid_remoteid instead of using the local path
+    // I use currentmail_localid+remoteid instead of using the local path
     // because this name is used by SQLite to create a file and paths contain
     // non valid characters for file names.
     char local_id[12];
@@ -84,7 +84,7 @@ Sync::Sync(MegaClient* cclient, string* crootpath, const char* cdebris,
     char remote_id[12];
     Base64::btoa((byte *)&remotenode->nodehandle, MegaClient::NODEHANDLE, remote_id);
 
-    dbname = client->current_email + "_" + local_id + "_" + remote_id;
+    dbname = client->current_email + "_" + local_id + remote_id;
 
     //dbaccess doesn't use local names, it uses UTF8 (see megaclient.cpp:3628)
     //client->fsaccess->name2local( &dbname );
@@ -159,10 +159,16 @@ bool Sync::loadFromCache() {
                 handle fsid = cur->fsid;
                 m_off_t size = cur->size;
 
-                //I clear localname to force newnode = true in setnameparent
+                string tmppath;
+                pNode->getlocalpath(&tmppath, true);
+                tmppath.append(client->fsaccess->localseparator);
+                tmppath.append(cur->localname);
+
+                //Clear localname to force newnode = true in setnameparent
                 //otherwise, setnameparent could trigger node moves
                 cur->localname.clear();
-                cur->init(this, cur->type, pNode, NULL, &cur->fullpathcache);
+
+                cur->init(this, cur->type, pNode, NULL, &tmppath);
                 cur->parent_dbid = pdbid;
                 cur->size = size;
                 cur->setfsid(fsid);
