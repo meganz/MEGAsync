@@ -586,7 +586,7 @@ void MegaApplication::rebootApplication(bool update)
 void MegaApplication::exitApplication()
 {
     if(!megaApi->isLoggedIn() || QMessageBox::question(NULL, tr("MEGAsync"),
-            tr("Synchronization will stop.\nDeletions that occur while it is not running will not be propagated.\n\nExit anyway?"),
+            tr("Synchronization will stop.\n\nExit anyway?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         trayIcon->hide();
@@ -1187,8 +1187,8 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(exitAction);
 
     trayIcon->setContextMenu(trayMenu);
-
-    onSyncStateChanged(megaApi);
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
 }
 
 //Called when a request is about to start
