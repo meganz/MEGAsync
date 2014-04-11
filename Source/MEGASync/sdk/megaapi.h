@@ -29,11 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <inttypes.h>
 typedef int64_t m_off_t;
 
-#include "mega/crypto/cryptopp.h"
-#include "mega/megaclient.h"
-
-#include "mega/db/sqlite.h"
-
+#include "mega.h"
 
 #ifdef USE_PTHREAD
 #include <pthread.h>
@@ -569,12 +565,12 @@ class MegaError
 		void setNextAttempt(long nextAttempt);
 
         static const char *getErrorString(int errorCode);
-        
+
 	#ifdef USE_QT
         QString QgetErrorString() const;
         static QString QgetErrorString(int errorCode);
 	#endif
-	
+
 	protected:
         //< 0 = API error code, > 0 = http error, 0 = No error
 		int errorCode;
