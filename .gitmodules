@@ -1,0 +1,4 @@
+[submodule "Source/MEGASync/sdk/sdk"]
+	path = Source/MEGASync/sdk/sdk
+	url = git@github.com:meganz/sdk.git
+	branch = stable
