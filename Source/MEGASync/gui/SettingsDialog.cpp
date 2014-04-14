@@ -606,6 +606,7 @@ bool SettingsDialog::saveSettings()
             QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
                                                                             "when the application starts again."), QMessageBox::Ok);
             excludedNamesChanged = false;
+            preferences->setCrashed(true);
         }
     }
 
