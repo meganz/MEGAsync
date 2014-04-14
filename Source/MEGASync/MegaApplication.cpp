@@ -1365,27 +1365,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
-        if(e->getErrorCode() == MegaError::API_OK)
-        {
-            for(int i=preferences->getNumSyncedFolders()-1; i>=0; i--)
-            {
-                if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
-                {
-                    LOG("Sync removed");
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
-                    preferences->removeSyncedFolder(i);
-                    if(infoDialog) infoDialog->updateSyncsButton();
-                    onSyncStateChanged(megaApi);
-                    break;
-                }
-            }
-        }
-        else
+        if(e->getErrorCode() != MegaError::API_OK)
         {
             showErrorMessage(e->QgetErrorString());
             if(settingsDialog)
                 settingsDialog->loadSettings();
         }
+        if(infoDialog) infoDialog->updateSyncsButton();
+        onSyncStateChanged(megaApi);
         break;
     }
     default:

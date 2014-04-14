@@ -542,7 +542,10 @@ bool SettingsDialog::saveSettings()
                 if(j == ui->tSyncs->rowCount())
                 {
                     LOG(QString::fromAscii("REMOVING SYNC: %1").arg(preferences->getSyncName(i)));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    preferences->removeSyncedFolder(i);
                     megaApi->removeSync(megaHandle);
+                    i--;
                 }
             }
 
