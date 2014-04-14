@@ -11,6 +11,7 @@
 #include <QProcess>
 
 #include "MegaApplication.h"
+#include "MacXFunctions.h"
 
 class MacXPlatform
 {

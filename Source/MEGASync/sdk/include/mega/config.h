@@ -17,7 +17,7 @@
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the `fdopendir' function. */
-#define HAVE_FDOPENDIR 1
+//#define HAVE_FDOPENDIR 1
 
 /* Define to 1 if you have the <FreeImage.h> header file. */
 /* #undef HAVE_FREEIMAGE_H */
@@ -25,8 +25,8 @@
 /* Define to 1 if you have the <htonl> header file. */
 /* #undef HAVE_HTONL */
 
-/* Define to 1 if you have the `inotify_init' function. */
-#define HAVE_INOTIFY_INIT 1
+/* Define to 1 if you have the `inotify_init' function.
+#define HAVE_INOTIFY_INIT 1*/
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -80,8 +80,8 @@
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
-/* Define to 1 if you have the <sys/inotify.h> header file. */
-#define HAVE_SYS_INOTIFY_H 1
+/* Define to 1 if you have the <sys/inotify.h> header file.
+#define HAVE_SYS_INOTIFY_H 1*/
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
 #define HAVE_SYS_SOCKET_H 1
@@ -150,8 +150,8 @@
 /* Define to use Berkeley DB */
 #define USE_DB 0
 
-/* Use inotify API */
-#define USE_INOTIFY 1
+/* Use inotify API
+#define USE_INOTIFY 1*/
 
 /* Define to use SQLite */
 #define USE_SQLITE 1

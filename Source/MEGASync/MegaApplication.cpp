@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QDir crashDir(crashPath);
     if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
-    CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
+    //CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
 
     singleInstanceChecker.setKey(QString::fromAscii("MEGAsyncSingleInstanceChecker"));
     if((argc == 2) && !strcmp("/reboot", argv[1]))
