@@ -4,11 +4,6 @@
 #
 #-------------------------------------------------
 
-#Compiler options for mac OS
-macx {
-QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
-}
-
 debug_and_release {
     CONFIG -= debug_and_release
     CONFIG += debug_and_release
@@ -84,3 +79,9 @@ win32 {
     RC_FILE = icon.rc
 }
 
+#Compiler options for mac OS
+macx {
+QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
+
+ICON = mlogo.icns
+}

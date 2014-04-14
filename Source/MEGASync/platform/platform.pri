@@ -30,5 +30,15 @@ unix:!macx {
 
 macx {
     SOURCES += $$PWD/macx/MacXPlatform.cpp
-    HEADERS += $$PWD/macx/MacXPlatform.h
+    HEADERS += $$PWD/macx/MacXPlatform.h \
+        $$PWD/macx/MacXFunctions.h
+
+    OBJECTIVE_SOURCES += \
+            $$PWD/macx/MacXFunctions.mm
+
+    LIBS += -framework Cocoa
 }
+
+
+
+
