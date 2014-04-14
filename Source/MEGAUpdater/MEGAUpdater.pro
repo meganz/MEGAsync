@@ -29,7 +29,7 @@ win32 {
 
 DEFINES += USE_CRYPTOPP
 DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/include/ ../MEGASync/sdk/sdk/include/
+INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/3rdparty/include/cryptopp ../MEGASync/sdk/include/ ../MEGASync/sdk/sdk/include/
 
 win32 {
     INCLUDEPATH += ../MEGASync/sdk/sdk/include/mega/win32
