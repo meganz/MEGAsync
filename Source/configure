@@ -1,5 +1,8 @@
 #!/bin/bash
 
+root_dir=`pwd`
+
+# curl
 export CURL=curl
 export CURL_VERSION=7.32.0
 export CURL_EXTRA="--disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp --disable-gopher --disable-sspi --without-librtmp --without-libidn --without-libssh2"
@@ -7,30 +10,42 @@ export CURL_SOURCE_FILE=curl-$CURL_VERSION.tar.gz
 export CURL_SOURCE_FOLDER=curl-$CURL_VERSION
 export CURL_CONFIGURED=$CURL/$CURL_SOURCE_FOLDER/curl-config
 export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
+export CURL_SOURCE_DIR=$root_dir/$CURL/$CURL_SOURCE_FOLDER
+export CURL_INSTALL_DIR=$root_dir/MEGASync/sdk/3rdparty/
+
+export MAKE_OPTS="-j1"
 
 echo "Checking if native cURL uses c-ares..."
-if curl-config --configure | grep enable-ares > /dev/null;
+if curl-config --configure  2>&1 | grep enable-ares > /dev/null;
 then
 	echo "cURL uses c-ares. We will use it!"
 	rm -rf $CURL
+	curl_conf=""
 else
 	echo "cURL doesn't use c-ares. We will use our own build"
+    if [ ! -f $CURL_SOURCE_FILE ]; then
+        wget -c $CURL_DOWNLOAD_URL || exit 1
+    fi
+
+    rm -fr $CURL
 	mkdir $CURL
 	cd $CURL
 	tar --overwrite -xf ../$CURL_SOURCE_FILE
 	ln -sf $CURL_SOURCE_FOLDER $CURL
 	cd $CURL_SOURCE_FOLDER || exit 1
 	./configure --enable-ipv6 --disable-manual --enable-shared=no --with-zlib --enable-ares $CURL_EXTRA || exit 1
-	make || exit 1
+	make $MAKE_OPTS || exit 1
 	cd ../..
-	mkdir -p `pwd`/curl/curl/include/curl MEGASync/sdk/3rdparty/include/
-	ln -sf `pwd`/curl/curl/include/curl MEGASync/sdk/3rdparty/include/curl
-	mkdir -p `pwd`/curl/curl/lib/.libs/libcurl.a MEGASync/sdk/3rdparty/libs/
-	ln -sf `pwd`/curl/curl/lib/.libs/libcurl.a MEGASync/sdk/3rdparty/libs/libcurl.a
+	mkdir -p $CURL_SOURCE_DIR/include/curl $CURL_INSTALL_DIR/include/
+	ln -sf $CURL_SOURCE_DIR/include/curl $CURL_INSTALL_DIR/include/curl
+	mkdir -p $CURL_INSTALL_DIR/lib/
+	mkdir -p $CURL_INSTALL_DIR/libs/
+	ln -sf $CURL_SOURCE_DIR/lib/.libs/libcurl.a $CURL_INSTALL_DIR/libs/libcurl.a
+	ln -sf $CURL_SOURCE_DIR/lib/.libs/libcurl.a $CURL_INSTALL_DIR/lib/libcurl.a
+	curl_conf="--with-curl=$CURL_INSTALL_DIR"
 fi
 
 cd MEGASync/sdk/sdk
-sed -i 's/$adns/AsynchDNS/g' configure.ac
 ./autogen.sh || exit 1
-./configure || exit 1
+./configure $curl_conf --without-freeimage || exit 1
 cd ../..
