@@ -102,12 +102,16 @@ win32 {
 }
 
 unix:!macx {
+    !exists($$PWD/sdk/include/mega/config.h) {
+        message("Configuration file not found! Please re-run configure script located in the project's root directory!")
+        return(false)
+    }
     HEADERS  += $$PWD/sdk/include/mega/posix/meganet.h  \
             $$PWD/sdk/include/mega/posix/megasys.h  \
             $$PWD/sdk/include/mega/posix/megafs.h  \
             $$PWD/sdk/include/mega/posix/megawaiter.h \
             $$PWD/linux/megaapiwait.h  \
-            $$PWD/include/mega/config.h
+            $$PWD/sdk/include/mega/config.h
 }
 
 DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
