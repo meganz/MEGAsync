@@ -76,7 +76,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
-        <translation>MEGAsync обнаружила проблему. Детали:</translation>
+        <translation>MEGAsync обнаружил проблему. Детали:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
@@ -169,7 +169,7 @@ Are you sure?</source>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAsync  в актуальном состоянии</translation>
+        <translation>MEGAsync синхронизирован</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync в ожидании</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync запускается</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Синхронизация будет остановлена.
+        <translation type="obsolete">Синхронизация будет остановлена.
 Удаления, которые происходят пока программа не запущена, не будут распространяться.
 
 Вы уверены, что хотите закрыть приложение?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Невозможно получить доступ к файловой системе. 
-		Пожалуйста, попробуйте еще раз. Если проблема не исчезнет, ​​обратитесь bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Синхронизация будет остановлена.
+
+Вы уверены, что хотите закрыть приложение?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>подготовка</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Невозможно получить доступ к файловой системе.
+Пожалуйста, попробуйте еще раз. Если проблема не исчезнет, ​​обратитесь bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

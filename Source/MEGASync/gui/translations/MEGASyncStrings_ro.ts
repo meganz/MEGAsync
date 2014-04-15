@@ -50,7 +50,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renunță</translation>
+        <translation>Renunţă</translation>
     </message>
     <message>
         <source>Error</source>
@@ -84,7 +84,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renunță</translation>
+        <translation>Renunţă</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync aşteaptă</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync porneşte</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Sincronizarea se va opri.
+        <translation type="obsolete">Sincronizarea se va opri.
 Ştergerile care se produc cât timp nu rulează nu vor fi propagate.
 
 Ieşi oricum?</translation>
@@ -420,7 +424,7 @@ Ieşi oricum?</translation>
     </message>
     <message>
         <source>Waiting</source>
-        <translation>Se așteaptă</translation>
+        <translation>Se aşteaptă</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nu se poate obține sistemul de fișiere. 
-		Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Sincronizarea se va opri.
+
+Ieşi oricum?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>începe</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Nu se poate obţine sistemul de fişiere.
+Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -656,7 +672,7 @@ Sigur doreşti să îl sincronizezi?</translation>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translation>Folder invalid pentru sincronizare.
-Te rugăm să te asiguri că nu folosești caractere precum \ / sau : în numele folderelor.</translation>
+Te rugăm să te asiguri că nu foloseşti caractere precum \ / sau : în numele folderelor.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +722,7 @@ Te rugăm să te asiguri că nu folosești caractere precum \ / sau : în numele
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Renunță</translation>
+        <translation>&amp;Renunţă</translation>
     </message>
 </context>
 <context>
@@ -896,11 +912,11 @@ Te rugăm să te asiguri că nu folosești caractere precum \ / sau : în numele
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>aproximativ 90% din lățimea de bandă disponibilă</translation>
+        <translation>aproximativ 90% din lăţimea de bandă disponibilă</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
-        <translation>Cota de lățime de bandă</translation>
+        <translation>Cota de lăţime de bandă</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -1039,7 +1055,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation>Te rugăm să astepți...</translation>
+        <translation>Te rugăm să astepţi...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -1063,7 +1079,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Dezactivarea sincronizării complete a contului îți va permite să configurezi sincronizarea selectivă a folderelor</translation>
+        <translation>Dezactivarea sincronizării complete a contului îţi va permite să configurezi sincronizarea selectivă a folderelor</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
@@ -1288,7 +1304,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nu se poate obține sistemul de fișiere.
+        <translation>Nu se poate obţine sistemul de fişiere.
 Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@mega.co.nz</translation>
     </message>
 </context>
@@ -1367,7 +1383,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renunță</translation>
+        <translation>Renunţă</translation>
     </message>
 </context>
 <context>

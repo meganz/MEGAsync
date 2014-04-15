@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>메가싱크가 대기중입니다</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>동기화가 멈출 것입니다.
+        <translation type="obsolete">동기화가 멈출 것입니다.
 작동중이지 않을 때 발생한 삭제는 누적되지 않습니다.
 
 그래도 종료하시겠습니까?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>오류</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>파일 시스템을 가져올 수 없습니다. 
-		다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락바랍니다.</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>동기화가 멈출 것입니다.
+
+그래도 종료하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>시작중</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>파일 시스템을 가져올 수 없습니다.
+다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락바랍니다.</translation>
     </message>
 </context>
 <context>
