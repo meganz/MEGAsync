@@ -101,7 +101,7 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
 #if QT_VERSION < 0x050000
     QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #else
-    QString newPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
 #endif
 
     QDir dir(dataPath);

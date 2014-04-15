@@ -3,6 +3,13 @@
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
+
+void WindowsPlatform::initialize(int argc, char *argv[])
+{
+
+
+}
+
 bool WindowsPlatform::enableTrayIcon(QString executable)
 {
     HRESULT hr;

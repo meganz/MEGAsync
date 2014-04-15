@@ -4,6 +4,13 @@ ExtServer *LinuxPlatform::ext_server = NULL;
 
 QString LinuxPlatform::desktop_file = QDir::homePath() + QString::fromAscii("/.config/autostart/megasync.desktop");
 
+
+void LinuxPlatform::initialize(int argc, char *argv[])
+{
+
+
+}
+
 bool LinuxPlatform::enableTrayIcon(QString executable)
 {
     return false;

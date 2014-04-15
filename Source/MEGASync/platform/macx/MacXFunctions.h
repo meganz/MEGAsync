@@ -3,6 +3,8 @@
 
 #include "QString"
 
+void setMacXActivationPolicy();
+
 bool startAtLogin(bool opt);
 
 bool isStartAtLoginActive();

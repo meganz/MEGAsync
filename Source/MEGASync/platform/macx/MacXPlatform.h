@@ -20,7 +20,7 @@ private:
     MacXPlatform() {}
 
 public:
-
+    static void initialize(int argc, char *argv[]);
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);

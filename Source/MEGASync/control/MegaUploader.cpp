@@ -4,6 +4,10 @@
 #include <QMessageBox>
 #include <QtCore>
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
