@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>XXXXX</translation>
+        <translation>[$1931]</translation>
     </message>
 </context>
 <context>
@@ -489,7 +489,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Starting</source>
-        <translation>XXXXX</translation>
+        <translation>[$819]</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.

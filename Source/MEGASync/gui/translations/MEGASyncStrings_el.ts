@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Προσπαθείτε να συγχρονίσετε πολύ μεγάλο φάκελο. Για να το προλάβετε από το να συγχρονιστεί ολόκληρο το  boot volumes, το οποίο είναι αναποτελεσματικό και επικίνδυνο, σας ζητάμε να ξεκινήσετε με έναν μικρότερο φάκελο και να προσθέσετε περισσότερα δεδομένα καθώς το MEGAsync τρέχει.</translation>
     </message>
 </context>
 <context>
@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>Το MEGAsync περιμένει</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Ο συγχρονισμός θα σταματήσει.
+        <translation type="obsolete">Ο συγχρονισμός θα σταματήσει.
 Οι διαγραφές που συμβαίνουν ενώ δεν είναι σε λειτουργία δεν θα μεταδοθούν.
 
 Έξοδος ούτως ή άλλως;</translation>
@@ -424,11 +428,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>Ο φάκελος (% 1) δεν φορτώθηκε επειδή είναι εξαιρετικά μεγάλος. Εμείς κάνουμε τον έλεγχο αυτό για να αποφευχθεί η αποστολή των ολόκληρων boot volumes, το οποίο είναι αναποτελεσματικό και επικίνδυνο. </translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation>%1 φάκελοι δεν φορτώθηκε επειδή είναι εξαιρετικά μεγάλοι. Εμείς κάνουμε τον έλεγχο αυτό για να αποφευχθεί η αποστολή των ολόκληρων boot volumes, το οποίο είναι αναποτελεσματικό και επικίνδυνο.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -465,7 +469,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>Ενημέρωση διαθέσιμη. Λήψη...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Ο συγχρονισμός θα σταματήσει.
+
+Έξοδος ούτως ή άλλως;</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>ξεκινάει</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Ανίκανο να πάρει το σύστημα αρχείων.
+Παρακαλώ προσπαθείστε ξανά. Αν το πρόβλημα επιμείνει παρακαλώ επικοινωνήστε στο bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +671,8 @@ Are you sure you want to sync it?</source>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Μη έγκυρος φάκελος για συγχρονισμό.
+Παρακαλώ βεβαιωθείτε ότι δεν χρησιμοποιείτε χαρακτήρες όπως \ / ή: στα ονόματα των φακέλων σας.</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1063,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Επιλεκτικός συγχρονισμός ενεργός</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Ενεργοποίηση πλήρους συγχρονισμού λογαριασμού</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Η ενεργοποίηση πλήρους συγχρονισμού λογαριασμού θα σταματήσει όλα τα τρέχοντα συχρονιζόμενα</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Πλήρης συγχρονισμός λογαριασμού ενεργός</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Η απενεργοποίηση πλήρη συγχρονισμού λογαριασμού θα σας επιτρέψει να κάνετε συγχρονισμό του επίλεκτου φακέλου</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Απενεργοποίηση πλήρη συγχρονισμού λογαριασμού</translation>
     </message>
 </context>
 <context>
@@ -1283,13 +1299,13 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Προσπαθείτε να συγχρονίσετε πολύ μεγάλο φάκελο. Για να το προλάβετε από το να συγχρονιστεί ολόκληρο το  boot volumes, το οποίο είναι αναποτελεσματικό και επικίνδυνο, σας ζητάμε να ξεκινήσετε με έναν μικρότερο φάκελο και να προσθέσετε περισσότερα δεδομένα καθώς το MEGAsync τρέχει.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Ανίκανο να πάρει το σύστημα αρχείων.
+Παρακαλώ προσπαθείστε ξανά. Αν το πρόβλημα επιμείνει παρακαλώ επικοινωνήστε στο bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

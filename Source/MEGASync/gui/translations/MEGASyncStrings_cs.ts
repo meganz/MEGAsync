@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync čeká</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>Spouští se MEGAsync</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Synchronizace bude zastavena.
+        <translation type="obsolete">Synchronizace bude zastavena.
 Smazání budou zpracována, pouze pokud běží synchronizační klient.
 
 Přesto ukončit?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nelze nalézt systém souborů 
-		Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Synchronizace bude zastavena.
+
+Přesto ukončit?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>spouštění</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Nelze nalézt systém souborů
+Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

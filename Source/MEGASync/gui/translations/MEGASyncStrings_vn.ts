@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync đang chờ</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Các tiến trình đồng bộ sẽ dừng lại.
+        <translation type="obsolete">Các tiến trình đồng bộ sẽ dừng lại.
 Việc xóa bỏ chỉ có thể thực hiện khi trình đồng bộ hóa MEGA đang hoạt động.
 
 Bạn có cuyết định thoát chương trình hay không?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Lỗi</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Không lấy được tệp tin hệ thống. 
-		Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên hệ bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Các tiến trình đồng bộ sẽ dừng lại.
+
+Bạn có cuyết định thoát chương trình hay không?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>đang bắt đầu</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Không lấy được tệp tin hệ thống.
+Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên hệ bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
