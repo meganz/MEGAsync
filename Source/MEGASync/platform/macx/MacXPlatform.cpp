@@ -1,5 +1,10 @@
 #include "MacXPlatform.h"
 
+void MacXPlatform::initialize(int argc, char *argv[])
+{
+    setMacXActivationPolicy();
+}
+
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
     return false;

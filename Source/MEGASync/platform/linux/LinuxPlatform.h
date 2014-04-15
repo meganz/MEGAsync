@@ -20,6 +20,7 @@ private:
     static ExtServer *ext_server;
     LinuxPlatform() {};
 public:
+    static void initialize(int argc, char *argv[]);
     static QString desktop_file;
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(QString path);

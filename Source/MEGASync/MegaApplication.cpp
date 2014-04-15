@@ -83,6 +83,8 @@ int main(int argc, char *argv[])
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
 
+    Platform::initialize(argc, argv);
+
 #ifndef WIN32
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Semibold.ttf"));

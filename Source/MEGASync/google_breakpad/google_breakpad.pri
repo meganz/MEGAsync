@@ -21,7 +21,7 @@ macx {
   LIBS += /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
   LIBS += /System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
 
-  QMAKE_CXXFLAGS+=-g
+  #QMAKE_CXXFLAGS+=-g
 }
 
 unix:!macx {
@@ -42,7 +42,7 @@ unix:!macx {
   SOURCES += $$PWD/common/string_conversion.cc
   SOURCES += $$PWD/common/convert_UTF.c
 
-  QMAKE_CXXFLAGS+=-g
+  #QMAKE_CXXFLAGS+=-g
 }
 
 win32 {
@@ -51,11 +51,13 @@ win32 {
   SOURCES += $$PWD/common/windows/guid_string.cc
   SOURCES += $$PWD/client/windows/crash_generation/crash_generation_client.cc
 
+  QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+  QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+
   LIBS += -lkernel32 -lpsapi
 }
 
-QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
-QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+
 INCLUDEPATH += $$PWD
 
 debug {

@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
+
 debug_and_release {
     CONFIG -= debug_and_release
     CONFIG += debug_and_release
@@ -79,9 +81,9 @@ win32 {
     RC_FILE = icon.rc
 }
 
-#Compiler options for mac OS
-macx {
-QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
 
-ICON = mlogo.icns
+macx {
+    QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
+    QMAKE_BUNDLE_DATA += mlogo.icns
+    ICON = mlogo.icns
 }

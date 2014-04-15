@@ -2,6 +2,12 @@
 #include <Cocoa/Cocoa.h>
 #include <AppKit/AppKit.h>
 
+void setMacXActivationPolicy()
+{
+    //application does not appear in the Dock
+    [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+}
+
 bool startAtLogin(bool opt)
 {
     NSString * appPath = [[NSBundle mainBundle] bundlePath];
@@ -29,7 +35,6 @@ bool startAtLogin(bool opt)
     {
         if (loginItems)
         {
-            NSURL *itemURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
             UInt32 seed = 0U;
             NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
             for (id itemObject in currentLoginItems)
@@ -98,15 +103,16 @@ void addPathToPlaces(QString path, QString pathName)
     FSRef fref;
 
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
+    NSString * appPath = [[NSBundle mainBundle] bundlePath];
 
     //Does not work propertly
     CFStringRef pnString = CFStringCreateWithCharacters(0, (UniChar *)pathName.unicode(), pathName.length());
 
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:folderPath];
 
-    /*CFURLRef iconURLRef = (CFURLRef)[NSURL fileURLWithPath:@"/Users/teny/Desktop/mlogo.icns"];
+    CFURLRef iconURLRef = (CFURLRef)[NSURL fileURLWithPath:[appPath stringByAppendingString:@"/Contents/Resources/mlogo.icns"]];
     CFURLGetFSRef(iconURLRef, &fref);
-    RegisterIconRefFromFSRef('SSBL', 'ssic', &fref, &iconRef);*/
+    RegisterIconRefFromFSRef('SSBL', 'ssic', &fref, &iconRef);
 
     // Create a reference to the shared file list.
     LSSharedFileListRef favoriteItems = LSSharedFileListCreate(NULL,
@@ -114,7 +120,7 @@ void addPathToPlaces(QString path, QString pathName)
     if (favoriteItems) {
         //Insert an item to the list.
         LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(favoriteItems,
-                                                                     kLSSharedFileListItemLast, pnString, /*iconRef*/NULL,
+                                                                     kLSSharedFileListItemLast, pnString, iconRef/*NULL*/,
                                                                      url, NULL, NULL);
         if (item){
             CFRelease(item);
@@ -170,8 +176,11 @@ void setFolderIcon(QString path)
 {
 
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
-    //NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:@"/Users/teny/Desktop/mlogo.icns"];
-    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:nil/*iconImage*/ forFile:folderPath options:0];
+
+    NSString * appPath = [[NSBundle mainBundle] bundlePath];
+    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/mlogo.icns"]];
+
+    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
 
     if(!didSetIcon)
     {
