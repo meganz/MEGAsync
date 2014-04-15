@@ -1,5 +1,8 @@
-MEGA Sync Client: Easy automated syncing between your computers and your MEGA cloud drive
-=========================================================================================
+MEGA Sync Client: 
+=================
+
+Easy automated syncing between your computers and your MEGA cloud drive.
+
 
 ### Supported Platforms
 
