@@ -65,7 +65,11 @@ int main(int argc, char *argv[])
         {
             preferences->enterUser(i);
             for(int j=0; j<preferences->getNumSyncedFolders(); j++)
+            {
                 Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
+                Utilities::removeRecursively(preferences->getLocalFolder(j) +
+                                             QDir::separator() + QString::fromAscii("Rubbish"));
+            }
             preferences->leaveUser();
         }
 
@@ -634,9 +638,14 @@ void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
     finished = true;
+    refreshTimer->stop();
+    trayIcon->hide();
+    QApplication::processEvents();
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        Platform::notifyItemChange(preferences->getLocalFolder(i));
 
     delete uploader;
     delete pasteMegaLinksDialog;
@@ -1370,6 +1379,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             showErrorMessage(e->QgetErrorString());
             if(settingsDialog)
                 settingsDialog->loadSettings();
+        }
+        else
+        {
+            QString syncPath = QString::fromUtf8(request->getFile());
+
+            #ifdef WIN32
+            if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+                syncPath = syncPath.mid(4);
+            #endif
+
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii("Rubbish"));
+            Platform::notifyItemChange(syncPath);
         }
         if(infoDialog) infoDialog->updateSyncsButton();
         onSyncStateChanged(megaApi);
