@@ -37,8 +37,8 @@ QCheckBox::indicator {
  }
 
 QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
+     width: 22px;
+     height: 22px;
  }
 
 QScrollBar:horizontal {
@@ -104,19 +104,33 @@ font-size: 16px;
 font-weight: bold;
 }
 
+#lTermsLink
+{
+	margin-left: 5px;
+}
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>6</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -148,9 +162,6 @@ font-weight: bold;
        <item>
         <widget class="QWidget" name="wHaveAccount" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="spacing">
-           <number>6</number>
-          </property>
           <property name="leftMargin">
            <number>140</number>
           </property>
@@ -313,9 +324,6 @@ font-weight: bold;
           </item>
           <item row="4" column="1">
            <layout class="QHBoxLayout" name="hAcceptTerms" stretch="0,1">
-            <property name="spacing">
-             <number>5</number>
-            </property>
             <item>
              <widget class="QCheckBox" name="cAgreeWithTerms">
               <property name="text">
@@ -325,6 +333,9 @@ font-weight: bold;
             </item>
             <item>
              <widget class="QLabel" name="lTermsLink">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
               </property>
@@ -633,7 +644,16 @@ font-weight: bold;
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -743,7 +763,16 @@ font-weight: bold;
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -864,6 +893,12 @@ font-weight: bold;
        <item>
         <widget class="QWidget" name="wAdvancedConfigForm" native="true">
          <layout class="QFormLayout" name="formLayout_2">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::ExpandingFieldsGrow</enum>
+          </property>
+          <property name="labelAlignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
           <property name="horizontalSpacing">
            <number>6</number>
           </property>
@@ -884,15 +919,20 @@ font-weight: bold;
           </property>
           <item row="0" column="0">
            <widget class="QLabel" name="lLocalFolder">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="text">
              <string>Local folder:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lMegaFolder">
-            <property name="text">
-             <string>MEGA folder:</string>
             </property>
            </widget>
           </item>
@@ -902,6 +942,12 @@ font-weight: bold;
              <widget class="QLineEdit" name="eLocalFolder">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -916,6 +962,13 @@ font-weight: bold;
              </widget>
             </item>
            </layout>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lMegaFolder">
+            <property name="text">
+             <string>MEGA folder:</string>
+            </property>
+           </widget>
           </item>
           <item row="2" column="1">
            <layout class="QHBoxLayout" name="hLocalFolder">
@@ -1113,12 +1166,6 @@ font-weight: bold;
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <property name="margin">
-       <number>9</number>
-      </property>
       <item>
        <spacer name="hsButtons">
         <property name="orientation">
