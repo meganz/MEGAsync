@@ -269,6 +269,7 @@ int WinShellDispatcherTask::dispatchPipe()
 void WinShellDispatcherTask::exitTask()
 {
     SetEvent(hEvents[INSTANCES]);
+    this->exit();
 }
 
 

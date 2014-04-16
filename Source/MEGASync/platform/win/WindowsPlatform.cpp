@@ -147,6 +147,8 @@ void WindowsPlatform::stopShellDispatcher()
     if(shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();
+        shellDispatcherTask->wait();
+        delete shellDispatcherTask;
         shellDispatcherTask = NULL;
     }
 }
