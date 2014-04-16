@@ -86,11 +86,11 @@ int main(int argc, char *argv[])
     Platform::initialize(argc, argv);
 
 #ifndef WIN32
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
+    /*QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Semibold.ttf"));
 
     QFont font(QString::fromAscii("Open Sans"), 8);
-    app.setFont(font);
+    app.setFont(font);*/
 #endif
 
     //QDate betaLimit(2014, 1, 21);
