@@ -17,8 +17,8 @@
  #include <signal.h>
 #endif
 
-const int MegaApplication::VERSION_CODE = 1014;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.14");
+const int MegaApplication::VERSION_CODE = 1015;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.15");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 

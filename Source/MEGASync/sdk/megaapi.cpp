@@ -1082,7 +1082,7 @@ MegaApi::MegaApi(const char *basePath)
     gfxAccess->setProcessor(processor);
 #endif
 
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.14");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.15");
 
     //Start blocking thread
 	threadExit = 0;
@@ -4664,7 +4664,8 @@ void MegaApi::updateStatics()
     while(it != end)
     {
         Transfer *transfer = it->second;
-        if(transfer->failcount<2) downloadCount++;
+        if((transfer->failcount<2) || (transfer->slot && (Waiter::ds - transfer->slot->lastdata) < TransferSlot::XFERTIMEOUT))
+            downloadCount++;
         it++;
     }
 
@@ -4673,7 +4674,8 @@ void MegaApi::updateStatics()
     while(it != end)
     {
         Transfer *transfer = it->second;
-        if(transfer->failcount<2) uploadCount++;
+        if((transfer->failcount<2) || (transfer->slot && (Waiter::ds - transfer->slot->lastdata) < TransferSlot::XFERTIMEOUT))
+            uploadCount++;
         it++;
     }
     MUTEX_UNLOCK(sdkMutex);
