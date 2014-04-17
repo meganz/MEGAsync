@@ -13,7 +13,7 @@ TARGET = MEGAupdater
 TEMPLATE = app
 CONFIG += console
 
-SOURCES += ../MEGASync/sdk/src/crypto/cryptopp.cpp ../MEGASync/sdk/src/base64.cpp ../MEGASync/sdk/src/utils.cpp
+SOURCES += ../MEGASync/sdk/sdk/src/crypto/cryptopp.cpp ../MEGASync/sdk/sdk/src/base64.cpp ../MEGASync/sdk/sdk/src/utils.cpp
 LIBS += -lcryptopp
 
 win32 {
@@ -29,14 +29,14 @@ win32 {
 
 DEFINES += USE_CRYPTOPP
 DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/include/
+INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/3rdparty/include/cryptopp ../MEGASync/sdk/include/ ../MEGASync/sdk/sdk/include/
 
 win32 {
-    INCLUDEPATH += ../MEGASync/sdk/include/mega/win32
+    INCLUDEPATH += ../MEGASync/sdk/sdk/include/mega/win32
 }
 
 unix:!macx {
-    INCLUDEPATH += ../MEGASync/sdk/include/mega/posix
+    INCLUDEPATH += ../MEGASync/sdk/sdk/include/mega/posix
 }
 
 SOURCES += MegaUpdater.cpp

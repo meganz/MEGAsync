@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>МЕГАсинхноризација е на чекање</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync стартира</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Синхронизација ќе престане.
+        <translation type="obsolete">Синхронизација ќе престане.
 Бришања што се случуваат додека не е уклучено ќе бидат пропагирани.
 
 Излезете и покрај тоа? </translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Грешка</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Не може да се превземе системот за фајлови. 
-		Ве молиме обидете се повторно. Ако проблемот сеуште присуствува тогаш контактирајте bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Синхронизација ќе престане.
+
+Излезете и покрај тоа? </translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>стартувам</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Не може да се превземе системот за фајлови.
+Ве молиме обидете се повторно. Ако проблемот сеуште присуствува тогаш контактирајте bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

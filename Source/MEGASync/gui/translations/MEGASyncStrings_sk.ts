@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync čaká</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync štartuje</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Synchronizácia bola zastavená.
+        <translation type="obsolete">Synchronizácia bola zastavená.
 Mazania ktoré prebehnú pokiaľ program nebeží nebudú prenesené na server.
 
 Odísť aj tak?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nemôžem získať prístup k súborovému systému. 
-		Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Synchronizácia bola zastavená.
+
+Odísť aj tak?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>začína</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Nemôžem získať prístup k súborovému systému.
+Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

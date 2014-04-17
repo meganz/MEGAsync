@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>May MEGAsync yn aros</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>Mae MEGAsync yn dechrau</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Fydd synchronization yn stopio.
+        <translation type="obsolete">Fydd synchronization yn stopio.
 Ni fydd dileadau yn digwydd er nad yw&apos;n cael ei rhedeg yn cael eu lluosogi.
 
 Gadael beth bynnag?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Gwall</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Methu cael y system ffeil. 
-		Ceisiwch eto os gwelwch yn dda. Os yw&apos;r broblem yn parhau, cysylltwch â bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Fydd synchronization yn stopio.
+
+Gadael beth bynnag?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>dechrau</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Methu cael y system ffeil.
+Ceisiwch eto os gwelwch yn dda. Os yw&apos;r broblem yn parhau, cysylltwch â bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

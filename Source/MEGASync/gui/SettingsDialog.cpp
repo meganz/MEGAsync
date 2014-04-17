@@ -546,7 +546,10 @@ bool SettingsDialog::saveSettings()
                 if(j == ui->tSyncs->rowCount())
                 {
                     LOG(QString::fromAscii("REMOVING SYNC: %1").arg(preferences->getSyncName(i)));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    preferences->removeSyncedFolder(i);
                     megaApi->removeSync(megaHandle);
+                    i--;
                 }
             }
 
@@ -607,6 +610,7 @@ bool SettingsDialog::saveSettings()
             QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
                                                                             "when the application starts again."), QMessageBox::Ok);
             excludedNamesChanged = false;
+            preferences->setCrashed(true);
         }
     }
 

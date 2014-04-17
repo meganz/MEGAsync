@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsünk on ootel</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Sünkroniseerimine peatub kohe.
+        <translation type="obsolete">Sünkroniseerimine peatub kohe.
 Kui sünkroniseerimise klient ei tööta siis tehtavad kustutusi ei sünkroniseerita.
 
 Välju niikuinii?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Failisüsteemi ei suudetud ligi pääseda. 
-		Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meiega ühendust  e-posti bug@mega.co.nz kaudu</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Sünkroniseerimine peatub kohe.
+
+Välju niikuinii?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>alustamine</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Failisüsteemi ei suudetud ligi pääseda.
+Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meiega ühendust  e-posti bug@mega.co.nz kaudu</translation>
     </message>
 </context>
 <context>

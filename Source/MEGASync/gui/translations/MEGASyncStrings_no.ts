@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync venter</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Synkroniseringen vil stoppe.
+        <translation type="obsolete">Synkroniseringen vil stoppe.
 Slettinger som blir gjort mens prosessen kjører vil ikke bli utført før synkroniseringen er ferdig.
 
 Avslutt uansett?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system. 
-		Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Synkroniseringen vil stoppe.
+
+Avslutt uansett?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>starter</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Kunne ikke nå filsystemet.
+Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -655,8 +671,8 @@ Er du sikker på at du ønsker å synkronisere?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>Ugyldig mappe for synkronisering.
+Pass på at du ikke bruker tegn som \ / eller : når du navngir mapper.</translation>
     </message>
 </context>
 <context>
@@ -1047,27 +1063,27 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>Tilpasset synkronisering aktivert</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Aktiver fullstendig synkronisering</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Aktivering av fullstendig synkronisering vil deaktivere alle eksisterende synkroniseringer</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Fullstendig kontosynkronisering aktiv</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Deaktivering av fullstendig  synkronisering vil gjøre det mulig å sette opp tilpasset synkronisering</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>Slå av fullstendig kontosynkronisering</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1304,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
+        <translation>Kunne ikke nå filsystemet.
 Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz</translation>
     </message>
 </context>

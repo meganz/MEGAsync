@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync trenutno čeka</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Sinhronizacija će biti prekinuta.
+        <translation type="obsolete">Sinhronizacija će biti prekinuta.
 Brisanje koje se desilo neće se dalje širiti.
 
 Izlazite ?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nismo u mogućnosti da uđemo u file sistem. 
-		Molimo Vas da pokušate ponovo a ukoliko problem i dalje postoji molimo Vas da kontaktirate bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Sinhronizacija će biti prekinuta.
+
+Izlazite ?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>počinje</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Nismo u mogućnosti da uđemo u file sistem.
+Molimo Vas da pokušate ponovo a ukoliko problem i dalje postoji molimo Vas da kontaktirate bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

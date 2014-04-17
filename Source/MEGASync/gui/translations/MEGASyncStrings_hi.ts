@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>मेगा सिंक इंतज़ार कर रही है</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>तुल्यकालन बंद हो जाएगा.
+        <translation type="obsolete">तुल्यकालन बंद हो जाएगा.
 यह नहीं चल रहा है, जबकि होती है कि विलोपन प्रचारित नहीं किया जाएगा.
 
 वैसे भी बाहर निकलें?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>त्रुटि</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>फाइल सिस्टम प्राप्त करने में असमर्थ. 
-		पुन: प्रयास करें. यदि समस्या बनी रहती bug@mega.co.nz से संपर्क करें</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>तुल्यकालन बंद हो जाएगा.
+
+वैसे भी बाहर निकलें?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>शुरू</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>फाइल सिस्टम प्राप्त करने में असमर्थ.
+पुन: प्रयास करें. यदि समस्या बनी रहती bug@mega.co.nz से संपर्क करें</translation>
     </message>
 </context>
 <context>
