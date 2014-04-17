@@ -104,11 +104,6 @@ font-size: 16px;
 font-weight: bold;
 }
 
-#lTermsLink
-{
-	margin-left: 5px;
-}
-
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -130,7 +125,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>5</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -209,13 +204,13 @@ font-weight: bold;
         <number>6</number>
        </property>
        <property name="leftMargin">
-        <number>100</number>
+        <number>60</number>
        </property>
        <property name="topMargin">
         <number>15</number>
        </property>
        <property name="rightMargin">
-        <number>100</number>
+        <number>60</number>
        </property>
        <property name="bottomMargin">
         <number>9</number>
@@ -256,6 +251,9 @@ font-weight: bold;
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
           </property>
+          <property name="labelAlignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
           <property name="horizontalSpacing">
            <number>6</number>
           </property>
@@ -276,6 +274,12 @@ font-weight: bold;
           </property>
           <item row="0" column="0">
            <widget class="QLabel" name="lName">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Name:</string>
             </property>
@@ -323,34 +327,54 @@ font-weight: bold;
            </widget>
           </item>
           <item row="4" column="1">
-           <layout class="QHBoxLayout" name="hAcceptTerms" stretch="0,1">
-            <item>
-             <widget class="QCheckBox" name="cAgreeWithTerms">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lTermsLink">
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <property name="text">
-               <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
-              </property>
-              <property name="textFormat">
-               <enum>Qt::RichText</enum>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QWidget" name="widget_4" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QCheckBox" name="cAgreeWithTerms">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lTermsLink">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -419,6 +443,9 @@ font-weight: bold;
          <layout class="QFormLayout" name="formLayout">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
+          <property name="labelAlignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
           <property name="leftMargin">
            <number>140</number>
