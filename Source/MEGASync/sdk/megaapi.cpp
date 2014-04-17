@@ -2934,7 +2934,7 @@ void MegaApi::openfilelink_result(error result)
 
 // the requested link was opened successfully
 // (it is the application's responsibility to delete n!)
-void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, time_t ts, time_t tm, int)
+void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, m_time_t ts, m_time_t tm, int)
 {
     LOG("openfilelink_result");
 	//cout << "Importing " << n->displayname() << "..." << endl;
@@ -3292,7 +3292,7 @@ void MegaApi::checkfile_result(handle h, error e)
     LOG("Link check failed");
 }
 
-void MegaApi::checkfile_result(handle h, error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring)
+void MegaApi::checkfile_result(handle h, error e, byte* filekey, m_off_t size, m_time_t ts, m_time_t tm, string* filename, string* fingerprint, string* fileattrstring)
 {
     LOG("Link check OK");
 }
