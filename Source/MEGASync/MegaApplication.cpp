@@ -37,7 +37,10 @@ int main(int argc, char *argv[])
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QDir crashDir(crashPath);
     if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
-    //CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
+
+#ifndef __APPLE__
+    CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
+#endif
 
     singleInstanceChecker.setKey(QString::fromAscii("MEGAsyncSingleInstanceChecker"));
     if((argc == 2) && !strcmp("/reboot", argv[1]))
@@ -90,11 +93,13 @@ int main(int argc, char *argv[])
     Platform::initialize(argc, argv);
 
 #ifndef WIN32
-    /*QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
+#ifndef __APPLE__
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Semibold.ttf"));
 
     QFont font(QString::fromAscii("Open Sans"), 8);
-    app.setFont(font);*/
+    app.setFont(font);
+#endif
 #endif
 
     //QDate betaLimit(2014, 1, 21);
