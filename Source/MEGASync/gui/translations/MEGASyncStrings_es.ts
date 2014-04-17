@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos al tiempo que MEGAsync está funcionado.</translation>
+        <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos después. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>Carpeta en MEGA</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync está en espera</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync se está iniciando</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -280,7 +284,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Selecciona si quieres instalar $(^NameDA) solo para ti o para todos los usuarios de este PC. $(^ClickNext)</translation>
+        <translation>Selecciona si quieres instalar $(^NameDA) sólo para ti o para todos los usuarios de este PC. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -334,14 +338,14 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">No se han subido (%1) carpetas porque son demasiado grandes (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
+        <translation type="obsolete">No se han subido %1 carpetas porque son demasiado grandes (esta versión está limitada a %2 carpetas o %3 archivos).</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>La sincronización se detendrá.
+        <translation type="obsolete">La sincronización se detendrá.
 La eliminación de archivos/carpetas cuando la sincronización está detenida no se propaga en el servidor.
 
 ¿Salir de todas formas?</translation>
@@ -428,7 +432,7 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1  carpetas no se han subido porque son extremadamente grandes. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
+        <translation>%1 carpetas no se han subido porque son extremadamente grandes. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Error</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>No se pudo determinar el sistema de archivos. 
-		Por favor, intenta de nuevo. Si el problema persiste, por favor, ponte en contacto con: bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>La sincronización se detendrá.
+
+¿Salir de todas formas?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>iniciando</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>No se pudo acceder el sistema de archivos de MEGA.
+Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en contacto con nosotros en: bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -607,7 +623,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Select a MEGA folder:</source>
-        <translation>Selecciona una carpeta MEGA</translation>
+        <translation>Selecciona una carpeta en MEGA</translation>
     </message>
     <message>
         <source>Retrieving folders...</source>
@@ -656,7 +672,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translation>Carpeta no válida para la sincronización.
-Por favor, asegúrate que no has utilizado caracteres como \ / ó : en los nombres de tus carpetas</translation>
+Por favor, asegúrate de que no has utilizado caracteres como \ / ó : en los nombres de tus carpetas</translation>
     </message>
 </context>
 <context>
@@ -848,7 +864,7 @@ Por favor, asegúrate que no has utilizado caracteres como \ / ó : en los nombr
     </message>
     <message>
         <source>Storage space</source>
-        <translation> Uso de espacio en disco</translation>
+        <translation>Uso de espacio en disco</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -872,7 +888,7 @@ Por favor, asegúrate que no has utilizado caracteres como \ / ó : en los nombr
     </message>
     <message>
         <source>MEGA folder</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>Carpeta en MEGA</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
@@ -1047,7 +1063,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Sincronización selectiva</translation>
+        <translation>Sincronización selectiva activada</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
@@ -1055,7 +1071,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Activando la sincronización completa de tu cuenta se borrarán las sincronizaciones de carpetas actuales</translation>
+        <translation>Activando la sincronización completa de tu cuenta se dejarán de sincronizar las carpetas actuales</translation>
     </message>
     <message>
         <source>Full account sync active</source>
@@ -1063,7 +1079,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Desactivando la sincronización completa de tu cuenta te permitirá configurar sincronizaciones  selectivas de carpetas</translation>
+        <translation>Desactivando la sincronización completa de tu cuenta podrás configurar la sincronización de varias carpetas</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
@@ -1150,7 +1166,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA:</translation>
+        <translation>Carpeta en MEGA:</translation>
     </message>
     <message>
         <source>Change</source>
@@ -1264,7 +1280,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
-        <translation>Por favor, selecciona una carpeta de MEGA</translation>
+        <translation>Por favor, selecciona una carpeta en MEGA</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -1283,13 +1299,13 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos al tiempo que MEGAsync está funcionado.</translation>
+        <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos después. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>No se pudo determinar el sistema de archivos.
-Por favor, intenta de nuevo. Si el problema persiste, por favor, ponte en contacto con: bug@mega.co.nz</translation>
+        <translation>No se pudo acceder el sistema de archivos de MEGA.
+Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en contacto con nosotros en: bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -1347,7 +1363,7 @@ Por favor, intenta de nuevo. Si el problema persiste, por favor, ponte en contac
     </message>
     <message>
         <source>MEGA folder:</source>
-        <translation>Carpeta MEGA</translation>
+        <translation>Carpeta en MEGA</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1374,7 +1390,7 @@ Por favor, intenta de nuevo. Si el problema persiste, por favor, ponte en contac
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
-        <translation>Carpeta MEGA sincronizada</translation>
+        <translation>Carpeta sincronizada con MEGA</translation>
     </message>
 </context>
 </TS>

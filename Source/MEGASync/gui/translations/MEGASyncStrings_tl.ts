@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>Naghihintay ang MEGAsync</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Ang pag-sisynchronize ay itinigil.
+        <translation type="obsolete">Ang pag-sisynchronize ay itinigil.
 Ang mga pagpahing mangyayari habang hindi nag-sisync ay hindi sabayang mangyayari sa computer mo at sa cloud drive
 
 Umalis na?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Mali</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Hindi makuha ang file system. 
-		Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Ang pag-sisynchronize ay itinigil.
+
+Umalis na?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>nagsisimula na</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Hindi makuha ang file system.
+Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -844,7 +860,7 @@ Siguraduhing walang mga karacter na \ / o : sa pangalan ng folders ninyo.</trans
     </message>
     <message>
         <source>Logout</source>
-        <translation>Maglogut</translation>
+        <translation>Mag-logout</translation>
     </message>
     <message>
         <source>Storage space</source>
@@ -1082,7 +1098,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
-        <translation>Walang akong MEGA account</translation>
+        <translation>Wala akong MEGA account</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
@@ -1222,7 +1238,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Please, enter your password</source>
-        <translation>Makikilagay ng password</translation>
+        <translation>Makikilagay ng password mo</translation>
     </message>
     <message>
         <source>Please, enter your name</source>

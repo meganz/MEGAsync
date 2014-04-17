@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync laukia</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>Sinchronizacija bus sustabdyta.
+        <translation type="obsolete">Sinchronizacija bus sustabdyta.
 Ištrinimai, kurie buvo įvykdyti tuo metu, kai ji neveikė, nebus perduoti.
 
 Vistiek išeiti?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nepavyko gauti failų sistemos informacijos. 
-		Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>Sinchronizacija bus sustabdyta.
+
+Vistiek išeiti?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>pradedama</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Nepavyko gauti failų sistemos informacijos.
+Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

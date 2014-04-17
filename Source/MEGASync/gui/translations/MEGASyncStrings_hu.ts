@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>A MEGAsync várakozik</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>A szinkronizáció le fog állni.
+        <translation type="obsolete">A szinkronizáció le fog állni.
 Az olyan törlések, melyek azalatt esnek meg, míg nem fut, nem lesznek tovább terjesztve.
 
 Akkor is kilép?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nem lehet hozzájutni a fájlrendszerhez. 
-		Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel a kapcsolatot a bug@mega.co.nz címen</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>A szinkronizáció le fog állni.
+
+Akkor is kilép?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>megkezdés</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Nem lehet hozzájutni a fájlrendszerhez.
+Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel a kapcsolatot a bug@mega.co.nz címen</translation>
     </message>
 </context>
 <context>

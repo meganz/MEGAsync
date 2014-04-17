@@ -17,8 +17,8 @@
  #include <signal.h>
 #endif
 
-const int MegaApplication::VERSION_CODE = 1013;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.13");
+const int MegaApplication::VERSION_CODE = 1015;
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.15");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -65,7 +65,11 @@ int main(int argc, char *argv[])
         {
             preferences->enterUser(i);
             for(int j=0; j<preferences->getNumSyncedFolders(); j++)
+            {
                 Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
+                Utilities::removeRecursively(preferences->getLocalFolder(j) +
+                                             QDir::separator() + QString::fromAscii("Rubbish"));
+            }
             preferences->leaveUser();
         }
 
@@ -588,7 +592,7 @@ void MegaApplication::rebootApplication(bool update)
 void MegaApplication::exitApplication()
 {
     if(!megaApi->isLoggedIn() || QMessageBox::question(NULL, tr("MEGAsync"),
-            tr("Synchronization will stop.\nDeletions that occur while it is not running will not be propagated.\n\nExit anyway?"),
+            tr("Synchronization will stop.\n\nExit anyway?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         trayIcon->hide();
@@ -636,9 +640,14 @@ void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
     finished = true;
+    refreshTimer->stop();
+    trayIcon->hide();
+    QApplication::processEvents();
     stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        Platform::notifyItemChange(preferences->getLocalFolder(i));
 
     delete uploader;
     delete pasteMegaLinksDialog;
@@ -1189,8 +1198,8 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(exitAction);
 
     trayIcon->setContextMenu(trayMenu);
-
-    onSyncStateChanged(megaApi);
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
 }
 
 //Called when a request is about to start
@@ -1367,27 +1376,26 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
-        if(e->getErrorCode() == MegaError::API_OK)
-        {
-            for(int i=preferences->getNumSyncedFolders()-1; i>=0; i--)
-            {
-                if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
-                {
-                    LOG("Sync removed");
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
-                    preferences->removeSyncedFolder(i);
-                    if(infoDialog) infoDialog->updateSyncsButton();
-                    onSyncStateChanged(megaApi);
-                    break;
-                }
-            }
-        }
-        else
+        if(e->getErrorCode() != MegaError::API_OK)
         {
             showErrorMessage(e->QgetErrorString());
             if(settingsDialog)
                 settingsDialog->loadSettings();
         }
+        else
+        {
+            QString syncPath = QString::fromUtf8(request->getFile());
+
+            #ifdef WIN32
+            if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+                syncPath = syncPath.mid(4);
+            #endif
+
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii("Rubbish"));
+            Platform::notifyItemChange(syncPath);
+        }
+        if(infoDialog) infoDialog->updateSyncsButton();
+        onSyncStateChanged(megaApi);
         break;
     }
     default:
@@ -1491,9 +1499,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if(lastStartedUpload == transfer->getStartTime())
             lastStartedUpload = 0;
         preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
+        if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
     }
-
-    if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
@@ -1636,8 +1643,11 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    //Don't reload the filesystem here because it's unsafe
+    //and the most probable cause for this callback is a false positive.
+    //Simply set the crashed flag to force a filesystem reload in the next execution.
     preferences->setCrashed(true);
-    megaApi->fetchNodes();
+    //megaApi->fetchNodes();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *)

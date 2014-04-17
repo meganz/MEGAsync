@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync في انتظار</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>المزامنة سوف تتوقف
+        <translation type="obsolete">المزامنة سوف تتوقف
 عمليات الحذف التي تحدث في حين أنه لم يتن قيد التشغيل لن يتم نشرها  .
 
 الخروج علي اي حال؟</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>خطأ</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>غير قادر على الحصول على نظام الملفات. 
-		يرجى المحاولة مرة أخرى. إذا استمرت المشكلة يرجى الاتصال ب bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>المزامنة سوف تتوقف
+
+الخروج علي اي حال؟</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>جاري البدء</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>غير قادر على الحصول على نظام الملفات.
+يرجى المحاولة مرة أخرى. إذا استمرت المشكلة يرجى الاتصال ب bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

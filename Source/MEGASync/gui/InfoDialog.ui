@@ -313,7 +313,7 @@ border: none;</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <property name="minimumSize">
@@ -366,7 +366,7 @@ border: none;</string>
        <item row="1" column="0">
         <widget class="QLabel" name="lSyncUpdated">
          <property name="text">
-          <string>MEGAsync is up to date</string>
+          <string>MEGAsync is starting</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

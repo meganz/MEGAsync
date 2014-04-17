@@ -118,7 +118,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Import to my cloud drive</source>
-        <translation>นำเข้าสู่ Cloud Drive ของฉัน</translation>
+        <translation>นำเข้าสู่คลาวด์ไดรฟ์ของฉัน</translation>
     </message>
     <message>
         <source>OK</source>
@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync กำลังรอ</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>MEGAsync is starting</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>การซิงโครไนซ์จะถูกหยุดไว้
+        <translation type="obsolete">การซิงโครไนซ์จะถูกหยุดไว้
 การลบไฟล์ขณะที่โปรแกรมยังไม่ได้ทำงาน จะไม่ถูกเผยแพร่
 
 จบการทำงานหรือไม่</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้ 
-		กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>การซิงโครไนซ์จะถูกหยุดไว้
+
+จบการทำงานหรือไม่</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>กำลังเริ่ม</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้
+กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
@@ -627,7 +643,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation>Cloud Drive</translation>
+        <translation>คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1126,7 +1142,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
-        <translation>ซิงค์ใน Cloud Drive ของคุณ</translation>
+        <translation>ซิงค์ในคลาวด์ไดรฟ์ของคุณ</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -1138,7 +1154,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>ซิงค์โฟลเดอร์ที่ระบุไว้ใน Cloud Drive ของคุณ</translation>
+        <translation>ซิงค์โฟลเดอร์ที่ระบุไว้ในคลาวด์ไดรฟ์ของคุณ</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -1251,12 +1267,12 @@ when the application starts again.</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>คุณมี %1 ใน Cloud Drive ของคุณ
-คุณแน่ใจว่าต้องการซิงค์ใน Cloud Drive ทั้งหมดของคุณหรือไม่</translation>
+        <translation>คุณมี %1 ในคลาวด์ไดรฟ์ของคุณ
+คุณแน่ใจว่าต้องการซิงค์ในคลาวด์ไดรฟ์ทั้งหมดของคุณหรือไม่</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>และ Cloud Drive MEGA ของคุณ</translation>
+        <translation>และคลาวด์ไดรฟ์บน MEGA ของคุณ</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>

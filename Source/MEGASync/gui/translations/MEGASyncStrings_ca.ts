@@ -267,6 +267,10 @@ Are you sure?</source>
         <source>MEGAsync is waiting</source>
         <translation>MEGAsync està esperant</translation>
     </message>
+    <message>
+        <source>MEGAsync is starting</source>
+        <translation>El MEGAsync s&apos;està iniciant</translation>
+    </message>
 </context>
 <context>
     <name>Installer</name>
@@ -341,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation>La sincronització es pararà.
+        <translation type="obsolete">La sincronització es pararà.
 Les eliminacions que es facin mentre el programa no estigui funcionant no es propagaran.
 
 Sortir de totes maneres?</translation>
@@ -476,10 +480,22 @@ https://mega.co.nz/#sync</source>
         <translation>Error</translation>
     </message>
     <message>
-        <source>Unable to get the filesystem. 
-		Please try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Impossible aconseguir el sistema de fitxers. 
-		Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte amb bug@mega.co.nz</translation>
+        <source>Synchronization will stop.
+
+Exit anyway?</source>
+        <translation>La sincronització es pararà.
+
+Sortir de totes maneres?</translation>
+    </message>
+    <message>
+        <source>Starting</source>
+        <translation>iniciant</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translation>Impossible aconseguir el sistema de fitxers.
+Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte amb bug@mega.co.nz</translation>
     </message>
 </context>
 <context>
