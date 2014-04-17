@@ -29,10 +29,9 @@ DEALINGS IN THE SOFTWARE.
 #define PREFER_STDARG
 #include "megaapi.h"
 
-#include "strings.h"
-
 #ifdef __APPLE__
     #include "xlocale.h"
+    #include "strings.h"
 #endif
 
 #ifdef USE_QT
