@@ -1099,6 +1099,12 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
+    if((settings->value(lastVersionKey).toInt() < 1015) &&
+       (MegaApplication::VERSION_CODE >= 1015))
+    {
+        excludedSyncNames.append(QString::fromUtf8("Icon?"));
+    }
+
     QMap<QString, QString> strMap;
     foreach ( QString str, excludedSyncNames ) {
         strMap.insert( str.toLower(), str );
