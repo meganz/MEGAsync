@@ -128,23 +128,14 @@ font-style: italic;
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
    <property name="horizontalSpacing">
     <number>0</number>
    </property>
    <property name="verticalSpacing">
     <number>2</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
    </property>
    <item row="1" column="0">
     <widget class="QWidget" name="wTabHeader" native="true">
@@ -351,16 +342,7 @@ font-style: italic;
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
+      <property name="margin">
        <number>0</number>
       </property>
       <item>
@@ -489,10 +471,13 @@ font-style: italic;
    <item row="2" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="topMargin">
         <number>0</number>
        </property>
@@ -545,16 +530,7 @@ font-style: italic;
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -563,16 +539,7 @@ font-style: italic;
                 <property name="spacing">
                  <number>0</number>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
+                <property name="margin">
                  <number>0</number>
                 </property>
                 <item>
@@ -661,16 +628,7 @@ font-style: italic;
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -745,16 +703,7 @@ font-style: italic;
              <item>
               <widget class="QWidget" name="widget_5" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_5">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
+                <property name="margin">
                  <number>0</number>
                 </property>
                 <item>
@@ -808,16 +757,7 @@ font-style: italic;
              <item>
               <widget class="QWidget" name="widget_6" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_15">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
+                <property name="margin">
                  <number>0</number>
                 </property>
                 <item>
@@ -842,16 +782,7 @@ font-style: italic;
                    </size>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_13">
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
+                   <property name="margin">
                     <number>0</number>
                    </property>
                    <item>
@@ -966,7 +897,7 @@ font-style: italic;
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>6</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -1229,7 +1160,7 @@ padding-right: 20px;</string>
            <number>6</number>
           </property>
           <property name="verticalSpacing">
-           <number>-1</number>
+           <number>6</number>
           </property>
           <property name="topMargin">
            <number>12</number>
@@ -1254,16 +1185,7 @@ padding-right: 20px;</string>
           <item row="2" column="1">
            <widget class="QWidget" name="wUploadLimit" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1496,16 +1418,7 @@ padding: 4px;</string>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1633,16 +1546,7 @@ padding: 4px;</string>
              </sizepolicy>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
