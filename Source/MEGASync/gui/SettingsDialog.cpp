@@ -4,6 +4,10 @@
 #include <QRect>
 #include <QTranslator>
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
 #include "ui_SettingsDialog.h"

@@ -101,7 +101,7 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
 #if QT_VERSION < 0x050000
     QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #else
-    QString newPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
 #endif
 
     QDir dir(dataPath);
@@ -1097,6 +1097,12 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8("desktop.ini"));
         excludedSyncNames.append(QString::fromUtf8("~*"));
         excludedSyncNames.append(QString::fromUtf8(".*"));
+    }
+
+    if((settings->value(lastVersionKey).toInt() < 1015) &&
+       (MegaApplication::VERSION_CODE >= 1015))
+    {
+        excludedSyncNames.append(QString::fromUtf8("Icon?"));
     }
 
     QMap<QString, QString> strMap;

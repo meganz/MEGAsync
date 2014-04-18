@@ -58,11 +58,9 @@ void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError
         LOG("Public node");
         LOG(QString::number(currentIndex));
         LOG(QString::number(e->getErrorCode()));
-        if(!request->getPublicNode())
-            LOG("NULL");
 
         if(e->getErrorCode() != MegaError::API_OK)  linkNode[currentIndex] = NULL;
-        else linkNode[currentIndex] = new MegaNode(request->getPublicNode());
+        else linkNode[currentIndex] = request->getPublicNode();
 
 		linkError[currentIndex] = e->getErrorCode();
 		linkSelected[currentIndex] = (linkError[currentIndex]==MegaError::API_OK);

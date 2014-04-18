@@ -29,6 +29,11 @@ DEALINGS IN THE SOFTWARE.
 #define PREFER_STDARG
 #include "megaapi.h"
 
+#ifdef __APPLE__
+    #include "xlocale.h"
+    #include "strings.h"
+#endif
+
 #ifdef USE_QT
     #include "platform/Platform.h"
     #include "control/Utilities.h"
@@ -2171,8 +2176,10 @@ int SearchTreeProcessor::processNode(Node* node)
 	if(!node) return 1;
 	if(!search) return 0;
 #ifndef _WIN32
+#ifndef __APPLE__
     if(strcasestr(node->displayname(), search)!=NULL) results.push_back(node);
-//TODO: Implement this for Windows
+//TODO: Implement this for Windows and MacOS
+#endif
 #endif
 	return 1;
 }
@@ -2927,7 +2934,7 @@ void MegaApi::openfilelink_result(error result)
 
 // the requested link was opened successfully
 // (it is the application's responsibility to delete n!)
-void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, time_t ts, time_t tm, int)
+void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, m_time_t ts, m_time_t tm, int)
 {
     LOG("openfilelink_result");
 	//cout << "Importing " << n->displayname() << "..." << endl;
@@ -3285,7 +3292,7 @@ void MegaApi::checkfile_result(handle h, error e)
     LOG("Link check failed");
 }
 
-void MegaApi::checkfile_result(handle h, error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring)
+void MegaApi::checkfile_result(handle h, error e, byte* filekey, m_off_t size, m_time_t ts, m_time_t tm, string* filename, string* fingerprint, string* fileattrstring)
 {
     LOG("Link check OK");
 }

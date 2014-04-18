@@ -42,7 +42,7 @@ SOURCES += $$PWD/sdk/src/win32/net.cpp  \
     $$PWD/win32/megaapiwinhttpio.cpp
 }
 
-unix:!mac {
+unix {
 SOURCES += $$PWD/sdk/src/posix/net.cpp  \
     $$PWD/sdk/src/posix/fs.cpp  \
     $$PWD/sdk/src/posix/waiter.cpp \
@@ -152,7 +152,7 @@ win32 {
     LIBS += -lwinhttp -lws2_32 -luser32
 }
 
-unix {
+unix:!macx {
    INCLUDEPATH += $$PWD/sdk/include
    INCLUDEPATH += $$PWD/sdk/include/mega/posix
    INCLUDEPATH += /usr/include/cryptopp
@@ -166,4 +166,15 @@ unix {
    else {
     LIBS += -lcurl
    }
+}
+
+macx {
+   INCLUDEPATH += $$PWD/sdk/include
+   INCLUDEPATH += $$PWD/sdk/include/mega/posix
+   INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
+
+   LIBS += -lsqlite3
+
+   INCLUDEPATH += $$PWD/3rdparty/include/curl
+   LIBS += -L$$PWD/3rdparty/libs/ $$PWD/3rdparty/libs/libcares.a $$PWD/3rdparty/libs/libcurl.a -lz -lssl -lcrypto
 }
