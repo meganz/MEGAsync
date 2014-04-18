@@ -72,12 +72,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->rProxyAuto->hide();
 #endif
 
-    if(!proxyOnly && preferences->logged())
+    /*if(!proxyOnly && preferences->logged())
     {
         connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
         QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
         cacheSizeWatcher.setFuture(futureCacheSize);
-    }
+    }*/
 
     ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
