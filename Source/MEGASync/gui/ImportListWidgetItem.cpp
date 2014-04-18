@@ -11,6 +11,7 @@ ImportListWidgetItem::ImportListWidgetItem(QString link, int id, QWidget *parent
 	ui->setupUi(this);
 	this->id = id;
 	this->link = link;
+    this->fileSize = 0;
 	status = LOADING;
 	fileName = link;
 	updateGui();

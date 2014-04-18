@@ -1043,7 +1043,7 @@ protected:
     virtual void checkout_result(const char*) { }
 
 	virtual void checkfile_result(mega::handle h, mega::error e);
-	virtual void checkfile_result(mega::handle h, mega::error e, byte* filekey, m_off_t size, time_t ts, time_t tm, string* filename, string* fingerprint, string* fileattrstring);
+    virtual void checkfile_result(mega::handle h, mega::error e, byte* filekey, m_off_t size, m_time_t ts, m_time_t tm, string* filename, string* fingerprint, string* fileattrstring);
 
 	// user invites/attributes
     virtual void invite_result(mega::error);
@@ -1057,7 +1057,7 @@ protected:
 
     // exported link access result
 	virtual void openfilelink_result(mega::error);
-	virtual void openfilelink_result(mega::handle, const byte*, m_off_t, string*, const char*, time_t, time_t, int);
+    virtual void openfilelink_result(mega::handle, const byte*, m_off_t, string*, const char*, m_time_t, m_time_t, int);
 
     // global transfer queue updates (separate signaling towards the queued objects)
     virtual void transfer_added(mega::Transfer*);
