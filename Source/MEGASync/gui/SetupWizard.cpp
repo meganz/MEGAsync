@@ -11,6 +11,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowModality(Qt::WindowModal);
+
     ui->wAdvancedSetup->installEventFilter(this);
     ui->wTypicalSetup->installEventFilter(this);
     ui->lTermsLink->installEventFilter(this);
