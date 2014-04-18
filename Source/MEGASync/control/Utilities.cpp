@@ -267,6 +267,8 @@ QPixmap Utilities::getExtensionPixmapMedium(QString fileName)
 
 bool Utilities::removeRecursively(QDir dir)
 {
+    return true;
+    /*
     if (!dir.exists())
         return true;
 
@@ -289,7 +291,7 @@ bool Utilities::removeRecursively(QDir dir)
     if (success)
         success = dir.rmdir(dir.absolutePath());
 
-    return success;
+    return success;*/
 }
 
 void Utilities::copyRecursively(QString srcPath, QString dstPath, bool overwrite)
