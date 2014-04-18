@@ -116,7 +116,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -156,6 +156,12 @@ font-weight: bold;
           </property>
           <item>
            <widget class="QRadioButton" name="rHaveAccount">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>I have a MEGA account</string>
             </property>
@@ -166,6 +172,12 @@ font-weight: bold;
           </item>
           <item>
            <widget class="QRadioButton" name="rDontHaveAccount">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>I don't have a MEGA account</string>
             </property>
