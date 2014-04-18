@@ -81,9 +81,16 @@ int main(int argc, char *argv[])
 #else
     QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
 #endif
-        QDir dataDir(dataPath);
-        Utilities::removeRecursively(dataDir);
+        QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
+        while (di.hasNext()) {
+            di.next();
+            const QFileInfo& fi = di.fileInfo();
+            if(fi.fileName().endsWith(QString::fromAscii(".db")) || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg")))
+                QFile::remove(di.filePath());
+        }
 
+        //QDir dataDir(dataPath);
+        //Utilities::removeRecursively(dataDir);
         return 0;
     }
 
@@ -210,7 +217,6 @@ void MegaApplication::initialize()
     lastExit = preferences->getLastExit();
 
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
-    Utilities::removeRecursively(QDir(basePath + QString::fromAscii("cache")));
 
 #if QT_VERSION < 0x050000
     QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
