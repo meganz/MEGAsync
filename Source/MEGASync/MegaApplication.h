@@ -15,6 +15,7 @@
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
+#include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
@@ -93,6 +94,7 @@ public slots:
     void pauseSync();
     void resumeSync();
 	void importLinks();
+    void uploadActionClicked();
     void copyFileLink(mega::handle fileHandle);
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
@@ -113,6 +115,7 @@ public slots:
     void onDupplicateLink(QString link, QString name, long long handle);
     void onDupplicateUpload(QString localPath, QString name, long long handle);
     void onInstallUpdateClicked();
+    void showInfoDialog();
 
 protected:
     void createTrayIcon();
@@ -130,6 +133,7 @@ protected:
     QAction *pauseAction;
     QAction *resumeAction;
 	QAction *importLinksAction;
+    QAction *uploadAction;
     QAction *aboutAction;
     QAction *changeProxyAction;
     QAction *initialExitAction;
@@ -142,6 +146,7 @@ protected:
     MegaApi *megaApi;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
+    MultiQFileDialog *multiUploadFileDialog;
 	QQueue<QString> uploadQueue;
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
@@ -154,6 +159,7 @@ protected:
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     QTimer *refreshTimer;
+    QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     QString lastTrayMessage;
