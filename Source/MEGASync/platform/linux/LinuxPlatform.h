@@ -18,7 +18,11 @@ class LinuxPlatform
 
 private:
     static ExtServer *ext_server;
-    LinuxPlatform() {};
+    static QString set_icon;
+    static QString custom_icon;
+    static QString remove_icon;
+
+    LinuxPlatform() {}
 public:
     static void initialize(int argc, char *argv[]);
     static QString desktop_file;

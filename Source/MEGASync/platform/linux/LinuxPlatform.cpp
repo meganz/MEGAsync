@@ -3,7 +3,9 @@
 ExtServer *LinuxPlatform::ext_server = NULL;
 
 QString LinuxPlatform::desktop_file = QDir::homePath() + QString::fromAscii("/.config/autostart/megasync.desktop");
-
+QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string %1 metadata::custom-icon file://%2");
+QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset %1 metadata::custom-icon");
+QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/512x512/apps/mega.png");
 
 void LinuxPlatform::initialize(int argc, char *argv[])
 {
@@ -68,10 +70,13 @@ void LinuxPlatform::stopShellDispatcher()
 
 void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
+    if(QFile(custom_icon).exists())
+        QProcess::startDetached(set_icon.arg(syncPath).arg(custom_icon));
 }
 
 void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
+    QProcess::startDetached(remove_icon.arg(syncPath));
 }
 
 QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)
