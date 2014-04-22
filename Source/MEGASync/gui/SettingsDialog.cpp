@@ -70,6 +70,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     ui->rProxyAuto->hide();
+    ui->cOverlayIcons->hide();
 #endif
 
     /*if(!proxyOnly && preferences->logged())
@@ -437,6 +438,8 @@ void SettingsDialog::loadSettings()
         QStringList excludedNames = preferences->getExcludedSyncNames();
         for(int i=0; i<excludedNames.size(); i++)
             ui->lExcludedNames->addItem(excludedNames[i]);
+
+        ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
     if(!proxyTestProgressDialog)
@@ -611,6 +614,13 @@ bool SettingsDialog::saveSettings()
                                                                             "when the application starts again."), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
+        }
+
+        if(ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
+        {
+            preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
+            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+                Platform::notifyItemChange(preferences->getLocalFolder(i));
         }
     }
 

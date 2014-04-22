@@ -69,7 +69,8 @@ const QString Preferences::lastUpdateTimeKey        = QString::fromAscii("lastUp
 const QString Preferences::lastUpdateVersionKey     = QString::fromAscii("lastUpdateVersion");
 const QString Preferences::previousCrashesKey       = QString::fromAscii("previousCrashes");
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
-const QString Preferences::lastExitKey            = QString::fromAscii("lastExit");
+const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
+const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1026,6 +1027,22 @@ void Preferences::setLastStatsRequest(long long value)
 {
     mutex.lock();
     settings->setValue(lastStatsRequestKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::overlayIconsDisabled()
+{
+    mutex.lock();
+    bool result = settings->value(disableOverlayIconsKey, false).toBool();
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::disableOverlayIcons(bool value)
+{
+    mutex.lock();
+    settings->setValue(disableOverlayIconsKey, value);
     settings->sync();
     mutex.unlock();
 }
