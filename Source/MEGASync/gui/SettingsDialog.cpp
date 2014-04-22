@@ -26,7 +26,7 @@ long long calculateCacheSize()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii("Rubbish"), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER), &cacheSize);
     }
     return cacheSize;
 }
@@ -38,7 +38,7 @@ void deleteCache()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii("Rubbish")));
+            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER)));
     }
 }
 
