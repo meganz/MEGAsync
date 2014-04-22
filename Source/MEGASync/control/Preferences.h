@@ -128,6 +128,9 @@ public:
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
 
+    bool overlayIconsDisabled();
+    void disableOverlayIcons(bool value);
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -233,6 +236,7 @@ protected:
     static const QString previousCrashesKey;
     static const QString lastRebootKey;
     static const QString lastExitKey;
+    static const QString disableOverlayIconsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

@@ -489,7 +489,7 @@ font-style: italic;
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1329,7 +1329,7 @@ padding-right: 20px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>18</height>
+                <height>16</height>
                </size>
               </property>
               <property name="text">
@@ -1518,6 +1518,28 @@ padding: 4px;</string>
            <widget class="QPushButton" name="bClearCache">
             <property name="text">
              <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="title">
+          <string>Others</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QCheckBox" name="cOverlayIcons">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Disable overlay icons</string>
             </property>
            </widget>
           </item>
@@ -2053,6 +2075,22 @@ padding: 4px;</string>
     <hint type="destinationlabel">
      <x>213</x>
      <y>226</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cOverlayIcons</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>438</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>259</y>
     </hint>
    </hints>
   </connection>
