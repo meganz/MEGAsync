@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
             {
                 Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
                 Utilities::removeRecursively(preferences->getLocalFolder(j) +
-                                             QDir::separator() + QString::fromAscii("Rubbish"));
+                                             QDir::separator() + QString::fromAscii(DEBRISFOLDER));
             }
             preferences->leaveUser();
         }
@@ -1481,7 +1481,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 syncPath = syncPath.mid(4);
             #endif
 
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii("Rubbish"));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
             Platform::notifyItemChange(syncPath);
         }
         if(infoDialog) infoDialog->updateSyncsButton();

@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
     #include "control/Utilities.h"
 #else
     #define QT_TR_NOOP(x) (x)
-    #define LOG(x) 
+    #define LOG(x)
 #endif
 
 #ifdef _WIN32
@@ -2632,7 +2632,7 @@ void MegaApi::fetchnodes_result(error e)
     #endif
             client->fsaccess->path2local(&utf8name, &localname);
             LOG("addSync");
-            error syncError = client->addsync(&localname, "Rubbish", NULL, node, -1);
+            error syncError = client->addsync(&localname, DEBRISFOLDER, NULL, node, -1);
             fireOnRequestFinish(this, syncRequest, MegaError(syncError));
         }
     }
@@ -4528,7 +4528,7 @@ void MegaApi::sendPendingRequests()
             string localname;
             client->fsaccess->path2local(&utf8name, &localname);
             LOG("addSync");
-            e = client->addsync(&localname, "Rubbish", NULL, node, -1);
+            e = client->addsync(&localname, DEBRISFOLDER, NULL, node, -1);
             if(!e)
             {
                 client->restag = nextTag;
