@@ -5,17 +5,13 @@
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
+#include "qtlockedfile/qtlockedfile.h"
 
 #include <QTranslator>
 #include <QClipboard>
 #include <QDesktopWidget>
-#include <QSharedMemory>
 #include <QFontDatabase>
 #include <QNetworkProxy>
-
-#ifdef Q_OS_UNIX
- #include <signal.h>
-#endif
 
 const int MegaApplication::VERSION_CODE = 1015;
 const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.15");
@@ -25,16 +21,11 @@ const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASync
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 
-QSharedMemory singleInstanceChecker;
-
-#ifdef Q_OS_UNIX
-static void on_sigint(int sig);
-#endif
-
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
+    QString appLockPath = QDir::current().filePath(QString::fromAscii("megasync.lock"));
     QDir crashDir(crashPath);
     if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
 
@@ -42,23 +33,7 @@ int main(int argc, char *argv[])
     CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
 #endif
 
-    singleInstanceChecker.setKey(QString::fromAscii("MEGAsyncSingleInstanceChecker"));
-    if((argc == 2) && !strcmp("/reboot", argv[1]))
-    {
-        //If the app is being restarted, wait up to 10 seconds or until the previous instance ends.
-        for(int i=0; i<10; i++)
-        {
-            if(!singleInstanceChecker.attach()) break;
-            singleInstanceChecker.detach();
-
-            #ifdef WIN32
-                Sleep(1000);
-            #else
-                sleep(1);
-            #endif
-        }
-    }
-    else if((argc == 2) && !strcmp("/uninstall", argv[1]))
+    if((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
         if(preferences->logged())
@@ -94,9 +69,28 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
-        return 0;
+    SharedTools::QtLockedFile singleInstanceChecker(appLockPath);
+    bool alreadyStarted = true;
+    for(int i=0; i<10; i++)
+    {
+        singleInstanceChecker.open(SharedTools::QtLockedFile::ReadWrite);
+        if(singleInstanceChecker.lock(SharedTools::QtLockedFile::WriteLock, false))
+        {
+            alreadyStarted = false;
+            break;
+        }
 
+        #ifdef WIN32
+            Sleep(1000);
+        #else
+            sleep(1);
+        #endif
+    }
+    if(alreadyStarted)
+    {
+        cout << "ALREADY STARTED" << endl;
+        return 0;
+    }
 
     Platform::initialize(argc, argv);
 
@@ -296,11 +290,6 @@ void MegaApplication::initialize()
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
 
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
-
-#ifdef Q_OS_UNIX
-    // instal signal handler
-    signal(SIGINT, on_sigint);
-#endif
 }
 
 QString MegaApplication::applicationFilePath()
@@ -603,13 +592,8 @@ void MegaApplication::rebootApplication(bool update)
     }
 
     #ifndef __APPLE__
-
         QString app = MegaApplication::applicationFilePath();
-        QStringList args = QStringList();
-
-        args.append(QString::fromAscii("/reboot"));
-        QProcess::startDetached(app, args);
-
+        QProcess::startDetached(app);
     #else
         QString app = MegaApplication::applicationDirPath();
         QString launchCommand = QString::fromUtf8("open");
@@ -662,20 +646,6 @@ void MegaApplication::refreshTrayIcon()
     if(trayIcon) trayIcon->show();
 }
 
-#ifdef Q_OS_UNIX
-// signal handler
-static void on_sigint(int)
-{
-    // delete shared memory key
-    singleInstanceChecker.detach();
-
-    // reset the default handler
-    signal(SIGINT, SIG_DFL);
-    // call again
-    raise(SIGINT);
-}
-#endif
-
 void MegaApplication::cleanAll()
 {
     LOG("Cleaning resources");
@@ -696,9 +666,6 @@ void MegaApplication::cleanAll()
     delete megaApi;
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
-
-    // remove shared memory key
-    singleInstanceChecker.detach();
     trayIcon->deleteLater();
     //QFontDatabase::removeAllApplicationFonts();
 }

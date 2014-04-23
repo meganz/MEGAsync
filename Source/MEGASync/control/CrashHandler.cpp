@@ -71,9 +71,7 @@ bool DumpCallback(const char* _dump_dir,const char* _minidump_id,void *context, 
         LOG("Reboot");
         preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
         QString app = MegaApplication::applicationFilePath();
-        QStringList args = QStringList();
-        args.append(QString::fromAscii("/reboot"));
-        QProcess::startDetached(app, args);
+        QProcess::startDetached(app);
     }
     else
     {
