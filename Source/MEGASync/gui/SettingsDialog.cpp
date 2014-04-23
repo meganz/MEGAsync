@@ -1082,6 +1082,16 @@ void SettingsDialog::on_bUpdate_clicked()
     app->checkForUpdates();
 }
 
+void SettingsDialog::on_bFullCheck_clicked()
+{
+    preferences->setCrashed(true);
+    if(QMessageBox::warning(this, tr("Full check"), tr("MEGAsync will perform a full check of your synced folders\nwhen it's restarted.\n\nDo you want to restart MEGAsync now?"),
+                         QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+    {
+        app->rebootApplication(false);
+    }
+}
+
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText, int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :
     QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, f) {}
 
