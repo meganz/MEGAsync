@@ -97,6 +97,7 @@ int main(int argc, char *argv[])
     if(singleInstanceChecker.attach() || !singleInstanceChecker.create(1))
         return 0;
 
+
     Platform::initialize(argc, argv);
 
 #ifndef WIN32
@@ -142,6 +143,7 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
@@ -592,10 +594,29 @@ void MegaApplication::rebootApplication(bool update)
         return;
     }
 
-    QString app = MegaApplication::applicationFilePath();
-    QStringList args = QStringList();
-    args.append(QString::fromAscii("/reboot"));
-    QProcess::startDetached(app, args);
+    #ifndef __APPLE__
+
+        QString app = MegaApplication::applicationFilePath();
+        QStringList args = QStringList();
+
+        args.append(QString::fromAscii("/reboot"));
+        QProcess::startDetached(app, args);
+
+    #else
+        QString app = MegaApplication::applicationDirPath();
+        QString launchCommand = QString::fromUtf8("open");
+        QStringList args = QStringList();
+
+        QDir appPath(app);
+        appPath.cdUp();
+        appPath.cdUp();
+
+        args.append(QString::fromAscii("-n"));
+        args.append(appPath.absolutePath());
+        QProcess::startDetached(launchCommand, args);
+    #endif
+
+
     trayIcon->hide();
     QApplication::exit();
 }
@@ -746,7 +767,9 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
-#ifdef WIN32
+
+#if defined(WIN32) || defined(__APPLE__)
+
     if(!updateThread && preferences->canUpdate())
     {
         updateThread = new QThread();
