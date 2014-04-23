@@ -27,6 +27,10 @@ win32 {
     LIBS += -lws2_32
 }
 
+macx {
+   LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs
+}
+
 DEFINES += USE_CRYPTOPP
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/3rdparty/include/cryptopp ../MEGASync/sdk/include/ ../MEGASync/sdk/sdk/include/
@@ -35,7 +39,7 @@ win32 {
     INCLUDEPATH += ../MEGASync/sdk/sdk/include/mega/win32
 }
 
-unix:!macx {
+unix {
     INCLUDEPATH += ../MEGASync/sdk/sdk/include/mega/posix
 }
 
