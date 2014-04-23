@@ -26,7 +26,7 @@ long long calculateCacheSize()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii("Rubbish"), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER), &cacheSize);
     }
     return cacheSize;
 }
@@ -38,7 +38,7 @@ void deleteCache()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii("Rubbish")));
+            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER)));
     }
 }
 
@@ -70,6 +70,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     ui->rProxyAuto->hide();
+    ui->cOverlayIcons->hide();
 #endif
 
     /*if(!proxyOnly && preferences->logged())
@@ -437,6 +438,8 @@ void SettingsDialog::loadSettings()
         QStringList excludedNames = preferences->getExcludedSyncNames();
         for(int i=0; i<excludedNames.size(); i++)
             ui->lExcludedNames->addItem(excludedNames[i]);
+
+        ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
     if(!proxyTestProgressDialog)
@@ -611,6 +614,13 @@ bool SettingsDialog::saveSettings()
                                                                             "when the application starts again."), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
+        }
+
+        if(ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
+        {
+            preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
+            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+                Platform::notifyItemChange(preferences->getLocalFolder(i));
         }
     }
 
@@ -1070,6 +1080,16 @@ void SettingsDialog::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthe
 void SettingsDialog::on_bUpdate_clicked()
 {
     app->checkForUpdates();
+}
+
+void SettingsDialog::on_bFullCheck_clicked()
+{
+    preferences->setCrashed(true);
+    if(QMessageBox::warning(this, tr("Full check"), tr("MEGAsync will perform a full check of your synced folders\nwhen it's restarted.\n\nDo you want to restart MEGAsync now?"),
+                         QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+    {
+        app->rebootApplication(false);
+    }
 }
 
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText, int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :

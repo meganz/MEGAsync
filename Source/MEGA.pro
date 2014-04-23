@@ -1,9 +1,9 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync
+SUBDIRS += MEGASync MEGAUpdater
 
 win32 {
-    SUBDIRS += MEGAShellExt MEGAUpdater MEGACrashAnalyzer
+    SUBDIRS += MEGAShellExt MEGACrashAnalyzer
 }
 
 unix:!macx {

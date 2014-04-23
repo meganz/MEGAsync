@@ -92,6 +92,7 @@ private slots:
     void onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator* auth);
     void on_bUpdate_clicked();
     void on_bSyncChange_clicked();
+    void on_bFullCheck_clicked();
 
 protected:
     void changeEvent(QEvent * event);
