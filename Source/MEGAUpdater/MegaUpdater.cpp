@@ -13,10 +13,12 @@
 using namespace mega;
 using namespace std;
 
-const char APP_VERSION[] = "1002";
-const char SERVER_BASE_URL[] = "http://g.static.mega.co.nz/upd/wsync/";
+const char APP_VERSION[] = "1015";
 
-const char *TARGET_PATHS[] = {
+const char SERVER_BASE_URL_WIN[] = "http://g.static.mega.co.nz/upd/wsync/";
+const char SERVER_BASE_URL_OSX[] = "http://g.static.mega.co.nz/upd/osxsync/megasync.app/";
+
+const char *TARGET_PATHS_WIN[] = {
     "MEGAsync.exe",
     "ShellExtX32.dll",
     "ShellExtX64.dll",
@@ -32,7 +34,7 @@ const char *TARGET_PATHS[] = {
     "imageformats/qtiff4.dll"
 };
 
-const char *UPDATE_FILES[] = {
+const char *UPDATE_FILES_WIN[] = {
     "MEGAsync.exe",
     "ShellExtX32.dll",
     "ShellExtX64.dll",
@@ -48,6 +50,68 @@ const char *UPDATE_FILES[] = {
     "qtiff4.dll"
 };
 
+const char *TARGET_PATHS_OSX[] = {
+    "Contents/MacOS/megasync",
+    "Contents/Info.plist",
+    "Contents/PkgInfo",
+
+    "Contents/Frameworks/QtCore.framework/Versions/4/QtCore",
+    "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/classes.nib",
+    "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/info.nib",
+    "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/keyedobjects.nib",
+    "Contents/Frameworks/QtGui.framework/Versions/4/QtGui",
+    "Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork",
+
+    "Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib",
+    "Contents/PlugIns/bearer/libqcorewlanbearer.dylib",
+    "Contents/PlugIns/bearer/libqgenericbearer.dylib",
+    "Contents/PlugIns/codecs/libqcncodecs.dylib",
+    "Contents/PlugIns/codecs/libqjpcodecs.dylib",
+    "Contents/PlugIns/codecs/libqkrcodecs.dylib",
+    "Contents/PlugIns/codecs/libqtwcodecs.dylib",
+    "Contents/PlugIns/imageformats/libqgif.dylib",
+    "Contents/PlugIns/imageformats/libqico.dylib",
+    "Contents/PlugIns/imageformats/libqjpeg.dylib",
+    "Contents/PlugIns/imageformats/libqmng.dylib",
+    "Contents/PlugIns/imageformats/libqtga.dylib",
+    "Contents/PlugIns/imageformats/libqtiff.dylib",
+
+    "Contents/Resources/empty.lproj",
+    "Contents/Resources/mlogo.icns",
+    "Contents/Resources/qt.conf"
+};
+
+const char *UPDATE_FILES_OSX[] = {
+    "Contents/MacOS/megasync",
+    "Contents/Info.plist",
+    "Contents/PkgInfo",
+
+    "Contents/Frameworks/QtCore.framework/Versions/4/QtCore",
+    "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/classes.nib",
+    "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/info.nib",
+    "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/keyedobjects.nib",
+    "Contents/Frameworks/QtGui.framework/Versions/4/QtGui",
+    "Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork",
+
+    "Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib",
+    "Contents/PlugIns/bearer/libqcorewlanbearer.dylib",
+    "Contents/PlugIns/bearer/libqgenericbearer.dylib",
+    "Contents/PlugIns/codecs/libqcncodecs.dylib",
+    "Contents/PlugIns/codecs/libqjpcodecs.dylib",
+    "Contents/PlugIns/codecs/libqkrcodecs.dylib",
+    "Contents/PlugIns/codecs/libqtwcodecs.dylib",
+    "Contents/PlugIns/imageformats/libqgif.dylib",
+    "Contents/PlugIns/imageformats/libqico.dylib",
+    "Contents/PlugIns/imageformats/libqjpeg.dylib",
+    "Contents/PlugIns/imageformats/libqmng.dylib",
+    "Contents/PlugIns/imageformats/libqtga.dylib",
+    "Contents/PlugIns/imageformats/libqtiff.dylib",
+
+    "Contents/Resources/empty.lproj",
+    "Contents/Resources/mlogo.icns",
+    "Contents/Resources/qt.conf"
+};
+
 template <typename T, std::size_t N>
 char (&static_sizeof_array( T(&)[N] ))[N];
 #define SIZEOF_ARRAY( x ) sizeof(static_sizeof_array(x))
@@ -56,7 +120,7 @@ void printUsage(const char* appname)
 {
     cout << "Usage: " << endl;
     cout << "Sign an update:" << endl;
-    cout << "    " << appname << " -s <update folder> <keyfile>" << endl;
+    cout << "    " << appname << " -s <win|osx> <update folder> <keyfile>" << endl;
     cout << "Generate a keypair" << endl;
     cout << "    " << appname << " -g" << endl;
 }
@@ -68,6 +132,12 @@ const byte *signFile(const char * filePath, AsymmCipher* key)
     char buffer[1024];
 
     ifstream input(filePath);
+    if(input.fail())
+    {
+        delete signature;
+        return NULL;
+    }
+
     while(input.good())
     {
         input.read(buffer, sizeof(buffer));
@@ -91,6 +161,7 @@ int main(int argc, char *argv[])
     vector<string> signatures;
     string pubk;
     string privk;
+    bool win = true;
 
     if((argc==2) && !strcmp(argv[1], "-g"))
     {
@@ -119,17 +190,18 @@ int main(int argc, char *argv[])
         delete privkstr;
         return 0;
     }
-    else if((argc == 4) && !strcmp(argv[1], "-s"))
+    else if((argc == 5) && !strcmp(argv[1], "-s") && (!strcmp(argv[2], "win") || !strcmp(argv[2], "osx")))
     {
         //Sign an update
+        win = !strcmp(argv[2], "win");
 
         //Prepare the update folder path
-        string updateFolder(argv[2]);
+        string updateFolder(argv[3]);
         if(updateFolder[updateFolder.size()-1] != '/')
             updateFolder.append("/");
 
         //Read keys
-        ifstream keyFile(argv[3]);
+        ifstream keyFile(argv[4]);
         if(keyFile.bad())
         {
             printUsage(argv[0]);
@@ -153,9 +225,14 @@ int main(int argc, char *argv[])
 
         //Generate update file signature
         signatureGenerator.add((const byte *)APP_VERSION, strlen(APP_VERSION));
-        for(unsigned int i=0; i<SIZEOF_ARRAY(UPDATE_FILES); i++)
+
+        int numFiles;
+        if(win) numFiles = SIZEOF_ARRAY(UPDATE_FILES_WIN);
+        else numFiles = SIZEOF_ARRAY(UPDATE_FILES_OSX);
+
+        for(unsigned int i=0; i<numFiles; i++)
         {
-            string filePath = updateFolder + UPDATE_FILES[i];
+            string filePath = updateFolder + (win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i];
             const byte *signature = signFile(filePath.data(), &aprivk);
             if(!signature)
             {
@@ -169,12 +246,13 @@ int main(int argc, char *argv[])
             signatures.push_back(s);
             delete signature;
 
-            string fileUrl(SERVER_BASE_URL);
-            fileUrl.append(UPDATE_FILES[i]);
+            string fileUrl((win ? SERVER_BASE_URL_WIN : SERVER_BASE_URL_OSX));
+            fileUrl.append((win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i]);
             downloadURLs.push_back(fileUrl);
 
             signatureGenerator.add((const byte*)fileUrl.data(), fileUrl.size());
-            signatureGenerator.add((const byte*)TARGET_PATHS[i], strlen(TARGET_PATHS[i]));
+            signatureGenerator.add((const byte*)(win ? TARGET_PATHS_WIN : TARGET_PATHS_OSX)[i],
+                                   strlen((win ? TARGET_PATHS_WIN : TARGET_PATHS_OSX)[i]));
             signatureGenerator.add((const byte*)s.data(), s.length());
         }
 
@@ -182,15 +260,15 @@ int main(int argc, char *argv[])
         signatureGenerator.get(&aprivk, buffer, sizeof(buffer));
         string updateFileSignature;
         updateFileSignature.resize((SIGNATURE_LENGTH*4)/3+4);
-        Base64::btoa((byte *)buffer,sizeof(buffer), (char *)updateFileSignature.data());
+        updateFileSignature.resize(Base64::btoa((byte *)buffer,sizeof(buffer), (char *)updateFileSignature.data()));
 
         //Print update file
         cout << APP_VERSION << endl;
         cout << updateFileSignature << endl;
-        for(unsigned int i=0; i<SIZEOF_ARRAY(UPDATE_FILES); i++)
+        for(unsigned int i=0; i<numFiles; i++)
         {
             cout << downloadURLs[i] << endl;
-            cout << TARGET_PATHS[i] << endl;
+            cout << (win ? TARGET_PATHS_WIN : TARGET_PATHS_OSX)[i] << endl;
             cout << signatures[i] << endl;
         }
 

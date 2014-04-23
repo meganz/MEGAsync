@@ -434,7 +434,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'P':
         {
-            if(lstrlen(pipe->chRequest)<3) break;
+            if((lstrlen(pipe->chRequest)<3) || (Preferences::instance()->overlayIconsDisabled()))
+                    break;
+
             mega::treestate_t state;
             QString temp = QString::fromWCharArray(content);
             if(temp.startsWith(QString::fromAscii("\\\\?\\")))

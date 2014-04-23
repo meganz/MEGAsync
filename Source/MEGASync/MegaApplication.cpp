@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
             {
                 Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
                 Utilities::removeRecursively(preferences->getLocalFolder(j) +
-                                             QDir::separator() + QString::fromAscii("Rubbish"));
+                                             QDir::separator() + QString::fromAscii(DEBRISFOLDER));
             }
             preferences->leaveUser();
         }
@@ -185,6 +185,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     pauseAction = NULL;
     resumeAction = NULL;
     importLinksAction = NULL;
+    uploadAction = NULL;
     trayMenu = NULL;
     waiting = false;
     updated = false;
@@ -193,6 +194,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateBlocked = false;
     updateThread = NULL;
     updateTask = NULL;
+    multiUploadFileDialog = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -287,8 +289,12 @@ void MegaApplication::initialize()
 
     refreshTimer = new QTimer();
     refreshTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
-
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
+
+    infoDialogTimer = new QTimer();
+    infoDialogTimer->setSingleShot(true);
+    connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
+
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
 #ifdef Q_OS_UNIX
@@ -413,6 +419,8 @@ void MegaApplication::start()
 {
     paused = false;
     indexing = false;
+    delete multiUploadFileDialog;
+    multiUploadFileDialog = NULL;
 
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
     trayIcon->setContextMenu(initialMenu);
@@ -431,7 +439,7 @@ void MegaApplication::start()
     {
         updated = false;
         setupWizard = new SetupWizard(this);
-		setupWizard->exec();
+        setupWizard->exec();
         if(!preferences->logged())
             ::exit(0);
         delete setupWizard;
@@ -711,6 +719,13 @@ void MegaApplication::onInstallUpdateClicked()
     emit installUpdate();
 }
 
+void MegaApplication::showInfoDialog()
+{
+    QRect screenGeometry = QApplication::desktop()->availableGeometry();
+    infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+    infoDialog->show();
+}
+
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
@@ -957,7 +972,45 @@ void MegaApplication::importLinks()
 	}
     //If importing links isn't needed, we can delete the link processor
     //It doesn't track transfers, only the importation of links
-	else delete linkProcessor;
+    else delete linkProcessor;
+}
+
+void MegaApplication::uploadActionClicked()
+{
+    if(multiUploadFileDialog)
+    {
+        multiUploadFileDialog->showMinimized();
+        multiUploadFileDialog->setWindowState(Qt::WindowActive);
+        multiUploadFileDialog->showNormal();
+        multiUploadFileDialog->raise();
+        multiUploadFileDialog->activateWindow();
+        return;
+    }
+
+#if QT_VERSION < 0x050000
+    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+    QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+#endif
+
+    multiUploadFileDialog = new MultiQFileDialog(NULL,
+           QCoreApplication::translate("ShellExtension", "Upload to MEGA"),
+           defaultFolderPath);
+
+    if(multiUploadFileDialog->exec() == QDialog::Accepted)
+    {
+        QStringList files = multiUploadFileDialog->selectedFiles();
+        if(files.size())
+        {
+            QQueue<QString> qFiles;
+            foreach(QString file, files)
+                qFiles.append(file);
+            shellUpload(qFiles);
+        }
+    }
+
+    delete multiUploadFileDialog;
+    multiUploadFileDialog = NULL;
 }
 
 //Called when the user wants to generate the public link for a node
@@ -1126,10 +1179,31 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         LOG("Information dialog available");
-        //Put it in the right position (to prevent problems with changes in the taskbar or the resolution)
-        QRect screenGeometry = QApplication::desktop()->availableGeometry();
-        infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
-        infoDialog->show();
+        infoDialogTimer->start(200);
+    }
+    else if(reason == QSystemTrayIcon::DoubleClick)
+    {
+        LOG("Event QSystemTrayIcon::DoubleClick");
+
+        if(!infoDialog)
+        {
+            LOG("NULL information dialog");
+            if(setupWizard)
+            {
+                LOG("Showing setup wizard");
+                setupWizard->setVisible(true);
+                setupWizard->activateWindow();
+            }
+            else showInfoMessage(tr("Logging in..."));
+
+            return;
+        }
+
+        infoDialogTimer->stop();
+        infoDialog->hide();
+        QString localFolderPath = preferences->getLocalFolder(0);
+        if(!localFolderPath.isEmpty())
+            QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
     }
 }
 
@@ -1224,10 +1298,15 @@ void MegaApplication::createTrayIcon()
     importLinksAction = new QAction(tr("Import links"), this);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
+    if(uploadAction) delete uploadAction;
+    uploadAction = new QAction(tr("Upload files/folders"), this);
+    connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
+
     //trayMenu->addAction(aboutAction);
     if(!paused) trayMenu->addAction(pauseAction);
     else trayMenu->addAction(resumeAction);
 	trayMenu->addAction(importLinksAction);
+    trayMenu->addAction(uploadAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addAction(exitAction);
 
@@ -1425,7 +1504,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 syncPath = syncPath.mid(4);
             #endif
 
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii("Rubbish"));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
             Platform::notifyItemChange(syncPath);
         }
         if(infoDialog) infoDialog->updateSyncsButton();

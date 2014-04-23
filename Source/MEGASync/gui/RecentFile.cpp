@@ -124,8 +124,14 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 
 	QMenu menu;
 	menu.addAction(tr("Open"), this, SLOT(openFile()));
-	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-	menu.exec(this->mapToGlobal(pos));
+    menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+#ifdef WIN32
+    menu.exec(this->mapToGlobal(pos));
+#elif __APPLE__
+    menu.exec(this->mapToGlobal(pos));
+#else
+    menu.exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+#endif
 }
 
 void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
@@ -135,7 +141,13 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 	QMenu menu;
 	menu.addAction(tr("Open"), this, SLOT(openFile()));
 	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-	menu.exec(this->mapToGlobal(pos));
+#ifdef WIN32
+    menu.exec(this->mapToGlobal(pos));
+#elif __APPLE__
+    menu.exec(this->mapToGlobal(pos));
+#else
+    menu.exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+#endif
 }
 
 void RecentFile::showInFolder()
