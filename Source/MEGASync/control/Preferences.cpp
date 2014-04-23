@@ -18,13 +18,19 @@ const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
-const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
+
+#ifdef WIN32
+    const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
+    const char Preferences::UPDATE_PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyiAfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
+#else
+    const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://pycusoft.com/upd/osxsync/v.txt");
+    const char Preferences::UPDATE_PUBLIC_KEY[] = "EAC7s4UeZQRXiAejTz1BcYOhktg_tlp_qDa0DPYYXrpUidOSlxbj3uSIa0z14EzzkLbxJwWszvy4f-fQPTQrWz134cy9WeWbfJqTlYQhDXGX9gY9Jspr5v-wfsIOgDNWwSgNeOVNwDIz3wLx8SDsCoeZYdEKxqBsDhOQjdslV1HMdTD2ZEUAnEGTxvLD05Q80_sDiDElVvAL0v-C4BxxuqO2SQqR4PWhSHgFvS0f6VksUIj_FAQ1X2jhWqrKxHEESX84a1h3WgHE6YYDenFtMAaCuPLTx4NLe_7lfXLEPFl4fV26EgnIOfqu6F3OpfIPGCgIupiUf4kLER5glxJ2zI0WcAlfDzyY3nttWnMCja5VuZ3b3bpwbn_yVq0O7MDBLzB0KLUIkq4d6a-rG3yAbCkEl3EHPCmJh5aQRY1kZJ5KC53UjAhNf-ZF1laE8J4tS_IAta-ekcaubocUCYqosLZ4kgOtZK4DuuqYlw2X_Z9XA4kWvJgGwKpi_ioJwwiS88EZI1WfZ45I7975C4lBUaMAOCCFeONsLgenPqnZAI_MGxDxKhK2ie-nh7oEjxEcx1gk_f_AgGDb3AEQFtsPD62Cuw9951rZYnxWMVVEHcsfZ0S7yE6bPWo2LNltJetgZtk-vJxzH7ON9i3wRVn3uenp6aWabeAaN8lBnI0dZT1tPwAFEQ";
+#endif
+
 const QString Preferences::CRASH_REPORT_URL                 = QString::fromUtf8("http://g.api.mega.co.nz/hb?crashdump");
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii("update");
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
-const char Preferences::UPDATE_PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyiAfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
-
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");

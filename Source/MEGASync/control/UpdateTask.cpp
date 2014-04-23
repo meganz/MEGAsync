@@ -51,6 +51,12 @@ void UpdateTask::startUpdateThread()
 
     QString basePath = MegaApplication::applicationDirPath() + QDir::separator();
     appFolder = QDir(basePath);
+
+    #ifdef __APPLE__
+        appFolder.cdUp();
+        appFolder.cdUp();
+    #endif
+
     updateFolder = QDir(basePath + Preferences::UPDATE_FOLDER_NAME);
     m_WebCtrl = new QNetworkAccessManager();
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
@@ -115,6 +121,14 @@ void UpdateTask::finalCleanup()
 
     //Remove the update folder
     Utilities::removeRecursively(QDir(updateFolder));
+
+    #ifdef __APPLE__
+        QFile exeFile(MegaApplication::applicationFilePath());
+        exeFile.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner |
+                                  QFile::ExeGroup | QFile::ReadGroup |
+                                  QFile::ExeOther | QFile::ReadOther);
+    #endif
+
     emit updateCompleted();
 }
 
@@ -282,6 +296,15 @@ bool UpdateTask::performUpdate()
     for(int i=0; i<localPaths.size(); i++)
     {
         QString file = localPaths[i];
+
+        QFileInfo bakInfo(backupFolder.absoluteFilePath(file));
+        QDir bakDir = bakInfo.dir();
+        bakDir.mkpath(QString::fromUtf8("."));
+
+        QFileInfo dstInfo(appFolder.absoluteFilePath(file));
+        QDir dstDir = dstInfo.dir();
+        dstDir.mkpath(QString::fromUtf8("."));
+
         appFolder.rename(file, backupFolder.absoluteFilePath(file));
         if(!updateFolder.rename(file, appFolder.absoluteFilePath(file)))
         {
