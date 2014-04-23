@@ -16,7 +16,7 @@
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>520</height>
+    <height>20</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -64,8 +64,8 @@ height: 16px;
 
 QPushButton
 {
-    min-height: 14px;
-	height: 14px;
+    min-height: 20px;
+	height: 20px;
 }
 
 #lHeader
@@ -1329,7 +1329,7 @@ padding-right: 20px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>16</height>
+                <height>22</height>
                </size>
               </property>
               <property name="text">
@@ -1378,7 +1378,13 @@ padding-right: 20px;</string>
      </widget>
      <widget class="QWidget" name="pAdvanced">
       <layout class="QVBoxLayout" name="verticalLayout_13">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -1471,14 +1477,23 @@ padding: 4px;</string>
           </item>
           <item>
            <widget class="QListWidget" name="lExcludedNames">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>16777215</height>
+              <height>120</height>
              </size>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Adjust</enum>
             </property>
             <property name="selectionRectVisible">
              <bool>false</bool>
@@ -1526,6 +1541,12 @@ padding: 4px;</string>
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_6">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Others</string>
          </property>
@@ -1540,6 +1561,25 @@ padding: 4px;</string>
             </property>
             <property name="text">
              <string>Disable overlay icons</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bFullCheck">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Force a full check</string>
             </property>
            </widget>
           </item>
