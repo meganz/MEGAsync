@@ -61,7 +61,10 @@
         oss << sys_siglist[sig] << " (" << sig << ") at address 0x" << std::hex << info->si_addr << std::dec << "\n";
 
         void *pnt = NULL;
-        #if defined(__x86_64__)
+        #if defined(__APPLE__)
+            ucontext_t* uc = (ucontext_t*) secret;
+            pnt = (void *)uc->uc_mcontext->__ss.__rip;
+        #elif defined(__x86_64__)
             ucontext_t* uc = (ucontext_t*) secret;
             pnt = (void*) uc->uc_mcontext.gregs[REG_RIP] ;
         #elif (defined (__ppc__)) || (defined (__powerpc__))
@@ -191,10 +194,15 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
                 );
         #endif
     #else
-        GUID guid;
         char guid_str[kGUIDStringLength + 1];
+        #if defined(__APPLE__)
+            strcpy(guid_str, "crash_dump");
+        #else
+        GUID guid;
+
         if (!CreateGUID(&guid) || !GUIDToString(&guid, guid_str, sizeof(guid_str)))
           strcpy(guid_str, "crash_dump");
+        #endif
 
         dump_path = dumpPath.toStdString() + "/" + guid_str + ".dmp";
 
@@ -230,8 +238,8 @@ void CrashHandler::tryReboot()
     {
         LOG("Reboot");
         preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
-        QString app = MegaApplication::applicationFilePath();
-        QProcess::startDetached(app);
+
+        ((MegaApplication *)qApp)->rebootApplication(false);
     }
     else
     {
