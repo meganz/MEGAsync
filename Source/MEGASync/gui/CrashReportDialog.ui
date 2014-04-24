@@ -53,7 +53,11 @@ QPushButton
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="tCrash"/>
+    <widget class="QTextEdit" name="tCrash">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="label_2">
@@ -98,7 +102,7 @@ QPushButton
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>18</height>
          </size>
         </property>
         <property name="text">
@@ -117,7 +121,7 @@ QPushButton
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>18</height>
          </size>
         </property>
         <property name="text">

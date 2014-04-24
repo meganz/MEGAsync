@@ -936,6 +936,8 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
   }
 
+  oss << "Operating system: Windows\n";
+
   MODULEINFO moduleInfo;
   GetModuleInformation(GetCurrentProcess(), module, &moduleInfo, sizeof(moduleInfo));
 
