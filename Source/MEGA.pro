@@ -6,6 +6,9 @@ win32 {
     SUBDIRS += MEGAShellExt MEGACrashAnalyzer
 }
 
+# qmake "CONFIG+=with_ext" MEGA.pro
 unix:!macx {
-    SUBDIRS += MEGAShellExtNautilus
+    CONFIG(with_ext) {
+        SUBDIRS += MEGAShellExtNautilus
+    }
 }
