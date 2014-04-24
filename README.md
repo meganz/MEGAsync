@@ -1,5 +1,5 @@
-MEGA Sync Client: 
-=================
+MEGA Sync Client 
+================
 
 Easy automated syncing between your computers and your MEGA cloud drive.
 
@@ -21,7 +21,7 @@ Requirements:
 
 Preparation:
 ```
-sudo apt-get install build-essential autoconf automake m4 libtool qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libfreeimage-dev libc-ares-dev
+sudo apt-get install build-essential autoconf automake m4 libtool qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev
 sudo apt-get install libnautilus-extension-dev
 ```
 
