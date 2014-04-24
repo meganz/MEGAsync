@@ -34,6 +34,7 @@ TEMPLATE = app
 
 debug {
     CONFIG += console
+    DEFINES += CREATE_COMPATIBLE_MINIDUMPS
 }
 
 include(gui/gui.pri)
