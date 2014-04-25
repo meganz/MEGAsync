@@ -206,7 +206,6 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
                 );
         #endif
     #else
-
         srandom(time(NULL));
         uint32_t data1 = (uint32_t)random();
         uint16_t data2 = (uint16_t)random();

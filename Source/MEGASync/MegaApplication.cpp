@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     }
     if(alreadyStarted)
     {
-        cout << "ALREADY STARTED" << endl;
+        LOG("Already started");
         return 0;
     }
 
@@ -134,7 +134,6 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
-
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
