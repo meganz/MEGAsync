@@ -12,16 +12,18 @@ macx {
   SOURCES += $$PWD/common/mac/macho_utilities.cc
   SOURCES += $$PWD/common/mac/string_utilities.cc
   SOURCES += $$PWD/common/mac/file_id.cc
-  SOURCES += $$PWD/common/mac/MachIPC.mm
   SOURCES += $$PWD/common/mac/bootstrap_compat.cc
   SOURCES += $$PWD/common/md5.cc
   SOURCES += $$PWD/common/string_conversion.cc
   SOURCES += $$PWD/common/linux/linux_libc_support.cc
   SOURCES += $$PWD/common/convert_UTF.c
+
+  OBJECTIVE_SOURCES += $$PWD/common/mac/MachIPC.mm
+
   LIBS += /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
   LIBS += /System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
 
-  #QMAKE_CXXFLAGS+=-g
+  QMAKE_CXXFLAGS+=-g
 }
 
 unix:!macx {
@@ -42,7 +44,7 @@ unix:!macx {
   SOURCES += $$PWD/common/string_conversion.cc
   SOURCES += $$PWD/common/convert_UTF.c
 
-  #QMAKE_CXXFLAGS+=-g
+  QMAKE_CXXFLAGS+=-g
 }
 
 win32 {
@@ -60,6 +62,3 @@ win32 {
 
 INCLUDEPATH += $$PWD
 
-debug {
-    DEFINES += CREATE_COMPATIBLE_MINIDUMPS
-}

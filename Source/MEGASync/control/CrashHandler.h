@@ -17,6 +17,7 @@ class CrashHandler: public QObject
 
 public:
     static CrashHandler* instance();
+    static void tryReboot();
     void Init(const QString&  reportPath);
     void setReportCrashesToSystem(bool report);
     bool writeMinidump();
