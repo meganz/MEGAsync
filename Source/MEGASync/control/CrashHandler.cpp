@@ -13,6 +13,111 @@
 #include "client/windows/handler/exception_handler.h"
 #endif
 
+#ifndef WIN32
+    #ifndef CREATE_COMPATIBLE_MINIDUMPS
+
+    #include <signal.h>
+    #include <execinfo.h>
+    #include <sys/utsname.h>
+
+    string dump_path;
+
+    // signal handler
+    void signal_handler(int sig, siginfo_t *info, void *secret)
+    {
+        int dump_file = open(dump_path.c_str(),  O_WRONLY | O_CREAT, 0400);
+        if (dump_file<0)
+        {
+            CrashHandler::tryReboot();
+            exit(128+sig);
+        }
+
+        std::ostringstream oss;
+        oss << "MEGAprivate ERROR DUMP\n";
+        oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
+        oss << "Version code: " << QString::number(MegaApplication::VERSION_CODE).toStdString() << "\n";
+        oss << "Module name: " << "megasync" << "\n";
+
+        struct utsname osData;
+        if(!uname(&osData))
+        {
+            oss << "Operating system: " << osData.sysname << "\n";
+            oss << "System version:  " << osData.version << "\n";
+            oss << "System release:  " << osData.release << "\n";
+            oss << "System arch: " << osData.machine << "\n";
+        }
+        else
+        {
+            oss << "Operating system: Unknown\n";
+            oss << "System version: Unknown\n";
+            oss << "System release: Unknown\n";
+            oss << "System arch: Unknown\n";
+        }
+
+        time_t rawtime;
+        time(&rawtime);
+        oss << "Error info:\n";
+        if(info)
+            oss << sys_siglist[sig] << " (" << sig << ") at address " << std::showbase << std::hex << info->si_addr << std::dec << "\n";
+        else
+            oss << "Out of memory" << endl;
+
+        void *pnt = NULL;
+        if(secret)
+        {
+            #if defined(__APPLE__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void *)uc->uc_mcontext->__ss.__rip;
+            #elif defined(__x86_64__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.gregs[REG_RIP] ;
+            #elif (defined (__ppc__)) || (defined (__powerpc__))
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.regs->nip ;
+            #elif defined(__sparc__)
+            struct sigcontext* sc = (struct sigcontext*) secret;
+                #if __WORDSIZE == 64
+                    pnt = (void*) scp->sigc_regs.tpc ;
+                #else
+                    pnt = (void*) scp->si_regs.pc ;
+                #endif
+            #elif defined(__i386__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.gregs[REG_EIP];
+            #else
+                #error NOT_SUPPORTED
+            #endif
+        }
+
+        oss << "Stacktrace:\n";
+        void *stack[32];
+        size_t size;
+        size = backtrace(stack, 32);
+        if(size>1)
+        {
+            stack[1] = pnt;
+            char **messages = backtrace_symbols(stack, size);
+            oss << "## " << messages[1] << "\n";
+            for (unsigned int i=2; i<size; i++)
+                oss << "#" << (i-1) << " " << messages[i] << "\n";
+        }
+        else oss << "Error getting stacktrace\n";
+
+        write(dump_file, oss.str().c_str(), oss.str().size());
+        close(dump_file);
+
+        CrashHandler::tryReboot();
+        exit(128+sig);
+    }
+
+    void mega_new_handler()
+    {
+        signal_handler(0, 0, 0);
+    }
+
+    #endif
+#endif
+
 /************************************************************************/
 /* CrashHandlerPrivate                                                  */
 /************************************************************************/
@@ -55,31 +160,8 @@ bool DumpCallback(const char* _dump_dir,const char* _minidump_id,void *context, 
     Q_UNUSED(assertion);
     Q_UNUSED(exinfo);
 #endif
-    qDebug("BreakpadQt crash");
-    //QString app = MegaApplication::applicationFilePath();
-    //QStringList args = QStringList();
-    //args.append(QString::fromAscii("/reboot"));
-    //QProcess::startDetached(app, args);
-    //((MegaApplication *)qApp)->cleanAll();
-    //qDebug("BreakpadQt restart");
 
-    Preferences *preferences = Preferences::instance();
-    preferences->setCrashed(true);
-
-    if((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)
-    {
-        LOG("Reboot");
-        preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
-        QString app = MegaApplication::applicationFilePath();
-        QStringList args = QStringList();
-        args.append(QString::fromAscii("/reboot"));
-        QProcess::startDetached(app, args);
-    }
-    else
-    {
-        LOG("No reboot");
-    }
-
+    CrashHandler::tryReboot();
     return CrashHandlerPrivate::bReportCrashesToSystem ? success : false;
 }
 
@@ -98,28 +180,55 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
         NULL,
         google_breakpad::ExceptionHandler::HANDLER_EXCEPTION
         );
-#elif defined(Q_OS_LINUX)
-    std::string pathAsStr = dumpPath.toStdString();
-    google_breakpad::MinidumpDescriptor md(pathAsStr);
-    pHandler = new google_breakpad::ExceptionHandler(
-        md,
-        /*FilterCallback*/ 0,
-        DumpCallback,
-        /*context*/ 0,
-        true,
-        -1
-        );
-#elif defined(Q_OS_MAC)
-    std::string pathAsStr = dumpPath.toStdString();
-    pHandler = new google_breakpad::ExceptionHandler(
-        pathAsStr,
-        /*FilterCallback*/ 0,
-        DumpCallback,
-        /*context*/
-        0,
-        true,
-        NULL
-        );
+#else
+    #ifdef CREATE_COMPATIBLE_MINIDUMPS
+        #if defined(Q_OS_LINUX)
+            std::string pathAsStr = dumpPath.toStdString();
+            google_breakpad::MinidumpDescriptor md(pathAsStr);
+            pHandler = new google_breakpad::ExceptionHandler(
+                md,
+                /*FilterCallback*/ 0,
+                DumpCallback,
+                /*context*/ 0,
+                true,
+                -1
+                );
+        #elif defined(Q_OS_MAC)
+            std::string pathAsStr = dumpPath.toStdString();
+            pHandler = new google_breakpad::ExceptionHandler(
+                pathAsStr,
+                /*FilterCallback*/ 0,
+                DumpCallback,
+                /*context*/
+                0,
+                true,
+                NULL
+                );
+        #endif
+    #else
+        srandom(time(NULL));
+        uint32_t data1 = (uint32_t)random();
+        uint16_t data2 = (uint16_t)random();
+        uint16_t data3 = (uint16_t)random();
+        uint32_t data4 = (uint32_t)random();
+        uint32_t data5 = (uint32_t)random();
+
+        char name[37];
+        sprintf(name, "%08x-%04x-%04x-%08x-%08x", data1, data2, data3, data4, data5);
+        dump_path = dumpPath.toStdString() + "/" + name + ".dmp";
+
+        /* Install our signal handler */
+        struct sigaction sa;
+        sa.sa_sigaction = signal_handler;
+        sigemptyset (&sa.sa_mask);
+        sa.sa_flags = SA_RESTART | SA_SIGINFO;
+        sigaction(SIGSEGV, &sa, NULL);
+        sigaction(SIGBUS, &sa, NULL);
+        sigaction(SIGILL, &sa, NULL);
+        sigaction(SIGFPE, &sa, NULL);
+        sigaction(SIGABRT, &sa, NULL);
+        std::set_new_handler(mega_new_handler);
+    #endif
 #endif
 }
 
@@ -130,6 +239,24 @@ CrashHandler* CrashHandler::instance()
 {
     static CrashHandler globalHandler;
     return &globalHandler;
+}
+
+void CrashHandler::tryReboot()
+{
+    Preferences *preferences = Preferences::instance();
+    preferences->setCrashed(true);
+
+    if((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)
+    {
+        LOG("Reboot");
+        preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
+
+        ((MegaApplication *)qApp)->rebootApplication(false);
+    }
+    else
+    {
+        LOG("No reboot");
+    }
 }
 
 CrashHandler::CrashHandler() : QObject()
@@ -307,3 +434,4 @@ void CrashHandler::Init( const QString& reportPath )
     this->dumpPath = reportPath;
     d->InitCrashHandler(reportPath);
 }
+

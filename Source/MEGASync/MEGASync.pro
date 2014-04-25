@@ -34,6 +34,7 @@ TEMPLATE = app
 
 debug {
     CONFIG += console
+    DEFINES += CREATE_COMPATIBLE_MINIDUMPS
 }
 
 include(gui/gui.pri)
@@ -41,6 +42,7 @@ include(sdk/sdk.pri)
 include(control/control.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
+include(qtlockedfile/qtlockedfile.pri)
 
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
