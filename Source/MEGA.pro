@@ -1,11 +1,18 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync MEGAUpdater
+SUBDIRS += MEGASync
 
 win32 {
-    SUBDIRS += MEGAShellExt MEGACrashAnalyzer
+    SUBDIRS += MEGAShellExt MEGACrashAnalyzer MEGAUpdater
 }
 
+macx {
+    SUBDIRS += MEGAUpdater
+}
+
+# qmake "CONFIG+=with_ext" MEGA.pro
 unix:!macx {
-    SUBDIRS += MEGAShellExtNautilus
+    CONFIG(with_ext) {
+        SUBDIRS += MEGAShellExtNautilus
+    }
 }
