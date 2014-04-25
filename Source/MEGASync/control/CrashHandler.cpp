@@ -14,12 +14,11 @@
 #endif
 
 #ifndef WIN32
+    #ifndef CREATE_COMPATIBLE_MINIDUMPS
+
     #include <signal.h>
     #include <execinfo.h>
     #include <sys/utsname.h>
-    #include "google_breakpad/common/linux/guid_creator.h"
-
-    #ifndef CREATE_COMPATIBLE_MINIDUMPS
 
     string dump_path;
 
@@ -58,31 +57,37 @@
         time_t rawtime;
         time(&rawtime);
         oss << "Error info:\n";
-        oss << sys_siglist[sig] << " (" << sig << ") at address 0x" << std::hex << info->si_addr << std::dec << "\n";
+        if(info)
+            oss << sys_siglist[sig] << " (" << sig << ") at address " << std::showbase << std::hex << info->si_addr << std::dec << "\n";
+        else
+            oss << "Out of memory" << endl;
 
         void *pnt = NULL;
-        #if defined(__APPLE__)
-            ucontext_t* uc = (ucontext_t*) secret;
-            pnt = (void *)uc->uc_mcontext->__ss.__rip;
-        #elif defined(__x86_64__)
-            ucontext_t* uc = (ucontext_t*) secret;
-            pnt = (void*) uc->uc_mcontext.gregs[REG_RIP] ;
-        #elif (defined (__ppc__)) || (defined (__powerpc__))
-            ucontext_t* uc = (ucontext_t*) secret;
-            pnt = (void*) uc->uc_mcontext.regs->nip ;
-        #elif defined(__sparc__)
-        struct sigcontext* sc = (struct sigcontext*) secret;
-            #if __WORDSIZE == 64
-                pnt = (void*) scp->sigc_regs.tpc ;
+        if(secret)
+        {
+            #if defined(__APPLE__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void *)uc->uc_mcontext->__ss.__rip;
+            #elif defined(__x86_64__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.gregs[REG_RIP] ;
+            #elif (defined (__ppc__)) || (defined (__powerpc__))
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.regs->nip ;
+            #elif defined(__sparc__)
+            struct sigcontext* sc = (struct sigcontext*) secret;
+                #if __WORDSIZE == 64
+                    pnt = (void*) scp->sigc_regs.tpc ;
+                #else
+                    pnt = (void*) scp->si_regs.pc ;
+                #endif
+            #elif defined(__i386__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.gregs[REG_EIP];
             #else
-                pnt = (void*) scp->si_regs.pc ;
+                #error NOT_SUPPORTED
             #endif
-        #elif defined(__i386__)
-            ucontext_t* uc = (ucontext_t*) secret;
-            pnt = (void*) uc->uc_mcontext.gregs[REG_EIP];
-        #else
-            #error NOT_SUPPORTED
-        #endif
+        }
 
         oss << "Stacktrace:\n";
         void *stack[32];
@@ -92,8 +97,9 @@
         {
             stack[1] = pnt;
             char **messages = backtrace_symbols(stack, size);
-            for (unsigned int i=1; i<size; i++)
-                oss << "#" << i << " " << messages[i] << "\n";
+            oss << "## " << messages[1] << "\n";
+            for (unsigned int i=2; i<size; i++)
+                oss << "#" << (i-1) << " " << messages[i] << "\n";
         }
         else oss << "Error getting stacktrace\n";
 
@@ -103,6 +109,12 @@
         CrashHandler::tryReboot();
         exit(128+sig);
     }
+
+    void mega_new_handler()
+    {
+        signal_handler(0, 0, 0);
+    }
+
     #endif
 #endif
 
@@ -194,17 +206,17 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
                 );
         #endif
     #else
-        char guid_str[kGUIDStringLength + 1];
-        #if defined(__APPLE__)
-            strcpy(guid_str, "crash_dump");
-        #else
-        GUID guid;
 
-        if (!CreateGUID(&guid) || !GUIDToString(&guid, guid_str, sizeof(guid_str)))
-          strcpy(guid_str, "crash_dump");
-        #endif
+        srandom(time(NULL));
+        uint32_t data1 = (uint32_t)random();
+        uint16_t data2 = (uint16_t)random();
+        uint16_t data3 = (uint16_t)random();
+        uint32_t data4 = (uint32_t)random();
+        uint32_t data5 = (uint32_t)random();
 
-        dump_path = dumpPath.toStdString() + "/" + guid_str + ".dmp";
+        char name[37];
+        sprintf(name, "%08x-%04x-%04x-%08x-%08x", data1, data2, data3, data4, data5);
+        dump_path = dumpPath.toStdString() + "/" + name + ".dmp";
 
         /* Install our signal handler */
         struct sigaction sa;
@@ -216,6 +228,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
         sigaction(SIGILL, &sa, NULL);
         sigaction(SIGFPE, &sa, NULL);
         sigaction(SIGABRT, &sa, NULL);
+        std::set_new_handler(mega_new_handler);
     #endif
 #endif
 }
@@ -422,3 +435,4 @@ void CrashHandler::Init( const QString& reportPath )
     this->dumpPath = reportPath;
     d->InitCrashHandler(reportPath);
 }
+
