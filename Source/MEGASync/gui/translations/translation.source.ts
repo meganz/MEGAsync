@@ -497,6 +497,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>[$1919]
 [$1920]</translation>
     </message>
+    <message>
+        <source>Upload files/folders</source>
+        <translation>XXXXX</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1084,6 +1088,29 @@ when the application starts again.</source>
     <message>
         <source>Disable full account sync</source>
         <translation>[$1927]</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Disable overlay icons</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Force a full check</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>Full check</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full check of your synced folders
+when it&apos;s restarted.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
