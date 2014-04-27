@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>[$2008]</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>[$2009]</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>[$2010]</translation>
     </message>
     <message>
