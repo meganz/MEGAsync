@@ -44,6 +44,6 @@ emblems64.files = $${EMBLEMS_LOC}/64x64/*
 INSTALLS += emblems32  emblems64
 
 # update icons cache
-update_cache.commands = gtk-update-icon-cache -f -t $${HICOLOR}
+update_cache.commands = gtk-update-icon-cache -f -t $${HICOLOR} || true
 update_cache.path = $$PWD
 INSTALLS += update_cache
