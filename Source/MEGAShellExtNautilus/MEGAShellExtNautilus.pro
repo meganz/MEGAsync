@@ -19,7 +19,11 @@ INSTALLS += target
 
 QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
 
-HICOLOR = /usr/share/icons/hicolor
+isEmpty(DESTDIR) {
+    DESTDIR = /usr
+}
+
+HICOLOR = $$DESTDIR/share/icons/hicolor
 
 # icons
 ICONS_LOC = $$PWD/data/icons/hicolor
