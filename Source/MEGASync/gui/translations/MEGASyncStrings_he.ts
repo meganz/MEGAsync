@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>MEGAsync מתחיל</translation>
     </message>
 </context>
 <context>
@@ -497,6 +497,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>לא נמצאה מערכת קבצים.
 אנא נסה שוב. אם הבעיה נמשכת, אנא פנה אלינו דרך bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Upload files/folders</source>
+        <translation>Upload files/folders</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -699,7 +703,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
-        <translation>הכנס קישור או יותר קישורי MEGA</translation>
+        <translation>הכנס קישור/י MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -729,11 +733,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>RecentFile</name>
     <message>
         <source>%1 hours ago</source>
-        <translation>%1 שעות נותרו</translation>
+        <translation>לפני %1 שעות</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation>צור קישור MEGA</translation>
+        <translation>צור קישור של MEGA</translation>
     </message>
     <message>
         <source>just now</source>
@@ -836,7 +840,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Start on startup</source>
-        <translation>התחל בהפעלה מחדש</translation>
+        <translation>התחל באתחול המחשב</translation>
     </message>
     <message>
         <source>Update automatically</source>
@@ -924,7 +928,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>תיקייה להעלאה מסייר החלונות</translation>
+        <translation>תיקייה להעלאה למנהל הקבצים</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1084,6 +1088,32 @@ when the application starts again.</source>
     <message>
         <source>Disable full account sync</source>
         <translation>בטל סנכרון חשבון מלא</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>Disable overlay icons</source>
+        <translation>Disable overlay icons</translation>
+    </message>
+    <message>
+        <source>Force a full check</source>
+        <translation>Force a full rescan</translation>
+    </message>
+    <message>
+        <source>Full check</source>
+        <translation>Full scan</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders
+when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+
+Do you want to restart MEGAsync now?
+</translation>
     </message>
 </context>
 <context>
@@ -1316,7 +1346,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation>צור קישור MEGA</translation>
+        <translation>צור קישור של MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>

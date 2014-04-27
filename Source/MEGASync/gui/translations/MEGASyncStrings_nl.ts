@@ -497,6 +497,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Bestandssysteem onbereikbaar.
 Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Upload files/folders</source>
+        <translation>Upload files/folders</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1084,6 +1088,32 @@ when the application starts again.</source>
     <message>
         <source>Disable full account sync</source>
         <translation>Schakel volledige accountsynchronisatie uit</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>Disable overlay icons</source>
+        <translation>Disable overlay icons</translation>
+    </message>
+    <message>
+        <source>Force a full check</source>
+        <translation>Force a full rescan</translation>
+    </message>
+    <message>
+        <source>Full check</source>
+        <translation>Full scan</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders
+when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+
+Do you want to restart MEGAsync now?
+</translation>
     </message>
 </context>
 <context>
