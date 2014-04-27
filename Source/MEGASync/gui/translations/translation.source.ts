@@ -499,7 +499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>XXXXX</translation>
+        <translation>[$2013]</translation>
     </message>
 </context>
 <context>
@@ -1090,27 +1090,30 @@ when the application starts again.</source>
         <translation>[$1927]</translation>
     </message>
     <message>
-        <source>Others</source>
-        <translation>XXXXX</translation>
+        <source>Other</source>
+        <translation>[$2007]</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>XXXXX</translation>
+        <translation>[$2008]</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>XXXXX</translation>
+        <translation>[$2009]</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>XXXXX</translation>
+        <translation>[$2010]</translation>
     </message>
     <message>
-        <source>MEGAsync will perform a full check of your synced folders
-when it&apos;s restarted.
+        <source>MEGAsync will perform a full scan of your synced folders
+when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>XXXXX</translation>
+        <translation>[$2011]
+
+[$2012]
+</translation>
     </message>
 </context>
 <context>

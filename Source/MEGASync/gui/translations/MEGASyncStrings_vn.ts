@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>Trình MEGAsync đang khởi động</translation>
     </message>
 </context>
 <context>
@@ -496,6 +496,10 @@ Bạn có cuyết định thoát chương trình hay không?</translation>
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Không lấy được tệp tin hệ thống.
 Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên hệ bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Upload files/folders</source>
+        <translation>Upload files/folders</translation>
     </message>
 </context>
 <context>
@@ -1084,6 +1088,32 @@ when the application starts again.</source>
     <message>
         <source>Disable full account sync</source>
         <translation>Vô hiệu chế độ đồng bộ toàn tài khoản</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>Disable overlay icons</source>
+        <translation>Disable overlay icons</translation>
+    </message>
+    <message>
+        <source>Force a full check</source>
+        <translation>Force a full rescan</translation>
+    </message>
+    <message>
+        <source>Full check</source>
+        <translation>Full scan</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders
+when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+
+Do you want to restart MEGAsync now?
+</translation>
     </message>
 </context>
 <context>

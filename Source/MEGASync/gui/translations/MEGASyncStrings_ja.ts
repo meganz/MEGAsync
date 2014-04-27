@@ -5,7 +5,7 @@
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
-        <translation>シンクされたフォルダを追加する</translation>
+        <translation>同期したフォルダを追加する</translation>
     </message>
     <message>
         <source></source>
@@ -17,19 +17,19 @@
     </message>
     <message>
         <source>The selected local folder is already synced</source>
-        <translation>選択されたローカルフォルダはすでにシンク済みです。</translation>
+        <translation>選択されたローカルフォルダはすでに同期済みです。</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
-        <translation>シンクされたフォルダの中にもう一つのシンク・フォルダを置くことはできません。</translation>
+        <translation>同期されたフォルダの中にあるフォルダを同期することはできません。</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
-        <translation>選択されたMEGAフォルダはすでにシンクされています。</translation>
+        <translation>選択されたMEGAフォルダはすでに同期されています。</translation>
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>シンクがすでに選択されていると、アカウント全体のシンクはできません。</translation>
+        <translation>同期がすでに選択されていると、すべてのフォルダの同期はできません。</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -37,12 +37,12 @@
     </message>
     <message>
         <source>Sync name</source>
-        <translation>シンク名</translation>
+        <translation>同期名</translation>
     </message>
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>&quot;%1&quot;という名は別のシンクに使われています。 このシンク・フォルダを識別するために別の名前を付けて下さい。</translation>
+        <translation>&quot;%1&quot;という名は別の同期に使われています。 この同期フォルダを識別するために別の名前を付けて下さい。</translation>
     </message>
     <message>
         <source>OK</source>
@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>あなたは非常に大きなフォルダをシンクしようとしています。ブート・ボリューム全体のシンクは非効率的で危険です。もっと小さいフォルダーから始めて、MEGAシンク作動中にデータを加えていって下さい。</translation>
+        <translation>あなたは非常に大きなフォルダを同期しようとしています。ブート・ボリューム全体の同期は非効率的で危険です。もっと小さいフォルダーから始めて、MEGAsync作動中にデータを加えていって下さい。</translation>
     </message>
 </context>
 <context>
@@ -76,11 +76,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
-        <translation>MEGAシンクに問題あり。詳細は以下の通り：</translation>
+        <translation>MEGAsync に問題あり。詳細は以下の通り：</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>あなたのエラー・レポートがMEGAシンクの向上に役立ちます。個人的情報は一切含まれません。詳細を教えていただけるのであれば、以下にご記入下さい。</translation>
+        <translation>あなたのエラー・レポートがMEGAsync の向上に役立ちます。個人的情報は一切含まれません。詳細を教えていただけるのであれば、以下にご記入下さい。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -126,7 +126,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation>中断する</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -156,20 +156,20 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>このファイルはシンクされたフォルダにインポートされます。このままダウンロードすると、ファイルはあなたのパソコンにも作られます。 いいですね。</translation>
+        <translation>このファイルは同期されたフォルダにインポートされます。このままダウンロードすると、ファイルはあなたのパソコンにも作られます。 いいですね。</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>これらのファイルはシンクされたフォルダにインポートされます。このままダウンロードすると、ファイルはあなたのパソコンにも作られます。 いいですね。</translation>
+        <translation>これらのファイルは同期されたフォルダにインポートされます。このままダウンロードすると、ファイルはあなたのパソコンにも作られます。 いいですね。</translation>
     </message>
 </context>
 <context>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
-        <translation>MEGAシンクは最新版です</translation>
+        <translation>最新版 MEGAsync です</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -181,7 +181,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Syncs</source>
-        <translation>シンク</translation>
+        <translation>同期</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -209,7 +209,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
-        <translation>MEGAシンクがスキャン中</translation>
+        <translation>MEGAsync がスキャン中</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -217,23 +217,23 @@ Are you sure?</source>
     </message>
     <message>
         <source>Cancel all downloads</source>
-        <translation>すべてのダウンロードを中断する</translation>
+        <translation>すべてのダウンロードをキャンセルする</translation>
     </message>
     <message>
         <source>Cancel download</source>
-        <translation>ダウンロード中断</translation>
+        <translation>ダウンロードをキャンセルする</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
-        <translation>すべてのアップロードを中断する</translation>
+        <translation>すべてのアップロードをキャンセルする</translation>
     </message>
     <message>
         <source>Cancel upload</source>
-        <translation>アップロード中断</translation>
+        <translation>アップロードをキャンセルする</translation>
     </message>
     <message>
         <source>Add Sync</source>
-        <translation>シンクを追加</translation>
+        <translation>Sync を追加</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -265,11 +265,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
-        <translation>MEGAシンク待機中</translation>
+        <translation>MEGAsync 待機中</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>MEGAsync 開始</translation>
     </message>
 </context>
 <context>
@@ -299,7 +299,7 @@ Are you sure?</source>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGAシンク</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
@@ -311,22 +311,22 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAシンク作動中 ここをクリックしてステータス・ウィンドウを開きます。</translation>
+        <translation>MEGAsync 作動中 ここをクリックしてステータス・ウィンドウを開きます。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>リモート・フォルダが存在しないため、あなたのシンク&quot;%1&quot;は解除されました。</translation>
+        <translation>リモート・フォルダが存在しないため、あなたの sync &quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>リモート・フォルダがゴミ箱内にあるため、あなたのシンク&quot;%1&quot;は解除されました。</translation>
+        <translation>リモート・フォルダがゴミ箱内にあるため、あなたの sync &quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>ローカル・フォルダが存在しないため、あなたのシンク&quot;%1&quot;は解除されました。</translation>
+        <translation>ローカル・フォルダが存在しないため、あなたの sync &quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -345,18 +345,18 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">シンクは中止されます。
-シンクしていない時に起った削除は実行されません。
+        <translation type="obsolete">同期は中止されます。
+同期していない時に起った削除は実行されません。
 
 終了しますか？</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
-        <translation>MEGAシンクについて</translation>
+        <translation>MEGAsync について</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
-        <translation>MEGAシンクコード%1版</translation>
+        <translation>MEGAsync コード%1版</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -388,7 +388,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Resume</source>
-        <translation>リネーム</translation>
+        <translation>再開</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -408,7 +408,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Syncing</source>
-        <translation>シンク中</translation>
+        <translation>同期中</translation>
     </message>
     <message>
         <source>Temporary transmission error: </source>
@@ -420,7 +420,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
-        <translation>MEGAシンクは更新されました。</translation>
+        <translation>MEGAsync は更新されました。</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -483,7 +483,7 @@ https://mega.co.nz/#sync</source>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
-        <translation>シンクは中止されます。
+        <translation>同期は中止されます。
 
 終了しますか？</translation>
     </message>
@@ -496,6 +496,10 @@ Exit anyway?</source>
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>ファイルシステムを取ることができません。
 再度トライして下さい。どうしてもうまく行かない時は、bug@mega.co.nzへ連絡して下さい。</translation>
+    </message>
+    <message>
+        <source>Upload files/folders</source>
+        <translation>Upload files/folders</translation>
     </message>
 </context>
 <context>
@@ -612,7 +616,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>宛先フォルダはシンクされており、その中に同じ名前のファイルが既にあります。（%1） アップロードを続けると、前回のファイルは上書きされます。</translation>
+        <translation>宛先フォルダは同期されており、その中に同じ名前のファイルが既にあります。（%1） アップロードを続けると、前回のファイルは上書きされます。</translation>
     </message>
 </context>
 <context>
@@ -639,7 +643,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>中断する</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -666,12 +670,12 @@ Please, select a subfolder.</source>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
         <translation>このフォルダには%1入っています。
-これをシンクするんですか？</translation>
+これを同期するんですか？</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>このフォルダはシンクできません。
+        <translation>このフォルダは同期できません。
 フォルダ名に、\ / :などの記号を使わないようにして下さい。</translation>
     </message>
 </context>
@@ -691,7 +695,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation>中断する</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -792,7 +796,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translation>設定 - MEGAシンク</translation>
+        <translation>設定 - MEGAsync</translation>
     </message>
     <message>
         <source>General</source>
@@ -804,15 +808,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Syncs</source>
-        <translation>シンク</translation>
+        <translation>同期</translation>
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation>バンド幅</translation>
+        <translation>データ帯域</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>高度な</translation>
+        <translation>高度な設定</translation>
     </message>
     <message>
         <source>Help</source>
@@ -824,11 +828,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation>中断</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>申し込む</translation>
+        <translation>適用</translation>
     </message>
     <message>
         <source>Show notifications</source>
@@ -872,7 +876,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>シンク済みフォルダ</translation>
+        <translation>同期されたフォルダ</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -912,11 +916,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>利用可能バンド幅の約90%</translation>
+        <translation>利用可能データ帯域の約90%</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
-        <translation>転送容量クオータ</translation>
+        <translation>転送容量制限</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -924,7 +928,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>ウィンドウズExplorerからアップロードするためのフォルダ</translation>
+        <translation>アップロードフォルダ</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1000,11 +1004,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You are already syncing your entire account.</source>
-        <translation type="obsolete">既に全体のアカウントをシンクしています。</translation>
+        <translation type="obsolete">既に全てのフォルダが同期されています。</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
-        <translation>シンクは中止されます。</translation>
+        <translation>同期は中止されます。</translation>
     </message>
     <message>
         <source>Are you sure?</source>
@@ -1017,7 +1021,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>シンクから除外する名前を入力して下さい。
+        <translation>同期から除外する名前を入力して下さい。
 （ワイルドカード*や?は使用できます）:</translation>
     </message>
     <message>
@@ -1063,34 +1067,60 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>選択シンク中</translation>
+        <translation>選択同期中</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>アカウント全体シンク実行</translation>
+        <translation>全てのフォルダの同期を実行</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>アカウント全体シンクを実行すると、現在のシンクは無効になります。</translation>
+        <translation>全てのフォルダを同期させると、現在の同期は無効になります。</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>アカウント全体シンク実行中</translation>
+        <translation>すべてのフォルダを同期中</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>アカウント全体シンクを解除すると、選択フォルダのシンクができます。</translation>
+        <translation>全てのフォルダの同期を解除すると、選択フォルダの同期ができます。</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>アカウント全体シンク解除</translation>
+        <translation>全てのフォルダの同期を解除</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>Disable overlay icons</source>
+        <translation>Disable overlay icons</translation>
+    </message>
+    <message>
+        <source>Force a full check</source>
+        <translation>Force a full rescan</translation>
+    </message>
+    <message>
+        <source>Full check</source>
+        <translation>Full scan</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders
+when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+
+Do you want to restart MEGAsync now?
+</translation>
     </message>
 </context>
 <context>
     <name>SetupWizard</name>
     <message>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>Wizardをインストールする - MEGAシンク</translation>
+        <translation>Wizardをインストールする - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
@@ -1142,23 +1172,23 @@ when the application starts again.</source>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
-        <translation>あなたのクラウド・ドライブ全体をシンク</translation>
+        <translation>クラウド・ドライブ内のあなたのすべてのフォルダを同期</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>アカウント全体をシンク</translation>
+        <translation>全てのフォルダを同期</translation>
     </message>
     <message>
         <source>Selective sync</source>
-        <translation>一部の選択的シンク</translation>
+        <translation>一部の選択的同期</translation>
     </message>
     <message>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>クラウド・ドライブ内の特定のフォルダをシンク</translation>
+        <translation>クラウド・ドライブ内の特定のフォルダを同期</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
-        <translation>次のフォルダは自動的にシンクされます。</translation>
+        <translation>次のフォルダは自動的に同期されます。</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1186,7 +1216,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>は自動的にシンクされます。</translation>
+        <translation>は自動的に同期されます。</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1198,7 +1228,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>中断</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1268,7 +1298,7 @@ when the application starts again.</source>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
         <translation>あなたのクラウド・ドライブには%1あります。
-あなたのクラウド・ドライブ全体をシンクするのですか？</translation>
+あなたのクラウド・ドライブ全体を同期するのですか？</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -1299,7 +1329,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>あなたは非常に大きなフォルダをシンクしようとしています。ブート・ボリューム全体のシンクは非効率的で危険です。もっと小さいフォルダーから始めて、MEGAシンク作動中にデータを加えていって下さい。</translation>
+        <translation>あなたは非常に大きなフォルダを同期しようとしています。ブート・ボリューム全体の同期は非効率的で危険です。もっと小さいフォルダーから始めて、MEGAsync作動中にデータを加えていって下さい。</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -1390,7 +1420,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
-        <translation>シンクしたMEGAフォルダ</translation>
+        <translation>同期されたMEGAフォルダ</translation>
     </message>
 </context>
 </TS>
