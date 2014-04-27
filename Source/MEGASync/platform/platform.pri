@@ -25,6 +25,7 @@ unix:!macx {
     # desktop
     desktop.path = /usr/share/applications
     desktop.files =  $$PWD/linux/megasync.desktop
+    desktop.commands = update-desktop-database &> /dev/null || true
     INSTALLS += desktop
 }
 
