@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>지금 매우 큰 폴더를 동기화하려고 합니다. 비효율적이고 위험한 부트 볼륨 전체를 동기화하는 것을 막으려면, 메가싱크가 작동중일 때 작은 폴더부터 데이터를 추가하는 것을 권장합니다.</translation>
+        <translation>지금 매우 큰 폴더를 동기화하려고 합니다. 비효율적이고 위험한 부트 볼륨 전체를 동기화하는 것을 막으려면, 메가싱크가 작동중일 때 작은 폴더부터 시작하여 더 많은 자료를 추가하는 것을 권장합니다.</translation>
     </message>
 </context>
 <context>
@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>메가싱크가 시작중입니다.</translation>
     </message>
 </context>
 <context>
@@ -496,6 +496,10 @@ Exit anyway?</source>
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>파일 시스템을 가져올 수 없습니다.
 다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락바랍니다.</translation>
+    </message>
+    <message>
+        <source>Upload files/folders</source>
+        <translation>Upload files/folders</translation>
     </message>
 </context>
 <context>
@@ -1085,6 +1089,32 @@ when the application starts again.</source>
         <source>Disable full account sync</source>
         <translation>계정 전체 동기화 비활성화</translation>
     </message>
+    <message>
+        <source>Other</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>Disable overlay icons</source>
+        <translation>Disable overlay icons</translation>
+    </message>
+    <message>
+        <source>Force a full check</source>
+        <translation>Force a full rescan</translation>
+    </message>
+    <message>
+        <source>Full check</source>
+        <translation>Full scan</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders
+when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+
+Do you want to restart MEGAsync now?
+</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1299,7 +1329,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>지금 매우 큰 폴더를 동기화하려고 합니다. 비효율적이고 위험한 부트 볼륨 전체를 동기화하는 것을 막으려면, 메가싱크가 작동중일 때 작은 폴더부터 데이터를 추가하는 것을 권장합니다.</translation>
+        <translation>지금 매우 큰 폴더를 동기화하려고 합니다. 비효율적이고 위험한 부트 볼륨 전체를 동기화하는 것을 막으려면, 메가싱크가 작동중일 때 작은 폴더부터 시작하여 더 많은 자료를 추가하는 것을 권장합니다.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
