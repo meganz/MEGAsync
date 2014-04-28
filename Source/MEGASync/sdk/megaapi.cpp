@@ -2624,6 +2624,19 @@ void MegaApi::fetchnodes_result(error e)
                 continue;
             }
 
+            Node *parent = node;
+            while(parent)
+            {
+                if(parent->nodehandle==client->rootnodes[2])
+                {
+                    fireOnRequestFinish(this, syncRequest, MegaError(API_ENOENT));
+                    break;
+                }
+                parent = parent->parent;
+            }
+            if(parent)
+                continue;
+
             string localname;
             string utf8name(localFolder.toUtf8().constData());
     #ifdef WIN32
@@ -3042,7 +3055,8 @@ void MegaApi::nodes_updated(Node** n, int count)
         for(int i=0; i<count; i++)
         {
             Node *node = n[i];
-            if(node->changed.parent || node->changed.attrs)
+            if(node->changed.parent || node->changed.attrs || node->removed ||
+                    (node->parent && (node->parent->nodehandle == client->rootnodes[2])))
             {
                 node->changed.parent = false;
                 node->changed.attrs = false;
