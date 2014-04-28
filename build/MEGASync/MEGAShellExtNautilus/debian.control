@@ -1,12 +1,21 @@
-Source: megasync
-Section: Tools
-Priority: normal
+Source: nautilus-megasync
+Section: gnome
+Priority: optional
 Maintainer: Javier Serrano <js@mega.co.nz>
-Build-Depends: debhelper, make, g++, libqt4-dev, libcrypto++-dev, libcurl4-openssl-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf
+Homepage: https://mega.co.nz/#sync
+Build-Depends:  debhelper,
+                libqt4-dev,
+                intltool,
+                autotools-dev,
+                libnautilus-extension-dev (>= 2.16.0),
+                libgtk2.0-bin,
+                cdbs
 
-Package: megasync
+Package: nautilus-megasync
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Recommends: nautilus (>= 2.16.0)
 Description: Easy automated syncing between your computers and your MEGA cloud drive
  Secure:
  Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
