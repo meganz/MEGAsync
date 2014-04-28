@@ -52,9 +52,7 @@ unix:!macx {
         icons128.files = $${ICONS_LOC}/128x128/apps/mega.png
         icons256.path = $${HICOLOR}/256x256/apps
         icons256.files = $${ICONS_LOC}/256x256/apps/mega.png
-        icons512.path = $${HICOLOR}/512x512/apps
-        icons512.files = $${ICONS_LOC}/512x512/apps/mega.png
-        INSTALLS += icons32 icons48 icons128 icons256 icons512
+        INSTALLS += icons32 icons48 icons128 icons256
     } else {
         message("Skipping desktop files installation.")
     }
