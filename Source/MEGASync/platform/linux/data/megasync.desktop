@@ -8,7 +8,6 @@ TryExec=megasync
 Exec=megasync
 Icon=mega
 Terminal=false
-Terminal=false
 Categories=Network;System;
 StartupNotify=false
 
