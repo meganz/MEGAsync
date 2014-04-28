@@ -43,3 +43,6 @@ Makefile
 # tmp files
 *.swn
 *.swo
+
+# osc files
+.osc
