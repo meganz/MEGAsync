@@ -22,11 +22,42 @@ unix:!macx {
     HEADERS += $$PWD/linux/LinuxPlatform.h \
         $$PWD/linux/ExtServer.h
 
-    # desktop
-    desktop.path = /usr/share/applications
-    desktop.files =  $$PWD/linux/megasync.desktop
-    desktop.commands = update-desktop-database &> /dev/null || true
-    INSTALLS += desktop
+    # do not install desktop files if no_desktop is defined,
+    # make build tool take care of these files
+    !contains(DEFINES, no_desktop) {
+
+        message("Installing desktop files.")
+
+        # get env variable
+        DESKTOP_DESTDIR = $$(DESKTOP_DESTDIR)
+        isEmpty(DESKTOP_DESTDIR) {
+            DESKTOP_DESTDIR = /usr
+        }
+
+        # desktop
+        desktop.path = $$DESKTOP_DESTDIR/share/applications
+        desktop.files = $$PWD/linux/data/megasync.desktop
+        desktop.commands = update-desktop-database &> /dev/null || true
+        INSTALLS += desktop
+
+        HICOLOR = $$DESKTOP_DESTDIR/share/icons/hicolor
+
+        # icons
+        ICONS_LOC = $$PWD/linux/data/icons/hicolor
+        icons32.path = $${HICOLOR}/32x32/apps
+        icons32.files = $${ICONS_LOC}/32x32/apps/mega.png
+        icons48.path = $${HICOLOR}/48x48/apps
+        icons48.files = $${ICONS_LOC}/48x48/apps/mega.png
+        icons128.path = $${HICOLOR}/128x128/apps
+        icons128.files = $${ICONS_LOC}/128x128/apps/mega.png
+        icons256.path = $${HICOLOR}/256x256/apps
+        icons256.files = $${ICONS_LOC}/256x256/apps/mega.png
+        icons512.path = $${HICOLOR}/512x512/apps
+        icons512.files = $${ICONS_LOC}/512x512/apps/mega.png
+        INSTALLS += icons32 icons48 icons128 icons256 icons512
+    } else {
+        message("Skipping desktop files installation.")
+    }
 }
 
 macx {

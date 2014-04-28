@@ -19,25 +19,13 @@ INSTALLS += target
 
 QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
 
-isEmpty(DESTDIR) {
-    DESTDIR = /usr
+# get env variable
+DESKTOP_DESTDIR = $$(DESKTOP_DESTDIR)
+isEmpty(DESKTOP_DESTDIR) {
+    DESKTOP_DESTDIR = /usr
 }
 
-HICOLOR = $$DESTDIR/share/icons/hicolor
-
-# icons
-ICONS_LOC = $$PWD/data/icons/hicolor
-icons32.path = $${HICOLOR}/32x32/apps
-icons32.files = $${ICONS_LOC}/32x32/apps/mega.png
-icons48.path = $${HICOLOR}/48x48/apps
-icons48.files = $${ICONS_LOC}/48x48/apps/mega.png
-icons128.path = $${HICOLOR}/128x128/apps
-icons128.files = $${ICONS_LOC}/128x128/apps/mega.png
-icons256.path = $${HICOLOR}/256x256/apps
-icons256.files = $${ICONS_LOC}/256x256/apps/mega.png
-icons512.path = $${HICOLOR}/512x512/apps
-icons512.files = $${ICONS_LOC}/512x512/apps/mega.png
-INSTALLS += icons32 icons48 icons128 icons256 icons512
+HICOLOR = $$DESKTOP_DESTDIR/share/icons/hicolor
 
 # emblems
 EMBLEMS_LOC = $$PWD/data/emblems
