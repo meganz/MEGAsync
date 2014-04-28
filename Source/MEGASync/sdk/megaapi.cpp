@@ -2618,24 +2618,17 @@ void MegaApi::fetchnodes_result(error e)
             client->restag = client->nextreqtag();
             requestMap[client->restag]=syncRequest;
 
-            if(!node)
+            MegaNode *megaNode = getNodeByHandle(preferences->getMegaFolderHandle(i));
+            const char *nodePath = getNodePath(megaNode);
+            if(!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
             {
                 fireOnRequestFinish(this, syncRequest, MegaError(API_ENOENT));
+                delete megaNode;
+                delete[] nodePath;
                 continue;
             }
-
-            Node *parent = node;
-            while(parent)
-            {
-                if(parent->nodehandle==client->rootnodes[2])
-                {
-                    fireOnRequestFinish(this, syncRequest, MegaError(API_ENOENT));
-                    break;
-                }
-                parent = parent->parent;
-            }
-            if(parent)
-                continue;
+            delete megaNode;
+            delete[] nodePath;
 
             string localname;
             string utf8name(localFolder.toUtf8().constData());

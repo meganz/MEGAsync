@@ -1405,47 +1405,33 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     QString localFolder = preferences->getLocalFolder(i);
                     MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
-                    MegaNode *parentNode = megaApi->getParentNode(node);
-                    MegaNode *rubbishNode = megaApi->getRubbishNode();
-                    if(!node)
-                    {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                            "because the remote folder doesn't exist")
-                                         .arg(preferences->getSyncName(i)));
-                    }
-                    else if(!QFileInfo(localFolder).isDir())
+                    const char *nodePath = megaApi->getNodePath(node);
+                    delete node;
+
+                    if(!QFileInfo(localFolder).isDir())
                     {
                         showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                             "because the local folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
-                    else
+                    else if(nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
                     {
-                        while(parentNode)
-                        {
-                            if(parentNode->getHandle() == rubbishNode->getHandle())
-                            {
-                                showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                                    "because the remote folder is in the rubbish bin")
-                                                 .arg(preferences->getSyncName(i)));
-                                break;
-                            }
-
-                            MegaNode *newParent  = megaApi->getParentNode(parentNode);
-                            delete parentNode;
-                            parentNode = newParent;
-                        }
-
-                        if(!parentNode)
-                            showErrorMessage(e->QgetErrorString());
+                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                                "because the remote folder is in the rubbish bin")
+                                             .arg(preferences->getSyncName(i)));
                     }
+                    else if(!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
+                    {
+                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                                "because the remote folder doesn't exist")
+                                             .arg(preferences->getSyncName(i)));
+                    }
+                    else showErrorMessage(e->QgetErrorString());
 
-                    delete node;
-                    delete parentNode;
-                    delete rubbishNode;
+                    delete[] nodePath;
 
                     LOG("Sync error! Removed");
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    Platform::syncFolderRemoved(localFolder, preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
                     if(settingsDialog)
                         settingsDialog->loadSettings();
@@ -1662,68 +1648,35 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
 
         if(node->getType()==MegaNode::TYPE_FOLDER)
         {
-            if(node->isRemoved())
+            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
-                for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-                {
-                    MegaNode *parent = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
-                    do
-                    {
-                        if(!parent || (node->getHandle() == parent->getHandle()))
-                        {
-                            LOG("Remote sync deletion detected!");
-                            Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
-                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                                "because the remote folder doesn't exist")
-                                             .arg(preferences->getSyncName(i)));
-                            Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
-                            Platform::notifyItemChange(preferences->getLocalFolder(i));
-                            megaApi->removeSync(preferences->getMegaFolderHandle(i));
-                            preferences->removeSyncedFolder(i);
-                            delete parent;
-                            i--;
-                            break;
-                        }
-                        MegaNode *newParent = megaApi->getParentNode(parent);
-                        delete parent;
-                        parent = newParent;
-                    }while(parent);
-                }
-            }
-            else
-            {
-                MegaNode *rubbishNode = megaApi->getRubbishNode();
-                MegaNode *dst = megaApi->getParentNode(node);
-                if(dst->getHandle() == rubbishNode->getHandle())
-                {
-                    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
-                    {
-                        MegaNode *parent = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
-                        while(parent)
-                        {
-                            if(parent->getHandle() == rubbishNode->getHandle())
-                            {
-                                Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
-                                showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                                    "because the remote folder is in the rubbish bin")
-                                                 .arg(preferences->getSyncName(i)));
-                                Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
-                                Platform::notifyItemChange(preferences->getLocalFolder(i));
-                                megaApi->removeSync(preferences->getMegaFolderHandle(i));
-                                preferences->removeSyncedFolder(i);
-                                delete parent;
-                                i--;
-                                break;
-                            }
+                MegaNode *nodeByHandle = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                const char *nodePath = megaApi->getNodePath(nodeByHandle);
 
-                            MegaNode *newParent = megaApi->getParentNode(parent);
-                            delete parent;
-                            parent = newParent;
-                        }
+                if(!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
+                {
+                    if(nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                            "because the remote folder is in the rubbish bin")
+                                         .arg(preferences->getSyncName(i)));
                     }
+                    else
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                            "because the remote folder doesn't exist")
+                                         .arg(preferences->getSyncName(i)));
+                    }
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
+                    Platform::notifyItemChange(preferences->getLocalFolder(i));
+                    megaApi->removeSync(preferences->getMegaFolderHandle(i));
+                    preferences->removeSyncedFolder(i);
+                    i--;
                 }
-                delete dst;
-                delete rubbishNode;
+
+                delete nodeByHandle;
+                delete [] nodePath;
             }
         }
 
