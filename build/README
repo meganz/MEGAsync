@@ -1,0 +1,59 @@
+MEGASync and MEGAShellExtNautilus projects OBS files.
+
+Supported distributives and versions (i586 and x86_64 platforms):
+* Ubuntu 14.04
+* Ubuntu 13.10
+* Ubuntu 12.10
+* Ubuntu 12.04
+* Debian 7.0
+* openSUSE 13.1
+* openSUSE 12.3
+* Fedora 20
+* Fedora 19
+
+Currently non supported:
+* Centos (it ships with QT 4.6.2, while minimal supported QT version is QT 4.7)
+
+
+"build" directory structure is ready for Open Build Service integration.
+
+* MEGAsync
+    * MEGASync
+    * MEGAShellExtNautilus
+
+Subprojects:
+* ubuntu:universe  (as OBS does not include packages from Ubuntu "universe" repository due to license and patent issues)
+    Repositories:
+        * Ubuntu 14.04
+        * Ubuntu 13.10
+        * Ubuntu 12.10
+        * Ubuntu 12.04
+    Files:
+        * http://archive.ubuntu.com/ubuntu/pool/universe/libc/libcrypto++/libcrypto++_5.6.1-6.dsc
+        * http://archive.ubuntu.com/ubuntu/pool/universe/libc/libcrypto++/libcrypto++_5.6.1.orig.tar.gz
+        * http://archive.ubuntu.com/ubuntu/pool/universe/libc/libcrypto++/libcrypto++_5.6.1-6.debian.tar.gz
+
+* libcrypto  (for RHEL / CentOS: requires EPEL6 testing repository, which is not included in OBS)
+    Repositories:
+        * CentOS_CentOS-6
+    Files:
+        * http://pkgs.repoforge.org/cryptopp/cryptopp-5.5.2-1.rf.src.rpm
+
+
+opensuse-commander (osc) tool installation and configuration.
+
+* Ubuntu:
+apt-get install osc
+
+To prepare for use with MEGA OBS instance edit ~/.oscrc file:
+
+[general]
+apiurl = https://build.developers.mega.co.nz
+do_package_tracking = 1
+
+[https://build.developers.mega.co.nz]
+user = XXX
+pass = YYY
+
+
+osc documentation: http://en.opensuse.org/Build_Service/CLI
