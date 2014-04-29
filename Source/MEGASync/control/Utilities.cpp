@@ -294,16 +294,16 @@ bool Utilities::removeRecursively(QDir dir)
     return success;*/
 }
 
-void Utilities::copyRecursively(QString srcPath, QString dstPath, bool overwrite)
+void Utilities::copyRecursively(QString srcPath, QString dstPath)
 {
     QFileInfo source(srcPath);
     if(!source.exists()) return;
+    if(srcPath == dstPath) return;
 
     QFile dst(dstPath);
-    if(dst.exists() && !overwrite)
+    if(dst.exists())
         return;
 
-    dst.remove();
     if(source.isFile())
     {
         QFile src(srcPath);
