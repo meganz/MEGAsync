@@ -90,4 +90,6 @@ macx {
     MAC_ICONS_RESOURCES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES
     ICON = app.icns
+
+    QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
 }
