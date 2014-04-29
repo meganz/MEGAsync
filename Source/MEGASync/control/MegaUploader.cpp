@@ -61,7 +61,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     }
 
     string localPath = megaApi->getLocalPath(parent);
-    if(localPath.size())
+    if(localPath.size() && megaApi->is_syncable(info.fileName().toUtf8().constData()))
     {
     #ifdef WIN32
         QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName());

@@ -899,6 +899,7 @@ public:
     bool isSynced(MegaNode *n);
     void setExcludedNames(vector<string> *excludedNames);
     bool moveToLocalDebris(const char *path);
+    bool is_syncable(const char* name);
 
 	//Filesystem
     NodeList* getChildren(MegaNode *parent, int order=1);
@@ -1105,7 +1106,6 @@ protected:
 
 	void sendPendingRequests();
 	void sendPendingTransfers();
-    bool is_syncable(const char* name);
 	char *stringToArray(string &buffer);
 
 	//Pending
