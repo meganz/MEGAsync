@@ -63,6 +63,8 @@ public:
 
 protected:
     ~ContextMenuExt(void);
+    bool isSynced(int type, int state);
+    bool isUnsynced(int type, int state);
 
 private:
     // Reference count of component.
