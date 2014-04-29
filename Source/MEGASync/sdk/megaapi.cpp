@@ -1087,7 +1087,7 @@ MegaApi::MegaApi(const char *basePath)
     gfxAccess->setProcessor(processor);
 #endif
 
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.15");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.16");
 
     //Start blocking thread
 	threadExit = 0;
