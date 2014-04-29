@@ -153,12 +153,22 @@ ContextMenuExt::~ContextMenuExt(void)
     InterlockedDecrement(&g_cDllRef);
 }
 
+bool ContextMenuExt::isSynced(int type, int state)
+{
+    return (state == MegaInterface::FILE_SYNCED) ||
+        ((type == MegaInterface::TYPE_FOLDER) && state == MegaInterface::FILE_SYNCING);
+}
+
+bool ContextMenuExt::isUnsynced(int type, int state)
+{
+    return (state == MegaInterface::FILE_NOTFOUND);
+}
 
 void ContextMenuExt::requestUpload()
 {
     for(unsigned int i=0; i<selectedFiles.size(); i++)
     {
-        if((pathStates[i] != MegaInterface::FILE_SYNCED) && (pathTypes[i]!=MegaInterface::TYPE_UNKNOWN))
+        if(isUnsynced(pathTypes[i], pathStates[i]))
             MegaInterface::upload((PCWSTR)selectedFiles[i].data());
     }
 }
@@ -167,7 +177,7 @@ void ContextMenuExt::requestGetLinks()
 {
     for(unsigned int i=0; i<selectedFiles.size(); i++)
     {
-        if((pathStates[i] == MegaInterface::FILE_SYNCED) && (pathTypes[i]!=MegaInterface::TYPE_UNKNOWN))
+        if(isSynced(pathTypes[i], pathStates[i]))
             MegaInterface::pasteLink((PCWSTR)selectedFiles[i].data());
     }
 }
@@ -267,13 +277,13 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
                                 selectedFiles.push_back(buffer);
                                 pathStates.push_back(state);
                                 pathTypes.push_back(type);
-                                if(state == MegaInterface::FILE_SYNCED)
+                                if(isSynced(type, state))
                                 {
                                     if(type == MegaInterface::TYPE_FOLDER) syncedFolders++;
                                     else if(type == MegaInterface::TYPE_FILE) syncedFiles++;
                                     else syncedUnknowns++;
                                 }
-                                else
+                                else if(isUnsynced(type, state))
                                 {
                                     if(type == MegaInterface::TYPE_FOLDER) unsyncedFolders++;
                                     else if(type == MegaInterface::TYPE_FILE) unsyncedFiles++;
