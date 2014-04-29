@@ -898,6 +898,7 @@ public:
     bool isWaiting();
     bool isSynced(MegaNode *n);
     void setExcludedNames(vector<string> *excludedNames);
+    bool moveToLocalDebris(const char *path);
 
 	//Filesystem
     NodeList* getChildren(MegaNode *parent, int order=1);
