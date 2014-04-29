@@ -32,7 +32,7 @@ public:
     static QPixmap getExtensionPixmapSmall(QString fileName);
     static QPixmap getExtensionPixmapMedium(QString fileName);
     static bool removeRecursively(QDir dir);
-    static void copyRecursively(QString srcPath, QString dstPath, bool overwrite = true);
+    static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);
     static void log(QString message);
     static void log(const char *message);
