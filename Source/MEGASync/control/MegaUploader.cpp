@@ -28,6 +28,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
 {
     NodeList *children =  megaApi->getChildren(parent);
     QByteArray utf8name = info.fileName().toUtf8();
+    QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     MegaNode *dupplicate = NULL;
     for(int i=0; i<children->size(); i++)
     {
@@ -60,30 +61,31 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     }
 
     string localPath = megaApi->getLocalPath(parent);
-    if(localPath.size())
+    if(localPath.size() && megaApi->is_syncable(info.fileName().toUtf8().constData()))
     {
     #ifdef WIN32
-        QString destPath = QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName();
+        QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName());
         if(destPath.startsWith(QString::fromAscii("\\\\?\\"))) destPath = destPath.mid(4);
     #else
-        QString destPath = QString::fromUtf8(localPath.data()) + QDir::separator() + info.fileName();
+        QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + info.fileName());
     #endif
 
         QFileInfo dstInfo(destPath);
-        if(dstInfo.exists() && (dstInfo.size() != info.size()))
+        if(dstInfo.exists() && (destPath != currentPath))
         {
             int res = QMessageBox::warning(NULL, tr("Warning"), tr("The destination folder is synced and you already have a file \n"
                                                          "inside it with the same name (%1).\n"
                                                          "If you continue the upload, the previous file will be overwritten.\n"
                                                          "Are you sure?").arg(info.fileName()), QMessageBox::Yes, QMessageBox::Cancel);
             if(res != QMessageBox::Yes) return;
+            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         }
 
-        QtConcurrent::run(Utilities::copyRecursively, info.absoluteFilePath(), destPath, true);
+        QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
     }
     else if(info.isFile())
     {
-        megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
+        megaApi->startUpload(currentPath.toUtf8().constData(), parent);
     }
     else if(info.isDir())
     {

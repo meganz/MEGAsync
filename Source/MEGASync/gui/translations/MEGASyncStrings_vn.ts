@@ -499,7 +499,7 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Tải lên các tệp/thư mục</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Khác</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Vô hiệu các biểu tượng nổi</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Buộc tiến hành quét toàn bộ dữ liệu</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Quét toàn bộ</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>Trình MEGAsync sẽ tiến hành quét toàn bộ dữ liệu từ các thư mục đuợc đồng bộ của bạn
 
-Do you want to restart MEGAsync now?
+Bạn có muốn khởi chạy lại MEGAsync ngay không?
 </translation>
     </message>
 </context>

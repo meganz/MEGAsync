@@ -499,7 +499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>رفع ملفات/مجلدات</translation>
     </message>
 </context>
 <context>
@@ -1091,7 +1091,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>أخرى</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1103,7 +1103,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>فحص كامل</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
@@ -1112,7 +1112,7 @@ when it starts.
 Do you want to restart MEGAsync now?</source>
         <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
 
-Do you want to restart MEGAsync now?
+هل تريد إعادة تشغيل MEGAsync الآن؟
 </translation>
     </message>
 </context>

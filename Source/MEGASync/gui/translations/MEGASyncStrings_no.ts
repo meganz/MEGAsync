@@ -499,7 +499,7 @@ Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz<
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Last opp filer/mapper</translation>
     </message>
 </context>
 <context>
@@ -1091,7 +1091,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Annet</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1099,20 +1099,20 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Tving fullstendig gjenskanning</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Fullstendig skanning</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync vil foreta en fullstendig skanning av dine synkroniserte mapper
 
-Do you want to restart MEGAsync now?
+Vil du starte MEGAsync på nytt?
 </translation>
     </message>
 </context>

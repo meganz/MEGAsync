@@ -499,7 +499,7 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>I-upload ang files/folders</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Iba pang settings</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Alisin ang overlay icons</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Ipwersa ang buong pagrescan</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Buong rescan</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>Ang MEGAsync ay gagawa ng buong scan ng iyong synced folders
 
-Do you want to restart MEGAsync now?
+Gusto mo bang irestart ang MEGAsync?
 </translation>
     </message>
 </context>
