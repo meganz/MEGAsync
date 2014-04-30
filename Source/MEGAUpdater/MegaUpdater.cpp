@@ -77,7 +77,8 @@ const char *TARGET_PATHS_OSX[] = {
     "Contents/PlugIns/imageformats/libqtiff.dylib",
 
     "Contents/Resources/empty.lproj",
-    "Contents/Resources/mlogo.icns",
+    "Contents/Resources/app.icns",
+    "Contents/Resources/folder.icns",
     "Contents/Resources/qt.conf"
 };
 
@@ -108,7 +109,8 @@ const char *UPDATE_FILES_OSX[] = {
     "Contents/PlugIns/imageformats/libqtiff.dylib",
 
     "Contents/Resources/empty.lproj",
-    "Contents/Resources/mlogo.icns",
+    "Contents/Resources/app.icns",
+    "Contents/Resources/folder.icns",
     "Contents/Resources/qt.conf"
 };
 
