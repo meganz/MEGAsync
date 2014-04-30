@@ -684,9 +684,12 @@ void MegaApplication::onInstallUpdateClicked()
 
 void MegaApplication::showInfoDialog()
 {
-    QRect screenGeometry = QApplication::desktop()->availableGeometry();
-    infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
-    infoDialog->show();
+    if(infoDialog)
+    {
+        QRect screenGeometry = QApplication::desktop()->availableGeometry();
+        infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+        infoDialog->show();
+    }
 }
 
 void MegaApplication::unlink()
