@@ -23,7 +23,7 @@ private:
 	// Reference count of component.
     long m_cRef;
 	int id;
-	TCHAR szModule[MAX_PATH];
+    wchar_t szModule[MAX_PATH];
 };
 
 #endif

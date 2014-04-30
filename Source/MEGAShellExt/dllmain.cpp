@@ -6,6 +6,7 @@
 #include "ClassFactoryShellExtSyncing.h" 
 #include "RegUtils.h"
 
+#include <new>
 
 // {0229E5E7-09E9-45CF-9228-0228EC7D5F17}
 const CLSID CLSID_ContextMenuExt = 
@@ -50,30 +51,33 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
 {
     HRESULT hr = CLASS_E_CLASSNOTAVAILABLE;
-	ClassFactory *pClassFactory = NULL;
-    
-	if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))
+    ClassFactory *pClassFactory = NULL;
+
+    if(ppv == NULL)
+        return E_POINTER;
+
+    if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))
     {
         hr = E_OUTOFMEMORY;
-        pClassFactory = new ClassFactoryContextMenuExt();
+        pClassFactory = new (std::nothrow) ClassFactoryContextMenuExt();
     }
-	else if (IsEqualCLSID(CLSID_ShellExtSynced, rclsid))
-	{
-		hr = E_OUTOFMEMORY;
-        pClassFactory = new ClassFactoryShellExtSynced();
-	}
-	else if (IsEqualCLSID(CLSID_ShellExtPending, rclsid))
-	{
-		hr = E_OUTOFMEMORY;
-        pClassFactory = new ClassFactoryShellExtPending();
-	}
-	else if (IsEqualCLSID(CLSID_ShellExtSyncing, rclsid))
-	{
-		hr = E_OUTOFMEMORY;
-        pClassFactory = new ClassFactoryShellExtSyncing();
-	}
+    else if (IsEqualCLSID(CLSID_ShellExtSynced, rclsid))
+    {
+        hr = E_OUTOFMEMORY;
+        pClassFactory = new (std::nothrow) ClassFactoryShellExtSynced();
+    }
+    else if (IsEqualCLSID(CLSID_ShellExtPending, rclsid))
+    {
+        hr = E_OUTOFMEMORY;
+        pClassFactory = new (std::nothrow) ClassFactoryShellExtPending();
+    }
+    else if (IsEqualCLSID(CLSID_ShellExtSyncing, rclsid))
+    {
+        hr = E_OUTOFMEMORY;
+        pClassFactory = new (std::nothrow) ClassFactoryShellExtSyncing();
+    }
 
-	if (pClassFactory)
+    if (pClassFactory)
     {
         hr = pClassFactory->QueryInterface(riid, ppv);
         pClassFactory->Release();
