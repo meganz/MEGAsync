@@ -499,7 +499,7 @@ Riprova. Se il problema persiste contatta bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Uploa files/cartelle</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Altro</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Disabilita icone di sovrapposizione</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Forza una nuova analisi completa</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Scansione completa</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync eseguirà una scansione completa delle cartelle sincronizzate quando verrà avviato.
 
-Do you want to restart MEGAsync now?
+Vuoi riavviare MEGAsync adesso?
 </translation>
     </message>
 </context>

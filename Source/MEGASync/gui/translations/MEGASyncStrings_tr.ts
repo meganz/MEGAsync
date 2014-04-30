@@ -499,7 +499,7 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Dosya/klasör yükle</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Bindirme simgelerini devre dışı bırak</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Tam taramaya zorla</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Tam tarama</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync senkronize edilmiş klasörlerinizde tam bir tarama gerçekleştirecek
 
-Do you want to restart MEGAsync now?
+MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?
 </translation>
     </message>
 </context>

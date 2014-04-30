@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>MEGAsync startuje</translation>
     </message>
 </context>
 <context>
@@ -499,7 +499,7 @@ Molimo Vas da pokušate ponovo a ukoliko problem i dalje postoji molimo Vas da k
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Upload fajlova/foldera</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Isključi preklapajuće ikonice</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Omogući puno re-skeniranje</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Puno skeniranje</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync će obaviti puno skeniranje Vaših sinhronizovanih foldera
 
-Do you want to restart MEGAsync now?
+Da li želite da restartujete MEGAsync sada?
 </translation>
     </message>
 </context>

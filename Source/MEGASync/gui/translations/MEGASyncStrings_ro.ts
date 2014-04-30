@@ -499,7 +499,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Încarcă fişiere/foldere</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Alte setări</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Dezactivează suprapunerea iconiţelor</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Forţează o rescanare completă</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Scanare completă</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync va realiza o scanare completă a folderelor tale sincronizate
 
-Do you want to restart MEGAsync now?
+Doreşti să reporneşti MEGAsync acum?
 </translation>
     </message>
 </context>
