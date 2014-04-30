@@ -499,7 +499,7 @@ Sila cuba lagi. Jika masalah berterusan sila hubungi bug@mega.co.nz</translation
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Muat naik fail/folder</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Lain-lain</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Matikan ikon overlay</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Paksa imbasan semula penuh</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Imbasan penuh</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync akan melaksanakan imbasan penuh untuk folder disegerak anda.
 
-Do you want to restart MEGAsync now?
+Adakah anda ingin memulakan semula MEGAsync sekarang?
 </translation>
     </message>
 </context>

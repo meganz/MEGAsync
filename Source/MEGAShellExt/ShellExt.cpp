@@ -12,7 +12,7 @@ extern HINSTANCE g_hInst;
 ShellExt::ShellExt(int id) : m_cRef(1)
 {
 	this->id = id;
-	if (!GetModuleFileName(g_hInst, szModule, ARRAYSIZE(szModule))) 
+    if (!g_hInst || !GetModuleFileName(g_hInst, szModule, ARRAYSIZE(szModule)))
 		szModule[0]=L'\0';
 }
 
@@ -52,26 +52,59 @@ IFACEMETHODIMP_(ULONG) ShellExt::Release()
 
 HRESULT ShellExt::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DWORD *pdwFlags)
 {
-    int len = lstrlen(szModule)+1;
-    if (len > cchMax)
-        return S_FALSE;
+    __try
+    {
+        if(pwszIconFile == NULL)
+            return E_POINTER;
+        if(pIndex == NULL)
+            return E_POINTER;
+        if(pdwFlags == NULL)
+            return E_POINTER;
+        if(cchMax < 1)
+            return E_INVALIDARG;
 
-    memcpy(pwszIconFile, szModule, len*sizeof(TCHAR));
-    *pIndex = id;
-    *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
-    return S_OK;
+        int len = lstrlen(szModule)+1;
+        if (len > cchMax)
+            return E_FAIL;
+
+        memcpy(pwszIconFile, szModule, len*sizeof(wchar_t));
+        *pIndex = id;
+        *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
+        return S_OK;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return E_FAIL;
 }
 
 HRESULT ShellExt::GetPriority(int *pPriority)
 {
-	*pPriority = 0;
-    return S_OK;
+    __try
+    {
+        if (pPriority == 0)
+            return E_POINTER;
+
+        *pPriority = 0;
+        return S_OK;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return E_FAIL;
 }
 
 HRESULT ShellExt::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
 {
-   (void)dwAttrib;
-   if(MegaInterface::getPathState(pwszPath) == id)
-		return S_OK;
-	return S_FALSE;
+    __try
+    {
+        (void)dwAttrib;
+        if(MegaInterface::getPathState(pwszPath) == id)
+            return S_OK;
+        return S_FALSE;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return E_FAIL;
 }

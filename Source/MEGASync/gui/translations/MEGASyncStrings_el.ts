@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>Το MEGAsync ξεκινάει</translation>
     </message>
 </context>
 <context>
@@ -499,7 +499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Ανεβάστε τα αρχεία/φακέλους</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>&apos;Αλλα</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Απενεργοποίηση επικάλυμένων εικονιδίων</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Πραγματοποιήστε μια πλήρη επανάληψη της σάρωσης</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Πλήρης σάρωση</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>Το MEGAsync θα εκτελεί μια πλήρη σάρωση των συγχρονισμένων φακέλων σας όταν ξεκινάει.
 
-Do you want to restart MEGAsync now?
+Θέλετε να επανεκκίνησετε το MEGAsync τώρα;
 </translation>
     </message>
 </context>

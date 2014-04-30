@@ -42,7 +42,7 @@
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Název &quot;%1&quot; je již použit pro jinou synchronizaci Zadejte rozdílný název pro identifikaci této synchronizované složky:</translation>
+        <translation>Název „%1“ je již použit pro jinou synchronizaci Zadejte rozdílný název pro identifikaci této synchronizované složky:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -50,7 +50,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Storno</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Error</source>
@@ -65,7 +65,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Pokoušíte se o synchronizaci extrémně velkého adresáře. Abychom předešli synchronizacím celých diskových svazků, což je nejen neužitečné, ale i nebezpečné, žádáme vás, abyste začli synchronizovat menší složky a další data přidávali za běhu MEGAsync.</translation>
+        <translation>Pokoušíte se synchronizovat mimořádně velkou složku. Aby se zabránilo synchronizaci celých spouštěcích svazků, což je neužitečné a nebezpečné, žádáme vás, abyste začali s menší složkou a další data přidávali, když je spuštěný MEGAsync.</translation>
     </message>
 </context>
 <context>
@@ -84,7 +84,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Storno</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -185,7 +185,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGA website</source>
-        <translation>Web MEGA</translation>
+        <translation>Stránka MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -288,7 +288,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
-        <translation>Nainstalovat pro všechny používající tento počítač</translation>
+        <translation>Nainstalovat pro kohokoliv, kdo používá tento počítač</translation>
     </message>
     <message>
         <source>Install just for me</source>
@@ -311,22 +311,22 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync je nyní spuštěno Klikněte sem pro otevření stavového okna.</translation>
+        <translation>MEGAsync je nyní spuštěno. Klikněte sem pro otevření stavového okna.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Vaše synchronizace &quot;%1&quot; byla zakázána, protože vzdálená složka neexistuje</translation>
+        <translation>Vaše synchronizace „%1“ byla zakázána, protože vzdálená složka neexistuje</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Vaše synchronizace &quot;%1&quot; byla zakázána, protože vzdálená složka je v koši</translation>
+        <translation>Vaše synchronizace „%1“ byla zakázána, protože vzdálená složka je v koši</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Vaše synchronizace &quot;%1&quot; byla zakázána, protože místní složka neexistuje</translation>
+        <translation>Vaše synchronizace „%1“ byla zakázána, protože místní složka neexistuje</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -346,7 +346,7 @@ Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
         <translation type="obsolete">Synchronizace bude zastavena.
-Smazání budou zpracována, pouze pokud běží synchronizační klient.
+Odstranění budou zpracována, pouze pokud běží synchronizační klient.
 
 Přesto ukončit?</translation>
     </message>
@@ -416,7 +416,7 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
-        <translation>Máte nové nebo aktualizované soubory ve vašem účtu</translation>
+        <translation>Na účtu máte nové nebo aktualizované soubory</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -428,11 +428,11 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>Složka (%1) nebyla nahrána, protože je velice velká. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
+        <translation>Složka (%1) nebyla nahrána, protože je mimořádně velká. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 složek nebyly nahráno, protože jsou velice velké. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
+        <translation>%1 složek nebylo nahráno, protože jsou mimořádně velké. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -494,12 +494,12 @@ Přesto ukončit?</translation>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nelze nalézt systém souborů
+        <translation>Nelze získat souborový systém.
 Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Nahrát soubory nebo složky</translation>
     </message>
 </context>
 <context>
@@ -518,15 +518,15 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Request failed, retrying</source>
-        <translation>Požadavek selhal, opakování</translation>
+        <translation>Požadavek se nezdařil, opakování</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
-        <translation>Překročen limit přenosové rychlosti</translation>
+        <translation>Překročeno omezení přenosové rychlosti</translation>
     </message>
     <message>
         <source>Failed permanently</source>
-        <translation>Trvalo selhalo</translation>
+        <translation>Trvalo se nezdařilo</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -562,7 +562,7 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
-        <translation>Neplatný klíč/Chyba dešifrování</translation>
+        <translation>Neplatný klíč nebo chyba dešifrování</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -707,7 +707,7 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Nenalezeny žádné platné odkazy MEGA</translation>
+        <translation>Nenalezeny žádné platné odkazy MEGA (odkazy na složky nejsou zatím podporovány).</translation>
     </message>
 </context>
 <context>
@@ -726,7 +726,7 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Storno</translation>
+        <translation>&amp;Zrušit</translation>
     </message>
 </context>
 <context>
@@ -952,7 +952,7 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation>Typ serveru proxy</translation>
+        <translation>Typ serveru proxy:</translation>
     </message>
     <message>
         <source>Server:</source>
@@ -1035,15 +1035,15 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>Nové vyloučené názvy souborů budou vzaty v úvahu po novém spuštění aplikace.</translation>
+        <translation>Nové vyloučené názvy souborů budou vzaty v úvahu po opětovném spuštění aplikace.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Vyrovnávací paměť</translation>
+        <translation>Mezipaměť</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Aktuální velikost vyrovnávací paměti: %1</translation>
+        <translation>Aktuální velikost mezipaměti: %1</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1055,7 +1055,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation>Nastavení proxy jsou neplatná nebo proxy neodpovídá</translation>
+        <translation>Nastavení serveru proxy jsou neplatná nebo server proxy neodpovídá</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Ostatní</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Zakázat překryvné ikony</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Vynutit úplné prohledání znovu</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Úplné prohledání</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync provede úplné prohledání vašich synchronizovaných složek
 
-Do you want to restart MEGAsync now?
+Chcete restartovat MEGAsync nyní?
 </translation>
     </message>
 </context>
@@ -1160,7 +1160,7 @@ Do you want to restart MEGAsync now?
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Ověřte svůj účet pomocí odkazu pro potvrzení, který jsme vám poslali na váš e-mail.</translation>
+        <translation>Ověřte svůj účet pomocí potvrzovacího odkazu, který jsme vám poslali na e-mailový účet</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1172,7 +1172,7 @@ Do you want to restart MEGAsync now?
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
-        <translation>Synchronizovat celou cloudovou jednotku</translation>
+        <translation>Synchronizovat celou vaši cloudovou jednotku</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -1184,7 +1184,7 @@ Do you want to restart MEGAsync now?
     </message>
     <message>
         <source> Sync specific folders in your cloud drive</source>
-        <translation>Synchronizovat určité složky v cloudové jednotce</translation>
+        <translation>Synchronizovat určité složky ve vaší cloudové jednotce</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -1329,12 +1329,12 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Pokoušíte se o synchronizaci extrémně velkého adresáře. Abychom předešli synchronizacím celých diskových svazků, což je nejen neužitečné, ale i nebezpečné, žádáme vás, abyste začli synchronizovat menší složky a další data přidávali za běhu MEGAsync.</translation>
+        <translation>Pokoušíte se synchronizovat mimořádně velkou složku. Aby se zabránilo synchronizaci celých spouštěcích svazků, což je neužitečné a nebezpečné, žádáme vás, abyste začali s menší složkou a další data přidávali, když je spuštěný MEGAsync.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nelze nalézt systém souborů
+        <translation>Nelze získat souborový systém.
 Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</translation>
     </message>
 </context>
@@ -1413,7 +1413,7 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Storno</translation>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>

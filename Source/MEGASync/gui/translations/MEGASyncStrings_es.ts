@@ -499,7 +499,7 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Subir archivos/carpetas</translation>
     </message>
 </context>
 <context>
@@ -574,7 +574,7 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Over quota</source>
-        <translation> Cuota superada</translation>
+        <translation>Límite de cuenta excedido</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -920,7 +920,7 @@ Por favor, asegúrate de que no has utilizado caracteres como \ / ó : en los no
     </message>
     <message>
         <source>Bandwidth quota</source>
-        <translation>Cuota de ancho de banda</translation>
+        <translation>Uso de ancho de banda</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Otros</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Desactivar iconos de estado</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Forzar un escaneo completo</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Escaneo completo</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync realizará un escaneo completo de las carpetas sincronizadas
 
-Do you want to restart MEGAsync now?
+¿Quieres reiniciar MEGAsync ahora?
 </translation>
     </message>
 </context>
@@ -1240,7 +1240,7 @@ Do you want to restart MEGAsync now?
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Obteniendo lista de archivos...</translation>
+        <translation>Cargando lista de archivos...</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -1252,7 +1252,7 @@ Do you want to restart MEGAsync now?
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
-        <translation>La carpeta MEGA no existe</translation>
+        <translation>La carpeta no existe en MEGA</translation>
     </message>
     <message>
         <source>Finish</source>

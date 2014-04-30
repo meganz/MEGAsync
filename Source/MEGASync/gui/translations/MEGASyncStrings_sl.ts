@@ -499,7 +499,7 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Naloži datoteke/mape</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Drugo</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Onemogoči prekrivalne ikone</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Zahtevaj polno ponovno skeniranje</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Polno skeniranje</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync bo začel s polnim skeniranjem vaših sinhroniziranih map ob zagonu.
 
-Do you want to restart MEGAsync now?
+Ali želite ponovno zagnati MEGAsync takoj?
 </translation>
     </message>
 </context>

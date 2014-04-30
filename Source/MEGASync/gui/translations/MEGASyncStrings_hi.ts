@@ -499,7 +499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>फ़ाइलें / फ़ोल्डर अपलोड करें</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>अन्य</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>ओवरले माउस को अक्षम</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>एक पूर्ण रीस्कैन मजबूर</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>पूर्ण स्कैन</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync अपने समन्वयित फ़ोल्डरों की एक पूर्ण स्कैन प्रदर्शन करेंगे
 
-Do you want to restart MEGAsync now?
+आप अब MEGAsync पुनः आरंभ करना चाहते हैं?
 </translation>
     </message>
 </context>

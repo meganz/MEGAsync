@@ -24,6 +24,9 @@ ClassFactory::~ClassFactory()
 //
 IFACEMETHODIMP ClassFactory::QueryInterface(REFIID riid, void **ppv)
 {
+    if(ppv == NULL)
+        return E_POINTER;
+
     static const QITAB qit[] =
     {
         QITABENT(ClassFactory, IClassFactory),

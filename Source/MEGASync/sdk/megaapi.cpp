@@ -1087,7 +1087,7 @@ MegaApi::MegaApi(const char *basePath)
     gfxAccess->setProcessor(processor);
 #endif
 
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.15");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.16");
 
     //Start blocking thread
 	threadExit = 0;
@@ -1756,6 +1756,45 @@ bool MegaApi::isRegularTransfer(Transfer *transfer)
     }
     MUTEX_UNLOCK(sdkMutex);
     return regular;
+}
+
+//Move local files inside synced folders to the "Rubbish" folder.
+bool MegaApi::moveToLocalDebris(const char *path)
+{
+    MUTEX_LOCK(sdkMutex);
+
+    string utf8path = path;
+#ifdef WIN32
+        if((utf8path.size()<2) || utf8path.compare(0, 2, "\\\\"))
+            utf8path.insert(0, "\\\\?\\");
+#endif
+
+    string localpath;
+    fsAccess->path2local(&utf8path, &localpath);
+
+    Sync *sync = NULL;
+    for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
+    {
+        string *localroot = &((*it)->localroot.localname);
+        if(((localroot->size()+fsAccess->localseparator.size())<localpath.size()) &&
+            !memcmp(localroot->data(), localpath.data(), localroot->size()) &&
+            !memcmp(fsAccess->localseparator.data(), localpath.data()+localroot->size(), fsAccess->localseparator.size()))
+        {
+            sync = (*it);
+            break;
+        }
+    }
+
+    if(!sync)
+    {
+        MUTEX_UNLOCK(sdkMutex);
+        return false;
+    }
+
+    bool result = sync->movetolocaldebris(&localpath);
+    MUTEX_UNLOCK(sdkMutex);
+
+    return result;
 }
 
 bool MegaApi::isRegularTransfer(MegaTransfer *transfer)
