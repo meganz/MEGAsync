@@ -499,7 +499,7 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>Augšuplādet failus/mapes</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Papildus</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Atslēgt pārklājuma ikonas</translation>
     </message>
     <message>
         <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <translation>Veikt piespiedu pilno skenēšanu</translation>
     </message>
     <message>
         <source>Full check</source>
-        <translation>Full scan</translation>
+        <translation>Pilna skenēšana</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync veiks pilnu skenēšanu jūsu sinhronizētajās mapēs
 
-Do you want to restart MEGAsync now?
+Vai tu vēlies restartēt MEGAsync tagad?
 </translation>
     </message>
 </context>
