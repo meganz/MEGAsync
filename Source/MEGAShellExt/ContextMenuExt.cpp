@@ -73,8 +73,14 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
             FreeLibrary(UxThemeDLL);
     }
 
-    hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
-    m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
+    hIcon = NULL;
+    m_hMenuBmp = NULL;
+
+    if(g_hInst)
+    {
+        hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+        if(hIcon) m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
+    }
 }
 
 HBITMAP ContextMenuExt::getBitmapLegacy(HICON hIcon)
@@ -112,8 +118,13 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
 
     int width   = GetSystemMetrics(SM_CXSMICON);
     int height  = GetSystemMetrics(SM_CYSMICON);
-    RECT rect   = {0, 0, width, height};
+    if(!width || !height)
+    {
+        DeleteDC(hdc);
+        return NULL;
+    }
 
+    RECT rect   = {0, 0, width, height};
     BITMAPINFO bmInfo = {0};
     bmInfo.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
     bmInfo.bmiHeader.biPlanes      = 1;
@@ -123,7 +134,19 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
     bmInfo.bmiHeader.biBitCount    = 32;
 
     bitmap = CreateDIBSection(hdc, &bmInfo, DIB_RGB_COLORS, NULL, NULL, 0);
-    SelectObject(hdc, bitmap);
+    if(!bitmap)
+    {
+        DeleteDC(hdc);
+        return NULL;
+    }
+
+    HGDIOBJ h = SelectObject(hdc, bitmap);
+    if(!h || (h == HGDI_ERROR))
+    {
+        DeleteDC(hdc);
+        return NULL;
+    }
+
     BLENDFUNCTION blendFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
     BP_PAINTPARAMS paintParams = {0};
     paintParams.cbSize = sizeof(BP_PAINTPARAMS);
@@ -164,6 +187,44 @@ bool ContextMenuExt::isUnsynced(int type, int state)
     return (state == MegaInterface::FILE_NOTFOUND);
 }
 
+void ContextMenuExt::processFile(HDROP hDrop, int i)
+{
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    int characters = DragQueryFileW(hDrop, i, NULL, 0);
+    int type = MegaInterface::TYPE_UNKNOWN;
+    if(characters)
+    {
+        characters+=1; //NUL character
+        std::string buffer;
+        buffer.resize(characters*sizeof(wchar_t));
+        int ok = DragQueryFileW(hDrop, i, (LPWSTR)buffer.data(), characters);
+        ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
+        if(ok)
+        {
+            if (GetFileAttributesExW((LPCWSTR)buffer.data(),GetFileExInfoStandard,(LPVOID)&fad))
+                type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
+                            MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
+
+            int state = MegaInterface::getPathState((PCWSTR)buffer.data());
+            selectedFiles.push_back(buffer);
+            pathStates.push_back(state);
+            pathTypes.push_back(type);
+            if(isSynced(type, state))
+            {
+                if(type == MegaInterface::TYPE_FOLDER) syncedFolders++;
+                else if(type == MegaInterface::TYPE_FILE) syncedFiles++;
+                else syncedUnknowns++;
+            }
+            else if(isUnsynced(type, state))
+            {
+                if(type == MegaInterface::TYPE_FOLDER) unsyncedFolders++;
+                else if(type == MegaInterface::TYPE_FILE) unsyncedFiles++;
+                else unsyncedUnknowns++;
+            }
+        }
+    }
+}
+
 void ContextMenuExt::requestUpload()
 {
     for(unsigned int i=0; i<selectedFiles.size(); i++)
@@ -188,6 +249,9 @@ void ContextMenuExt::requestGetLinks()
 // Query to the interface the component supported.
 IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
 {
+    if(ppv == NULL)
+        return E_POINTER;
+
     static const QITAB qit[] = 
     {
         QITABENT(ContextMenuExt, IContextMenu),
@@ -233,75 +297,47 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 
     HRESULT hr = E_FAIL;
 
-    FORMATETC fe = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-    STGMEDIUM stm;
-
-    // The pDataObj pointer contains the objects being acted upon. In this 
-    // example, we get an HDROP handle for enumerating the selected files and 
-    // folders.
-    selectedFiles.clear();
-    pathStates.clear();
-    pathTypes.clear();
-    syncedFolders = syncedFiles = syncedUnknowns = 0;
-    unsyncedFolders = unsyncedFiles = unsyncedUnknowns = 0;
-    if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
+    __try
     {
-        // Get an HDROP handle.
-        WIN32_FILE_ATTRIBUTE_DATA fad;
-        HDROP hDrop = static_cast<HDROP>(GlobalLock(stm.hGlobal));
-        if (hDrop != NULL)
+        FORMATETC fe = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+        STGMEDIUM stm;
+
+        // The pDataObj pointer contains the objects being acted upon. In this
+        // example, we get an HDROP handle for enumerating the selected files and
+        // folders.
+        selectedFiles.clear();
+        pathStates.clear();
+        pathTypes.clear();
+        syncedFolders = syncedFiles = syncedUnknowns = 0;
+        unsyncedFolders = unsyncedFiles = unsyncedUnknowns = 0;
+        if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
         {
-            UINT nFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
-			if (nFiles != 0)
+            // Get an HDROP handle.
+            HDROP hDrop = static_cast<HDROP>(GlobalLock(stm.hGlobal));
+            if (hDrop != NULL)
             {
-                if (MegaInterface::startRequest())
-				{
-					for(unsigned int i=0; i<nFiles; i++)
-					{
-                        int characters = DragQueryFileW(hDrop, i, NULL, 0);
-                        int type = MegaInterface::TYPE_UNKNOWN;
-						if(characters)
-						{
-                            characters+=1; //NUL character
-                            std::string buffer;
-                            buffer.resize(characters*sizeof(wchar_t));
-                            int ok = DragQueryFileW(hDrop, i, (LPWSTR)buffer.data(), characters);
-                            ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
-                            if(ok)
-                            {
-                                if (GetFileAttributesExW((LPCWSTR)buffer.data(),GetFileExInfoStandard,(LPVOID)&fad))
-                                    type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
-                                                MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
+                UINT nFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
+                if (nFiles != 0)
+                {
+                    if (MegaInterface::startRequest())
+                    {
+                        for(unsigned int i=0; i<nFiles; i++)
+                            processFile(hDrop, i);
 
-                                int state = MegaInterface::getPathState((PCWSTR)buffer.data());
-                                selectedFiles.push_back(buffer);
-                                pathStates.push_back(state);
-                                pathTypes.push_back(type);
-                                if(isSynced(type, state))
-                                {
-                                    if(type == MegaInterface::TYPE_FOLDER) syncedFolders++;
-                                    else if(type == MegaInterface::TYPE_FILE) syncedFiles++;
-                                    else syncedUnknowns++;
-                                }
-                                else if(isUnsynced(type, state))
-                                {
-                                    if(type == MegaInterface::TYPE_FOLDER) unsyncedFolders++;
-                                    else if(type == MegaInterface::TYPE_FILE) unsyncedFiles++;
-                                    else unsyncedUnknowns++;
-                                }
-                            }
-						}
-					}
+                        if(selectedFiles.size())
+                            hr = S_OK;
+                    }
+                }
 
-                    if(selectedFiles.size())
-                        hr = S_OK;
-				}
+                GlobalUnlock(stm.hGlobal);
             }
 
-            GlobalUnlock(stm.hGlobal);
+            ReleaseStgMedium(&stm);
         }
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
 
-        ReleaseStgMedium(&stm);
     }
 
     // If any value other than S_OK is returned from the method, the context 
@@ -326,70 +362,78 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
 	HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT , UINT uFlags)
 {
-    // If uFlags include CMF_DEFAULTONLY then we should not do anything.
-    if (CMF_DEFAULTONLY & uFlags)
+    __try
     {
-        return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
-    }
-
-    // Use either InsertMenu or InsertMenuItem to add menu items.
-    // Learn how to add sub-menu from:
-    // http://www.codeproject.com/KB/shell/ctxextsubmenu.aspx
-
-    int lastItem;
-    if(unsyncedFolders || unsyncedFiles)
-    {
-        LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-        if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
-        MENUITEMINFO mii = { sizeof(mii) };
-        mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-        mii.wID = idCmdFirst + IDM_UPLOAD;
-        mii.fType = MFT_STRING;
-        mii.dwTypeData = menuText;
-        mii.fState = MFS_ENABLED;
-        mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
-        if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+        // If uFlags include CMF_DEFAULTONLY then we should not do anything.
+        if (CMF_DEFAULTONLY & uFlags)
         {
+            return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+        }
+
+        // Use either InsertMenu or InsertMenuItem to add menu items.
+        // Learn how to add sub-menu from:
+        // http://www.codeproject.com/KB/shell/ctxextsubmenu.aspx
+
+        int lastItem;
+        if(unsyncedFolders || unsyncedFiles)
+        {
+            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+            if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            MENUITEMINFO mii = { sizeof(mii) };
+            mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+            mii.wID = idCmdFirst + IDM_UPLOAD;
+            mii.fType = MFT_STRING;
+            mii.dwTypeData = menuText;
+            mii.fState = MFS_ENABLED;
+            mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+            if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+            {
+                delete menuText;
+                return HRESULT_FROM_WIN32(GetLastError());
+            }
             delete menuText;
+            lastItem = IDM_UPLOAD;
+        }
+
+        if(syncedFolders || syncedFiles)
+        {
+            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK, syncedFiles, syncedFolders);
+            if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            MENUITEMINFO mii = { sizeof(mii) };
+            mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+            mii.wID = idCmdFirst + IDM_GETLINK;
+            mii.fType = MFT_STRING;
+            mii.dwTypeData = menuText;
+            mii.fState = MFS_ENABLED;
+            mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+            if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+            {
+                delete menuText;
+                return HRESULT_FROM_WIN32(GetLastError());
+            }
+            delete menuText;
+            lastItem = IDM_GETLINK;
+        }
+
+        // Add a separator.
+        MENUITEMINFO sep = { sizeof(sep) };
+        sep.fMask = MIIM_TYPE;
+        sep.fType = MFT_SEPARATOR;
+        if (!InsertMenuItem(hMenu, indexMenu, TRUE, &sep))
+        {
             return HRESULT_FROM_WIN32(GetLastError());
         }
-        delete menuText;
-        lastItem = IDM_UPLOAD;
-    }
 
-    if(syncedFolders || syncedFiles)
+        // Return an HRESULT value with the severity set to SEVERITY_SUCCESS.
+        // Set the code value to the offset of the largest command identifier
+        // that was assigned, plus one (1).
+        return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(lastItem + 1));
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
     {
-        LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK, syncedFiles, syncedFolders);
-        if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
-        MENUITEMINFO mii = { sizeof(mii) };
-        mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-        mii.wID = idCmdFirst + IDM_GETLINK;
-        mii.fType = MFT_STRING;
-        mii.dwTypeData = menuText;
-        mii.fState = MFS_ENABLED;
-        mii.hbmpItem = legacyIcon ? HBMMENU_CALLBACK : m_hMenuBmp;
-        if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-        {
-            delete menuText;
-            return HRESULT_FROM_WIN32(GetLastError());
-        }
-        delete menuText;
-        lastItem = IDM_GETLINK;
-    }
 
-    // Add a separator.
-    MENUITEMINFO sep = { sizeof(sep) };
-    sep.fMask = MIIM_TYPE;
-    sep.fType = MFT_SEPARATOR;
-    if (!InsertMenuItem(hMenu, indexMenu, TRUE, &sep))
-    {
-        return HRESULT_FROM_WIN32(GetLastError());
     }
-
-    // Return an HRESULT value with the severity set to SEVERITY_SUCCESS. 
-    // Set the code value to the offset of the largest command identifier 
-    // that was assigned, plus one (1).
-    return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(lastItem + 1));
+    return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
 }
 
 
@@ -403,101 +447,112 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
 IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 {
     BOOL fUnicode = FALSE;
+    if(pici == NULL)
+        return E_FAIL;
 
-    // Determine which structure is being passed in, CMINVOKECOMMANDINFO or 
-    // CMINVOKECOMMANDINFOEX based on the cbSize member of lpcmi. Although 
-    // the lpcmi parameter is declared in Shlobj.h as a CMINVOKECOMMANDINFO 
-    // structure, in practice it often points to a CMINVOKECOMMANDINFOEX 
-    // structure. This struct is an extended version of CMINVOKECOMMANDINFO 
-    // and has additional members that allow Unicode strings to be passed.
-    if (pici->cbSize == sizeof(CMINVOKECOMMANDINFOEX))
+    __try
     {
-        if (pici->fMask & CMIC_MASK_UNICODE)
+        // Determine which structure is being passed in, CMINVOKECOMMANDINFO or
+        // CMINVOKECOMMANDINFOEX based on the cbSize member of lpcmi. Although
+        // the lpcmi parameter is declared in Shlobj.h as a CMINVOKECOMMANDINFO
+        // structure, in practice it often points to a CMINVOKECOMMANDINFOEX
+        // structure. This struct is an extended version of CMINVOKECOMMANDINFO
+        // and has additional members that allow Unicode strings to be passed.
+        if (pici->cbSize == sizeof(CMINVOKECOMMANDINFOEX))
         {
-            fUnicode = TRUE;
+            if (pici->fMask & CMIC_MASK_UNICODE)
+            {
+                fUnicode = TRUE;
+            }
         }
-    }
 
-    // Determines whether the command is identified by its offset or verb.
-    // There are two ways to identify commands:
-    // 
-    //   1) The command's verb string 
-    //   2) The command's identifier offset
-    // 
-    // If the high-order word of lpcmi->lpVerb (for the ANSI case) or 
-    // lpcmi->lpVerbW (for the Unicode case) is nonzero, lpVerb or lpVerbW 
-    // holds a verb string. If the high-order word is zero, the command 
-    // offset is in the low-order word of lpcmi->lpVerb.
+        // Determines whether the command is identified by its offset or verb.
+        // There are two ways to identify commands:
+        //
+        //   1) The command's verb string
+        //   2) The command's identifier offset
+        //
+        // If the high-order word of lpcmi->lpVerb (for the ANSI case) or
+        // lpcmi->lpVerbW (for the Unicode case) is nonzero, lpVerb or lpVerbW
+        // holds a verb string. If the high-order word is zero, the command
+        // offset is in the low-order word of lpcmi->lpVerb.
 
-    // For the ANSI case, if the high-order word is not zero, the command's 
-    // verb string is in lpcmi->lpVerb. 
-    if (!fUnicode && HIWORD(pici->lpVerb))
-    {
-        // Is the verb supported by this context menu extension?
-        if (!StrCmpIA(pici->lpVerb, m_pszUploadVerb))
+        // For the ANSI case, if the high-order word is not zero, the command's
+        // verb string is in lpcmi->lpVerb.
+        if (!fUnicode && HIWORD(pici->lpVerb))
         {
-            requestUpload();
+            // Is the verb supported by this context menu extension?
+            if (!StrCmpIA(pici->lpVerb, m_pszUploadVerb))
+            {
+                requestUpload();
+            }
+            else if(!StrCmpIA(pici->lpVerb, m_pszGetLinkVerb))
+            {
+                requestGetLinks();
+            }
+            else
+            {
+                // If the verb is not recognized by the context menu handler, it
+                // must return E_FAIL to allow it to be passed on to the other
+                // context menu handlers that might implement that verb.
+                return E_FAIL;
+            }
         }
-        else if(!StrCmpIA(pici->lpVerb, m_pszGetLinkVerb))
+
+        // For the Unicode case, if the high-order word is not zero, the
+        // command's verb string is in lpcmi->lpVerbW.
+        else if (fUnicode && HIWORD(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW))
         {
-            requestGetLinks();
+            // Is the verb supported by this context menu extension?
+            if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszUploadVerb))
+            {
+                requestUpload();
+            }
+            else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszGetLinkVerb))
+            {
+                requestGetLinks();
+            }
+            else
+            {
+                // If the verb is not recognized by the context menu handler, it
+                // must return E_FAIL to allow it to be passed on to the other
+                // context menu handlers that might implement that verb.
+                return E_FAIL;
+            }
         }
+
+        // If the command cannot be identified through the verb string, then
+        // check the identifier offset.
         else
         {
-            // If the verb is not recognized by the context menu handler, it 
-            // must return E_FAIL to allow it to be passed on to the other 
-            // context menu handlers that might implement that verb.
-            return E_FAIL;
+            // Is the command identifier offset supported by this context menu
+            // extension?
+            if (LOWORD(pici->lpVerb) == IDM_UPLOAD)
+            {
+                requestUpload();
+            }
+            else if (LOWORD(pici->lpVerb) == IDM_GETLINK)
+            {
+                requestGetLinks();
+            }
+            else
+            {
+                // If the verb is not recognized by the context menu handler, it
+                // must return E_FAIL to allow it to be passed on to the other
+                // context menu handlers that might implement that verb.
+                return E_FAIL;
+            }
         }
-    }
 
-    // For the Unicode case, if the high-order word is not zero, the 
-    // command's verb string is in lpcmi->lpVerbW. 
-    else if (fUnicode && HIWORD(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW))
+        MegaInterface::endRequest();
+        return S_OK;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
     {
-        // Is the verb supported by this context menu extension?
-        if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszUploadVerb))
-        {
-            requestUpload();
-        }
-        else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszGetLinkVerb))
-        {
-            requestGetLinks();
-        }
-        else
-        {
-            // If the verb is not recognized by the context menu handler, it 
-            // must return E_FAIL to allow it to be passed on to the other 
-            // context menu handlers that might implement that verb.
-            return E_FAIL;
-        }
+
     }
 
-    // If the command cannot be identified through the verb string, then 
-    // check the identifier offset.
-    else
-    {
-        // Is the command identifier offset supported by this context menu 
-        // extension?
-        if (LOWORD(pici->lpVerb) == IDM_UPLOAD)
-        {
-            requestUpload();
-        }
-        else if (LOWORD(pici->lpVerb) == IDM_GETLINK)
-        {
-            requestGetLinks();
-        }
-        else
-        {
-            // If the verb is not recognized by the context menu handler, it 
-            // must return E_FAIL to allow it to be passed on to the other 
-            // context menu handlers that might implement that verb.
-            return E_FAIL;
-        }
-    }
-
-    MegaInterface::endRequest();
-    return S_OK;
+    return E_FAIL;
 }
 
 
@@ -519,55 +574,62 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
 {
     HRESULT hr = E_INVALIDARG;
 
-    if (idCommand == IDM_UPLOAD)
+    __try
     {
-        switch (uFlags)
+        if (idCommand == IDM_UPLOAD)
         {
-        case GCS_HELPTEXTW:
-            // Only useful for pre-Vista versions of Windows that have a 
-            // Status bar.
-            hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax, 
-                m_pwszUploadVerbHelpText);
-            break;
+            switch (uFlags)
+            {
+            case GCS_HELPTEXTW:
+                // Only useful for pre-Vista versions of Windows that have a
+                // Status bar.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszUploadVerbHelpText);
+                break;
 
-        case GCS_VERBW:
-            // GCS_VERBW is an optional feature that enables a caller to 
-            // discover the canonical name for the verb passed in through 
-            // idCommand.
-            hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax, 
-                m_pwszUploadVerbCanonicalName);
-            break;
+            case GCS_VERBW:
+                // GCS_VERBW is an optional feature that enables a caller to
+                // discover the canonical name for the verb passed in through
+                // idCommand.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszUploadVerbCanonicalName);
+                break;
 
-        default:
-            hr = S_OK;
+            default:
+                hr = S_OK;
+            }
         }
+        else if (idCommand == IDM_GETLINK)
+        {
+            switch (uFlags)
+            {
+            case GCS_HELPTEXTW:
+                // Only useful for pre-Vista versions of Windows that have a
+                // Status bar.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszGetLinkVerbHelpText);
+                break;
+
+            case GCS_VERBW:
+                // GCS_VERBW is an optional feature that enables a caller to
+                // discover the canonical name for the verb passed in through
+                // idCommand.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszGetLinkVerbCanonicalName);
+                break;
+
+            default:
+                hr = S_OK;
+            }
+        }
+
+        // If the command (idCommand) is not supported by this context menu
+        // extension handler, return E_INVALIDARG.
     }
-    else if (idCommand == IDM_GETLINK)
+    __except(EXCEPTION_EXECUTE_HANDLER)
     {
-        switch (uFlags)
-        {
-        case GCS_HELPTEXTW:
-            // Only useful for pre-Vista versions of Windows that have a
-            // Status bar.
-            hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                m_pwszGetLinkVerbHelpText);
-            break;
 
-        case GCS_VERBW:
-            // GCS_VERBW is an optional feature that enables a caller to
-            // discover the canonical name for the verb passed in through
-            // idCommand.
-            hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                m_pwszGetLinkVerbCanonicalName);
-            break;
-
-        default:
-            hr = S_OK;
-        }
     }
-
-    // If the command (idCommand) is not supported by this context menu 
-    // extension handler, return E_INVALIDARG.
 
     return hr;
 }
@@ -575,39 +637,57 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
 IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, LRESULT *plResult)
 {
     LRESULT res;
-    if (plResult == NULL)
-        plResult = &res;
-    *plResult = FALSE;
 
-    switch (uMsg)
+    __try
     {
-    case WM_MEASUREITEM:
-        {
-            MEASUREITEMSTRUCT* lpmis = (MEASUREITEMSTRUCT*)lParam;
-            if (lpmis==NULL)
-                break;
-            lpmis->itemWidth = 16;
-            lpmis->itemHeight = 16;
-            *plResult = TRUE;
-        }
-        break;
+        if (plResult == NULL)
+            plResult = &res;
+        *plResult = FALSE;
 
-    case WM_DRAWITEM:
-        {
-            DRAWITEMSTRUCT* lpdis = (DRAWITEMSTRUCT*)lParam;
-            if ((lpdis==NULL)||(lpdis->CtlType != ODT_MENU))
-                return S_OK;        //not for a menu
+        if(!g_hInst)
+            return E_FAIL;
 
-            DrawIconEx(lpdis->hDC,
-                lpdis->rcItem.left-16,
-                lpdis->rcItem.top + (lpdis->rcItem.bottom - lpdis->rcItem.top - 16) / 2,
-                hIcon, 16, 16,
-                0, NULL, DI_NORMAL);
-            *plResult = TRUE;
+        if(!hIcon)
+        {
+            hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+            if(!hIcon) return E_FAIL;
         }
-        break;
+
+        switch (uMsg)
+        {
+            case WM_MEASUREITEM:
+            {
+                MEASUREITEMSTRUCT* lpmis = (MEASUREITEMSTRUCT*)lParam;
+                if (lpmis==NULL)
+                    break;
+                lpmis->itemWidth = 16;
+                lpmis->itemHeight = 16;
+                *plResult = TRUE;
+            }
+            break;
+
+            case WM_DRAWITEM:
+            {
+                DRAWITEMSTRUCT* lpdis = (DRAWITEMSTRUCT*)lParam;
+                if ((lpdis==NULL)||(lpdis->CtlType != ODT_MENU))
+                    return S_OK;        //not for a menu
+
+                DrawIconEx(lpdis->hDC,
+                    lpdis->rcItem.left-16,
+                    lpdis->rcItem.top + (lpdis->rcItem.bottom - lpdis->rcItem.top - 16) / 2,
+                    hIcon, 16, 16,
+                    0, NULL, DI_NORMAL);
+                *plResult = TRUE;
+            }
+            break;
+        }
+        return S_OK;
     }
-    return S_OK;
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+
+    }
+    return E_FAIL;
 }
 
 IFACEMETHODIMP ContextMenuExt::HandleMenuMsg(UINT uMsg, WPARAM wParam, LPARAM lParam)
