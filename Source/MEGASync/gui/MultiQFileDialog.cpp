@@ -36,6 +36,7 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
     if(buttonBox) buttonBox->button(QDialogButtonBox::Open)->setText(QCoreApplication::translate("QDialogButtonBox", "&OK"));
 
     setFileMode(QFileDialog::ExistingFiles);
+    le->setText(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
 }
 
 void MultiQFileDialog::accept()
@@ -52,22 +53,25 @@ void MultiQFileDialog::onSelectionChanged(const QItemSelection &selected, const 
     QString actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
 
     QStringList files = selectedFiles();
-    if (files.isEmpty())
-    {
-        le->setText(actionString);
-        return;
-    }
-
     int numFiles = 0;
     int numFolders = 0;
     for(int i=0; i<files.size(); i++)
     {
-        QFileInfo fi(files[i]);
-        if(fi.exists())
+        if(files[i] != directory().absolutePath())
         {
-            if(fi.isDir()) numFolders++;
-            else numFiles++;
+            QFileInfo fi(files[i]);
+            if(fi.exists())
+            {
+                if(fi.isDir()) numFolders++;
+                else numFiles++;
+            }
         }
+    }
+
+    if (!numFiles && !numFolders)
+    {
+        le->setText(actionString);
+        return;
     }
 
     QString sNumFiles;

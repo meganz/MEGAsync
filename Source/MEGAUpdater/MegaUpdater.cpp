@@ -16,7 +16,7 @@ using namespace std;
 const char APP_VERSION[] = "1015";
 
 const char SERVER_BASE_URL_WIN[] = "http://g.static.mega.co.nz/upd/wsync/";
-const char SERVER_BASE_URL_OSX[] = "http://g.static.mega.co.nz/upd/osxsync/megasync.app/";
+const char SERVER_BASE_URL_OSX[] = "http://g.static.mega.co.nz/upd/msync/megasync.app/";
 
 const char *TARGET_PATHS_WIN[] = {
     "MEGAsync.exe",
