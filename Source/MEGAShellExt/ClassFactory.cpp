@@ -4,9 +4,7 @@
 #include <Shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 
-
 extern long g_cDllRef;
-
 
 ClassFactory::ClassFactory() : m_cRef(1)
 {
@@ -24,15 +22,26 @@ ClassFactory::~ClassFactory()
 //
 IFACEMETHODIMP ClassFactory::QueryInterface(REFIID riid, void **ppv)
 {
-    if(ppv == NULL)
-        return E_POINTER;
-
-    static const QITAB qit[] =
+    __try
     {
-        QITABENT(ClassFactory, IClassFactory),
-        { 0 },
-    };
-    return QISearch(this, qit, riid, ppv);
+        if(ppv == NULL)
+            return E_POINTER;
+
+        *ppv = NULL;
+        if (riid == __uuidof (IClassFactory))
+            *ppv = (IClassFactory *) this;
+        else if (riid == IID_IUnknown)
+            *ppv = (IUnknown *) this;
+        else
+            return E_NOINTERFACE;
+
+        AddRef();
+        return S_OK;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return E_NOINTERFACE;
 }
 
 IFACEMETHODIMP_(ULONG) ClassFactory::AddRef()
