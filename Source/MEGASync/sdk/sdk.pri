@@ -24,6 +24,7 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/treeproc.cpp \
     $$PWD/sdk/src/user.cpp \
     $$PWD/sdk/src/utils.cpp \
+    $$PWD/sdk/src/logging.cpp \
     $$PWD/sdk/src/waiterbase.cpp  \
     $$PWD/sdk/src/crypto/cryptopp.cpp  \
     $$PWD/sdk/src/db/sqlite.cpp  \
@@ -80,6 +81,7 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/sdk/include/mega/types.h \
 	    $$PWD/sdk/include/mega/user.h \
 	    $$PWD/sdk/include/mega/utils.h \
+	    $$PWD/sdk/include/mega/logging.h \
 	    $$PWD/sdk/include/mega/waiter.h \
 	    $$PWD/sdk/include/mega/crypto/cryptopp.h  \
 	    $$PWD/sdk/include/mega/db/sqlite.h  \
@@ -114,13 +116,13 @@ unix:!macx {
             $$PWD/sdk/include/mega/config.h
 }
 
-DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT
+DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT MEGA_QT_LOGGING
 LIBS += -lcryptopp
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += $$PWD/sdk/include
 
 !release {
-    DEFINES += SQLITE_DEBUG
+    DEFINES += SQLITE_DEBUG DEBUG
 }
 
 INCLUDEPATH += $$PWD
