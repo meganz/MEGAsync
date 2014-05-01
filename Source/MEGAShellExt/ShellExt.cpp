@@ -8,46 +8,91 @@
 #pragma comment(lib, "shlwapi.lib")
 
 extern HINSTANCE g_hInst;
+extern long g_cDllRef;
 
 ShellExt::ShellExt(int id) : m_cRef(1)
 {
-	this->id = id;
-    if (!g_hInst || !GetModuleFileName(g_hInst, szModule, ARRAYSIZE(szModule)))
-		szModule[0]=L'\0';
+    __try
+    {
+        szModule[0]=L'\0';
+        InterlockedIncrement(&g_cDllRef);
+
+        this->id = id;
+        if (g_hInst)
+            GetModuleFileName(g_hInst, szModule, MAX_PATH);
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
 }
 
 
 ShellExt::~ShellExt()
 {
+    __try
+    {
+        InterlockedDecrement(&g_cDllRef);
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
 }
 
 // Query to the interface the component supported.
 IFACEMETHODIMP ShellExt::QueryInterface(REFIID riid, void **ppv)
 {
-    static const QITAB qit[] = 
+    __try
     {
-        QITABENT(ShellExt, IShellIconOverlayIdentifier),
-        { 0 },
-    };
-    return QISearch(this, qit, riid, ppv);
+        if(ppv == NULL)
+            return E_POINTER;
+
+        *ppv = NULL;
+        if (riid == __uuidof (IShellIconOverlayIdentifier))
+            *ppv = (IShellIconOverlayIdentifier *) this;
+        else if (riid == IID_IUnknown)
+            *ppv = this;
+        else
+            return E_NOINTERFACE;
+
+        AddRef();
+        return S_OK;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return E_NOINTERFACE;
 }
 
-// Increase the reference count for an interface on an object.
+// Increase the reference count for an interface or an object.
 IFACEMETHODIMP_(ULONG) ShellExt::AddRef()
 {
-    return InterlockedIncrement(&m_cRef);
+    __try
+    {
+        return InterlockedIncrement(&m_cRef);
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return ++m_cRef;
 }
 
 // Decrease the reference count for an interface on an object.
 IFACEMETHODIMP_(ULONG) ShellExt::Release()
 {
-    ULONG cRef = InterlockedDecrement(&m_cRef);
-    if (0 == cRef)
+    __try
     {
-        delete this;
+        ULONG cRef = InterlockedDecrement(&m_cRef);
+        if (0 == cRef)
+        {
+            delete this;
+        }
+        return cRef;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
     }
 
-    return cRef;
+    return 0;
 }
 
 HRESULT ShellExt::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DWORD *pdwFlags)
@@ -64,10 +109,10 @@ HRESULT ShellExt::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DW
             return E_INVALIDARG;
 
         int len = lstrlen(szModule)+1;
-        if (len > cchMax)
+        if (!len || (len > cchMax))
             return E_FAIL;
 
-        memcpy(pwszIconFile, szModule, len*sizeof(wchar_t));
+        memcpy(pwszIconFile, szModule, len*sizeof(TCHAR));
         *pIndex = id;
         *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
         return S_OK;

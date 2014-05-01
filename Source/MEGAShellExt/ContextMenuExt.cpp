@@ -42,7 +42,7 @@ extern long g_cDllRef;
 #define IDM_UPLOAD             0  // The command's identifier offset
 #define IDM_GETLINK            1
 
-ContextMenuExt::ContextMenuExt(void) : m_cRef(1), 
+ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
     m_pszUploadMenuText(L"&Upload to MEGA"),
     m_pszUploadVerb("UploadToMEGA"),
     m_pwszUploadVerb(L"UploadToMEGA"),
@@ -58,9 +58,12 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
     m_pszGetLinkVerbHelpText("Get MEGA link"),
     m_pwszGetLinkVerbHelpText(L"Get MEGA link")
 {
+    hIcon = NULL;
+    m_hMenuBmp = NULL;
+    legacyIcon = true;
+
     InterlockedIncrement(&g_cDllRef);
 
-    legacyIcon = true;
     HMODULE UxThemeDLL = LoadLibrary(L"UXTHEME.DLL");
     if (UxThemeDLL)
     {
@@ -73,9 +76,6 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
             FreeLibrary(UxThemeDLL);
     }
 
-    hIcon = NULL;
-    m_hMenuBmp = NULL;
-
     if(g_hInst)
     {
         hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
@@ -85,84 +85,98 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 
 HBITMAP ContextMenuExt::getBitmapLegacy(HICON hIcon)
 {
-    RECT rect;
-    rect.right = ::GetSystemMetrics(SM_CXMENUCHECK);
-    rect.bottom = ::GetSystemMetrics(SM_CYMENUCHECK);
-    rect.left = rect.top  = 0;
-
-    // Create a compatible DC
-    HDC dst_hdc = ::CreateCompatibleDC(NULL);
-    if (dst_hdc == NULL) return NULL;
-
-    // Create a new bitmap of icon size
-    HBITMAP bmp = ::CreateCompatibleBitmap(dst_hdc, rect.right, rect.bottom);
-    if (bmp == NULL)
+    __try
     {
-        DeleteDC(dst_hdc);
-        return NULL;
-    }
+        RECT rect;
+        rect.right = ::GetSystemMetrics(SM_CXMENUCHECK);
+        rect.bottom = ::GetSystemMetrics(SM_CYMENUCHECK);
+        rect.left = rect.top  = 0;
 
-    SelectObject(dst_hdc, bmp);
-    SetBkColor(dst_hdc, RGB(255, 255, 255));
-    ExtTextOut(dst_hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
-    DrawIconEx(dst_hdc, 0, 0, hIcon, rect.right, rect.bottom, 0, NULL, DI_NORMAL);
-    DeleteDC(dst_hdc);
-    return bmp;
+        // Create a compatible DC
+        HDC dst_hdc = ::CreateCompatibleDC(NULL);
+        if (dst_hdc == NULL) return NULL;
+
+        // Create a new bitmap of icon size
+        HBITMAP bmp = ::CreateCompatibleBitmap(dst_hdc, rect.right, rect.bottom);
+        if (bmp == NULL)
+        {
+            DeleteDC(dst_hdc);
+            return NULL;
+        }
+
+        SelectObject(dst_hdc, bmp);
+        SetBkColor(dst_hdc, RGB(255, 255, 255));
+        ExtTextOut(dst_hdc, 0, 0, ETO_OPAQUE, &rect, NULL, 0, NULL);
+        DrawIconEx(dst_hdc, 0, 0, hIcon, rect.right, rect.bottom, 0, NULL, DI_NORMAL);
+        DeleteDC(dst_hdc);
+        return bmp;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return NULL;
 }
 
 HBITMAP ContextMenuExt::getBitmap(HICON icon)
 {
-    HBITMAP bitmap = NULL;
-    HDC hdc = CreateCompatibleDC(NULL);
-    if (!hdc) return NULL;
-
-    int width   = GetSystemMetrics(SM_CXSMICON);
-    int height  = GetSystemMetrics(SM_CYSMICON);
-    if(!width || !height)
+    __try
     {
+        HBITMAP bitmap = NULL;
+        HDC hdc = CreateCompatibleDC(NULL);
+        if (!hdc) return NULL;
+
+        int width   = GetSystemMetrics(SM_CXSMICON);
+        int height  = GetSystemMetrics(SM_CYSMICON);
+        if(!width || !height)
+        {
+            DeleteDC(hdc);
+            return NULL;
+        }
+
+        RECT rect   = {0, 0, width, height};
+        BITMAPINFO bmInfo = {0};
+        bmInfo.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
+        bmInfo.bmiHeader.biPlanes      = 1;
+        bmInfo.bmiHeader.biCompression = BI_RGB;
+        bmInfo.bmiHeader.biWidth       = width;
+        bmInfo.bmiHeader.biHeight      = height;
+        bmInfo.bmiHeader.biBitCount    = 32;
+
+        bitmap = CreateDIBSection(hdc, &bmInfo, DIB_RGB_COLORS, NULL, NULL, 0);
+        if(!bitmap)
+        {
+            DeleteDC(hdc);
+            return NULL;
+        }
+
+        HGDIOBJ h = SelectObject(hdc, bitmap);
+        if(!h || (h == HGDI_ERROR))
+        {
+            DeleteDC(hdc);
+            return NULL;
+        }
+
+        BLENDFUNCTION blendFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+        BP_PAINTPARAMS paintParams = {0};
+        paintParams.cbSize = sizeof(BP_PAINTPARAMS);
+        paintParams.dwFlags = BPPF_ERASE;
+        paintParams.pBlendFunction = &blendFunction;
+
+        HDC newHdc;
+        HPAINTBUFFER hPaintBuffer = BeginBufferedPaint(hdc, &rect, BPBF_DIB, &paintParams, &newHdc);
+        if (hPaintBuffer)
+        {
+            DrawIconEx(newHdc, 0, 0, icon, width, height, 0, NULL, DI_NORMAL);
+            EndBufferedPaint(hPaintBuffer, TRUE);
+        }
+
         DeleteDC(hdc);
-        return NULL;
+        return bitmap;
     }
-
-    RECT rect   = {0, 0, width, height};
-    BITMAPINFO bmInfo = {0};
-    bmInfo.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
-    bmInfo.bmiHeader.biPlanes      = 1;
-    bmInfo.bmiHeader.biCompression = BI_RGB;
-    bmInfo.bmiHeader.biWidth       = width;
-    bmInfo.bmiHeader.biHeight      = height;
-    bmInfo.bmiHeader.biBitCount    = 32;
-
-    bitmap = CreateDIBSection(hdc, &bmInfo, DIB_RGB_COLORS, NULL, NULL, 0);
-    if(!bitmap)
+    __except(EXCEPTION_EXECUTE_HANDLER)
     {
-        DeleteDC(hdc);
-        return NULL;
     }
-
-    HGDIOBJ h = SelectObject(hdc, bitmap);
-    if(!h || (h == HGDI_ERROR))
-    {
-        DeleteDC(hdc);
-        return NULL;
-    }
-
-    BLENDFUNCTION blendFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-    BP_PAINTPARAMS paintParams = {0};
-    paintParams.cbSize = sizeof(BP_PAINTPARAMS);
-    paintParams.dwFlags = BPPF_ERASE;
-    paintParams.pBlendFunction = &blendFunction;
-
-    HDC newHdc;
-    HPAINTBUFFER hPaintBuffer = BeginBufferedPaint(hdc, &rect, BPBF_DIB, &paintParams, &newHdc);
-    if (hPaintBuffer)
-    {
-        DrawIconEx(newHdc, 0, 0, icon, width, height, 0, NULL, DI_NORMAL);
-        EndBufferedPaint(hPaintBuffer, TRUE);
-    }
-
-    DeleteDC(hdc);
-    return bitmap;
+    return NULL;
 }
 
 ContextMenuExt::~ContextMenuExt(void)
@@ -249,18 +263,32 @@ void ContextMenuExt::requestGetLinks()
 // Query to the interface the component supported.
 IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
 {
-    if(ppv == NULL)
-        return E_POINTER;
-
-    static const QITAB qit[] = 
+    __try
     {
-        QITABENT(ContextMenuExt, IContextMenu),
-        QITABENT(ContextMenuExt, IContextMenu2),
-        QITABENT(ContextMenuExt, IContextMenu3),
-        QITABENT(ContextMenuExt, IShellExtInit), 
-        { 0 },
-    };
-    return QISearch(this, qit, riid, ppv);
+        if(ppv == NULL)
+            return E_POINTER;
+
+        *ppv = NULL;
+        if (riid == __uuidof (IContextMenu))
+            *ppv = (IContextMenu *) this;
+        else if (riid == __uuidof (IContextMenu2))
+            *ppv = (IContextMenu2 *) this;
+        else if (riid == __uuidof (IContextMenu3))
+            *ppv = (IContextMenu3 *) this;
+        else if (riid == __uuidof (IShellExtInit))
+            *ppv = (IShellExtInit *) this;
+        else if (riid == IID_IUnknown)
+            *ppv = this;
+        else
+            return E_NOINTERFACE;
+
+        AddRef();
+        return S_OK;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return E_NOINTERFACE;
 }
 
 // Increase the reference count for an interface on an object.
@@ -272,13 +300,20 @@ IFACEMETHODIMP_(ULONG) ContextMenuExt::AddRef()
 // Decrease the reference count for an interface on an object.
 IFACEMETHODIMP_(ULONG) ContextMenuExt::Release()
 {
-    ULONG cRef = InterlockedDecrement(&m_cRef);
-    if (0 == cRef)
+    __try
     {
-        delete this;
-    }
+        ULONG cRef = InterlockedDecrement(&m_cRef);
+        if (0 == cRef)
+        {
+            delete this;
+        }
 
-    return cRef;
+        return cRef;
+    }
+    __except(EXCEPTION_EXECUTE_HANDLER)
+    {
+    }
+    return 0;
 }
 
 #pragma endregion
@@ -290,15 +325,15 @@ IFACEMETHODIMP_(ULONG) ContextMenuExt::Release()
 IFACEMETHODIMP ContextMenuExt::Initialize(
 	LPCITEMIDLIST , LPDATAOBJECT pDataObj, HKEY )
 {
-    if (NULL == pDataObj)
-    {
-        return E_INVALIDARG;
-    }
-
-    HRESULT hr = E_FAIL;
-
     __try
     {
+        if (NULL == pDataObj)
+        {
+            return E_INVALIDARG;
+        }
+
+        HRESULT hr = E_FAIL;
+
         FORMATETC fe = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
         STGMEDIUM stm;
 
@@ -334,6 +369,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 
             ReleaseStgMedium(&stm);
         }
+        return hr;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
@@ -342,7 +378,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 
     // If any value other than S_OK is returned from the method, the context 
     // menu item is not displayed.
-    return hr;
+    return E_FAIL;
 }
 
 #pragma endregion
@@ -446,12 +482,12 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
 //
 IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 {
-    BOOL fUnicode = FALSE;
-    if(pici == NULL)
-        return E_FAIL;
-
     __try
     {
+        BOOL fUnicode = FALSE;
+        if(pici == NULL)
+            return E_FAIL;
+
         // Determine which structure is being passed in, CMINVOKECOMMANDINFO or
         // CMINVOKECOMMANDINFOEX based on the cbSize member of lpcmi. Although
         // the lpcmi parameter is declared in Shlobj.h as a CMINVOKECOMMANDINFO
@@ -572,10 +608,10 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand, 
 	UINT uFlags, UINT *, LPSTR pszName, UINT cchMax)
 {
-    HRESULT hr = E_INVALIDARG;
-
     __try
     {
+        HRESULT hr = E_INVALIDARG;
+
         if (idCommand == IDM_UPLOAD)
         {
             switch (uFlags)
@@ -625,21 +661,20 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
 
         // If the command (idCommand) is not supported by this context menu
         // extension handler, return E_INVALIDARG.
+        return hr;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
-
     }
 
-    return hr;
+    return E_FAIL;
 }
 
 IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, LRESULT *plResult)
 {
-    LRESULT res;
-
     __try
     {
+        LRESULT res;
         if (plResult == NULL)
             plResult = &res;
         *plResult = FALSE;
