@@ -130,6 +130,7 @@ INCLUDEPATH += $$PWD/3rdparty/include
 
 win32 {
 
+    INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
     INCLUDEPATH += $$PWD/sdk/include/mega/win32
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
 

@@ -19,7 +19,11 @@ DEALINGS IN THE SOFTWARE.
 
 #define _POSIX_SOURCE
 #define _LARGE_FILES
+
+#ifndef WIN32
 #define _LARGEFILE64_SOURCE
+#endif
+
 #define _GNU_SOURCE 1
 #define _FILE_OFFSET_BITS 64
 
