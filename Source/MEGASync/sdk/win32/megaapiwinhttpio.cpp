@@ -208,6 +208,8 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
 
     httpctx->httpio = this;
     httpctx->req = req;
+    httpctx->gzip = false;
+
     req->httpiohandle = (void*)httpctx;
 
     if (MultiByteToWideChar(CP_UTF8, 0, req->posturl.c_str(), -1, szURL,
@@ -246,8 +248,8 @@ void MegaApiWinHttpIO::post(HttpReq* req, const char* data, unsigned len)
                                          | WINHTTP_CALLBACK_FLAG_HANDLES,
                                          0);
 
-                LPCWSTR pwszHeaders = (req->type == REQ_JSON)
-                                      ? L"Content-Type: application/json"
+                LPCWSTR pwszHeaders = (req->type == REQ_JSON || !req->buf)
+                                      ? L"Content-Type: application/json\r\nAccept-Encoding: gzip"
                                       : L"Content-Type: application/octet-stream";
 
                 // data is sent in HTTP_POST_CHUNK_SIZE instalments to ensure
