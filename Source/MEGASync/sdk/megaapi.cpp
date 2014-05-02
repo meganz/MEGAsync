@@ -2020,9 +2020,9 @@ NodeList* MegaApi::getInShares(MegaUser *megaUser)
     User *user = client->finduser(megaUser->getEmail(), 0);
     if(!user) return new NodeList();
 
-	Node *n;
 	for (handle_set::iterator sit = user->sharing.begin(); sit != user->sharing.end(); sit++)
 	{
+        Node *n;
 		if ((n = client->nodebyhandle(*sit)))
             vNodes.push_back(n);
 	}
@@ -2282,7 +2282,7 @@ void MegaApi::transfer_removed(Transfer *t)
             pendingUploads --;
     }
 
-    if(!pendingUploads && !pendingUploads) fireOnSyncStateChanged(this);
+    if(!pendingUploads && !pendingDownloads) fireOnSyncStateChanged(this);
     if(transferMap.find(t) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t);
     LOG("transfer_removed");
