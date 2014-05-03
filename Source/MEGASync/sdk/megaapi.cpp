@@ -1111,7 +1111,7 @@ MegaApi::MegaApi(const char *basePath)
     gfxAccess->setProcessor(processor);
 #endif
 
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.16");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.17");
 
     //Start blocking thread
 	threadExit = 0;
@@ -1347,12 +1347,12 @@ void MegaApi::loop()
         MUTEX_UNLOCK(sdkMutex);
 	}
 
-    //delete dbAccess; //Warning, it's deleted in MegaClient's destructor
-    delete client;
+    delete dbAccess; //Warning, it's deleted in MegaClient's destructor
+    //delete client;
     //delete httpio;
     //delete waiter;
     //delete fsAccess;
-    if(loginRequest) delete loginRequest;
+    //if(loginRequest) delete loginRequest;
     MUTEX_DELETE(sdkMutex);
 }
 
