@@ -175,7 +175,19 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
 			break;
 		}
-	}
+    }
+}
+
+void SetupWizard::onRequestUpdate(MegaApi *api, MegaRequest *request)
+{
+    if(request->getType() == MegaRequest::TYPE_FETCH_NODES)
+    {
+        if(request->getTotalBytes()>0)
+        {
+            ui->progressBar->setMaximum(request->getTotalBytes());
+            ui->progressBar->setValue(request->getTransferredBytes());
+        }
+    }
 }
 
 
@@ -223,6 +235,9 @@ void SetupWizard::on_bNext_clicked()
 		megaApi->logout();
 		megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
         ui->lProgress->setText(tr("Logging in..."));
+
+        ui->progressBar->setMaximum(0);
+        ui->progressBar->setValue(-1);
         ui->sPages->setCurrentWidget(ui->pProgress);
         ui->bBack->setEnabled(false);
         ui->bNext->setEnabled(false);
