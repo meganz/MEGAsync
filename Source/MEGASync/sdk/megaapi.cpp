@@ -442,6 +442,8 @@ MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 	this->file = NULL;
 	this->attrType = 0;
     this->flag = false;
+    this->totalBytes = -1;
+    this->transferredBytes = 0;
 
 	if(type == MegaRequest::TYPE_ACCOUNT_DETAILS) this->accountDetails = new AccountDetails();
 	else this->accountDetails = NULL;
@@ -480,6 +482,8 @@ MegaRequest::MegaRequest(MegaRequest &request)
     this->setPublicNode(request.getPublicNode());
     this->setFlag(request.getFlag());
     this->setTransfer(request.getTransfer());
+    this->setTotalBytes(request.getTotalBytes());
+    this->setTransferredBytes(request.getTransferredBytes());
 	this->listener = request.getListener();
 	this->accountDetails = NULL;
 	if(request.getAccountDetails())
@@ -539,6 +543,8 @@ const char* MegaRequest::getAccess() const { return access; }
 const char* MegaRequest::getFile() const { return file; }
 int MegaRequest::getParamType() const { return attrType; }
 bool MegaRequest::getFlag() const { return flag;}
+long long MegaRequest::getTransferredBytes() const { return transferredBytes; }
+long long MegaRequest::getTotalBytes() const { return totalBytes; }
 int MegaRequest::getNumRetry() const { return numRetry; }
 int MegaRequest::getNextRetryDelay() const { return nextRetryDelay; }
 AccountDetails* MegaRequest::getAccountDetails() const { return accountDetails; }
@@ -617,6 +623,16 @@ void MegaRequest::setTransfer(Transfer *transfer)
 void MegaRequest::setListener(MegaRequestListener *listener)
 {
     this->listener = listener;
+}
+
+void MegaRequest::setTotalBytes(long long totalBytes)
+{
+    this->totalBytes = totalBytes;
+}
+
+void MegaRequest::setTransferredBytes(long long transferredBytes)
+{
+    this->transferredBytes = transferredBytes;
 }
 
 void MegaRequest::setPublicNode(MegaNode *publicNode)
@@ -975,6 +991,8 @@ void MegaRequestListener::onRequestStart(MegaApi*, MegaRequest *request)
 { cout << "onRequestStartA " << "   Type: " << request->getRequestString() << endl; }
 void MegaRequestListener::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 { cout << "onRequestFinishA " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
+void MegaRequestListener::onRequestUpdate(MegaApi* api, MegaRequest *request)
+{}
 void MegaRequestListener::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 { cout << "onRequestTemporaryError " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
 MegaRequestListener::~MegaRequestListener() {}
@@ -1012,6 +1030,8 @@ void MegaListener::onRequestStart(MegaApi*, MegaRequest *request)
 { cout << "onRequestStartA " << "   Type: " << request->getRequestString() << endl; }
 void MegaListener::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 { cout << "onRequestFinishB " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
+void MegaListener::onRequestUpdate(MegaApi* api, MegaRequest *request)
+{}
 void MegaListener::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 { cout << "onRequestTemporaryError " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
 
@@ -2838,6 +2858,20 @@ void MegaApi::request_error(error e)
 #endif
 }
 
+void MegaApi::request_response_progress(m_off_t currentProgress, m_off_t totalProgress)
+{
+    if(requestMap.size() == 1)
+    {
+        MegaRequest *request = requestMap.begin()->second;
+        if(request)
+        {
+            request->setTransferredBytes(currentProgress);
+            request->setTotalBytes(totalProgress);
+            fireOnRequestUpdate(this, request);
+        }
+    }
+}
+
 // login result
 void MegaApi::login_result(error result)
 {
@@ -3490,7 +3524,19 @@ void MegaApi::fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError 
 
 	requestMap.erase(client->restag);
 	delete request;
-	delete megaError;
+    delete megaError;
+}
+
+void MegaApi::fireOnRequestUpdate(MegaApi *api, MegaRequest *request)
+{
+    for(set<MegaRequestListener *>::iterator it = requestListeners.begin(); it != requestListeners.end() ; it++)
+        (*it)->onRequestUpdate(api, request);
+
+    for(set<MegaListener *>::iterator it = listeners.begin(); it != listeners.end() ; it++)
+        (*it)->onRequestUpdate(api, request);
+
+    MegaRequestListener* listener = request->getListener();
+    if(listener) listener->onRequestUpdate(api, request);
 }
 
 void MegaApi::fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError e)

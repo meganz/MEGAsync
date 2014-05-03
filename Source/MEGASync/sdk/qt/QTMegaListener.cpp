@@ -8,6 +8,8 @@ QTMegaListener::QTMegaListener(MegaApi *megaApi, MegaListener *listener) : QObje
 			this, SLOT(QTonRequestStart(MegaApi *, MegaRequest *)));
 	connect(this, SIGNAL(QTonRequestFinishSignal(MegaApi *, MegaRequest *, MegaError *)),
 			this, SLOT(QTonRequestFinish(MegaApi *, MegaRequest *, MegaError *)));
+    connect(this, SIGNAL(QTonRequestUpdateSignal(MegaApi *, MegaRequest *)),
+            this, SLOT(QTonRequestUpdate(MegaApi *, MegaRequest *)));
 	connect(this, SIGNAL(QTonRequestTemporaryErrorSignal(MegaApi *, MegaRequest *, MegaError *)),
 			this, SLOT(QTonRequestTemporaryError(MegaApi *, MegaRequest *, MegaError *)));
 
@@ -43,7 +45,12 @@ void QTMegaListener::onRequestStart(MegaApi *api, MegaRequest *request)
 
 void QTMegaListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
-	emit QTonRequestFinishSignal(api, request->copy(), e->copy());
+    emit QTonRequestFinishSignal(api, request->copy(), e->copy());
+}
+
+void QTMegaListener::onRequestUpdate(MegaApi *api, MegaRequest *request)
+{
+    emit QTonRequestUpdateSignal(api, request->copy());
 }
 
 void QTMegaListener::onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError *e)
@@ -101,7 +108,13 @@ void QTMegaListener::QTonRequestFinish(MegaApi *api, MegaRequest *request, MegaE
 {
 	if(listener) listener->onRequestFinish(api, request, e);
 	delete request;
-	delete e;
+    delete e;
+}
+
+void QTMegaListener::QTonRequestUpdate(MegaApi *api, MegaRequest *request)
+{
+    if(listener) listener->onRequestUpdate(api, request);
+    delete request;
 }
 
 void QTMegaListener::QTonRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError *e)
