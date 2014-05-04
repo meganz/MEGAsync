@@ -1347,7 +1347,9 @@ void MegaApi::loop()
         MUTEX_UNLOCK(sdkMutex);
 	}
 
-    delete dbAccess; //Warning, it's deleted in MegaClient's destructor
+    delete client->dbaccess; //Warning, it's deleted in MegaClient's destructor
+    delete client->sctable;  //Warning, it's deleted in MegaClient's destructor
+
     //delete client;
     //delete httpio;
     //delete waiter;
