@@ -14,6 +14,7 @@ public:
 
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void onRequestUpdate(MegaApi* api, MegaRequest *request);
 	virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 	virtual void onTransferStart(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);
@@ -27,6 +28,7 @@ public:
 signals:
     void QTonRequestStartSignal(MegaApi* api, MegaRequest *request);
     void QTonRequestFinishSignal(MegaApi* api, MegaRequest *request, MegaError* e);
+    void QTonRequestUpdateSignal(MegaApi* api, MegaRequest *request);
     void QTonRequestTemporaryErrorSignal(MegaApi *api, MegaRequest *request, MegaError* e);
     void QTonTransferStartSignal(MegaApi *api, MegaTransfer *transfer);
     void QTonTransferFinishSignal(MegaApi* api, MegaTransfer *transfer, MegaError* e);
@@ -40,6 +42,7 @@ signals:
 public slots:
 	virtual void QTonRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void QTonRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void QTonRequestUpdate(MegaApi* api, MegaRequest *request);
 	virtual void QTonRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 	virtual void QTonTransferStart(MegaApi *api, MegaTransfer *transfer);
 	virtual void QTonTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);

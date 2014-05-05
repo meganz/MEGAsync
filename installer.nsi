@@ -4,7 +4,7 @@ RequestExecutionLevel user
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "MEGAsync"
-!define PRODUCT_VERSION "1.0.16"
+!define PRODUCT_VERSION "1.0.17"
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.co.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
@@ -345,6 +345,14 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\QtNetwork4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtNetwork4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
+  File "${SRCDIR_MEGASYNC_X32}\QtXml4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\QtXml4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\QtXml4.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC_X32}\QtSvg4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\QtSvg4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\QtSvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
   SetOutPath "$INSTDIR\imageformats"
   File "${SRCDIR_MEGASYNC_X32}\imageformats\qgif4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
@@ -520,6 +528,8 @@ Section Uninstall
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
+  Delete "$INSTDIR\QtSvg4.dll"
+  Delete "$INSTDIR\QtXml4.dll"
   Delete "$INSTDIR\imageformats\qgif4.dll"
   Delete "$INSTDIR\imageformats\qico4.dll"
   Delete "$INSTDIR\imageformats\qjpeg4.dll"

@@ -15,16 +15,19 @@ public:
 	//Request callbacks
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void onRequestUpdate(MegaApi* api, MegaRequest *request);
 	virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 
 signals:
 	void QTonRequestStartSignal(MegaApi* api, MegaRequest *request);
 	void QTonRequestFinishSignal(MegaApi* api, MegaRequest *request, MegaError* e);
+    void QTonRequestUpdateSignal(MegaApi* api, MegaRequest *request);
 	void QTonRequestTemporaryErrorSignal(MegaApi *api, MegaRequest *request, MegaError* e);
 
 public slots:
 	virtual void QTonRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void QTonRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void QTonRequestUpdate(MegaApi* api, MegaRequest *request);
 	virtual void QTonRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 
 protected:
