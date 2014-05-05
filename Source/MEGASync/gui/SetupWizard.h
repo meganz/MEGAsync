@@ -26,6 +26,7 @@ public:
     ~SetupWizard();
 
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void onRequestUpdate(MegaApi* api, MegaRequest *request);
 
 private slots:
 

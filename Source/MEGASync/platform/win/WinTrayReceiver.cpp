@@ -6,6 +6,7 @@ WinTrayReceiver::WinTrayReceiver(ITrayNotify *m_ITrayNotify, QString &executable
     this->m_ITrayNotifyNew = NULL;
     this->executable = executable;
     m_cRef = 0;
+    id = 0;
 }
 
 WinTrayReceiver::WinTrayReceiver(ITrayNotifyNew *m_ITrayNotifyNew, QString &executable)
@@ -14,6 +15,7 @@ WinTrayReceiver::WinTrayReceiver(ITrayNotifyNew *m_ITrayNotifyNew, QString &exec
     this->m_ITrayNotify = NULL;
     this->executable = executable;
     m_cRef = 0;
+    id = 0;
 }
 
 boolean WinTrayReceiver::start()

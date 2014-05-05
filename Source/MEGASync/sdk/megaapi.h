@@ -352,6 +352,8 @@ class MegaRequest
         MegaNode *getPublicNode();
         int getParamType() const;
         bool getFlag() const;
+        long long getTransferredBytes() const;
+        long long getTotalBytes() const;
 
 		void setNodeHandle(mega::handle nodeHandle);
 		void setLink(const char* link);
@@ -372,6 +374,8 @@ class MegaRequest
         void setFlag(bool flag);
         void setTransfer(mega::Transfer *transfer);
         void setListener(MegaRequestListener *listener);
+        void setTotalBytes(long long totalBytes);
+        void setTransferredBytes(long long transferredBytes);
 		MegaRequestListener *getListener() const;
         mega::Transfer * getTransfer() const;
 		mega::AccountDetails * getAccountDetails() const;
@@ -392,6 +396,8 @@ class MegaRequest
 		const char* file;
 		int attrType;
         bool flag;
+        long long totalBytes;
+        long long transferredBytes;
 
 		MegaRequestListener *listener;
         mega::Transfer *transfer;
@@ -617,6 +623,7 @@ class MegaRequestListener
 	//Request callbacks
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void onRequestUpdate(MegaApi* api, MegaRequest *request);
 	virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 	virtual ~MegaRequestListener();
 };
@@ -655,6 +662,7 @@ class MegaListener
 	public:
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void onRequestUpdate(MegaApi* api, MegaRequest *request);
 	virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 	virtual void onTransferStart(MegaApi *api, MegaTransfer *transfer);
 	virtual void onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);
@@ -943,6 +951,7 @@ protected:
 
 	void fireOnRequestStart(MegaApi* api, MegaRequest *request);
 	void fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError e);
+    void fireOnRequestUpdate(MegaApi* api, MegaRequest *request);
 	void fireOnRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError e);
 	void fireOnTransferStart(MegaApi* api, MegaTransfer *transfer);
 	void fireOnTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError e);
@@ -991,6 +1000,8 @@ protected:
 
     // a request-level error occurred
     virtual void request_error(mega::error);
+
+    virtual void request_response_progress(m_off_t, m_off_t);
 
     // login result
 	virtual void login_result(mega::error);
