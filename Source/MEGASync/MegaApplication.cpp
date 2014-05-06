@@ -459,8 +459,15 @@ void MegaApplication::loggedIn()
     if(settingsDialog)
         settingsDialog->setProxyOnly(false);
 
-    //Apply the "Start on startup" configuration
-    Platform::startOnStartup(preferences->startOnStartup());
+    // Apply the "Start on startup" configuration, make sure configuration has the actual value
+    // get the requested value
+    bool startOnStartup = preferences->startOnStartup();
+    // try to enable / disable startup (e.g. copy or delete desktop file)
+    if (!Platform::startOnStartup(startOnStartup)) {
+        // in case of failure - make sure configuration keeps the right value
+        LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
+        preferences->setStartOnStartup(!startOnStartup);
+    }
 
     startUpdateTask();
 

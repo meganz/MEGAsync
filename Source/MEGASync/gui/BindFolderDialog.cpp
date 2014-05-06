@@ -69,13 +69,13 @@ void BindFolderDialog::on_bOK_clicked()
     for(int i=0; i<localFolders.size(); i++)
     {
         QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
-        if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QChar::fromAscii('\\'))))
+        if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QDir::separator())))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             delete node;
             return;
         }
-        else if(c.startsWith(localFolderPath) && c[localFolderPath.size()]==QChar::fromAscii('\\'))
+        else if(c.startsWith(localFolderPath) && c[localFolderPath.size()]==QDir::separator())
         {
             QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             delete node;

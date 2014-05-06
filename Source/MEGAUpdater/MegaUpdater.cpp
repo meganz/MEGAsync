@@ -13,8 +13,6 @@
 using namespace mega;
 using namespace std;
 
-const char APP_VERSION[] = "1015";
-
 const char SERVER_BASE_URL_WIN[] = "http://g.static.mega.co.nz/upd/wsync/";
 const char SERVER_BASE_URL_OSX[] = "http://g.static.mega.co.nz/upd/msync/megasync.app/";
 
@@ -126,7 +124,7 @@ void printUsage(const char* appname)
 {
     cout << "Usage: " << endl;
     cout << "Sign an update:" << endl;
-    cout << "    " << appname << " -s <win|osx> <update folder> <keyfile>" << endl;
+    cout << "    " << appname << " -s <win|osx> <update folder> <keyfile> <version_code>" << endl;
     cout << "Generate a keypair" << endl;
     cout << "    " << appname << " -g" << endl;
 }
@@ -137,7 +135,7 @@ const byte *signFile(const char * filePath, AsymmCipher* key)
     HashSignature signatureGenerator(new Hash());
     char buffer[1024];
 
-    ifstream input(filePath);
+    ifstream input(filePath, std::ios::in | std::ios::binary);
     if(input.fail())
     {
         delete signature;
@@ -196,7 +194,7 @@ int main(int argc, char *argv[])
         delete privkstr;
         return 0;
     }
-    else if((argc == 5) && !strcmp(argv[1], "-s") && (!strcmp(argv[2], "win") || !strcmp(argv[2], "osx")))
+    else if((argc == 6) && !strcmp(argv[1], "-s") && (!strcmp(argv[2], "win") || !strcmp(argv[2], "osx")))
     {
         //Sign an update
         win = !strcmp(argv[2], "win");
@@ -207,7 +205,7 @@ int main(int argc, char *argv[])
             updateFolder.append("/");
 
         //Read keys
-        ifstream keyFile(argv[4]);
+        ifstream keyFile(argv[4], std::ios::in);
         if(keyFile.bad())
         {
             printUsage(argv[0]);
@@ -223,6 +221,13 @@ int main(int argc, char *argv[])
         }
         keyFile.close();
 
+        long versionCode = strtol (argv[5], NULL, 10);
+        if(!versionCode)
+        {
+            cout << "Invalid version code" << endl;
+            return 5;
+        }
+
         //Initialize AsymmCypher
         string privks;
         privks.resize(privk.size()/4*3+3);
@@ -230,7 +235,7 @@ int main(int argc, char *argv[])
         aprivk.setkey(AsymmCipher::PRIVKEY,(byte*)privks.data(), privks.size());
 
         //Generate update file signature
-        signatureGenerator.add((const byte *)APP_VERSION, strlen(APP_VERSION));
+        signatureGenerator.add((const byte *)argv[5], strlen(argv[5]));
 
         int numFiles;
         if(win) numFiles = SIZEOF_ARRAY(UPDATE_FILES_WIN);
@@ -269,7 +274,7 @@ int main(int argc, char *argv[])
         updateFileSignature.resize(Base64::btoa((byte *)buffer,sizeof(buffer), (char *)updateFileSignature.data()));
 
         //Print update file
-        cout << APP_VERSION << endl;
+        cout << argv[5] << endl;
         cout << updateFileSignature << endl;
         for(unsigned int i=0; i<numFiles; i++)
         {
