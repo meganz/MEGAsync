@@ -334,7 +334,7 @@ void Utilities::log(const char *message)
     if(filePath.isEmpty())
     {
         QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-        filePath = dataPath + QString::fromAscii("\\MEGAsync.log");
+        filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
     }
 
     QFile file(filePath);
