@@ -623,6 +623,12 @@ void MegaApplication::exitApplication()
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         trayIcon->hide();
+
+        #ifdef __APPLE__
+            cleanAll();
+            ::exit(0);
+        #endif
+
         QApplication::exit();
     }
 }
