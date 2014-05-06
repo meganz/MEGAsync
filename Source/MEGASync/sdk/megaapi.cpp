@@ -2363,32 +2363,37 @@ void MegaApi::transfer_update(Transfer *tr)
             tr->localfilename.resize(tr->localfilename.size()-1);
         }
 #endif
-		transfer->setTime(tr->slot->lastdata);
-        if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
-		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
-		transfer->setTransferredBytes(tr->slot->progressreported);
 
-        unsigned long long currentTime = Waiter::ds;
-        if(currentTime<transfer->getStartTime())
-            transfer->setStartTime(currentTime);
+        if((transfer->getUpdateTime() != Waiter::ds) || !tr->slot->progressreported ||
+           (tr->slot->progressreported == tr->size))
+        {
+            transfer->setTime(tr->slot->lastdata);
+            if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
+            transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
+            transfer->setTransferredBytes(tr->slot->progressreported);
 
-        long long speed = 0;
-        long long deltaTime = currentTime-transfer->getStartTime();
-        if(deltaTime<=0)
-            deltaTime = 1;
-        if(transfer->getTransferredBytes()>0)
-            speed = (10*transfer->getTransferredBytes())/deltaTime;
+            unsigned long long currentTime = Waiter::ds;
+            if(currentTime<transfer->getStartTime())
+                transfer->setStartTime(currentTime);
 
-        transfer->setSpeed(speed);
-        transfer->setUpdateTime(currentTime);
+            long long speed = 0;
+            long long deltaTime = currentTime-transfer->getStartTime();
+            if(deltaTime<=0)
+                deltaTime = 1;
+            if(transfer->getTransferredBytes()>0)
+                speed = (10*transfer->getTransferredBytes())/deltaTime;
 
-        //string th;
-        //if (tr->type == GET) th = "TD ";
-        //else th = "TU ";
-        //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
-        //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(Waiter::ds-transfer->getStartTime())+1) << " KB/s" << endl;
+            transfer->setSpeed(speed);
+            transfer->setUpdateTime(currentTime);
 
-        fireOnTransferUpdate(this, transfer);
+            //string th;
+            //if (tr->type == GET) th = "TD ";
+            //else th = "TU ";
+            //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
+            //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(Waiter::ds-transfer->getStartTime())+1) << " KB/s" << endl;
+
+            fireOnTransferUpdate(this, transfer);
+        }
 	}
 }
 
