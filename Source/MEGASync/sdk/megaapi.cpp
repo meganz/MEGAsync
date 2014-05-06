@@ -1403,9 +1403,9 @@ void MegaApi::remove(MegaNode *node, MegaRequestListener *listener)
     waiter->notify();
 }
 
-void MegaApi::share(MegaNode* node, User* user, const char *access, MegaRequestListener *listener)
+void MegaApi::share(MegaNode* node, MegaUser *user, const char *access, MegaRequestListener *listener)
 {
-    return share(node, user->email.c_str(), access, listener);
+    return share(node, user ? user->getEmail() : NULL, access, listener);
 }
 
 void MegaApi::share(MegaNode *node, const char* email, const char *access, MegaRequestListener *listener)

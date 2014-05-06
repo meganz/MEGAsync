@@ -853,7 +853,7 @@ public:
     void copyNode(MegaNode* node, MegaNode *newParent, MegaRequestListener *listener = NULL);
     void renameNode(MegaNode* node, const char* newName, MegaRequestListener *listener = NULL);
     void remove(MegaNode* node, MegaRequestListener *listener = NULL);
-    void share(MegaNode *node, mega::User* user, const char *level, MegaRequestListener *listener = NULL);
+    void share(MegaNode *node, MegaUser* user, const char *level, MegaRequestListener *listener = NULL);
     void share(MegaNode* node, const char* email, const char *level, MegaRequestListener *listener = NULL);
 	void folderAccess(const char* megaFolderLink, MegaRequestListener *listener = NULL);
 	void importFileLink(const char* megaFileLink, MegaNode* parent, MegaRequestListener *listener = NULL);
