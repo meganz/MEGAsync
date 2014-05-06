@@ -2,7 +2,8 @@
 
 ExtServer *LinuxPlatform::ext_server = NULL;
 
-QString LinuxPlatform::desktop_file = QDir::homePath() + QString::fromAscii("/.config/autostart/megasync.desktop");
+static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
+QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
 QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string %1 metadata::custom-icon file://%2");
 QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset %1 metadata::custom-icon");
 QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
@@ -23,21 +24,34 @@ void LinuxPlatform::notifyItemChange(QString path)
 //cout << "notifyItemChange " << path.toStdString().c_str() << endl;
 }
 
+// enable or disable MEGASync launching at startup
+// return true if operation succeeded
 bool LinuxPlatform::startOnStartup(bool value)
 {
+    // copy desktop file into autostart directory
     if (value) {
         if (QFile(desktop_file).exists())
             return true;
         else {
+            // make sure directory exist
+            if (!QDir(autostart_dir).exists()) {
+                if (!QDir().mkdir(autostart_dir)) {
+                    LOG_debug << "Failed to create autostart dir: " << autostart_dir;
+                    return false;
+                }
+            }
             QString app_desktop = QString::fromAscii("/usr/share/applications/megasync.desktop");
             if (QFile(app_desktop).exists()) {
-                QFile::copy(app_desktop, desktop_file);
-            } else
+                return QFile::copy(app_desktop, desktop_file);
+            } else {
+                LOG_debug << "Desktop file does not exist: " << app_desktop;
                 return false;
+            }
         }
+    // remove desktop file if it exists
     } else {
         if (QFile(desktop_file).exists())
-            QFile::remove(desktop_file);
+            return QFile::remove(desktop_file);
     }
     return true;
 }

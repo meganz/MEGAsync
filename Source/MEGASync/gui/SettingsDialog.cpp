@@ -297,7 +297,8 @@ void SettingsDialog::loadSettings()
     #ifdef WIN32
         qt_ntfs_permission_lookup--; // turn it off again
     #endif
-        ui->cStartOnStartup->setChecked(preferences->startOnStartup());
+        // if checked: make sure both sources are true
+        ui->cStartOnStartup->setChecked(preferences->startOnStartup() && Platform::isStartOnStartupActive());
 
         //Language
         ui->cLanguage->clear();
@@ -503,8 +504,12 @@ bool SettingsDialog::saveSettings()
         }
 
         bool startOnStartup = ui->cStartOnStartup->isChecked();
-        Platform::startOnStartup(startOnStartup);
-        preferences->setStartOnStartup(startOnStartup);
+        if (!Platform::startOnStartup(startOnStartup)) {
+            // in case of failure - make sure configuration keeps the right value
+            LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
+            preferences->setStartOnStartup(!startOnStartup);
+        } else
+            preferences->setStartOnStartup(startOnStartup);
 
         //Language
         int currentIndex = ui->cLanguage->currentIndex();
