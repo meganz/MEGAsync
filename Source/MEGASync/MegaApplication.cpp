@@ -132,12 +132,13 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 {
     // set log level
 #if DEBUG
-    SimpleLogger::setLogLevel(logDebug);
+    mega::SimpleLogger::setLogLevel(mega::logDebug);
+    mega::SimpleLogger::setOutputSettings(mega::logDebug, true, true, true);
 #else
-    SimpleLogger::setLogLevel(logInfo);
+    mega::SimpleLogger::setLogLevel(mega::logInfo);
 #endif
     // set output to stdout
-    SimpleLogger::setAllOutputs(&std::cout);
+    mega::SimpleLogger::setAllOutputs(&std::cout);
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
