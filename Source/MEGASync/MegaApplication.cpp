@@ -20,6 +20,7 @@ const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASync
 
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
+QString MegaApplication::dataPath = QString();
 
 int main(int argc, char *argv[])
 {
@@ -48,12 +49,7 @@ int main(int argc, char *argv[])
             preferences->leaveUser();
         }
 
-#if QT_VERSION < 0x050000
-    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#else
-    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
-#endif
-        QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
+        QDirIterator di(MegaApplication::applicationDataPath(), QDir::Files | QDir::NoDotAndDotDot);
         while (di.hasNext()) {
             di.next();
             const QFileInfo& fi = di.fileInfo();
@@ -144,9 +140,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     //Set the working directory
 #if QT_VERSION < 0x050000
-    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #else
-    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
 #endif
 
     QDir currentDir(dataPath);
@@ -211,12 +207,6 @@ void MegaApplication::initialize()
     lastExit = preferences->getLastExit();
 
     QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
-
-#if QT_VERSION < 0x050000
-    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#else
-    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
-#endif
 
 #ifdef WIN32
     //Backwards compatibility code
@@ -296,6 +286,11 @@ QString MegaApplication::applicationFilePath()
 QString MegaApplication::applicationDirPath()
 {
     return appDirPath;
+}
+
+QString MegaApplication::applicationDataPath()
+{
+    return dataPath;
 }
 
 void MegaApplication::changeLanguage(QString languageCode)

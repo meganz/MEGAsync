@@ -42,6 +42,7 @@ public:
     static const QString TRANSLATION_PREFIX;
     static QString applicationFilePath();
     static QString applicationDirPath();
+    static QString applicationDataPath();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
@@ -166,6 +167,7 @@ protected:
 
     static QString appPath;
     static QString appDirPath;
+    static QString dataPath;
 
     QThread *updateThread;
     UpdateTask *updateTask;
