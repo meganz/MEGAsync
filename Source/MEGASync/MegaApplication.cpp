@@ -130,6 +130,15 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+    // set log level
+#if DEBUG
+    SimpleLogger::setLogLevel(logDebug);
+#else
+    SimpleLogger::setLogLevel(logInfo);
+#endif
+    // set output to stdout
+    SimpleLogger::setAllOutputs(&std::cout);
+
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
