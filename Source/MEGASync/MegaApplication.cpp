@@ -644,10 +644,13 @@ void MegaApplication::aboutDialog()
 
 void MegaApplication::refreshTrayIcon()
 {
+    static int counter = 0;
     if(megaApi)
     {
         LOG("STATE: Refreshing state");
-        megaApi->update();
+        if(!(++counter % 12))
+            megaApi->update();
+
         megaApi->updateStatics();
         onSyncStateChanged(megaApi);
     }
