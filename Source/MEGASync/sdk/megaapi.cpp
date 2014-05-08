@@ -3132,22 +3132,26 @@ void MegaApi::nodes_updated(Node** n, int count)
         for(int i=0; i<count; i++)
         {
             Node *node = n[i];
-            if(node->changed.parent || node->changed.attrs || node->removed ||
-                    (node->parent && (node->parent->nodehandle == client->rootnodes[2])))
+            if(node->changed.parent || node->changed.attrs || node->removed)
             {
                 node->changed.parent = false;
                 node->changed.attrs = false;
                 list.push_back(node);
             }
         }
-        nodeList = new NodeList(list.data(), list.size());
+
+        if(list.size())
+        {
+            nodeList = new NodeList(list.data(), list.size());
+            fireOnNodesUpdate(this, nodeList);
+        }
     }
     else
     {
         for (node_map::iterator it = client->nodes.begin(); it != client->nodes.end(); it++)
             memset(&(it->second->changed), 0,sizeof it->second->changed);
+        fireOnNodesUpdate(this, nodeList);
     }
-    fireOnNodesUpdate(this, nodeList);
 #endif
 }
 
