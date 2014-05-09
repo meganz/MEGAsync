@@ -647,6 +647,12 @@ void MegaApplication::exitApplication()
         if(button == QMessageBox::Yes)
         {
             trayIcon->hide();
+
+            #ifdef __APPLE__
+                cleanAll();
+                ::exit(0);
+            #endif
+
             QApplication::exit();
         }
     }
