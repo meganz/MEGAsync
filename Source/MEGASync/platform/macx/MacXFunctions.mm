@@ -110,7 +110,7 @@ void addPathToPlaces(QString path, QString pathName)
 
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:folderPath];
 
-    CFURLRef iconURLRef = (CFURLRef)[NSURL fileURLWithPath:[appPath stringByAppendingString:@"/Contents/Resources/mlogo.icns"]];
+    CFURLRef iconURLRef = (CFURLRef)[NSURL fileURLWithPath:[appPath stringByAppendingString:@"/Contents/Resources/app.icns"]];
     CFURLGetFSRef(iconURLRef, &fref);
     RegisterIconRefFromFSRef('SSBL', 'ssic', &fref, &iconRef);
 
@@ -178,7 +178,7 @@ void setFolderIcon(QString path)
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
 
     NSString * appPath = [[NSBundle mainBundle] bundlePath];
-    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/mlogo.icns"]];
+    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder.icns"]];
 
     BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
 
