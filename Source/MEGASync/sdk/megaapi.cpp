@@ -1111,7 +1111,7 @@ MegaApi::MegaApi(const char *basePath)
     gfxAccess->setProcessor(processor);
 #endif
 
-    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.17");
+    client = new MegaClient(this, waiter, httpio, fsAccess, dbAccess, gfxAccess, "FhMgXbqb", "MEGAsync/1.0.18");
 
     //Start blocking thread
 	threadExit = 0;
@@ -1403,9 +1403,9 @@ void MegaApi::remove(MegaNode *node, MegaRequestListener *listener)
     waiter->notify();
 }
 
-void MegaApi::share(MegaNode* node, User* user, const char *access, MegaRequestListener *listener)
+void MegaApi::share(MegaNode* node, MegaUser *user, const char *access, MegaRequestListener *listener)
 {
-    return share(node, user->email.c_str(), access, listener);
+    return share(node, user ? user->getEmail() : NULL, access, listener);
 }
 
 void MegaApi::share(MegaNode *node, const char* email, const char *access, MegaRequestListener *listener)
@@ -2363,32 +2363,37 @@ void MegaApi::transfer_update(Transfer *tr)
             tr->localfilename.resize(tr->localfilename.size()-1);
         }
 #endif
-		transfer->setTime(tr->slot->lastdata);
-        if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
-		transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
-		transfer->setTransferredBytes(tr->slot->progressreported);
 
-        unsigned long long currentTime = Waiter::ds;
-        if(currentTime<transfer->getStartTime())
-            transfer->setStartTime(currentTime);
+        if((transfer->getUpdateTime() != Waiter::ds) || !tr->slot->progressreported ||
+           (tr->slot->progressreported == tr->size))
+        {
+            transfer->setTime(tr->slot->lastdata);
+            if(!transfer->getStartTime()) transfer->setStartTime(Waiter::ds);
+            transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
+            transfer->setTransferredBytes(tr->slot->progressreported);
 
-        long long speed = 0;
-        long long deltaTime = currentTime-transfer->getStartTime();
-        if(deltaTime<=0)
-            deltaTime = 1;
-        if(transfer->getTransferredBytes()>0)
-            speed = (10*transfer->getTransferredBytes())/deltaTime;
+            unsigned long long currentTime = Waiter::ds;
+            if(currentTime<transfer->getStartTime())
+                transfer->setStartTime(currentTime);
 
-        transfer->setSpeed(speed);
-        transfer->setUpdateTime(currentTime);
+            long long speed = 0;
+            long long deltaTime = currentTime-transfer->getStartTime();
+            if(deltaTime<=0)
+                deltaTime = 1;
+            if(transfer->getTransferredBytes()>0)
+                speed = (10*transfer->getTransferredBytes())/deltaTime;
 
-        //string th;
-        //if (tr->type == GET) th = "TD ";
-        //else th = "TU ";
-        //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
-        //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(Waiter::ds-transfer->getStartTime())+1) << " KB/s" << endl;
+            transfer->setSpeed(speed);
+            transfer->setUpdateTime(currentTime);
 
-        fireOnTransferUpdate(this, transfer);
+            //string th;
+            //if (tr->type == GET) th = "TD ";
+            //else th = "TU ";
+            //cout << th << transfer->getFileName() << ": Update: " << tr->slot->progressreported/1024 << " KB of "
+            //     << transfer->getTotalBytes()/1024 << " KB, " << tr->slot->progressreported*10/(1024*(Waiter::ds-transfer->getStartTime())+1) << " KB/s" << endl;
+
+            fireOnTransferUpdate(this, transfer);
+        }
 	}
 }
 
@@ -3127,22 +3132,26 @@ void MegaApi::nodes_updated(Node** n, int count)
         for(int i=0; i<count; i++)
         {
             Node *node = n[i];
-            if(node->changed.parent || node->changed.attrs || node->removed ||
-                    (node->parent && (node->parent->nodehandle == client->rootnodes[2])))
+            if(node->changed.parent || node->changed.attrs || node->removed)
             {
                 node->changed.parent = false;
                 node->changed.attrs = false;
                 list.push_back(node);
             }
         }
-        nodeList = new NodeList(list.data(), list.size());
+
+        if(list.size())
+        {
+            nodeList = new NodeList(list.data(), list.size());
+            fireOnNodesUpdate(this, nodeList);
+        }
     }
     else
     {
         for (node_map::iterator it = client->nodes.begin(); it != client->nodes.end(); it++)
             memset(&(it->second->changed), 0,sizeof it->second->changed);
+        fireOnNodesUpdate(this, nodeList);
     }
-    fireOnNodesUpdate(this, nodeList);
 #endif
 }
 
