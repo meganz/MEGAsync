@@ -163,6 +163,7 @@ protected:
     QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
+    QMessageBox *exitDialog;
     QString lastTrayMessage;
 
     static QString appPath;

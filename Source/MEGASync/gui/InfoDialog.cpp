@@ -409,16 +409,28 @@ void InfoDialog::updateDialog()
 
 void InfoDialog::addSync()
 {
-    BindFolderDialog *dialog = new BindFolderDialog(app);
+    static BindFolderDialog *dialog = NULL;
+    if(dialog)
+    {
+        dialog->activateWindow();
+        return;
+    }
+
+    dialog = new BindFolderDialog(app);
     int result = dialog->exec();
     if(result != QDialog::Accepted)
+    {
+        delete dialog;
+        dialog = NULL;
         return;
+    }
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     long long handle = dialog->getMegaFolder();
     MegaNode *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
     delete dialog;
+    dialog = NULL;
     if(!localFolderPath.length() || !node)
     {
         delete node;
