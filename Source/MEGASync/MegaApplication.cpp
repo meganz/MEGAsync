@@ -191,6 +191,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateThread = NULL;
     updateTask = NULL;
     multiUploadFileDialog = NULL;
+    exitDialog = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -623,13 +624,27 @@ void MegaApplication::rebootApplication(bool update)
 
 void MegaApplication::exitApplication()
 {
-    if(!megaApi->isLoggedIn() || QMessageBox::question(NULL, tr("MEGAsync"),
-            tr("Synchronization will stop.\n\nExit anyway?"),
-            QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+    if(!megaApi->isLoggedIn())
     {
         trayIcon->hide();
         QApplication::exit();
+        return;
     }
+
+    if(!exitDialog)
+    {
+        exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
+                                     tr("Synchronization will stop.\n\nExit anyway?"), QMessageBox::Yes|QMessageBox::No);
+        int button = exitDialog->exec();
+        delete exitDialog;
+        exitDialog = NULL;
+        if(button == QMessageBox::Yes)
+        {
+            trayIcon->hide();
+            QApplication::exit();
+        }
+    }
+    else exitDialog->activateWindow();
 }
 
 void MegaApplication::pauseTransfers(bool pause)
