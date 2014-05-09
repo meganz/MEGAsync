@@ -27,6 +27,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     selectedMegaFolderHandle = mega::UNDEF;
     ui->bNext->setFocus();
     delegateListener = new QTMegaRequestListener(megaApi, this);
+
+    ui->bNext->setDefault(true);
 }
 
 SetupWizard::~SetupWizard()
