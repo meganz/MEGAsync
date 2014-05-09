@@ -627,6 +627,12 @@ void MegaApplication::exitApplication()
     if(!megaApi->isLoggedIn())
     {
         trayIcon->hide();
+
+        #ifdef __APPLE__
+            cleanAll();
+            ::exit(0);
+        #endif
+
         QApplication::exit();
         return;
     }
@@ -973,9 +979,12 @@ void MegaApplication::uploadActionClicked()
 {
     if(multiUploadFileDialog)
     {
-        multiUploadFileDialog->showMinimized();
-        multiUploadFileDialog->setWindowState(Qt::WindowActive);
-        multiUploadFileDialog->showNormal();
+        #ifdef WIN32
+            multiUploadFileDialog->showMinimized();
+            multiUploadFileDialog->setWindowState(Qt::WindowActive);
+            multiUploadFileDialog->showNormal();
+        #endif
+
         multiUploadFileDialog->raise();
         multiUploadFileDialog->activateWindow();
         return;
@@ -1026,9 +1035,11 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     //Files will be uploaded when the user selects the upload folder
     if(uploadFolderSelector->isVisible())
     {
-        uploadFolderSelector->showMinimized();
-        uploadFolderSelector->setWindowState(Qt::WindowActive);
-        uploadFolderSelector->showNormal();
+        #ifdef WIN32
+            uploadFolderSelector->showMinimized();
+            uploadFolderSelector->setWindowState(Qt::WindowActive);
+            uploadFolderSelector->showNormal();
+        #endif
         uploadFolderSelector->raise();
         uploadFolderSelector->activateWindow();
         return;
@@ -1061,9 +1072,11 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 void MegaApplication::showUploadDialog()
 {
     uploadFolderSelector->initialize();
-    uploadFolderSelector->showMinimized();
-    uploadFolderSelector->setWindowState(Qt::WindowActive);
-    uploadFolderSelector->showNormal();
+    #ifdef WIN32
+        uploadFolderSelector->showMinimized();
+        uploadFolderSelector->setWindowState(Qt::WindowActive);
+        uploadFolderSelector->showNormal();
+    #endif
     uploadFolderSelector->raise();
     uploadFolderSelector->activateWindow();
     uploadFolderSelector->exec();
@@ -1173,7 +1186,12 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         LOG("Information dialog available");
-        infoDialogTimer->start(200);
+
+        #ifndef __APPLE__
+                infoDialogTimer->start(200);
+        #else
+                showInfoDialog();
+        #endif
     }
     else if(reason == QSystemTrayIcon::DoubleClick)
     {
