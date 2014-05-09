@@ -1174,6 +1174,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
         #ifndef __APPLE__
                 infoDialogTimer->start(200);
+        #else
+                showInfoDialog();
         #endif
     }
     else if(reason == QSystemTrayIcon::DoubleClick)
