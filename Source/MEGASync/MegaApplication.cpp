@@ -160,6 +160,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QDir::setCurrent(dataPath);
 
     finished = false;
+    updateAvailable = false;
     lastStartedDownload = 0;
     lastStartedUpload = 0;
     trayIcon = NULL;
@@ -178,8 +179,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exitAction = NULL;
     aboutAction = NULL;
     settingsAction = NULL;
-    pauseAction = NULL;
-    resumeAction = NULL;
+    //pauseAction = NULL;
+    //resumeAction = NULL;
     importLinksAction = NULL;
     uploadAction = NULL;
     trayMenu = NULL;
@@ -337,7 +338,7 @@ void MegaApplication::updateTrayIcon()
     {
         LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
         QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
-        if(!updateAction)
+        if(!updateAvailable)
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
             trayIcon->setToolTip(tooltip);
@@ -373,7 +374,7 @@ void MegaApplication::updateTrayIcon()
         else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
         else tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing");
 
-        if(!updateAction)
+        if(!updateAvailable)
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             trayIcon->setToolTip(tooltip);
@@ -389,7 +390,7 @@ void MegaApplication::updateTrayIcon()
     else
     {
         LOG("STATE: Setting the \"synced\" tray icon (default).");
-        if(!updateAction)
+        if(!updateAvailable)
         {
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
             trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
@@ -721,7 +722,19 @@ void MegaApplication::showInfoDialog()
     if(infoDialog)
     {
         QRect screenGeometry = QApplication::desktop()->availableGeometry();
-        infoDialog->move(screenGeometry.right() - 400 - 2, screenGeometry.bottom() - 545 - 2);
+        QPoint cursor = QCursor::pos();
+        int posx, posy;
+        if(cursor.x() > (screenGeometry.right()/2))
+            posx = screenGeometry.right() - 400 - 2;
+        else
+            posx = screenGeometry.left() + 2;
+
+        if(cursor.y() > (screenGeometry.bottom()/2))
+            posy = screenGeometry.bottom() - 545 - 2;
+        else
+            posy = screenGeometry.top() + 2;
+
+        infoDialog->move(posx, posy);
         infoDialog->show();
     }
 }
@@ -906,6 +919,15 @@ void MegaApplication::checkForUpdates()
 {
     this->showInfoMessage(tr("Checking for updates..."));
     emit tryUpdate();
+}
+
+void MegaApplication::showTrayMenu(QPoint *point)
+{
+    if(trayMenu)
+    {
+        QPoint p = point ? (*point)-QPoint(trayMenu->sizeHint().width(), 0) : QCursor::pos();
+        trayMenu->popup(p);
+    }
 }
 
 void MegaApplication::pauseSync()
@@ -1118,23 +1140,21 @@ void MegaApplication::onUpdateCompleted()
 {
     LOG("Update completed. Initializing a silent reboot...");
     if(trayMenu)
-        trayMenu->removeAction(updateAction);
-    delete updateAction;
-    updateAction = NULL;
+    {
+        updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING);
+        updateAction->setEnabled(false);
+    }
+    updateAvailable = false;
     rebootApplication();
 }
 
 void MegaApplication::onUpdateAvailable(bool requested)
 {
-    if(!updateAction && (trayIcon->contextMenu()==trayMenu))
+    if(trayIcon->contextMenu()!=initialMenu)
     {
-        updateAction = new QAction(tr("Install update"), this);
-        connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
-        if(trayMenu && !trayMenu->actions().contains(updateAction))
-        {
-            trayMenu->addAction(updateAction);
-            trayIcon->setContextMenu(trayMenu);
-        }
+        updateAvailable = true;
+        updateAction->setText(tr("Install update"));
+        updateAction->setEnabled(true);
     }
 
     if(requested)
@@ -1151,7 +1171,7 @@ void MegaApplication::onUpdateNotFound(bool requested)
 {
     if(requested)
     {
-        if(!updateAction)
+        if(!updateAvailable)
             showInfoMessage(tr("No update available at this time"));
         else
             showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync"));
@@ -1167,7 +1187,7 @@ void MegaApplication::onUpdateError()
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     LOG("Tray icon clicked");
-    if(reason == QSystemTrayIcon::Trigger)
+    if(reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
     {
         LOG("Event QSystemTrayIcon::Trigger");
 
@@ -1186,12 +1206,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         LOG("Information dialog available");
-
-        #ifndef __APPLE__
-                infoDialogTimer->start(200);
-        #else
-                showInfoDialog();
-        #endif
+        infoDialogTimer->start(200);
     }
     else if(reason == QSystemTrayIcon::DoubleClick)
     {
@@ -1216,6 +1231,10 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QString localFolderPath = preferences->getLocalFolder(0);
         if(!localFolderPath.isEmpty())
             QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
+    }
+    else if(reason == QSystemTrayIcon::MiddleClick)
+    {
+        showTrayMenu();
     }
 }
 
@@ -1276,7 +1295,14 @@ void MegaApplication::changeProxy()
 //This function creates the tray icon
 void MegaApplication::createTrayIcon()
 {
-    if(!trayMenu) trayMenu = new QMenu();
+    if(!trayMenu)
+    {
+        trayMenu = new QMenu();
+        trayMenu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+    }
     else
     {
         QList<QAction *> actions = trayMenu->actions();
@@ -1298,13 +1324,13 @@ void MegaApplication::createTrayIcon()
     settingsAction = new QAction(tr("Settings"), this);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
-    if(pauseAction) delete pauseAction;
-    pauseAction = new QAction(tr("Pause"), this);
-    connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
+    //if(pauseAction) delete pauseAction;
+    //pauseAction = new QAction(tr("Pause"), this);
+    //connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
 
-    if(resumeAction) delete resumeAction;
-    resumeAction = new QAction(tr("Resume"), this);
-    connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
+    //if(resumeAction) delete resumeAction;
+    //resumeAction = new QAction(tr("Resume"), this);
+    //connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
 
     if(importLinksAction) delete importLinksAction;
     importLinksAction = new QAction(tr("Import links"), this);
@@ -1314,15 +1340,34 @@ void MegaApplication::createTrayIcon()
     uploadAction = new QAction(tr("Upload files/folders"), this);
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
 
+    if(updateAction) delete updateAction;
+    if(updateAvailable)
+    {
+        updateAction = new QAction(tr("Install update"), this);
+        updateAction->setEnabled(true);
+    }
+    else
+    {
+        updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING, this);
+        updateAction->setEnabled(false);
+    }
+    updateAction->setCheckable(true);
+    updateAction->setChecked(true);
+    connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
     //trayMenu->addAction(aboutAction);
-    if(!paused) trayMenu->addAction(pauseAction);
-    else trayMenu->addAction(resumeAction);
+    //if(!paused) trayMenu->addAction(pauseAction);
+    //else trayMenu->addAction(resumeAction);
+
+    trayMenu->addAction(updateAction);
+    trayMenu->addSeparator();
 	trayMenu->addAction(importLinksAction);
     trayMenu->addAction(uploadAction);
     trayMenu->addAction(settingsAction);
+    trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
 
-    trayIcon->setContextMenu(trayMenu);
+    trayIcon->setContextMenu(NULL);
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
 }
@@ -1430,7 +1475,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         paused = request->getFlag();
         preferences->setWasPaused(paused);
-        if(paused)
+        /*if(paused)
         {
             trayMenu->removeAction(pauseAction);
             trayMenu->insertAction(importLinksAction, resumeAction);
@@ -1439,7 +1484,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             trayMenu->removeAction(resumeAction);
             trayMenu->insertAction(importLinksAction, pauseAction);
-        }
+        }*/
         onSyncStateChanged(megaApi);
         break;
     }
