@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>MEGAsync تعمل الان</translation>
     </message>
 </context>
 <context>
@@ -1095,14 +1095,14 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>تعطيل رموز الغطاء</translation>
     </message>
     <message>
-        <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <source>Force a full scan</source>
+        <translation>فرض إعادة تفحص كامل</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>فحص كامل</translation>
     </message>
     <message>
@@ -1110,7 +1110,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>سوف يقوم MEGAsync بإجراء مسح كامل للمجلدات الخاصة بك المتزامنه عندما يبدأ.
 
 هل تريد إعادة تشغيل MEGAsync الآن؟
 </translation>

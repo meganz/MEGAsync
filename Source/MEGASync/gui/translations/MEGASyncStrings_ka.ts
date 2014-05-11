@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>მეორეული ხატულების გაუქმება</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>სრული ხელახალი სკანირება</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>სრული სკანირება</translation>
     </message>
     <message>

@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Disable overlay icons</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Tving fullstendig gjenskanning</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Fullstendig skanning</translation>
     </message>
     <message>

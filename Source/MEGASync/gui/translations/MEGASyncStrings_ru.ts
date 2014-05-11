@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Отключить пометки на иконках</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Принудительно выполнить полную проверку</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Полная проверка</translation>
     </message>
     <message>

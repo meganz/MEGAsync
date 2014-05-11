@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>禁用图标覆盖</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>强制执行完整重新扫描</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>完整重新扫描</translation>
     </message>
     <message>

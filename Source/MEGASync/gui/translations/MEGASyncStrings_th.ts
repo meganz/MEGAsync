@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>กำลังเริ่มต้น MEGAsync </translation>
     </message>
 </context>
 <context>
@@ -499,7 +499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>อัปโหลดไฟล์/โฟลเดอร์</translation>
     </message>
 </context>
 <context>
@@ -1091,28 +1091,28 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>อื่นๆ</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>ปิดใช้งานแสดงไอคอน</translation>
     </message>
     <message>
-        <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <source>Force a full scan</source>
+        <translation>บังคับให้สแกนใหม่แบบเต็ม</translation>
     </message>
     <message>
-        <source>Full check</source>
-        <translation>Full scan</translation>
+        <source>Full scan</source>
+        <translation>สแกนแบบเต็ม</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync จะดำเนินการสแกนโฟลเดอร์ซิงค์ของคุณ เมื่อเริ่มต้น
 
-Do you want to restart MEGAsync now?
+คุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่
 </translation>
     </message>
 </context>

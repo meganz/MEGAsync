@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Zakázať prekrytie ikon</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Vynútiť úplné preskenovanie</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Úplný scan</translation>
     </message>
     <message>

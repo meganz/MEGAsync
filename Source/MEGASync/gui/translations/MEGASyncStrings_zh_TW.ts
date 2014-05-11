@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>停用覆蓋按鈕</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>強制執行完整掃描</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>完整掃描</translation>
     </message>
     <message>
