@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Onemogoči prekrivalne ikone</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Zahtevaj polno ponovno skeniranje</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Polno skeniranje</translation>
     </message>
     <message>

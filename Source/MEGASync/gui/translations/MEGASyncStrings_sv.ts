@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Inaktivera ikonöverlägg</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Tvinga fullständig gemonsökning</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Fullständig gemomsökning</translation>
     </message>
     <message>

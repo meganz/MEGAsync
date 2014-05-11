@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Dezactivează suprapunerea iconiţelor</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Forţează o rescanare completă</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Scanare completă</translation>
     </message>
     <message>

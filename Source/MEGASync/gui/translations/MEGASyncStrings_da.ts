@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Slå overlejrede ikoner fra</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Gennemtving en fuld genskanning</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Fuld skanning</translation>
     </message>
     <message>

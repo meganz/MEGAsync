@@ -1095,14 +1095,14 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Fedő ikonok kikapcsolása</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Teljes újravizsgálat erőltetése</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Újravizsgálat</translation>
     </message>
     <message>

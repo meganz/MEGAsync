@@ -345,7 +345,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">La sincronització es pararà.
+        <translation type="obsolete">S&apos;interromprà la sincronització.
 Les eliminacions que es facin mentre el programa no estigui funcionant no es propagaran.
 
 Sortir de totes maneres?</translation>
@@ -483,7 +483,7 @@ https://mega.co.nz/#sync</source>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
-        <translation>La sincronització es pararà.
+        <translation>S&apos;interromprà la sincronització.
 
 Sortir de totes maneres?</translation>
     </message>
@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Desactiva les icones sobre-impreses</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Força un escaneig complet</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Escaneig complet</translation>
     </message>
     <message>

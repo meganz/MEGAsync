@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Disabilita icone di sovrapposizione</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Forza una nuova analisi completa</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Scansione completa</translation>
     </message>
     <message>

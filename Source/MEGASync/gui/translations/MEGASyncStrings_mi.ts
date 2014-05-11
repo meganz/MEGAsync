@@ -269,7 +269,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync is starting</source>
-        <translation>MEGAsync is starting</translation>
+        <translation>Kei te timata a Megawhiritahi </translation>
     </message>
 </context>
 <context>
@@ -469,7 +469,7 @@ https://mega.co.nz/#sync</source>
     </message>
     <message>
         <source>Update available. Downloading...</source>
-        <translation>Update available. Downloading...</translation>
+        <translation>whakahou kei te watea. Kei te Utaiho...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -494,12 +494,12 @@ e puta ahakoa</translation>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>kore taea te tiki i te punaha konae
+Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation>utaakehia nga konae/kopaki</translation>
     </message>
 </context>
 <context>
@@ -675,8 +675,8 @@ kei te tino hiahia koe ki te whakarite ?</translation>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Invalid folder for synchronization.
-Please ensure that you don&apos;t use characters like \ / or : in your folder names.</translation>
+        <translation>kopaki hapa hei whiritahi.
+Maumahara kaua e whakamahia enei pu \/ranei</translation>
     </message>
 </context>
 <context>
@@ -1067,52 +1067,52 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selective sync active</translation>
+        <translation>ko te whiritahi i whiria kei te mahi</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Enable full account sync</translation>
+        <translation>Whakakaha i te whiritahi nama katoa</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Enabling full account sync will disable all your current syncs</translation>
+        <translation>Ma te whakakaha i o whiritahi nama katoa ka wetohia au whiritahi o aianei. </translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Full account sync active</translation>
+        <translation>Whiritahi nama katoa kei te mahi</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation>Ki te tineia to whiritahi nama katoa ka watea koe ki te whakatu whiritahi kopaki i whiria. </translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Disable full account sync</translation>
+        <translation>tineia te whiritahi nama katoa</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>tera atu</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Tineia nga whakapipinga ata</translation>
     </message>
     <message>
-        <source>Force a full check</source>
-        <translation>Force a full rescan</translation>
+        <source>Force a full scan</source>
+        <translation>akina he matai katoa</translation>
     </message>
     <message>
-        <source>Full check</source>
-        <translation>Full scan</translation>
+        <source>Full scan</source>
+        <translation>matai katoa</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>Ka mahia e Megawhiritahi he matai katoa a o kopaki whititahi 
 
-Do you want to restart MEGAsync now?
+Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.
 </translation>
     </message>
 </context>
@@ -1334,8 +1334,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Unable to get the file system.
-Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>kore taea te tiki i te punaha konae
+Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
     </message>
 </context>
 <context>

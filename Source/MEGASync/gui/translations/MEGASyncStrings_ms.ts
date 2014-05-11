@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Matikan ikon overlay</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Paksa imbasan semula penuh</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Imbasan penuh</translation>
     </message>
     <message>
