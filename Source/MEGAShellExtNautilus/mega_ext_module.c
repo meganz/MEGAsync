@@ -3,16 +3,16 @@
 
 #define G_LOG_DOMAIN ((gchar*) 0)
 
-void nautilus_module_initialize (GTypeModule* module)
+void nautilus_module_initialize(GTypeModule* module)
 {
-	mega_ext_register_type (module);
+	mega_ext_register_type(module);
 }
 
-void nautilus_module_shutdown (void)
+void nautilus_module_shutdown(void)
 {
 }
 
-void nautilus_module_list_types (const GType **types, int *num_types)
+void nautilus_module_list_types(const GType **types, int *num_types)
 {
 	static GType type_list[1];
 

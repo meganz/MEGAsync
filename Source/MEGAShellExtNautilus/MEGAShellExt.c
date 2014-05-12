@@ -4,6 +4,8 @@
 #include <libnautilus-extension/nautilus-info-provider.h>
 #include "MEGAShellExt.h"
 #include "mega_ext_client.h"
+#include "mega_notify_client.h"
+#include <string.h>
 
 static GObjectClass *parent_class;
 
@@ -15,8 +17,19 @@ static void mega_ext_class_init(MEGAExtClass *class)
 static void mega_ext_instance_init(MEGAExt *mega_ext)
 {
     mega_ext->srv_sock = -1;
+    mega_ext->notify_sock = -1;
     mega_ext->chan = NULL;
     mega_ext->num_retries = 2;
+    mega_ext->h_syncs = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+    mega_ext->string_getlink = NULL;
+    mega_ext->string_upload = NULL;
+    mega_ext->syncs_received = FALSE;
+
+    // ignore SIGPIPE as we most likely will write to a closed socket in mega_notify_client_read()
+    signal(SIGPIPE, SIG_IGN);
+
+    // start notification client
+    mega_notify_client_timer_start(mega_ext);
 }
 
 static const gchar *file_state_to_str(FileState state)
@@ -32,6 +45,25 @@ static const gchar *file_state_to_str(FileState state)
         default:
             return "notfound";
     }
+}
+
+// received path from notify server with the path to item which state was changed
+void mega_ext_on_item_changed(MEGAExt *mega_ext, const gchar *path)
+{
+    GFile *f;
+    f = g_file_new_for_path(path);
+    if (!f) {
+        g_debug("No file found for %s!", path);
+        return;
+    }
+
+    NautilusFileInfo *file = nautilus_file_info_lookup(f);
+    if (!file) {
+        g_debug("No NautilusFileInfo found for %s!", path);
+        return;
+    }
+    g_debug("Item changed: %s", path);
+    nautilus_info_provider_update_file_info((NautilusInfoProvider*)mega_ext, file, (void*)1, (void*)1);
 }
 
 // user clicked on "Upload to MEGA" menu item
@@ -63,10 +95,50 @@ static void mega_ext_on_upload_selected(NautilusMenuItem *item, gpointer user_da
             if (mega_ext_client_upload(mega_ext, path))
                 flag = TRUE;
         }
+        g_free(path);
     }
 
     if (flag)
         mega_ext_client_end_request(mega_ext);
+}
+
+void mega_ext_on_sync_add(MEGAExt *mega_ext, const gchar *path)
+{
+    // ignore empty sync
+    if (!strcmp(path, "."))
+        return;
+    g_debug("New sync path: %s", path);
+    g_hash_table_insert(mega_ext->h_syncs, g_strdup(path), GINT_TO_POINTER(1));
+}
+
+void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path)
+{
+    g_debug("Deleted sync path: %s", path);
+    g_hash_table_remove(mega_ext->h_syncs, path);
+}
+
+// path: a full path to filesystem object
+// return TRUE if path located in one of the sync folders
+static gboolean mega_ext_path_in_sync(MEGAExt *mega_ext, const gchar *path)
+{
+    GList *l, *p;
+    gboolean found = FALSE;
+
+    l = g_hash_table_get_keys(mega_ext->h_syncs);
+    for (p = g_list_first(l); p; p = g_list_next(p)) {
+        const gchar *sync = p->data;
+        // sync must be a prefix of path
+        if (strlen(sync) <= strlen(path)) {
+            if (!strncmp(sync, path, strlen(sync))) {
+                found = TRUE;
+                break;
+            }
+        }
+    }
+
+    g_list_free(l);
+
+    return found;
 }
 
 // user clicked on "Get MEGA link" menu item
@@ -98,6 +170,7 @@ static void mega_ext_on_get_link_selected(NautilusMenuItem *item, gpointer user_
             if (mega_ext_client_paste_link(mega_ext, path))
                 flag = TRUE;
         }
+        g_free(path);
     }
 
     if (flag)
@@ -113,15 +186,15 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
     MEGAExt *mega_ext = MEGA_EXT(provider);
     GList *l, *l_out = NULL;
     int syncedFiles, syncedFolders, unsyncedFiles, unsyncedFolders;
-    const gchar *out = NULL;
+    gchar *out = NULL;
 
-    g_debug("mega_ext_get_file_items");
+    g_debug("mega_ext_get_file_items: %u", g_list_length(files));
 
     syncedFiles = syncedFolders = unsyncedFiles = unsyncedFolders = 0;
 
     // get list of selected objects
     for(l = files; l != NULL; l = l->next) {
-        NautilusFileInfo *file = NAUTILUS_FILE_INFO (l->data);
+        NautilusFileInfo *file = NAUTILUS_FILE_INFO(l->data);
         gchar *path;
         GFile *fp;
         FileState state;
@@ -134,7 +207,12 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         if (!path)
             continue;
 
-        state = mega_ext_client_get_path_state(mega_ext, path);
+        // avoid sending requests for files which are not in synced folders
+        // but make sure we received the list of synced folders first
+        if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path)) {
+            state = FILE_NOTFOUND;
+        } else
+            state = mega_ext_client_get_path_state(mega_ext, path);
         g_free(path);
 
         if (state == FILE_ERROR)
@@ -145,7 +223,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         g_object_set_data_full((GObject*)file, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
         // count the number of synced / unsynced files and folders
-        if (state == FILE_SYNCED) {
+        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING) {
             if (nautilus_file_info_get_file_type(file) == G_FILE_TYPE_DIRECTORY) {
                 syncedFolders++;
             } else {
@@ -163,8 +241,17 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
     // if there any unsynced files / folders selected
     if (unsyncedFiles || unsyncedFolders) {
         NautilusMenuItem *item;
-        out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-        item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+
+        // cache string
+        if (mega_ext->string_upload)
+            item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", mega_ext->string_upload, "Upload files to you MEGA account", "mega");
+        else {
+            out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+            item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+            mega_ext->string_upload = g_strdup(out);
+            g_free(out);
+        }
+
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
         l_out = g_list_append(l_out, item);
@@ -173,8 +260,15 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
     // if there any synced files / folders selected
     if (syncedFiles || syncedFolders) {
         NautilusMenuItem *item;
-        out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
-        item = nautilus_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
+
+        if (mega_ext->string_getlink)
+            item = nautilus_menu_item_new("MEGAExtension::get_mega_link", mega_ext->string_getlink, "Get MEGA link", "mega");
+        else {
+            out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
+            item = nautilus_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
+            mega_ext->string_getlink = g_strdup(out);
+            g_free(out);
+        }
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
         l_out = g_list_append(l_out, item);
@@ -191,7 +285,6 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     GFile *fp;
     FileState state;
 
-    g_debug("mega_ext_update_file_info");
 
     fp = nautilus_file_info_get_location(file);
     if (!fp)
@@ -201,8 +294,20 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     if (!path)
         return NAUTILUS_OPERATION_COMPLETE;
 
+
+    // process items located in sync folders
+    if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path)) {
+        g_free(path);
+        return NAUTILUS_OPERATION_COMPLETE;
+    }
+    g_debug("mega_ext_update_file_info %s", path);
+
     state = mega_ext_client_get_path_state(mega_ext, path);
+    g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));
     g_free(path);
+
+    // reset
+    nautilus_file_info_invalidate_extension_info(file);
 
     if (state == FILE_ERROR || state == FILE_NOTFOUND)
         return NAUTILUS_OPERATION_COMPLETE;

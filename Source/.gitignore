@@ -12,4 +12,4 @@ qrc_*
 MEGASync/MEGAsync
 MEGACrashAnalyzer/MEGACrashAnalyzer
 curl
-
+.*.py
