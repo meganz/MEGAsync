@@ -727,21 +727,25 @@ void MegaApplication::showInfoDialog()
 {
     if(infoDialog)
     {
-        QRect screenGeometry = QApplication::desktop()->availableGeometry();
-        QPoint cursor = QCursor::pos();
-        int posx, posy;
-        if(cursor.x() > (screenGeometry.right()/2))
-            posx = screenGeometry.right() - 400 - 2;
-        else
-            posx = screenGeometry.left() + 2;
+        if(!infoDialog->isVisible())
+        {
+            QRect screenGeometry = QApplication::desktop()->availableGeometry();
+            QPoint cursor = QCursor::pos();
+            int posx, posy;
+            if(cursor.x() > (screenGeometry.right()/2))
+                posx = screenGeometry.right() - 400 - 2;
+            else
+                posx = screenGeometry.left() + 2;
 
-        if(cursor.y() > (screenGeometry.bottom()/2))
-            posy = screenGeometry.bottom() - 545 - 2;
-        else
-            posy = screenGeometry.top() + 2;
+            if(cursor.y() > (screenGeometry.bottom()/2))
+                posy = screenGeometry.bottom() - 545 - 2;
+            else
+                posy = screenGeometry.top() + 2;
 
-        infoDialog->move(posx, posy);
-        infoDialog->show();
+            infoDialog->move(posx, posy);
+            infoDialog->show();
+        }else
+            infoDialog->hide();
     }
 }
 
