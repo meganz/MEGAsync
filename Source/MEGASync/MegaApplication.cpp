@@ -193,6 +193,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateTask = NULL;
     multiUploadFileDialog = NULL;
     exitDialog = NULL;
+    notificator = NULL;
 }
 
 MegaApplication::~MegaApplication()
@@ -272,6 +273,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
+    notificator = new Notificator(applicationName(), trayIcon, NULL);
     changeProxyAction = new QAction(tr("Settings"), this);
     connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
     initialExitAction = new QAction(tr("Exit"), this);
@@ -762,10 +764,14 @@ void MegaApplication::unlink()
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
-    if(trayIcon)
+    if(notificator)
     {
+        #ifdef __APPLE__
+            if(infoDialog && infoDialog->isVisible()) infoDialog->hide();
+        #endif
         lastTrayMessage = message;
-        trayIcon->showMessage(title, message, QSystemTrayIcon::Information);
+        notificator->notify(Notificator::Information, title, message,
+                                    QIcon(QString::fromUtf8("://images/app_512.png")));
     }
     else QMessageBox::information(NULL, title, message);
 }
@@ -773,26 +779,36 @@ void MegaApplication::showInfoMessage(QString message, QString title)
 void MegaApplication::showWarningMessage(QString message, QString title)
 {
     if(!preferences->showNotifications()) return;
-    if(trayIcon)
+    if(notificator)
     {
         lastTrayMessage = message;
-        trayIcon->showMessage(title, message, QSystemTrayIcon::Warning);
+        notificator->notify(Notificator::Warning, title, message,
+                                    QIcon(QString::fromUtf8("://images/app_512.png")));
     }
     else QMessageBox::warning(NULL, title, message);
 }
 
 void MegaApplication::showErrorMessage(QString message, QString title)
 {
-    QMessageBox::critical(NULL, title, message);
+    if(notificator)
+    {
+        #ifdef __APPLE__
+            if(infoDialog && infoDialog->isVisible()) infoDialog->hide();
+        #endif
+        notificator->notify(Notificator::Critical, title, message,
+        QIcon(QString::fromUtf8("://images/app_512.png")));
+    }
+    else QMessageBox::critical(NULL, title, message);
 }
 
 void MegaApplication::showNotificationMessage(QString message, QString title)
 {
     if(!preferences->showNotifications()) return;
-    if(trayIcon)
+    if(notificator)
     {
         lastTrayMessage = message;
-        trayIcon->showMessage(title, message, QSystemTrayIcon::Information, 8000);
+        notificator->notify(Notificator::Information, title, message,
+                                    QIcon(QString::fromUtf8("://images/app_512.png")));
     }
 }
 

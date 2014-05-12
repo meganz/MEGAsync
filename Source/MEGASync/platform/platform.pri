@@ -1,7 +1,8 @@
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
-HEADERS  +=  $$PWD/Platform.h
+SOURCES += $$PWD/notificator.cpp
+HEADERS +=  $$PWD/Platform.h $$PWD/notificator.h
 
 win32 {
     SOURCES +=	$$PWD/win/WindowsPlatform.cpp \
@@ -17,6 +18,7 @@ win32 {
 }
 
 unix:!macx {
+    QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
         $$PWD/linux/ExtServer.cpp \
         $$PWD/linux/NotifyServer.cpp
@@ -24,6 +26,7 @@ unix:!macx {
         $$PWD/linux/ExtServer.h \
         $$PWD/linux/NotifyServer.h
 
+    DEFINES += USE_DBUS
     # do not install desktop files if no_desktop is defined,
     # make build tool take care of these files
     !contains(DEFINES, no_desktop) {
@@ -63,13 +66,18 @@ unix:!macx {
 macx {
     SOURCES += $$PWD/macx/MacXPlatform.cpp
     HEADERS += $$PWD/macx/MacXPlatform.h \
-        $$PWD/macx/MacXFunctions.h
+        $$PWD/macx/MacXFunctions.h \
+        $$PWD/macx/macnotificationhandler.h \
+        $$PWD/macx/NotificationDelegate.h
 
     OBJECTIVE_SOURCES += \
-            $$PWD/macx/MacXFunctions.mm
+            $$PWD/macx/MacXFunctions.mm \
+            $$PWD/macx/macnotificationhandler.mm \
+            $$PWD/macx/NotificationDelegate.mm
 
     LIBS += -framework Cocoa
 }
+
 
 
 
