@@ -12,12 +12,14 @@
 
 #include "MegaApplication.h"
 #include "ExtServer.h"
+#include "NotifyServer.h"
 
 class LinuxPlatform
 {
 
 private:
     static ExtServer *ext_server;
+    static NotifyServer *notify_server;
     static QString set_icon;
     static QString custom_icon;
     static QString remove_icon;
