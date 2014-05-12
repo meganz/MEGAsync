@@ -1,6 +1,7 @@
 #include "LinuxPlatform.h"
 
 ExtServer *LinuxPlatform::ext_server = NULL;
+NotifyServer *LinuxPlatform::notify_server = NULL;
 
 static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
 QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
@@ -11,7 +12,6 @@ QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor
 void LinuxPlatform::initialize(int argc, char *argv[])
 {
 
-
 }
 
 bool LinuxPlatform::enableTrayIcon(QString executable)
@@ -21,7 +21,8 @@ bool LinuxPlatform::enableTrayIcon(QString executable)
 
 void LinuxPlatform::notifyItemChange(QString path)
 {
-//cout << "notifyItemChange " << path.toStdString().c_str() << endl;
+    if (notify_server)
+        notify_server->notifyItemChange(path);
 }
 
 // enable or disable MEGASync launching at startup
@@ -68,17 +69,21 @@ void LinuxPlatform::showInFolder(QString pathIn)
 
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    if(ext_server)
-        return;
-    ext_server = new ExtServer(receiver);
+    if (!ext_server)
+        ext_server = new ExtServer(receiver);
+    if (!notify_server)
+        notify_server = new NotifyServer();
 }
 
 void LinuxPlatform::stopShellDispatcher()
 {
-    if(ext_server)
-    {
+    if(ext_server) {
         delete ext_server;
         ext_server = NULL;
+    }
+    if(notify_server) {
+        delete notify_server;
+        notify_server = NULL;
     }
 }
 
@@ -86,11 +91,15 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
     if(QFile(custom_icon).exists())
         QProcess::startDetached(set_icon.arg(syncPath).arg(custom_icon));
+    if (notify_server)
+        notify_server->notifySyncAdd(syncPath);
 }
 
 void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
     QProcess::startDetached(remove_icon.arg(syncPath));
+    if (notify_server)
+        notify_server->notifySyncDel(syncPath);
 }
 
 QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)

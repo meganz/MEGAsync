@@ -1,28 +1,21 @@
 #include "ExtServer.h"
 #include <sys/types.h>
 #include <pwd.h>
+#include <unistd.h>
 #include "control/Utilities.h"
+
+using namespace mega;
 
 ExtServer::ExtServer(MegaApplication *app): QObject(),
     m_localServer(0)
 {
-    QString sockPath;
-    struct passwd *uinfo;
-
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)));
 
-    // get the current user information
-    uinfo = getpwuid(getuid());
-    if (!uinfo) {
-        LOG("Failed to getpwuid() !");
-        return;
-    }
-
     // construct local socket path
-    sockPath = QDir::tempPath() + QDir::separator() + QString::fromAscii(uinfo->pw_name) + QString::fromAscii(".mega.sock");
+    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("mega.socket");
 
-    LOG("Starting Ext server");
+    LOG_info << "Starting Ext server";
 
     // make sure previous socket file is removed
     QLocalServer::removeServer(sockPath);
@@ -32,7 +25,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
     // start listening for new connections
     if (!m_localServer->listen(sockPath)) {
         // XXX: failed to open local socket, retry ?
-        LOG("Failed to listen()");
+        LOG_err << "Failed to listen()";
         return;
     }
 
@@ -42,6 +35,9 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 ExtServer::~ExtServer()
 {
     qDeleteAll(m_clients);
+    QLocalServer::removeServer(sockPath);
+    m_localServer->close();
+    delete m_localServer;
 }
 
 // a new connection is available
@@ -50,7 +46,7 @@ void ExtServer::acceptConnection()
     while (m_localServer->hasPendingConnections()) {
         QLocalSocket *client = m_localServer->nextPendingConnection();
 
-        LOG("Incoming connection");
+        LOG_debug << "Incoming connection";
         if (!client)
             return;
 
@@ -70,7 +66,7 @@ void ExtServer::onClientDisconnected()
     m_clients.removeAll(client);
     client->deleteLater();
 
-    LOG("Client disconnected");
+    LOG_debug << "Client disconnected";
 }
 
 // client sends some data
@@ -81,7 +77,7 @@ void ExtServer::onClientData()
         return;
 
     if (m_clients.indexOf(client) == -1 ) {
-        LOG("QLocalSocket not found !");
+        LOG_err << "QLocalSocket not found !";
         return;
     }
 
@@ -168,7 +164,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             QFileInfo file(filePath);
             if(file.exists())
             {
-                LOG("Adding file to upload queue");
+                LOG_debug << "Adding file to upload queue";
                 uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
             break;

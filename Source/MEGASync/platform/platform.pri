@@ -18,9 +18,11 @@ win32 {
 
 unix:!macx {
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
-        $$PWD/linux/ExtServer.cpp
+        $$PWD/linux/ExtServer.cpp \
+        $$PWD/linux/NotifyServer.cpp
     HEADERS += $$PWD/linux/LinuxPlatform.h \
-        $$PWD/linux/ExtServer.h
+        $$PWD/linux/ExtServer.h \
+        $$PWD/linux/NotifyServer.h
 
     # do not install desktop files if no_desktop is defined,
     # make build tool take care of these files
