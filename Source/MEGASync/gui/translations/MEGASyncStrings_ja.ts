@@ -590,7 +590,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Read error</source>
-        <translation>エラーを読み込む</translation>
+        <translation>エラーを読み取る</translation>
     </message>
     <message>
         <source>Invalid application key</source>
@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>オーバーレイを無効にする</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>全体の再スキャンを強制実行する</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>全体のスキャン</translation>
     </message>
     <message>

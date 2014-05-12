@@ -494,7 +494,8 @@ void InfoDialog::cancelCurrentDownload()
 
 void InfoDialog::on_bSettings_clicked()
 {
-	app->openSettings();
+    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
+    app->showTrayMenu(&p);
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()

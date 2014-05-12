@@ -80,6 +80,7 @@ public:
     void updateUserStats();
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString());
     void checkForUpdates();
+    void showTrayMenu(QPoint *point = NULL);
 
 signals:
     void startUpdaterThread();
@@ -131,8 +132,8 @@ protected:
     QMenu *trayMenu;
     QAction *exitAction;
     QAction *settingsAction;
-    QAction *pauseAction;
-    QAction *resumeAction;
+    //QAction *pauseAction;
+    //QAction *resumeAction;
 	QAction *importLinksAction;
     QAction *uploadAction;
     QAction *aboutAction;
@@ -182,6 +183,7 @@ protected:
     bool updateBlocked;
     long long lastExit;
     bool finished;
+    bool updateAvailable;
 };
 
 #endif // MEGAAPPLICATION_H

@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Вимкнути накладання піктограм</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Примусове повторне сканування</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Повне сканування</translation>
     </message>
     <message>

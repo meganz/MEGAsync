@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Исклучи икони на преклоп</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Форсирај целосен ре-скен </translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Целосен скен </translation>
     </message>
     <message>

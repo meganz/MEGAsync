@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Išjungti persidengiančias piktogramas</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Inicijuoti pilną skenavimą</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Pilnas skenavimas</translation>
     </message>
     <message>

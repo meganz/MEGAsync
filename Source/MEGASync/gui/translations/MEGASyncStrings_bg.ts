@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Изключи наслагващи икони</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Принудително пълно повторно сканиране</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Пълно сканиране</translation>
     </message>
     <message>

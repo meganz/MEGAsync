@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>בטל סמלי כיסוי</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>אכף סריקה כוללת</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>סריקה כוללת</translation>
     </message>
     <message>

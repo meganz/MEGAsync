@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Keelake rakenduse ikoonid</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Sooritage põhjalik otsing uuesti</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Põhjalik otsing</translation>
     </message>
     <message>
