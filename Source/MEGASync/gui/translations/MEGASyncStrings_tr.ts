@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Bindirme simgelerini devre dışı bırak</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Tam taramaya zorla</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Tam tarama</translation>
     </message>
     <message>

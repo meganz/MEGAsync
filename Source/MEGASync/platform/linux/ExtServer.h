@@ -5,8 +5,6 @@
 #include "sdk/megaapi.h"
 #include "control/Preferences.h"
 
-using namespace mega;
-
 typedef enum {
    STRING_UPLOAD = 0,
    STRING_GETLINK = 1,
@@ -23,7 +21,6 @@ class ExtServer: public QObject
     virtual ~ExtServer();
 
  protected:
-    MegaApplication *app;
     QLocalServer *m_localServer;
 	QQueue<QString> uploadQueue;
     QQueue<QString> exportQueue;
@@ -33,6 +30,7 @@ class ExtServer: public QObject
     void onClientData();
     void onClientDisconnected();
  private:
+    QString sockPath;
     QList<QLocalSocket *> m_clients;
     const char *GetAnswerToRequest(const char *buf);
 

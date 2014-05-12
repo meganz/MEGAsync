@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Atslēgt pārklājuma ikonas</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Veikt piespiedu pilno skenēšanu</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Pilna skenēšana</translation>
     </message>
     <message>

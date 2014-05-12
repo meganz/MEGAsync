@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Desativar ícones sobrepostos</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Forçar a examinação total</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Examinação total</translation>
     </message>
     <message>

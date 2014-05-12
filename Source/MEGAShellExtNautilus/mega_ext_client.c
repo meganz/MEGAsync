@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <string.h>
 
 const gchar OP_PATH_STATE  = 'P'; //Path state
 const gchar OP_INIT        = 'I'; //Init operation
@@ -20,21 +21,21 @@ static gboolean mega_ext_client_reconnect(MEGAExt *mega_ext)
 {
     int len;
     struct sockaddr_un remote;
-    gchar *sock_path, *sock_file;
-    const gchar sock_path_ending[] = ".mega.sock";
+    gchar *sock_path;
+    const gchar sock_file[] = "mega.socket";
+    // XXX: current path MEGASync uses to store private data
+    const gchar sock_path_hardcode[] = ".local/share/data/Mega Limited/MEGAsync";
 
     if ((mega_ext->srv_sock = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
         g_warning("socket() failed");
         goto failed;
     }
 
-    sock_file = g_strdup_printf ("%s%s", g_get_user_name(), sock_path_ending);
-    sock_path = g_build_filename(g_get_tmp_dir(), sock_file, NULL);
-    g_free (sock_file);
+    sock_path = g_build_filename(g_get_home_dir(), sock_path_hardcode, sock_file, NULL);
 
     remote.sun_family = AF_UNIX;
-    strcpy(remote.sun_path, sock_path);
-    g_free (sock_path);
+    strncpy(remote.sun_path, sock_path, sizeof(remote.sun_path));
+    g_free(sock_path);
 
     g_debug("Connecting to: %s", remote.sun_path);
 
@@ -65,8 +66,11 @@ static void mega_ext_client_disconnect(MEGAExt *mega_ext)
 {
     g_debug("Client disconnected");
 
-    if (mega_ext->chan)
+    if (mega_ext->chan) {
         g_io_channel_shutdown(mega_ext->chan, FALSE, NULL);
+        g_io_channel_unref(mega_ext->chan);
+        mega_ext->chan = NULL;
+    }
 
     if (mega_ext->srv_sock > 0)
         close(mega_ext->srv_sock);
@@ -80,9 +84,11 @@ static gchar *mega_ext_client_send_request(MEGAExt *mega_ext, gchar type, const 
     gchar *out = NULL;
     gchar *tmp;
     gsize bytes_written;
-    GError *error = NULL;
+    GError *error;
     GIOStatus status;
     gint num_retries;
+
+    g_debug("Sending request: %s ", in);
 
     // try to send request several times
     for (num_retries = 0; num_retries < mega_ext->num_retries; num_retries++) {
@@ -96,6 +102,7 @@ static gchar *mega_ext_client_send_request(MEGAExt *mega_ext, gchar type, const 
         // format request string
         tmp = g_strdup_printf("%c:%s", type, in);
 
+        error = NULL;
         // try to send request
         status = g_io_channel_write_chars(mega_ext->chan, tmp, strlen(tmp), &bytes_written, &error);
         if (status != G_IO_STATUS_NORMAL || error) {
@@ -151,13 +158,17 @@ gchar *mega_ext_client_get_string(MEGAExt *mega_ext, int stringID, int numFiles,
 FileState mega_ext_client_get_path_state(MEGAExt *mega_ext, const gchar *path)
 {
     gchar *out;
+    FileState st;
 
     out = mega_ext_client_send_request(mega_ext, OP_PATH_STATE, path);
 
     if (!out)
         return FILE_ERROR;
 
-    return out[0]-'0';
+    st = out[0]-'0';
+    g_free(out);
+
+    return st;
 }
 
 gboolean mega_ext_client_paste_link(MEGAExt *mega_ext, const gchar *path)
@@ -168,6 +179,7 @@ gboolean mega_ext_client_paste_link(MEGAExt *mega_ext, const gchar *path)
 
     if (!out)
         return FALSE;
+    g_free(out);
 
     return TRUE;
 }
@@ -180,6 +192,7 @@ gboolean mega_ext_client_upload(MEGAExt *mega_ext, const gchar *path)
 
     if (!out)
         return FALSE;
+    g_free(out);
 
     return TRUE;
 }
@@ -192,6 +205,7 @@ gboolean mega_ext_client_end_request(MEGAExt *mega_ext)
 
     if (!out)
         return FALSE;
+    g_free(out);
 
     return TRUE;
 }

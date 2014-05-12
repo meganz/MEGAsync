@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>ओवरले माउस को अक्षम</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>एक पूर्ण रीस्कैन मजबूर</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>पूर्ण स्कैन</translation>
     </message>
     <message>

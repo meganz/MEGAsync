@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Alisin ang overlay icons</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Ipwersa ang buong pagrescan</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Buong rescan</translation>
     </message>
     <message>

@@ -5,10 +5,12 @@ TEMPLATE = lib
 
 SOURCES += mega_ext_module.c \
     mega_ext_client.c \
+    mega_notify_client.c \
     MEGAShellExt.c
 
 HEADERS += MEGAShellExt.h \
-    mega_ext_client.h
+    mega_ext_client.h \
+    mega_notify_client.h
 
 CONFIG += link_pkgconfig
 PKGCONFIG += libnautilus-extension

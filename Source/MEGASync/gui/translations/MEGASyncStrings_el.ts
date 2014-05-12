@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Απενεργοποίηση επικάλυμένων εικονιδίων</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Πραγματοποιήστε μια πλήρη επανάληψη της σάρωσης</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Πλήρης σάρωση</translation>
     </message>
     <message>

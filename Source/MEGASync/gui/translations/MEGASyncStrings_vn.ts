@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Vô hiệu các biểu tượng nổi</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Buộc tiến hành quét toàn bộ dữ liệu</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Quét toàn bộ</translation>
     </message>
     <message>

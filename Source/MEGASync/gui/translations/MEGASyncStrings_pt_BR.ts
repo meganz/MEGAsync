@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Desativar ícones</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Forçar análise completa</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Análise completa</translation>
     </message>
     <message>

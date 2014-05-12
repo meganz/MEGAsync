@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>오버레이 아이콘 해제</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>강제로 전체 재검색하기</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>전체 검색</translation>
     </message>
     <message>

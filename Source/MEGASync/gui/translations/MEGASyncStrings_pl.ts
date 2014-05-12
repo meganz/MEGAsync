@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Wyłącz nakładanie ikon</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Wymuś pełne skanowanie</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Pełne skanowanie</translation>
     </message>
     <message>

@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Desgaitu gainazaleko ikonoak</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Berreskaneaketa behartu</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Eskaneaketa osoa</translation>
     </message>
     <message>

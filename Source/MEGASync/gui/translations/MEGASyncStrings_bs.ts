@@ -1098,11 +1098,11 @@ when the application starts again.</source>
         <translation>Isključi preklapajuće ikonice</translation>
     </message>
     <message>
-        <source>Force a full check</source>
+        <source>Force a full scan</source>
         <translation>Omogući puno re-skeniranje</translation>
     </message>
     <message>
-        <source>Full check</source>
+        <source>Full scan</source>
         <translation>Puno skeniranje</translation>
     </message>
     <message>
