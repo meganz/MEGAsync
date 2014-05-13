@@ -384,11 +384,11 @@ Vistiek išeiti?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pauzė</translation>
+        <translation type="obsolete">Pauzė</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Tęsti</translation>
+        <translation type="obsolete">Tęsti</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.
     <message>
         <source>Upload files/folders</source>
         <translation>Įkelti failus/aplankus</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Ar jūs dabar norite paleisti MEGAsync iš naujo?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Įdiegti atnaujinimą</translation>
     </message>
 </context>
 <context>

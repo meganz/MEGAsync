@@ -384,11 +384,11 @@ Keluar juga?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Jeda</translation>
+        <translation type="obsolete">Jeda</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Sambung</translation>
+        <translation type="obsolete">Sambung</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Sila cuba lagi. Jika masalah berterusan sila hubungi bug@mega.co.nz</translation
     <message>
         <source>Upload files/folders</source>
         <translation>Muat naik fail/folder</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Adakah anda ingin memulakan semula MEGAsync sekarang?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Pasang kemaskini</translation>
     </message>
 </context>
 <context>

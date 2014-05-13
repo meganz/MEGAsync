@@ -384,11 +384,11 @@ Verlaat in elk geval?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Breek</translation>
+        <translation type="obsolete">Breek</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Hervat</translation>
+        <translation type="obsolete">Hervat</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please try again. If the problem persists please contact bug@mega.co.nz</transla
     <message>
         <source>Upload files/folders</source>
         <translation>Upload files/folders</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Installeer opdatering</translation>
     </message>
 </context>
 <context>
