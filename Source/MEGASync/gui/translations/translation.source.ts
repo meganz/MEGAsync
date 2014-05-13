@@ -384,11 +384,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation>[$1647]</translation>
+        <translation type="obsolete">[$1647]</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>[$1649]</translation>
+        <translation type="obsolete">[$1649]</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload files/folders</source>
         <translation>[$2013]</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>XXXXX</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>XXXXX</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 [$2012]
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>[$1904]</translation>
     </message>
 </context>
 <context>
