@@ -384,11 +384,11 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pozastavit</translation>
+        <translation type="obsolete">Pozastavit</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Pokračovat</translation>
+        <translation type="obsolete">Pokračovat</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     <message>
         <source>Upload files/folders</source>
         <translation>Nahrát soubory nebo složky</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Chcete restartovat MEGAsync nyní?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Nainstalovat aktualizaci</translation>
     </message>
 </context>
 <context>

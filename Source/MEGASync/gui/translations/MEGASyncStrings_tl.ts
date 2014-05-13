@@ -384,11 +384,11 @@ Umalis na?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Itigil</translation>
+        <translation type="obsolete">Itigil</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>I-resume</translation>
+        <translation type="obsolete">I-resume</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     <message>
         <source>Upload files/folders</source>
         <translation>I-upload ang files/folders</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Gusto mo bang irestart ang MEGAsync?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>I-install ang update</translation>
     </message>
 </context>
 <context>

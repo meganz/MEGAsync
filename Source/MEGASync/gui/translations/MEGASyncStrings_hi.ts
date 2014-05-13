@@ -384,11 +384,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation>ठहराव</translation>
+        <translation type="obsolete">ठहराव</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>फिर से शुरू</translation>
+        <translation type="obsolete">फिर से शुरू</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload files/folders</source>
         <translation>फ़ाइलें / फ़ोल्डर अपलोड करें</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 आप अब MEGAsync पुनः आरंभ करना चाहते हैं?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>अद्यतन स्थापित करें</translation>
     </message>
 </context>
 <context>

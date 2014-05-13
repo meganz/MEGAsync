@@ -384,11 +384,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation>დაპაუზება</translation>
+        <translation type="obsolete">დაპაუზება</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>გაგრძელება</translation>
+        <translation type="obsolete">გაგრძელება</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload files/folders</source>
         <translation>ფაილების/ფოლდერების ატვირთვა</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 გსურთ რომ გადატვირთოთ MEGAsync-ი ახლავე?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>განახლების ინსტალაცია</translation>
     </message>
 </context>
 <context>

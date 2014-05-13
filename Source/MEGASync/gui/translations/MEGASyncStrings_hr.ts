@@ -384,11 +384,11 @@ Ipak izaći?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pauza</translation>
+        <translation type="obsolete">Pauza</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Nastavak</translation>
+        <translation type="obsolete">Nastavak</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Molim pokušajte ponovno. Ako se problem nastavi molimo da nas kontaktirate na b
     <message>
         <source>Upload files/folders</source>
         <translation>Upload datoteka/mapa</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Želite li ponovno pokrenuti MEGAsync sada?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Instaliraj ažuriranje</translation>
     </message>
 </context>
 <context>

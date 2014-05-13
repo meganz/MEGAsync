@@ -384,11 +384,11 @@ Välju niikuinii?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pausi</translation>
+        <translation type="obsolete">Pausi</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Taasta</translation>
+        <translation type="obsolete">Taasta</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     <message>
         <source>Upload files/folders</source>
         <translation>Lae üles faile/kaustu</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Kas soovite praegu taaskäivitada MEGAsünki?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Paigalda uuendus</translation>
     </message>
 </context>
 <context>

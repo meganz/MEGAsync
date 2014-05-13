@@ -384,11 +384,11 @@ Irten nolanahi ere?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Etendu</translation>
+        <translation type="obsolete">Etendu</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Jarraitu</translation>
+        <translation type="obsolete">Jarraitu</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     <message>
         <source>Upload files/folders</source>
         <translation>Fitxategiak/karpetak igo</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 MEGAsync berrabiarazi nahi al duzu orain?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Eguneraketa instalatu</translation>
     </message>
 </context>
 <context>
