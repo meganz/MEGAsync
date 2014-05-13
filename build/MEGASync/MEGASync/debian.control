@@ -11,7 +11,8 @@ Build-Depends:  debhelper,
                 zlib1g-dev,
                 wget,
                 dh-autoreconf,
-                cdbs
+                cdbs,
+                libqt4-dbus
 
 Package: megasync
 Architecture: any

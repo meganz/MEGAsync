@@ -7,17 +7,19 @@ Group:		Applications/Others
 Url:		https://mega.co.nz
 Source0:	megasync_%{version}.tar.gz
 
-BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, libcryptopp-devel
 BuildRequires: update-desktop-files
+BuildRequires: libqt4, libqt4-x11
 %endif
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora}
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
+BuildRequires: qt, qt-x11
 %endif
 
 %description

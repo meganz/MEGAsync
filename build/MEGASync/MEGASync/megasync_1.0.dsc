@@ -5,7 +5,7 @@ Architecture: any
 Version: 1.0
 Maintainer: Javier Serrano <js@mega.co.nz>
 Homepage: https://mega.co.nz/#sync
-Build-Depends: debhelper, libqt4-dev, libcrypto++-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs
+Build-Depends: debhelper, libqt4-dev, libqt4-dbus, libcrypto++-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs
 Package-List:
  megasync deb gnome optional
 Files:
