@@ -1,4 +1,4 @@
-MEGA Sync Client 
+MEGA Sync Client
 ================
 
 Easy automated syncing between your computers and your MEGA cloud drive.
@@ -17,7 +17,7 @@ Requirements:
 * QT 4.0
 * Qt Creator
 
-### Linux compilation
+## Linux compilation
 
 Preparation:
 ```
@@ -39,3 +39,6 @@ qmake MEGA.pro
 lrelease MEGASync/MEGASync.pro
 make
 ```
+
+## [End user installation instructions](INSTALL.md)
+
