@@ -40,5 +40,6 @@ lrelease MEGASync/MEGASync.pro
 make
 ```
 
-## [End user installation instructions](INSTALL.md)
+## End user installation instructions
 
+* [Linux](INSTALL.md)
