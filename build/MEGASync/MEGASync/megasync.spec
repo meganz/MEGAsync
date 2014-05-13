@@ -8,7 +8,6 @@ Url:		https://mega.co.nz
 Source0:	megasync_%{version}.tar.gz
 
 BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
-BuildRequires: fdupes
 BuildRequires: hicolor-icon-theme
 
 %if 0%{?suse_version}
@@ -64,8 +63,6 @@ desktop-file-install \
     --dir %{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
-%fdupes %{buildroot}%{_datadir}
-%fdupes %{buildroot}%{_libdir}
 
 %post
 %if 0%{?suse_version} >= 1140
