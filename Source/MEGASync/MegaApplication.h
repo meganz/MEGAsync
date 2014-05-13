@@ -120,6 +120,8 @@ public slots:
     void onDupplicateUpload(QString localPath, QString name, long long handle);
     void onInstallUpdateClicked();
     void showInfoDialog();
+    bool anUpdateIsAvailable();
+    void triggerInstallUpdate();
 
 protected:
     void createTrayIcon();

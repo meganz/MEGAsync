@@ -1084,7 +1084,10 @@ void SettingsDialog::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthe
 
 void SettingsDialog::on_bUpdate_clicked()
 {
-    app->checkForUpdates();
+    if(ui->bUpdate->text() == tr("Check for updates"))
+        app->checkForUpdates();
+    else
+        app->triggerInstallUpdate();
 }
 
 void SettingsDialog::on_bFullCheck_clicked()
@@ -1095,6 +1098,14 @@ void SettingsDialog::on_bFullCheck_clicked()
     {
         app->rebootApplication(false);
     }
+}
+
+void SettingsDialog::setUpdateAvailable(bool updateAvailable)
+{
+    if(updateAvailable)
+        ui->bUpdate->setText(tr("Install update"));
+    else
+        ui->bUpdate->setText(tr("Check for updates"));
 }
 
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText, int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :

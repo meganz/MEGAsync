@@ -485,8 +485,15 @@ void MegaApplication::loggedIn()
 
     //Show the tray icon
     createTrayIcon();
+
+#ifdef WIN32
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
     else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
+#else
+    if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+    else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+#endif
+
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     infoDialog = new InfoDialog(this);
@@ -749,6 +756,16 @@ void MegaApplication::showInfoDialog()
         }else
             infoDialog->hide();
     }
+}
+
+bool MegaApplication::anUpdateIsAvailable()
+{
+    return updateAvailable;
+}
+
+void MegaApplication::triggerInstallUpdate()
+{
+    emit installUpdate();
 }
 
 void MegaApplication::unlink()
@@ -1183,8 +1200,17 @@ void MegaApplication::onUpdateAvailable(bool requested)
         updateAction->setEnabled(true);
     }
 
+    if(settingsDialog)
+        settingsDialog->setUpdateAvailable(true);
+
     if(requested)
+    {
+#ifdef WIN32
         showInfoMessage(tr("A new version of MEGAsync is available! Click on this message to install it"));
+#else
+        showInfoMessage(tr("A new version of MEGAsync is available!"));
+#endif
+    }
 }
 
 void MegaApplication::onInstallingUpdate(bool requested)
@@ -1268,7 +1294,7 @@ void MegaApplication::onMessageClicked()
 {
     LOG("onMessageClicked");
     if(lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
-        emit installUpdate();
+        triggerInstallUpdate();
     else
         trayIconActivated(QSystemTrayIcon::Trigger);
 }
@@ -1292,6 +1318,7 @@ void MegaApplication::openSettings()
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
+    settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->show();
 }
 
