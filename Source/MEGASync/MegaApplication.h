@@ -26,6 +26,8 @@
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
+class Notificator;
+
 class MegaApplication : public QApplication, public MegaListener
 {
     Q_OBJECT
@@ -173,6 +175,7 @@ protected:
 
     QThread *updateThread;
     UpdateTask *updateTask;
+    Notificator *notificator;
 
     bool reboot;
     bool syncActive;
