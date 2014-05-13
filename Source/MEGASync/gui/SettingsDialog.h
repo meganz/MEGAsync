@@ -38,6 +38,7 @@ public:
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
     void loadSettings();
+    void setUpdateAvailable(bool updateAvailable);
 
 public slots:
     void stateChanged();
