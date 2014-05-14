@@ -57,7 +57,7 @@ void NotifyServer::acceptConnection()
             for(int i=0; i<localFolders.size(); i++) {
                 QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
                 client->write("A");
-                client->write(c.toStdString().c_str());
+                client->write(c.toUtf8().constData());
                 client->write("\n");
             }
         } else {
@@ -89,7 +89,7 @@ void NotifyServer::sendToAll(const char *type, QString str)
     foreach(QLocalSocket *socket, m_clients)
         if (socket && socket->state() == QLocalSocket::ConnectedState) {
             socket->write(type);
-            socket->write(str.toStdString().c_str());
+            socket->write(str.toUtf8().constData());
             socket->write("\n");
             socket->flush();
         }
