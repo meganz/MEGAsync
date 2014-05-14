@@ -384,11 +384,11 @@ e puta ahakoa</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>e tu</translation>
+        <translation type="obsolete">e tu</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>timatahia</translation>
+        <translation type="obsolete">timatahia</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
     <message>
         <source>Upload files/folders</source>
         <translation>utaakehia nga konae/kopaki</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>utaina nga whakahou</translation>
     </message>
 </context>
 <context>

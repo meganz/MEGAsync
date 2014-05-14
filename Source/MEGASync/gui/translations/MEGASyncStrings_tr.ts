@@ -384,11 +384,11 @@ Yine de çıkılsın mı?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Duraklat</translation>
+        <translation type="obsolete">Duraklat</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Devam et</translation>
+        <translation type="obsolete">Devam et</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     <message>
         <source>Upload files/folders</source>
         <translation>Dosya/klasör yükle</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Güncellemeyi yükle</translation>
     </message>
 </context>
 <context>

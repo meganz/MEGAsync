@@ -384,11 +384,11 @@ Sortir de totes maneres?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pausa</translation>
+        <translation type="obsolete">Pausa</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Reprèn</translation>
+        <translation type="obsolete">Reprèn</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte
     <message>
         <source>Upload files/folders</source>
         <translation>Puja fitxers/carpetes</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Vols reiniciar el MEGAsync ara?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Instal·la l&apos;actualització</translation>
     </message>
 </context>
 <context>

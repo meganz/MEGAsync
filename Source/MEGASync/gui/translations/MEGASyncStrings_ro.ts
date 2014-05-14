@@ -384,11 +384,11 @@ Ieşi oricum?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pauză</translation>
+        <translation type="obsolete">Pauză</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Reia</translation>
+        <translation type="obsolete">Reia</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     <message>
         <source>Upload files/folders</source>
         <translation>Încarcă fişiere/foldere</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Doreşti să reporneşti MEGAsync acum?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Instalează actualizarea</translation>
     </message>
 </context>
 <context>

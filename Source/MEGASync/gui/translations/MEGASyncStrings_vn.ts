@@ -384,11 +384,11 @@ Bạn có cuyết định thoát chương trình hay không?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Dừng truyền tải</translation>
+        <translation type="obsolete">Dừng truyền tải</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Tiếp tục truyền tải</translation>
+        <translation type="obsolete">Tiếp tục truyền tải</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     <message>
         <source>Upload files/folders</source>
         <translation>Tải lên các tệp/thư mục</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Bạn có muốn khởi chạy lại MEGAsync ngay không?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Cài bản cập nhật</translation>
     </message>
 </context>
 <context>

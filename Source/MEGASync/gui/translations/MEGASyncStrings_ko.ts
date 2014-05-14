@@ -384,11 +384,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation>일시정지</translation>
+        <translation type="obsolete">일시정지</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>재개</translation>
+        <translation type="obsolete">재개</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload files/folders</source>
         <translation>파일/폴더 업로드</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 지금 메가싱크를 다시 시작할까요?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>업데이트 설치</translation>
     </message>
 </context>
 <context>

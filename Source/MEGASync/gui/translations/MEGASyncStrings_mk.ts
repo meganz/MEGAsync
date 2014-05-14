@@ -384,11 +384,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Паузирај </translation>
+        <translation type="obsolete">Паузирај </translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Продолжи</translation>
+        <translation type="obsolete">Продолжи</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload files/folders</source>
         <translation>Прикачи ги сите датотеки/папки</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Да ли сакаш да го рестартираш MEGAsync сега?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Инсталирај ја новата верзија</translation>
     </message>
 </context>
 <context>

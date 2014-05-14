@@ -384,11 +384,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation>พัก</translation>
+        <translation type="obsolete">พัก</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>ต่อ</translation>
+        <translation type="obsolete">ต่อ</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload files/folders</source>
         <translation>อัปโหลดไฟล์/โฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 คุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>ติดตั้ง</translation>
     </message>
 </context>
 <context>

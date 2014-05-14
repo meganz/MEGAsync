@@ -384,11 +384,11 @@ Akkor is kilép?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Megállítás</translation>
+        <translation type="obsolete">Megállítás</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Folytatás</translation>
+        <translation type="obsolete">Folytatás</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     <message>
         <source>Upload files/folders</source>
         <translation>Fájlok/mappák feltöltése</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Szeretné most újraindítani a MEGAsync-et?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Frissítés telepítése</translation>
     </message>
 </context>
 <context>

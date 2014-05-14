@@ -503,11 +503,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>XXXXX</translation>
+        <translation>[$2015]</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>XXXXX</translation>
+        <translation>[$2014]</translation>
     </message>
 </context>
 <context>

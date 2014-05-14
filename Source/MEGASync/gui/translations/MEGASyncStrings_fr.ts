@@ -384,11 +384,11 @@ Quitter quand même ?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Mettre en pause</translation>
+        <translation type="obsolete">Mettre en pause</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Reprendre</translation>
+        <translation type="obsolete">Reprendre</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     <message>
         <source>Upload files/folders</source>
         <translation>Uploader fichiers/dossiers</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Voulez-vous redémarrer MEGAsync maintenant ?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Installer la mise à jour</translation>
     </message>
 </context>
 <context>
