@@ -170,7 +170,7 @@ class MegaNode
 			TYPE_MAIL
 		};
 
-        MegaNode(const char *name, int type, m_off_t size, time_t ctime, time_t mtime, mega::handle nodehandle, string *nodekey, string *attrstring);
+        MegaNode(const char *name, int type, m_off_t size, m_time_t ctime, m_time_t mtime, mega::handle nodehandle, string *nodekey, string *attrstring);
         MegaNode(MegaNode *node);
         ~MegaNode();
 
@@ -181,8 +181,8 @@ class MegaNode
         const char* getName();
         const char *getBase64Handle();
         m_off_t getSize();
-        time_t getCreationTime();
-        time_t getModificationTime();
+        m_time_t getCreationTime();
+        m_time_t getModificationTime();
         mega::handle getHandle();
         string* getNodeKey();
         string* getAttrString();
@@ -201,8 +201,8 @@ class MegaNode
         int type;
         const char *name;
         m_off_t size;
-        time_t ctime;
-        time_t mtime;
+        m_time_t ctime;
+        m_time_t mtime;
         mega::handle nodehandle;
         string nodekey;
         string attrstring;
@@ -237,6 +237,34 @@ class MegaUser
 		const char *email;
 		int visibility;
 		time_t ctime;
+};
+
+class MegaShare
+{
+	public:
+		enum {
+			ACCESS_UNKNOWN = -1,
+			ACCESS_READ = 0,
+			ACCESS_READWRITE,
+			ACCESS_FULL,
+			ACCESS_OWNER
+		};
+
+		~MegaShare();
+		const char *getUser();
+		mega::handle getNodeHandle();
+		int getAccess();
+		int getTimestamp();
+        static MegaShare *fromShare(mega::handle nodehandle, mega::Share *share);
+
+	private:
+		MegaShare(mega::handle nodehandle, mega::Share *share);
+
+		mega::handle nodehandle;
+		const char *user;
+		int access;
+		m_time_t ts;
+
 };
 
 struct MegaFile : public mega::File
@@ -294,6 +322,21 @@ class UserList
 		int s;
 };
 
+class ShareList
+{
+	public:
+		ShareList();
+		ShareList(mega::Share** newlist, mega::handle *handlelist, int size);
+		virtual ~ShareList();
+
+		MegaShare* get(int i);
+		int size();
+
+	protected:
+		MegaShare** list;
+		int s;
+};
+
 //typedef ArrayWrapper<AccountBalance> BalanceList;
 //typedef ArrayWrapper<AccountSession> SessionList;
 //typedef ArrayWrapper<AccountPurchase> PurchaseList;
@@ -345,7 +388,7 @@ class MegaRequest
 		const char* getPassword() const;
 		const char* getNewPassword() const;
 		const char* getPrivateKey() const;
-		const char* getAccess() const;
+		int getAccess() const;
 		const char* getFile() const;
 		int getNumRetry() const;
 		int getNextRetryDelay() const;
@@ -364,7 +407,7 @@ class MegaRequest
     	void setPassword(const char* email);
     	void setNewPassword(const char* email);
 		void setPrivateKey(const char* privateKey);
-		void setAccess(const char* access);
+		void setAccess(int access);
 		void setNumRetry(int ds);
 		void setNextRetryDelay(int delay);
         void setPublicNode(MegaNode* publicNode);
@@ -392,7 +435,7 @@ class MegaRequest
 		const char* password;
 		const char* newPassword;
 		const char* privateKey;
-		const char* access;
+		int access;
 		const char* file;
 		int attrType;
         bool flag;
@@ -853,8 +896,8 @@ public:
     void copyNode(MegaNode* node, MegaNode *newParent, MegaRequestListener *listener = NULL);
     void renameNode(MegaNode* node, const char* newName, MegaRequestListener *listener = NULL);
     void remove(MegaNode* node, MegaRequestListener *listener = NULL);
-    void share(MegaNode *node, MegaUser* user, const char *level, MegaRequestListener *listener = NULL);
-    void share(MegaNode* node, const char* email, const char *level, MegaRequestListener *listener = NULL);
+    void share(MegaNode *node, MegaUser* user, int level, MegaRequestListener *listener = NULL);
+    void share(MegaNode* node, const char* email, int level, MegaRequestListener *listener = NULL);
 	void folderAccess(const char* megaFolderLink, MegaRequestListener *listener = NULL);
 	void importFileLink(const char* megaFileLink, MegaNode* parent, MegaRequestListener *listener = NULL);
     void importPublicNode(MegaNode *publicNode, MegaNode *parent, MegaRequestListener *listener = NULL);
@@ -876,8 +919,8 @@ public:
 	//Transfers
     void startUpload(const char* localPath, MegaNode *parent, MegaTransferListener *listener=NULL);
     void startUpload(const char* localPath, MegaNode* parent, const char* fileName, MegaTransferListener *listener = NULL);
-    void startDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
-    void startPublicDownload(MegaNode* node, const char* localFolder, MegaTransferListener *listener = NULL);
+    void startDownload(MegaNode* node, const char* localPath, MegaTransferListener *listener = NULL);
+    void startPublicDownload(MegaNode* node, const char* localPath, MegaTransferListener *listener = NULL);
     //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
     bool isRegularTransfer(MegaTransfer *transfer);
     void cancelTransfer(MegaTransfer *transfer, MegaRequestListener *listener=NULL);
@@ -919,11 +962,11 @@ public:
     MegaUser* getContact(const char* email);
 	NodeList *getInShares(MegaUser* user);
 	NodeList *getInShares();
-    //ShareList *getOutShares(Node *node);
-	const char *getAccess(MegaNode* node);
+    ShareList *getOutShares(MegaNode *node);
+	int getAccess(MegaNode* node);
     long long getSize(MegaNode *node);
 
-	MegaError checkAccess(MegaNode* node, const char *level);
+	MegaError checkAccess(MegaNode* node, int level);
 	MegaError checkMove(MegaNode* node, MegaNode* target);
 
     MegaNode *getRootNode();
