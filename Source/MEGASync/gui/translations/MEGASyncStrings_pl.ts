@@ -384,11 +384,11 @@ Wyjść?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Wstrzymaj</translation>
+        <translation type="obsolete">Wstrzymaj</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Wznów</translation>
+        <translation type="obsolete">Wznów</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     <message>
         <source>Upload files/folders</source>
         <translation>Wgraj pliki/katalogi</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Czy chcesz teraz zrestarować MEGAsync?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Zainstaluj</translation>
     </message>
 </context>
 <context>

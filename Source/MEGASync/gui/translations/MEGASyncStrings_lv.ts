@@ -384,11 +384,11 @@ Vienalga iziet?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pauze</translation>
+        <translation type="obsolete">Pauze</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Atsākt</translation>
+        <translation type="obsolete">Atsākt</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     <message>
         <source>Upload files/folders</source>
         <translation>Augšuplādet failus/mapes</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Vai tu vēlies restartēt MEGAsync tagad?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Uzstādīt atjauninājumu</translation>
     </message>
 </context>
 <context>

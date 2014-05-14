@@ -384,11 +384,11 @@ Avslutt uansett?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation type="obsolete">Pause</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Gjennoppta</translation>
+        <translation type="obsolete">Gjennoppta</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz<
     <message>
         <source>Upload files/folders</source>
         <translation>Last opp filer/mapper</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Vil du starte MEGAsync på nytt?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Installer oppdatering</translation>
     </message>
 </context>
 <context>

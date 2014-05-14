@@ -384,11 +384,11 @@ Afbryd alligevel?</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation type="obsolete">Pause</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Genoptag</translation>
+        <translation type="obsolete">Genoptag</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Prøv venligst igen. Hvis problemet fortsætter, så kontakt bug@mega.co.nz</tra
     <message>
         <source>Upload files/folders</source>
         <translation>Upload filer/mapper</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 Vil du genstarte MEGAsync nu?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Installér opdatering</translation>
     </message>
 </context>
 <context>

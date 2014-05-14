@@ -384,11 +384,11 @@ La eliminación de archivos/carpetas cuando la sincronización está detenida no
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pausa</translation>
+        <translation type="obsolete">Pausa</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Reanudar</translation>
+        <translation type="obsolete">Reanudar</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -500,6 +500,14 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     <message>
         <source>Upload files/folders</source>
         <translation>Subir archivos/carpetas</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>A new version of MEGAsync is available!</source>
+        <translation>A new version of MEGAsync is available!</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1122,10 @@ Do you want to restart MEGAsync now?</source>
 
 ¿Quieres reiniciar MEGAsync ahora?
 </translation>
+    </message>
+    <message>
+        <source>Install update</source>
+        <translation>Instalar actualización</translation>
     </message>
 </context>
 <context>
