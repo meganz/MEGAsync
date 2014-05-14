@@ -64,7 +64,7 @@ bool LinuxPlatform::isStartOnStartupActive()
 
 void LinuxPlatform::showInFolder(QString pathIn)
 {
-    QProcess::startDetached(QString::fromAscii("nautilus ") + pathIn);
+    QProcess::startDetached(QString::fromAscii("nautilus \"") + pathIn + QString::fromUtf8("\""));
 }
 
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
