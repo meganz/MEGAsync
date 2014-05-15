@@ -463,7 +463,7 @@ MegaUser *MegaUser::fromUser(mega::User *user)
 MegaShare::MegaShare(handle handle, mega::Share *share)
 {
 	this->nodehandle = handle;
-	this->user = MegaApi::strdup(share->user->email.c_str());
+	this->user = share->user ? MegaApi::strdup(share->user->email.c_str()) : NULL;
 	this->access = share->access;
 	this->ts = share->ts;
 }
