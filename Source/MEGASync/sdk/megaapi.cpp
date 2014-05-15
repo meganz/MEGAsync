@@ -1736,7 +1736,7 @@ void MegaApi::startDownload(handle nodehandle, const char* localPath, int connec
         string path(localPath);
         if((path.size()<2) || path.compare(0, 2, "\\\\"))
             path.insert(0, "\\\\?\\");
-        target = path.data();
+        localPath = path.data();
 #endif
 
         int c = localPath[strlen(localPath)-1];
@@ -3916,9 +3916,11 @@ Node* MegaApi::getChildNode(Node *parent, const char* name)
 	}
 
 	Node *result = NULL;
+    string nname = name;
+    fsAccess->normalize(&nname);
 	for (node_list::iterator it = parent->children.begin(); it != parent->children.end(); it++)
 	{
-		if (!strcmp(name,(*it)->displayname()))
+        if (!strcmp(nname.c_str(),(*it)->displayname()))
 		{
 			result = *it;
 			break;
@@ -4397,7 +4399,9 @@ void MegaApi::sendPendingRequests()
 
 			// generate fresh attribute object with the folder name
 			AttrMap attrs;
-			attrs.map['n'] = name;
+            string sname = name;
+            fsAccess->normalize(&sname);
+            attrs.map['n'] = sname;
 
 			// JSON-encode object and encrypt attribute string
 			attrs.getjson(&attrstring);
@@ -4451,7 +4455,10 @@ void MegaApi::sendPendingRequests()
 			if(!node || !newName) { e = API_EARGS; break; }
 
 			if (!client->checkaccess(node,FULL)) { e = API_EACCESS; break; }
-			node->attrs.map['n'] = string(newName);
+
+            string sname = newName;
+            fsAccess->normalize(&sname);
+            node->attrs.map['n'] = sname;
 			e = client->setattr(node);
 			break;
 		}
