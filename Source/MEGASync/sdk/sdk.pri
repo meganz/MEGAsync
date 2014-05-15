@@ -29,6 +29,7 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/crypto/cryptopp.cpp  \
     $$PWD/sdk/src/db/sqlite.cpp  \
     $$PWD/sdk/src/gfx/qt.cpp \
+    $$PWD/sdk/third_party/utf8proc/utf8proc.cpp \
     $$PWD/megaapi.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
@@ -86,6 +87,7 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/sdk/include/mega/crypto/cryptopp.h  \
 	    $$PWD/sdk/include/mega/db/sqlite.h  \
 	    $$PWD/sdk/include/mega/gfx/qt.h \
+            $$PWD/sdk/third_party/utf8proc/utf8proc.h \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
@@ -120,6 +122,7 @@ DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT MEGA_QT_LOGGING
 LIBS += -lcryptopp
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += $$PWD/sdk/include
+INCLUDEPATH += $$PWD/sdk/third_party/utf8proc
 
 !release {
     DEFINES += SQLITE_DEBUG DEBUG
