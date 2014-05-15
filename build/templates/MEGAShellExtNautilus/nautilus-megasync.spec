@@ -1,5 +1,5 @@
 Name:       nautilus-megasync
-Version:	1.0
+Version:    EXT_VERSION
 Release:	1%{?dist}
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware

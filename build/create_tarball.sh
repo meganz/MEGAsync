@@ -2,8 +2,10 @@
 
 # make sure the source tree is in "clean" state
 cd ../Source
-make distclean || true
-cd ../build
+make distclean 2> /dev/null || true
+cd MEGASync
+make distclean 2> /dev/null || true
+cd ../../build
 
 # download cURL
 export CURL_VERSION=7.32.0
@@ -15,18 +17,26 @@ if [ ! -f $CURL_SOURCE_FILE ]; then
     wget -c $CURL_DOWNLOAD_URL || exit 1
 fi
 
-# prepare archieve
-export MEGASYNC_VERSION=1.0
+# get current version
+MEGASYNC_VERSION=`grep -Po 'const QString MegaApplication::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../Source/MEGASync/MegaApplication.cpp`
 export MEGASYNC_NAME=megasync-$MEGASYNC_VERSION
 rm -rf $MEGASYNC_NAME.tar.gz
 rm -rf $MEGASYNC_NAME
+
+echo "MEGASync version: $MEGASYNC_VERSION"
+
+# fix version number in template files and copy to appropriate directories
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/megasync.spec > MEGASync/MEGASync/megasync.spec
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/megasync.dsc > MEGASync/MEGASync/megasync_$MEGASYNC_VERSION.dsc
+
+# create archive
 mkdir $MEGASYNC_NAME
 ln -s ../MEGASync/MEGASync/megasync.spec $MEGASYNC_NAME/megasync.spec
 ln -s ../../Source/configure $MEGASYNC_NAME/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
-tar cvzfh $MEGASYNC_NAME.tar.gz --exclude $MEGASYNC_NAME/MEGASync/sdk/sqlite3.c $MEGASYNC_NAME
+tar czfh $MEGASYNC_NAME.tar.gz --exclude $MEGASYNC_NAME/MEGASync/sdk/sqlite3.c --exclude Makefile --exclude '*.o' $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
 # transform arch name, to satisfy Debian requirements
@@ -35,15 +45,22 @@ mv $MEGASYNC_NAME.tar.gz MEGASync/MEGASync/megasync_$MEGASYNC_VERSION.tar.gz
 
 # make sure the source tree is in "clean" state
 cd ../Source/MEGAShellExtNautilus/
-make distclean || true
+make distclean 2> /dev/null || true
 cd ../../build
 
-export EXT_VERSION=1.0
+# extension uses the same version number as MEGASync app
+export EXT_VERSION=$MEGASYNC_VERSION
 export EXT_NAME=nautilus-megasync-$EXT_VERSION
 rm -rf $EXT_NAME.tar.gz
 rm -rf $EXT_NAME
+
+# fix version number in template files and copy to appropriate directories
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/nautilus-megasync.spec > MEGASync/MEGAShellExtNautilus/nautilus-megasync.spec
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/nautilus-megasync.dsc > MEGASync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.dsc
+
+# create archive
 mkdir $EXT_NAME
-ln -s ../MEGASync/MEGAShellExtNautilus/nautilus-megasync.spec $EXT_NAME/megasync.spec
+ln -s ../MEGASync/MEGAShellExtNautilus/nautilus-megasync.spec $EXT_NAME/nautilus-megasync.spec
 ln -s ../../Source/MEGAShellExtNautilus/mega_ext_client.c $EXT_NAME/mega_ext_client.c
 ln -s ../../Source/MEGAShellExtNautilus/mega_ext_client.h $EXT_NAME/mega_ext_client.h
 ln -s ../../Source/MEGAShellExtNautilus/mega_ext_module.c $EXT_NAME/mega_ext_module.c
@@ -53,7 +70,7 @@ ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
-tar cvzfh $EXT_NAME.tar.gz $EXT_NAME
+tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
 
 # transform arch name, to satisfy Debian requirements

@@ -1,1 +1,4 @@
 nautilus-megasync_*.tar.gz
+#generated files
+nautilus-megasync_*.dsc
+nautilus-megasync.spec
