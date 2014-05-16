@@ -127,6 +127,10 @@ INCLUDEPATH += $$PWD/sdk/third_party/utf8proc
 !release {
     DEFINES += SQLITE_DEBUG DEBUG
 }
+else {
+
+    DEFINES += NDEBUG
+}
 
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/3rdparty/include
