@@ -909,6 +909,7 @@ public:
 	void getUserAvatar(MegaUser* user, char *dstFilePath, MegaRequestListener *listener = NULL);
 	//void setUserAvatar(MegaUser* user, char *srcFilePath, MegaRequestListener *listener = NULL);
 	void exportNode(MegaNode *node, MegaRequestListener *listener = NULL);
+    void disableExport(MegaNode *node, MegaRequestListener *listener = NULL);
 	void fetchNodes(MegaRequestListener *listener = NULL);
 	void getAccountDetails(MegaRequestListener *listener = NULL);
 	void changePassword(const char *oldPassword, const char *newPassword, MegaRequestListener *listener = NULL);
