@@ -668,7 +668,7 @@ void MegaApplication::exitApplication()
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
                                      tr("Synchronization will stop.\n\nExit anyway?"), QMessageBox::Yes|QMessageBox::No);
         int button = exitDialog->exec();
-        delete exitDialog;
+        exitDialog->deleteLater();
         exitDialog = NULL;
         if(button == QMessageBox::Yes)
         {
@@ -682,7 +682,11 @@ void MegaApplication::exitApplication()
             QApplication::exit();
         }
     }
-    else exitDialog->activateWindow();
+    else
+    {
+        exitDialog->raise();
+        exitDialog->activateWindow();
+    }
 }
 
 void MegaApplication::pauseTransfers(bool pause)
@@ -1269,6 +1273,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 LOG("Showing setup wizard");
                 setupWizard->setVisible(true);
+                setupWizard->raise();
                 setupWizard->activateWindow();
             }
             else showInfoMessage(tr("Logging in..."));
@@ -1290,6 +1295,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 LOG("Showing setup wizard");
                 setupWizard->setVisible(true);
+                setupWizard->raise();
                 setupWizard->activateWindow();
             }
             else showInfoMessage(tr("Logging in..."));
@@ -1327,6 +1333,7 @@ void MegaApplication::openSettings()
 		if(settingsDialog->isVisible())
 		{
             //and visible -> show it
+            settingsDialog->raise();
 			settingsDialog->activateWindow();
 			return;
 		}
@@ -1351,6 +1358,7 @@ void MegaApplication::changeProxy()
         if(settingsDialog->isVisible())
         {
             //and visible -> show it
+            settingsDialog->raise();
             settingsDialog->activateWindow();
             return;
         }
