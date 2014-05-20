@@ -38,7 +38,7 @@ DEALINGS IN THE SOFTWARE.
 #define CLIENT_USER_AGENT "MEGA Android/2.0 BETA"
 #else
 #define CLIENT_KEY "FhMgXbqb"
-#define CLIENT_USER_AGENT "MEGAsync/1.0.19"
+#define CLIENT_USER_AGENT "MEGAsync/1.0.21"
 #endif
 
 #ifdef __APPLE__
@@ -1563,7 +1563,17 @@ void MegaApi::exportNode(MegaNode *node, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_EXPORT, listener);
     if(node) request->setNodeHandle(node->getHandle());
+    request->setAccess(1);
 	requestQueue.push(request);
+    waiter->notify();
+}
+
+void MegaApi::disableExport(MegaNode *node, MegaRequestListener *listener)
+{
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_EXPORT, listener);
+    if(node) request->setNodeHandle(node->getHandle());
+    request->setAccess(0);
+    requestQueue.push(request);
     waiter->notify();
 }
 
@@ -4478,10 +4488,12 @@ void MegaApi::sendPendingRequests()
 			int access = request->getAccess();
 			if(!node || !email) { e = API_EARGS; break; }
 
-            accesslevel_t a = ACCESS_UNKNOWN;
+            accesslevel_t a;
 			switch(access)
 			{
 				case MegaShare::ACCESS_UNKNOWN:
+                    a = ACCESS_UNKNOWN;
+                    break;
 				case MegaShare::ACCESS_READ:
 					a = RDONLY;
 					break;
@@ -4494,10 +4506,12 @@ void MegaApi::sendPendingRequests()
 				case MegaShare::ACCESS_OWNER:
 					a = OWNER;
 					break;
+                default:
+                    e = API_EARGS;
 			}
 
-			if(a == ACCESS_UNKNOWN) { e = API_EARGS; break; }
-			client->setshare(node, email, a);
+            if(e == API_OK)
+                client->setshare(node, email, a);
 			break;
 		}
 		case MegaRequest::TYPE_FOLDER_ACCESS:
@@ -4549,7 +4563,7 @@ void MegaApi::sendPendingRequests()
 			Node* node = client->nodebyhandle(request->getNodeHandle());
 			if(!node) { e = API_EARGS; break; }
 
-			e = client->exportnode(node, 0);
+            e = client->exportnode(node, !request->getAccess());
 			break;
 		}
 		case MegaRequest::TYPE_FETCH_NODES:
@@ -4846,7 +4860,7 @@ void MegaApi::sendPendingRequests()
             while(it != client->syncs.end())
             {
                 Sync *sync = (*it);
-                if(sync->localroot.node->nodehandle == nodehandle)
+                if(!sync->localroot.node || sync->localroot.node->nodehandle == nodehandle)
                 {
                     LOG("DELETING SYNC IN MEGAAPI");
                     string path;
