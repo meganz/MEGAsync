@@ -187,6 +187,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     updateAction = NULL;
+    showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
     updateBlocked = false;
     updateThread = NULL;
@@ -198,6 +199,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+
 }
 
 void MegaApplication::initialize()
@@ -207,6 +209,9 @@ void MegaApplication::initialize()
     paused = false;
     indexing = false;
     setQuitOnLastWindowClosed(false);
+
+    const QByteArray xdgCurrentDesktop = qgetenv("XDG_CURRENT_DESKTOP");
+    isUnity = xdgCurrentDesktop == "Unity";
 
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
@@ -324,13 +329,14 @@ void MegaApplication::changeLanguage(QString languageCode)
     }
     else delete newTranslator;
 
-    createTrayIcon();
+    if(notificator)
+        createTrayIcon();
 }
 
 void MegaApplication::updateTrayIcon()
 {
     if(!trayIcon) return;
-    if(trayIcon->contextMenu() == initialMenu)
+    if(!infoDialog)
     {
         LOG("STATE: Logging in...");
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
@@ -483,9 +489,6 @@ void MegaApplication::loggedIn()
     QString language = preferences->language();
     changeLanguage(language);
 
-    //Show the tray icon
-    createTrayIcon();
-
 #ifdef WIN32
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
     else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
@@ -597,6 +600,19 @@ void MegaApplication::processUploadQueue(mega::handle nodeHandle)
     }
 }
 
+void MegaApplication::unityFix()
+{
+    static QMenu *dummyMenu = NULL;
+    if(!dummyMenu)
+    {
+        dummyMenu = new QMenu();
+        connect(this, SIGNAL(unityFixSignal()), dummyMenu, SLOT(close()), Qt::QueuedConnection);
+    }
+
+    emit unityFixSignal();
+    dummyMenu->exec();
+}
+
 void MegaApplication::rebootApplication(bool update)
 {
     reboot = true;
@@ -690,6 +706,7 @@ void MegaApplication::refreshTrayIcon()
 
         megaApi->updateStatics();
         onSyncStateChanged(megaApi);
+        if(isUnity) updateTrayIcon();
     }
     if(trayIcon) trayIcon->show();
 }
@@ -750,6 +767,8 @@ void MegaApplication::showInfoDialog()
                 posy = screenGeometry.bottom() - 545 - 2;
             else
                 posy = screenGeometry.top() + 2;
+
+            if(isUnity) unityFix();
 
             infoDialog->move(posx, posy);
             infoDialog->show();
@@ -1193,7 +1212,7 @@ void MegaApplication::onUpdateCompleted()
 
 void MegaApplication::onUpdateAvailable(bool requested)
 {
-    if(trayIcon->contextMenu()!=initialMenu)
+    if(infoDialog)
     {
         updateAvailable = true;
         updateAction->setText(tr("Install update"));
@@ -1420,9 +1439,21 @@ void MegaApplication::createTrayIcon()
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
 
-    trayIcon->setContextMenu(NULL);
+    if (isUnity)
+    {
+        if(showStatusAction) delete showStatusAction;
+        showStatusAction = new QAction(tr("Show status"), this);
+        connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
+
+        trayMenu->insertAction(importLinksAction, showStatusAction);
+        trayIcon->setContextMenu(trayMenu);
+    }
+    else
+    {
+        trayIcon->setContextMenu(NULL);
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+    }
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
 }
 
 //Called when a request is about to start
@@ -1909,7 +1940,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     if(waiting) LOG("Waiting = true");
     else LOG("Waiting = false");
 
-    updateTrayIcon();
+    if(!isUnity) updateTrayIcon();
 }
 
 //TODO: Manage sync callbacks here

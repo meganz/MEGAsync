@@ -88,6 +88,7 @@ signals:
     void startUpdaterThread();
     void tryUpdate();
     void installUpdate();
+    void unityFixSignal();
 
 public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -130,6 +131,7 @@ protected:
     void startSyncs();
 	void stopSyncs();
     void processUploadQueue(mega::handle nodeHandle);
+    void unityFix();
 
     QSystemTrayIcon *trayIcon;
     QMenu *initialMenu;
@@ -144,6 +146,7 @@ protected:
     QAction *changeProxyAction;
     QAction *initialExitAction;
     QAction *updateAction;
+    QAction *showStatusAction;
 
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
@@ -189,6 +192,7 @@ protected:
     long long lastExit;
     bool finished;
     bool updateAvailable;
+    bool isUnity;
 };
 
 #endif // MEGAAPPLICATION_H
