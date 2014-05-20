@@ -46,6 +46,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfer1 = NULL;
     transfer2 = NULL;
 
+    const QByteArray xdgCurrentDesktop = qgetenv("XDG_CURRENT_DESKTOP");
+    isUnity = xdgCurrentDesktop == "Unity";
+
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
@@ -494,8 +497,12 @@ void InfoDialog::cancelCurrentDownload()
 
 void InfoDialog::on_bSettings_clicked()
 {
-    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
-    app->showTrayMenu(&p);
+    if(!isUnity)
+    {
+        QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
+        app->showTrayMenu(&p);
+    }
+    else app->openSettings();
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()
