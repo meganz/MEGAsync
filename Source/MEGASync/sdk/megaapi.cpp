@@ -4860,7 +4860,7 @@ void MegaApi::sendPendingRequests()
             while(it != client->syncs.end())
             {
                 Sync *sync = (*it);
-                if(sync->localroot.node->nodehandle == nodehandle)
+                if(!sync->localroot.node || sync->localroot.node->nodehandle == nodehandle)
                 {
                     LOG("DELETING SYNC IN MEGAAPI");
                     string path;
