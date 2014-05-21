@@ -634,7 +634,9 @@ QString Preferences::getLocalFolder(int num)
         mutex.unlock();
         return QString();
     }
-    QString value = QDir::toNativeSeparators(localFolders.at(num));
+
+    QFileInfo fileInfo(localFolders.at(num));
+    QString value = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
     mutex.unlock();
     return value;
 }
@@ -704,12 +706,14 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     mutex.lock();
     assert(logged());
 
-    if(syncName.isEmpty()) syncName = QFileInfo(localFolder).fileName();
-    if(syncName.isEmpty()) syncName = localFolder;
+    QFileInfo localFolderInfo(localFolder);
+    if(syncName.isEmpty()) syncName = localFolderInfo.fileName();
+    if(syncName.isEmpty()) syncName = QDir::toNativeSeparators(localFolder);
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
 
+    localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
     syncNames.append(syncName);
-    localFolders.append(QDir::toNativeSeparators(localFolder));
+    localFolders.append(localFolder);
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     writeFolders();

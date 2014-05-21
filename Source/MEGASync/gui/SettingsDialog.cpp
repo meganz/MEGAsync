@@ -18,6 +18,8 @@
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
+using namespace mega;
+
 long long calculateCacheSize()
 {
     Preferences *preferences = Preferences::instance();
@@ -570,6 +572,11 @@ bool SettingsDialog::saveSettings()
                 MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
                 if(!node) continue;
                 int j;
+
+                QFileInfo localFolderInfo(localFolderPath);
+                localFolderPath = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
+                if(!localFolderPath.size() || !localFolderInfo.isDir()) continue;
+
                 for(j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
                     QString previousLocalPath = preferences->getLocalFolder(j);
