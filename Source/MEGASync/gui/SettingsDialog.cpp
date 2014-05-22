@@ -1042,6 +1042,13 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
         return;
     }
 
+    QString data = QString::fromUtf8(reply->readAll());
+    if (!data.contains(Preferences::PROXY_TEST_SUBSTRING)) {
+        LOG_debug << "Proxy request failed.";
+        onProxyTestTimeout();
+        return;
+    }
+
     if(ui->rNoProxy->isChecked())
         preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
     else if(ui->rProxyAuto->isChecked())
