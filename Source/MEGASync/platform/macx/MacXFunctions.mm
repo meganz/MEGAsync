@@ -1,9 +1,5 @@
 #include "MacXFunctions.h"
 #include <Cocoa/Cocoa.h>
-#include <AppKit/AppKit.h>
-#include <dlfcn.h>
-#include <sys/mman.h>
-#include <iostream>
 
 void setMacXActivationPolicy()
 {
