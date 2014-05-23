@@ -1,5 +1,7 @@
 #include "LinuxPlatform.h"
 
+using namespace mega;
+
 ExtServer *LinuxPlatform::ext_server = NULL;
 NotifyServer *LinuxPlatform::notify_server = NULL;
 
