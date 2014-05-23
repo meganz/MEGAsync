@@ -122,6 +122,14 @@ void UpdateTask::finalCleanup()
 
     //Remove the update folder
     Utilities::removeRecursively(QDir(updateFolder));
+
+    #ifdef __APPLE__
+        QFile exeFile(MegaApplication::applicationFilePath());
+        exeFile.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner |
+                                  QFile::ExeGroup | QFile::ReadGroup |
+                                  QFile::ExeOther | QFile::ReadOther);
+    #endif
+
     emit updateCompleted();
 }
 
@@ -309,14 +317,6 @@ bool UpdateTask::performUpdate()
 
         LOG(QString::fromAscii("File installed: ") + file);
     }
-
-#ifdef __APPLE__
-    if(!MacXPlatform::enableSetuidBit())
-    {
-        rollbackUpdate(i-1);
-        return false;
-    }
-#endif
 
     LOG("Update installed!!");
     return true;
