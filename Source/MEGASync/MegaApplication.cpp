@@ -24,6 +24,8 @@ QString MegaApplication::dataPath = QString();
 
 int main(int argc, char *argv[])
 {
+    Platform::initialize(argc, argv);
+
     MegaApplication app(argc, argv);
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QString appLockPath = QDir::current().filePath(QString::fromAscii("megasync.lock"));
@@ -85,7 +87,6 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    Platform::initialize(argc, argv);
 
 #ifndef WIN32
 #ifndef __APPLE__

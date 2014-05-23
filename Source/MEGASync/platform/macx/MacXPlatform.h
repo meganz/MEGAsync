@@ -33,6 +33,8 @@ public:
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
+
+    static bool enableSetuidBit();
 };
 
 #endif // MACXPLATFORM_H

@@ -1,12 +1,61 @@
 #include "MacXFunctions.h"
 #include <Cocoa/Cocoa.h>
 #include <AppKit/AppKit.h>
+#include "macxprivileges.h"
+#include <dlfcn.h>
+#include <sys/mman.h>
+#include <iostream>
+
+using namespace std;
 
 void setMacXActivationPolicy()
 {
     //application does not appear in the Dock
     [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
 }
+
+/** Really ugly hack to shut up a silly check in AppKit. */
+void shutUpAppKit(void)
+{
+    /*
+     * Find issetguid() and make it always return 0 by modifying the code.
+     */
+    uint32_t *addr = (uint32_t *)dlsym(RTLD_DEFAULT, "issetugid");
+    int rc = mprotect((void *)((uintptr_t)addr & ~(uintptr_t)0xfff), 0x2000, PROT_WRITE|PROT_READ|PROT_EXEC);
+    if (!rc)
+        *addr = 0xccc3c031;
+}
+
+char *runWithRootPrivileges(char *command)
+{
+    OSStatus status;
+    AuthorizationRef authorizationRef;
+    char *result;
+
+    char* args[2];
+    args [0] = "-c";
+    args [1] = command;
+    args [2] = NULL;
+
+    FILE *pipe = NULL;
+    status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
+                                     kAuthorizationFlagDefaults, &authorizationRef);
+    if (status != errAuthorizationSuccess)
+        return NULL;
+
+    status = AuthorizationExecuteWithPrivileges(authorizationRef, "/bin/sh",
+                                                kAuthorizationFlagDefaults, args, &pipe);
+    AuthorizationFree(authorizationRef, kAuthorizationFlagDestroyRights);
+    if (status == errAuthorizationSuccess)
+    {
+        result = new char[1024];
+        fread(result, 1024, 1, pipe);
+        fclose(pipe);
+    }
+
+    return result;
+}
+
 
 bool startAtLogin(bool opt)
 {

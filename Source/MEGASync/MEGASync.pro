@@ -92,4 +92,5 @@ macx {
     ICON = app.icns
 
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+    QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
 }

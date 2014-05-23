@@ -1,6 +1,7 @@
 #include "MegaApplication.h"
 #include "UpdateTask.h"
 #include "control/Utilities.h"
+#include "platform/Platform.h"
 #include <iostream>
 #include <QAuthenticator>
 
@@ -121,14 +122,6 @@ void UpdateTask::finalCleanup()
 
     //Remove the update folder
     Utilities::removeRecursively(QDir(updateFolder));
-
-    #ifdef __APPLE__
-        QFile exeFile(MegaApplication::applicationFilePath());
-        exeFile.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner |
-                                  QFile::ExeGroup | QFile::ReadGroup |
-                                  QFile::ExeOther | QFile::ReadOther);
-    #endif
-
     emit updateCompleted();
 }
 
@@ -287,13 +280,14 @@ bool UpdateTask::processFile(QNetworkReply *reply)
 
 bool UpdateTask::performUpdate()
 {
+    int i;
     LOG("performUpdate");
 
     //Create backup folder
     backupFolder = QDir(appFolder.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
     backupFolder.mkdir(QString::fromAscii("."));
 
-    for(int i=0; i<localPaths.size(); i++)
+    for(i=0; i<localPaths.size(); i++)
     {
         QString file = localPaths[i];
 
@@ -315,6 +309,14 @@ bool UpdateTask::performUpdate()
 
         LOG(QString::fromAscii("File installed: ") + file);
     }
+
+#ifdef __APPLE__
+    if(!MacXPlatform::enableSetuidBit())
+    {
+        rollbackUpdate(i-1);
+        return false;
+    }
+#endif
 
     LOG("Update installed!!");
     return true;

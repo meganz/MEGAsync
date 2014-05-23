@@ -65,6 +65,7 @@ unix:!macx {
 
 macx {
     SOURCES += $$PWD/macx/MacXPlatform.cpp
+
     HEADERS += $$PWD/macx/MacXPlatform.h \
         $$PWD/macx/MacXFunctions.h \
         $$PWD/macx/macnotificationhandler.h \
@@ -76,6 +77,7 @@ macx {
             $$PWD/macx/NotificationDelegate.mm
 
     LIBS += -framework Cocoa
+    LIBS += -framework Security
 }
 
 
