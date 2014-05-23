@@ -25,6 +25,8 @@ rm -rf $MEGASYNC_NAME
 
 echo "MEGASync version: $MEGASYNC_VERSION"
 
+# delete previously generated files
+rm -fr MEGASync/MEGASync/megasync_*.dsc
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/megasync.spec > MEGASync/MEGASync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/megasync.dsc > MEGASync/MEGASync/megasync_$MEGASYNC_VERSION.dsc
@@ -39,6 +41,8 @@ ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
 tar czfh $MEGASYNC_NAME.tar.gz --exclude $MEGASYNC_NAME/MEGASync/sdk/sqlite3.c --exclude Makefile --exclude '*.o' $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
+# delete any previous archive
+rm -fr MEGASync/MEGASync/megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $MEGASYNC_NAME.tar.gz MEGASync/MEGASync/megasync_$MEGASYNC_VERSION.tar.gz
 
@@ -53,6 +57,9 @@ export EXT_VERSION=$MEGASYNC_VERSION
 export EXT_NAME=nautilus-megasync-$EXT_VERSION
 rm -rf $EXT_NAME.tar.gz
 rm -rf $EXT_NAME
+
+# delete previously generated files
+rm -fr MEGASync/MEGAShellExtNautilus/nautilus-megasync_*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/nautilus-megasync.spec > MEGASync/MEGAShellExtNautilus/nautilus-megasync.spec
@@ -73,5 +80,7 @@ ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
 
+# delete any previous archive
+rm -fr MEGASync/MEGAShellExtNautilus/nautilus-megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $EXT_NAME.tar.gz MEGASync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.tar.gz
