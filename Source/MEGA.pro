@@ -16,6 +16,10 @@ unix:!macx {
     }
 }
 
+macx {
+    SUBDIRS += MEGALoader
+}
+
 CONFIG(with_updater) {
     SUBDIRS += MEGAUpdater
 }

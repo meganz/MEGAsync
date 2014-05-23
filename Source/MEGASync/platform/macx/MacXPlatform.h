@@ -35,6 +35,8 @@ public:
     static QByteArray getLocalStorageKey();
 
     static bool enableSetuidBit();
+
+    static int fd;
 };
 
 #endif // MACXPLATFORM_H

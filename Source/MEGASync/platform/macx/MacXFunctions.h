@@ -3,9 +3,8 @@
 
 #include <QString>
 
-void shutUpAppKit(void);
-char *runWithRootPrivileges(char *command);
 void setMacXActivationPolicy();
+char *runWithRootPrivileges(char *command);
 bool startAtLogin(bool opt);
 bool isStartAtLoginActive();
 void addPathToPlaces(QString path, QString pathName);

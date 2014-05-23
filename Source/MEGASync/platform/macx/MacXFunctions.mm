@@ -1,12 +1,9 @@
 #include "MacXFunctions.h"
 #include <Cocoa/Cocoa.h>
 #include <AppKit/AppKit.h>
-#include "macxprivileges.h"
 #include <dlfcn.h>
 #include <sys/mman.h>
 #include <iostream>
-
-using namespace std;
 
 void setMacXActivationPolicy()
 {
@@ -14,23 +11,11 @@ void setMacXActivationPolicy()
     [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
 }
 
-/** Really ugly hack to shut up a silly check in AppKit. */
-void shutUpAppKit(void)
-{
-    /*
-     * Find issetguid() and make it always return 0 by modifying the code.
-     */
-    uint32_t *addr = (uint32_t *)dlsym(RTLD_DEFAULT, "issetugid");
-    int rc = mprotect((void *)((uintptr_t)addr & ~(uintptr_t)0xfff), 0x2000, PROT_WRITE|PROT_READ|PROT_EXEC);
-    if (!rc)
-        *addr = 0xccc3c031;
-}
-
 char *runWithRootPrivileges(char *command)
 {
     OSStatus status;
     AuthorizationRef authorizationRef;
-    char *result;
+    char *result = NULL;
 
     char* args[2];
     args [0] = "-c";
