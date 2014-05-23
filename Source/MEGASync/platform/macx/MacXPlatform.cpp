@@ -1,28 +1,37 @@
 #include "MacXPlatform.h"
-#include "MacXPrivileges.h"
 
+int MacXPlatform::fd = 0;
 
 void MacXPlatform::initialize(int argc, char *argv[])
 {
-    shutUpAppKit();
     setMacXActivationPolicy();
 
-    if(seteuid(0)!=0)
+    fd = 0;
+    if(argc)
+    {
+        long int value = strtol(argv[argc-1], NULL, 10);
+        if(value > 0 && value < INT_MAX)
+            fd = value;
+    }
+
+    if(!fd)
     {
         if(!enableSetuidBit())
             ::exit(0);
 
         //Reboot
-        cout << "Rebooting" << endl;
+        QString app = MegaApplication::applicationDirPath();
         QString launchCommand = QString::fromUtf8("open");
         QStringList args = QStringList();
+        QDir appPath(app);
+        appPath.cdUp();
+        appPath.cdUp();
         args.append(QString::fromAscii("-n"));
-        args.append(QString::fromUtf8("/Applications/MEGAsync.app"));
+        args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
         sleep(2);
         ::exit(0);
     }
-    else seteuid(getuid());
 }
 
 bool MacXPlatform::enableTrayIcon(QString executable)
@@ -96,7 +105,7 @@ QByteArray MacXPlatform::getLocalStorageKey()
 
 bool MacXPlatform::enableSetuidBit()
 {
-    QString command = QString::fromUtf8("chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync > /dev/null && chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync > /dev/null && echo true");
+    QString command = QString::fromUtf8("chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true");
     char *response = runWithRootPrivileges((char *)command.toStdString().c_str());
     if(!response) return NULL;
 

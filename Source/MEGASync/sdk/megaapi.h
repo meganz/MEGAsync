@@ -143,17 +143,13 @@ class MegaWaiter : public mega::MegaApiWinWaiter {};
 #include "mega/posix/megafs.h"
 #include "linux/megaapiwait.h"
 
-class MegaHttpIO : public mega::MegaApiCurlHttpIO {};
-class MegaFileSystemAccess : public mega::PosixFileSystemAccess {};
-class MegaWaiter : public mega::MegaApiLinuxWaiter {};
+typedef mega::MegaApiCurlHttpIO MegaHttpIO;
+typedef mega::PosixFileSystemAccess MegaFileSystemAccess;
+typedef mega::MegaApiLinuxWaiter MegaWaiter;
 
 #endif
 
-class MegaDbAccess : public mega::SqliteDbAccess
-{
-public:
-    MegaDbAccess(string *basePath = NULL) : SqliteDbAccess(basePath){}
-};
+typedef mega::SqliteDbAccess MegaDbAccess;
 
 class MegaApi;
 class MegaNode
