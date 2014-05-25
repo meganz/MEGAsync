@@ -161,6 +161,7 @@ public:
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
     static const QString PROXY_TEST_URL;
+    static const QString PROXY_TEST_SUBSTRING;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
 
