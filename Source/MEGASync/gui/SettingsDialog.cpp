@@ -141,6 +141,7 @@ void SettingsDialog::on_bAccount_clicked()
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAccount);
+    ui->bOk->setFocus();
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -152,6 +153,7 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible( true );
+    ui->bOk->setFocus();
 }
 
 void SettingsDialog::on_bBandwidth_clicked()
@@ -162,6 +164,7 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pBandwidth);
+    ui->bOk->setFocus();
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -172,6 +175,7 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->bAdvanced->setChecked(true);
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAdvanced);
+    ui->bOk->setFocus();
 }
 
 
@@ -183,6 +187,7 @@ void SettingsDialog::on_bProxies_clicked()
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
+    ui->bOk->setFocus();
 }
 
 
