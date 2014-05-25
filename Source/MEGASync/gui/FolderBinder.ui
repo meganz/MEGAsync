@@ -176,6 +176,12 @@ border: none;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>eLocalFolder</tabstop>
+  <tabstop>bLocalFolder</tabstop>
+  <tabstop>eMegaFolder</tabstop>
+  <tabstop>bMegaFolder</tabstop>
+ </tabstops>
  <resources>
   <include location="Resources.qrc"/>
  </resources>
