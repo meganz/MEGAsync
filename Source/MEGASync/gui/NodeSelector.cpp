@@ -16,6 +16,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;
     delegateListener = new QTMegaRequestListener(megaApi, this);
+    ui->bOk->setDefault(true);
 }
 
 NodeSelector::~NodeSelector()
