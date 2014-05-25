@@ -84,6 +84,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
+    ui->bOk->setDefault(true);
 }
 
 SettingsDialog::~SettingsDialog()
