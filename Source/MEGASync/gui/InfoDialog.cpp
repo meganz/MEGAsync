@@ -174,6 +174,10 @@ void InfoDialog::updateTransfers()
     remainingDownloads = megaApi->getNumPendingDownloads();
     totalUploads = megaApi->getTotalUploads();
     totalDownloads = megaApi->getTotalDownloads();
+
+    if(totalUploads < remainingUploads) totalUploads = remainingUploads;
+    if(totalDownloads < remainingDownloads) totalDownloads = remainingDownloads;
+
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
 
