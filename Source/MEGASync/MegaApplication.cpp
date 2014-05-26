@@ -628,25 +628,19 @@ void MegaApplication::rebootApplication(bool update)
         return;
     }
 
-    #ifndef __APPLE__
-        QString app = MegaApplication::applicationFilePath();
-        QProcess::startDetached(app);
-    #else
-        QString app = MegaApplication::applicationDirPath();
-        QString launchCommand = QString::fromUtf8("open");
-        QStringList args = QStringList();
-
-        QDir appPath(app);
-        appPath.cdUp();
-        appPath.cdUp();
-
-        args.append(QString::fromAscii("-n"));
-        args.append(appPath.absolutePath());
-        QProcess::startDetached(launchCommand, args);
-    #endif
-
-
     trayIcon->hide();
+    if(setupWizard && setupWizard->isVisible())
+        setupWizard->hide();
+    if(settingsDialog && settingsDialog->isVisible())
+        settingsDialog->hide();
+    if(infoDialog && infoDialog->isVisible())
+        infoDialog->hide();
+    if(uploadFolderSelector && uploadFolderSelector->isVisible())
+        uploadFolderSelector->hide();
+    if(multiUploadFileDialog && multiUploadFileDialog->isVisible())
+        multiUploadFileDialog->hide();
+    if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
+        pasteMegaLinksDialog->hide();
     QApplication::exit();
 }
 
@@ -654,7 +648,20 @@ void MegaApplication::exitApplication()
 {
     if(!megaApi->isLoggedIn())
     {
+        reboot = false;
         trayIcon->hide();
+        if(setupWizard && setupWizard->isVisible())
+            setupWizard->hide();
+        if(settingsDialog && settingsDialog->isVisible())
+            settingsDialog->hide();
+        if(infoDialog && infoDialog->isVisible())
+            infoDialog->hide();
+        if(uploadFolderSelector && uploadFolderSelector->isVisible())
+            uploadFolderSelector->hide();
+        if(multiUploadFileDialog && multiUploadFileDialog->isVisible())
+            multiUploadFileDialog->hide();
+        if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
+            pasteMegaLinksDialog->hide();
 
         #ifdef __APPLE__
             cleanAll();
@@ -674,7 +681,20 @@ void MegaApplication::exitApplication()
         exitDialog = NULL;
         if(button == QMessageBox::Yes)
         {
+            reboot = false;
             trayIcon->hide();
+            if(setupWizard && setupWizard->isVisible())
+                setupWizard->hide();
+            if(settingsDialog && settingsDialog->isVisible())
+                settingsDialog->hide();
+            if(infoDialog && infoDialog->isVisible())
+                infoDialog->hide();
+            if(uploadFolderSelector && uploadFolderSelector->isVisible())
+                uploadFolderSelector->hide();
+            if(multiUploadFileDialog && multiUploadFileDialog->isVisible())
+                multiUploadFileDialog->hide();
+            if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
+                pasteMegaLinksDialog->hide();
 
             #ifdef __APPLE__
                 cleanAll();
@@ -736,6 +756,33 @@ void MegaApplication::cleanAll()
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
+
+    if(reboot)
+    {
+    #ifndef __APPLE__
+        QString app = MegaApplication::applicationFilePath();
+        QProcess::startDetached(app);
+    #else
+        QString app = MegaApplication::applicationDirPath();
+        QString launchCommand = QString::fromUtf8("open");
+        QStringList args = QStringList();
+
+        QDir appPath(app);
+        appPath.cdUp();
+        appPath.cdUp();
+
+        args.append(QString::fromAscii("-n"));
+        args.append(appPath.absolutePath());
+        QProcess::startDetached(launchCommand, args);
+    #endif
+
+    #ifdef WIN32
+        Sleep(2000);
+    #else
+        sleep(2);
+    #endif
+    }
+
     //QFontDatabase::removeAllApplicationFonts();
 }
 
