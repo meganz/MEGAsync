@@ -1218,11 +1218,11 @@ font-weight: bold;
   </layout>
  </widget>
  <tabstops>
-  <tabstop>bNext</tabstop>
-  <tabstop>bBack</tabstop>
-  <tabstop>bCancel</tabstop>
   <tabstop>rHaveAccount</tabstop>
   <tabstop>rDontHaveAccount</tabstop>
+  <tabstop>bBack</tabstop>
+  <tabstop>bNext</tabstop>
+  <tabstop>bCancel</tabstop>
   <tabstop>eName</tabstop>
   <tabstop>eEmail</tabstop>
   <tabstop>ePassword</tabstop>
@@ -1234,6 +1234,10 @@ font-weight: bold;
   <tabstop>bLocalFolder</tabstop>
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
+  <tabstop>rTypicalSetup</tabstop>
+  <tabstop>rAdvancedSetup</tabstop>
+  <tabstop>bFinalLocalFolder</tabstop>
+  <tabstop>bFinalMegaFolder</tabstop>
  </tabstops>
  <resources>
   <include location="Resources.qrc"/>
