@@ -4932,10 +4932,10 @@ void MegaApi::updateStatics()
             uploadCount++;
         it++;
     }
-    MUTEX_UNLOCK(sdkMutex);
 
     pendingDownloads = downloadCount;
     pendingUploads = uploadCount;
+    MUTEX_UNLOCK(sdkMutex);
 }
 
 void MegaApi::update()

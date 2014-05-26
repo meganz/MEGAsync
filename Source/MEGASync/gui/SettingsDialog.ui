@@ -489,7 +489,7 @@ font-style: italic;
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1329,7 +1329,7 @@ padding-right: 20px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>22</height>
+                <height>24</height>
                </size>
               </property>
               <property name="text">
@@ -1575,7 +1575,7 @@ padding: 4px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>22</height>
+              <height>24</height>
              </size>
             </property>
             <property name="text">
@@ -1858,6 +1858,50 @@ padding: 4px;</string>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>bAccount</tabstop>
+  <tabstop>bSyncs</tabstop>
+  <tabstop>bBandwidth</tabstop>
+  <tabstop>bProxies</tabstop>
+  <tabstop>bAdvanced</tabstop>
+  <tabstop>bHelp</tabstop>
+  <tabstop>bOk</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bApply</tabstop>
+  <tabstop>bUnlink</tabstop>
+  <tabstop>bUpgrade</tabstop>
+  <tabstop>cShowNotifications</tabstop>
+  <tabstop>cStartOnStartup</tabstop>
+  <tabstop>cAutoUpdate</tabstop>
+  <tabstop>bUpdate</tabstop>
+  <tabstop>cLanguage</tabstop>
+  <tabstop>bAdd</tabstop>
+  <tabstop>bDelete</tabstop>
+  <tabstop>tSyncs</tabstop>
+  <tabstop>bSyncChange</tabstop>
+  <tabstop>rAutoLimit</tabstop>
+  <tabstop>rNoLimit</tabstop>
+  <tabstop>rLimit</tabstop>
+  <tabstop>eLimit</tabstop>
+  <tabstop>bUpgradeBandwidth</tabstop>
+  <tabstop>eUploadFolder</tabstop>
+  <tabstop>bUploadFolder</tabstop>
+  <tabstop>bAddName</tabstop>
+  <tabstop>bDeleteName</tabstop>
+  <tabstop>lExcludedNames</tabstop>
+  <tabstop>bClearCache</tabstop>
+  <tabstop>cOverlayIcons</tabstop>
+  <tabstop>bFullCheck</tabstop>
+  <tabstop>rNoProxy</tabstop>
+  <tabstop>rProxyAuto</tabstop>
+  <tabstop>rProxyManual</tabstop>
+  <tabstop>cProxyType</tabstop>
+  <tabstop>eProxyServer</tabstop>
+  <tabstop>eProxyPort</tabstop>
+  <tabstop>cProxyRequiresPassword</tabstop>
+  <tabstop>eProxyUsername</tabstop>
+  <tabstop>eProxyPassword</tabstop>
+ </tabstops>
  <resources>
   <include location="Resources.qrc"/>
  </resources>
