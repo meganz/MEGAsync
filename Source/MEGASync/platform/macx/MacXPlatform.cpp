@@ -6,6 +6,8 @@ void MacXPlatform::initialize(int argc, char *argv[])
 {
     setMacXActivationPolicy();
 
+    SetProcessName(QString::fromUtf8("MEGAsync"));
+
     fd = 0;
     if(argc)
     {

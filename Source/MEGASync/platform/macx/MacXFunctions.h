@@ -4,6 +4,7 @@
 #include <QString>
 
 void setMacXActivationPolicy();
+void SetProcessName(QString procname);
 char *runWithRootPrivileges(char *command);
 bool startAtLogin(bool opt);
 bool isStartAtLoginActive();
