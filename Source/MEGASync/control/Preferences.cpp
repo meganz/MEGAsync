@@ -30,6 +30,7 @@ const QString Preferences::CRASH_REPORT_URL                 = QString::fromUtf8(
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii("update");
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
+const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("<title>MEGA</title>");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");

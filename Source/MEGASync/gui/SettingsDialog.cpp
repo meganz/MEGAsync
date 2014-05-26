@@ -84,6 +84,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
+    ui->bOk->setDefault(true);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -141,6 +142,7 @@ void SettingsDialog::on_bAccount_clicked()
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAccount);
+    ui->bOk->setFocus();
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -152,6 +154,7 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible( true );
+    ui->bOk->setFocus();
 }
 
 void SettingsDialog::on_bBandwidth_clicked()
@@ -162,6 +165,7 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pBandwidth);
+    ui->bOk->setFocus();
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -172,6 +176,7 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->bAdvanced->setChecked(true);
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAdvanced);
+    ui->bOk->setFocus();
 }
 
 
@@ -183,6 +188,7 @@ void SettingsDialog::on_bProxies_clicked()
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
+    ui->bOk->setFocus();
 }
 
 
@@ -1038,6 +1044,13 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
     QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
     if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
     {
+        onProxyTestTimeout();
+        return;
+    }
+
+    QString data = QString::fromUtf8(reply->readAll());
+    if (!data.contains(Preferences::PROXY_TEST_SUBSTRING)) {
+        LOG_debug << "Proxy request failed.";
         onProxyTestTimeout();
         return;
     }
