@@ -60,7 +60,7 @@ void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError
         LOG(QString::number(e->getErrorCode()));
 
         if(e->getErrorCode() != MegaError::API_OK)  linkNode[currentIndex] = NULL;
-        else linkNode[currentIndex] = request->getPublicNode();
+        else linkNode[currentIndex] = request->getPublicNode()->copy();
 
 		linkError[currentIndex] = e->getErrorCode();
 		linkSelected[currentIndex] = (linkError[currentIndex]==MegaError::API_OK);
@@ -86,6 +86,8 @@ void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError
 		else importFailed ++;
 		if(!remainingNodes) emit onLinkImportFinish();
 	}
+    delete request;
+    delete e;
 }
 
 void LinkProcessor::requestLinkInfo()
