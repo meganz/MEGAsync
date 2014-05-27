@@ -50,6 +50,7 @@ RequestExecutionLevel user
 !define MUI_WELCOMEFINISHPAGE_BITMAP "installer\left_banner.bmp"
 ;!define MUI_FINISHPAGE_NOAUTOCLOSE
 
+var APP_NAME
 var ICONS_GROUP
 ;var INSTALLDAY
 ;var EXPIRATIONDAY
@@ -148,7 +149,7 @@ var ALL_USERS_INSTDIR
 
 ; MUI end ------
 
-Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+Name $APP_NAME
 OutFile "MEGAsyncSetup.exe"
 InstallDir "$PROGRAMFILES\MEGAsync"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
@@ -156,7 +157,6 @@ ShowInstDetails nevershow
 ShowUnInstDetails nevershow
 
 Function RunFunction
-  ;Exec '"$WINDIR\explorer.exe" "$INSTDIR\MEGASync.exe"'
   ${UAC.CallFunctionAsUser} RunMegaSync
 FunctionEnd
 
@@ -169,8 +169,8 @@ Function RunExplorer
   ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
 FunctionEnd
 
-
 Function .onInit
+  StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
   ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   ;strCpy $INSTALLDAY "$2$1$0"
   ;strCpy $EXPIRATIONDAY "20140121"
@@ -401,7 +401,6 @@ modeselected:
   new_installation_x32:
   
   ; Register shell extension 1 (x86_32)
-  ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe "$INSTDIR\ShellExtX32.dll"'
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
   !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
@@ -420,7 +419,6 @@ modeselected:
         new_installation_x64:
   
         ; Register shell extension 1 (x86_64)
-        ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe "$INSTDIR\x64\ShellExtX64.dll"'
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
@@ -436,13 +434,7 @@ modeselected:
   ${UAC.CallFunctionAsUser} RunExplorer
    
   SetRebootFlag false
- ;ExecDos::exec /ASYNC /DETAILED /DISABLEFSR "explorer.exe"
- ;${DisableX64FSRedirection}
- ;ExecWait "taskkill /f /IM explorer.exe"
- ;Exec "explorer.exe"
- ;${EnableX64FSRedirection}
-
-    StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
+  StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
   SetShellVarContext all
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
@@ -478,10 +470,10 @@ SectionEnd
 Section -Post
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\MEGAsync.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\MEGAsync.exe"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" ""
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   
@@ -492,6 +484,7 @@ Section -Post
 SectionEnd
 
 Function un.onInit
+StrCpy $APP_NAME "${PRODUCT_NAME}"
 UAC::RunElevated
   ${Switch} $0
   ${Case} 0
@@ -540,11 +533,6 @@ Section Uninstall
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAsync.cfg"
 
-  ;ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\SysWoW64\regsvr32.exe /u "$INSTDIR\ShellExtX32.dll"'
-  ;${If} ${RunningX64}
-  ;  ExecDos::exec /DETAILED /DISABLEFSR '%WINDIR%\System32\regsvr32.exe /u "$INSTDIR\ShellExtX64.dll"'
-  ;${EndIf}
-  
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
   !insertmacro UnInstallLib REGDLL NOTSHARED NOREMOVE "$INSTDIR\ShellExtX32.dll"
@@ -595,10 +583,8 @@ Section Uninstall
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR"
 
-
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
   SetAutoClose true
-
   SetRebootFlag false
 SectionEnd
