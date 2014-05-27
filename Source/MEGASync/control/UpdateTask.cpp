@@ -83,7 +83,11 @@ void UpdateTask::tryUpdate()
 
     running = true;
     initialCleanup();
-    downloadFile(Preferences::UPDATE_CHECK_URL);
+
+    QString randomSequence = QString::fromUtf8("?");
+    for(int i=0;i<10;i++)
+        randomSequence += QChar::fromAscii('A'+(rand() % 26));
+    downloadFile(Preferences::UPDATE_CHECK_URL + randomSequence);
 }
 
 void UpdateTask::onTimeout()
