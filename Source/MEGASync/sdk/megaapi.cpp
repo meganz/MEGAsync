@@ -1416,17 +1416,20 @@ void MegaApi::loop()
 {
     while(true)
 	{
-        client->wait();
-        MUTEX_LOCK(sdkMutex);
-		sendPendingTransfers();
-		sendPendingRequests();
-        if(threadExit)
+        int r = client->wait();
+        if(r & Waiter::NEEDEXEC)
         {
+            MUTEX_LOCK(sdkMutex);
+            sendPendingTransfers();
+            sendPendingRequests();
+            if(threadExit)
+            {
+                MUTEX_UNLOCK(sdkMutex);
+                break;
+            }
+            client->exec();
             MUTEX_UNLOCK(sdkMutex);
-            break;
         }
-		client->exec();
-        MUTEX_UNLOCK(sdkMutex);
 	}
 
     delete client->dbaccess; //Warning, it's deleted in MegaClient's destructor
