@@ -36,12 +36,13 @@ int MegaApiLinuxWaiter::wait()
     FD_SET(m_pipe[0], &rfds);
     bumpmaxfd(m_pipe[0]);
 
-    select();
+    int r = PosixWaiter::wait();
 
     //Empty pipe
     uint8_t buf;
     while (read(m_pipe[0], &buf, 1) == 1);
-    return NEEDEXEC;
+
+    return r;
 }
 
 void MegaApiLinuxWaiter::notify()
