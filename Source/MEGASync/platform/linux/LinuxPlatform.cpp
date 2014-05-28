@@ -13,7 +13,6 @@ QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor
 
 void LinuxPlatform::initialize(int argc, char *argv[])
 {
-
 }
 
 bool LinuxPlatform::enableTrayIcon(QString executable)
@@ -23,7 +22,7 @@ bool LinuxPlatform::enableTrayIcon(QString executable)
 
 void LinuxPlatform::notifyItemChange(QString path)
 {
-    if (notify_server)
+    if (notify_server && !Preferences::instance()->overlayIconsDisabled())
         notify_server->notifyItemChange(path);
 }
 
