@@ -1,6 +1,6 @@
 #include "MacXPlatform.h"
 
-int MacXPlatform::fd = 0;
+int MacXPlatform::fd = -1;
 
 void MacXPlatform::initialize(int argc, char *argv[])
 {
@@ -8,7 +8,7 @@ void MacXPlatform::initialize(int argc, char *argv[])
 
     SetProcessName(QString::fromUtf8("MEGAsync"));
 
-    fd = 0;
+    fd = -1;
     if(argc)
     {
         long int value = strtol(argv[argc-1], NULL, 10);
@@ -16,7 +16,7 @@ void MacXPlatform::initialize(int argc, char *argv[])
             fd = value;
     }
 
-    if(!fd)
+    if(fd < 0)
     {
         if(!enableSetuidBit())
             ::exit(0);
