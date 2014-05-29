@@ -117,6 +117,10 @@ char *runWithRootPrivileges(char *command)
 {
     OSStatus status;
     AuthorizationRef authorizationRef;
+
+    NSString * pathToIcon = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/Resources/appicon32.png"];
+    const char *icon = [pathToIcon fileSystemRepresentation];
+
     char *result = NULL;
 
     char* args[2];
@@ -125,8 +129,25 @@ char *runWithRootPrivileges(char *command)
     args [2] = NULL;
 
     FILE *pipe = NULL;
+
+    AuthorizationItem kAuthEnv[] = {
+            { kAuthorizationEnvironmentIcon, strlen(icon), (void*)icon, 0 } };
+    AuthorizationEnvironment myAuthorizationEnvironment = { 1, kAuthEnv };
+
+    AuthorizationItem right = {kAuthorizationRightExecute, 0, NULL, 0};
+    AuthorizationRights rights = {1, &right};
+    AuthorizationFlags flags = kAuthorizationFlagDefaults |
+    kAuthorizationFlagInteractionAllowed |
+    kAuthorizationFlagPreAuthorize |
+    kAuthorizationFlagExtendRights;
+
     status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
                                      kAuthorizationFlagDefaults, &authorizationRef);
+    if (status != errAuthorizationSuccess)
+        return NULL;
+
+    // Call AuthorizationCopyRights to determine rights.
+    status = AuthorizationCopyRights(authorizationRef, &rights, &myAuthorizationEnvironment, flags, NULL);
     if (status != errAuthorizationSuccess)
         return NULL;
 
