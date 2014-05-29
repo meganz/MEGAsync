@@ -86,7 +86,7 @@ win32 {
 
 macx {
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
-    MAC_ICONS_RESOURCES.files = folder.icns
+    MAC_ICONS_RESOURCES.files = folder.icns appicon32.png
     MAC_ICONS_RESOURCES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES
     ICON = app.icns
