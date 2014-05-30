@@ -1329,7 +1329,7 @@ padding-right: 20px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>24</height>
+                <height>22</height>
                </size>
               </property>
               <property name="text">
@@ -1390,7 +1390,7 @@ padding-right: 20px;</string>
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>Folder for uploads from Windows Explorer</string>
+          <string>Folder for uploads from this computer</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
@@ -1575,7 +1575,7 @@ padding: 4px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>24</height>
+              <height>22</height>
              </size>
             </property>
             <property name="text">
@@ -1865,9 +1865,6 @@ padding: 4px;</string>
   <tabstop>bProxies</tabstop>
   <tabstop>bAdvanced</tabstop>
   <tabstop>bHelp</tabstop>
-  <tabstop>bOk</tabstop>
-  <tabstop>bCancel</tabstop>
-  <tabstop>bApply</tabstop>
   <tabstop>bUnlink</tabstop>
   <tabstop>bUpgrade</tabstop>
   <tabstop>cShowNotifications</tabstop>
@@ -1910,7 +1907,7 @@ padding: 4px;</string>
    <sender>cProxyType</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
@@ -1926,7 +1923,7 @@ padding: 4px;</string>
    <sender>cProxyRequiresPassword</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
@@ -1990,7 +1987,7 @@ padding: 4px;</string>
    <sender>eProxyPassword</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>144</x>
@@ -2022,7 +2019,7 @@ padding: 4px;</string>
    <sender>eProxyUsername</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>144</x>
@@ -2038,7 +2035,7 @@ padding: 4px;</string>
    <sender>rProxyManual</sender>
    <signal>toggled(bool)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
@@ -2070,7 +2067,7 @@ padding: 4px;</string>
    <sender>eProxyPort</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -2086,7 +2083,7 @@ padding: 4px;</string>
    <sender>eProxyServer</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>144</x>
@@ -2181,5 +2178,6 @@ padding: 4px;</string>
  </connections>
  <slots>
   <slot>stateChanged()</slot>
+  <slot>proxyStateChanged()</slot>
  </slots>
 </ui>

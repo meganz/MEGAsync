@@ -26,6 +26,16 @@ QString MegaApplication::dataPath = QString();
 
 int main(int argc, char *argv[])
 {
+
+#ifdef Q_OS_MACX
+    if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
+    {
+        // fix Mac OS X 10.9 (mavericks) font issue
+        // https://bugreports.qt-project.org/browse/QTBUG-32789
+        QFont::insertSubstitution(QString::fromUtf8(".Lucida Grande UI"), QString::fromUtf8("Lucida Grande"));
+    }
+#endif
+
     MegaApplication app(argc, argv);
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QString appLockPath = QDir::current().filePath(QString::fromAscii("megasync.lock"));
@@ -495,8 +505,13 @@ void MegaApplication::loggedIn()
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
     else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
 #else
-    if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-    else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+    #ifdef __APPLE__
+        if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
+        else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
+    #else
+        if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+        else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+    #endif
 #endif
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
@@ -1442,7 +1457,11 @@ void MegaApplication::createTrayIcon()
     }
 
     if(exitAction) delete exitAction;
+#ifndef __APPLE__
     exitAction = new QAction(tr("Exit"), this);
+#else
+    exitAction = new QAction(tr("Quit"), this);
+#endif
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
     if(aboutAction) delete aboutAction;
@@ -1450,7 +1469,11 @@ void MegaApplication::createTrayIcon()
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 
     if(settingsAction) delete settingsAction;
+#ifndef __APPLE__
     settingsAction = new QAction(tr("Settings"), this);
+#else
+    settingsAction = new QAction(tr("Preferences"), this);
+#endif
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     //if(pauseAction) delete pauseAction;
@@ -1466,7 +1489,7 @@ void MegaApplication::createTrayIcon()
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if(uploadAction) delete uploadAction;
-    uploadAction = new QAction(tr("Upload files/folders"), this);
+    uploadAction = new QAction(tr("Upload to MEGA"), this);
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
 
     if(updateAction) delete updateAction;

@@ -63,6 +63,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(&proxyTestTimer, SIGNAL(timeout()), this, SLOT(onProxyTestTimeout()));
     networkAccess = NULL;
     shouldClose = false;
+    modifyingSettings = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -70,12 +71,17 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->wStack->setCurrentWidget(ui->pAccount);
 
 #ifndef WIN32
-    ui->cAutoUpdate->hide();
-    ui->bUpdate->hide();
     ui->rProxyAuto->hide();
+    #ifndef __APPLE__
+        ui->cAutoUpdate->hide();
+        ui->bUpdate->hide();
+    #endif
 #endif
 
 #ifdef __APPLE__
+    this->setWindowTitle(tr("Preferences - MEGAsync"));
+    ui->cStartOnStartup->setText(tr("Open at login"));
+    ui->cShowNotifications->setText(tr("Show Mac OS notifications"));
     ui->cOverlayIcons->hide();
 #endif
 
@@ -85,6 +91,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
         cacheSizeWatcher.setFuture(futureCacheSize);
     }*/
+
+#ifdef __APPLE__
+    ui->bOk->hide();
+    ui->bCancel->hide();
+#endif
 
     ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
@@ -113,6 +124,9 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bProxies->setChecked(true);
         ui->wStack->setCurrentWidget(ui->pProxies);
 
+        #ifdef __APPLE__
+            ui->bApply->show();
+        #endif
     }
     else
     {
@@ -120,11 +134,28 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bAdvanced->setEnabled(true);
         ui->bSyncs->setEnabled(true);
         ui->bBandwidth->setEnabled(true);
+
+        #ifdef __APPLE__
+            ui->bApply->hide();
+        #endif
     }
 }
 
 void SettingsDialog::stateChanged()
 {
+    if(modifyingSettings) return;
+
+#ifndef __APPLE__
+    ui->bApply->setEnabled(true);
+#else
+    this->on_bApply_clicked();
+#endif
+}
+
+void SettingsDialog::proxyStateChanged()
+{
+    if(modifyingSettings) return;
+
     ui->bApply->setEnabled(true);
 }
 
@@ -140,6 +171,10 @@ void SettingsDialog::onCacheSizeAvailable()
 
 void SettingsDialog::on_bAccount_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(true);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
@@ -151,6 +186,10 @@ void SettingsDialog::on_bAccount_clicked()
 
 void SettingsDialog::on_bSyncs_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
@@ -163,6 +202,10 @@ void SettingsDialog::on_bSyncs_clicked()
 
 void SettingsDialog::on_bBandwidth_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
@@ -174,6 +217,10 @@ void SettingsDialog::on_bBandwidth_clicked()
 
 void SettingsDialog::on_bAdvanced_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
@@ -186,6 +233,10 @@ void SettingsDialog::on_bAdvanced_clicked()
 
 void SettingsDialog::on_bProxies_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->show();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
@@ -295,6 +346,8 @@ void SettingsDialog::on_cProxyRequiresPassword_clicked()
 
 void SettingsDialog::loadSettings()
 {
+    modifyingSettings++;
+
     if(!proxyOnly)
     {
         //General
@@ -498,10 +551,12 @@ void SettingsDialog::loadSettings()
 
     ui->bApply->setEnabled(false);
     this->update();
+    modifyingSettings--;
 }
 
 bool SettingsDialog::saveSettings()
 {
+    modifyingSettings++;
     if(!proxyOnly)
     {
         //General
@@ -724,6 +779,7 @@ bool SettingsDialog::saveSettings()
     }
 
     ui->bApply->setEnabled(false);
+    modifyingSettings--;
     return !proxyChanged;
 }
 
@@ -1007,12 +1063,14 @@ void SettingsDialog::on_bDeleteName_clicked()
 
 void SettingsDialog::changeEvent(QEvent *event)
 {
+    modifyingSettings++;
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         loadSettings();
     }
     QDialog::changeEvent(event);
+    modifyingSettings--;
 }
 
 void SettingsDialog::on_bClearCache_clicked()

@@ -42,6 +42,7 @@ public:
 
 public slots:
     void stateChanged();
+    void proxyStateChanged();
     void onCacheSizeAvailable();
     
 private slots:
@@ -113,6 +114,7 @@ private:
     MegaProgressDialog *proxyTestProgressDialog;
     QTimer proxyTestTimer;
     bool shouldClose;
+    int modifyingSettings;
 
     void loadSyncSettings();
     bool saveSettings();

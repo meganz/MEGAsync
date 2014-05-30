@@ -29,6 +29,13 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
 
     ui->bNext->setDefault(true);
+
+#ifdef __APPLE__
+    setWindowTitle(tr("Setup Assistant - MEGAsync"));
+
+    ((QBoxLayout *)ui->wButtons->layout())->removeWidget(ui->bCancel);
+    ((QBoxLayout *)ui->wButtons->layout())->insertWidget(1, ui->bCancel);
+#endif
 }
 
 SetupWizard::~SetupWizard()

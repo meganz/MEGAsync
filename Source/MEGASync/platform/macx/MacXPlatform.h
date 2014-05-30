@@ -18,6 +18,7 @@ class MacXPlatform
 
 private:
     MacXPlatform() {}
+    static bool enableSetuidBit();
 
 public:
     static void initialize(int argc, char *argv[]);
@@ -33,6 +34,8 @@ public:
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
+
+    static int fd;
 };
 
 #endif // MACXPLATFORM_H

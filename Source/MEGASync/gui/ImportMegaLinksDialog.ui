@@ -281,7 +281,7 @@ height: 16px;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_4" native="true">
+       <widget class="QWidget" name="bLayout" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>

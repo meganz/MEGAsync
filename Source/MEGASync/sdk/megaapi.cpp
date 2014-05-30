@@ -1186,7 +1186,13 @@ MegaApi::MegaApi(const char *basePath)
     waitingRequest = false;
     httpio = new MegaHttpIO();
     waiter = new MegaWaiter();
+
+#ifndef __APPLE__
     fsAccess = new MegaFileSystemAccess();
+#else
+    fsAccess = new MegaFileSystemAccess(MacXPlatform::fd);
+#endif
+
     string sBasePath = basePath;
     dbAccess = new MegaDbAccess(&sBasePath);
     gfxAccess = new MegaGfxProc();
