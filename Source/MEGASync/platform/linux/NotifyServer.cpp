@@ -26,6 +26,7 @@ NotifyServer::NotifyServer(): QObject(),
         return;
     }
 
+    connect(this, SIGNAL(sendToAll(const char *, QString )), this, SLOT(doSendToAll(const char *, QString)));
     connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -84,7 +85,7 @@ void NotifyServer::onClientDisconnected()
 }
 
 // send string to all connected clients
-void NotifyServer::sendToAll(const char *type, QString str)
+void NotifyServer::doSendToAll(const char *type, QString str)
 {
     foreach(QLocalSocket *socket, m_clients)
         if (socket && socket->state() == QLocalSocket::ConnectedState) {
@@ -97,16 +98,16 @@ void NotifyServer::sendToAll(const char *type, QString str)
 
 void NotifyServer::notifyItemChange(QString path)
 {
-    sendToAll("P", path);
+    emit sendToAll("P", path);
 }
 
 void NotifyServer::notifySyncAdd(QString path)
 {
-    sendToAll("A", path);
+    emit sendToAll("A", path);
 }
 
 void NotifyServer::notifySyncDel(QString path)
 {
-    sendToAll("D", path);
+    emit sendToAll("D", path);
 }
 
