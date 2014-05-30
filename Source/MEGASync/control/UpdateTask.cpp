@@ -1,7 +1,6 @@
 #include "MegaApplication.h"
 #include "UpdateTask.h"
 #include "control/Utilities.h"
-#include "platform/Platform.h"
 #include <iostream>
 #include <QAuthenticator>
 
@@ -292,14 +291,13 @@ bool UpdateTask::processFile(QNetworkReply *reply)
 
 bool UpdateTask::performUpdate()
 {
-    int i;
     LOG("performUpdate");
 
     //Create backup folder
     backupFolder = QDir(appFolder.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
     backupFolder.mkdir(QString::fromAscii("."));
 
-    for(i=0; i<localPaths.size(); i++)
+    for(int i=0; i<localPaths.size(); i++)
     {
         QString file = localPaths[i];
 
