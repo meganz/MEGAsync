@@ -15,12 +15,14 @@ void SetProcessName(QString procname) {
   CFStringRef process_name = CFStringCreateWithCharacters(0, (UniChar *)procname.unicode(), procname.length());
 
 
-  if (!process_name || CFStringGetLength(process_name) == 0) {
+  if (!process_name || CFStringGetLength(process_name) == 0)
+  {
     //"SetProcessName given bad name.";
     return;
   }
 
-  if (![NSThread isMainThread]) {
+  if (![NSThread isMainThread])
+  {
     //"Should only set process name from main thread.";
     return;
   }
@@ -54,7 +56,8 @@ void SetProcessName(QString procname) {
     CFBundleRef launch_services_bundle =
         CFBundleGetBundleWithIdentifier(CFSTR("com.apple.LaunchServices"));
 
-    if (!launch_services_bundle) {
+    if (!launch_services_bundle)
+    {
       //"Failed to look up LaunchServices bundle";
       return;
     }
@@ -65,7 +68,9 @@ void SetProcessName(QString procname) {
                 launch_services_bundle, CFSTR("_LSGetCurrentApplicationASN")));
 
     if (!ls_get_current_application_asn_func)
-      //"Could not find _LSGetCurrentApplicationASN");
+    {
+        //"Could not find _LSGetCurrentApplicationASN");
+    }
 
     ls_set_application_information_item_func =
         reinterpret_cast<LSSetApplicationInformationItemType>(
@@ -74,7 +79,10 @@ void SetProcessName(QString procname) {
                 CFSTR("_LSSetApplicationInformationItem")));
 
     if (!ls_set_application_information_item_func)
-      //"Could not find _LSSetApplicationInformationItem");
+    {
+        //"Could not find _LSSetApplicationInformationItem");
+    }
+
 
         key_pointer = reinterpret_cast<CFStringRef*>(
         CFBundleGetDataPointerForName(launch_services_bundle,
@@ -82,7 +90,10 @@ void SetProcessName(QString procname) {
     ls_display_name_key = key_pointer ? *key_pointer : NULL;
 
     if (!ls_display_name_key)
-      //"Could not find _kLSDisplayNameKey");
+    {
+        //"Could not find _kLSDisplayNameKey");
+    }
+
 
     // Internally, this call relies on the Mach ports that are started up by the
     // Carbon Process Manager.  In debug builds this usually happens due to how
@@ -356,14 +367,7 @@ void setFolderIcon(QString path)
     NSString * appPath = [[NSBundle mainBundle] bundlePath];
     NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder.icns"]];
 
-    BOOL didSetIcon = [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
-
-    if(!didSetIcon)
-    {
-        [iconImage release];
-        [folderPath release];
-        return;
-    }
+    [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
 
     [iconImage release];
     [folderPath release];
@@ -373,13 +377,7 @@ void unSetFolderIcon(QString path)
 {
 
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
-    BOOL didUnsetIcon = [[NSWorkspace sharedWorkspace] setIcon:nil forFile:folderPath options:0];
-
-    if(!didUnsetIcon)
-    {
-        [folderPath release];
-        return;
-    }
+    [[NSWorkspace sharedWorkspace] setIcon:nil forFile:folderPath options:0];
 
     [folderPath release];
 }
