@@ -182,11 +182,12 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         // get the state of an object
         case 'P':
         {
-            mega::treestate_t state;
-            MegaApplication *app = (MegaApplication *)qApp;
-            MegaApi *megaApi = app->getMegaApi();
-            string tmpPath(content);
-            state = megaApi->syncPathState(&tmpPath);
+            mega::treestate_t state = TREESTATE_NONE;
+            if(!Preferences::instance()->overlayIconsDisabled())
+            {
+                string tmpPath(content);
+                state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
+            }
 
             switch(state)
             {

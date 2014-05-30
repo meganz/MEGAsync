@@ -22,11 +22,16 @@ class NotifyServer: public QObject
  public Q_SLOTS:
     void acceptConnection();
     void onClientDisconnected();
+    void doSendToAll(const char *type, QString str);
+
  private:
     MegaApplication *app;
     QString sockPath;
     QList<QLocalSocket *> m_clients;
+
+signals:
     void sendToAll(const char *type, QString str);
+
 };
 
 #endif

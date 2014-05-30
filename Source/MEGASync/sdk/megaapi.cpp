@@ -22,6 +22,7 @@ DEALINGS IN THE SOFTWARE.
 
 #ifndef WIN32
 #define _LARGEFILE64_SOURCE
+#include <signal.h>
 #endif
 
 #define _GNU_SOURCE 1
@@ -1145,7 +1146,14 @@ TreeProcessor::~TreeProcessor() {}
 //Entry point for the blocking thread
 void *MegaApi::threadEntryPoint(void *param)
 {
-	MegaApi *api = (MegaApi *)param;
+#ifndef WIN32
+    struct sigaction noaction;
+    memset(&noaction, 0, sizeof(noaction));
+    noaction.sa_handler = SIG_IGN;
+    ::sigaction(SIGPIPE, &noaction, 0);
+#endif
+
+    MegaApi *api = (MegaApi *)param;
 	api->loop();
 	return 0;
 }
