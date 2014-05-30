@@ -19,6 +19,11 @@ PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent) :
 	QString text = clipboard->text();
 	if(extractLinks(text).size()!=0)
 		ui->eLinks->setPlainText(text);
+
+#ifdef __APPLE__
+    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
+    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
+#endif
 }
 
 PasteMegaLinksDialog::~PasteMegaLinksDialog()

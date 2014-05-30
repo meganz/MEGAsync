@@ -11,6 +11,11 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
 	setAttribute(Qt::WA_QuitOnClose, false);
     this->megaApi = megaApi;
     this->delegateListener = new QTMegaRequestListener(megaApi, this);
+
+#ifdef __APPLE__
+    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
+    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
+#endif
 }
 
 UploadToMegaDialog::~UploadToMegaDialog()

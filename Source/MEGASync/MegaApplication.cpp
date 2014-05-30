@@ -495,8 +495,13 @@ void MegaApplication::loggedIn()
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
     else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
 #else
-    if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-    else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+    #ifdef __APPLE__
+        if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
+        else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
+    #else
+        if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+        else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
+    #endif
 #endif
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
@@ -1442,7 +1447,11 @@ void MegaApplication::createTrayIcon()
     }
 
     if(exitAction) delete exitAction;
+#ifndef __APPLE__
     exitAction = new QAction(tr("Exit"), this);
+#else
+    exitAction = new QAction(tr("Quit"), this);
+#endif
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
     if(aboutAction) delete aboutAction;
@@ -1450,7 +1459,11 @@ void MegaApplication::createTrayIcon()
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
 
     if(settingsAction) delete settingsAction;
+#ifndef __APPLE__
     settingsAction = new QAction(tr("Settings"), this);
+#else
+    settingsAction = new QAction(tr("Preferences"), this);
+#endif
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     //if(pauseAction) delete pauseAction;
