@@ -89,6 +89,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         cacheSizeWatcher.setFuture(futureCacheSize);
     }*/
 
+#ifdef __APPLE__
+    ui->bOk->hide();
+    ui->bCancel->hide();
+#endif
+
     ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
@@ -116,6 +121,9 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bProxies->setChecked(true);
         ui->wStack->setCurrentWidget(ui->pProxies);
 
+        #ifdef __APPLE__
+            ui->bApply->show();
+        #endif
     }
     else
     {
@@ -123,10 +131,23 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bAdvanced->setEnabled(true);
         ui->bSyncs->setEnabled(true);
         ui->bBandwidth->setEnabled(true);
+
+        #ifdef __APPLE__
+            ui->bApply->hide();
+        #endif
     }
 }
 
 void SettingsDialog::stateChanged()
+{
+#ifndef __APPLE___
+    ui->bApply->setEnabled(true);
+#else
+    this->on_bApply_clicked();
+#endif
+}
+
+void SettingsDialog::proxyStateChanged()
 {
     ui->bApply->setEnabled(true);
 }
@@ -143,6 +164,10 @@ void SettingsDialog::onCacheSizeAvailable()
 
 void SettingsDialog::on_bAccount_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(true);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
@@ -154,6 +179,10 @@ void SettingsDialog::on_bAccount_clicked()
 
 void SettingsDialog::on_bSyncs_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
@@ -166,6 +195,10 @@ void SettingsDialog::on_bSyncs_clicked()
 
 void SettingsDialog::on_bBandwidth_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
@@ -177,6 +210,10 @@ void SettingsDialog::on_bBandwidth_clicked()
 
 void SettingsDialog::on_bAdvanced_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
@@ -189,6 +226,10 @@ void SettingsDialog::on_bAdvanced_clicked()
 
 void SettingsDialog::on_bProxies_clicked()
 {
+#ifdef __APPLE__
+    ui->bApply->show();
+#endif
+
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);

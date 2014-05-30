@@ -1907,7 +1907,7 @@ padding: 4px;</string>
    <sender>cProxyType</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
@@ -1923,7 +1923,7 @@ padding: 4px;</string>
    <sender>cProxyRequiresPassword</sender>
    <signal>stateChanged(int)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
@@ -1987,7 +1987,7 @@ padding: 4px;</string>
    <sender>eProxyPassword</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>144</x>
@@ -2019,7 +2019,7 @@ padding: 4px;</string>
    <sender>eProxyUsername</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>144</x>
@@ -2035,7 +2035,7 @@ padding: 4px;</string>
    <sender>rProxyManual</sender>
    <signal>toggled(bool)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
@@ -2067,7 +2067,7 @@ padding: 4px;</string>
    <sender>eProxyPort</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -2083,7 +2083,7 @@ padding: 4px;</string>
    <sender>eProxyServer</sender>
    <signal>textChanged(QString)</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
+   <slot>proxyStateChanged()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>144</x>
@@ -2178,5 +2178,6 @@ padding: 4px;</string>
  </connections>
  <slots>
   <slot>stateChanged()</slot>
+  <slot>proxyStateChanged()</slot>
  </slots>
 </ui>
