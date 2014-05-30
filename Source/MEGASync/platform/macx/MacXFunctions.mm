@@ -177,6 +177,23 @@ bool startAtLogin(bool opt)
     if(opt)
     {
         if (loginItems) {
+
+            UInt32 seed;
+            NSArray *items = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seed);
+
+            // Remove duplicates called "MEGAsync"
+            for (id item in items) {
+                LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;
+                CFStringRef itemName = LSSharedFileListItemCopyDisplayName(itemRef);
+
+                if ([(NSString *)itemName isEqualToString:@"MEGAsync"]) {
+                    OSStatus error = LSSharedFileListItemRemove(loginItems, itemRef);
+                    if (error != noErr)
+                        NSLog(@"Failed to remove App from Session Login Items");
+                }
+                CFRelease(itemName);
+            }
+
             //Insert an item to the login list.
             LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
                                                                          kLSSharedFileListItemLast, NULL, NULL,
