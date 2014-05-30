@@ -55,7 +55,7 @@ QPushButton
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="bLayout" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
