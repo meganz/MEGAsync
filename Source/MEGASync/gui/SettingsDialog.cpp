@@ -63,6 +63,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(&proxyTestTimer, SIGNAL(timeout()), this, SLOT(onProxyTestTimeout()));
     networkAccess = NULL;
     shouldClose = false;
+    modifyingSettings = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -70,9 +71,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->wStack->setCurrentWidget(ui->pAccount);
 
 #ifndef WIN32
-    ui->cAutoUpdate->hide();
-    ui->bUpdate->hide();
     ui->rProxyAuto->hide();
+    #ifndef __APPLE__
+        ui->cAutoUpdate->hide();
+        ui->bUpdate->hide();
+    #endif
 #endif
 
 #ifdef __APPLE__
@@ -140,7 +143,9 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
 void SettingsDialog::stateChanged()
 {
-#ifndef __APPLE___
+    if(modifyingSettings) return;
+
+#ifndef __APPLE__
     ui->bApply->setEnabled(true);
 #else
     this->on_bApply_clicked();
@@ -149,6 +154,8 @@ void SettingsDialog::stateChanged()
 
 void SettingsDialog::proxyStateChanged()
 {
+    if(modifyingSettings) return;
+
     ui->bApply->setEnabled(true);
 }
 
@@ -339,6 +346,8 @@ void SettingsDialog::on_cProxyRequiresPassword_clicked()
 
 void SettingsDialog::loadSettings()
 {
+    modifyingSettings++;
+
     if(!proxyOnly)
     {
         //General
@@ -542,10 +551,12 @@ void SettingsDialog::loadSettings()
 
     ui->bApply->setEnabled(false);
     this->update();
+    modifyingSettings--;
 }
 
 bool SettingsDialog::saveSettings()
 {
+    modifyingSettings++;
     if(!proxyOnly)
     {
         //General
@@ -768,6 +779,7 @@ bool SettingsDialog::saveSettings()
     }
 
     ui->bApply->setEnabled(false);
+    modifyingSettings--;
     return !proxyChanged;
 }
 
@@ -1051,12 +1063,14 @@ void SettingsDialog::on_bDeleteName_clicked()
 
 void SettingsDialog::changeEvent(QEvent *event)
 {
+    modifyingSettings++;
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
         loadSettings();
     }
     QDialog::changeEvent(event);
+    modifyingSettings--;
 }
 
 void SettingsDialog::on_bClearCache_clicked()

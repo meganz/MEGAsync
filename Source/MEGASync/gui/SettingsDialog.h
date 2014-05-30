@@ -114,6 +114,7 @@ private:
     MegaProgressDialog *proxyTestProgressDialog;
     QTimer proxyTestTimer;
     bool shouldClose;
+    int modifyingSettings;
 
     void loadSyncSettings();
     bool saveSettings();
