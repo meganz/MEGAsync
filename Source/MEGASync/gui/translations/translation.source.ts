@@ -499,7 +499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>[$2013]</translation>
+        <translation type="obsolete">[$2013]</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -508,6 +508,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translation>[$2014]</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation type="unfinished">[$2015]</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished">[$1644]</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished">[$1646]</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation type="unfinished">[$1803]</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation type="unfinished">XXXXX</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>[$1741]</translation>
+        <translation type="obsolete">[$1741]</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>[$1904]</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation type="unfinished">XXXXX</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation type="unfinished">[$1646] - [$1626]</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation type="unfinished">[$1721]</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation type="unfinished">[$1720]</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>[$1919]
 [$1920]</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation type="unfinished">[$1760] - [$1626]</translation>
     </message>
 </context>
 <context>
