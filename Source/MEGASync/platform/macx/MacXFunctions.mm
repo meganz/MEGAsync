@@ -120,7 +120,7 @@ char *runWithRootPrivileges(char *command)
 
     NSString * pathToIcon = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/Resources/appicon32.png"];
     const char *icon = [pathToIcon fileSystemRepresentation];
-    const char *prompt = "MEGAsync \n\n";
+    const char *prompt = "MEGAsync.";
 
     char *result = NULL;
 
