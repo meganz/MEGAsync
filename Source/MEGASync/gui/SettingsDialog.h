@@ -42,6 +42,7 @@ public:
 
 public slots:
     void stateChanged();
+    void proxyStateChanged();
     void onCacheSizeAvailable();
     
 private slots:

@@ -1489,7 +1489,7 @@ void MegaApplication::createTrayIcon()
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if(uploadAction) delete uploadAction;
-    uploadAction = new QAction(tr("Upload files/folders"), this);
+    uploadAction = new QAction(tr("Upload to MEGA"), this);
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
 
     if(updateAction) delete updateAction;
