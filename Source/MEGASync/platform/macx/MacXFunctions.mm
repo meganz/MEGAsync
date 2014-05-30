@@ -120,6 +120,7 @@ char *runWithRootPrivileges(char *command)
 
     NSString * pathToIcon = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/Resources/appicon32.png"];
     const char *icon = [pathToIcon fileSystemRepresentation];
+    const char *prompt = "MEGAsync \n\n";
 
     char *result = NULL;
 
@@ -131,8 +132,9 @@ char *runWithRootPrivileges(char *command)
     FILE *pipe = NULL;
 
     AuthorizationItem kAuthEnv[] = {
-            { kAuthorizationEnvironmentIcon, strlen(icon), (void*)icon, 0 } };
-    AuthorizationEnvironment myAuthorizationEnvironment = { 1, kAuthEnv };
+            { kAuthorizationEnvironmentIcon, strlen(icon), (void*)icon, 0 },
+        {kAuthorizationEnvironmentPrompt, strlen(prompt), (char *) prompt, 0}};
+    AuthorizationEnvironment myAuthorizationEnvironment = { 2, kAuthEnv };
 
     AuthorizationItem right = {kAuthorizationRightExecute, 0, NULL, 0};
     AuthorizationRights rights = {1, &right};
