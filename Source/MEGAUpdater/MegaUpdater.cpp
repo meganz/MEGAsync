@@ -53,24 +53,29 @@ const char *UPDATE_FILES_WIN[] = {
 };
 
 const char *TARGET_PATHS_OSX[] = {
-    "Contents/MacOS/megasync",
+    "Contents/MacOS/MEGAclient",
     "Contents/Info.plist",
     "Contents/PkgInfo",
 
     "Contents/Frameworks/QtCore.framework/Versions/4/QtCore",
+
     "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/classes.nib",
     "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/info.nib",
     "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/keyedobjects.nib",
     "Contents/Frameworks/QtGui.framework/Versions/4/QtGui",
+
     "Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork",
 
     "Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib",
+
     "Contents/PlugIns/bearer/libqcorewlanbearer.dylib",
     "Contents/PlugIns/bearer/libqgenericbearer.dylib",
+
     "Contents/PlugIns/codecs/libqcncodecs.dylib",
     "Contents/PlugIns/codecs/libqjpcodecs.dylib",
     "Contents/PlugIns/codecs/libqkrcodecs.dylib",
     "Contents/PlugIns/codecs/libqtwcodecs.dylib",
+
     "Contents/PlugIns/imageformats/libqgif.dylib",
     "Contents/PlugIns/imageformats/libqico.dylib",
     "Contents/PlugIns/imageformats/libqjpeg.dylib",
@@ -80,16 +85,18 @@ const char *TARGET_PATHS_OSX[] = {
 
     "Contents/Resources/empty.lproj",
     "Contents/Resources/app.icns",
+    "Contents/Resources/appicon32.png",
     "Contents/Resources/folder.icns",
     "Contents/Resources/qt.conf"
 };
 
 const char *UPDATE_FILES_OSX[] = {
-    "Contents/MacOS/megasync",
+    "Contents/MacOS/MEGAclient",
     "Contents/Info.plist",
     "Contents/PkgInfo",
 
     "Contents/Frameworks/QtCore.framework/Versions/4/QtCore",
+
     "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/classes.nib",
     "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/info.nib",
     "Contents/Frameworks/QtGui.framework/Resources/qt_menu.nib/keyedobjects.nib",
@@ -97,12 +104,15 @@ const char *UPDATE_FILES_OSX[] = {
     "Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork",
 
     "Contents/PlugIns/accessible/libqtaccessiblewidgets.dylib",
+
     "Contents/PlugIns/bearer/libqcorewlanbearer.dylib",
     "Contents/PlugIns/bearer/libqgenericbearer.dylib",
+
     "Contents/PlugIns/codecs/libqcncodecs.dylib",
     "Contents/PlugIns/codecs/libqjpcodecs.dylib",
     "Contents/PlugIns/codecs/libqkrcodecs.dylib",
     "Contents/PlugIns/codecs/libqtwcodecs.dylib",
+
     "Contents/PlugIns/imageformats/libqgif.dylib",
     "Contents/PlugIns/imageformats/libqico.dylib",
     "Contents/PlugIns/imageformats/libqjpeg.dylib",
@@ -112,6 +122,7 @@ const char *UPDATE_FILES_OSX[] = {
 
     "Contents/Resources/empty.lproj",
     "Contents/Resources/app.icns",
+    "Contents/Resources/appicon32.png",
     "Contents/Resources/folder.icns",
     "Contents/Resources/qt.conf"
 };
