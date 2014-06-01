@@ -1175,7 +1175,7 @@ void SettingsDialog::on_bUpdate_clicked()
 void SettingsDialog::on_bFullCheck_clicked()
 {
     preferences->setCrashed(true);
-    if(QMessageBox::warning(this, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders\nwhen it starts.\n\nDo you want to restart MEGAsync now?"),
+    if(QMessageBox::warning(this, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
                          QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
     {
         app->rebootApplication(false);
