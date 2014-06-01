@@ -1138,7 +1138,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>[$2011]
+        <translation type="obsolete">[$2011]
 
 [$2012]
 </translation>
@@ -1162,6 +1162,14 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Show Mac OS notifications</source>
         <translation type="unfinished">[$1720]</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation type="unfinished">[$2011]
+
+[$2012]</translation>
     </message>
 </context>
 <context>
