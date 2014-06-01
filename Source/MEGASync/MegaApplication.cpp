@@ -351,7 +351,11 @@ void MegaApplication::updateTrayIcon()
     if(!infoDialog)
     {
         LOG("STATE: Logging in...");
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+        #ifndef __APPLE__
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+        #else
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")));
+        #endif
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     }
     else if(paused)
@@ -363,7 +367,7 @@ void MegaApplication::updateTrayIcon()
             #ifndef __APPLE__
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.ico")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")));
             #endif
             trayIcon->setToolTip(tooltip);
         }
@@ -373,7 +377,7 @@ void MegaApplication::updateTrayIcon()
             #ifndef __APPLE__
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.ico")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")));
             #endif
             tooltip += QString::fromAscii("\n") + tr("Update available!");
             trayIcon->setToolTip(tooltip);
@@ -407,7 +411,7 @@ void MegaApplication::updateTrayIcon()
             #ifndef __APPLE__
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.ico")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
             #endif
             trayIcon->setToolTip(tooltip);
         }
@@ -417,7 +421,7 @@ void MegaApplication::updateTrayIcon()
             #ifndef __APPLE__
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.ico")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
             #endif
             tooltip += QString::fromAscii("\n") + tr("Update available!");
             trayIcon->setToolTip(tooltip);
@@ -431,7 +435,7 @@ void MegaApplication::updateTrayIcon()
             #ifndef __APPLE__
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.ico")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")));
             #endif
             trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
         }
@@ -441,7 +445,7 @@ void MegaApplication::updateTrayIcon()
             #ifndef __APPLE__
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.ico")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")));
             #endif
             trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
         }
@@ -1558,7 +1562,7 @@ void MegaApplication::createTrayIcon()
         #ifndef __APPLE__
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
         #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.ico")));
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
         #endif
     }
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
