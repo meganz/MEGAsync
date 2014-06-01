@@ -819,7 +819,6 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setRowCount(0);
         syncNames.clear();
         syncsChanged = true;
-        stateChanged();
 
     #if QT_VERSION < 0x050000
         QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
@@ -843,6 +842,7 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setItem(pos, 0, localFolder);
         ui->tSyncs->setItem(pos, 1, megaFolder);
         syncNames.append(QString::fromAscii("MEGA"));
+        stateChanged();
     }
 
     updateAddButton();
