@@ -187,8 +187,9 @@
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
         <file>fonts/OpenSans-Regular.ttf</file>
         <file>fonts/OpenSans-Semibold.ttf</file>
-        <file>images/icon_paused_mac.ico</file>
-        <file>images/icon_synced_mac.ico</file>
-        <file>images/icon_syncing_mac.ico</file>
+        <file>images/icon_logging_mac.png</file>
+        <file>images/icon_paused_mac.png</file>
+        <file>images/icon_synced_mac.png</file>
+        <file>images/icon_syncing_mac.png</file>
     </qresource>
 </RCC>
