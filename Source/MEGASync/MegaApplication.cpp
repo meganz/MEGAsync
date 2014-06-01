@@ -462,7 +462,11 @@ void MegaApplication::start()
     delete multiUploadFileDialog;
     multiUploadFileDialog = NULL;
 
+#ifndef __APPLE__
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+#else
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")));
+#endif
     trayIcon->setContextMenu(initialMenu);
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
