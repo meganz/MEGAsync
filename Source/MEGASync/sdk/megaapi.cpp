@@ -507,7 +507,7 @@ MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 	this->nodeHandle = UNDEF;
 	this->link = NULL;
 	this->parentHandle = UNDEF;
-	this->userHandle = NULL;
+    this->sessionKey = NULL;
 	this->name = NULL;
 	this->email = NULL;
 	this->password = NULL;
@@ -531,7 +531,7 @@ MegaRequest::MegaRequest(int type, MegaRequestListener *listener)
 MegaRequest::MegaRequest(MegaRequest &request)
 {
     this->link = NULL;
-    this->userHandle = NULL;
+    this->sessionKey = NULL;
     this->name = NULL;
     this->email = NULL;
     this->password = NULL;
@@ -546,7 +546,7 @@ MegaRequest::MegaRequest(MegaRequest &request)
 	this->setNodeHandle(request.getNodeHandle());
 	this->setLink(request.getLink());
 	this->setParentHandle(request.getParentHandle());
-	this->setUserHandle(request.getUserHandle());
+    this->setSessionKey(request.getSessionKey());
 	this->setName(request.getName());
 	this->setEmail(request.getEmail());
 	this->setPassword(request.getPassword());
@@ -597,7 +597,7 @@ MegaRequest::~MegaRequest()
 	if(newPassword) delete [] newPassword;
 	if(privateKey) delete [] privateKey;
 	if(accountDetails) delete accountDetails;
-	if(userHandle) delete [] userHandle;
+    if(sessionKey) delete [] sessionKey;
 	if(publicNode) delete publicNode;
 	if(file) delete [] file;
 }
@@ -611,7 +611,7 @@ int MegaRequest::getType() const { return type; }
 uint64_t MegaRequest::getNodeHandle() const { return nodeHandle; }
 const char* MegaRequest::getLink() const { return link; }
 uint64_t MegaRequest::getParentHandle() const { return parentHandle; }
-const char* MegaRequest::getUserHandle() const { return userHandle; }
+const char* MegaRequest::getSessionKey() const { return sessionKey; }
 const char* MegaRequest::getName() const { return name; }
 const char* MegaRequest::getEmail() const { return email; }
 const char* MegaRequest::getPassword() const { return password; }
@@ -631,10 +631,10 @@ void MegaRequest::setNumDetails(int numDetails) { this->numDetails = numDetails;
 MegaNode *MegaRequest::getPublicNode() { return publicNode;}
 void MegaRequest::setNodeHandle(handle nodeHandle) { this->nodeHandle = nodeHandle; }
 void MegaRequest::setParentHandle(handle parentHandle) { this->parentHandle = parentHandle; }
-void MegaRequest::setUserHandle(const char* userHandle)
+void MegaRequest::setSessionKey(const char* sessionKey)
 {
-	if(this->userHandle) delete [] this->userHandle;
-	this->userHandle = MegaApi::strdup(userHandle);
+    if(this->sessionKey) delete [] this->sessionKey;
+    this->sessionKey = MegaApi::strdup(sessionKey);
 }
 
 void MegaRequest::setNumRetry(int numRetry) { this->numRetry = numRetry; }
@@ -1315,6 +1315,13 @@ void MegaApi::fastLogin(const char* email, const char *stringHash, const char *b
     waiter->notify();
 }
 
+void MegaApi::fastLogin(const char *session, MegaRequestListener *listener)
+{
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_FAST_LOGIN, listener);
+    request->setSessionKey(session);
+    requestQueue.push(request);
+    waiter->notify();
+}
 
 void MegaApi::login(const char *login, const char *password, MegaRequestListener *listener)
 {
@@ -1323,6 +1330,23 @@ void MegaApi::login(const char *login, const char *password, MegaRequestListener
 	request->setPassword(password);
 	requestQueue.push(request);
     waiter->notify();
+}
+
+const char *MegaApi::dumpSession()
+{
+    MUTEX_LOCK(sdkMutex);
+    byte session[64];
+    char* buf = NULL;
+    int size;
+    size = client->dumpsession(session, sizeof session);
+    if (size > 0)
+    {
+        buf = new char[sizeof(session)*4/3+4];
+        Base64::btoa(session, size, buf);
+    }
+
+    MUTEX_UNLOCK(sdkMutex);
+    return buf;
 }
 
 void MegaApi::createAccount(const char* email, const char* password, const char* name, MegaRequestListener *listener)
@@ -2966,7 +2990,7 @@ void MegaApi::request_error(error e)
 {
 	MegaError megaError(e);
 #ifdef USE_QT
-    ((MegaApplication *)qApp)->showErrorMessage(QCoreApplication::translate("MegaError", "Error") + QString::fromAscii(":") + megaError.QgetErrorString());
+    ((MegaApplication *)qApp)->showErrorMessage(QCoreApplication::translate("MegaError", "Error") + QString::fromAscii(": ") + megaError.QgetErrorString());
 #endif
 }
 
@@ -4652,12 +4676,22 @@ void MegaApi::sendPendingRequests()
 			const char* email = request->getEmail();
 			const char* stringHash = request->getPassword();
 			const char* base64pwkey = request->getPrivateKey();
-			if(!email || !base64pwkey || !stringHash) { e = API_EARGS; break; }
+            const char* sessionKey = request->getSessionKey();
+            if(!sessionKey && (!email || !base64pwkey || !stringHash)) { e = API_EARGS; break; }
 
-			byte pwkey[SymmCipher::KEYLENGTH];
-			Base64::atob(base64pwkey, (byte *)pwkey, sizeof pwkey);
+            if(!sessionKey)
+            {
+                byte pwkey[SymmCipher::KEYLENGTH];
+                Base64::atob(base64pwkey, (byte *)pwkey, sizeof pwkey);
+                client->login(email, pwkey);
+            }
+            else
+            {
+                byte session[sizeof client->key.key + MegaClient::SIDLEN];
+                Base64::atob(sessionKey, (byte *)session, sizeof session);
+                client->login(session, sizeof session);
+            }
 
-            client->login(email, pwkey);
             /*byte strhash[SymmCipher::KEYLENGTH];
 			Base64::atob(stringHash, (byte *)strhash, sizeof strhash);
 

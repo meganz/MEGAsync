@@ -32,7 +32,8 @@ public:
     void setEmail(QString email);
     QString emailHash();
     QString privatePw();
-    void setCredentials(QString emailHash, QString privatePw);
+    void setSession(QString session);
+    QString getSession();
     long long totalStorage();
     void setTotalStorage(long long value);
     long long usedStorage();
@@ -238,6 +239,7 @@ protected:
     static const QString lastRebootKey;
     static const QString lastExitKey;
     static const QString disableOverlayIconsKey;
+    static const QString sessionKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

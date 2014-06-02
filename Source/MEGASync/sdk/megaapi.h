@@ -378,7 +378,7 @@ class MegaRequest
 		mega::handle getNodeHandle() const;
 		const char* getLink() const;
 		mega::handle getParentHandle() const;
-		const char* getUserHandle() const;
+        const char* getSessionKey() const;
 		const char* getName() const;
 		const char* getEmail() const;
 		const char* getPassword() const;
@@ -397,7 +397,7 @@ class MegaRequest
 		void setNodeHandle(mega::handle nodeHandle);
 		void setLink(const char* link);
 		void setParentHandle(mega::handle parentHandle);
-		void setUserHandle(const char* userHandle);
+        void setSessionKey(const char* sessionKey);
 		void setName(const char* name);
 		void setEmail(const char* email);
     	void setPassword(const char* email);
@@ -426,7 +426,7 @@ class MegaRequest
 		const char* link;
 		const char* name;
 		mega::handle parentHandle;
-		const char* userHandle;
+        const char* sessionKey;
 		const char* email;
 		const char* password;
 		const char* newPassword;
@@ -876,7 +876,9 @@ public:
 
 	//API requests
 	void login(const char* email, const char* password, MegaRequestListener *listener = NULL);
+    const char *dumpSession();
 	void fastLogin(const char* email, const char *stringHash, const char *base64pwkey, MegaRequestListener *listener = NULL);
+    void fastLogin(const char* session, MegaRequestListener *listener = NULL);
 	void createAccount(const char* email, const char* password, const char* name, MegaRequestListener *listener = NULL);
 	void fastCreateAccount(const char* email, const char *base64pwkey, const char* name, MegaRequestListener *listener = NULL);
 	void querySignupLink(const char* link, MegaRequestListener *listener = NULL);
