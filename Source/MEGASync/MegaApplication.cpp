@@ -475,9 +475,16 @@ void MegaApplication::start()
         megaApi->setExcludedNames(&vExclusions);
 
         //Otherwise, login in the account
-        megaApi->fastLogin(preferences->email().toUtf8().constData(),
+        if(preferences->getSession().size())
+        {
+            megaApi->fastLogin(preferences->getSession().toUtf8().constData());
+        }
+        else
+        {
+            megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
                        preferences->privatePw().toUtf8().constData());
+        }
     }
 }
 
@@ -1563,11 +1570,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         //This prevents to handle logins in the initial setup wizard
         if(preferences->logged())
 		{
-			if(e->getErrorCode() == MegaError::API_OK)
+            if(e->getErrorCode() == MegaError::API_OK)
 			{
-                //Successful login, fetch nodes and account details
-				megaApi->fetchNodes();
-                break;
+                const char *session = megaApi->dumpSession();
+                if(session)
+                {
+                    QString sessionKey = QString::fromUtf8(session);
+                    preferences->setSession(sessionKey);
+                    delete session;
+
+                    //Successful login, fetch nodes
+                    megaApi->fetchNodes();
+                    break;
+                }
 			}
 
             //Wrong login -> logout

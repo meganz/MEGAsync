@@ -77,6 +77,7 @@ const QString Preferences::previousCrashesKey       = QString::fromAscii("previo
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
 const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
+const QString Preferences::sessionKey               = QString::fromAscii("session");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -157,14 +158,24 @@ QString Preferences::privatePw()
     return value;
 }
 
-void Preferences::setCredentials(QString emailHash, QString privatePw)
+void Preferences::setSession(QString session)
 {
     mutex.lock();
     assert(logged());
-    settings->setValue(emailHashKey, emailHash);
-    settings->setValue(privatePwKey, privatePw);
+    settings->setValue(sessionKey, session);
+    settings->remove(emailHashKey);
+    settings->remove(privatePwKey);
     settings->sync();
     mutex.unlock();
+}
+
+QString Preferences::getSession()
+{
+    mutex.lock();
+    assert(logged());
+    QString value = settings->value(sessionKey).toString();
+    mutex.unlock();
+    return value;
 }
 
 long long Preferences::totalStorage()
@@ -979,6 +990,7 @@ void Preferences::unlink()
     assert(logged());
     settings->remove(emailHashKey);
     settings->remove(privatePwKey);
+    settings->remove(sessionKey);
     settings->endGroup();
 
     settings->remove(currentAccountKey);
