@@ -1,14 +1,18 @@
 ## End user installation instructions
 
 ##### Table of Contents
-[Ubuntu 14.10](#ubuntu_14.10)
-[Ubuntu 13.10](#ubuntu_13.10)
-[Ubuntu 12.10](#ubuntu_12.10)
-[Ubuntu 12.04](#ubuntu_12.04)
-[Debian 7](#debian_7)
-[Fedora 20](#fedora_20)
-[Fedora 19](#fedora_19)
-
+- [Ubuntu 14.10](#ubuntu_14.10)
+- [Ubuntu 13.10](#ubuntu_13.10)
+- [Ubuntu 12.10](#ubuntu_12.10)
+- [Ubuntu 12.04](#ubuntu_12.04)
+- [Debian 7](#debian_7)
+- [Fedora 20](#fedora_20)
+- [Fedora 19](#fedora_19)
+- [openSUSE Factory](#openSUSE_Factory)
+- [openSUSE 13.1](#openSUSE_13.1)
+- [openSUSE 12.3](#openSUSE_12.3)
+- [openSUSE 12.2](#openSUSE_12.2)
+- [Arch Linux](#arch_linux)
 
 <a name="ubuntu_14.04"/>
 ### Ubuntu 14.04
@@ -88,3 +92,19 @@ sudo yum update
 sudo yum install megasync nautilus-megasync
 nautilus --quit
 ```
+
+<a name="openSUSE_Factory"/>
+### openSUSE Factory
+
+<a name="openSUSE_13.1"/>
+### openSUSE 13.1
+
+<a name="openSUSE_12.3"/>
+### openSUSE 12.3
+
+<a name="openSUSE_12.2"/>
+### openSUSE 12.2
+
+<a name="arch_linux"/>
+### Arch Linux
+
