@@ -36,6 +36,10 @@ void MacXPlatform::initialize(int argc, char *argv[])
     }
 }
 
+QStringList MacXPlatform::multipleUpload(QString uploadTitle)
+{
+    return uploadMultipleFiles(uploadTitle);
+}
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
     return false;

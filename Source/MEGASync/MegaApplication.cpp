@@ -16,7 +16,7 @@
 using namespace mega;
 
 const int MegaApplication::VERSION_CODE = 1022;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.22h");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.22i");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
@@ -1161,6 +1161,24 @@ void MegaApplication::importLinks()
 
 void MegaApplication::uploadActionClicked()
 {
+    #ifdef __APPLE__
+                infoDialog->hide();
+                QApplication::processEvents();
+                QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
+                if(files.size())
+                {
+                    QQueue<QString> qFiles;
+                    foreach(QString file, files)
+                    {
+                        qFiles.append(file);
+                        cout << "ELEMENT TO UPLOAD: " << file.toUtf8().constData() << endl;
+                    }
+
+                    shellUpload(qFiles);
+                }
+         return;
+    #endif
+
     if(multiUploadFileDialog)
     {
         #ifdef WIN32

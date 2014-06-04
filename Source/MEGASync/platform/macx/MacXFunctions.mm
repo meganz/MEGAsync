@@ -7,6 +7,62 @@ void setMacXActivationPolicy()
     [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
 }
 
+NSString* fromQString(QString string)
+{
+    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)string.toStdString().c_str()];
+    return convertedString;
+}
+QString fromNSString(const NSString *string)
+{
+    if (!string)
+        return QString();
+
+    QString qstring;
+    qstring.resize([string length]);
+    [string getCharacters:reinterpret_cast<unichar*>(qstring.data()) range:NSMakeRange(0, [string length])];
+
+    return qstring;
+}
+
+QStringList qt_mac_NSArrayToQStringList(void *nsarray)
+{
+    QStringList result;
+    NSArray *array = static_cast<NSArray *>(nsarray);
+    for (NSUInteger i=0; i<[array count]; ++i)
+    {
+       QString st = fromNSString([[array objectAtIndex:i] path]);
+       result.append(st);
+    }
+
+    return result;
+}
+
+
+QStringList uploadMultipleFiles(QString uploadTitle)
+{
+    QStringList uploads;
+    static NSOpenPanel *panel = NULL;
+
+    if(!panel)
+    {
+        panel = [NSOpenPanel openPanel];
+        [panel setTitle:fromQString(uploadTitle)];
+        [panel setCanChooseFiles:YES];
+        [panel setCanChooseDirectories:YES];
+        [panel setAllowsMultipleSelection:YES];
+
+        NSInteger clicked = [panel runModal];
+
+        if (clicked == NSFileHandlingPanelOKButton) {
+            uploads = qt_mac_NSArrayToQStringList([panel URLs]);
+        }
+
+        panel = NULL;
+        return uploads;
+    }
+
+    return QStringList();
+}
 // Copyright (c) 2011 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -176,7 +232,6 @@ char *runWithRootPrivileges(char *command)
 
     return result;
 }
-
 
 bool startAtLogin(bool opt)
 {
