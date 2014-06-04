@@ -219,6 +219,5 @@
         <file>images/tray_web_ico@2x.png</file>
         <file>images/upload_timer_ico@2x.png</file>
         <file>images/usageProgress@2x.png</file>
-        <file>images/transferProgress@2x.png</file>
     </qresource>
 </RCC>
