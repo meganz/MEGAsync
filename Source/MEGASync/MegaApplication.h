@@ -136,6 +136,7 @@ protected:
     QSystemTrayIcon *trayIcon;
     QMenu *initialMenu;
     QMenu *trayMenu;
+    QMenu emptyMenu;
     QAction *exitAction;
     QAction *settingsAction;
     //QAction *pauseAction;
