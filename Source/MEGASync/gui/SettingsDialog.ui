@@ -151,6 +151,17 @@ margin-right: 5px;
 #pUsedBandwidth
 {
 margin-right: 6px;
+margin-left: 2px;
+}
+
+#lStorage
+{
+margin-left: 2px;
+}
+
+#label
+{
+margin-left: 5px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -728,6 +739,9 @@ margin-right: 6px;
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="spacing">
+           <number>6</number>
+          </property>
           <property name="leftMargin">
            <number>9</number>
           </property>
@@ -749,7 +763,7 @@ margin-right: 6px;
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>26</height>
+              <height>25</height>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -770,6 +784,12 @@ margin-right: 6px;
              </property>
              <item>
               <widget class="QLabel" name="lStorage">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>22</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
                </property>
