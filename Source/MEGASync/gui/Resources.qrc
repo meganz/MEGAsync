@@ -193,15 +193,32 @@
         <file>images/icon_synced_mac@2x.png</file>
         <file>images/icon_syncing_mac@2x.png</file>
         <file>images/Free.png</file>
-        <file>images/Free@2X.png</file>
         <file>images/Pro_II.png</file>
-        <file>images/Pro_II@2X.png</file>
         <file>images/Pro_III.png</file>
-        <file>images/Pro_III@2X.png</file>
-        <file>images/account_32@2X.png</file>
-        <file>images/advanced_32@2X.png</file>
-        <file>images/bandwidth_32@2X.png</file>
-        <file>images/proxies_32@2X.png</file>
-        <file>images/syncs_32@2X.png</file>
+        <file>images/Free@2x.png</file>
+        <file>images/Pro_II@2x.png</file>
+        <file>images/Pro_III@2x.png</file>
+        <file>images/account_32@2x.png</file>
+        <file>images/advanced_32@2x.png</file>
+        <file>images/bandwidth_32@2x.png</file>
+        <file>images/proxies_32@2x.png</file>
+        <file>images/syncs_32@2x.png</file>
+        <file>images/download_timer_ico@2x.png</file>
+        <file>images/mega_logo@2x.png</file>
+        <file>images/tray_add_sync_ico@2x.png</file>
+        <file>images/tray_download_ico@2x.png</file>
+        <file>images/tray_folder_ico@2x.png</file>
+        <file>images/tray_pause_ico@2x.png</file>
+        <file>images/tray_paused_large_ico@2x.png</file>
+        <file>images/tray_play_ico@2x.png</file>
+        <file>images/tray_preferences_ico@2x.png</file>
+        <file>images/tray_share_ico@2x.png</file>
+        <file>images/tray_sync_ico@2x.png</file>
+        <file>images/tray_updated_large_ico@2x.png</file>
+        <file>images/tray_upload_ico@2x.png</file>
+        <file>images/tray_web_ico@2x.png</file>
+        <file>images/upload_timer_ico@2x.png</file>
+        <file>images/usageProgress@2x.png</file>
+        <file>images/transferProgress@2x.png</file>
     </qresource>
 </RCC>
