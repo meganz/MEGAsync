@@ -35,7 +35,6 @@ HEADERS  += gui/SettingsDialog.h \
     gui/CrashReportDialog.h \
     gui/MultiQFileDialog.h
 
-
 FORMS    += gui/SettingsDialog.ui \
     gui/ActiveTransfer.ui \
     gui/InfoDialog.ui \
@@ -58,4 +57,9 @@ INCLUDEPATH += $$PWD
 
 debug {
     DEFINES += SHOW_LOGS
+}
+
+macx {
+    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm
+    HEADERS += gui/CocoaHelpButton.h
 }

@@ -14,6 +14,10 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 
+#ifdef __APPLE__
+    #include "gui/CocoaHelpButton.h"
+#endif
+
 #ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
@@ -83,6 +87,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cStartOnStartup->setText(tr("Open at login"));
     ui->cShowNotifications->setText(tr("Show Mac OS notifications"));
     ui->cOverlayIcons->hide();
+
+    ui->bHelp->hide();
+    ui->lHelp->hide();
+
+    CocoaHelpButton *helpButton = new CocoaHelpButton(this);
+    ui->layoutBottom->insertWidget(0, helpButton);
+    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 #endif
 
     /*if(!proxyOnly && preferences->logged())
