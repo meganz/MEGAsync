@@ -191,5 +191,9 @@
         <file>images/icon_paused_mac.png</file>
         <file>images/icon_synced_mac.png</file>
         <file>images/icon_syncing_mac.png</file>
+        <file>images/icon_logging_mac@2x.png</file>
+        <file>images/icon_paused_mac@2x.png</file>
+        <file>images/icon_synced_mac@2x.png</file>
+        <file>images/icon_syncing_mac@2x.png</file>
     </qresource>
 </RCC>
