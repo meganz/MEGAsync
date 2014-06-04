@@ -27,6 +27,9 @@ QString MegaApplication::dataPath = QString();
 int main(int argc, char *argv[])
 {
 
+
+
+    MegaApplication app(argc, argv);
 #ifdef Q_OS_MACX
     if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
     {
@@ -34,9 +37,10 @@ int main(int argc, char *argv[])
         // https://bugreports.qt-project.org/browse/QTBUG-32789
         QFont::insertSubstitution(QString::fromUtf8(".Lucida Grande UI"), QString::fromUtf8("Lucida Grande"));
     }
+
+    app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
-    MegaApplication app(argc, argv);
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QString appLockPath = QDir::current().filePath(QString::fromAscii("megasync.lock"));
     QDir crashDir(crashPath);
