@@ -822,6 +822,7 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setRowCount(0);
         syncNames.clear();
         syncsChanged = true;
+        updateAddButton();
         stateChanged();
     }
     else
@@ -853,10 +854,9 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setItem(pos, 0, localFolder);
         ui->tSyncs->setItem(pos, 1, megaFolder);
         syncNames.append(QString::fromAscii("MEGA"));
+        updateAddButton();
         stateChanged();
     }
-
-    updateAddButton();
 }
 
 
@@ -870,8 +870,8 @@ void SettingsDialog::on_bDelete_clicked()
     syncNames.removeAt(index);
 
 	syncsChanged = true;
-	stateChanged();
     updateAddButton();
+    stateChanged();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -945,8 +945,8 @@ void SettingsDialog::on_bAdd_clicked()
    delete nPath;
 
    syncsChanged = true;
-   stateChanged();
    updateAddButton();
+   stateChanged();
 }
 
 void SettingsDialog::on_bApply_clicked()
