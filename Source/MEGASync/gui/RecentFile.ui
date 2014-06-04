@@ -37,11 +37,20 @@ margin-right: 1px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
+#s1, #v
+{
+	border-bottom: 2px solid rgb(241, 240, 240);
+}
+
+#s2
+{
+	border-bottom: 2px solid rgb(241, 240, 240);
+margin-right: 1px;
+}
+
 #pArrow
 {
-margin-right: 1px;
 border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #lFileType
@@ -168,37 +177,84 @@ font-size: 11px;
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pArrow">
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>0</height>
-      </size>
-     </property>
+    <widget class="QWidget" name="s1" native="true">
      <property name="maximumSize">
       <size>
-       <width>50</width>
+       <width>10</width>
        <height>50</height>
       </size>
      </property>
-     <property name="toolTip">
-      <string>Get MEGA link</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="Resources.qrc">
-       <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
-     </property>
-     <property name="iconSize">
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="v" native="true">
+     <property name="maximumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>30</width>
+       <height>50</height>
       </size>
      </property>
-     <property name="flat">
-      <bool>true</bool>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="pArrow">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Get MEGA link</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="s2" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>10</width>
+       <height>50</height>
+      </size>
      </property>
     </widget>
    </item>
