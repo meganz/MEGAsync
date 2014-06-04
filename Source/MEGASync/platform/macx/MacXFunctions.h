@@ -2,8 +2,11 @@
 #define MACXFUNCTIONS_H
 
 #include <QString>
+#include <QStringList>
 
 void setMacXActivationPolicy();
+QStringList qt_mac_NSArrayToQStringList(void *nsarray);
+QStringList uploadMultipleFiles(QString uploadTitle);
 void SetProcessName(QString procname);
 char *runWithRootPrivileges(char *command);
 bool startAtLogin(bool opt);
