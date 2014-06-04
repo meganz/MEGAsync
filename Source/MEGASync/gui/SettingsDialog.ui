@@ -125,7 +125,33 @@ font-style: italic;
 {
 font-style: italic;
 }
-</string>
+
+#wBottom
+{
+border-top: 1px solid #CCCCCC;
+}
+
+#pStorage
+{
+padding-right: 5px;
+padding-left: 5px;
+}
+
+#tSyncs
+{
+margin-right: 5px;
+margin-left: 5px;
+}
+
+#lExcludedNames
+{
+margin-right: 5px;
+}
+
+#pUsedBandwidth
+{
+margin-right: 6px;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -366,16 +392,16 @@ font-style: italic;
       <item>
        <layout class="QHBoxLayout" name="layoutBottom">
         <property name="leftMargin">
-         <number>12</number>
+         <number>18</number>
         </property>
         <property name="topMargin">
-         <number>9</number>
-        </property>
-        <property name="rightMargin">
          <number>12</number>
         </property>
+        <property name="rightMargin">
+         <number>33</number>
+        </property>
         <property name="bottomMargin">
-         <number>9</number>
+         <number>12</number>
         </property>
         <item>
          <widget class="QLabel" name="lHelp">
@@ -418,6 +444,9 @@ font-style: italic;
         </item>
         <item>
          <widget class="QPushButton" name="bOk">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>OK</string>
           </property>
@@ -522,12 +551,18 @@ font-style: italic;
          <property name="title">
           <string>Details</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
+          <property name="leftMargin">
+           <number>12</number>
+          </property>
           <property name="topMargin">
            <number>3</number>
           </property>
           <property name="rightMargin">
-           <number>9</number>
+           <number>12</number>
           </property>
           <property name="bottomMargin">
            <number>9</number>
@@ -580,6 +615,12 @@ font-style: italic;
              </property>
              <item>
               <widget class="QWidget" name="wAccountDetails" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <property name="spacing">
                  <number>0</number>
@@ -617,25 +658,49 @@ font-style: italic;
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="bUnlink">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>24</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>Logout</string>
-                  </property>
-                  <property name="default">
-                   <bool>false</bool>
-                  </property>
+                 <widget class="QWidget" name="widget_9" native="true">
+                  <layout class="QVBoxLayout" name="verticalLayout_16">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="bUnlink">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>24</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <property name="text">
+                      <string>Logout</string>
+                     </property>
+                     <property name="default">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                </layout>
@@ -659,9 +724,18 @@ font-style: italic;
          <property name="title">
           <string>Storage space</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="leftMargin">
+           <number>9</number>
+          </property>
           <item>
            <widget class="QProgressBar" name="pStorage">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="value">
              <number>24</number>
             </property>
@@ -732,18 +806,21 @@ font-style: italic;
          <property name="title">
           <string/>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
           <property name="spacing">
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>9</number>
+           <number>12</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>9</number>
+           <number>12</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -918,7 +995,19 @@ font-style: italic;
          <property name="title">
           <string>Language</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="leftMargin">
+           <number>14</number>
+          </property>
+          <property name="rightMargin">
+           <number>17</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QComboBox" name="cLanguage">
             <property name="sizePolicy">
@@ -948,6 +1037,9 @@ font-style: italic;
         <widget class="QGroupBox" name="gSyncs">
          <property name="title">
           <string>Synced folders</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <property name="spacing">
@@ -1070,13 +1162,13 @@ font-style: italic;
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>220</number>
+             <number>222</number>
             </attribute>
             <attribute name="horizontalHeaderHighlightSections">
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>220</number>
+             <number>222</number>
             </attribute>
             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
              <bool>false</bool>
@@ -1145,13 +1237,13 @@ font-style: italic;
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>20</number>
+              <number>0</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -1236,6 +1328,9 @@ padding-right: 20px;</string>
          <property name="title">
           <string>Upload rate limit</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QFormLayout" name="formLayout">
           <property name="rowWrapPolicy">
            <enum>QFormLayout::DontWrapRows</enum>
@@ -1251,6 +1346,9 @@ padding-right: 20px;</string>
           </property>
           <property name="verticalSpacing">
            <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>15</number>
           </property>
           <property name="topMargin">
            <number>12</number>
@@ -1367,9 +1465,15 @@ padding-right: 20px;</string>
           <string>Bandwidth quota</string>
          </property>
          <property name="flat">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>12</number>
+          </property>
           <item>
            <widget class="QProgressBar" name="pUsedBandwidth">
             <property name="value">
@@ -1393,7 +1497,7 @@ padding-right: 20px;</string>
               <property name="sizeHint" stdset="0">
                <size>
                 <width>40</width>
-                <height>23</height>
+                <height>10</height>
                </size>
               </property>
              </spacer>
@@ -1473,6 +1577,9 @@ padding-right: 20px;</string>
          <property name="title">
           <string>Folder for uploads from this computer</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
            <widget class="QLineEdit" name="eUploadFolder">
@@ -1512,6 +1619,9 @@ padding: 4px;</string>
         <widget class="QGroupBox" name="groupBox_5">
          <property name="title">
           <string>Excluded file names</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_14">
           <item>
@@ -1598,11 +1708,20 @@ padding: 4px;</string>
          <property name="title">
           <string>Cache</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="rightMargin">
+           <number>17</number>
+          </property>
           <item>
            <widget class="QLabel" name="lCacheSize">
             <property name="text">
              <string>Current cache size: %1</string>
+            </property>
+            <property name="margin">
+             <number>2</number>
             </property>
            </widget>
           </item>
@@ -1640,7 +1759,13 @@ padding: 4px;</string>
          <property name="title">
           <string>Other</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <property name="rightMargin">
+           <number>18</number>
+          </property>
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
             <property name="sizePolicy">
@@ -1688,12 +1813,15 @@ padding: 4px;</string>
          <property name="title">
           <string>Proxy Settings</string>
          </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
          <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <property name="leftMargin">
-           <number>9</number>
+           <number>16</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -1710,7 +1838,7 @@ padding: 4px;</string>
           <item row="9" column="1">
            <widget class="QWidget" name="wProxyAddress" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -1964,7 +2092,6 @@ padding: 4px;</string>
   <tabstop>bProxies</tabstop>
   <tabstop>bAdvanced</tabstop>
   <tabstop>bHelp</tabstop>
-  <tabstop>bUnlink</tabstop>
   <tabstop>bUpgrade</tabstop>
   <tabstop>cShowNotifications</tabstop>
   <tabstop>cStartOnStartup</tabstop>
