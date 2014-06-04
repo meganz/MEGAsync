@@ -1,5 +1,6 @@
 #include "MacXFunctions.h"
 #include <Cocoa/Cocoa.h>
+#include <QFileInfo>
 
 void setMacXActivationPolicy()
 {
@@ -341,6 +342,9 @@ bool isStartAtLoginActive()
 
 void addPathToPlaces(QString path, QString pathName)
 {
+    if(path.isEmpty()) return;
+    if(!QFileInfo(path).exists()) return;
+
     IconRef iconRef;
     FSRef fref;
 
@@ -377,6 +381,9 @@ void addPathToPlaces(QString path, QString pathName)
 
 void removePathFromPlaces(QString path)
 {
+    if(path.isEmpty()) return;
+    if(!QFileInfo(path).exists()) return;
+
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
 
     // This will get the path for the application
@@ -416,6 +423,8 @@ void removePathFromPlaces(QString path)
 
 void setFolderIcon(QString path)
 {
+    if(path.isEmpty()) return;
+    if(!QFileInfo(path).exists()) return;
 
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
 

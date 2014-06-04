@@ -638,6 +638,7 @@ QString Preferences::getLocalFolder(int num)
 
     QFileInfo fileInfo(localFolders.at(num));
     QString value = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
+    if(value.isEmpty()) value = QDir::toNativeSeparators(localFolders.at(num));
     mutex.unlock();
     return value;
 }
