@@ -505,6 +505,8 @@ void InfoDialog::on_bSettings_clicked()
     {
         QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
         app->showTrayMenu(&p);
+        if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+            this->hide();
     }
     else app->openSettings();
 }
@@ -553,6 +555,8 @@ void InfoDialog::on_bSyncFolder_clicked()
             connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
         menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+        if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+            this->hide();
     }
     delete rootNode;
 }

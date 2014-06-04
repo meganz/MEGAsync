@@ -872,6 +872,9 @@ void MegaApplication::showInfoDialog()
 
             infoDialog->move(posx, posy);
             infoDialog->show();
+            infoDialog->setFocus();
+            infoDialog->raise();
+            infoDialog->activateWindow();
         }else
             infoDialog->hide();
     }
@@ -1088,7 +1091,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
     if(trayMenu)
     {
         QPoint p = point ? (*point)-QPoint(trayMenu->sizeHint().width(), 0) : QCursor::pos();
-        trayMenu->popup(p);
+        trayMenu->exec(p);
     }
 }
 
@@ -1396,8 +1399,13 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         LOG("Information dialog available");
+#ifndef __APPLE__
         infoDialogTimer->start(200);
+#else
+        showInfoDialog();
+#endif
     }
+#ifndef __APPLE__
     else if(reason == QSystemTrayIcon::DoubleClick)
     {
         LOG("Event QSystemTrayIcon::DoubleClick");
@@ -1427,6 +1435,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     {
         showTrayMenu();
     }
+#endif
 }
 
 void MegaApplication::onMessageClicked()
@@ -1459,7 +1468,9 @@ void MegaApplication::openSettings()
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
     settingsDialog->setUpdateAvailable(updateAvailable);
-    settingsDialog->show();
+    settingsDialog->exec();
+    delete settingsDialog;
+    settingsDialog = NULL;
 }
 
 void MegaApplication::changeProxy()
@@ -1580,7 +1591,7 @@ void MegaApplication::createTrayIcon()
     }
     else
     {
-        trayIcon->setContextMenu(NULL);
+        trayIcon->setContextMenu(&emptyMenu);
         #ifndef __APPLE__
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
         #else
