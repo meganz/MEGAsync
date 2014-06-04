@@ -106,6 +106,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     ui->bOk->hide();
     ui->bCancel->hide();
+    ui->gBandwidthQuota->hide();
 #endif
 
     ui->gCache->setVisible(false);
