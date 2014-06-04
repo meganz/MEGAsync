@@ -162,6 +162,18 @@ margin-left: 2px;
 #label
 {
 margin-left: 5px;
+}
+
+#lSyncType
+{
+margin-top: 6px;
+}
+
+#cProxyRequiresPassword
+{
+margin-left: 9px;
+padding-top: 1px;
+padding-bottom: -1px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -1240,7 +1252,7 @@ margin-left: 5px;
              <set>Qt::AlignCenter</set>
             </property>
             <property name="margin">
-             <number>6</number>
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -1352,6 +1364,9 @@ padding-right: 20px;</string>
           <bool>true</bool>
          </property>
          <layout class="QFormLayout" name="formLayout">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+          </property>
           <property name="rowWrapPolicy">
            <enum>QFormLayout::DontWrapRows</enum>
           </property>
@@ -1373,8 +1388,76 @@ padding-right: 20px;</string>
           <property name="topMargin">
            <number>12</number>
           </property>
+          <item row="0" column="0">
+           <widget class="QRadioButton" name="rAutoLimit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Auto</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="lAutoLimit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">padding-bottom: -2px;</string>
+            </property>
+            <property name="text">
+             <string>(about 90% of the available bandwidth)</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QRadioButton" name="rNoLimit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>27</height>
+             </size>
+            </property>
             <property name="text">
              <string>Don't limit</string>
             </property>
@@ -1385,6 +1468,12 @@ padding-right: 20px;</string>
           </item>
           <item row="2" column="0">
            <widget class="QRadioButton" name="rLimit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Limit to:</string>
             </property>
@@ -1459,28 +1548,11 @@ padding-right: 20px;</string>
             </layout>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="rAutoLimit">
-            <property name="text">
-             <string>Auto</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="lAutoLimit">
-            <property name="text">
-             <string>(about 90% of the available bandwidth)</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="gBandwidthQuota">
          <property name="title">
           <string>Bandwidth quota</string>
          </property>
@@ -1644,6 +1716,37 @@ padding: 4px;</string>
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_14">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QListWidget" name="lExcludedNames">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>120</height>
+             </size>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Adjust</enum>
+            </property>
+            <property name="selectionRectVisible">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QWidget" name="widget_2" native="true">
             <property name="maximumSize">
@@ -1679,45 +1782,20 @@ padding: 4px;</string>
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="bAddName">
-               <property name="text">
-                <string>Add</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="bDeleteName">
                <property name="text">
                 <string>Delete</string>
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="bAddName">
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
             </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="lExcludedNames">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>120</height>
-             </size>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::ExtendedSelection</enum>
-            </property>
-            <property name="resizeMode">
-             <enum>QListView::Adjust</enum>
-            </property>
-            <property name="selectionRectVisible">
-             <bool>false</bool>
-            </property>
            </widget>
           </item>
          </layout>
@@ -2066,6 +2144,18 @@ padding: 4px;</string>
           </item>
           <item row="0" column="1">
            <widget class="QRadioButton" name="rNoProxy">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>27</height>
+             </size>
+            </property>
             <property name="text">
              <string>No proxy</string>
             </property>
@@ -2073,6 +2163,18 @@ padding: 4px;</string>
           </item>
           <item row="1" column="1">
            <widget class="QRadioButton" name="rProxyAuto">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>27</height>
+             </size>
+            </property>
             <property name="text">
              <string>Auto-detect</string>
             </property>
@@ -2090,6 +2192,18 @@ padding: 4px;</string>
           </item>
           <item row="7" column="1">
            <widget class="QRadioButton" name="rProxyManual">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>27</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>27</height>
+             </size>
+            </property>
             <property name="text">
              <string>Proxy</string>
             </property>
@@ -2130,7 +2244,6 @@ padding: 4px;</string>
   <tabstop>eUploadFolder</tabstop>
   <tabstop>bUploadFolder</tabstop>
   <tabstop>bAddName</tabstop>
-  <tabstop>bDeleteName</tabstop>
   <tabstop>lExcludedNames</tabstop>
   <tabstop>bClearCache</tabstop>
   <tabstop>cOverlayIcons</tabstop>
