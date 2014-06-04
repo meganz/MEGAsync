@@ -52,13 +52,10 @@
         <file>images/drag_web_lang.png</file>
         <file>images/drag_word.png</file>
         <file>images/folder.ico</file>
-        <file>images/Free.ico</file>
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
         <file>images/logo.png</file>
         <file>images/Pro I.ico</file>
-        <file>images/Pro II.ico</file>
-        <file>images/Pro III.ico</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
@@ -195,5 +192,16 @@
         <file>images/icon_paused_mac@2x.png</file>
         <file>images/icon_synced_mac@2x.png</file>
         <file>images/icon_syncing_mac@2x.png</file>
+        <file>images/Free.png</file>
+        <file>images/Free@2X.png</file>
+        <file>images/Pro_II.png</file>
+        <file>images/Pro_II@2X.png</file>
+        <file>images/Pro_III.png</file>
+        <file>images/Pro_III@2X.png</file>
+        <file>images/account_32@2X.png</file>
+        <file>images/advanced_32@2X.png</file>
+        <file>images/bandwidth_32@2X.png</file>
+        <file>images/proxies_32@2X.png</file>
+        <file>images/syncs_32@2X.png</file>
     </qresource>
 </RCC>
