@@ -450,7 +450,7 @@ void SettingsDialog::loadSettings()
         switch(preferences->accountType())
         {
             case Preferences::ACCOUNT_TYPE_FREE:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.ico")));
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.png")));
                 ui->lAccountType->setText(tr("FREE"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROI:
@@ -458,11 +458,11 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("PRO I"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROII:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro II.ico")));
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro_II.png")));
                 ui->lAccountType->setText(tr("PRO II"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROIII:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro III.ico")));
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro_III.png")));
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
         }
