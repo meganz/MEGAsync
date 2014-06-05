@@ -455,7 +455,7 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("FREE"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROI:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro I.ico")));
+                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro_I.png")));
                 ui->lAccountType->setText(tr("PRO I"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROII:
