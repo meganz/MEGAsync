@@ -33,21 +33,20 @@
 #lPercentage
 {
 color: green;
-padding-right: 5px;
 }
 
 #lFileName
 {
 color: grey;
-padding-left: 1px;
-}</string>
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>15</number>
+    <number>17</number>
    </property>
    <property name="topMargin">
     <number>9</number>
@@ -64,7 +63,16 @@ padding-left: 1px;
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
@@ -131,13 +139,13 @@ padding-left: 1px;
        <widget class="QLabel" name="lPercentage">
         <property name="minimumSize">
          <size>
-          <width>48</width>
+          <width>51</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>48</width>
+          <width>51</width>
           <height>16777215</height>
          </size>
         </property>
@@ -160,7 +168,14 @@ padding-left: 1px;
     </widget>
    </item>
    <item>
-    <widget class="TransferProgressBar" name="pProgress" native="true"/>
+    <widget class="TransferProgressBar" name="pProgress" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>368</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

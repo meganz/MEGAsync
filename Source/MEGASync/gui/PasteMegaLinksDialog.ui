@@ -45,10 +45,10 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
-QPushButton
+#eLinks
 {
-    min-height: 14px;
-	height: 14px;
+margin-right: 5px;
+margin-left: 5px;
 }
 </string>
   </property>
@@ -56,8 +56,17 @@ QPushButton
    <property name="spacing">
     <number>6</number>
    </property>
-   <property name="margin">
-    <number>9</number>
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>6</number>
    </property>
    <item>
     <widget class="QLabel" name="lHeader">
@@ -96,11 +105,20 @@ QPushButton
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>26</height>
+       <height>33</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
@@ -111,13 +129,19 @@ QPushButton
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
-          <height>20</height>
+          <height>30</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
        <widget class="QPushButton" name="bSubmit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Submit</string>
         </property>
@@ -125,6 +149,12 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
