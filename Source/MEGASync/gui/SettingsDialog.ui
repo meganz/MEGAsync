@@ -586,7 +586,7 @@ spacing: 10px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -606,10 +606,10 @@ spacing: 10px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
           <property name="leftMargin">
-           <number>12</number>
+           <number>13</number>
           </property>
           <property name="topMargin">
-           <number>3</number>
+           <number>6</number>
           </property>
           <property name="rightMargin">
            <number>12</number>
@@ -790,6 +790,12 @@ spacing: 10px;
           <property name="leftMargin">
            <number>8</number>
           </property>
+          <property name="topMargin">
+           <number>12</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QProgressBar" name="pStorage">
             <property name="styleSheet">
@@ -903,7 +909,7 @@ spacing: 10px;
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>6</number>
+              <number>0</number>
              </property>
              <item>
               <widget class="QWidget" name="widget_5" native="true">
@@ -1067,6 +1073,9 @@ spacing: 10px;
           <property name="leftMargin">
            <number>14</number>
           </property>
+          <property name="topMargin">
+           <number>13</number>
+          </property>
           <property name="rightMargin">
            <number>17</number>
           </property>
@@ -1112,9 +1121,6 @@ spacing: 10px;
           </property>
           <property name="leftMargin">
            <number>9</number>
-          </property>
-          <property name="topMargin">
-           <number>12</number>
           </property>
           <property name="rightMargin">
            <number>9</number>
@@ -1419,7 +1425,7 @@ padding-right: 20px;</string>
            <number>15</number>
           </property>
           <property name="topMargin">
-           <number>12</number>
+           <number>9</number>
           </property>
           <item row="0" column="0">
            <widget class="QRadioButton" name="rAutoLimit">
@@ -1709,6 +1715,9 @@ padding-right: 20px;</string>
           <property name="leftMargin">
            <number>11</number>
           </property>
+          <property name="topMargin">
+           <number>9</number>
+          </property>
           <property name="rightMargin">
            <number>11</number>
           </property>
@@ -1760,7 +1769,7 @@ padding-right: 20px;</string>
            <number>6</number>
           </property>
           <property name="bottomMargin">
-           <number>6</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QListWidget" name="lExcludedNames">
@@ -1954,7 +1963,7 @@ padding-right: 20px;</string>
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0,0">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
@@ -2042,6 +2051,9 @@ padding-right: 20px;</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -2246,6 +2258,16 @@ padding-right: 20px;</string>
             </property>
             <property name="text">
              <string>Proxy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QWidget" name="widget_9" native="true">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>10</height>
+             </size>
             </property>
            </widget>
           </item>

@@ -36,10 +36,10 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
-QPushButton
+#tMegaFolders
 {
-    min-height: 14px;
-	height: 14px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 </string>
   </property>
@@ -47,7 +47,10 @@ QPushButton
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
     <number>9</number>
    </property>
    <item>
@@ -70,6 +73,9 @@ QPushButton
    </item>
    <item>
     <widget class="QTreeWidget" name="tMegaFolders">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="autoExpandDelay">
       <number>-1</number>
      </property>
@@ -96,13 +102,29 @@ QPushButton
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>26</height>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
+      <property name="leftMargin">
        <number>0</number>
       </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="bNewFolder">
+        <property name="text">
+         <string>New folder</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -115,13 +137,6 @@ QPushButton
          </size>
         </property>
        </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bNewFolder">
-        <property name="text">
-         <string>New folder</string>
-        </property>
-       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
