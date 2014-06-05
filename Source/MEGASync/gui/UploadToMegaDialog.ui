@@ -50,14 +50,25 @@ QPushButton
     min-height: 14px;
 	height: 14px;
 }
+
+#cDefaultPath
+{
+    spacing: 10px;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>6</number>
+   <property name="leftMargin">
+    <number>12</number>
    </property>
-   <property name="margin">
-    <number>9</number>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>10</number>
    </property>
    <item>
     <widget class="QLabel" name="label">
@@ -94,7 +105,7 @@ QPushButton
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -119,20 +130,7 @@ QPushButton
       <item>
        <widget class="QPushButton" name="bChange">
         <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="Resources.qrc">
-          <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
+         <string>Choose</string>
         </property>
        </widget>
       </item>
@@ -211,9 +209,7 @@ QPushButton
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bCancel</sender>
