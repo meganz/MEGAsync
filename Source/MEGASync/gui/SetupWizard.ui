@@ -39,6 +39,7 @@ QCheckBox::indicator {
 QRadioButton::indicator {
      width: 22px;
      height: 22px;
+	
  }
 
 QScrollBar:horizontal {
@@ -107,6 +108,12 @@ font-weight: bold;
 #cAgreeWithTerms
 {
 	margin-left: -2px;
+}
+
+#rAdvancedSetup, #rTypicalSetup
+{
+	padding-top: -2px;
+	
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -128,7 +135,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>1</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -600,7 +607,7 @@ font-weight: bold;
         <number>40</number>
        </property>
        <property name="topMargin">
-        <number>25</number>
+        <number>40</number>
        </property>
        <property name="rightMargin">
         <number>40</number>
@@ -631,6 +638,9 @@ font-weight: bold;
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
+         </property>
+         <property name="margin">
+          <number>0</number>
          </property>
         </widget>
        </item>
@@ -871,6 +881,9 @@ font-weight: bold;
                </property>
                <property name="text">
                 <string> Sync specific folders in your cloud drive</string>
+               </property>
+               <property name="margin">
+                <number>0</number>
                </property>
               </widget>
              </item>
