@@ -41,11 +41,14 @@ QPushButton
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>6</number>
+   <property name="leftMargin">
+    <number>0</number>
    </property>
-   <property name="margin">
-    <number>9</number>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
    </property>
    <item>
     <widget class="FolderBinder" name="wBinder" native="true">
@@ -59,11 +62,23 @@ QPushButton
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>26</height>
+       <height>32</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
+      <property name="spacing">
+       <number>12</number>
+      </property>
+      <property name="leftMargin">
+       <number>18</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>22</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
@@ -82,10 +97,16 @@ QPushButton
       <item>
        <widget class="QPushButton" name="bOK">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
         </property>
         <property name="text">
          <string>OK</string>
@@ -99,6 +120,12 @@ QPushButton
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
         </property>
         <property name="text">
          <string>Cancel</string>
