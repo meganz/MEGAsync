@@ -171,7 +171,8 @@ margin-top: 6px;
 
 #cProxyRequiresPassword
 {
-margin-left: 9px;
+spacing: 11px;
+
 padding-top: 1px;
 padding-bottom: -1px;
 }
@@ -184,6 +185,21 @@ padding-bottom: 1px;
 #lEmail
 {
  padding-bottom: -5px;
+}
+
+#lProxyType
+{
+padding-bottom: -1px;
+}
+
+QRadioButton
+{
+spacing: 6px;
+}
+
+QCheckBox
+{
+spacing: 10px;
 }
 </string>
   </property>
@@ -570,7 +586,7 @@ padding-bottom: 1px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -772,7 +788,7 @@ padding-bottom: 1px;
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>9</number>
+           <number>8</number>
           </property>
           <item>
            <widget class="QProgressBar" name="pStorage">
@@ -1098,7 +1114,7 @@ padding-bottom: 1px;
            <number>9</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>12</number>
           </property>
           <property name="rightMargin">
            <number>9</number>
@@ -1106,66 +1122,6 @@ padding-bottom: 1px;
           <property name="bottomMargin">
            <number>9</number>
           </property>
-          <item>
-           <widget class="QWidget" name="wSyncsButtons" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::RightToLeft</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>6</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QPushButton" name="bAdd">
-               <property name="text">
-                <string>Add</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="bDelete">
-               <property name="text">
-                <string>Delete</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="hSyncs">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>26</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item>
            <widget class="QTableWidget" name="tSyncs">
             <property name="enabled">
@@ -1258,6 +1214,66 @@ padding-bottom: 1px;
               <string>MEGA folder</string>
              </property>
             </column>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="wSyncsButtons" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="bAdd">
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bDelete">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="hSyncs">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>26</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -1690,35 +1706,42 @@ padding-right: 20px;</string>
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="leftMargin">
+           <number>11</number>
+          </property>
+          <property name="rightMargin">
+           <number>11</number>
+          </property>
           <item>
-           <widget class="QLineEdit" name="eUploadFolder">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bUploadFolder">
-            <property name="styleSheet">
-             <string notr="true">border: none;
-padding: 4px;</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="Resources.qrc">
-              <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
+           <widget class="QWidget" name="widget" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLineEdit" name="eUploadFolder">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bUploadFolder">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -2243,14 +2266,16 @@ padding: 4px;</string>
   <tabstop>bProxies</tabstop>
   <tabstop>bAdvanced</tabstop>
   <tabstop>bHelp</tabstop>
+  <tabstop>bUnlink</tabstop>
   <tabstop>bUpgrade</tabstop>
   <tabstop>cShowNotifications</tabstop>
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cAutoUpdate</tabstop>
   <tabstop>bUpdate</tabstop>
   <tabstop>cLanguage</tabstop>
-  <tabstop>bAdd</tabstop>
   <tabstop>tSyncs</tabstop>
+  <tabstop>bDelete</tabstop>
+  <tabstop>bAdd</tabstop>
   <tabstop>bSyncChange</tabstop>
   <tabstop>rAutoLimit</tabstop>
   <tabstop>rNoLimit</tabstop>
@@ -2259,8 +2284,9 @@ padding: 4px;</string>
   <tabstop>bUpgradeBandwidth</tabstop>
   <tabstop>eUploadFolder</tabstop>
   <tabstop>bUploadFolder</tabstop>
-  <tabstop>bAddName</tabstop>
   <tabstop>lExcludedNames</tabstop>
+  <tabstop>bDeleteName</tabstop>
+  <tabstop>bAddName</tabstop>
   <tabstop>bClearCache</tabstop>
   <tabstop>cOverlayIcons</tabstop>
   <tabstop>bFullCheck</tabstop>
@@ -2273,6 +2299,9 @@ padding: 4px;</string>
   <tabstop>cProxyRequiresPassword</tabstop>
   <tabstop>eProxyUsername</tabstop>
   <tabstop>eProxyPassword</tabstop>
+  <tabstop>bOk</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bApply</tabstop>
  </tabstops>
  <resources>
   <include location="Resources.qrc"/>
