@@ -20,7 +20,8 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
 
 #ifdef __APPLE__
     ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
+    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(2, ui->bCancel);
+    ui->bOk->setDefault(true);
 #endif
 }
 
