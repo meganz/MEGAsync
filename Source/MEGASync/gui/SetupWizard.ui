@@ -140,7 +140,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>5</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1093,13 +1093,13 @@ font-weight: bold;
      <widget class="QWidget" name="pWelcome">
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <property name="spacing">
-        <number>10</number>
+        <number>8</number>
        </property>
        <property name="leftMargin">
         <number>80</number>
        </property>
        <property name="topMargin">
-        <number>25</number>
+        <number>40</number>
        </property>
        <property name="rightMargin">
         <number>80</number>
