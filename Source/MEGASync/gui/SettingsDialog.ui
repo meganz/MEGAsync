@@ -68,11 +68,6 @@ QPushButton
 	height: 20px;
 }
 
-#lHeader
-{
-background-color: white;
-}
-
 #wTabHeader QToolButton
 {
 width: 70px;
@@ -201,7 +196,12 @@ QCheckBox
 {
 spacing: 10px;
 }
-</string>
+
+#lHeader
+{
+background-color: white;
+border: none;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -536,30 +536,28 @@ spacing: 10px;
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="lHeader">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
+      <widget class="QToolButton" name="lHeader">
+       <property name="enabled">
+        <bool>true</bool>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="lineWidth">
-        <number>0</number>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
        <property name="text">
         <string/>
        </property>
-       <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
+       <property name="icon">
+        <iconset resource="Resources.qrc">
+         <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+       <property name="iconSize">
+        <size>
+         <width>150</width>
+         <height>60</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -586,7 +584,7 @@ spacing: 10px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <layout class="QVBoxLayout" name="verticalLayout_2">

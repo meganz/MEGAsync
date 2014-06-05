@@ -100,6 +100,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 #ifdef __APPLE__
     ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
     ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
+    ui->bOk->setDefault(true);
 #endif
 
 	finished = false;
