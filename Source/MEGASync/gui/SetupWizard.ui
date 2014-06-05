@@ -113,8 +113,13 @@ font-weight: bold;
 #rAdvancedSetup, #rTypicalSetup
 {
 	padding-top: -2px;
-	
-}</string>
+}
+#lLocalFolder, #lMegaFolder
+{
+	margin-top:2px;	
+	margin-left: -3px;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -135,7 +140,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -911,13 +916,13 @@ font-weight: bold;
      <widget class="QWidget" name="pAdvanced">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
-        <number>30</number>
+        <number>20</number>
        </property>
        <property name="leftMargin">
         <number>50</number>
        </property>
        <property name="topMargin">
-        <number>25</number>
+        <number>40</number>
        </property>
        <property name="rightMargin">
         <number>50</number>
@@ -1037,6 +1042,9 @@ font-weight: bold;
            <widget class="QLabel" name="lMegaFolder">
             <property name="text">
              <string>MEGA folder:</string>
+            </property>
+            <property name="margin">
+             <number>0</number>
             </property>
            </widget>
           </item>
