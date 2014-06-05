@@ -29,7 +29,6 @@
    <string notr="true">#InfoDialog
 {
 background: white;
-border: 2px solid rgb(100, 100, 100);
 }
 
 QWidget
@@ -39,16 +38,12 @@ font-size: 11px;
 
 #wHeader
 {
-margin-left: 2px;
-margin-right: 2px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #wRecent1, #wRecent2, #wRecent3
 {
-margin-left: 2px;
-margin-right: 2px;
 border: 0px;
 border-bottom: 2px solid rgb(241, 240, 240);
 }
@@ -56,19 +51,15 @@ border-bottom: 2px solid rgb(241, 240, 240);
 
 #wUsage
 {
-margin-left: 2px;
-margin-right: 2px;
 border: 0px;
 border-bottom: 2px solid rgb(217, 217, 217);
 }
 
 #lRecentlyUpdated
 {
-padding-left: 14px;
+padding-left: 15px;
 background: rgb(178, 178, 178);
 color:  rgb(255, 255, 255);
-border-left: 2px solid rgb(100, 100, 100);
-border-right: 2px solid rgb(100, 100, 100);
 font-size: 12px;
 font-weight: bold;
 }
@@ -83,16 +74,11 @@ font-weight: bold;
 #wBottom
 {
 background: rgb(242, 242, 242);
-border-bottom: 2px solid rgb(100, 100, 100);
-border-left: 2px solid rgb(100, 100, 100);
-border-right: 2px solid rgb(100, 100, 100);
 }
 
 #sActiveTransfers
 {
 border: 0px;
-margin-left: 2px;
-margin-right: 2px;
 padding: 0px;
 }
 
@@ -157,6 +143,11 @@ font-weight: bold;
 {
 font-weight: bold;
 }
+
+#lPercentageUsed
+{
+padding-right: 0px;
+}
 </string>
   </property>
   <property name="sizeGripEnabled">
@@ -196,6 +187,9 @@ font-weight: bold;
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>29</number>
+      </property>
       <property name="leftMargin">
        <number>20</number>
       </property>
@@ -203,7 +197,7 @@ font-weight: bold;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>16</number>
+       <number>14</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -514,8 +508,11 @@ border: none;</string>
           <item>
            <widget class="QWidget" name="wUploadDesc" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0,0">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
-              <number>16</number>
+              <number>18</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -559,7 +556,7 @@ border: none;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>60</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -581,11 +578,17 @@ color: rgb(102, 102, 102);</string>
           <item>
            <widget class="QWidget" name="wDownloadDesc" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>17</number>
              </property>
              <property name="topMargin">
               <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>12</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -626,7 +629,7 @@ color: rgb(102, 102, 102);</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>60</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -696,13 +699,13 @@ color: rgb(102, 102, 102);</string>
        <widget class="RecentFile" name="wRecent1" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>400</width>
           <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>400</width>
           <height>50</height>
          </size>
         </property>
@@ -712,13 +715,13 @@ color: rgb(102, 102, 102);</string>
        <widget class="RecentFile" name="wRecent2" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>400</width>
           <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>400</width>
           <height>50</height>
          </size>
         </property>
@@ -728,13 +731,13 @@ color: rgb(102, 102, 102);</string>
        <widget class="RecentFile" name="wRecent3" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>400</width>
           <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>400</width>
           <height>50</height>
          </size>
         </property>
@@ -765,7 +768,7 @@ color: rgb(102, 102, 102);</string>
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>17</number>
+       <number>19</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -778,6 +781,12 @@ color: rgb(102, 102, 102);</string>
       </property>
       <item>
        <widget class="QWidget" name="widget_8" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>362</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="leftMargin">
           <number>0</number>
@@ -845,13 +854,13 @@ color: rgb(102, 102, 102);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
-       <number>20</number>
+       <number>17</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>20</number>
+       <number>19</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
