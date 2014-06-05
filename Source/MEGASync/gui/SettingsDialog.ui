@@ -174,6 +174,11 @@ margin-top: 6px;
 margin-left: 9px;
 padding-top: 1px;
 padding-bottom: -1px;
+}
+
+#lStorage
+{
+padding-bottom: 1px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
