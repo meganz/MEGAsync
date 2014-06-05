@@ -55,7 +55,6 @@
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
         <file>images/logo.png</file>
-        <file>images/Pro I.ico</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
@@ -219,5 +218,9 @@
         <file>images/tray_web_ico@2x.png</file>
         <file>images/upload_timer_ico@2x.png</file>
         <file>images/usageProgress@2x.png</file>
+        <file>images/Pro_I.png</file>
+        <file>images/Pro_I@2x.png</file>
+        <file>images/check_mega_version.png</file>
+        <file>images/check_mega_version@2x.png</file>
     </qresource>
 </RCC>
