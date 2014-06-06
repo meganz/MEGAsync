@@ -38,22 +38,12 @@ void RecentFile::updateWidget()
         return;
 	}
 
-	if(fileName.compare(ui->lFileName->text()))
-	{
+    if(fileName.compare(ui->lFileName->text()))
+    {
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
         ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
-
-        if(!localPath.isEmpty())
-        {
-            QImage image = mega::GfxProcQT::createThumbnail(localPath);
-            if(!image.isNull())
-                ui->lFileType->setPixmap(QPixmap::fromImage(image.scaled(48, 48, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
-            else
-                ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
-        }
-        else ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
-
+        ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
     }
 
