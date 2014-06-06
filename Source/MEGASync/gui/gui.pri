@@ -16,7 +16,8 @@ SOURCES += gui/SettingsDialog.cpp \
     gui/ImportMegaLinksDialog.cpp \
     gui/ImportListWidgetItem.cpp \
     gui/CrashReportDialog.cpp \
-    gui/MultiQFileDialog.cpp
+    gui/MultiQFileDialog.cpp \
+    gui/MegaProxyStyle.cpp
 
 HEADERS  += gui/SettingsDialog.h \
     gui/ActiveTransfer.h \
@@ -33,7 +34,8 @@ HEADERS  += gui/SettingsDialog.h \
     gui/ImportMegaLinksDialog.h \
     gui/ImportListWidgetItem.h \
     gui/CrashReportDialog.h \
-    gui/MultiQFileDialog.h
+    gui/MultiQFileDialog.h \
+    gui/MegaProxyStyle.h
 
 FORMS    += gui/SettingsDialog.ui \
     gui/ActiveTransfer.ui \
