@@ -279,7 +279,9 @@ void MegaApplication::initialize()
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
-                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
+                #ifndef __APPLE__
+                    QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
+                #endif
             }
         }
     }

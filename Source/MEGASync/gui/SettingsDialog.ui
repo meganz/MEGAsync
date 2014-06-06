@@ -10,19 +10,19 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>520</height>
+    <height>462</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>520</height>
+    <height>457</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>520</height>
+    <height>462</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -222,7 +222,7 @@ border: none;
    <property name="verticalSpacing">
     <number>2</number>
    </property>
-   <item row="1" column="0">
+   <item row="0" column="0">
     <widget class="QWidget" name="wTabHeader" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
@@ -421,7 +421,7 @@ border: none;
      </layout>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="2" column="0">
     <widget class="QWidget" name="wBottom" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_12">
       <property name="spacing">
@@ -530,40 +530,7 @@ border: none;
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="layoutHeader">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QToolButton" name="lHeader">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="Resources.qrc">
-         <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>150</width>
-         <height>60</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
+   <item row="1" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
