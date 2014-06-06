@@ -300,6 +300,9 @@ QStringList CrashHandler::getPendingCrashReports()
     for(int i=0; i<fiList.size(); i++)
     {
         QFile file(fiList[i].absoluteFilePath());
+        if(!file.fileName().endsWith(QString::fromAscii(".dmp")))
+            continue;
+
         if(file.size()>16384)
             continue;
 
@@ -317,6 +320,7 @@ QStringList CrashHandler::getPendingCrashReports()
         {
             LOG(QString::fromAscii("Invalid or outdated dump file: ") + file.fileName());
             LOG(crashReport);
+            if(fi.fileName().endsWith(QString::fromAscii(".dmp")))
             file.remove();
             continue;
         }
