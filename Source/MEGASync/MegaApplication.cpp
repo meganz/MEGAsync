@@ -287,7 +287,12 @@ void MegaApplication::initialize()
     }
 
     //Create GUI elements
+#ifdef __APPLE__
+    trayIcon = new MegaSystemTrayIcon();
+#else
     trayIcon = new QSystemTrayIcon();
+#endif
+
     connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -296,7 +301,11 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
+#ifdef __APPLE__
+    notificator = new Notificator(applicationName(), NULL, NULL);
+#else
     notificator = new Notificator(applicationName(), trayIcon, NULL);
+#endif
     changeProxyAction = new QAction(tr("Settings"), this);
     connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
     initialExitAction = new QAction(tr("Exit"), this);
@@ -872,18 +881,27 @@ void MegaApplication::showInfoDialog()
     {
         if(!infoDialog->isVisible())
         {
-            QRect screenGeometry = QApplication::desktop()->availableGeometry();
-            QPoint cursor = QCursor::pos();
             int posx, posy;
-            if(cursor.x() > (screenGeometry.right()/2))
-                posx = screenGeometry.right() - 400 - 2;
-            else
-                posx = screenGeometry.left() + 2;
+            QPoint position;
+            QRect screenGeometry = QApplication::desktop()->availableGeometry();
 
-            if(cursor.y() > (screenGeometry.bottom()/2))
-                posy = screenGeometry.bottom() - 545 - 2;
-            else
+            #ifdef __APPLE__
+                position = trayIcon->getPosition();
+                posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2;
                 posy = screenGeometry.top() + 2;
+            #else
+                QPoint position = QCursor::pos();
+
+                if(position.x() > (screenGeometry.right()/2))
+                    posx = screenGeometry.right() - 400 - 2;
+                else
+                    posx = screenGeometry.left() + 2;
+
+                if(position.y() > (screenGeometry.bottom()/2))
+                    posy = screenGeometry.bottom() - 545 - 2;
+                else
+                    posy = screenGeometry.top() + 2;
+            #endif
 
             if(isUnity) unityFix();
 

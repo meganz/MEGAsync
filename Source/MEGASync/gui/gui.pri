@@ -62,6 +62,7 @@ debug {
 }
 
 macx {
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm
-    HEADERS += gui/CocoaHelpButton.h
+    QT += macextras
+    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
+    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
 }
