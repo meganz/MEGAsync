@@ -697,8 +697,10 @@ void MegaApplication::rebootApplication(bool update)
 
 void MegaApplication::exitApplication()
 {
+#ifndef __APPLE__
     if(!megaApi->isLoggedIn())
     {
+#endif
         reboot = false;
         trayIcon->hide();
         if(setupWizard && setupWizard->isVisible())
@@ -721,7 +723,9 @@ void MegaApplication::exitApplication()
 
         QApplication::exit();
         return;
+#ifndef __APPLE__
     }
+#endif
 
     if(!exitDialog)
     {
