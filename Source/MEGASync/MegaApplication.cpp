@@ -1520,10 +1520,10 @@ void MegaApplication::createTrayIcon()
     if(!trayMenu)
     {
         trayMenu = new QMenu();
-        trayMenu->setStyleSheet(QString::fromAscii(
+        /*trayMenu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));*/
     }
     else
     {
@@ -1579,10 +1579,12 @@ void MegaApplication::createTrayIcon()
     else
     {
         updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING, this);
+        //updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+        //updateAction->setIconVisibleInMenu(true);
         updateAction->setEnabled(false);
     }
-    updateAction->setCheckable(true);
-    updateAction->setChecked(true);
+    //updateAction->setCheckable(true);
+    //updateAction->setChecked(true);
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
     //trayMenu->addAction(aboutAction);
