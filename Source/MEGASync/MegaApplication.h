@@ -24,6 +24,10 @@
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
 
+#ifdef __APPLE__
+    #include "gui/MegaSystemTrayIcon.h"
+#endif
+
 Q_DECLARE_METATYPE(QQueue<QString>)
 
 class Notificator;
@@ -133,7 +137,12 @@ protected:
     void processUploadQueue(mega::handle nodeHandle);
     void unityFix();
 
+#ifdef __APPLE__
+    MegaSystemTrayIcon *trayIcon;
+#else
     QSystemTrayIcon *trayIcon;
+#endif
+
     QMenu *initialMenu;
     QMenu *trayMenu;
     QMenu emptyMenu;
