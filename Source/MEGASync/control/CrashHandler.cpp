@@ -320,7 +320,6 @@ QStringList CrashHandler::getPendingCrashReports()
         {
             LOG(QString::fromAscii("Invalid or outdated dump file: ") + file.fileName());
             LOG(crashReport);
-            if(fi.fileName().endsWith(QString::fromAscii(".dmp")))
             file.remove();
             continue;
         }
