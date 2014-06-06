@@ -1,6 +1,7 @@
 #include "MegaApplication.h"
 #include "gui/ImportMegaLinksDialog.h"
 #include "gui/CrashReportDialog.h"
+#include "gui/MegaProxyStyle.h"
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
@@ -26,10 +27,9 @@ QString MegaApplication::dataPath = QString();
 
 int main(int argc, char *argv[])
 {
-
-
-
     MegaApplication app(argc, argv);
+    app.setStyle(new MegaProxyStyle());
+
 #ifdef Q_OS_MACX
     if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
     {
