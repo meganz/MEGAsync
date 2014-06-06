@@ -16,7 +16,7 @@
 using namespace mega;
 
 const int MegaApplication::VERSION_CODE = 1022;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.22j");
+const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.22k");
 const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
