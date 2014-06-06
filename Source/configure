@@ -33,7 +33,7 @@ else
 	tar --overwrite -xf ../$CURL_SOURCE_FILE
 	ln -sf $CURL_SOURCE_FOLDER $CURL
 	cd $CURL_SOURCE_FOLDER || exit 1
-	./configure --enable-ipv6 --disable-manual --enable-shared=no --with-zlib --enable-ares $CURL_EXTRA || exit 1
+	./configure --enable-ipv6 --disable-manual --enable-shared=no --with-zlib --enable-ares --with-ssl $CURL_EXTRA || exit 1
 	make $MAKE_OPTS || exit 1
 	cd ../..
 	mkdir -p $CURL_SOURCE_DIR/include/curl $CURL_INSTALL_DIR/include/

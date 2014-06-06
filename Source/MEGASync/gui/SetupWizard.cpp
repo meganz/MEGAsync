@@ -79,8 +79,21 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 		{
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
-				ui->lProgress->setText(tr("Fetching file list..."));
-                megaApi->fetchNodes(delegateListener);
+                const char *session = megaApi->dumpSession();
+                if(session)
+                {
+                    sessionKey = QString::fromUtf8(session);
+                    delete session;
+                    ui->lProgress->setText(tr("Fetching file list..."));
+                    megaApi->fetchNodes(delegateListener);
+                }
+                else
+                {
+                    ui->bBack->setEnabled(true);
+                    ui->bNext->setEnabled(true);
+                    ui->sPages->setCurrentWidget(ui->pLogin);
+                    QMessageBox::warning(this, tr("Error"), tr("Error getting session key"), QMessageBox::Ok);
+                }
 			}
 			else if(error->getErrorCode() == MegaError::API_ENOENT)
 			{
@@ -134,6 +147,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->bBack->setEnabled(true);
                 ui->bNext->setEnabled(true);
                 ui->sPages->setCurrentWidget(ui->pLogin);
+                sessionKey.clear();
                 QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
             }
             else if(megaApi->getRootNode() == NULL)
@@ -141,6 +155,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->bBack->setEnabled(true);
                 ui->bNext->setEnabled(true);
                 ui->sPages->setCurrentWidget(ui->pLogin);
+                sessionKey.clear();
                 QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
                                                            "Please, try again. If the problem persists "
                                                            "please contact bug@mega.co.nz"), QMessageBox::Ok);
@@ -160,11 +175,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     QString proxyUsername = preferences->getProxyUsername();
                     QString proxyPassword = preferences->getProxyPassword();
 
-                    QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
-                    QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
                     preferences->setEmail(email);
-                    preferences->setCredentials(emailHash, privatePw);
-
+                    preferences->setSession(sessionKey);
                     preferences->setProxyType(proxyType);
                     preferences->setProxyServer(proxyServer);
                     preferences->setProxyPort(proxyPort);
@@ -431,6 +443,7 @@ void SetupWizard::on_bBack_clicked()
         ui->sPages->setCurrentWidget(ui->pLogin);
         ui->eLoginPassword->clear();
         ui->lVerify->hide();
+        sessionKey.clear();
         wTypicalSetup_clicked();
         megaApi->logout();
     }
@@ -445,8 +458,6 @@ void SetupWizard::on_bCancel_clicked()
     if(ui->sPages->currentWidget() == ui->pWelcome)
     {
         QString email = ui->eLoginEmail->text().toLower().trimmed();
-        QString privatePw = QString::fromUtf8(megaApi->getBase64PwKey(ui->eLoginPassword->text().toUtf8().constData()));
-        QString emailHash = QString::fromUtf8(megaApi->getStringHash(privatePw.toUtf8().constData(), email.toUtf8().constData()));
 
         int proxyType = preferences->proxyType();
         QString proxyServer = preferences->proxyServer();
@@ -455,9 +466,9 @@ void SetupWizard::on_bCancel_clicked()
         bool proxyAuth = preferences->proxyRequiresAuth();
         QString proxyUsername = preferences->getProxyUsername();
         QString proxyPassword = preferences->getProxyPassword();
-
         preferences->setEmail(email);
-        preferences->setCredentials(emailHash, privatePw);
+        preferences->setSession(sessionKey);
+
         QString syncName;
         MegaNode *rootNode = megaApi->getRootNode();
         if(selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
