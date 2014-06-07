@@ -15,6 +15,7 @@
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
+#include "gui/ImportMegaLinksDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "control/Preferences.h"
@@ -180,6 +181,7 @@ protected:
     QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
+    ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
     QString lastTrayMessage;
 

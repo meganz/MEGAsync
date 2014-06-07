@@ -1,5 +1,4 @@
 #include "MegaApplication.h"
-#include "gui/ImportMegaLinksDialog.h"
 #include "gui/CrashReportDialog.h"
 #include "gui/MegaProxyStyle.h"
 #include "control/Utilities.h"
@@ -205,6 +204,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateAction = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
+    importDialog = NULL;
     uploadFolderSelector = NULL;
     updateBlocked = false;
     updateThread = NULL;
@@ -710,6 +710,8 @@ void MegaApplication::rebootApplication(bool update)
         multiUploadFileDialog->hide();
     if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
         pasteMegaLinksDialog->hide();
+    if(importDialog && importDialog->isVisible())
+        importDialog->hide();
     QApplication::exit();
 }
 
@@ -733,6 +735,8 @@ void MegaApplication::exitApplication()
             multiUploadFileDialog->hide();
         if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
             pasteMegaLinksDialog->hide();
+        if(importDialog && importDialog->isVisible())
+            importDialog->hide();
 
         #ifdef __APPLE__
             cleanAll();
@@ -768,6 +772,8 @@ void MegaApplication::exitApplication()
                 multiUploadFileDialog->hide();
             if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
                 pasteMegaLinksDialog->hide();
+            if(importDialog && importDialog->isVisible())
+                importDialog->hide();
 
             #ifdef __APPLE__
                 cleanAll();
@@ -823,6 +829,7 @@ void MegaApplication::cleanAll()
 
     delete uploader;
     delete pasteMegaLinksDialog;
+    delete importDialog;
     delete uploadFolderSelector;
     delete delegateListener;
     delete megaApi;
@@ -1152,6 +1159,15 @@ void MegaApplication::importLinks()
         return;
     }
 
+    if(importDialog)
+    {
+        importDialog->setVisible(true);
+        importDialog->activateWindow();
+        importDialog->raise();
+        importDialog->setFocus();
+        return;
+    }
+
     //Show the dialog to paste public links
     pasteMegaLinksDialog = new PasteMegaLinksDialog();
     pasteMegaLinksDialog->exec();
@@ -1173,28 +1189,36 @@ void MegaApplication::importLinks()
 	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
 
     //Open the import dialog
-	ImportMegaLinksDialog importDialog(megaApi, preferences, linkProcessor);
-	importDialog.exec();
-	if(importDialog.result()!=QDialog::Accepted) return;
+    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
+    importDialog->exec();
+    if(importDialog->result()!=QDialog::Accepted)
+    {
+        delete importDialog;
+        importDialog = NULL;
+        return;
+    }
 
     //If the user wants to download some links, do it
-	if(importDialog.shouldDownload())
+    if(importDialog->shouldDownload())
 	{
-		preferences->setDownloadFolder(importDialog.getDownloadPath());
-		linkProcessor->downloadLinks(importDialog.getDownloadPath());
+        preferences->setDownloadFolder(importDialog->getDownloadPath());
+        linkProcessor->downloadLinks(importDialog->getDownloadPath());
 	}
 
     //If the user wants to import some links, do it
-	if(importDialog.shouldImport())
+    if(importDialog->shouldImport())
 	{
 		connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
         connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, long long)),
                 this, SLOT(onDupplicateLink(QString, QString, long long)));
-		linkProcessor->importLinks(importDialog.getImportPath());
+        linkProcessor->importLinks(importDialog->getImportPath());
 	}
     //If importing links isn't needed, we can delete the link processor
     //It doesn't track transfers, only the importation of links
     else delete linkProcessor;
+
+    delete importDialog;
+    importDialog = NULL;
 }
 
 void MegaApplication::uploadActionClicked()

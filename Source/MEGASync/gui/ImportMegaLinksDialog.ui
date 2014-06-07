@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>445</width>
-    <height>196</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>445</width>
-    <height>196</height>
+    <height>200</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -51,9 +51,10 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
-#bLocalFolder, #bMegaFolder
+#cImport, #cDownload
 {
-    border: none;
+spacing: 10px;
+padding-left: 10px;
 }
 </string>
   </property>
@@ -84,7 +85,7 @@ height: 16px;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>38</height>
+       <height>35</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -99,6 +100,12 @@ height: 16px;
        <height>0</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -108,13 +115,13 @@ height: 16px;
        <number>6</number>
       </property>
       <property name="leftMargin">
-       <number>9</number>
+       <number>6</number>
       </property>
       <property name="topMargin">
-       <number>15</number>
+       <number>14</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>6</number>
       </property>
       <property name="bottomMargin">
        <number>9</number>
@@ -148,13 +155,13 @@ height: 16px;
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>6</number>
+          <number>8</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -164,6 +171,12 @@ height: 16px;
            <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>21</height>
+            </size>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -171,8 +184,17 @@ height: 16px;
          </item>
          <item>
           <widget class="QPushButton" name="bLocalFolder">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Choose</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -202,13 +224,13 @@ height: 16px;
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>6</number>
+          <number>8</number>
          </property>
          <property name="bottomMargin">
           <number>6</number>
@@ -217,6 +239,12 @@ height: 16px;
           <widget class="QLineEdit" name="eMegaFolder">
            <property name="enabled">
             <bool>true</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>21</height>
+            </size>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -238,7 +266,7 @@ height: 16px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>32</height>
+          <height>34</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -252,13 +280,13 @@ height: 16px;
           <number>6</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <property name="topMargin">
           <number>6</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -281,6 +309,12 @@ height: 16px;
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>OK</string>
            </property>
@@ -288,6 +322,12 @@ height: 16px;
          </item>
          <item>
           <widget class="QPushButton" name="bCancel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Cancel</string>
            </property>

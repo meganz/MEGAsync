@@ -30,13 +30,13 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
 	if(linkProcessor->size()<=8)
 	{
-		ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+32*(linkProcessor->size()-1));
-		this->setMinimumHeight(this->minimumHeight()+32*(linkProcessor->size()-1));
+        ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+35*(linkProcessor->size()-1));
+        this->setMinimumHeight(this->minimumHeight()+35*(linkProcessor->size()-1));
 	}
 	else
 	{
-		ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+32*7);
-		this->setMinimumHeight(this->minimumHeight()+32*7);
+        ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+35*7);
+        this->setMinimumHeight(this->minimumHeight()+35*7);
 	}
 
 	ui->linkList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
