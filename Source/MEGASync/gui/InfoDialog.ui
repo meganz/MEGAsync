@@ -188,7 +188,7 @@ padding-right: 0px;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>29</number>
+       <number>15</number>
       </property>
       <property name="leftMargin">
        <number>20</number>
@@ -528,7 +528,7 @@ border: none;</string>
               <widget class="QLabel" name="label_2">
                <property name="minimumSize">
                 <size>
-                 <width>24</width>
+                 <width>28</width>
                  <height>0</height>
                 </size>
                </property>
@@ -598,7 +598,7 @@ color: rgb(102, 102, 102);</string>
               <widget class="QLabel" name="label_5">
                <property name="minimumSize">
                 <size>
-                 <width>24</width>
+                 <width>28</width>
                  <height>0</height>
                 </size>
                </property>
