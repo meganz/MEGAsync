@@ -128,10 +128,7 @@ color: grey;
          </size>
         </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/images/tray_download_ico.png</pixmap>
+         <string notr="true">&lt;img src=&quot;:/images/tray_download_ico.png&quot;/&gt;</string>
         </property>
        </widget>
       </item>
@@ -187,8 +184,6 @@ color: grey;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

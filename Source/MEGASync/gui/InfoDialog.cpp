@@ -375,7 +375,7 @@ void InfoDialog::updateState()
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        ui->label->setPixmap(QPixmap(QString::fromUtf8("://images/tray_updated_large_ico.png")));
+        ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_updated_large_ico.png\"/>"));
         if(indexing || remainingUploads || remainingDownloads) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
         else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
         else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
@@ -409,7 +409,7 @@ void InfoDialog::setPaused(bool paused)
     ui->bPause->setEnabled(true);
     overlay->setVisible(paused);
     if(paused && (ui->sActiveTransfers->currentWidget() == ui->pUpdated))
-        ui->label->setPixmap(QPixmap());
+        ui->label->setText(QString());
 }
 
 void InfoDialog::updateDialog()

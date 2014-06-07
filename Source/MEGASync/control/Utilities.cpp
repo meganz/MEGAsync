@@ -189,15 +189,15 @@ void Utilities::getFolderSize(QString folderPath, long long *size)
     }
 }
 
-QPixmap Utilities::getExtensionPixmap(QString fileName, QString prefix)
+QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
 {
     if(extensionIcons.isEmpty()) initializeExtensions();
 
     QFileInfo f(fileName);
     if(extensionIcons.contains(f.suffix().toLower()))
-        return QPixmap(QString(extensionIcons[f.suffix().toLower()]).insert(0, prefix));
+        return QString(extensionIcons[f.suffix().toLower()]).insert(0, prefix);
     else
-        return QPixmap(prefix + QString::fromAscii("generic.png"));
+        return prefix + QString::fromAscii("generic.png");
 }
 
 QString Utilities::languageCodeToString(QString code)
@@ -255,12 +255,12 @@ QString Utilities::languageCodeToString(QString code)
     return languageNames.value(code);
 }
 
-QPixmap Utilities::getExtensionPixmapSmall(QString fileName)
+QString Utilities::getExtensionPixmapSmall(QString fileName)
 {
     return getExtensionPixmap(fileName, QString::fromAscii("://images/small_"));
 }
 
-QPixmap Utilities::getExtensionPixmapMedium(QString fileName)
+QString Utilities::getExtensionPixmapMedium(QString fileName)
 {
     return getExtensionPixmap(fileName, QString::fromAscii("://images/drag_"));
 }

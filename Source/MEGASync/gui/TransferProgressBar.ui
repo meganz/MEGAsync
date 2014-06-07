@@ -40,10 +40,7 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap resource="Resources.qrc">:/images/transferProgress.png</pixmap>
+    <string notr="true">&lt;img src=&quot;:/images/transferProgress.png&quot;/&gt;</string>
    </property>
   </widget>
   <widget class="QWidget" name="wProgress" native="true">

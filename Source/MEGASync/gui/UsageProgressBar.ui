@@ -19,6 +19,11 @@
 	background-color: red;
 	border-radius: 6px;
 	margin-left: 5px;
+}
+
+#lProgress
+{
+padding-top: -2px;
 }</string>
   </property>
   <widget class="QWidget" name="wProgress" native="true">
@@ -53,10 +58,7 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>://images/usageProgress.png</pixmap>
+    <string notr="true">&lt;img src=&quot;://images/usageProgress.png&quot;/&gt;</string>
    </property>
   </widget>
  </widget>
