@@ -6,79 +6,66 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>430</width>
-    <height>32</height>
+    <width>445</width>
+    <height>34</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>430</width>
-    <height>32</height>
+    <width>445</width>
+    <height>34</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>32</height>
+    <height>34</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 11px;
-}
-
-QCheckBox::indicator {
-     height: 16px;
-     width: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-QPushButton
-{
-    min-height: 24px;
-	height: 24px;
-}
-
-#lName
+   <string notr="true">#lName
 {
 font-size: 12px;
 }
-</string>
+
+#lState
+{
+padding-left: -4px;
+}
+
+#lImage
+{
+margin-left: 3px;
+}</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0,0,0">
-   <property name="spacing">
-    <number>0</number>
-   </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
-    <number>9</number>
+    <number>14</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>9</number>
+    <number>12</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
     <widget class="QCheckBox" name="cSelected">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>18</width>
-       <height>16777215</height>
+       <height>34</height>
       </size>
      </property>
      <property name="text">
@@ -93,14 +80,14 @@ font-size: 12px;
     <widget class="QLabel" name="lImage">
      <property name="minimumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>30</width>
+       <height>28</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>24</width>
-       <height>24</height>
+       <height>28</height>
       </size>
      </property>
      <property name="text">
@@ -113,15 +100,21 @@ font-size: 12px;
    </item>
    <item>
     <widget class="QLabel" name="lName">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>290</width>
-       <height>0</height>
+       <width>320</width>
+       <height>28</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>290</width>
+       <width>320</width>
        <height>16777215</height>
       </size>
      </property>
@@ -146,7 +139,7 @@ font-size: 12px;
      <property name="sizeHint" stdset="0">
       <size>
        <width>10</width>
-       <height>20</height>
+       <height>10</height>
       </size>
      </property>
     </spacer>
@@ -156,13 +149,13 @@ font-size: 12px;
      <property name="minimumSize">
       <size>
        <width>24</width>
-       <height>24</height>
+       <height>28</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>24</width>
-       <height>24</height>
+       <height>28</height>
       </size>
      </property>
      <property name="text">
