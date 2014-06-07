@@ -136,13 +136,13 @@ color: grey;
        <widget class="QLabel" name="lPercentage">
         <property name="minimumSize">
          <size>
-          <width>51</width>
+          <width>39</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>51</width>
+          <width>39</width>
           <height>16777215</height>
          </size>
         </property>
