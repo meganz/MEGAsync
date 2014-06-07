@@ -38,7 +38,9 @@ void ImportListWidgetItem::updateGui()
     QFont f = ui->lName->font();
     QFontMetrics fm = QFontMetrics(f);
     ui->lName->setText(fm.elidedText(name, Qt::ElideMiddle,ui->lName->width()));
-    ui->lImage->setPixmap(Utilities::getExtensionPixmapSmall(fileName));
+    ui->lImage->setText(QString::fromUtf8("<img src=\"") +
+                        Utilities::getExtensionPixmapSmall(fileName) +
+                        QString::fromUtf8("\"/>"));
 
 	switch(status)
 	{
@@ -46,15 +48,15 @@ void ImportListWidgetItem::updateGui()
 		//ui->lState->setText("LOADING");
 		break;
 	case CORRECT:
-        ui->lState->setPixmap(QPixmap(QString::fromAscii("://images/import_ok_icon.png")));
+        ui->lState->setText(QString::fromAscii("<img src=\"://images/import_ok_icon.png\"/>"));
 		break;
 	case WARNING:
-        ui->lState->setPixmap(QPixmap(QString::fromAscii("://images/import_warning_ico.png")));
+        ui->lState->setText(QString::fromAscii("<img src=\"://images/import_warning_ico.png\"/>"));
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;
 	default:
-        ui->lState->setPixmap(QPixmap(QString::fromAscii("://images/import_error_ico.png")));
+        ui->lState->setText(QString::fromAscii("<img src=\"://images/import_error_ico.png\"/>"));
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;

@@ -451,19 +451,19 @@ void SettingsDialog::loadSettings()
         switch(preferences->accountType())
         {
             case Preferences::ACCOUNT_TYPE_FREE:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.png")));
+                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Free.png\"/>"));
                 ui->lAccountType->setText(tr("FREE"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROI:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro_I.png")));
+                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Pro_I.png\"/>"));
                 ui->lAccountType->setText(tr("PRO I"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROII:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro_II.png")));
+                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Pro_II.png\"/>"));
                 ui->lAccountType->setText(tr("PRO II"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROIII:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro_III.png")));
+                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Pro_III.png\"/>"));
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
         }

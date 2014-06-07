@@ -8,7 +8,7 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
 {
     ui->setupUi(this);
     fileName = QString::fromAscii("");
-    ui->lType->setPixmap(QPixmap());
+    ui->lType->setText(QString());
     ui->lPercentage->setText(QString());
     ui->pProgress->hide();
     ui->lType->hide();
@@ -46,12 +46,12 @@ void ActiveTransfer::setType(int type)
     this->type = type;
     if(type)
     {
-        ui->lType->setPixmap(QPixmap(QString::fromAscii("://images/tray_upload_ico.png")));
+        ui->lType->setText(QString::fromUtf8("<img src=\":/images/tray_upload_ico.png\"/>"));
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(119, 186, 216);"));
     }
     else
     {
-        ui->lType->setPixmap(QPixmap(QString::fromAscii("://images/tray_download_ico.png")));
+        ui->lType->setText(QString::fromUtf8("<img src=\":/images/tray_download_ico.png\"/>"));
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
     }
 }

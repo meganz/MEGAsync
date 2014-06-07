@@ -140,7 +140,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -159,10 +159,7 @@ font-weight: bold;
           </size>
          </property>
          <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>://images/logo.png</pixmap>
+          <string notr="true">&lt;img src=&quot;://images/logo.png&quot;/&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -245,10 +242,7 @@ font-weight: bold;
        <item>
         <widget class="QLabel" name="lCreateAccountHeader">
          <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>://images/app_128.png</pixmap>
+          <string notr="true">&lt;img src=&quot;://images/app_128.png&quot;/&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -450,10 +444,7 @@ font-weight: bold;
        <item>
         <widget class="QLabel" name="lLoginHeader">
          <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>://images/app_128.png</pixmap>
+          <string notr="true">&lt;img src=&quot;://images/app_128.png&quot;/&gt;</string>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
@@ -1145,10 +1136,7 @@ font-weight: bold;
        <item>
         <widget class="QLabel" name="lWelcomeImage">
          <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>://images/app_128.png</pixmap>
+          <string notr="true">&lt;img src=&quot;://images/app_128.png&quot;/&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

@@ -205,10 +205,7 @@ padding-right: 0px;
       <item>
        <widget class="QLabel" name="lHeader">
         <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
+         <string notr="true">&lt;img src=&quot;://images/mega_logo.png&quot;/&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -353,10 +350,7 @@ border: none;</string>
           </size>
          </property>
          <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap>://images/tray_updated_large_ico.png</pixmap>
+          <string notr="true">&lt;img src=&quot;:/images/tray_updated_large_ico.png&quot;/&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -539,10 +533,7 @@ border: none;</string>
                 </size>
                </property>
                <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="Resources.qrc">:/images/upload_timer_ico.png</pixmap>
+                <string notr="true">&lt;img src=&quot;://images/upload_timer_ico.png&quot;/&gt;</string>
                </property>
               </widget>
              </item>
@@ -612,10 +603,7 @@ color: rgb(102, 102, 102);</string>
                 </size>
                </property>
                <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="Resources.qrc">:/images/download_timer_ico.png</pixmap>
+                <string notr="true">&lt;img src=&quot;://images/download_timer_ico.png&quot;/&gt;</string>
                </property>
               </widget>
              </item>

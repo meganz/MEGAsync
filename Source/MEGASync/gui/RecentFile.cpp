@@ -32,7 +32,7 @@ void RecentFile::updateWidget()
 {
 	if(!fileName.length())
 	{
-		ui->lFileType->setPixmap(QPixmap());
+        ui->lFileType->setText(QString());
         ui->lTime->setText(QString::fromAscii(""));
         ui->pArrow->setIcon(QIcon());
         return;
@@ -43,7 +43,9 @@ void RecentFile::updateWidget()
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
         ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
-        ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
+        ui->lFileType->setText(QString::fromUtf8("<img src=\"") +
+                               Utilities::getExtensionPixmapMedium(fileName) +
+                               QString::fromUtf8("\"/>"));
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
     }
 

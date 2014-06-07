@@ -104,10 +104,7 @@ font-size: 12px;
       </size>
      </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="Resources.qrc">:/images/small_photoshop.png</pixmap>
+      <string notr="true">&lt;img src=&quot;:/images/small_photoshop.png&quot;/&gt;</string>
      </property>
      <property name="scaledContents">
       <bool>false</bool>
@@ -169,7 +166,7 @@ font-size: 12px;
       </size>
      </property>
      <property name="text">
-      <string/>
+      <string notr="true">&lt;img src=&quot;://images/import_ok_icon.png&quot;/&gt;</string>
      </property>
      <property name="scaledContents">
       <bool>false</bool>
@@ -178,8 +175,6 @@ font-size: 12px;
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

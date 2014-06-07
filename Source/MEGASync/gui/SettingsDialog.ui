@@ -456,10 +456,7 @@ border: none;
         <item>
          <widget class="QLabel" name="lHelp">
           <property name="text">
-           <string/>
-          </property>
-          <property name="pixmap">
-           <pixmap>://images/help_ico.png</pixmap>
+           <string notr="true">&lt;img src=&quot;://images/help_ico.png&quot;/&gt;</string>
           </property>
          </widget>
         </item>
@@ -597,10 +594,7 @@ border: none;
              </size>
             </property>
             <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="Resources.qrc">:/images/Free.png</pixmap>
+             <string notr="true">&lt;img src=&quot;:/images/Free.png&quot;/&gt;</string>
             </property>
             <property name="scaledContents">
              <bool>false</bool>
