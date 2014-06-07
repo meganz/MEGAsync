@@ -107,7 +107,6 @@ public slots:
     void copyFileLink(mega::handle fileHandle);
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
-	void showUploadDialog();
 	void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
