@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="[LANG]" sourcelanguage="en">
+<TS version="2.1" language="[LANG]" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>[$1592]</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>[$1816] [$1815]</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1171,6 +1179,10 @@ Do you want to restart MEGAsync now?</source>
 
 [$2012]</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1397,6 +1409,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Setup Assistant - MEGAsync</source>
         <translation type="unfinished">[$1760] - [$1626]</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1474,6 +1490,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>[$82]</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
