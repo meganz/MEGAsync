@@ -28,6 +28,10 @@ int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
     app.setStyle(new MegaProxyStyle());
+    QPalette newPal(qApp->palette());
+    newPal.setColor(QPalette::Link, QColor(0xDC, 0, 0));
+    newPal.setColor(QPalette::LinkVisited, QColor(0xDC, 0, 0));
+    qApp->setPalette(newPal);
 
 #ifdef Q_OS_MACX
     if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
