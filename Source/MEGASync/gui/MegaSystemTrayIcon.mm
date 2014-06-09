@@ -140,7 +140,6 @@ void MegaSystemTrayIcon::setIcon(const QIcon &icon)
     NSImage *nsimage = [[NSImage alloc] init];
     [nsimage addRepresentation:bitmapRep];
     [bitmapRep release];
-    [nsimage setTemplate:true];
     [[[m_sys->item item] view] setImage: nsimage];
     [nsimage release];
 }
