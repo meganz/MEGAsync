@@ -7,18 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>545</height>
+    <height>551</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>0</height>
+    <height>551</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>404</width>
+    <width>426</width>
     <height>600</height>
    </size>
   </property>
@@ -28,7 +28,8 @@
   <property name="styleSheet">
    <string notr="true">#InfoDialog
 {
-background: white;
+background: transparent;
+border-radius: 6px;
 }
 
 QWidget
@@ -39,31 +40,29 @@ font-size: 11px;
 #wHeader
 {
 border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+background-color: white;
 }
 
-#wRecent1, #wRecent2, #wRecent3
+#lHeader
 {
-border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
-}
-
-
-#wUsage
-{
-border: 0px;
-border-bottom: 2px solid rgb(217, 217, 217);
+padding-top: -3px;
 }
 
 #lRecentlyUpdated
 {
-padding-left: 15px;
+
 background: rgb(178, 178, 178);
 color:  rgb(255, 255, 255);
 font-size: 12px;
 font-weight: bold;
 }
 
+#wRecentlyUpdated
+{
+background: rgb(178, 178, 178);
+}
 #lSyncUpdated
 {
 color:  rgb(166, 166, 166);
@@ -78,8 +77,7 @@ background: rgb(242, 242, 242);
 
 #sActiveTransfers
 {
-border: 0px;
-padding: 0px;
+background-color: #F7F7F7;
 }
 
 #lQueued
@@ -107,11 +105,6 @@ color: rgb(102, 102, 102);
 #bDownloads
 {
 color: rgb(102, 102, 102);
-}
-
-#wDescriptions
-{
-	border-top: 2px solid rgb(241, 240, 240);
 }
 
 #lTotalUsed
@@ -148,7 +141,37 @@ font-weight: bold;
 {
 padding-right: 0px;
 }
-</string>
+
+#wBottom
+{
+border-bottom-left-radius: 6px;
+border-bottom-right-radius: 6px;
+}
+
+#wUsage
+{
+background-color: white;
+}
+
+#wTransfers
+{
+	background-color: #F7F7F7;
+}
+
+#wDescriptions
+{
+   background-color: white;
+}
+
+#pUsage
+{
+padding-left: 1px;
+}
+
+#wRecentLayout
+{
+    background-color: white;
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -156,7 +179,7 @@ padding-right: 0px;
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,1,0,0,0">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -172,6 +195,31 @@ padding-right: 0px;
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="Resources.qrc">:/images/triangle.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QWidget" name="wHeader" native="true">
      <property name="minimumSize">
@@ -191,13 +239,13 @@ padding-right: 0px;
        <number>15</number>
       </property>
       <property name="leftMargin">
-       <number>20</number>
+       <number>19</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>14</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -216,14 +264,14 @@ padding-right: 0px;
        <widget class="QCheckBox" name="bPause">
         <property name="minimumSize">
          <size>
-          <width>36</width>
-          <height>36</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>36</width>
-          <height>36</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -263,14 +311,14 @@ padding-right: 0px;
        <widget class="QPushButton" name="bSettings">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>0</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>32</width>
-          <height>36</height>
+          <height>32</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -313,7 +361,7 @@ border: none;</string>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <property name="minimumSize">
@@ -328,7 +376,7 @@ border: none;</string>
         <height>200</height>
        </size>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="leftMargin">
         <number>2</number>
        </property>
@@ -339,14 +387,20 @@ border: none;</string>
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>8</number>
+        <number>0</number>
        </property>
-       <item row="0" column="0">
+       <item>
         <widget class="QLabel" name="label">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>95</height>
+           <height>112</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>112</height>
           </size>
          </property>
          <property name="text">
@@ -360,8 +414,44 @@ border: none;</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item>
         <widget class="QLabel" name="lSyncUpdated">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>88</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>88</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#lSyncUpdated
+{
+font: &quot;Helvetica&quot;;
+font-size: 20px;
+font-weight: normal;
+color: #999999;
+padding-bottom: 25px;
+}</string>
+         </property>
          <property name="text">
           <string>MEGAsync is starting</string>
          </property>
@@ -511,6 +601,9 @@ border: none;</string>
              <property name="topMargin">
               <number>0</number>
              </property>
+             <property name="rightMargin">
+              <number>11</number>
+             </property>
              <property name="bottomMargin">
               <number>0</number>
              </property>
@@ -521,19 +614,6 @@ border: none;</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="minimumSize">
-                <size>
-                 <width>28</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string notr="true">&lt;img src=&quot;://images/upload_timer_ico.png&quot;/&gt;</string>
                </property>
               </widget>
              </item>
@@ -563,6 +643,19 @@ color: rgb(102, 102, 102);</string>
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string notr="true">&lt;img src=&quot;://images/upload_timer_ico.png&quot;/&gt;</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -579,7 +672,7 @@ color: rgb(102, 102, 102);</string>
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>12</number>
+              <number>11</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -591,19 +684,6 @@ color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="minimumSize">
-                <size>
-                 <width>28</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string notr="true">&lt;img src=&quot;://images/download_timer_ico.png&quot;/&gt;</string>
                </property>
               </widget>
              </item>
@@ -633,6 +713,19 @@ color: rgb(102, 102, 102);</string>
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string notr="true">&lt;img src=&quot;://images/download_timer_ico.png&quot;/&gt;</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -644,35 +737,25 @@ color: rgb(102, 102, 102);</string>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="lRecentlyUpdated">
+    <widget class="QWidget" name="wRecent" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>30</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>30</height>
+       <height>16777215</height>
       </size>
      </property>
-     <property name="text">
-      <string>RECENTLY UPDATED</string>
-     </property>
-     <property name="margin">
-      <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wRecentLayout" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_7">
       <property name="spacing">
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -684,54 +767,164 @@ color: rgb(102, 102, 102);</string>
        <number>0</number>
       </property>
       <item>
-       <widget class="RecentFile" name="wRecent1" native="true">
+       <widget class="QWidget" name="wRecentlyUpdated" native="true">
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>50</height>
+          <width>0</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>400</width>
-          <height>50</height>
+          <width>16777215</width>
+          <height>30</height>
          </size>
         </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>19</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>30</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lRecentlyUpdated">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>RECENTLY UPDATED</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="cRecentlyUpdated">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <widget class="RecentFile" name="wRecent2" native="true">
+       <widget class="QWidget" name="wRecentLayout" native="true">
         <property name="minimumSize">
          <size>
           <width>400</width>
-          <height>50</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>400</width>
-          <height>50</height>
+          <height>144</height>
          </size>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="RecentFile" name="wRecent3" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>400</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>400</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="RecentFile" name="wRecent1" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="RecentFile" name="wRecent2" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>48</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="RecentFile" name="wRecent3" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -762,10 +955,10 @@ color: rgb(102, 102, 102);</string>
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>17</number>
+       <number>19</number>
       </property>
       <property name="bottomMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="widget_8" native="true">
@@ -783,7 +976,7 @@ color: rgb(102, 102, 102);</string>
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -802,6 +995,15 @@ color: rgb(102, 102, 102);</string>
              <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">#lTotalUsed
+{
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #333333;
+}</string>
+           </property>
            <property name="text">
             <string>Usage: Data temporarily unavailable</string>
            </property>
@@ -809,6 +1011,16 @@ color: rgb(102, 102, 102);</string>
          </item>
          <item>
           <widget class="QLabel" name="lPercentageUsed">
+           <property name="styleSheet">
+            <string notr="true">#lPercentageUsed
+{
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #333333;
+}
+</string>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -841,6 +1053,9 @@ color: rgb(102, 102, 102);</string>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <property name="leftMargin">
        <number>17</number>
       </property>
@@ -868,7 +1083,14 @@ color: rgb(102, 102, 102);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border: none;</string>
+         <string notr="true">#bSyncFolder
+{
+border: none;
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+}</string>
         </property>
         <property name="text">
          <string>Syncs</string>
@@ -902,6 +1124,47 @@ color: rgb(102, 102, 102);</string>
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="bOfficialWebIcon">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>36</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>36</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/tray_web_ico@2x.png</normaloff>:/images/tray_web_ico@2x.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="bOfficialWeb">
         <property name="minimumSize">
          <size>
@@ -916,20 +1179,18 @@ color: rgb(102, 102, 102);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border: none;</string>
+         <string notr="true">#bOfficialWeb
+{
+border: none;
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #666666;
+}
+</string>
         </property>
         <property name="text">
          <string>MEGA website</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/tray_web_ico.png</normaloff>://images/tray_web_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
         </property>
         <property name="flat">
          <bool>true</bool>

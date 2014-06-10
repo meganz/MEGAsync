@@ -7,18 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>50</height>
+    <height>48</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>50</height>
+    <height>48</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
+    <width>404</width>
     <height>50</height>
    </size>
   </property>
@@ -26,49 +26,12 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#RecentFile
-{
-border: 0px;
-}
+   <string notr="true">
 
-#wText
-{
-border-bottom: 2px solid rgb(241, 240, 240);
-}
 
-#s1, #v
-{
-	border-bottom: 2px solid rgb(241, 240, 240);
-}
 
-#s2
-{
-	border-bottom: 2px solid rgb(241, 240, 240);
-}
 
-#pArrow
-{
-border: 0px;
-}
-
-#lFileType
-{
-padding-left: 10px;
-border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
-}
-
-#lTime
-{
-color: rgb(102, 102, 102);
-font-size: 10px;
-}
-
-#lFileName
-{
-color: rgb(51, 51, 51);
-font-size: 11px;
-}</string>
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -91,17 +54,24 @@ font-size: 11px;
      <property name="minimumSize">
       <size>
        <width>60</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>60</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#lFileType
+{
+padding-left: 11px;
+}
+</string>
      </property>
      <property name="text">
       <string/>
@@ -119,7 +89,7 @@ font-size: 11px;
      <property name="maximumSize">
       <size>
        <width>288</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <property name="contextMenuPolicy">
@@ -158,6 +128,16 @@ font-size: 11px;
           <height>16777215</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">#lFileName
+{
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #333333;
+}
+</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -165,6 +145,15 @@ font-size: 11px;
       </item>
       <item>
        <widget class="QLabel" name="lTime">
+        <property name="styleSheet">
+         <string notr="true">#lTime
+{
+font: &quot;Helvetica&quot;;
+font-size: 10px;
+font-weight: normal;
+color: #666666;
+}</string>
+        </property>
         <property name="text">
          <string>%1 hours ago</string>
         </property>
@@ -175,20 +164,32 @@ font-size: 11px;
    </item>
    <item>
     <widget class="QWidget" name="s1" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>7</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>6</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="v" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>30</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -247,10 +248,16 @@ font-size: 11px;
    </item>
    <item>
     <widget class="QWidget" name="s2" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>15</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>14</width>
-       <height>50</height>
+       <width>16</width>
+       <height>48</height>
       </size>
      </property>
     </widget>

@@ -28,7 +28,6 @@ public:
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
     void setPaused(bool paused);
-	void updateDialog();
     void updateTransfers();
     void transferFinished();
     void updateSyncsButton();
@@ -36,6 +35,7 @@ public:
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes);
     void updateState();
+    void showRecentlyUpdated(bool show);
 
 public slots:
    void addSync();
@@ -58,9 +58,18 @@ private slots:
     void on_bPause_clicked();
 
     void onOverlayClicked();
+    void on_cRecentlyUpdated_stateChanged(int arg1);
+
+    void on_bOfficialWebIcon_clicked();
+    void onAnimationFinished();
+    void showRecentList();
+
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
+    QPropertyAnimation minHeightAnimation;
+    QPropertyAnimation maxHeightAnimation;
+    QParallelAnimationGroup animationGroup;
 
     long long downloadSpeed;
     long long uploadSpeed;

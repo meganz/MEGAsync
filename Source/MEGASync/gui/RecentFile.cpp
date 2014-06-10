@@ -95,6 +95,15 @@ void RecentFile::updateWidget()
         else
             ui->lTime->setText(tr("%1 years ago").arg(years));
     }
+
+    if(!(parentWidget()->layout()->indexOf(this) % 2))
+    {
+        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: #F7F7F7; }"));
+    }
+    else
+    {
+        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: white; }"));
+    }
 }
 
 void RecentFile::changeEvent(QEvent *event)

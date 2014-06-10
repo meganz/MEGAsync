@@ -22,6 +22,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setAttribute(Qt::WA_TranslucentBackground);
 
     //Initialize fields
     this->app = app;
@@ -55,51 +56,40 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
 
     megaApi = app->getMegaApi();
-
-    //Initialize the "recently updated" list with stored values
     preferences = Preferences::instance();
-    if(preferences->getRecentFileHandle(0) != mega::UNDEF)
-    {
-        ui->wRecent1->setFile(preferences->getRecentFileName(0),
-                          preferences->getRecentFileHandle(0),
-                          preferences->getRecentLocalPath(0),
-                          preferences->getRecentFileTime(0));
 
-        if(preferences->getRecentFileHandle(1) != mega::UNDEF)
-        {
-            ui->wRecent2->setFile(preferences->getRecentFileName(1),
-                                  preferences->getRecentFileHandle(1),
-                                  preferences->getRecentLocalPath(1),
-                                  preferences->getRecentFileTime(1));
-
-            if(preferences->getRecentFileHandle(2) != mega::UNDEF)
-            {
-                ui->wRecent3->setFile(preferences->getRecentFileName(2),
-                                      preferences->getRecentFileHandle(2),
-                                      preferences->getRecentLocalPath(2),
-                                      preferences->getRecentFileTime(2));
-            }
-        }
-    }
-    updateRecentFiles();
     updateSyncsButton();
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
-    overlay->setIcon(QPixmap(QString::fromAscii("://images/tray_paused_large_ico.png")));
+    overlay->setIcon(QIcon(QString::fromAscii("://images/tray_paused_large_ico.png")));
     overlay->setIconSize(QSize(64, 64));
-    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(255, 255, 255, 200);"
-                                              "border: none; "
-                                              "margin-left: 4px; "
-                                              "margin-right: 4px; "));
+    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
+                                              "border: none; "));
+    minHeightAnimation.setTargetObject(this);
+    minHeightAnimation.setPropertyName("minimumHeight");
+    maxHeightAnimation.setTargetObject(this);
+    maxHeightAnimation.setPropertyName("maximumHeight");
+    animationGroup.addAnimation(&minHeightAnimation);
+    animationGroup.addAnimation(&maxHeightAnimation);
+    connect(&animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
+    ui->wTransfer1->hide();
+    ui->wTransfer1->hide();
     overlay->resize(ui->wTransfers->minimumSize());
-    overlay->move(1, 60);
+    overlay->move(1, 72);
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
     connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
+
+    ui->wRecentlyUpdated->hide();
+    ui->wRecent1->hide();
+    ui->wRecent2->hide();
+    ui->wRecent3->hide();
+    setMinimumHeight(377);
+    setMaximumHeight(377);
 }
 
 InfoDialog::~InfoDialog()
@@ -113,7 +103,7 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 
     this->totalBytes = totalBytes;
     this->usedBytes = usedBytes;
-    int percentage = (100 * usedBytes) / totalBytes;
+    int percentage = ceil((100 * usedBytes) / (double)totalBytes);
 	ui->pUsage->setProgress(percentage);
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(totalBytes));
@@ -154,8 +144,10 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
         }
     }
 
+    bool shown = wTransfer->isVisible();
     wTransfer->setFileName(fileName);
     wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer));
+    if(!shown) updateState();
 }
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
@@ -165,7 +157,9 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     RecentFile * recentFile = ((RecentFile *)item->widget());
     recentLayout->insertWidget(0, recentFile);
     recentFile->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
-    preferences->addRecentFile(fileName, fileHandle, localPath);
+    if(!ui->wRecentlyUpdated->isVisible())
+        showRecentList();
+    updateRecentFiles();
 }
 
 void InfoDialog::updateTransfers()
@@ -369,16 +363,37 @@ void InfoDialog::updateState()
     {
         setTransferSpeeds(-1, -1);
         ui->lSyncUpdated->setText(tr("File transfers paused"));
+        ui->label->setText(QString::fromUtf8("<img src=\"://images/tray_paused_large_ico.png\"/>"));
+        if(ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            overlay->setVisible(true);
+        else
+            overlay->setVisible(false);
     }
     else
     {
+        overlay->setVisible(false);
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
         ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_updated_large_ico.png\"/>"));
+
         if(indexing || remainingUploads || remainingDownloads) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
         else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
         else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+    }
+}
+
+void InfoDialog::showRecentlyUpdated(bool show)
+{
+    ui->wRecent->setVisible(show);
+    if(!show)
+    {
+        this->setMinimumHeight(377);
+        this->setMaximumHeight(377);
+    }
+    else
+    {
+        on_cRecentlyUpdated_stateChanged(0);
     }
 }
 
@@ -407,14 +422,6 @@ void InfoDialog::setPaused(bool paused)
 {
     ui->bPause->setChecked(paused);
     ui->bPause->setEnabled(true);
-    overlay->setVisible(paused);
-    if(paused && (ui->sActiveTransfers->currentWidget() == ui->pUpdated))
-        ui->label->setText(QString());
-}
-
-void InfoDialog::updateDialog()
-{
-    updateRecentFiles();
 }
 
 void InfoDialog::addSync()
@@ -597,4 +604,59 @@ void InfoDialog::changeEvent(QEvent *event)
         updateTransfers();
     }
     QDialog::changeEvent(event);
+}
+
+void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
+{
+    ui->wRecent1->hide();
+    ui->wRecent2->hide();
+    ui->wRecent3->hide();
+    ui->cRecentlyUpdated->setEnabled(false);
+
+    if(ui->cRecentlyUpdated->isChecked())
+    {
+        minHeightAnimation.setStartValue(minimumHeight());
+        maxHeightAnimation.setStartValue(maximumHeight());
+        minHeightAnimation.setEndValue(407);
+        maxHeightAnimation.setEndValue(407);
+        minHeightAnimation.setDuration(150);
+        maxHeightAnimation.setDuration(150);
+        animationGroup.start();
+    }
+    else
+    {
+
+        minHeightAnimation.setStartValue(minimumHeight());
+        maxHeightAnimation.setStartValue(maximumHeight());
+        minHeightAnimation.setEndValue(551);
+        maxHeightAnimation.setEndValue(551);
+        minHeightAnimation.setDuration(150);
+        maxHeightAnimation.setDuration(150);
+        animationGroup.start();
+    }
+}
+
+void InfoDialog::on_bOfficialWebIcon_clicked()
+{
+    on_bOfficialWeb_clicked();
+}
+
+void InfoDialog::onAnimationFinished()
+{
+    if(this->minimumHeight() == 551)
+    {
+        ui->wRecent1->show();
+        ui->wRecent2->show();
+        ui->wRecent3->show();
+    }
+
+    ui->lRecentlyUpdated->show();
+    ui->cRecentlyUpdated->show();
+    ui->wRecentlyUpdated->show();
+    ui->cRecentlyUpdated->setEnabled(true);
+}
+
+void InfoDialog::showRecentList()
+{
+    on_cRecentlyUpdated_stateChanged(0);
 }

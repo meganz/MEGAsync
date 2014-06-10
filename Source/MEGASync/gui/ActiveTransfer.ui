@@ -52,7 +52,7 @@ color: grey;
     <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>17</number>
+    <number>16</number>
    </property>
    <property name="bottomMargin">
     <number>9</number>
@@ -70,7 +70,7 @@ color: grey;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>4</number>
+       <number>3</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -114,25 +114,6 @@ color: grey;
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="lType">
-        <property name="minimumSize">
-         <size>
-          <width>22</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>22</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string notr="true">&lt;img src=&quot;:/images/tray_download_ico.png&quot;/&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="lPercentage">
         <property name="minimumSize">
          <size>
@@ -158,6 +139,25 @@ color: grey;
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lType">
+        <property name="minimumSize">
+         <size>
+          <width>22</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>22</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string notr="true">&lt;img src=&quot;:/images/tray_download_ico.png&quot;/&gt;</string>
         </property>
        </widget>
       </item>
