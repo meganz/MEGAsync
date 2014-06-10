@@ -127,6 +127,7 @@ public slots:
     void showInfoDialog();
     bool anUpdateIsAvailable();
     void triggerInstallUpdate();
+    void scanningAnimationStep();
 
 protected:
     void createTrayIcon();
@@ -157,7 +158,8 @@ protected:
     QAction *initialExitAction;
     QAction *updateAction;
     QAction *showStatusAction;
-
+    QTimer *scanningTimer;
+    int scanningAnimationIndex = 1;
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
