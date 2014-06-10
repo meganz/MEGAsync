@@ -10,19 +10,19 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>462</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>457</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>462</height>
+    <height>500</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -40,12 +40,13 @@ font-size: 11px;
 QGroupBox {
     margin-top: 15px;
 	margin-bottom: 10px;
+	border:none;
 }
 
 QGroupBox::title {
     subcontrol-origin: margin;
-    left: 10px;
     padding: 0 3px 0 3px;
+	margin-left:30px;
 }
 
 QCheckBox::indicator {
@@ -67,26 +68,24 @@ QPushButton
     min-height: 20px;
 	height: 20px;
 }
-
+#wTabHeader
+{
+	background-image: url(://images/menu_header.png);
+}
 #wTabHeader QToolButton
 {
-width: 70px;
-height: 60px;
+
 border: none;
 background-color: transparent;
-border-bottom: 5px solid transparent;
-padding: 0px;
+padding-top: 9px;
+padding-bottom: 9px;
+color: #333333;
+
 }
 
 #wTabHeader QToolButton:checked
 {
-background-color: white;
-border-bottom: 5px solid rgb(212,31,0);
-}
-
-#wTabHeader QToolButton
-{
-background-color: none;
+	background-image:url(://images/menu_selected.png);
 }
 
 #bHelp
@@ -201,7 +200,9 @@ spacing: 10px;
 {
 background-color: white;
 border: none;
-}</string>
+}
+
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
@@ -224,6 +225,18 @@ border: none;
    </property>
    <item row="0" column="0">
     <widget class="QWidget" name="wTabHeader" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>76</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>500</width>
+       <height>76</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -241,21 +254,26 @@ border: none;
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Account</string>
@@ -283,14 +301,19 @@ border: none;
         <property name="minimumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Syncs</string>
@@ -318,14 +341,19 @@ border: none;
         <property name="minimumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Bandwidth</string>
@@ -353,14 +381,19 @@ border: none;
         <property name="minimumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Proxy</string>
@@ -388,14 +421,19 @@ border: none;
         <property name="minimumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>100</width>
-          <height>60</height>
+          <height>76</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>Advanced</string>
@@ -442,13 +480,13 @@ border: none;
       <item>
        <layout class="QHBoxLayout" name="layoutBottom">
         <property name="leftMargin">
-         <number>18</number>
+         <number>30</number>
         </property>
         <property name="topMargin">
          <number>12</number>
         </property>
         <property name="rightMargin">
-         <number>33</number>
+         <number>30</number>
         </property>
         <property name="bottomMargin">
          <number>12</number>
@@ -538,46 +576,69 @@ border: none;
      <property name="minimumSize">
       <size>
        <width>500</width>
-       <height>345</height>
+       <height>380</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>500</width>
-       <height>345</height>
+       <height>380</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>0</height>
+       </size>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
         <number>0</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="groupBox_3">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="title">
-          <string>Details</string>
+          <string notr="true"/>
          </property>
          <property name="flat">
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
           <property name="leftMargin">
-           <number>13</number>
+           <number>30</number>
           </property>
           <property name="topMargin">
            <number>6</number>
           </property>
           <property name="rightMargin">
-           <number>12</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
-           <number>9</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QLabel" name="lAccountImage">
@@ -735,6 +796,40 @@ border: none;
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">margin-bottom:20px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="Resources.qrc">:/images/separator line.png</pixmap>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBox_4">
          <property name="title">
           <string>Storage space</string>
@@ -747,10 +842,13 @@ border: none;
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="topMargin">
            <number>12</number>
+          </property>
+          <property name="rightMargin">
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -832,6 +930,25 @@ border: none;
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label_5">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">margin-bottom:10px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="Resources.qrc">:/images/separator line.png</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="gGeneral">
          <property name="title">
           <string/>
@@ -844,13 +961,13 @@ border: none;
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>12</number>
+           <number>30</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>12</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -1021,6 +1138,34 @@ border: none;
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="label_4">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">margin-bottom: 20px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="Resources.qrc">:/images/separator line.png</pixmap>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="gLanguage">
          <property name="title">
           <string>Language</string>
@@ -1030,13 +1175,13 @@ border: none;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="leftMargin">
-           <number>14</number>
+           <number>30</number>
           </property>
           <property name="topMargin">
            <number>13</number>
           </property>
           <property name="rightMargin">
-           <number>17</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -1069,7 +1214,7 @@ border: none;
        <item>
         <widget class="QGroupBox" name="gSyncs">
          <property name="title">
-          <string>Synced folders</string>
+          <string/>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -1863,7 +2008,7 @@ padding-right: 20px;</string>
           </size>
          </property>
          <property name="title">
-          <string>Other</string>
+          <string/>
          </property>
          <property name="flat">
           <bool>true</bool>
