@@ -10,19 +10,19 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>500</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>500</height>
+    <height>550</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>500</height>
+    <height>594</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -38,15 +38,14 @@ font-size: 11px;
 }
 
 QGroupBox {
-    margin-top: 15px;
-	margin-bottom: 10px;
 	border:none;
 }
 
 QGroupBox::title {
     subcontrol-origin: margin;
-    padding: 0 3px 0 3px;
+    padding: 0 0 0 -2px;
 	margin-left:30px;
+	margin-top:20px;
 }
 
 QCheckBox::indicator {
@@ -576,13 +575,13 @@ border: none;
      <property name="minimumSize">
       <size>
        <width>500</width>
-       <height>380</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>500</width>
-       <height>380</height>
+       <height>500</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -613,6 +612,12 @@ border: none;
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox_3">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>80</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
@@ -629,16 +634,16 @@ border: none;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1">
           <property name="leftMargin">
-           <number>30</number>
+           <number>29</number>
           </property>
           <property name="topMargin">
-           <number>6</number>
+           <number>15</number>
           </property>
           <property name="rightMargin">
-           <number>30</number>
+           <number>25</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>15</number>
           </property>
           <item>
            <widget class="QLabel" name="lAccountImage">
@@ -719,6 +724,9 @@ border: none;
              </item>
              <item>
               <widget class="QWidget" name="widget_10" native="true">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <layout class="QHBoxLayout" name="horizontalLayout_16">
                 <property name="spacing">
                  <number>0</number>
@@ -806,17 +814,17 @@ border: none;
          <property name="minimumSize">
           <size>
            <width>500</width>
-           <height>0</height>
+           <height>2</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>500</width>
-           <height>16777215</height>
+           <height>2</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">margin-bottom:20px;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -831,6 +839,15 @@ border: none;
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_4">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>200</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="title">
           <string>Storage space</string>
          </property>
@@ -839,16 +856,16 @@ border: none;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="spacing">
-           <number>6</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>30</number>
+           <number>25</number>
           </property>
           <property name="topMargin">
-           <number>12</number>
+           <number>10</number>
           </property>
           <property name="rightMargin">
-           <number>30</number>
+           <number>25</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -934,11 +951,17 @@ border: none;
          <property name="minimumSize">
           <size>
            <width>500</width>
-           <height>0</height>
+           <height>2</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>2</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">margin-bottom:10px;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string/>
@@ -950,6 +973,18 @@ border: none;
        </item>
        <item>
         <widget class="QGroupBox" name="gGeneral">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>90</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>90</height>
+          </size>
+         </property>
          <property name="title">
           <string/>
          </property>
@@ -958,22 +993,37 @@ border: none;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
           <property name="spacing">
-           <number>6</number>
+           <number>10</number>
           </property>
           <property name="leftMargin">
-           <number>30</number>
+           <number>27</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>30</number>
+           <number>25</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>11</number>
           </property>
           <item>
            <widget class="QWidget" name="widget_4" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_12">
              <property name="leftMargin">
               <number>0</number>
@@ -990,6 +1040,9 @@ border: none;
              <item>
               <widget class="QWidget" name="widget_5" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_5">
+                <property name="spacing">
+                 <number>10</number>
+                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -1052,6 +1105,9 @@ border: none;
              </item>
              <item>
               <widget class="QWidget" name="widget_6" native="true">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <layout class="QVBoxLayout" name="verticalLayout_15">
                 <property name="leftMargin">
                  <number>0</number>
@@ -1142,17 +1198,18 @@ border: none;
          <property name="minimumSize">
           <size>
            <width>500</width>
-           <height>0</height>
+           <height>2</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>500</width>
-           <height>16777215</height>
+           <height>2</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">margin-bottom: 20px;</string>
+          <string notr="true">
+</string>
          </property>
          <property name="text">
           <string/>
@@ -1167,6 +1224,21 @@ border: none;
        </item>
        <item>
         <widget class="QGroupBox" name="gLanguage">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>90</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="title">
           <string>Language</string>
          </property>
@@ -1174,11 +1246,14 @@ border: none;
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>30</number>
           </property>
           <property name="topMargin">
-           <number>13</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>30</number>
@@ -1193,6 +1268,18 @@ border: none;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
             </property>
             <item>
              <property name="text">
