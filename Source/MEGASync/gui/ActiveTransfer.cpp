@@ -39,6 +39,7 @@ void ActiveTransfer::setProgress(long long completedSize, long long totalSize, b
     ui->lPercentage->setText(QString::number((permil+5)/10) + QString::fromAscii("%"));
     ui->pProgress->show();
     ui->lType->show();
+    this->show();
 }
 
 void ActiveTransfer::setType(int type)
@@ -62,6 +63,7 @@ void ActiveTransfer::hideTransfer()
     ui->lPercentage->setText(QString::fromAscii(""));
 	ui->pProgress->hide();
     ui->lType->hide();
+    this->hide();
 }
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)

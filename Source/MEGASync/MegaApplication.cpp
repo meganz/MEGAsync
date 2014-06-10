@@ -898,8 +898,8 @@ void MegaApplication::showInfoDialog()
 
             #ifdef __APPLE__
                 position = trayIcon->getPosition();
-                posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2;
-                posy = screenGeometry.top() + 2;
+                posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 2;
+                posy = screenGeometry.top();
             #else
                 QPoint position = QCursor::pos();
 
@@ -1883,7 +1883,11 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
     //Send statics to the information dialog
     if(infoDialog)
+    {
         infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
+        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+        infoDialog->updateTransfers();
+    }
 
     if((megaApi->getNumPendingDownloads() + megaApi->getNumPendingDownloads()) == 1)
         infoDialog->setWaiting(true);
@@ -1948,7 +1952,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
         infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
         infoDialog->updateTransfers();
-        infoDialog->updateDialog();
         infoDialog->transferFinished();
     }
 
@@ -2110,12 +2113,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
         }
 	}
 
-    //Update the information dialog
-    if(infoDialog)
-    {
-        infoDialog->updateDialog();
-    }
-
     if(externalNodes)
     {
         updateUserStats();
@@ -2147,7 +2144,6 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
         infoDialog->setPaused(paused);
         infoDialog->updateState();
         infoDialog->transferFinished();
-        infoDialog->updateDialog();
     }
 
     LOG("Current state: ");
