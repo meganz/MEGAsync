@@ -222,5 +222,58 @@
         <file>images/Pro_I@2x.png</file>
         <file>images/check_mega_version.png</file>
         <file>images/check_mega_version@2x.png</file>
+        <file>images/tray_scanning_large_ico_@2x.png</file>
+        <file>images/tray_scanning_large_ico.png</file>
+        <file>images/menu_header.png</file>
+        <file>images/menu_selected.png</file>
+        <file>images/separator line.png</file>
+        <file>images/collapse_down.png</file>
+        <file>images/collapse_down@2x.png</file>
+        <file>images/collapse_up.png</file>
+        <file>images/collapse_up@2x.png</file>
+        <file>images/top_arrow.png</file>
+        <file>images/top_arrow@2x.png</file>
+        <file>images/scanning_anime1.png</file>
+        <file>images/scanning_anime1@2x.png</file>
+        <file>images/scanning_anime2.png</file>
+        <file>images/scanning_anime2@2x.png</file>
+        <file>images/scanning_anime3.png</file>
+        <file>images/scanning_anime3@2x.png</file>
+        <file>images/scanning_anime4.png</file>
+        <file>images/scanning_anime4@2x.png</file>
+        <file>images/scanning_anime5.png</file>
+        <file>images/scanning_anime5@2x.png</file>
+        <file>images/scanning_anime6.png</file>
+        <file>images/scanning_anime6@2x.png</file>
+        <file>images/scanning_anime7.png</file>
+        <file>images/scanning_anime7@2x.png</file>
+        <file>images/scanning_anime8.png</file>
+        <file>images/scanning_anime8@2x.png</file>
+        <file>images/scanning_anime9.png</file>
+        <file>images/scanning_anime9@2x.png</file>
+        <file>images/scanning_anime10.png</file>
+        <file>images/scanning_anime10@2x.png</file>
+        <file>images/scanning_anime11.png</file>
+        <file>images/scanning_anime11@2x.png</file>
+        <file>images/scanning_anime12.png</file>
+        <file>images/scanning_anime12@2x.png</file>
+        <file>images/scanning_anime13.png</file>
+        <file>images/scanning_anime13@2x.png</file>
+        <file>images/scanning_anime14.png</file>
+        <file>images/scanning_anime14@2x.png</file>
+        <file>images/scanning_anime15.png</file>
+        <file>images/scanning_anime15@2x.png</file>
+        <file>images/scanning_anime16.png</file>
+        <file>images/scanning_anime16@2x.png</file>
+        <file>images/scanning_anime17.png</file>
+        <file>images/scanning_anime17@2x.png</file>
+        <file>images/scanning_anime18.png</file>
+        <file>images/scanning_anime18@2x.png</file>
+        <file>images/drag_camera_sync.png</file>
+        <file>images/drag_camera_sync@2x.png</file>
+        <file>images/drag_mac_folder.png</file>
+        <file>images/drag_mac_folder@2x.png</file>
+        <file>images/drag_win_folder.png</file>
+        <file>images/drag_win_folder@2x.png</file>
     </qresource>
 </RCC>
