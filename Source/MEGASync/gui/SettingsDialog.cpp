@@ -143,8 +143,28 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #endif
 
     ui->gCache->setVisible(false);
+    ui->lCacheTitle->hide();
+    ui->lCacheSeparator->hide();
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
+
+    minHeightAnimation = new QPropertyAnimation();
+    maxHeightAnimation = new QPropertyAnimation();
+    animationGroup = new QParallelAnimationGroup();
+    animationGroup->addAnimation(minHeightAnimation);
+    animationGroup->addAnimation(maxHeightAnimation);
+    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pSyncs->hide();
+
+    if(!proxyOnly)
+    {
+        ui->pProxies->hide();
+        setMinimumHeight(475);
+        setMaximumHeight(475);
+    }
 }
 
 SettingsDialog::~SettingsDialog()
@@ -168,6 +188,9 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bBandwidth->setChecked(false);
         ui->bProxies->setChecked(true);
         ui->wStack->setCurrentWidget(ui->pProxies);
+        setMinimumHeight(410);
+        setMaximumHeight(410);
+        ui->pProxies->show();
 
         #ifdef __APPLE__
             ui->bApply->show();
@@ -179,10 +202,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bAdvanced->setEnabled(true);
         ui->bSyncs->setEnabled(true);
         ui->bBandwidth->setEnabled(true);
-
-        #ifdef __APPLE__
-            ui->bApply->hide();
-        #endif
     }
 }
 
@@ -227,6 +246,24 @@ void SettingsDialog::on_bAccount_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
+
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(475);
+    maxHeightAnimation->setEndValue(475);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -243,6 +280,34 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible( true );
     ui->bOk->setFocus();
+
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        minHeightAnimation->setEndValue(250);
+        maxHeightAnimation->setEndValue(250);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(420);
+        maxHeightAnimation->setEndValue(420);
+    }
+
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
 }
 
 void SettingsDialog::on_bBandwidth_clicked()
@@ -258,6 +323,24 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
+
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(300);
+    maxHeightAnimation->setEndValue(300);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -273,6 +356,24 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
+
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(430);
+    maxHeightAnimation->setEndValue(430);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
 }
 
 
@@ -289,6 +390,24 @@ void SettingsDialog::on_bProxies_clicked()
     ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
+
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(410);
+    maxHeightAnimation->setEndValue(410);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
 }
 
 
@@ -891,6 +1010,8 @@ void SettingsDialog::on_bSyncChange_clicked()
         updateAddButton();
         stateChanged();
     }
+
+    on_bSyncs_clicked();
 }
 
 
@@ -1225,6 +1346,20 @@ void SettingsDialog::on_bFullCheck_clicked()
     {
         app->rebootApplication(false);
     }
+}
+
+void SettingsDialog::onAnimationFinished()
+{
+    if(ui->wStack->currentWidget() == ui->pAccount)
+        ui->pAccount->show();
+    else if(ui->wStack->currentWidget() == ui->pSyncs)
+        ui->pSyncs->show();
+    else if(ui->wStack->currentWidget() == ui->pBandwidth)
+        ui->pBandwidth->show();
+    else if(ui->wStack->currentWidget() == ui->pProxies)
+        ui->pProxies->show();
+    else if(ui->wStack->currentWidget() == ui->pAdvanced)
+        ui->pAdvanced->show();
 }
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)
