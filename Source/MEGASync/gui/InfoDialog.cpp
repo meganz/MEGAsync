@@ -58,6 +58,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
 
+    setUsage(preferences->totalStorage(), preferences->usedStorage());
     updateSyncsButton();
 
     //Create the overlay widget with a semi-transparent background
