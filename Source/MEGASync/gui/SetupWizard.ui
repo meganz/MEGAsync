@@ -396,7 +396,7 @@ font-weight: bold;
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot; style=&quot;color:#DC0000&quot;&gt;Terms of Service&lt;/a&gt;</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::RichText</enum>

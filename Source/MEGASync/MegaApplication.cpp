@@ -28,10 +28,6 @@ int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
     app.setStyle(new MegaProxyStyle());
-    QPalette newPal(qApp->palette());
-    newPal.setColor(QPalette::Link, QColor(0xDC, 0, 0));
-    newPal.setColor(QPalette::LinkVisited, QColor(0xDC, 0, 0));
-    qApp->setPalette(newPal);
 
 #ifdef Q_OS_MACX
     if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
@@ -1600,10 +1596,6 @@ void MegaApplication::createTrayIcon()
     if(!trayMenu)
     {
         trayMenu = new QMenu();
-        /*trayMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-            "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));*/
     }
     else
     {
