@@ -40,8 +40,8 @@ font-size: 11px;
 #wHeader
 {
 border: 0px;
-border-top-left-radius: 5px;
-border-top-right-radius: 5px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
 background-color: white;
 }
 
@@ -144,8 +144,8 @@ padding-right: 0px;
 
 #wBottom
 {
-border-bottom-left-radius: 6px;
-border-bottom-right-radius: 6px;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
 }
 
 #wUsage
@@ -196,7 +196,7 @@ padding-left: 1px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="lTopArrow">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -210,13 +210,10 @@ padding-left: 1px;
       </size>
      </property>
      <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="Resources.qrc">:/images/triangle.png</pixmap>
+      <string>&lt;img src=&quot;:/images/top_arrow.png&quot;/&gt;</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignBottom|Qt::AlignHCenter</set>
      </property>
     </widget>
    </item>
@@ -791,7 +788,7 @@ color: rgb(102, 102, 102);</string>
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>30</number>
+          <number>21</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -831,6 +828,22 @@ color: rgb(102, 102, 102);</string>
              <width>0</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QCheckBox::indicator {
+     width: 24px;
+     height: 24px;
+	 subcontrol-position:  center;
+ }
+
+  QCheckBox::indicator:checked
+  {
+    image: url(://images/collapse_down.png);
+  }
+  QCheckBox::indicator:unchecked
+  {
+    image: url(://images/collapse_up.png);
+  }</string>
            </property>
            <property name="text">
             <string/>
