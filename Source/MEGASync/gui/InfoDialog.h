@@ -63,6 +63,7 @@ private slots:
     void on_bOfficialWebIcon_clicked();
     void onAnimationFinished();
     void showRecentList();
+    void scanningAnimationStep();
 
 private:
     Ui::InfoDialog *ui;
@@ -98,7 +99,8 @@ protected:
 	void updateRecentFiles();
 
 	QDateTime lastPopupUpdate;
-    QTimer *timer;
+    QTimer scanningTimer;
+    int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
     MegaApi *megaApi;

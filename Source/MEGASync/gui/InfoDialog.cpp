@@ -57,6 +57,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
+    scanningTimer.setSingleShot(false);
+    scanningTimer.setInterval(60);
+    scanningAnimationIndex = 1;
+    connect(&scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
     setUsage(preferences->totalStorage(), preferences->usedStorage());
     updateSyncsButton();
@@ -362,6 +366,9 @@ void InfoDialog::updateState()
 {
     if(ui->bPause->isChecked())
     {
+        if(scanningTimer.isActive())
+            scanningTimer.stop();
+
         setTransferSpeeds(-1, -1);
         ui->lSyncUpdated->setText(tr("File transfers paused"));
         ui->label->setText(QString::fromUtf8("<img src=\"://images/tray_paused_large_ico.png\"/>"));
@@ -376,11 +383,33 @@ void InfoDialog::updateState()
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_updated_large_ico.png\"/>"));
+        if(indexing || remainingUploads || remainingDownloads)
+        {
+            if(!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
 
-        if(indexing || remainingUploads || remainingDownloads) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-        else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
-        else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+            ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_scanning_large_ico.png\"/>"));
+        }
+        else if(waiting)
+        {
+            if(scanningTimer.isActive())
+                scanningTimer.stop();
+
+            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+            ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_scanning_large_ico.png\"/>"));
+        }
+        else
+        {
+            if(scanningTimer.isActive())
+                scanningTimer.stop();
+
+            ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+            ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_updated_large_ico.png\"/>"));
+        }
     }
 }
 
@@ -660,4 +689,12 @@ void InfoDialog::onAnimationFinished()
 void InfoDialog::showRecentList()
 {
     on_cRecentlyUpdated_stateChanged(0);
+}
+
+void InfoDialog::scanningAnimationStep()
+{
+    scanningAnimationIndex = scanningAnimationIndex%18;
+    scanningAnimationIndex++;
+    ui->label->setText(QString::fromUtf8("<img src=\":/images/scanning_anime") +
+                       QString::number(scanningAnimationIndex) + QString::fromUtf8("\"/>"));
 }
