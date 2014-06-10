@@ -576,10 +576,6 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         QMenu menu;
-        //menu.setStyleSheet(QString::fromAscii(
-           // "QMenu {} "));
-           // "QMenu::item {background-color: white; color: black;} "
-           // "QMenu::item:selected {background-color: #0063cd; color:white}"));
         QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
         addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
         addSyncAction->setIconVisibleInMenu(true);
