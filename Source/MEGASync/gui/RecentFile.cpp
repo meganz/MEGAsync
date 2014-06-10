@@ -30,6 +30,15 @@ void RecentFile::setFile(QString fileName, long long fileHandle, QString localPa
 
 void RecentFile::updateWidget()
 {
+    if(!(parentWidget()->layout()->indexOf(this) % 2))
+    {
+        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: #F7F7F7; }"));
+    }
+    else
+    {
+        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: white; }"));
+    }
+
 	if(!fileName.length())
 	{
         ui->lFileType->setText(QString());
@@ -94,15 +103,6 @@ void RecentFile::updateWidget()
             ui->lTime->setText(tr("1 year ago"));
         else
             ui->lTime->setText(tr("%1 years ago").arg(years));
-    }
-
-    if(!(parentWidget()->layout()->indexOf(this) % 2))
-    {
-        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: #F7F7F7; }"));
-    }
-    else
-    {
-        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: white; }"));
     }
 }
 
