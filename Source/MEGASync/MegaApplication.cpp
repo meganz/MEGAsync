@@ -262,6 +262,12 @@ void MegaApplication::initialize()
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
+    scanningTimer = new QTimer();
+    scanningTimer->setSingleShot(false);
+    scanningTimer->setInterval(500);
+    scanningAnimationIndex = 1;
+    connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
 
     if(preferences->isCrashed())
@@ -374,6 +380,8 @@ void MegaApplication::updateTrayIcon()
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
         #else
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")));
+            if(scanningTimer->isActive())
+                scanningTimer->stop();
         #endif
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     }
@@ -387,6 +395,8 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")));
+                if(scanningTimer->isActive())
+                    scanningTimer->stop();
             #endif
             trayIcon->setToolTip(tooltip);
         }
@@ -397,6 +407,8 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")));
+                if(scanningTimer->isActive())
+                    scanningTimer->stop();
             #endif
             tooltip += QString::fromAscii("\n") + tr("Update available!");
             trayIcon->setToolTip(tooltip);
@@ -431,6 +443,11 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
+                if(!scanningTimer->isActive())
+                {
+                    scanningAnimationIndex = 1;
+                    scanningTimer->start();
+                }
             #endif
             trayIcon->setToolTip(tooltip);
         }
@@ -441,6 +458,11 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
+                if(!scanningTimer->isActive())
+                {
+                    scanningAnimationIndex = 1;
+                    scanningTimer->start();
+                }
             #endif
             tooltip += QString::fromAscii("\n") + tr("Update available!");
             trayIcon->setToolTip(tooltip);
@@ -455,6 +477,8 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")));
+                if(scanningTimer->isActive())
+                    scanningTimer->stop();
             #endif
             trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
         }
@@ -465,6 +489,8 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")));
+                if(scanningTimer->isActive())
+                    scanningTimer->stop();
             #endif
             trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
         }
@@ -934,6 +960,14 @@ bool MegaApplication::anUpdateIsAvailable()
 void MegaApplication::triggerInstallUpdate()
 {
     emit installUpdate();
+}
+
+void MegaApplication::scanningAnimationStep()
+{
+    scanningAnimationIndex = scanningAnimationIndex%4;
+    scanningAnimationIndex++;
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac") +
+                      QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
 }
 
 void MegaApplication::unlink()
@@ -1661,6 +1695,11 @@ void MegaApplication::createTrayIcon()
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
         #else
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
+            if(!scanningTimer->isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer->start();
+            }
         #endif
     }
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
