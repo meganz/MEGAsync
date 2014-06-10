@@ -222,7 +222,6 @@
         <file>images/Pro_I@2x.png</file>
         <file>images/check_mega_version.png</file>
         <file>images/check_mega_version@2x.png</file>
-        <file>images/tray_scanning_large_ico_@2x.png</file>
         <file>images/tray_scanning_large_ico.png</file>
         <file>images/menu_header.png</file>
         <file>images/menu_selected.png</file>
@@ -283,5 +282,6 @@
         <file>images/icon_syncing_mac3@2x.png</file>
         <file>images/icon_syncing_mac4.png</file>
         <file>images/icon_syncing_mac4@2x.png</file>
+        <file>images/tray_scanning_large_ico@2x.png</file>
     </qresource>
 </RCC>
