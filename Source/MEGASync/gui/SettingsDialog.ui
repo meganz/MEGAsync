@@ -180,6 +180,12 @@ border: none;
 padding-left: 2px;
 padding-bottom: 6px;
 }
+
+#lExcludedFiles
+{
+	margin-bottom: 13px;
+	margin-top:5px;
+}
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -1922,7 +1928,7 @@ padding-bottom: 3px;</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_14">
           <property name="spacing">
-           <number>6</number>
+           <number>5</number>
           </property>
           <property name="leftMargin">
            <number>30</number>
@@ -1937,15 +1943,21 @@ padding-bottom: 3px;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_12">
+           <widget class="QLabel" name="lExcludedFiles">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Excluded file names</string>
+            </property>
+            <property name="indent">
+             <number>0</number>
             </property>
            </widget>
           </item>
@@ -2042,6 +2054,9 @@ padding-bottom: 3px;</string>
        </item>
        <item>
         <widget class="QLabel" name="label_15">
+         <property name="styleSheet">
+          <string notr="true">margin-top:8px;</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -2074,6 +2089,9 @@ padding-bottom: 3px;</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="title">
           <string/>
          </property>
@@ -2081,14 +2099,17 @@ padding-bottom: 3px;</string>
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>28</number>
           </property>
           <property name="topMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>20</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -2173,13 +2194,13 @@ padding-bottom: 3px;</string>
            <number>30</number>
           </property>
           <property name="topMargin">
-           <number>5</number>
+           <number>7</number>
           </property>
           <property name="rightMargin">
            <number>30</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>18</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
@@ -2278,7 +2299,7 @@ padding-bottom: 3px;</string>
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
