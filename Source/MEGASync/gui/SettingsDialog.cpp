@@ -336,8 +336,8 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(300);
-    maxHeightAnimation->setEndValue(300);
+    minHeightAnimation->setEndValue(310);
+    maxHeightAnimation->setEndValue(310);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
