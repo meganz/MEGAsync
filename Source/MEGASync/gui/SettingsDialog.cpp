@@ -235,6 +235,12 @@ void SettingsDialog::onCacheSizeAvailable()
 
 void SettingsDialog::on_bAccount_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pAccount)
+    {
+        ui->bAccount->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -268,6 +274,12 @@ void SettingsDialog::on_bAccount_clicked()
 
 void SettingsDialog::on_bSyncs_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pSyncs)
+    {
+        ui->bSyncs->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -312,6 +324,12 @@ void SettingsDialog::on_bSyncs_clicked()
 
 void SettingsDialog::on_bBandwidth_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pBandwidth)
+    {
+        ui->bBandwidth->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -345,6 +363,13 @@ void SettingsDialog::on_bBandwidth_clicked()
 
 void SettingsDialog::on_bAdvanced_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pAdvanced)
+    {
+        ui->bAdvanced->setChecked(true);
+        return;
+    }
+    ui->bAdvanced->setCheckable(false);
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -379,6 +404,12 @@ void SettingsDialog::on_bAdvanced_clicked()
 
 void SettingsDialog::on_bProxies_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pProxies)
+    {
+        ui->bProxies->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->show();
 #endif
