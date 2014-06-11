@@ -368,7 +368,6 @@ void SettingsDialog::on_bAdvanced_clicked()
         ui->bAdvanced->setChecked(true);
         return;
     }
-    ui->bAdvanced->setCheckable(false);
 
 #ifdef __APPLE__
     ui->bApply->hide();
