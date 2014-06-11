@@ -46,11 +46,20 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	QFileInfo test(preferences->downloadFolder());
 	if(!test.isDir())
 	{
-		#if QT_VERSION < 0x050000
-            QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads"));
-		#else
-            QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads"));
-		#endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads"));
+            #else
+                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads"));
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads"));
+            #else
+                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads"));
+            #endif
+        #endif
+
         defaultFolder.mkpath(QString::fromAscii("."));
 		defaultFolderPath = defaultFolder.absolutePath();
 		defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -198,11 +207,19 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if(!defaultPath.size())
     {
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
     }
 	QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
                                                       defaultPath,

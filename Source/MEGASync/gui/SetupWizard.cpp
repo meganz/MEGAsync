@@ -323,12 +323,19 @@ void SetupWizard::on_bNext_clicked()
     }
     else if(w == ui->pSetupType)
     {
-
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-#else
-    QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-#endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
 
         if(ui->rAdvancedSetup->isChecked())
         {
@@ -495,11 +502,19 @@ void SetupWizard::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if(!defaultPath.size())
     {
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
     }
 	QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
                                                       defaultPath,
