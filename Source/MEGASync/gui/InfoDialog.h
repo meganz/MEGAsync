@@ -36,6 +36,7 @@ public:
     void increaseUsedStorage(long long bytes);
     void updateState();
     void showRecentlyUpdated(bool show);
+    void closeSyncsMenu();
 
 public slots:
    void addSync();
@@ -71,6 +72,8 @@ private:
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;
+    QMenu *syncsMenu;
+    QMenu *transferMenu;
 
     long long downloadSpeed;
     long long uploadSpeed;

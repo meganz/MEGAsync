@@ -943,8 +943,14 @@ void MegaApplication::showInfoDialog()
             infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
-        }else
+        }
+        else
+        {
+            infoDialog->closeSyncsMenu();
+            if(trayMenu->isVisible())
+                trayMenu->close();
             infoDialog->hide();
+        }
     }
 }
 
@@ -1166,6 +1172,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
 {
     if(trayMenu)
     {
+        if(trayMenu->isVisible())
+            trayMenu->close();
         QPoint p = point ? (*point)-QPoint(trayMenu->sizeHint().width(), 0) : QCursor::pos();
         trayMenu->exec(p);
     }

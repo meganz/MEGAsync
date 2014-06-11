@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QMenu>
 
 namespace Ui {
 class RecentFile;
@@ -18,6 +19,7 @@ public:
     ~RecentFile();
     void setFile(QString fileName, long long fileHandle, QString localPath, long long time);
 	void updateWidget();
+    void closeMenu();
 
 private:
     Ui::RecentFile *ui;
@@ -27,6 +29,7 @@ protected:
 	long long fileHandle;
     QDateTime dateTime;
 	QString localPath;
+    QMenu *menu;
     void changeEvent(QEvent * event);
 
 private slots:
