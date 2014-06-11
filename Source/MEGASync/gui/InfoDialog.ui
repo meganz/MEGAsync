@@ -210,7 +210,7 @@ padding-left: 1px;
       </size>
      </property>
      <property name="text">
-      <string>&lt;img src=&quot;:/images/top_arrow.png&quot;/&gt;</string>
+      <string notr="true">&lt;img src=&quot;:/images/top_arrow.png&quot;/&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>

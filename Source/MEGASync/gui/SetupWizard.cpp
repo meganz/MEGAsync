@@ -29,6 +29,9 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
 
     ui->bNext->setDefault(true);
+    ui->lTermsLink->setText(ui->lTermsLink->text().replace(
+        QString::fromUtf8("\">"),
+        QString::fromUtf8("\" style=\"color:#DC0000\">")));
 
 #ifdef __APPLE__
     setWindowTitle(tr("Setup Assistant - MEGAsync"));
