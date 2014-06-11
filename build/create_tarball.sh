@@ -30,6 +30,7 @@ rm -fr MEGASync/MEGASync/megasync_*.dsc
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/megasync.spec > MEGASync/MEGASync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/megasync.dsc > MEGASync/MEGASync/megasync_$MEGASYNC_VERSION.dsc
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/PKGBUILD > MEGASync/MEGASync/PKGBUILD
 
 # create archive
 mkdir $MEGASYNC_NAME
@@ -64,6 +65,7 @@ rm -fr MEGASync/MEGAShellExtNautilus/nautilus-megasync_*.dsc
 # fix version number in template files and copy to appropriate directories
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/nautilus-megasync.spec > MEGASync/MEGAShellExtNautilus/nautilus-megasync.spec
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/nautilus-megasync.dsc > MEGASync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.dsc
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/PKGBUILD > MEGASync/MEGAShellExtNautilus/PKGBUILD
 
 # create archive
 mkdir $EXT_NAME
