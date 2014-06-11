@@ -56,4 +56,7 @@ user = XXX
 pass = YYY
 
 
+To get the initial copy of OBS repository:
+osc co MEGASync
+
 osc documentation: http://en.opensuse.org/Build_Service/CLI

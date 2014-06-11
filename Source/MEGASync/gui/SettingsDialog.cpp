@@ -593,8 +593,8 @@ void SettingsDialog::loadSettings()
         }
         else
         {
-            int percentage = 100*((double)preferences->usedStorage()/preferences->totalStorage());
-            ui->pStorage->setValue(percentage);
+            int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
+            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
                   .arg(QString::number(percentage))
