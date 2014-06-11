@@ -72,13 +72,18 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setIconSize(QSize(64, 64));
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
-    minHeightAnimation.setTargetObject(this);
-    minHeightAnimation.setPropertyName("minimumHeight");
-    maxHeightAnimation.setTargetObject(this);
-    maxHeightAnimation.setPropertyName("maximumHeight");
-    animationGroup.addAnimation(&minHeightAnimation);
-    animationGroup.addAnimation(&maxHeightAnimation);
-    connect(&animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+
+    minHeightAnimation = new QPropertyAnimation();
+    maxHeightAnimation = new QPropertyAnimation();
+    animationGroup = new QParallelAnimationGroup();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    animationGroup->addAnimation(minHeightAnimation);
+    animationGroup->addAnimation(maxHeightAnimation);
+    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
     ui->wTransfer1->hide();
     ui->wTransfer1->hide();
@@ -641,24 +646,31 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
 
     if(ui->cRecentlyUpdated->isChecked())
     {
-        minHeightAnimation.setStartValue(minimumHeight());
-        maxHeightAnimation.setStartValue(maximumHeight());
-        minHeightAnimation.setEndValue(407);
-        maxHeightAnimation.setEndValue(407);
-        minHeightAnimation.setDuration(150);
-        maxHeightAnimation.setDuration(150);
-        animationGroup.start();
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(407);
+        maxHeightAnimation->setEndValue(407);
+        minHeightAnimation->setDuration(150);
+        maxHeightAnimation->setDuration(150);
+        animationGroup->start();
     }
     else
     {
-
-        minHeightAnimation.setStartValue(minimumHeight());
-        maxHeightAnimation.setStartValue(maximumHeight());
-        minHeightAnimation.setEndValue(551);
-        maxHeightAnimation.setEndValue(551);
-        minHeightAnimation.setDuration(150);
-        maxHeightAnimation.setDuration(150);
-        animationGroup.start();
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(551);
+        maxHeightAnimation->setEndValue(551);
+        minHeightAnimation->setDuration(150);
+        maxHeightAnimation->setDuration(150);
+        animationGroup->start();
     }
 }
 

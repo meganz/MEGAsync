@@ -68,9 +68,9 @@ private slots:
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
-    QPropertyAnimation minHeightAnimation;
-    QPropertyAnimation maxHeightAnimation;
-    QParallelAnimationGroup animationGroup;
+    QPropertyAnimation *minHeightAnimation;
+    QPropertyAnimation *maxHeightAnimation;
+    QParallelAnimationGroup *animationGroup;
 
     long long downloadSpeed;
     long long uploadSpeed;
