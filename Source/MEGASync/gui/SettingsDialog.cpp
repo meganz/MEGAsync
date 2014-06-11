@@ -369,8 +369,8 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(430);
-    maxHeightAnimation->setEndValue(430);
+    minHeightAnimation->setEndValue(450);
+    maxHeightAnimation->setEndValue(450);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();

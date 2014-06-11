@@ -33,6 +33,7 @@
 #lPercentage
 {
 color: green;
+padding-right:8px;
 }
 
 #lFileName
