@@ -985,11 +985,19 @@ void SettingsDialog::on_bSyncChange_clicked()
         syncNames.clear();
         syncsChanged = true;
 
-    #if QT_VERSION < 0x050000
-        QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
 
         localFolderPath.append(QString::fromAscii("/MEGA"));
         localFolderPath = QDir::toNativeSeparators(localFolderPath);
