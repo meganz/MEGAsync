@@ -892,7 +892,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Details</source>
-        <translation>[$1724]</translation>
+        <translation type="vanished">[$1724]</translation>
     </message>
     <message>
         <source>FREE</source>
@@ -912,7 +912,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>[$1729]</translation>
+        <translation type="vanished">[$1729]</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1127,7 +1127,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>[$2007]</translation>
+        <translation type="vanished">[$2007]</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
