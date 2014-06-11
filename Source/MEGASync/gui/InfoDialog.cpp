@@ -46,6 +46,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     waiting = false;
     transfer1 = NULL;
     transfer2 = NULL;
+    syncsMenu = NULL;
+    transferMenu = NULL;
 
     const QByteArray xdgCurrentDesktop = qgetenv("XDG_CURRENT_DESKTOP");
     isUnity = xdgCurrentDesktop == "Unity";
@@ -432,6 +434,19 @@ void InfoDialog::showRecentlyUpdated(bool show)
     }
 }
 
+void InfoDialog::closeSyncsMenu()
+{
+    if(syncsMenu && syncsMenu->isVisible())
+        syncsMenu->close();
+
+    if(transferMenu && transferMenu->isVisible())
+        transferMenu->close();
+
+    ui->wRecent1->closeMenu();
+    ui->wRecent2->closeMenu();
+    ui->wRecent3->closeMenu();
+}
+
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
 {
     if(downloadSpeed || this->downloadSpeed<0)
@@ -505,22 +520,44 @@ void InfoDialog::addSync()
 
 void InfoDialog::onTransfer1Cancel(int x, int y)
 {
-    QMenu menu;
-    QAction *cancelAll = menu.addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
-    QAction *cancelCurrent = menu.addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
-    menu.addAction(cancelCurrent);
-    menu.addAction(cancelAll);
-    menu.exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    if(transferMenu)
+    {
+        transferMenu->close();
+        return;
+    }
+
+    transferMenu = new QMenu();
+    QAction *cancelAll = transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+    transferMenu->addAction(cancelCurrent);
+    transferMenu->addAction(cancelAll);
+    transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        this->hide();
+
+    transferMenu->deleteLater();
+    transferMenu = NULL;
 }
 
 void InfoDialog::onTransfer2Cancel(int x, int y)
 {
-    QMenu menu;
-    QAction *cancelAll = menu.addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
-    QAction *cancelCurrent = menu.addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
-    menu.addAction(cancelCurrent);
-    menu.addAction(cancelAll);
-    menu.exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    if(transferMenu)
+    {
+        transferMenu->close();
+        return;
+    }
+
+    transferMenu = new QMenu();
+    QAction *cancelAll = transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+    transferMenu->addAction(cancelCurrent);
+    transferMenu->addAction(cancelAll);
+    transferMenu->exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        this->hide();
+
+    transferMenu->deleteLater();
+    transferMenu = NULL;
 }
 
 void InfoDialog::cancelAllUploads()
@@ -564,6 +601,12 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
+    if(syncsMenu)
+    {
+        syncsMenu->close();
+        return;
+    }
+
     int num = preferences->getNumSyncedFolders();
 
     MegaNode *rootNode = megaApi->getRootNode();
@@ -580,24 +623,27 @@ void InfoDialog::on_bSyncFolder_clicked()
     }
     else
     {
-        QMenu menu;
-        QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
+        syncsMenu = new QMenu();
+        QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
         addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
         addSyncAction->setIconVisibleInMenu(true);
-        menu.addSeparator();
+        syncsMenu->addSeparator();
 
         QSignalMapper signalMapper;
         for(int i=0; i<num; i++)
         {
-            QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
+            QAction *action = syncsMenu->addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
             action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
             action->setIconVisibleInMenu(true);
             signalMapper.setMapping(action, preferences->getLocalFolder(i));
             connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
-        menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+        syncsMenu->exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
         if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
             this->hide();
+
+        syncsMenu->deleteLater();
+        syncsMenu = NULL;
     }
     delete rootNode;
 }

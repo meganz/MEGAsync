@@ -13,6 +13,7 @@ RecentFile::RecentFile(QWidget *parent) :
     ui->setupUi(this);
     ui->lTime->setText(QString::fromAscii(""));
     ui->pArrow->setIcon(QIcon());
+    menu = NULL;
 }
 
 RecentFile::~RecentFile()
@@ -30,6 +31,8 @@ void RecentFile::setFile(QString fileName, long long fileHandle, QString localPa
 
 void RecentFile::updateWidget()
 {
+    closeMenu();
+
     if(!(parentWidget()->layout()->indexOf(this) % 2))
     {
         this->setStyleSheet(QString::fromUtf8("QWidget { background-color: #F7F7F7; }"));
@@ -106,6 +109,12 @@ void RecentFile::updateWidget()
     }
 }
 
+void RecentFile::closeMenu()
+{
+    if(menu)
+        menu->close();
+}
+
 void RecentFile::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -121,30 +130,48 @@ void RecentFile::on_pArrow_clicked()
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 {
+    if(menu)
+    {
+        menu->close();
+        return;
+    }
+
     if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
 
-	QMenu menu;
-	menu.addAction(tr("Open"), this, SLOT(openFile()));
-    menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+    menu = new QMenu();
+    menu->addAction(tr("Open"), this, SLOT(openFile()));
+    menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
 #ifdef WIN32
-    menu.exec(this->mapToGlobal(pos));
+    menu->exec(this->mapToGlobal(pos));
 #else
-    menu.exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+    menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
 #endif
+
+    menu->deleteLater();
+    menu = NULL;
 }
 
 void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 {
+    if(menu)
+    {
+        menu->close();
+        return;
+    }
+
     if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
 
-	QMenu menu;
-	menu.addAction(tr("Open"), this, SLOT(openFile()));
-	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+    menu = new QMenu();
+    menu->addAction(tr("Open"), this, SLOT(openFile()));
+    menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
 #ifdef WIN32
-    menu.exec(this->mapToGlobal(pos));
+    menu->exec(this->mapToGlobal(pos));
 #else
-    menu.exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+    menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
 #endif
+
+    menu->deleteLater();
+    menu = NULL;
 }
 
 void RecentFile::showInFolder()
