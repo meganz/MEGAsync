@@ -283,5 +283,6 @@
         <file>images/icon_syncing_mac4.png</file>
         <file>images/icon_syncing_mac4@2x.png</file>
         <file>images/tray_scanning_large_ico@2x.png</file>
+        <file>images/app_128@2x.png</file>
     </qresource>
 </RCC>
