@@ -89,9 +89,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cShowNotifications->setText(tr("Show Mac OS notifications"));
     ui->cOverlayIcons->hide();
 
-    ui->bHelp->hide();
-    ui->lHelp->hide();
-
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
@@ -162,8 +159,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     if(!proxyOnly)
     {
         ui->pProxies->hide();
-        setMinimumHeight(475);
-        setMaximumHeight(475);
+        setMinimumHeight(485);
+        setMaximumHeight(485);
+        ui->bApply->hide();
     }
 }
 
@@ -265,8 +263,8 @@ void SettingsDialog::on_bAccount_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(475);
-    maxHeightAnimation->setEndValue(475);
+    minHeightAnimation->setEndValue(485);
+    maxHeightAnimation->setEndValue(485);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
