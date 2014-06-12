@@ -97,7 +97,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 
     //Apply drop shadow to tab header
-    QGraphicsDropShadowEffect *wndShadow = new QGraphicsDropShadowEffect(this);
+    /*QGraphicsDropShadowEffect *wndShadow = new QGraphicsDropShadowEffect(this);
 
     wndShadow->setBlurRadius(1.0);
     wndShadow->setColor(QColor(255, 255, 255, 128));
@@ -126,7 +126,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     wndShadow->setBlurRadius(1.0);
     wndShadow->setColor(QColor(255, 255, 255, 128));
     wndShadow->setOffset(1.0);
-    ui->bAccount->setGraphicsEffect(wndShadow);
+    ui->bAccount->setGraphicsEffect(wndShadow);*/
 #endif
 
     /*if(!proxyOnly && preferences->logged())
