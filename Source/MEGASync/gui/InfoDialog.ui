@@ -29,7 +29,6 @@
    <string notr="true">#InfoDialog
 {
 background: transparent;
-border-radius: 6px;
 }
 
 QWidget
@@ -40,8 +39,8 @@ font-size: 11px;
 #wHeader
 {
 border: 0px;
-border-top-left-radius: 10px;
-border-top-right-radius: 10px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
 background-color: white;
 }
 
@@ -144,8 +143,8 @@ padding-right: 0px;
 
 #wBottom
 {
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
 }
 
 #wUsage
