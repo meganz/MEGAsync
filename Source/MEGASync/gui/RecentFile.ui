@@ -10,6 +10,12 @@
     <height>48</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
@@ -19,19 +25,14 @@
   <property name="maximumSize">
    <size>
     <width>404</width>
-    <height>50</height>
+    <height>48</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-
-
-
-
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -50,7 +51,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="lFileType">
+    <widget class="QPushButton" name="lFileType">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>60</width>
@@ -63,18 +70,21 @@
        <height>48</height>
       </size>
      </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
      <property name="styleSheet">
-      <string notr="true">#lFileType
-{
-padding-left: 11px;
-}
-</string>
+      <string notr="true">border: none;
+padding-left: 15px;</string>
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>48</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -83,7 +93,7 @@ padding-left: 11px;
      <property name="minimumSize">
       <size>
        <width>288</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -101,6 +111,9 @@ padding-left: 11px;
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>7</number>
       </property>
       <property name="topMargin">
        <number>6</number>

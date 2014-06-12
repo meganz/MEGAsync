@@ -53,7 +53,7 @@ color: grey;
     <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>16</number>
+    <number>15</number>
    </property>
    <property name="bottomMargin">
     <number>9</number>
@@ -71,7 +71,7 @@ color: grey;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -109,7 +109,7 @@ color: grey;
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
-          <height>20</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>
@@ -144,21 +144,34 @@ color: grey;
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lType">
-        <property name="minimumSize">
-         <size>
-          <width>22</width>
-          <height>0</height>
-         </size>
+       <widget class="QPushButton" name="lType">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="maximumSize">
          <size>
-          <width>22</width>
+          <width>16777215</width>
           <height>16777215</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
         <property name="text">
-         <string notr="true">&lt;img src=&quot;:/images/tray_download_ico.png&quot;/&gt;</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/tray_download_ico.png</normaloff>:/images/tray_download_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -185,6 +198,8 @@ color: grey;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -31,6 +31,11 @@
 background: transparent;
 }
 
+QPushButton
+{
+    border: none;
+}
+
 QWidget
 {
 font-size: 11px;
@@ -46,7 +51,7 @@ background-color: white;
 
 #lHeader
 {
-padding-top: -3px;
+
 }
 
 #lRecentlyUpdated
@@ -195,24 +200,29 @@ padding-left: 1px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="lTopArrow">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>12</height>
-      </size>
+    <widget class="QToolButton" name="toolButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>12</height>
-      </size>
+     <property name="styleSheet">
+      <string notr="true">border: none;
+padding-bottom: -1px;</string>
      </property>
      <property name="text">
-      <string notr="true">&lt;img src=&quot;:/images/top_arrow.png&quot;/&gt;</string>
+      <string/>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+     <property name="icon">
+      <iconset resource="Resources.qrc">
+       <normaloff>:/images/top_arrow.png</normaloff>:/images/top_arrow.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>22</width>
+       <height>11</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -235,7 +245,7 @@ padding-left: 1px;
        <number>15</number>
       </property>
       <property name="leftMargin">
-       <number>19</number>
+       <number>18</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -247,14 +257,40 @@ padding-left: 1px;
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="lHeader">
-        <property name="text">
-         <string notr="true">&lt;img src=&quot;://images/mega_logo.png&quot;/&gt;</string>
+       <widget class="QPushButton" name="lHeader">
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>150</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <widget class="QCheckBox" name="bPause">
@@ -318,8 +354,8 @@ padding-left: 1px;
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">margin: 4px;
-border: none;</string>
+         <string notr="true">border: none;
+padding-top: 2px;</string>
         </property>
         <property name="text">
          <string/>
@@ -386,7 +422,7 @@ border: none;</string>
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QPushButton" name="label">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -399,21 +435,34 @@ border: none;</string>
            <height>112</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">padding-top: 46px;</string>
+         </property>
          <property name="text">
-          <string notr="true">&lt;img src=&quot;:/images/tray_updated_large_ico.png&quot;/&gt;</string>
+          <string/>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+         <property name="icon">
+          <iconset resource="Resources.qrc">
+           <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
          </property>
-         <property name="margin">
-          <number>3</number>
+         <property name="iconSize">
+          <size>
+           <width>64</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="lSyncUpdated">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -598,7 +647,7 @@ padding-bottom: 25px;
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>11</number>
+              <number>21</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -640,15 +689,19 @@ color: rgb(102, 102, 102);</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_2">
-               <property name="minimumSize">
-                <size>
-                 <width>30</width>
-                 <height>0</height>
-                </size>
-               </property>
+              <widget class="QPushButton" name="pushButton">
                <property name="text">
-                <string notr="true">&lt;img src=&quot;://images/upload_timer_ico.png&quot;/&gt;</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/upload_timer_ico.png</normaloff>:/images/upload_timer_ico.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -668,7 +721,7 @@ color: rgb(102, 102, 102);</string>
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>11</number>
+              <number>21</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -710,15 +763,19 @@ color: rgb(102, 102, 102);</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_5">
-               <property name="minimumSize">
-                <size>
-                 <width>30</width>
-                 <height>0</height>
-                </size>
-               </property>
+              <widget class="QPushButton" name="pushButton_2">
                <property name="text">
-                <string notr="true">&lt;img src=&quot;://images/download_timer_ico.png&quot;/&gt;</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -822,6 +879,12 @@ color: rgb(102, 102, 102);</string>
          </item>
          <item>
           <widget class="QCheckBox" name="cRecentlyUpdated">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -843,9 +906,6 @@ color: rgb(102, 102, 102);</string>
   {
     image: url(://images/collapse_up.png);
   }</string>
-           </property>
-           <property name="text">
-            <string/>
            </property>
            <property name="checked">
             <bool>true</bool>

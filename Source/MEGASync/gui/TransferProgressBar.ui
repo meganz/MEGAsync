@@ -30,19 +30,6 @@
 	background-color: rgb(178, 178, 178);
 }</string>
   </property>
-  <widget class="QLabel" name="lProgress">
-   <property name="geometry">
-    <rect>
-     <x>1</x>
-     <y>0</y>
-     <width>364</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string notr="true">&lt;img src=&quot;:/images/transferProgress.png&quot;/&gt;</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="wProgress" native="true">
    <property name="geometry">
     <rect>
@@ -118,6 +105,32 @@ border-left: 1px solid white;</string>
    <property name="icon">
     <iconset resource="Resources.qrc">
      <normaloff>:/images/tray_cancel_ico.png</normaloff>:/images/tray_cancel_ico.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="lProgress">
+   <property name="geometry">
+    <rect>
+     <x>1</x>
+     <y>0</y>
+     <width>364</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: none;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/images/transferProgress.png</normaloff>:/images/transferProgress.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>364</width>
+     <height>16</height>
+    </size>
    </property>
   </widget>
   <zorder>lProgress</zorder>
