@@ -630,25 +630,29 @@ void SettingsDialog::loadSettings()
                   .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
+
+        QIcon icon;
         switch(preferences->accountType())
         {
             case Preferences::ACCOUNT_TYPE_FREE:
-                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Free.png\"/>"));
+                icon.addFile(QStringLiteral(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("FREE"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROI:
-                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Pro_I.png\"/>"));
+                icon.addFile(QStringLiteral(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO I"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROII:
-                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Pro_II.png\"/>"));
+                icon.addFile(QStringLiteral(":/images/Pro_II.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO II"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROIII:
-                ui->lAccountImage->setText(QString::fromUtf8("<img src=\":/images/Pro_III.png\"/>"));
+                icon.addFile(QStringLiteral(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
         }
+        ui->lAccountImage->setIcon(icon);
+        ui->lAccountImage->setIconSize(QSize(32, 32));
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
         if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
