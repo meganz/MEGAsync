@@ -231,7 +231,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -291,6 +291,9 @@ padding-bottom: 6px;
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
+          <property name="spacing">
+           <number>6</number>
+          </property>
           <property name="leftMargin">
            <number>29</number>
           </property>
@@ -304,30 +307,25 @@ padding-bottom: 6px;
            <number>15</number>
           </property>
           <item>
-           <widget class="QLabel" name="lAccountImage">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
+           <widget class="QPushButton" name="lAccountImage">
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">border: none;</string>
             </property>
             <property name="text">
-             <string notr="true">&lt;img src=&quot;:/images/Free.png&quot;/&gt;</string>
+             <string/>
             </property>
-            <property name="scaledContents">
-             <bool>false</bool>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2654,8 +2652,8 @@ padding-bottom: 3px;</string>
         </property>
         <item>
          <widget class="QLabel" name="lHelp">
-          <property name="text">
-           <string notr="true">&lt;img src=&quot;://images/help_ico.png&quot;/&gt;</string>
+          <property name="pixmap">
+           <pixmap resource="Resources.qrc">:/images/help_ico.png</pixmap>
           </property>
          </widget>
         </item>
