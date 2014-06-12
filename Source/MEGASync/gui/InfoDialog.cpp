@@ -378,7 +378,10 @@ void InfoDialog::updateState()
 
         setTransferSpeeds(-1, -1);
         ui->lSyncUpdated->setText(tr("File transfers paused"));
-        ui->label->setText(QString::fromUtf8("<img src=\"://images/tray_paused_large_ico.png\"/>"));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->label->setIcon(icon);
+        ui->label->setIconSize(QSize(64, 64));
         if(ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             overlay->setVisible(true);
         else
@@ -399,7 +402,11 @@ void InfoDialog::updateState()
             }
 
             ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-            ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_scanning_large_ico.png\"/>"));
+
+            QIcon icon;
+            icon.addFile(QStringLiteral(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->label->setIcon(icon);
+            ui->label->setIconSize(QSize(64, 64));
         }
         else if(waiting)
         {
@@ -407,7 +414,10 @@ void InfoDialog::updateState()
                 scanningTimer.stop();
 
             ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
-            ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_scanning_large_ico.png\"/>"));
+            QIcon icon;
+            icon.addFile(QStringLiteral(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->label->setIcon(icon);
+            ui->label->setIconSize(QSize(64, 64));
         }
         else
         {
@@ -415,7 +425,10 @@ void InfoDialog::updateState()
                 scanningTimer.stop();
 
             ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
-            ui->label->setText(QString::fromUtf8("<img src=\":/images/tray_updated_large_ico.png\"/>"));
+            QIcon icon;
+            icon.addFile(QStringLiteral(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->label->setIcon(icon);
+            ui->label->setIconSize(QSize(64, 64));
         }
     }
 }
@@ -749,6 +762,9 @@ void InfoDialog::scanningAnimationStep()
 {
     scanningAnimationIndex = scanningAnimationIndex%18;
     scanningAnimationIndex++;
-    ui->label->setText(QString::fromUtf8("<img src=\":/images/scanning_anime") +
-                       QString::number(scanningAnimationIndex) + QString::fromUtf8("\"/>"));
+    QIcon icon;
+    icon.addFile(QStringLiteral(":/images/scanning_anime")+
+                 QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
+    ui->label->setIcon(icon);
+    ui->label->setIconSize(QSize(64, 64));
 }

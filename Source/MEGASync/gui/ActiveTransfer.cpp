@@ -45,14 +45,19 @@ void ActiveTransfer::setProgress(long long completedSize, long long totalSize, b
 void ActiveTransfer::setType(int type)
 {
     this->type = type;
+    QIcon icon;
     if(type)
     {
-        ui->lType->setText(QString::fromUtf8("<img src=\":/images/tray_upload_ico.png\"/>"));
+        icon.addFile(QStringLiteral(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->lType->setIcon(icon);
+        ui->lType->setIconSize(QSize(24, 24));
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(119, 186, 216);"));
     }
     else
     {
-        ui->lType->setText(QString::fromUtf8("<img src=\":/images/tray_download_ico.png\"/>"));
+        icon.addFile(QStringLiteral(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->lType->setIcon(icon);
+        ui->lType->setIconSize(QSize(24, 24));
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
     }
 }
