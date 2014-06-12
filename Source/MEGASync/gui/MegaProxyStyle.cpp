@@ -29,3 +29,11 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
     painter->setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
+
+int	MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option, const QWidget * widget) const
+{
+    if (metric == QStyle::PM_SmallIconSize)
+               return 24;
+           else
+               return QProxyStyle::pixelMetric(metric, option, widget);
+}
