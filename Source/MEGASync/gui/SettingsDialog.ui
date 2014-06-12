@@ -1062,7 +1062,7 @@ padding-bottom: 6px;
           <item>
            <widget class="QComboBox" name="cLanguage">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -1070,13 +1070,13 @@ padding-bottom: 6px;
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>28</height>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>28</height>
+              <height>16777215</height>
              </size>
             </property>
             <item>
@@ -1093,6 +1093,9 @@ padding-bottom: 6px;
         <spacer name="verticalSpacer_3">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Preferred</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -2651,29 +2654,6 @@ padding-bottom: 3px;</string>
          <number>12</number>
         </property>
         <item>
-         <widget class="QLabel" name="lHelp">
-          <property name="pixmap">
-           <pixmap resource="Resources.qrc">:/images/help_ico.png</pixmap>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bHelp">
-          <property name="font">
-           <font>
-            <pointsize>-1</pointsize>
-            <underline>true</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>Help</string>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -2992,7 +2972,6 @@ padding-bottom: 3px;</string>
   <tabstop>bBandwidth</tabstop>
   <tabstop>bProxies</tabstop>
   <tabstop>bAdvanced</tabstop>
-  <tabstop>bHelp</tabstop>
   <tabstop>bUpgrade</tabstop>
   <tabstop>cShowNotifications</tabstop>
   <tabstop>cStartOnStartup</tabstop>

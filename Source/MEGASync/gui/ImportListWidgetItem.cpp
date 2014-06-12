@@ -38,29 +38,34 @@ void ImportListWidgetItem::updateGui()
     QFont f = ui->lName->font();
     QFontMetrics fm = QFontMetrics(f);
     ui->lName->setText(fm.elidedText(name, Qt::ElideMiddle,ui->lName->width()));
-    ui->lImage->setText(QString::fromUtf8("<img src=\"") +
-                        Utilities::getExtensionPixmapSmall(fileName) +
-                        QString::fromUtf8("\"/>"));
 
+    QIcon icon;
+    icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    ui->lImage->setIcon(icon);
+    ui->lImage->setIconSize(QSize(24, 24));
+
+    QIcon icon2;
 	switch(status)
 	{
 	case LOADING:
 		//ui->lState->setText("LOADING");
 		break;
 	case CORRECT:
-        ui->lState->setText(QString::fromAscii("<img src=\"://images/import_ok_icon.png\"/>"));
+        icon2.addFile(QStringLiteral(":/images/import_ok_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
 		break;
 	case WARNING:
-        ui->lState->setText(QString::fromAscii("<img src=\"://images/import_warning_ico.png\"/>"));
+        icon2.addFile(QStringLiteral(":/images/import_warning_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;
 	default:
-        ui->lState->setText(QString::fromAscii("<img src=\"://images/import_error_ico.png\"/>"));
+        icon2.addFile(QStringLiteral(":/images/import_error_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;
 	}
+    ui->lState->setIcon(icon2);
+    ui->lState->setIconSize(QSize(24, 24));
 }
 
 bool ImportListWidgetItem::isSelected()
