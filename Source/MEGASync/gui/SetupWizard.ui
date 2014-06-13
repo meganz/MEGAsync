@@ -124,6 +124,37 @@ font-weight: bold;
 {
 	border:none;
 	
+}
+
+#lWelcome
+{
+font-size:20px;
+font: &quot;Helvetica&quot;;
+font-weight: normal;
+color: #666666;
+margin-bottom: 9px;
+}
+
+#label_2, #label_6, #lFinalMegaFolderIntro
+{
+	font: &quot;Helvetica&quot;;
+	font-size: 13px;
+	font-weight: normal;
+	color: #666666;
+}
+
+#lCreateAccount, #lProgress, #lSetupType, #lAdvancedSetup
+{
+	font: &quot;Helvetica&quot;;
+	font-weight: normal;
+	color: #666666;
+	font-size:20px;
+}
+#lLogin
+{
+	font: &quot;Helvetica&quot;;
+	font-weight: normal;
+	color: #666666;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -144,13 +175,25 @@ font-weight: bold;
    </property>
    <item>
     <widget class="QStackedWidget" name="sPages">
+     <property name="styleSheet">
+      <string notr="true">background-image: url(&quot;:/images/background.png&quot;);</string>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="pSetup">
+      <property name="styleSheet">
+       <string notr="true">background: transparent;</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>11</number>
+       </property>
        <property name="topMargin">
-        <number>66</number>
+        <number>68</number>
+       </property>
+       <property name="bottomMargin">
+        <number>12</number>
        </property>
        <item>
         <widget class="QToolButton" name="lSetupHeader">
@@ -181,6 +224,9 @@ font-weight: bold;
        <item>
         <widget class="QWidget" name="wHaveAccount" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>16</number>
+          </property>
           <property name="leftMargin">
            <number>178</number>
           </property>
@@ -235,6 +281,9 @@ font-weight: bold;
       </layout>
      </widget>
      <widget class="QWidget" name="pNewAccount">
+      <property name="styleSheet">
+       <string notr="true">background: transparent;</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="spacing">
         <number>6</number>
@@ -243,7 +292,7 @@ font-weight: bold;
         <number>60</number>
        </property>
        <property name="topMargin">
-        <number>15</number>
+        <number>25</number>
        </property>
        <property name="rightMargin">
         <number>60</number>
@@ -252,39 +301,17 @@ font-weight: bold;
         <number>9</number>
        </property>
        <item>
-        <widget class="QToolButton" name="lCreateAccountHeader">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">border: none;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="Resources.qrc">
-           <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>128</width>
-           <height>128</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="lCreateAccount">
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Create a new MEGA account</string>
@@ -296,6 +323,9 @@ font-weight: bold;
        </item>
        <item>
         <widget class="QWidget" name="wCreateAccountForm" native="true">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <layout class="QFormLayout" name="formLayout_3">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::ExpandingFieldsGrow</enum>
@@ -316,7 +346,7 @@ font-weight: bold;
            <number>9</number>
           </property>
           <property name="topMargin">
-           <number>9</number>
+           <number>120</number>
           </property>
           <property name="rightMargin">
            <number>9</number>
@@ -459,6 +489,9 @@ font-weight: bold;
       </layout>
      </widget>
      <widget class="QWidget" name="pLogin">
+      <property name="styleSheet">
+       <string notr="true">background: transparent;</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="spacing">
         <number>5</number>
@@ -481,7 +514,8 @@ font-weight: bold;
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: none;</string>
+          <string notr="true">border: none;
+</string>
          </property>
          <property name="text">
           <string/>
@@ -503,9 +537,13 @@ font-weight: bold;
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Login to your MEGA account</string>
@@ -517,6 +555,9 @@ font-weight: bold;
        </item>
        <item>
         <widget class="QWidget" name="wLoginForm" native="true">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <layout class="QFormLayout" name="formLayout">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
@@ -597,6 +638,9 @@ font-weight: bold;
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QWidget" name="widget" native="true">
+         <property name="styleSheet">
+          <string notr="true">background: transparent;</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <property name="leftMargin">
            <number>80</number>
@@ -612,6 +656,10 @@ font-weight: bold;
           </property>
           <item>
            <widget class="QLabel" name="lProgress">
+            <property name="styleSheet">
+             <string notr="true">
+</string>
+            </property>
             <property name="text">
              <string>Logging in ...</string>
             </property>
@@ -639,6 +687,9 @@ font-weight: bold;
       </layout>
      </widget>
      <widget class="QWidget" name="pSetupType">
+      <property name="styleSheet">
+       <string notr="true">background: transparent;</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <property name="spacing">
         <number>40</number>
@@ -669,9 +720,16 @@ font-weight: bold;
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: &quot;Helvetica&quot;;
+font-weight: normal;
+color: #666666;
+</string>
          </property>
          <property name="text">
           <string>Choose install type</string>
@@ -957,7 +1015,7 @@ font-weight: bold;
         <number>50</number>
        </property>
        <property name="topMargin">
-        <number>40</number>
+        <number>26</number>
        </property>
        <property name="rightMargin">
         <number>50</number>
@@ -976,9 +1034,14 @@ font-weight: bold;
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background: transparent;
+</string>
          </property>
          <property name="text">
           <string>Selective sync</string>
@@ -988,12 +1051,26 @@ font-weight: bold;
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background: transparent;
+margin-bottom: 12px;
+color: #666666;
+font: &quot;Helvetica&quot;;
+font-size: 13px;
+font-weight: normal;
+
+
+</string>
          </property>
          <property name="text">
           <string>The following folders will be automatically synchronized:</string>
@@ -1002,6 +1079,9 @@ font-weight: bold;
        </item>
        <item>
         <widget class="QWidget" name="wAdvancedConfigForm" native="true">
+         <property name="styleSheet">
+          <string notr="true">background: none;</string>
+         </property>
          <layout class="QFormLayout" name="formLayout_2">
           <property name="fieldGrowthPolicy">
            <enum>QFormLayout::ExpandingFieldsGrow</enum>
@@ -1041,6 +1121,10 @@ font-weight: bold;
               <height>0</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">margin-top:-2px;
+margin-left: 2px;</string>
+            </property>
             <property name="text">
              <string>Local folder:</string>
             </property>
@@ -1075,6 +1159,10 @@ font-weight: bold;
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lMegaFolder">
+            <property name="styleSheet">
+             <string notr="true">margin-top:-2px;
+margin-left: 2px;</string>
+            </property>
             <property name="text">
              <string>MEGA folder:</string>
             </property>
@@ -1126,6 +1214,9 @@ font-weight: bold;
       </layout>
      </widget>
      <widget class="QWidget" name="pWelcome">
+      <property name="styleSheet">
+       <string notr="true">background: transparent;</string>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <property name="spacing">
         <number>8</number>
@@ -1134,7 +1225,7 @@ font-weight: bold;
         <number>80</number>
        </property>
        <property name="topMargin">
-        <number>40</number>
+        <number>26</number>
        </property>
        <property name="rightMargin">
         <number>80</number>
@@ -1165,9 +1256,13 @@ font-weight: bold;
          <property name="font">
           <font>
            <pointsize>-1</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Welcome to MEGA</string>
@@ -1186,7 +1281,8 @@ font-weight: bold;
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">border: none;</string>
+          <string notr="true">border: none;
+</string>
          </property>
          <property name="text">
           <string/>
