@@ -297,5 +297,6 @@
         <file>images/selected_sync_bt@2x.png</file>
         <file>images/selective_sync_ico.png</file>
         <file>images/selective_sync_ico@2x.png</file>
+        <file>images/small_folder@2x.png</file>
     </qresource>
 </RCC>
