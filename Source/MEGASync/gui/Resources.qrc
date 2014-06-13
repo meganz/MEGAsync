@@ -284,5 +284,18 @@
         <file>images/icon_syncing_mac4@2x.png</file>
         <file>images/tray_scanning_large_ico@2x.png</file>
         <file>images/app_128@2x.png</file>
+        <file>images/import_error_ico@2x.png</file>
+        <file>images/import_ok_icon@2x.png</file>
+        <file>images/import_warning_ico@2x.png</file>
+        <file>images/background@2x.png</file>
+        <file>images/full_sync_ico.png</file>
+        <file>images/full_sync_ico@2x.png</file>
+        <file>images/logo@2x.png</file>
+        <file>images/select_sync_bt.png</file>
+        <file>images/select_sync_bt@2x.png</file>
+        <file>images/selected_sync_bt.png</file>
+        <file>images/selected_sync_bt@2x.png</file>
+        <file>images/selective_sync_ico.png</file>
+        <file>images/selective_sync_ico@2x.png</file>
     </qresource>
 </RCC>
