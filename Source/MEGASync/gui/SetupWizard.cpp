@@ -38,9 +38,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 
     ((QBoxLayout *)ui->wButtons->layout())->removeWidget(ui->bCancel);
     ((QBoxLayout *)ui->wButtons->layout())->insertWidget(1, ui->bCancel);
-    ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
-    ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
 #endif
+
     wTypicalSetup_clicked();
 }
 
@@ -590,8 +589,17 @@ void SetupWizard::wTypicalSetup_clicked()
                                      "#wAdvancedSetup {background: transparent;"
                                      "border: none;}"));
 #else
-    ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/selected_sync_bt.png\");"));
-    ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
+    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    if(ratio < 2)
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/selected_sync_bt.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
+    }
+    else
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/selected_sync_bt@2x.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
+    }
 #endif
 
     ui->rTypicalSetup->setChecked(true);
@@ -610,8 +618,17 @@ void SetupWizard::wAdvancedSetup_clicked()
                                      "border: 2px solid rgb(217, 217, 217);"
                                      "border-radius: 10px;}"));
 #else
-    ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
-    ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/selected_sync_bt.png\");"));
+    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    if(ratio < 2)
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/selected_sync_bt.png\"); }"));
+    }
+    else
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/selected_sync_bt@2x.png\"); }"));
+    }
 #endif
 
     ui->rTypicalSetup->setChecked(false);
