@@ -131,8 +131,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 				   ui->bBack->setVisible(false);
 				   ui->bNext->setVisible(false);
 				   ui->bCancel->setText(tr("Finish"));
+#ifndef __APPLE__
                    ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
                    ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
+#endif
 				   ui->sPages->setCurrentWidget(ui->pWelcome);
                    delete node;
 			   }
@@ -372,10 +374,14 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
+
+#ifndef __APPLE__
             ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
-            ui->sPages->setCurrentWidget(ui->pWelcome);
             ui->lFinalMegaFolderIntro->setText(tr("and your MEGA Cloud Drive"));
             ui->bFinalMegaFolder->hide();
+#endif
+            ui->sPages->setCurrentWidget(ui->pWelcome);
+
             delete node;
         }
 
@@ -383,7 +389,10 @@ void SetupWizard::on_bNext_clicked()
         QDir defaultFolder(defaultFolderPath);
         defaultFolder.mkpath(QString::fromAscii("."));
         ui->eLocalFolder->setText(defaultFolderPath);
+
+#ifndef __APPLE__
         ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
+#endif
     }
     else if(w == ui->pAdvanced)
     {
@@ -422,8 +431,11 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
+
+#ifndef __APPLE__
             ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
             ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
+#endif
             ui->sPages->setCurrentWidget(ui->pWelcome);
             delete node;
         }
@@ -482,7 +494,7 @@ void SetupWizard::on_bCancel_clicked()
         QString syncName;
         MegaNode *rootNode = megaApi->getRootNode();
         if(selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
-        preferences->addSyncedFolder(ui->bFinalLocalFolder->text(), ui->bFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         delete rootNode;
 
         preferences->setProxyType(proxyType);
@@ -608,12 +620,15 @@ void SetupWizard::lTermsLink_clicked()
 
 void SetupWizard::on_bFinalLocalFolder_clicked()
 {
+#ifndef __APPLE__
     QString localFolderPath = ui->bFinalLocalFolder->text();
     QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
+#endif
 }
 
 void SetupWizard::on_bFinalMegaFolder_clicked()
 {
+#ifndef __APPLE__
     QString megaFolderPath = ui->bFinalMegaFolder->text();
     MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
     if(node)
@@ -624,4 +639,5 @@ void SetupWizard::on_bFinalMegaFolder_clicked()
         delete handle;
         delete node;
     }
+#endif
 }
