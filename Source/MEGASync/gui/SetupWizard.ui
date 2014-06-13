@@ -179,7 +179,7 @@ margin-bottom: 9px;
       <string notr="true">background-image: url(&quot;:/images/background.png&quot;);</string>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <property name="styleSheet">
@@ -292,7 +292,7 @@ margin-bottom: 9px;
         <number>60</number>
        </property>
        <property name="topMargin">
-        <number>17</number>
+        <number>25</number>
        </property>
        <property name="rightMargin">
         <number>60</number>
@@ -368,7 +368,11 @@ margin-bottom: 9px;
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="eName"/>
+           <widget class="QLineEdit" name="eName">
+            <property name="styleSheet">
+             <string notr="true">background: none;</string>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="lEmail">
@@ -378,7 +382,11 @@ margin-bottom: 9px;
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="eEmail"/>
+           <widget class="QLineEdit" name="eEmail">
+            <property name="styleSheet">
+             <string notr="true">background: none;</string>
+            </property>
+           </widget>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lPassword">
@@ -389,6 +397,9 @@ margin-bottom: 9px;
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="ePassword">
+            <property name="styleSheet">
+             <string notr="true">background: none;</string>
+            </property>
             <property name="echoMode">
              <enum>QLineEdit::Password</enum>
             </property>
@@ -403,6 +414,9 @@ margin-bottom: 9px;
           </item>
           <item row="3" column="1">
            <widget class="QLineEdit" name="eRepeatPassword">
+            <property name="styleSheet">
+             <string notr="true">background: none;</string>
+            </property>
             <property name="echoMode">
              <enum>QLineEdit::Password</enum>
             </property>
@@ -487,7 +501,7 @@ margin-bottom: 9px;
         <number>20</number>
        </property>
        <property name="topMargin">
-        <number>17</number>
+        <number>25</number>
        </property>
        <property name="rightMargin">
         <number>20</number>
@@ -657,8 +671,7 @@ margin-bottom: 9px;
           <item>
            <widget class="QLabel" name="lProgress">
             <property name="styleSheet">
-             <string notr="true">
-</string>
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>Logging in ...</string>
@@ -698,7 +711,7 @@ margin-bottom: 9px;
         <number>40</number>
        </property>
        <property name="topMargin">
-        <number>40</number>
+        <number>25</number>
        </property>
        <property name="rightMargin">
         <number>40</number>
@@ -726,10 +739,10 @@ margin-bottom: 9px;
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">font: &quot;Helvetica&quot;;
+          <string notr="true">font-size:20px;
+font: &quot;Helvetica&quot;;
 font-weight: normal;
-color: #666666;
-</string>
+color: #666666;</string>
          </property>
          <property name="text">
           <string>Choose install type</string>
@@ -1009,7 +1022,7 @@ color: #666666;
      <widget class="QWidget" name="pAdvanced">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
-        <number>20</number>
+        <number>26</number>
        </property>
        <property name="leftMargin">
         <number>50</number>
@@ -1041,6 +1054,7 @@ color: #666666;
          </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
+
 </string>
          </property>
          <property name="text">
@@ -1099,7 +1113,7 @@ font-weight: normal;
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>9</number>
+           <number>4</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
@@ -1219,19 +1233,19 @@ margin-left: 2px;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <property name="spacing">
-        <number>8</number>
+        <number>5</number>
        </property>
        <property name="leftMargin">
-        <number>80</number>
+        <number>20</number>
        </property>
        <property name="topMargin">
-        <number>26</number>
+        <number>19</number>
        </property>
        <property name="rightMargin">
-        <number>80</number>
+        <number>20</number>
        </property>
        <property name="bottomMargin">
-        <number>20</number>
+        <number>27</number>
        </property>
        <item>
         <widget class="QLabel" name="lWelcome">
@@ -1300,63 +1314,6 @@ margin-left: 2px;</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Your local folder:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="bFinalLocalFolder">
-         <property name="styleSheet">
-          <string notr="true">border: none;
-</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lFinalMegaFolderIntro">
-         <property name="text">
-          <string>and your MEGA folder:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="bFinalMegaFolder">
-         <property name="styleSheet">
-          <string notr="true">border: none;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>will be automatically synchronized.</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1368,6 +1325,16 @@ margin-left: 2px;</string>
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1458,8 +1425,6 @@ margin-left: 2px;</string>
   <tabstop>bMegaFolder</tabstop>
   <tabstop>rTypicalSetup</tabstop>
   <tabstop>rAdvancedSetup</tabstop>
-  <tabstop>bFinalLocalFolder</tabstop>
-  <tabstop>bFinalMegaFolder</tabstop>
  </tabstops>
  <resources>
   <include location="Resources.qrc"/>
