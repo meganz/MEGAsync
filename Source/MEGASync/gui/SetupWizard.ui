@@ -145,7 +145,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="currentIndex">
-      <number>2</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <layout class="QVBoxLayout" name="verticalLayout_2">
