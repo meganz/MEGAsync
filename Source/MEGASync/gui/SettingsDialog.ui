@@ -61,10 +61,11 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
-#wTabHeader
-{
-	background-image: url(://images/menu_header.png);
+#wTabHeader 
+{ 
+background-image: url(://images/menu_header.png); 
 }
+
 #wTabHeader QToolButton
 {
 
@@ -74,11 +75,6 @@ padding-top: 9px;
 padding-bottom: 9px;
 color: #333333;
 
-}
-
-#wTabHeader QToolButton:checked
-{
-	background-image:url(://images/menu_selected.png);
 }
 
 #bHelp
@@ -231,7 +227,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -301,7 +297,7 @@ padding-bottom: 6px;
            <number>15</number>
           </property>
           <property name="rightMargin">
-           <number>30</number>
+           <number>29</number>
           </property>
           <property name="bottomMargin">
            <number>15</number>
@@ -581,7 +577,7 @@ padding-bottom: 6px;
            <number>15</number>
           </property>
           <property name="rightMargin">
-           <number>24</number>
+           <number>23</number>
           </property>
           <property name="bottomMargin">
            <number>9</number>
@@ -606,8 +602,14 @@ padding-bottom: 6px;
            <widget class="QProgressBar" name="pStorage">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>451</width>
               <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>451</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -776,7 +778,7 @@ padding-bottom: 6px;
            <number>9</number>
           </property>
           <property name="rightMargin">
-           <number>25</number>
+           <number>23</number>
           </property>
           <property name="bottomMargin">
            <number>9</number>
@@ -1047,7 +1049,7 @@ padding-bottom: 6px;
            <number>14</number>
           </property>
           <property name="rightMargin">
-           <number>30</number>
+           <number>29</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -2265,7 +2267,7 @@ padding-bottom: 3px;</string>
         <number>12</number>
        </property>
        <property name="leftMargin">
-        <number>14</number>
+        <number>13</number>
        </property>
        <property name="topMargin">
         <number>14</number>
@@ -2279,7 +2281,7 @@ padding-bottom: 3px;</string>
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 12px;</string>
+          <string notr="true">padding-left: 13px;</string>
          </property>
          <property name="text">
           <string>Proxy Settings</string>
@@ -2645,13 +2647,13 @@ padding-bottom: 3px;</string>
          <number>21</number>
         </property>
         <property name="topMargin">
-         <number>12</number>
+         <number>11</number>
         </property>
         <property name="rightMargin">
          <number>30</number>
         </property>
         <property name="bottomMargin">
-         <number>12</number>
+         <number>15</number>
         </property>
         <item>
          <spacer name="horizontalSpacer">
@@ -2694,6 +2696,18 @@ padding-bottom: 3px;</string>
           <property name="enabled">
            <bool>false</bool>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
            <string>Apply</string>
           </property>
@@ -2717,6 +2731,9 @@ padding-bottom: 3px;</string>
        <width>500</width>
        <height>76</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">

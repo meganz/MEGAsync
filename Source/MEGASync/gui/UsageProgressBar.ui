@@ -7,19 +7,25 @@
     <x>0</x>
     <y>0</y>
     <width>362</width>
-    <height>21</height>
+    <height>24</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
     <width>362</width>
-    <height>0</height>
+    <height>24</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>362</width>
-    <height>16777215</height>
+    <height>24</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -32,20 +38,22 @@
 	border-radius: 6px;
 	margin-left: 5px;
 }
-
-#lProgress
-{
-padding-top: -2px;
-}</string>
+</string>
   </property>
   <widget class="QWidget" name="wProgress" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>4</y>
+     <y>6</y>
      <width>50</width>
      <height>12</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="minimumSize">
     <size>
@@ -59,6 +67,9 @@ padding-top: -2px;
      <height>12</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
   </widget>
   <widget class="QPushButton" name="lProgress">
    <property name="geometry">
@@ -66,8 +77,26 @@ padding-top: -2px;
      <x>0</x>
      <y>0</y>
      <width>362</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>362</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>362</width>
+     <height>24</height>
+    </size>
    </property>
    <property name="styleSheet">
     <string notr="true">border: none;</string>
@@ -84,6 +113,9 @@ padding-top: -2px;
      <width>362</width>
      <height>24</height>
     </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
   <zorder>lProgress</zorder>
