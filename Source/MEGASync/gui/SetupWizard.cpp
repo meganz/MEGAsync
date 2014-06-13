@@ -38,7 +38,10 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 
     ((QBoxLayout *)ui->wButtons->layout())->removeWidget(ui->bCancel);
     ((QBoxLayout *)ui->wButtons->layout())->insertWidget(1, ui->bCancel);
+    ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
+    ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
 #endif
+    wTypicalSetup_clicked();
 }
 
 SetupWizard::~SetupWizard()
@@ -577,7 +580,8 @@ void SetupWizard::on_bMegaFolder_clicked()
 }
 
 void SetupWizard::wTypicalSetup_clicked()
-{
+{    
+#ifndef __APPLE__
     ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
                                      "#wTypicalSetup {background: rgb(242,242,242);"
                                      "border: 2px solid rgb(217, 217, 217);"
@@ -585,12 +589,19 @@ void SetupWizard::wTypicalSetup_clicked()
     ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
                                      "#wAdvancedSetup {background: transparent;"
                                      "border: none;}"));
+#else
+    ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/selected_sync_bt.png\");"));
+    ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
+#endif
+
     ui->rTypicalSetup->setChecked(true);
     ui->rAdvancedSetup->setChecked(false);
+    repaint();
 }
 
 void SetupWizard::wAdvancedSetup_clicked()
 {
+#ifndef __APPLE__
     ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
                                      "#wTypicalSetup {background: transparent;"
                                      "border: none;}"));
@@ -598,8 +609,14 @@ void SetupWizard::wAdvancedSetup_clicked()
                                      "#wAdvancedSetup {background: rgb(242,242,242);"
                                      "border: 2px solid rgb(217, 217, 217);"
                                      "border-radius: 10px;}"));
+#else
+    ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/select_sync_bt.png\");"));
+    ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("background: url(\":/images/selected_sync_bt.png\");"));
+#endif
+
     ui->rTypicalSetup->setChecked(false);
     ui->rAdvancedSetup->setChecked(true);
+    repaint();
 }
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)

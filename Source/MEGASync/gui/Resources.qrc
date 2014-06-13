@@ -291,12 +291,12 @@
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/logo@2x.png</file>
-        <file>images/select_sync_bt.png</file>
-        <file>images/select_sync_bt@2x.png</file>
-        <file>images/selected_sync_bt.png</file>
-        <file>images/selected_sync_bt@2x.png</file>
         <file>images/selective_sync_ico.png</file>
         <file>images/selective_sync_ico@2x.png</file>
         <file>images/small_folder@2x.png</file>
+        <file>images/selected_sync_bt.png</file>
+        <file>images/selected_sync_bt@2x.png</file>
+        <file>images/select_sync_bt.png</file>
+        <file>images/select_sync_bt@2X.png</file>
     </qresource>
 </RCC>
