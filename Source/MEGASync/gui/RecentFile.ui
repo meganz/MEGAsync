@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -24,7 +24,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>404</width>
+    <width>400</width>
     <height>48</height>
    </size>
   </property>
@@ -60,19 +60,19 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>60</width>
+       <width>59</width>
        <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>60</width>
+       <width>59</width>
        <height>48</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">border: none;
-padding-left: 15px;</string>
+padding-left: 16px;</string>
      </property>
      <property name="text">
       <string/>
@@ -180,12 +180,12 @@ color: #666666;
      <property name="minimumSize">
       <size>
        <width>7</width>
-       <height>0</height>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>6</width>
+       <width>7</width>
        <height>48</height>
       </size>
      </property>
@@ -196,7 +196,7 @@ color: #666666;
      <property name="minimumSize">
       <size>
        <width>30</width>
-       <height>0</height>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -263,8 +263,8 @@ color: #666666;
     <widget class="QWidget" name="s2" native="true">
      <property name="minimumSize">
       <size>
-       <width>15</width>
-       <height>0</height>
+       <width>16</width>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">

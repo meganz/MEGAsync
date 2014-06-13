@@ -711,8 +711,8 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
         maxHeightAnimation->setPropertyName("maximumHeight");
         minHeightAnimation->setStartValue(minimumHeight());
         maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(407);
-        maxHeightAnimation->setEndValue(407);
+        minHeightAnimation->setEndValue(408);
+        maxHeightAnimation->setEndValue(408);
         minHeightAnimation->setDuration(150);
         maxHeightAnimation->setDuration(150);
         animationGroup->start();
@@ -725,8 +725,8 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
         maxHeightAnimation->setPropertyName("maximumHeight");
         minHeightAnimation->setStartValue(minimumHeight());
         maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(551);
-        maxHeightAnimation->setEndValue(551);
+        minHeightAnimation->setEndValue(552);
+        maxHeightAnimation->setEndValue(552);
         minHeightAnimation->setDuration(150);
         maxHeightAnimation->setDuration(150);
         animationGroup->start();
@@ -740,7 +740,7 @@ void InfoDialog::on_bOfficialWebIcon_clicked()
 
 void InfoDialog::onAnimationFinished()
 {
-    if(this->minimumHeight() == 551)
+    if(this->minimumHeight() == 552)
     {
         ui->wRecent1->show();
         ui->wRecent2->show();
