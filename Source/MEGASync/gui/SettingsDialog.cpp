@@ -324,8 +324,8 @@ void SettingsDialog::on_bSyncs_clicked()
 
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
     {
-        minHeightAnimation->setEndValue(250);
-        maxHeightAnimation->setEndValue(250);
+        minHeightAnimation->setEndValue(256);
+        maxHeightAnimation->setEndValue(256);
     }
     else
     {
@@ -1069,7 +1069,27 @@ void SettingsDialog::on_bSyncChange_clicked()
         stateChanged();
     }
 
-    on_bSyncs_clicked();
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        minHeightAnimation->setEndValue(256);
+        maxHeightAnimation->setEndValue(256);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(420);
+        maxHeightAnimation->setEndValue(420);
+    }
+
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
 }
 
 
