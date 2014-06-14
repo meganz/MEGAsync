@@ -2704,14 +2704,19 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
 
 bool MegaApi::sync_syncable(Node *node)
 {
-    //LOG("sync_syncable1");
-    return is_syncable(node->displayname());
+    const char *name = node->displayname();
+    MUTEX_UNLOCK(sdkMutex);
+    bool result = is_syncable(name);
+    MUTEX_LOCK(sdkMutex);
+    return result;
 }
 
 bool MegaApi::sync_syncable(const char *name, string *, string *)
 {
-    //LOG("sync_syncable2");
-    return is_syncable(name);
+    MUTEX_UNLOCK(sdkMutex);
+    bool result =  is_syncable(name);
+    MUTEX_LOCK(sdkMutex);
+    return result;
 }
 
 void MegaApi::syncupdate_local_lockretry(bool waiting)
@@ -4381,18 +4386,14 @@ bool WildcardMatch(const char *pszString, const char *pszMatch)
 
 bool MegaApi::is_syncable(const char *name)
 {
-    MUTEX_UNLOCK(sdkMutex);
-
     for(int i=0; i< excludedNames.size(); i++)
     {
         if(WildcardMatch(name, excludedNames[i].c_str()))
         {
-            MUTEX_LOCK(sdkMutex);
             return false;
         }
     }
 
-    MUTEX_LOCK(sdkMutex);
     return true;
 }
 
