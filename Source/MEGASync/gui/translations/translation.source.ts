@@ -856,7 +856,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Help</source>
-        <translation>[$1717]</translation>
+        <translation type="vanished">[$1717]</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1244,7 +1244,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>[$1771]</translation>
+        <translation type="vanished">[$1771]</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1276,15 +1276,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>[$1778]</translation>
+        <translation type="vanished">[$1778]</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>[$1779]</translation>
+        <translation type="vanished">[$1779]</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>[$1780]</translation>
+        <translation type="vanished">[$1780]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1411,6 +1411,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
