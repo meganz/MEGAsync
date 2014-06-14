@@ -105,12 +105,6 @@ padding-right: 5px;
 padding-left: 5px;
 }
 
-#tSyncs
-{
-margin-right: 5px;
-margin-left: 5px;
-}
-
 #lExcludedNames
 {
 margin-right: 5px;
@@ -119,11 +113,6 @@ margin-right: 5px;
 #pUsedBandwidth
 {
 margin-right: 6px;
-margin-left: 2px;
-}
-
-#lStorage
-{
 margin-left: 2px;
 }
 
@@ -173,7 +162,6 @@ border: none;
 
 #lStorageSpace
 {
-padding-left: 2px;
 padding-bottom: 6px;
 }
 
@@ -224,7 +212,7 @@ padding-bottom: 6px;
       <item>
        <layout class="QHBoxLayout" name="layoutBottom">
         <property name="leftMargin">
-         <number>21</number>
+         <number>22</number>
         </property>
         <property name="topMargin">
          <number>11</number>
@@ -561,7 +549,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -581,13 +569,13 @@ padding-bottom: 6px;
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -625,7 +613,7 @@ padding-bottom: 6px;
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>29</number>
+           <number>27</number>
           </property>
           <property name="topMargin">
            <number>15</number>
@@ -905,7 +893,7 @@ padding-bottom: 6px;
            <number>2</number>
           </property>
           <property name="leftMargin">
-           <number>25</number>
+           <number>24</number>
           </property>
           <property name="topMargin">
            <number>15</number>
@@ -929,6 +917,9 @@ padding-bottom: 6px;
             </property>
             <property name="text">
              <string>Storage space</string>
+            </property>
+            <property name="indent">
+             <number>5</number>
             </property>
            </widget>
           </item>
@@ -1009,6 +1000,10 @@ padding-bottom: 6px;
                  <width>0</width>
                  <height>22</height>
                 </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-left: 1px;
+</string>
                </property>
                <property name="text">
                 <string notr="true">1.21 GB (1%) of 500 GB used</string>
@@ -1377,49 +1372,73 @@ padding-bottom: 6px;
            <number>8</number>
           </property>
           <property name="leftMargin">
-           <number>30</number>
+           <number>27</number>
           </property>
           <property name="topMargin">
            <number>14</number>
           </property>
           <property name="rightMargin">
-           <number>29</number>
+           <number>26</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
            <widget class="QLabel" name="label_6">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Language</string>
+            </property>
+            <property name="indent">
+             <number>1</number>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cLanguage">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <item>
-             <property name="text">
-              <string>English</string>
+           <widget class="QWidget" name="widget_11" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_17">
+             <property name="leftMargin">
+              <number>0</number>
              </property>
-            </item>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QComboBox" name="cLanguage">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <item>
+                <property name="text">
+                 <string>English</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -1446,13 +1465,13 @@ padding-bottom: 6px;
      <widget class="QWidget" name="pSyncs">
       <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0">
        <property name="leftMargin">
-        <number>14</number>
+        <number>24</number>
        </property>
        <property name="topMargin">
         <number>5</number>
        </property>
        <property name="rightMargin">
-        <number>14</number>
+        <number>24</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -1470,106 +1489,124 @@ padding-bottom: 6px;
            <number>4</number>
           </property>
           <property name="leftMargin">
-           <number>9</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>9</number>
+           <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>10</number>
           </property>
           <item>
-           <widget class="QTableWidget" name="tSyncs">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="autoScroll">
-             <bool>false</bool>
-            </property>
-            <property name="editTriggers">
-             <set>QAbstractItemView::NoEditTriggers</set>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::SingleSelection</enum>
-            </property>
-            <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectRows</enum>
-            </property>
-            <property name="textElideMode">
-             <enum>Qt::ElideMiddle</enum>
-            </property>
-            <property name="horizontalScrollMode">
-             <enum>QAbstractItemView::ScrollPerPixel</enum>
-            </property>
-            <property name="showGrid">
-             <bool>true</bool>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="cornerButtonEnabled">
-             <bool>true</bool>
-            </property>
-            <attribute name="horizontalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="horizontalHeaderCascadingSectionResizes">
-             <bool>true</bool>
-            </attribute>
-            <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>221</number>
-            </attribute>
-            <attribute name="horizontalHeaderHighlightSections">
-             <bool>true</bool>
-            </attribute>
-            <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>221</number>
-            </attribute>
-            <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="horizontalHeaderStretchLastSection">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderCascadingSectionResizes">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderDefaultSectionSize">
-             <number>30</number>
-            </attribute>
-            <attribute name="verticalHeaderHighlightSections">
-             <bool>true</bool>
-            </attribute>
-            <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderStretchLastSection">
-             <bool>false</bool>
-            </attribute>
-            <row>
-             <property name="text">
-              <string/>
+           <widget class="QWidget" name="widget_9" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <property name="leftMargin">
+              <number>6</number>
              </property>
-            </row>
-            <column>
-             <property name="text">
-              <string>Local Folder</string>
+             <property name="topMargin">
+              <number>0</number>
              </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>MEGA folder</string>
+             <property name="rightMargin">
+              <number>6</number>
              </property>
-            </column>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QTableWidget" name="tSyncs">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="autoScroll">
+                <bool>false</bool>
+               </property>
+               <property name="editTriggers">
+                <set>QAbstractItemView::NoEditTriggers</set>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="textElideMode">
+                <enum>Qt::ElideMiddle</enum>
+               </property>
+               <property name="horizontalScrollMode">
+                <enum>QAbstractItemView::ScrollPerPixel</enum>
+               </property>
+               <property name="showGrid">
+                <bool>true</bool>
+               </property>
+               <property name="wordWrap">
+                <bool>false</bool>
+               </property>
+               <property name="cornerButtonEnabled">
+                <bool>true</bool>
+               </property>
+               <attribute name="horizontalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="horizontalHeaderCascadingSectionResizes">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="horizontalHeaderDefaultSectionSize">
+                <number>219</number>
+               </attribute>
+               <attribute name="horizontalHeaderHighlightSections">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="horizontalHeaderMinimumSectionSize">
+                <number>219</number>
+               </attribute>
+               <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="horizontalHeaderStretchLastSection">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderCascadingSectionResizes">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderDefaultSectionSize">
+                <number>30</number>
+               </attribute>
+               <attribute name="verticalHeaderHighlightSections">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="verticalHeaderStretchLastSection">
+                <bool>false</bool>
+               </attribute>
+               <row>
+                <property name="text">
+                 <string/>
+                </property>
+               </row>
+               <column>
+                <property name="text">
+                 <string>Local Folder</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>MEGA folder</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -1785,12 +1822,12 @@ padding-bottom: 2px;</string>
         <number>12</number>
        </property>
        <property name="bottomMargin">
-        <number>5</number>
+        <number>14</number>
        </property>
        <item>
         <widget class="QLabel" name="label_10">
          <property name="styleSheet">
-          <string notr="true">padding-left: 12px;</string>
+          <string notr="true">padding-left: 11px;</string>
          </property>
          <property name="text">
           <string>Upload rate limit</string>
@@ -2038,15 +2075,39 @@ padding-bottom: 2px;</string>
           <property name="topMargin">
            <number>12</number>
           </property>
+          <property name="rightMargin">
+           <number>11</number>
+          </property>
           <item>
            <widget class="QLabel" name="label_9">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Bandwidth quota</string>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <property name="indent">
+             <number>1</number>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QProgressBar" name="pUsedBandwidth">
+            <property name="minimumSize">
+             <size>
+              <width>448</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>448</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="value">
              <number>24</number>
             </property>
@@ -2059,6 +2120,9 @@ padding-bottom: 2px;</string>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
              <number>6</number>
+            </property>
+            <property name="rightMargin">
+             <number>7</number>
             </property>
             <item>
              <spacer name="horizontalSpacer_2">
@@ -2126,7 +2190,10 @@ padding-bottom: 2px;</string>
           <bool>true</bool>
          </property>
          <property name="margin">
-          <number>10</number>
+          <number>0</number>
+         </property>
+         <property name="indent">
+          <number>8</number>
          </property>
         </widget>
        </item>
@@ -2158,7 +2225,7 @@ padding-bottom: 2px;</string>
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 28px;
+          <string notr="true">padding-left: 26px;
 padding-bottom: 3px;</string>
          </property>
          <property name="text">
@@ -2275,7 +2342,7 @@ padding-bottom: 3px;</string>
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>25</number>
+           <number>24</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -2300,28 +2367,46 @@ padding-bottom: 3px;</string>
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="lExcludedNames">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>120</height>
-             </size>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::ExtendedSelection</enum>
-            </property>
-            <property name="resizeMode">
-             <enum>QListView::Adjust</enum>
-            </property>
-            <property name="selectionRectVisible">
-             <bool>false</bool>
-            </property>
+           <widget class="QWidget" name="widget_12" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_18">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>1</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QListWidget" name="lExcludedNames">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::ExtendedSelection</enum>
+               </property>
+               <property name="resizeMode">
+                <enum>QListView::Adjust</enum>
+               </property>
+               <property name="selectionRectVisible">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -2412,7 +2497,7 @@ padding-bottom: 3px;</string>
           </sizepolicy>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 26px;</string>
+          <string notr="true">padding-left: 27px;</string>
          </property>
          <property name="text">
           <string>Cache</string>
@@ -2982,8 +3067,6 @@ padding-bottom: 3px;</string>
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cAutoUpdate</tabstop>
   <tabstop>bUpdate</tabstop>
-  <tabstop>cLanguage</tabstop>
-  <tabstop>tSyncs</tabstop>
   <tabstop>bDelete</tabstop>
   <tabstop>bAdd</tabstop>
   <tabstop>bSyncChange</tabstop>
@@ -2994,7 +3077,6 @@ padding-bottom: 3px;</string>
   <tabstop>bUpgradeBandwidth</tabstop>
   <tabstop>eUploadFolder</tabstop>
   <tabstop>bUploadFolder</tabstop>
-  <tabstop>lExcludedNames</tabstop>
   <tabstop>bDeleteName</tabstop>
   <tabstop>bAddName</tabstop>
   <tabstop>bClearCache</tabstop>
