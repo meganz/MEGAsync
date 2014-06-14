@@ -167,7 +167,7 @@ padding-bottom: 6px;
 
 #lExcludedFiles
 {
-	margin-bottom: 13px;
+	margin-bottom: 12px;
 	margin-top:5px;
 }
 </string>
@@ -1104,13 +1104,13 @@ padding-bottom: 6px;
            <number>27</number>
           </property>
           <property name="topMargin">
-           <number>9</number>
+           <number>11</number>
           </property>
           <property name="rightMargin">
            <number>23</number>
           </property>
           <property name="bottomMargin">
-           <number>9</number>
+           <number>7</number>
           </property>
           <item>
            <widget class="QWidget" name="widget_4" native="true">
@@ -1369,7 +1369,7 @@ padding-bottom: 6px;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
-           <number>8</number>
+           <number>5</number>
           </property>
           <property name="leftMargin">
            <number>27</number>
@@ -1827,7 +1827,8 @@ padding-bottom: 2px;</string>
        <item>
         <widget class="QLabel" name="label_10">
          <property name="styleSheet">
-          <string notr="true">padding-left: 11px;</string>
+          <string notr="true">padding-left: 11px;
+</string>
          </property>
          <property name="text">
           <string>Upload rate limit</string>
@@ -1871,13 +1872,16 @@ padding-bottom: 2px;</string>
            <number>6</number>
           </property>
           <property name="verticalSpacing">
-           <number>7</number>
+           <number>8</number>
           </property>
           <property name="leftMargin">
            <number>15</number>
           </property>
           <property name="topMargin">
-           <number>4</number>
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
           </property>
           <item row="1" column="0">
            <widget class="QRadioButton" name="rAutoLimit">
@@ -1978,6 +1982,12 @@ padding-bottom: 2px;</string>
           </item>
           <item row="3" column="1">
            <widget class="QWidget" name="wUploadLimit" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>21</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <property name="leftMargin">
               <number>0</number>
@@ -2001,6 +2011,12 @@ padding-bottom: 2px;</string>
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
                </property>
                <property name="maximumSize">
                 <size>
@@ -2175,28 +2191,6 @@ padding-bottom: 2px;</string>
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Upload limits are per upload server and are applied when starting new uploads</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <property name="indent">
-          <number>8</number>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pAdvanced">
@@ -2279,7 +2273,7 @@ padding-bottom: 3px;</string>
               <number>19</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <item>
               <widget class="QLineEdit" name="eUploadFolder">
@@ -2345,7 +2339,7 @@ padding-bottom: 3px;</string>
            <number>24</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>1</number>
           </property>
           <item>
            <widget class="QLabel" name="lExcludedFiles">
@@ -2356,7 +2350,7 @@ padding-bottom: 3px;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">padding-left: -1px;</string>
             </property>
             <property name="text">
              <string>Excluded file names</string>
@@ -2389,10 +2383,16 @@ padding-bottom: 3px;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>88</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>120</height>
+                 <height>88</height>
                 </size>
                </property>
                <property name="selectionMode">
@@ -2623,7 +2623,7 @@ padding-bottom: 3px;</string>
            <number>30</number>
           </property>
           <property name="bottomMargin">
-           <number>18</number>
+           <number>19</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
@@ -2722,7 +2722,7 @@ padding-bottom: 3px;</string>
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_2">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
@@ -2736,7 +2736,7 @@ padding-bottom: 3px;</string>
            <number>9</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="horizontalSpacing">
            <number>6</number>
@@ -2744,7 +2744,95 @@ padding-bottom: 3px;</string>
           <property name="verticalSpacing">
            <number>14</number>
           </property>
-          <item row="9" column="1">
+          <item row="8" column="1">
+           <widget class="QWidget" name="widget_13" native="true">
+            <property name="styleSheet">
+             <string notr="true">padding-left: -1px;
+</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_19">
+             <property name="spacing">
+              <number>15</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>2</number>
+             </property>
+             <item>
+              <widget class="QRadioButton" name="rNoProxy">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>No proxy</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rProxyAuto">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Auto-detect</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rProxyManual">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>27</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>Proxy</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="10" column="1">
            <widget class="QWidget" name="wProxyAddress" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -2835,32 +2923,14 @@ padding-bottom: 3px;</string>
             </layout>
            </widget>
           </item>
-          <item row="12" column="1">
-           <widget class="QLineEdit" name="eProxyPassword">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>240</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>240</width>
-              <height>16777215</height>
-             </size>
-            </property>
+          <item row="12" column="0">
+           <widget class="QLabel" name="lProxyUsername">
             <property name="text">
-             <string/>
-            </property>
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
+             <string>Username:</string>
             </property>
            </widget>
           </item>
-          <item row="12" column="0">
+          <item row="13" column="0">
            <widget class="QLabel" name="lProxyPassword">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2873,7 +2943,7 @@ padding-bottom: 3px;</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="1">
+          <item row="12" column="1">
            <widget class="QLineEdit" name="eProxyUsername">
             <property name="enabled">
              <bool>false</bool>
@@ -2895,21 +2965,24 @@ padding-bottom: 3px;</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="lProxyUsername">
-            <property name="text">
-             <string>Username:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
+          <item row="9" column="0">
            <widget class="QLabel" name="lProxyType">
             <property name="text">
              <string>Proxy type:</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="11" column="1">
+           <widget class="QCheckBox" name="cProxyRequiresPassword">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Proxy server requires a password</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
            <widget class="QComboBox" name="cProxyType">
             <property name="enabled">
              <bool>false</bool>
@@ -2939,87 +3012,35 @@ padding-bottom: 3px;</string>
             </item>
            </widget>
           </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="lProxyServer">
-            <property name="text">
-             <string>Server:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="rProxyAuto">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Auto-detect</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QCheckBox" name="cProxyRequiresPassword">
+          <item row="13" column="1">
+           <widget class="QLineEdit" name="eProxyPassword">
             <property name="enabled">
              <bool>false</bool>
             </property>
-            <property name="text">
-             <string>Proxy server requires a password</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QRadioButton" name="rNoProxy">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>27</height>
+              <width>240</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>27</height>
+              <width>240</width>
+              <height>16777215</height>
              </size>
             </property>
-            <property name="text">
-             <string>No proxy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_2">
             <property name="text">
              <string/>
             </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
            </widget>
           </item>
-          <item row="7" column="1">
-           <widget class="QRadioButton" name="rProxyManual">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>27</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>27</height>
-             </size>
-            </property>
+          <item row="10" column="0">
+           <widget class="QLabel" name="lProxyServer">
             <property name="text">
-             <string>Proxy</string>
+             <string>Server:</string>
             </property>
            </widget>
           </item>
@@ -3082,9 +3103,6 @@ padding-bottom: 3px;</string>
   <tabstop>bClearCache</tabstop>
   <tabstop>cOverlayIcons</tabstop>
   <tabstop>bFullCheck</tabstop>
-  <tabstop>rNoProxy</tabstop>
-  <tabstop>rProxyAuto</tabstop>
-  <tabstop>rProxyManual</tabstop>
   <tabstop>cProxyType</tabstop>
   <tabstop>eProxyServer</tabstop>
   <tabstop>eProxyPort</tabstop>

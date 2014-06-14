@@ -370,8 +370,8 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(310);
-    maxHeightAnimation->setEndValue(310);
+    minHeightAnimation->setEndValue(266);
+    maxHeightAnimation->setEndValue(266);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -409,8 +409,8 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(450);
-    maxHeightAnimation->setEndValue(450);
+    minHeightAnimation->setEndValue(455);
+    maxHeightAnimation->setEndValue(455);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -449,8 +449,8 @@ void SettingsDialog::on_bProxies_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(410);
-    maxHeightAnimation->setEndValue(410);
+    minHeightAnimation->setEndValue(416);
+    maxHeightAnimation->setEndValue(416);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
