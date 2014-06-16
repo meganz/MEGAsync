@@ -10,6 +10,15 @@ namespace Ui {
 class RecentFile;
 }
 
+class RecentFileInfo
+{
+public:
+    QString fileName;
+    long long fileHandle;
+    QDateTime dateTime;
+    QString localPath;
+};
+
 class RecentFile : public QWidget
 {
     Q_OBJECT
@@ -20,15 +29,14 @@ public:
     void setFile(QString fileName, long long fileHandle, QString localPath, long long time);
 	void updateWidget();
     void closeMenu();
+    RecentFileInfo getFileInfo();
+    void setFileInfo(RecentFileInfo info);
 
 private:
     Ui::RecentFile *ui;
 
 protected:
-    QString fileName;
-	long long fileHandle;
-    QDateTime dateTime;
-	QString localPath;
+    RecentFileInfo info;
     QMenu *menu;
     void changeEvent(QEvent * event);
 

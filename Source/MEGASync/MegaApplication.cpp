@@ -832,7 +832,7 @@ void MegaApplication::refreshTrayIcon()
     if(megaApi)
     {
         LOG("STATE: Refreshing state");
-        if(!(++counter % 12))
+        if(!(++counter % 6))
             megaApi->update();
 
         megaApi->updateStatics();
