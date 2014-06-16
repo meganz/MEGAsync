@@ -169,7 +169,8 @@ padding-left: 1px;
 #wRecentLayout
 {
     background-color: white;
-}</string>
+}
+</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -1015,6 +1016,9 @@ color: rgb(102, 102, 102);</string>
              <height>48</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #F7F7F7;</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -1049,6 +1053,9 @@ color: rgb(102, 102, 102);</string>
            </property>
            <property name="layoutDirection">
             <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #F7F7F7;</string>
            </property>
           </widget>
          </item>

@@ -23,26 +23,17 @@ RecentFile::~RecentFile()
 
 void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath, long long time)
 {
-    this->fileName = fileName;
-	this->fileHandle = fileHandle;
-	this->localPath = localPath;
-    this->dateTime = QDateTime::fromMSecsSinceEpoch(time);
+    info.fileName = fileName;
+    info.fileHandle = fileHandle;
+    info.localPath = localPath;
+    info.dateTime = QDateTime::fromMSecsSinceEpoch(time);
 }
 
 void RecentFile::updateWidget()
 {
     closeMenu();
 
-    if(!(parentWidget()->layout()->indexOf(this) % 2))
-    {
-        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: #F7F7F7; }"));
-    }
-    else
-    {
-        this->setStyleSheet(QString::fromUtf8("QWidget { background-color: white; }"));
-    }
-
-	if(!fileName.length())
+    if(!info.fileName.length())
 	{
         ui->lFileType->setText(QString());
         ui->lTime->setText(QString::fromAscii(""));
@@ -50,20 +41,20 @@ void RecentFile::updateWidget()
         return;
 	}
 
-    if(fileName.compare(ui->lFileName->text()))
+    if(info.fileName.compare(ui->lFileName->text()))
     {
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
-        ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+        ui->lFileName->setText(fm.elidedText(info.fileName, Qt::ElideRight,ui->lFileName->width()));
         QIcon icon;
-        icon.addFile(Utilities::getExtensionPixmapMedium(fileName), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
         ui->lFileType->setIcon(icon);
         ui->lFileType->setIconSize(QSize(48, 48));
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    qint64 secs = dateTime.secsTo(now);
+    qint64 secs = info.dateTime.secsTo(now);
     if(secs < 2)
         ui->lTime->setText(tr("just now"));
     else if(secs < 60)
@@ -116,6 +107,16 @@ void RecentFile::closeMenu()
         menu->close();
 }
 
+RecentFileInfo RecentFile::getFileInfo()
+{
+    return info;
+}
+
+void RecentFile::setFileInfo(RecentFileInfo info)
+{
+    this->info = info;
+}
+
 void RecentFile::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -126,7 +127,7 @@ void RecentFile::changeEvent(QEvent *event)
 
 void RecentFile::on_pArrow_clicked()
 {
-	((MegaApplication*)qApp)->copyFileLink(fileHandle);
+    ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
 }
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
@@ -137,7 +138,7 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
         return;
     }
 
-    if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
+    if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
 
     menu = new QMenu();
     menu->addAction(tr("Open"), this, SLOT(openFile()));
@@ -160,7 +161,7 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
         return;
     }
 
-    if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
+    if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
 
     menu = new QMenu();
     menu->addAction(tr("Open"), this, SLOT(openFile()));
@@ -178,11 +179,11 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 void RecentFile::showInFolder()
 {
     QWidget::window()->hide();
-    Platform::showInFolder(localPath);
+    Platform::showInFolder(info.localPath);
 }
 
 void RecentFile::openFile()
 {
     QWidget::window()->hide();
-	QDesktopServices::openUrl(QUrl::fromLocalFile(localPath));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(info.localPath));
 }

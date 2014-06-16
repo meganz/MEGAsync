@@ -164,11 +164,11 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
 {
-    QVBoxLayout *recentLayout = (QVBoxLayout *)ui->wRecentLayout->layout();
-    QLayoutItem *item = recentLayout->itemAt(2);
-    RecentFile * recentFile = ((RecentFile *)item->widget());
-    recentLayout->insertWidget(0, recentFile);
-    recentFile->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
+    RecentFileInfo info1 = ui->wRecent1->getFileInfo();
+    RecentFileInfo info2 = ui->wRecent2->getFileInfo();
+    ui->wRecent3->setFileInfo(info2);
+    ui->wRecent2->setFileInfo(info1);
+    ui->wRecent1->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
     if(!ui->wRecentlyUpdated->isVisible())
         showRecentList();
     updateRecentFiles();
