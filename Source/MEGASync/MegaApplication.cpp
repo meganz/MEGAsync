@@ -920,7 +920,7 @@ void MegaApplication::showInfoDialog()
 
             #ifdef __APPLE__
                 position = trayIcon->getPosition();
-                posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 2;
+                posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
                 posy = screenGeometry.top();
             #else
                 QPoint position = QCursor::pos();
