@@ -138,23 +138,27 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bCancel->hide();
     ui->gBandwidthQuota->hide();
 
-    //const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-    //if(ratio < 0)
-    //{
-        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected.png); }"));
-        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected.png); }"));
-        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected.png); }"));
-        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected.png); }"));
-        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected.png); }"));
-    //}
-    //else
-    //{
-    //    ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected@2x.png); }"));
-    //    ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected@2x.png); }"));
-    //    ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected@2x.png); }"));
-    //    ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected@2x.png); }"));
-    //    ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { background-image:url(://images/menu_selected@2x.png); }"));
-    //}
+    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    if(ratio < 2)
+    {
+        ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
+
+        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    }
+    else
+    {
+        ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header@2x.png\"); }"));
+
+        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+    }
 #endif
 
     ui->gCache->setVisible(false);

@@ -296,6 +296,9 @@
         <file>images/selected_sync_bt.png</file>
         <file>images/selected_sync_bt@2x.png</file>
         <file>images/select_sync_bt.png</file>
-        <file>images/select_sync_bt@2X.png</file>
+        <file>images/select_sync_bt@2x.png</file>
+        <file>images/menu_header@2x.png</file>
+        <file>images/menu_selected@2x.png</file>
+        <file>images/separator line@2x.png</file>
     </qresource>
 </RCC>
