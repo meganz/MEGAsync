@@ -478,6 +478,9 @@ padding-bottom: 6px;
           <property name="text">
            <string>OK</string>
           </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -490,6 +493,9 @@ padding-bottom: 6px;
           </property>
           <property name="text">
            <string>Cancel</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -512,6 +518,9 @@ padding-bottom: 6px;
           </property>
           <property name="text">
            <string>Apply</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -544,7 +553,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -809,11 +818,17 @@ padding-bottom: 6px;
               <height>32</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
             <property name="text">
              <string>Logout</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
             <property name="default">
              <bool>false</bool>
@@ -1034,11 +1049,17 @@ border: none;</string>
                  <height>0</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <property name="text">
                 <string>Upgrade</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1307,8 +1328,14 @@ border: none;</string>
                        <height>32</height>
                       </size>
                      </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
                      <property name="text">
                       <string>Check for updates</string>
+                     </property>
+                     <property name="autoDefault">
+                      <bool>false</bool>
                      </property>
                     </widget>
                    </item>
@@ -1678,8 +1705,14 @@ border: none;</string>
                  <height>32</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>Add</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1697,8 +1730,14 @@ border: none;</string>
                  <height>32</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>Delete</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1784,11 +1823,17 @@ border: none;</string>
                  <height>32</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
                <property name="text">
                 <string>Enable full account sync</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1928,6 +1973,12 @@ padding-bottom: 2px;</string>
               <height>27</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="text">
              <string>Auto</string>
             </property>
@@ -1984,6 +2035,9 @@ padding-bottom: 2px;</string>
               <height>27</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Don't limit</string>
             </property>
@@ -1999,6 +2053,9 @@ padding-bottom: 2px;</string>
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Limit to:</string>
@@ -2193,8 +2250,14 @@ padding-bottom: 2px;</string>
                 <height>0</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="text">
                <string>Upgrade</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -2318,6 +2381,9 @@ padding-bottom: 3px;</string>
                <property name="text">
                 <string>Choose</string>
                </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -2416,6 +2482,24 @@ background:transparent;</string>
           </item>
           <item>
            <widget class="QWidget" name="widget_12" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>85</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>85</height>
+             </size>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <property name="leftMargin">
               <number>0</number>
@@ -2424,7 +2508,7 @@ background:transparent;</string>
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>1</number>
+              <number>6</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -2440,14 +2524,17 @@ background:transparent;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>88</height>
+                 <height>85</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>88</height>
+                 <height>85</height>
                 </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin:0px;</string>
                </property>
                <property name="selectionMode">
                 <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -2508,6 +2595,9 @@ background:transparent;</string>
                <property name="text">
                 <string>Delete</string>
                </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
              <item>
@@ -2520,6 +2610,9 @@ background:transparent;</string>
                </property>
                <property name="text">
                 <string>Add</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -2657,6 +2750,9 @@ background:transparent;</string>
             <property name="text">
              <string>Clear</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -2763,6 +2859,9 @@ background:transparent;</string>
             </property>
             <property name="text">
              <string>Force a full scan</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -2889,6 +2988,9 @@ background:transparent;</string>
                  <height>27</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>No proxy</string>
                </property>
@@ -2908,11 +3010,14 @@ background:transparent;</string>
                  <height>27</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string>Auto-detect</string>
                </property>
                <property name="checked">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -2929,6 +3034,9 @@ background:transparent;</string>
                  <width>16777215</width>
                  <height>27</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
