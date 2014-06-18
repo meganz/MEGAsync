@@ -328,8 +328,8 @@ void SettingsDialog::on_bSyncs_clicked()
 
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
     {
-        minHeightAnimation->setEndValue(256);
-        maxHeightAnimation->setEndValue(256);
+        minHeightAnimation->setEndValue(266);
+        maxHeightAnimation->setEndValue(266);
     }
     else
     {
@@ -807,7 +807,7 @@ bool SettingsDialog::saveSettings()
 
         //Account
         MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
-        if(node && ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")))
+        if(node && (ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")) || preferences->uploadFolder()))
             preferences->setUploadFolder(node->getHandle());
         delete node;
 
@@ -1082,8 +1082,8 @@ void SettingsDialog::on_bSyncChange_clicked()
 
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
     {
-        minHeightAnimation->setEndValue(256);
-        maxHeightAnimation->setEndValue(256);
+        minHeightAnimation->setEndValue(266);
+        maxHeightAnimation->setEndValue(266);
     }
     else
     {
