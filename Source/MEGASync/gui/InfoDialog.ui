@@ -272,7 +272,7 @@ padding-bottom: -1px;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">margin-top:-2px;</string>
         </property>
         <property name="text">
          <string/>
@@ -382,6 +382,9 @@ QCheckBox::indicator {
         </property>
         <property name="styleSheet">
          <string notr="true">border: none;
+margin-top:-1px;
+
+
 </string>
         </property>
         <property name="text">
@@ -889,7 +892,7 @@ color: rgb(102, 102, 102);</string>
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>26</number>
+          <number>19</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -915,7 +918,7 @@ color: rgb(102, 102, 102);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true"/>
+            <string notr="true">margin-left:1px;</string>
            </property>
            <property name="text">
             <string>RECENTLY UPDATED</string>
@@ -932,30 +935,30 @@ color: rgb(102, 102, 102);</string>
            </property>
            <property name="minimumSize">
             <size>
-             <width>24</width>
+             <width>36</width>
              <height>24</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
+             <width>36</width>
              <height>24</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator {
-     width: 24px;
+     width: 36px;
      height: 24px;
 	 subcontrol-position:  center;
  }
 
   QCheckBox::indicator:checked
   {
-    image: url(://images/collapse_down.png);
+    image: url(://images/collapse_up.png);
   }
   QCheckBox::indicator:unchecked
   {
-    image: url(://images/collapse_up.png);
+    image: url(://images/collapse_down.png);
   }</string>
            </property>
            <property name="iconSize">
@@ -965,7 +968,7 @@ color: rgb(102, 102, 102);</string>
             </size>
            </property>
            <property name="checked">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
