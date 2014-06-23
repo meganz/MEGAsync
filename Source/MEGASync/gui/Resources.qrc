@@ -300,5 +300,50 @@
         <file>images/menu_header@2x.png</file>
         <file>images/menu_selected@2x.png</file>
         <file>images/separator line@2x.png</file>
+        <file>images/drag_3D@2x.png</file>
+        <file>images/drag_aftereffects@2x.png</file>
+        <file>images/drag_audio@2x.png</file>
+        <file>images/drag_cad@2x.png</file>
+        <file>images/drag_compressed@2x.png</file>
+        <file>images/drag_database@2x.png</file>
+        <file>images/drag_dreamweaver@2x.png</file>
+        <file>images/drag_excel@2x.png</file>
+        <file>images/drag_executable@2x.png</file>
+        <file>images/drag_fla_lang@2x.png</file>
+        <file>images/drag_flash_video@2x.png</file>
+        <file>images/drag_flash@2x.png</file>
+        <file>images/drag_folder_shared@2x.png</file>
+        <file>images/drag_folder@2x.png</file>
+        <file>images/drag_font@2x.png</file>
+        <file>images/drag_generic@2x.png</file>
+        <file>images/drag_gis@2x.png</file>
+        <file>images/drag_graphic@2x.png</file>
+        <file>images/drag_html@2x.png</file>
+        <file>images/drag_illustrator@2x.png</file>
+        <file>images/drag_image@2x.png</file>
+        <file>images/drag_indesign@2x.png</file>
+        <file>images/drag_java@2x.png</file>
+        <file>images/drag_midi@2x.png</file>
+        <file>images/drag_pdf@2x.png</file>
+        <file>images/drag_photoshop@2x.png</file>
+        <file>images/drag_playlist@2x.png</file>
+        <file>images/drag_podcast@2x.png</file>
+        <file>images/drag_powerpoint@2x.png</file>
+        <file>images/drag_premiere@2x.png</file>
+        <file>images/drag_raw@2x.png</file>
+        <file>images/drag_real_audio@2x.png</file>
+        <file>images/drag_source_code@2x.png</file>
+        <file>images/drag_spreadsheet@2x.png</file>
+        <file>images/drag_swf@2x.png</file>
+        <file>images/drag_text@2x.png</file>
+        <file>images/drag_torrent@2x.png</file>
+        <file>images/drag_vcard@2x.png</file>
+        <file>images/drag_vector@2x.png</file>
+        <file>images/drag_video_subtitles@2x.png</file>
+        <file>images/drag_video_vob@2x.png</file>
+        <file>images/drag_video@2x.png</file>
+        <file>images/drag_web_data@2x.png</file>
+        <file>images/drag_web_lang@2x.png</file>
+        <file>images/drag_word@2x.png</file>
     </qresource>
 </RCC>

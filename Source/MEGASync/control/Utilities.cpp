@@ -257,12 +257,12 @@ QString Utilities::languageCodeToString(QString code)
 
 QString Utilities::getExtensionPixmapSmall(QString fileName)
 {
-    return getExtensionPixmap(fileName, QString::fromAscii("://images/small_"));
+    return getExtensionPixmap(fileName, QString::fromAscii(":/images/small_"));
 }
 
 QString Utilities::getExtensionPixmapMedium(QString fileName)
 {
-    return getExtensionPixmap(fileName, QString::fromAscii("://images/drag_"));
+    return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
 }
 
 bool Utilities::removeRecursively(QDir dir)
