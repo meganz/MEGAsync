@@ -48,18 +48,20 @@ void ActiveTransfer::setType(int type)
     QIcon icon;
     if(type)
     {
-        icon.addFile(QStringLiteral(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->lType->setIcon(icon);
-        ui->lType->setIconSize(QSize(24, 24));
+        icon.addFile(QString::fromUtf8(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(119, 186, 216);"));
     }
     else
     {
-        icon.addFile(QStringLiteral(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->lType->setIcon(icon);
-        ui->lType->setIconSize(QSize(24, 24));
+        icon.addFile(QString::fromUtf8(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
     }
+#ifdef __APPLE__
+        ui->lType->setIcon(icon);
+        ui->lType->setIconSize(QSize(24, 24));
+#else
+        ui->lType->setPixmap(icon.pixmap(QSize(24, 24)));
+#endif
 }
 
 void ActiveTransfer::hideTransfer()

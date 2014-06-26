@@ -923,7 +923,7 @@ void MegaApplication::showInfoDialog()
                 posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
                 posy = screenGeometry.top();
             #else
-                QPoint position = QCursor::pos();
+                position = QCursor::pos();
 
                 if(position.x() > (screenGeometry.right()/2))
                     posx = screenGeometry.right() - 400 - 2;

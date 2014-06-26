@@ -59,19 +59,26 @@ private slots:
     void on_bPause_clicked();
 
     void onOverlayClicked();
-    void on_cRecentlyUpdated_stateChanged(int arg1);
 
-    void on_bOfficialWebIcon_clicked();
-    void onAnimationFinished();
-    void showRecentList();
     void scanningAnimationStep();
+
+#ifdef __APPLE__
+    void on_cRecentlyUpdated_stateChanged(int arg1);
+    void showRecentList();
+    void onAnimationFinished();
+    void on_bOfficialWebIcon_clicked();
+#endif
 
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
+
+#ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;
+#endif
+
     QMenu *syncsMenu;
     QMenu *transferMenu;
 
