@@ -46,11 +46,16 @@ void RecentFile::updateWidget()
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
         ui->lFileName->setText(fm.elidedText(info.fileName, Qt::ElideRight,ui->lFileName->width()));
-        //QIcon icon;
-        //icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
-        //ui->lFileType->setIcon(icon);
-        //ui->lFileType->setIconSize(QSize(48, 48));
-        ui->lFileType->setIcon(QIcon(Utilities::getExtensionPixmapMedium(info.fileName)));
+
+        QIcon icon;
+        icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
+
+#ifdef __APPLE__
+        ui->lFileType->setIcon(icon);
+        ui->lFileType->setIconSize(QSize(48, 48));
+#else
+        ui->lFileType->setPixmap(QSize(48, 48));
+#endif
 
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
     }

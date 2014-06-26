@@ -159,7 +159,7 @@ protected:
     QAction *updateAction;
     QAction *showStatusAction;
     QTimer *scanningTimer;
-    int scanningAnimationIndex = 1;
+    int scanningAnimationIndex;
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;

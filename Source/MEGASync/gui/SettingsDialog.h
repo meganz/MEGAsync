@@ -116,9 +116,12 @@ private:
     QTimer proxyTestTimer;
     bool shouldClose;
     int modifyingSettings;
+
+#ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;
+#endif
 
     void loadSyncSettings();
     bool saveSettings();

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TransferProgressBar</class>
+ <widget class="QWidget" name="TransferProgressBar">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>364</width>
+    <height>21</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#wProgress
+{
+	background-color: white;
+	border-radius: 3px;
+}
+
+#wBackground
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	border-radius: 4px;
+	background-color: rgb(178, 178, 178);
+}</string>
+  </property>
+  <widget class="QLabel" name="lProgress">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>364</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Resources.qrc">:/images/transferProgress.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wProgress" native="true">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>7</y>
+     <width>60</width>
+     <height>6</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>6</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>6</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wBackground" native="true">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>6</y>
+     <width>356</width>
+     <height>8</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>355</width>
+     <height>8</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>355</width>
+     <height>8</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bCancel">
+   <property name="geometry">
+    <rect>
+     <x>348</x>
+     <y>3</y>
+     <width>12</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>12</width>
+     <height>15</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>15</width>
+     <height>15</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: none;
+border-left: 1px solid white;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="Resources.qrc">
+     <normaloff>:/images/tray_cancel_ico.png</normaloff>:/images/tray_cancel_ico.png</iconset>
+   </property>
+  </widget>
+  <zorder>lProgress</zorder>
+  <zorder>wBackground</zorder>
+  <zorder>wProgress</zorder>
+  <zorder>bCancel</zorder>
+ </widget>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

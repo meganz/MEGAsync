@@ -41,8 +41,13 @@ void ImportListWidgetItem::updateGui()
 
     QIcon icon;
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
+
+#ifdef __APPLE__
     ui->lImage->setIcon(icon);
     ui->lImage->setIconSize(QSize(24, 24));
+#else
+    ui->lImage->setPixmap(icon.pixmap(QSize(24, 24)));
+#endif
 
     QIcon icon2;
 	switch(status)
@@ -51,21 +56,26 @@ void ImportListWidgetItem::updateGui()
 		//ui->lState->setText("LOADING");
 		break;
 	case CORRECT:
-        icon2.addFile(QStringLiteral(":/images/import_ok_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/images/import_ok_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
 		break;
 	case WARNING:
-        icon2.addFile(QStringLiteral(":/images/import_warning_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/images/import_warning_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;
 	default:
-        icon2.addFile(QStringLiteral(":/images/import_error_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/images/import_error_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 		ui->cSelected->setChecked(false);
 		ui->cSelected->setEnabled(false);
 		break;
 	}
+
+#ifdef __APPLE__
     ui->lState->setIcon(icon2);
     ui->lState->setIconSize(QSize(24, 24));
+#else
+    ui->lState->setPixmap(icon.pixmap(QSize(24, 24)));
+#endif
 }
 
 bool ImportListWidgetItem::isSelected()

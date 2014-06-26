@@ -22,7 +22,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+
+#ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
+#endif
 
     //Initialize fields
     this->app = app;
@@ -75,6 +78,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
 
+#ifdef __APPLE__
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
     animationGroup = new QParallelAnimationGroup();
@@ -86,6 +90,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     animationGroup->addAnimation(minHeightAnimation);
     animationGroup->addAnimation(maxHeightAnimation);
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+#endif
 
     ui->wTransfer1->hide();
     ui->wTransfer1->hide();
@@ -96,12 +101,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
     connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
 
+#ifdef __APPLE__
     ui->wRecentlyUpdated->hide();
     ui->wRecent1->hide();
     ui->wRecent2->hide();
     ui->wRecent3->hide();
     setMinimumHeight(377);
     setMaximumHeight(377);
+#endif
 }
 
 InfoDialog::~InfoDialog()
@@ -169,8 +176,11 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     ui->wRecent3->setFileInfo(info2);
     ui->wRecent2->setFileInfo(info1);
     ui->wRecent1->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
+
+#ifdef __APPLE__
     if(!ui->wRecentlyUpdated->isVisible())
         showRecentList();
+#endif
     updateRecentFiles();
 }
 
@@ -379,9 +389,15 @@ void InfoDialog::updateState()
         setTransferSpeeds(-1, -1);
         ui->lSyncUpdated->setText(tr("File transfers paused"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->label->setIcon(icon);
-        ui->label->setIconSize(QSize(64, 64));
+        icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+
+        #ifdef __APPLE__
+            ui->label->setIcon(icon);
+            ui->label->setIconSize(QSize(64, 64));
+        #else
+            ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+        #endif
+
         if(ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             overlay->setVisible(true);
         else
@@ -404,9 +420,13 @@ void InfoDialog::updateState()
             ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
 
             QIcon icon;
-            icon.addFile(QStringLiteral(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
+            icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            #ifdef __APPLE__
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            #else
+                ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+            #endif
         }
         else if(waiting)
         {
@@ -415,9 +435,13 @@ void InfoDialog::updateState()
 
             ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
             QIcon icon;
-            icon.addFile(QStringLiteral(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
+            icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            #ifdef __APPLE__
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            #else
+                ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+            #endif
         }
         else
         {
@@ -426,13 +450,18 @@ void InfoDialog::updateState()
 
             ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
             QIcon icon;
-            icon.addFile(QStringLiteral(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
+            icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            #ifdef __APPLE__
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            #else
+                ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+            #endif
         }
     }
 }
 
+#ifdef __APPLE__
 void InfoDialog::showRecentlyUpdated(bool show)
 {
     ui->wRecent->setVisible(show);
@@ -446,6 +475,7 @@ void InfoDialog::showRecentlyUpdated(bool show)
         on_cRecentlyUpdated_stateChanged(0);
     }
 }
+#endif
 
 void InfoDialog::closeSyncsMenu()
 {
@@ -696,6 +726,23 @@ void InfoDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
+void InfoDialog::scanningAnimationStep()
+{
+    scanningAnimationIndex = scanningAnimationIndex%18;
+    scanningAnimationIndex++;
+    QIcon icon;
+    icon.addFile(QString::fromUtf8(":/images/scanning_anime")+
+                 QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
+
+#ifdef __APPLE__
+    ui->label->setIcon(icon);
+    ui->label->setIconSize(QSize(64, 64));
+#else
+    ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+#endif
+}
+
+#ifdef __APPLE__
 void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
 {
     ui->wRecent1->hide();
@@ -733,11 +780,6 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
     }
 }
 
-void InfoDialog::on_bOfficialWebIcon_clicked()
-{
-    on_bOfficialWeb_clicked();
-}
-
 void InfoDialog::onAnimationFinished()
 {
     if(this->minimumHeight() == 552)
@@ -753,18 +795,15 @@ void InfoDialog::onAnimationFinished()
     ui->cRecentlyUpdated->setEnabled(true);
 }
 
+
 void InfoDialog::showRecentList()
 {
     on_cRecentlyUpdated_stateChanged(0);
 }
 
-void InfoDialog::scanningAnimationStep()
+
+void InfoDialog::on_bOfficialWebIcon_clicked()
 {
-    scanningAnimationIndex = scanningAnimationIndex%18;
-    scanningAnimationIndex++;
-    QIcon icon;
-    icon.addFile(QStringLiteral(":/images/scanning_anime")+
-                 QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
-    ui->label->setIcon(icon);
-    ui->label->setIconSize(QSize(64, 64));
+    on_bOfficialWeb_clicked();
 }
+#endif
