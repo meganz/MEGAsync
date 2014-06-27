@@ -1,43 +1,40 @@
-
 QT       += network
 
-SOURCES += gui/SettingsDialog.cpp \
-    gui/ActiveTransfer.cpp \
-    gui/InfoDialog.cpp \
-    gui/RecentFile.cpp \
-    gui/TransferProgressBar.cpp \
-    gui/UsageProgressBar.cpp \
-    gui/SetupWizard.cpp \
-    gui/NodeSelector.cpp \
-    gui/FolderBinder.cpp \
-    gui/BindFolderDialog.cpp \
-    gui/UploadToMegaDialog.cpp \
-    gui/PasteMegaLinksDialog.cpp \
-    gui/ImportMegaLinksDialog.cpp \
-    gui/ImportListWidgetItem.cpp \
-    gui/CrashReportDialog.cpp \
-    gui/MultiQFileDialog.cpp \
-    gui/MegaProxyStyle.cpp
+SOURCES += $$PWD/SettingsDialog.cpp \
+    $$PWD/ActiveTransfer.cpp \
+    $$PWD/InfoDialog.cpp \
+    $$PWD/RecentFile.cpp \
+    $$PWD/TransferProgressBar.cpp \
+    $$PWD/UsageProgressBar.cpp \
+    $$PWD/SetupWizard.cpp \
+    $$PWD/NodeSelector.cpp \
+    $$PWD/FolderBinder.cpp \
+    $$PWD/BindFolderDialog.cpp \
+    $$PWD/UploadToMegaDialog.cpp \
+    $$PWD/PasteMegaLinksDialog.cpp \
+    $$PWD/ImportMegaLinksDialog.cpp \
+    $$PWD/ImportListWidgetItem.cpp \
+    $$PWD/CrashReportDialog.cpp \
+    $$PWD/MultiQFileDialog.cpp \
+    $$PWD/MegaProxyStyle.cpp
 
-HEADERS  += gui/SettingsDialog.h \
-    gui/ActiveTransfer.h \
-    gui/InfoDialog.h \
-    gui/RecentFile.h \
-    gui/TransferProgressBar.h \
-    gui/UsageProgressBar.h \
-    gui/SetupWizard.h \
-    gui/NodeSelector.h \
-    gui/FolderBinder.h \
-    gui/BindFolderDialog.h \
-    gui/UploadToMegaDialog.h \
-    gui/PasteMegaLinksDialog.h \
-    gui/ImportMegaLinksDialog.h \
-    gui/ImportListWidgetItem.h \
-    gui/CrashReportDialog.h \
-    gui/MultiQFileDialog.h \
-    gui/MegaProxyStyle.h
-
-RESOURCES += gui/Resources.qrc
+HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/ActiveTransfer.h \
+    $$PWD/InfoDialog.h \
+    $$PWD/RecentFile.h \
+    $$PWD/TransferProgressBar.h \
+    $$PWD/UsageProgressBar.h \
+    $$PWD/SetupWizard.h \
+    $$PWD/NodeSelector.h \
+    $$PWD/FolderBinder.h \
+    $$PWD/BindFolderDialog.h \
+    $$PWD/UploadToMegaDialog.h \
+    $$PWD/PasteMegaLinksDialog.h \
+    $$PWD/ImportMegaLinksDialog.h \
+    $$PWD/ImportListWidgetItem.h \
+    $$PWD/CrashReportDialog.h \
+    $$PWD/MultiQFileDialog.h \
+    $$PWD/MegaProxyStyle.h
 
 INCLUDEPATH += $$PWD
 
@@ -46,41 +43,43 @@ debug {
 }
 
 win32 {
+    RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
-    FORMS    += gui/win/ActiveTransfer.ui \
-        gui/win/InfoDialog.ui \
-        gui/win/RecentFile.ui \
-        gui/win/TransferProgressBar.ui \
-        gui/win/UsageProgressBar.ui \
-        gui/win/NodeSelector.ui \
-        gui/win/FolderBinder.ui \
-        gui/win/BindFolderDialog.ui \
-        gui/win/UploadToMegaDialog.ui \
-        gui/win/PasteMegaLinksDialog.ui \
-        gui/win/ImportMegaLinksDialog.ui \
-        gui/win/ImportListWidgetItem.ui \
-        gui/win/CrashReportDialog.ui \
-        gui/win/SetupWizard.ui \
-        gui/win/SettingsDialog.ui
+    FORMS    += $$PWD/win/ActiveTransfer.ui \
+                $$PWD/win/InfoDialog.ui \
+                $$PWD/win/RecentFile.ui \
+                $$PWD/win/TransferProgressBar.ui \
+                $$PWD/win/UsageProgressBar.ui \
+                $$PWD/win/NodeSelector.ui \
+                $$PWD/win/FolderBinder.ui \
+                $$PWD/win/BindFolderDialog.ui \
+                $$PWD/win/UploadToMegaDialog.ui \
+                $$PWD/win/PasteMegaLinksDialog.ui \
+                $$PWD/win/ImportMegaLinksDialog.ui \
+                $$PWD/win/ImportListWidgetItem.ui \
+                $$PWD/win/CrashReportDialog.ui \
+                $$PWD/win/SetupWizard.ui \
+                $$PWD/win/SettingsDialog.ui
 }
 
 macx {
+    RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
-    FORMS    += gui/macx/ActiveTransfer.ui \
-                gui/macx/InfoDialog.ui \
-                gui/macx/RecentFile.ui \
-                gui/macx/TransferProgressBar.ui \
-                gui/macx/UsageProgressBar.ui \
-                gui/macx/NodeSelector.ui \
-                gui/macx/FolderBinder.ui \
-                gui/macx/BindFolderDialog.ui \
-                gui/macx/UploadToMegaDialog.ui \
-                gui/macx/PasteMegaLinksDialog.ui \
-                gui/macx/ImportMegaLinksDialog.ui \
-                gui/macx/ImportListWidgetItem.ui \
-                gui/macx/CrashReportDialog.ui \
-                gui/macx/SetupWizard.ui \
-                gui/macx/SettingsDialog.ui
+    FORMS    += $$PWD/macx/ActiveTransfer.ui \
+                $$PWD/macx/InfoDialog.ui \
+                $$PWD/macx/RecentFile.ui \
+                $$PWD/macx/TransferProgressBar.ui \
+                $$PWD/macx/UsageProgressBar.ui \
+                $$PWD/macx/NodeSelector.ui \
+                $$PWD/macx/FolderBinder.ui \
+                $$PWD/macx/BindFolderDialog.ui \
+                $$PWD/macx/UploadToMegaDialog.ui \
+                $$PWD/macx/PasteMegaLinksDialog.ui \
+                $$PWD/macx/ImportMegaLinksDialog.ui \
+                $$PWD/macx/ImportListWidgetItem.ui \
+                $$PWD/macx/CrashReportDialog.ui \
+                $$PWD/macx/SetupWizard.ui \
+                $$PWD/macx/SettingsDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -88,20 +87,21 @@ macx {
 }
 
 unix:!macx {
+    RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
-    FORMS    += gui/linux/ActiveTransfer.ui \
-                gui/linux/InfoDialog.ui \
-                gui/linux/RecentFile.ui \
-                gui/linux/TransferProgressBar.ui \
-                gui/linux/UsageProgressBar.ui \
-                gui/linux/NodeSelector.ui \
-                gui/linux/FolderBinder.ui \
-                gui/linux/BindFolderDialog.ui \
-                gui/linux/UploadToMegaDialog.ui \
-                gui/linux/PasteMegaLinksDialog.ui \
-                gui/linux/ImportMegaLinksDialog.ui \
-                gui/linux/ImportListWidgetItem.ui \
-                gui/linux/CrashReportDialog.ui \
-                gui/linux/SetupWizard.ui \
-                gui/linux/SettingsDialog.ui
+    FORMS    += $$PWD/linux/ActiveTransfer.ui \
+                $$PWD/linux/InfoDialog.ui \
+                $$PWD/linux/RecentFile.ui \
+                $$PWD/linux/TransferProgressBar.ui \
+                $$PWD/linux/UsageProgressBar.ui \
+                $$PWD/linux/NodeSelector.ui \
+                $$PWD/linux/FolderBinder.ui \
+                $$PWD/linux/BindFolderDialog.ui \
+                $$PWD/linux/UploadToMegaDialog.ui \
+                $$PWD/linux/PasteMegaLinksDialog.ui \
+                $$PWD/linux/ImportMegaLinksDialog.ui \
+                $$PWD/linux/ImportListWidgetItem.ui \
+                $$PWD/linux/CrashReportDialog.ui \
+                $$PWD/linux/SetupWizard.ui \
+                $$PWD/linux/SettingsDialog.ui
 }

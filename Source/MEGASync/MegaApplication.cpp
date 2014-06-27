@@ -194,8 +194,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exitAction = NULL;
     aboutAction = NULL;
     settingsAction = NULL;
-    //pauseAction = NULL;
-    //resumeAction = NULL;
     importLinksAction = NULL;
     uploadAction = NULL;
     trayMenu = NULL;
@@ -1175,7 +1173,11 @@ void MegaApplication::showTrayMenu(QPoint *point)
         if(trayMenu->isVisible())
             trayMenu->close();
         QPoint p = point ? (*point)-QPoint(trayMenu->sizeHint().width(), 0) : QCursor::pos();
-        trayMenu->exec(p);
+        #ifdef __APPLE__
+            trayMenu->exec(p);
+        #else
+            trayMenu->popup(p);
+        #endif
     }
 }
 
@@ -1604,6 +1606,12 @@ void MegaApplication::createTrayIcon()
     if(!trayMenu)
     {
         trayMenu = new QMenu();
+        #ifndef __APPLE__
+            trayMenu->setStyleSheet(QString::fromAscii(
+                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+                    "QMenu::item {background-color: white; color: black;} "
+                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+        #endif
     }
     else
     {
@@ -1634,14 +1642,6 @@ void MegaApplication::createTrayIcon()
 #endif
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
-    //if(pauseAction) delete pauseAction;
-    //pauseAction = new QAction(tr("Pause"), this);
-    //connect(pauseAction, SIGNAL(triggered()), this, SLOT(pauseSync()));
-
-    //if(resumeAction) delete resumeAction;
-    //resumeAction = new QAction(tr("Resume"), this);
-    //connect(resumeAction, SIGNAL(triggered()), this, SLOT(resumeSync()));
-
     if(importLinksAction) delete importLinksAction;
     importLinksAction = new QAction(tr("Import links"), this);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
@@ -1659,17 +1659,13 @@ void MegaApplication::createTrayIcon()
     else
     {
         updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING, this);
-        //updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
-        //updateAction->setIconVisibleInMenu(true);
+#ifndef __APPLE__
+        updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+        updateAction->setIconVisibleInMenu(true);
+#endif
         updateAction->setEnabled(false);
     }
-    //updateAction->setCheckable(true);
-    //updateAction->setChecked(true);
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
-
-    //trayMenu->addAction(aboutAction);
-    //if(!paused) trayMenu->addAction(pauseAction);
-    //else trayMenu->addAction(resumeAction);
 
     trayMenu->addAction(updateAction);
     trayMenu->addSeparator();
@@ -1816,16 +1812,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         paused = request->getFlag();
         preferences->setWasPaused(paused);
-        /*if(paused)
-        {
-            trayMenu->removeAction(pauseAction);
-            trayMenu->insertAction(importLinksAction, resumeAction);
-        }
-        else
-        {
-            trayMenu->removeAction(resumeAction);
-            trayMenu->insertAction(importLinksAction, pauseAction);
-        }*/
         onSyncStateChanged(megaApi);
         break;
     }

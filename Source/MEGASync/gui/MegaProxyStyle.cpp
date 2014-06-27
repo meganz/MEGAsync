@@ -32,8 +32,9 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
 
 int	MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option, const QWidget * widget) const
 {
+#ifdef __APPLE__
     if (metric == QStyle::PM_SmallIconSize)
-               return 24;
-           else
-               return QProxyStyle::pixelMetric(metric, option, widget);
+        return 24;
+#endif
+    return QProxyStyle::pixelMetric(metric, option, widget);
 }

@@ -30,26 +30,10 @@
 	background-color: rgb(178, 178, 178);
 }</string>
   </property>
-  <widget class="QLabel" name="lProgress">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>364</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap resource="Resources.qrc">:/images/transferProgress.png</pixmap>
-   </property>
-  </widget>
   <widget class="QWidget" name="wProgress" native="true">
    <property name="geometry">
     <rect>
-     <x>5</x>
+     <x>6</x>
      <y>7</y>
      <width>60</width>
      <height>6</height>
@@ -71,21 +55,21 @@
   <widget class="QWidget" name="wBackground" native="true">
    <property name="geometry">
     <rect>
-     <x>5</x>
+     <x>4</x>
      <y>6</y>
-     <width>356</width>
+     <width>358</width>
      <height>8</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>355</width>
+     <width>358</width>
      <height>8</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>355</width>
+     <width>358</width>
      <height>8</height>
     </size>
    </property>
@@ -93,27 +77,27 @@
   <widget class="QPushButton" name="bCancel">
    <property name="geometry">
     <rect>
-     <x>348</x>
-     <y>3</y>
+     <x>349</x>
+     <y>4</y>
      <width>12</width>
-     <height>15</height>
+     <height>12</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>12</width>
-     <height>15</height>
+     <height>12</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>15</width>
-     <height>15</height>
+     <width>12</width>
+     <height>12</height>
     </size>
    </property>
    <property name="styleSheet">
     <string notr="true">border: none;
-border-left: 1px solid white;</string>
+border-left: 1px solid #F7F7F7;</string>
    </property>
    <property name="text">
     <string/>
@@ -123,10 +107,52 @@ border-left: 1px solid white;</string>
      <normaloff>:/images/tray_cancel_ico.png</normaloff>:/images/tray_cancel_ico.png</iconset>
    </property>
   </widget>
+  <widget class="QPushButton" name="lProgress">
+   <property name="geometry">
+    <rect>
+     <x>3</x>
+     <y>4</y>
+     <width>360</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>360</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>360</width>
+     <height>10</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius: 6px;
+border: 2px solid rgb(178, 178, 178);;
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>364</width>
+     <height>16</height>
+    </size>
+   </property>
+  </widget>
   <zorder>lProgress</zorder>
   <zorder>wBackground</zorder>
-  <zorder>wProgress</zorder>
   <zorder>bCancel</zorder>
+  <zorder>wProgress</zorder>
  </widget>
  <resources>
   <include location="Resources.qrc"/>
