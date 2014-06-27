@@ -74,7 +74,7 @@ void ImportListWidgetItem::updateGui()
     ui->lState->setIcon(icon2);
     ui->lState->setIconSize(QSize(24, 24));
 #else
-    ui->lState->setPixmap(icon.pixmap(QSize(24, 24)));
+    ui->lState->setPixmap(icon2.pixmap(QSize(24, 24)));
 #endif
 }
 

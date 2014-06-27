@@ -630,8 +630,10 @@ void InfoDialog::on_bSettings_clicked()
     {
         QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
         app->showTrayMenu(&p);
-        if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
-            this->hide();
+        #ifdef __APPLE__
+            if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+                this->hide();
+        #endif
     }
     else app->openSettings();
 }
@@ -667,6 +669,12 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
+        #ifndef __APPLE__
+            syncsMenu->setStyleSheet(QString::fromAscii(
+                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+                    "QMenu::item {background-color: white; color: black;} "
+                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+        #endif
         QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
         addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
         addSyncAction->setIconVisibleInMenu(true);

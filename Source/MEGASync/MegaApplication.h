@@ -149,8 +149,6 @@ protected:
     QMenu emptyMenu;
     QAction *exitAction;
     QAction *settingsAction;
-    //QAction *pauseAction;
-    //QAction *resumeAction;
 	QAction *importLinksAction;
     QAction *uploadAction;
     QAction *aboutAction;

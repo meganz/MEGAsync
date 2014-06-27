@@ -54,7 +54,7 @@ void RecentFile::updateWidget()
         ui->lFileType->setIcon(icon);
         ui->lFileType->setIconSize(QSize(48, 48));
 #else
-        ui->lFileType->setPixmap(QSize(48, 48));
+        ui->lFileType->setPixmap(icon.pixmap(QSize(48, 48)));
 #endif
 
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
