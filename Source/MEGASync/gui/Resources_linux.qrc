@@ -210,5 +210,7 @@
         <file>images/scanning_anime18.png</file>
         <file>images/tray_scanning_large_ico.png</file>
         <file>images/check_mega_version.png</file>
+        <file>images/tray_add_sync_ico2.png</file>
+        <file>images/tray_sync_ico2.png</file>
     </qresource>
 </RCC>

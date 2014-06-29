@@ -676,7 +676,11 @@ void InfoDialog::on_bSyncFolder_clicked()
                     "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
         #endif
         QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
+#ifdef __APPLE__
         addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
+#else
+        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico2.png")));
+#endif
         addSyncAction->setIconVisibleInMenu(true);
         syncsMenu->addSeparator();
 
@@ -684,7 +688,11 @@ void InfoDialog::on_bSyncFolder_clicked()
         for(int i=0; i<num; i++)
         {
             QAction *action = syncsMenu->addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
+#ifdef __APPLE__
             action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
+#else
+            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico2.png")));
+#endif
             action->setIconVisibleInMenu(true);
             signalMapper.setMapping(action, preferences->getLocalFolder(i));
             connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
