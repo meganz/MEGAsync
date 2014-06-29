@@ -22,6 +22,7 @@ public:
     bool containsGroup(QString groupName);
     bool isGroupEmpty();
     void remove(const QString & key);
+    void clear();
     void sync();
 
 protected:
