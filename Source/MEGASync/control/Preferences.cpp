@@ -117,9 +117,20 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
     QString settingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg"));
 
     settings = new EncryptedSettings(settingsFile);
+    errorFlag = false;
 
     QString currentAccount = settings->value(currentAccountKey).toString();
-    if(currentAccount.size()) login(currentAccount);
+    if(currentAccount.size())
+    {
+        if(hasEmail(currentAccount))
+            login(currentAccount);
+        else
+        {
+            //Corrupt settings
+            clearAll();
+            errorFlag = true;
+        }
+    }
 }
 
 QString Preferences::email()
@@ -1070,6 +1081,22 @@ void Preferences::disableOverlayIcons(bool value)
     mutex.unlock();
 }
 
+bool Preferences::error()
+{
+    return errorFlag;
+}
+
+void Preferences::clearAll()
+{
+    mutex.lock();
+    if(logged())
+        unlink();
+
+    settings->clear();
+    settings->sync();
+    mutex.unlock();
+}
+
 void Preferences::login(QString account)
 {
     mutex.lock();
@@ -1103,6 +1130,14 @@ bool Preferences::hasEmail(QString email)
     mutex.lock();
     assert(!logged());
     bool value = settings->containsGroup(email);
+    if(value)
+    {
+        settings->beginGroup(email);
+        QString storedEmail = settings->value(emailKey).toString();
+        value = !storedEmail.compare(email);
+        if(!value) settings->remove(QString::fromAscii(""));
+        settings->endGroup();
+    }
     mutex.unlock();
     return value;
 }

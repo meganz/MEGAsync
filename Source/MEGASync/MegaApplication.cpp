@@ -49,19 +49,22 @@ int main(int argc, char *argv[])
     if((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
-        if(preferences->logged())
-            preferences->unlink();
-
-        for(int i=0; i<preferences->getNumUsers(); i++)
+        if(!preferences->error())
         {
-            preferences->enterUser(i);
-            for(int j=0; j<preferences->getNumSyncedFolders(); j++)
+            if(preferences->logged())
+                preferences->unlink();
+
+            for(int i=0; i<preferences->getNumUsers(); i++)
             {
-                Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
-                Utilities::removeRecursively(preferences->getLocalFolder(j) +
-                                             QDir::separator() + QString::fromAscii(DEBRISFOLDER));
+                preferences->enterUser(i);
+                for(int j=0; j<preferences->getNumSyncedFolders(); j++)
+                {
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
+                    Utilities::removeRecursively(preferences->getLocalFolder(j) +
+                                                 QDir::separator() + QString::fromAscii(DEBRISFOLDER));
+                }
+                preferences->leaveUser();
             }
-            preferences->leaveUser();
         }
 
         QDirIterator di(MegaApplication::applicationDataPath(), QDir::Files | QDir::NoDotAndDotDot);
@@ -236,6 +239,9 @@ void MegaApplication::initialize()
     QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
 
     preferences = Preferences::instance();
+    if(preferences->error())
+        QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
+
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
 

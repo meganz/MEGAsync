@@ -131,6 +131,9 @@ public:
 
     bool overlayIconsDisabled();
     void disableOverlayIcons(bool value);
+    bool error();
+
+    void clearAll();
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -191,6 +194,7 @@ protected:
     QList<long long> recentFileTime;
 
     QStringList excludedSyncNames;
+    bool errorFlag;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
