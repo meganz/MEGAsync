@@ -204,5 +204,7 @@
         <file>images/scanning_anime1.png</file>
         <file>images/scanning_anime10.png</file>
         <file>images/check_mega_version.png</file>
+        <file>images/tray_add_sync_ico2.png</file>
+        <file>images/tray_sync_ico2.png</file>
     </qresource>
 </RCC>
