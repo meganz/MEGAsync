@@ -81,6 +81,7 @@ private:
 
     QMenu *syncsMenu;
     QMenu *transferMenu;
+    QSignalMapper *menuSignalMapper;
 
     long long downloadSpeed;
     long long uploadSpeed;

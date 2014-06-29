@@ -148,6 +148,12 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
     if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
 
     menu = new QMenu();
+#ifndef __APPLE__
+    menu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+#endif
     menu->addAction(tr("Open"), this, SLOT(openFile()));
     menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
 #ifdef WIN32
@@ -171,6 +177,12 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
     if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
 
     menu = new QMenu();
+#ifndef __APPLE__
+    menu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+#endif
     menu->addAction(tr("Open"), this, SLOT(openFile()));
     menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
 #ifdef WIN32
