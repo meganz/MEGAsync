@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr" sourcelanguage="en">
+<TS version="2.1" language="fr" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Sélectionner un dossier local </translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Vous êtes sur le point d&apos;importer ces fichier dans un dossier synchronisé. Si vous activez le téléchargement, ces fichiers seront dupliqués sur votre ordinateur. Êtes-vous sûr ?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Afficher le statut</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync va effectuer un scan complet de vos dossiers synchronisés.
+        <translation type="obsolete">MEGAsync va effectuer un scan complet de vos dossiers synchronisés.
 
 Voulez-vous redémarrer MEGAsync maintenant ?
 </translation>
@@ -1149,7 +1161,7 @@ Voulez-vous redémarrer MEGAsync maintenant ?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Dossier pour les uploads depuis cet ordinateur</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Voulez-vous redémarrer MEGAsync maintenant ?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Montrer les notifications</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync va effectuer un scan complet de vos dossiers synchronisés.
+
+Voulez-vous redémarrer MEGAsync maintenant ?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
         <source>Setup Assistant - MEGAsync</source>
         <translation>Assistant d&apos;Installation - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

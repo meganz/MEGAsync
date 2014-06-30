@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de" sourcelanguage="en">
+<TS version="2.1" language="de" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Wählen Sie einen lokalen Ordner aus</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Auswählen</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Der Import dieser Dateien in einen synchronisierten Ordner führt zu ihrem erneuten Download. Sind Sie sicher?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Auswählen</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Status anzeigen</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Ihre Einstellungen konnten nicht gelesen werden. Bitte erstellen Sie sie erneut.</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync wird Ihre synchronisierten Verzeichnisse vollständig neu scannen
+        <translation type="obsolete">MEGAsync wird Ihre synchronisierten Verzeichnisse vollständig neu scannen
 
 Neustart von MEGAsync?
 </translation>
@@ -1149,7 +1161,7 @@ Neustart von MEGAsync?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Zielordner für manuelle Uploads</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Neustart von MEGAsync?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Ereignisse anzeigen</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync wird Ihre synchronisierten Verzeichnisse vollständig neu scannen
+
+Neustart von MEGAsync?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Auswählen</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
         <source>Setup Assistant - MEGAsync</source>
         <translation>Installationsassistent - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Fehler bei der Anforderung des Sitzungsschlüssels</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Vollsynchronisierung</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Ihr lokaler Ordner und Ihr MEGA-Cloud Drive werden automatisch synchronisiert.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
     <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Auswählen</translation>
     </message>
 </context>
 <context>

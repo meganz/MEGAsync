@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fi" sourcelanguage="en">
+<TS version="2.1" language="fi" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Valitse paikallinen kansio</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Olet tuomassa näitä tiedostoja synkronoitavaan kansioon. Jos sallit lataamisen, tietokoneellesi tulee identtisiä kopioita tiedostoista. Oletko varma?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Näytä tila</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync tulee suorittamaan täyden skannin synkronisoimistasi kansioista
+        <translation type="obsolete">MEGAsync tulee suorittamaan täyden skannin synkronisoimistasi kansioista
 
 Haluatko käynnistää MEGAsyncin uudelleen nyt?
 </translation>
@@ -1149,7 +1161,7 @@ Haluatko käynnistää MEGAsyncin uudelleen nyt?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Kansio lähetyksille tältä tietokoneelta</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Haluatko käynnistää MEGAsyncin uudelleen nyt?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Näytä ilmoitukset</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync tulee suorittamaan täyden skannin synkronisoimistasi kansioista
+
+Haluatko käynnistää MEGAsyncin uudelleen nyt?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
         <source>Setup Assistant - MEGAsync</source>
         <translation>Ohjattu asennus - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     <message>
         <source>Cancel</source>
         <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

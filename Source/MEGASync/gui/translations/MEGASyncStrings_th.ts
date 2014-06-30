@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="th" sourcelanguage="en">
+<TS version="2.1" language="th" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>คุณกำลังนำเข้าไฟล์เหล่านี้ไปยังโฟลเดอร์ที่ซิงค์แล้ว ถ้าคุณเปิดใช้งานการดาวน์โหลด ไฟล์อาจจะซ้ำกันในคอมพิวเตอร์ของคุณ คุณแน่ใจหรือไม่</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>แสดงสถานะ</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync จะดำเนินการสแกนโฟลเดอร์ซิงค์ของคุณ เมื่อเริ่มต้น
+        <translation type="obsolete">MEGAsync จะดำเนินการสแกนโฟลเดอร์ซิงค์ของคุณ เมื่อเริ่มต้น
 
 คุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่
 </translation>
@@ -1149,7 +1161,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>โฟลเดอร์สำหรับภาพที่ส่งจากคอมพิวเตอร์เครื่องนี้</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Show Mac OS notifications</source>
         <translation>แสดงการแจ้งเตือน</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync จะดำเนินการสแกนโฟลเดอร์ซิงค์ของคุณ เมื่อเริ่มต้น
+
+คุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Setup Assistant - MEGAsync</source>
         <translation>ตัวช่วยสร้างการติดตั้ง - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

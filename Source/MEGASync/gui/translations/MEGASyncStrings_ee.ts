@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ee" sourcelanguage="en">
+<TS version="2.1" language="ee" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Vali kohalik kaust</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Failid imporditakse sünkroniseeritavasse kausta. Allalaadimise lubamise korral luuakse failidest Teie arvutisse koopia. Olete kindel?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Kuva olek</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsünk teostab Teie sünkroniseeritud kaustades põhjaliku otsingu
+        <translation type="obsolete">MEGAsünk teostab Teie sünkroniseeritud kaustades põhjaliku otsingu
 
 Kas soovite praegu taaskäivitada MEGAsünki?
 </translation>
@@ -1149,7 +1161,7 @@ Kas soovite praegu taaskäivitada MEGAsünki?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Sellest arvutist üleslaetavate failide kaust</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Kas soovite praegu taaskäivitada MEGAsünki?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Kuva teated</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsünk teostab Teie sünkroniseeritud kaustades põhjaliku otsingu
+
+Kas soovite praegu taaskäivitada MEGAsünki?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
         <source>Setup Assistant - MEGAsync</source>
         <translation>Paigaldusvõlur - MEGASync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     <message>
         <source>Cancel</source>
         <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

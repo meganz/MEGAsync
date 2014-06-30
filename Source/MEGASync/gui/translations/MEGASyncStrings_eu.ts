@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="eu" sourcelanguage="en">
+<TS version="2.1" language="eu" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Aukeratu karpeta lokala</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Fitxategi hauek karpeta sinkronizatu batera inportatuko duzu. Deskarga gaituz gero, fitxategiak bikoiztu egingo dira zure konputagailuan. Ziur al zaude?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Egoera erakutsi</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync-ek zure sinkronizatutako karpeten eskaneaketa oso bat burutuko du
+        <translation type="obsolete">MEGAsync-ek zure sinkronizatutako karpeten eskaneaketa oso bat burutuko du
 
 MEGAsync berrabiarazi nahi al duzu orain?
 </translation>
@@ -1149,7 +1161,7 @@ MEGAsync berrabiarazi nahi al duzu orain?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Konputagailu honetatik igoerak egiteko karpeta</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ MEGAsync berrabiarazi nahi al duzu orain?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Oharpenak erakutsi</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync-ek zure sinkronizatutako karpeten eskaneaketa oso bat burutuko du
+
+MEGAsync berrabiarazi nahi al duzu orain?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
         <source>Setup Assistant - MEGAsync</source>
         <translation>Instalazio Laguntzailea - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     <message>
         <source>Cancel</source>
         <translation>Ezeztatu</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

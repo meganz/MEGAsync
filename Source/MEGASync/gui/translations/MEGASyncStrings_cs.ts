@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="cs" sourcelanguage="en">
+<TS version="2.1" language="cs" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Vyberte místní složku</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Chystáte se importovat tyto soubory do synchronizované složky. Pokud povolíte stahování, soubory budou ve vašem počítači zduplikovány. Opravdu?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Zobrazit stav</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync provede úplné prohledání vašich synchronizovaných složek
+        <translation type="obsolete">MEGAsync provede úplné prohledání vašich synchronizovaných složek
 
 Chcete restartovat MEGAsync nyní?
 </translation>
@@ -1149,7 +1161,7 @@ Chcete restartovat MEGAsync nyní?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Složka pro nahrávání z tohoto počítače</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Chcete restartovat MEGAsync nyní?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Zobrazovat oznámení</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync provede úplné prohledání vašich synchronizovaných složek
+
+Chcete restartovat MEGAsync nyní?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
         <source>Setup Assistant - MEGAsync</source>
         <translation>Průvodce nastavením - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     <message>
         <source>Cancel</source>
         <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
