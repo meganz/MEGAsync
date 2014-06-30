@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="bs" sourcelanguage="en">
+<TS version="2.1" language="bs" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Izaberite lokalni folder</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Ukoliko odobrite preuzimanje, imaćete duplirane fajlove na Vašem računaru. Da li ste sigurni ?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Molimo Vas da pokušate ponovo a ukoliko problem i dalje postoji molimo Vas da k
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload fajlova/foldera</translation>
+        <translation type="obsolete">Upload fajlova/foldera</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync je sada uključen. Kliknite na sistemsku tray ikonicu da biste mogli da otvorite statusni prozorčić.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Nova verzija MEGAsync je sada dostupna!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync je sada uključen. Kliknite na sistemsku tray ikonicu da biste mogli da otvorite statusni prozorčić.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Izlazite</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Podešavanja</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Zakačite na MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Prikazuje status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Molimo Vas da se osigurate kako nebiste koristili sljedeće karaktere \/ ili : u
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Folder za kačnje preko Windows Explorera</translation>
+        <translation type="obsolete">Folder za kačnje preko Windows Explorera</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync će obaviti puno skeniranje Vaših sinhronizovanih foldera
+        <translation type="obsolete">MEGAsync će obaviti puno skeniranje Vaših sinhronizovanih foldera
 
 Da li želite da restartujete MEGAsync sada?
 </translation>
@@ -1126,6 +1158,34 @@ Da li želite da restartujete MEGAsync sada?
     <message>
         <source>Install update</source>
         <translation>Instalirajte update</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder za uploads sa ovog računara</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Podešavanja - MEGA sinhronizacija</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Prikažite obavještenja</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync će obaviti puno skeniranje Vaših sinhronizovanih foldera
+
+Da li želite da restartujete MEGAsync sada?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Nismo u mogućnosti da uđemo u file sistem.
 Molimo Vas da pokušate ponovo a ukoliko problem i dalje postoji molimo Vas da kontaktirate bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Čarobnjak za namještanje  - MEGA sinhronizacija</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Molimo Vas da pokušate ponovo a ukoliko problem i dalje postoji molimo Vas da k
     <message>
         <source>Cancel</source>
         <translation>Otkažite</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

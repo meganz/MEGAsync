@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ee" sourcelanguage="en">
+<TS version="2.1" language="ee" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Vali kohalik kaust</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Failid imporditakse sünkroniseeritavasse kausta. Allalaadimise lubamise korral luuakse failidest Teie arvutisse koopia. Olete kindel?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Lae üles faile/kaustu</translation>
+        <translation type="obsolete">Lae üles faile/kaustu</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsünk on kasutusvalmis. Oleku vaatamiseks vajutage kella kõrval oleval MEGA ikoonil.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsünki uus versioon on saadaval!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsünk on kasutusvalmis. Oleku vaatamiseks vajutage kella kõrval oleval MEGA ikoonil.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Välju</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Seaded</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Lae üles MEGA-sse</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Kuva olek</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</transla
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Kaust Windows Explorerist tulnud üleslaadimiste jaoks</translation>
+        <translation type="obsolete">Kaust Windows Explorerist tulnud üleslaadimiste jaoks</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsünk teostab Teie sünkroniseeritud kaustades põhjaliku otsingu
+        <translation type="obsolete">MEGAsünk teostab Teie sünkroniseeritud kaustades põhjaliku otsingu
 
 Kas soovite praegu taaskäivitada MEGAsünki?
 </translation>
@@ -1126,6 +1158,34 @@ Kas soovite praegu taaskäivitada MEGAsünki?
     <message>
         <source>Install update</source>
         <translation>Paigalda uuendus</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Sellest arvutist üleslaetavate failide kaust</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Seaded - MEGASync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Käivita koos arvutiga</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Kuva teated</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsünk teostab Teie sünkroniseeritud kaustades põhjaliku otsingu
+
+Kas soovite praegu taaskäivitada MEGAsünki?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Failisüsteemi ei suudetud ligi pääseda.
 Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meiega ühendust  e-posti bug@mega.co.nz kaudu</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Paigaldusvõlur - MEGASync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     <message>
         <source>Cancel</source>
         <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

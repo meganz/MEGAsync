@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
+<TS version="2.1" language="uk" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Виберіть локальну теку</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Ви збираєтесь імпортувати ці файли до тек синхронізації. Якщо ви увімкнете завантаження, файли будуть дублюватися на вашому комп&apos;ютері. Ви впевнені?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Закачати файли/теки</translation>
+        <translation type="obsolete">Закачати файли/теки</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync запущено. Натисніть на іконку у системному лотку, щоб відкрити вікно статусу.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Доступна нова версія MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync запущено. Натисніть на іконку у системному лотку, щоб відкрити вікно статусу.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Вихід</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Налаштування</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Закачати до MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Показати статус</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Тека для закачувань з провідника Windows</translation>
+        <translation type="obsolete">Тека для закачувань з провідника Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync виконає повну перевірку синхронізованих тек
+        <translation type="obsolete">MEGAsync виконає повну перевірку синхронізованих тек
 
 Ви хочете перезапустити MEGAsync зараз?
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>Встановити оновлення</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Тека для закачувань з цього комп&apos;ютера</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Налаштування - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Запускати під час старту</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Показати сповіщення</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync виконає повну перевірку синхронізованих тек
+
+Ви хочете перезапустити MEGAsync зараз?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Не можливо отримати доступ до файлової системи.
 Будь ласка, спробуйте ще раз. Якщо проблема не зникне, зверніться до bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Майстер встановлення - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>Скасувати</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

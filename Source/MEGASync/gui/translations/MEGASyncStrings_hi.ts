@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="hi" sourcelanguage="en">
+<TS version="2.1" language="hi" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>स्थानीय फ़ोल्डर का चयन करें</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>आप एक सिंक किए गए फ़ोल्डर में इन फ़ाइलों को आयात करने के बारे में हैं. आप डाउनलोड करने के लिए सक्षम हैं, फ़ाइलों को अपने कंप्यूटर पर दोहराया जा जाएगा. क्या आपको यकीन है?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>फ़ाइलें / फ़ोल्डर अपलोड करें</translation>
+        <translation type="obsolete">फ़ाइलें / फ़ोल्डर अपलोड करें</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync अब चल रहा है. स्थिति विंडो खोलने के लिए सिस्टम ट्रे आइकन पर क्लिक करें.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsync का एक नया संस्करण उपलब्ध है!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync अब चल रहा है. स्थिति विंडो खोलने के लिए सिस्टम ट्रे आइकन पर क्लिक करें.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>निकास</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>सेटिंग्स</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>मेगा पर अपलोड करें</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>दिखाएँ स्थिति</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>विंडोज अंवेषक से अपलोड करने के लिए फ़ोल्डर</translation>
+        <translation type="obsolete">विंडोज अंवेषक से अपलोड करने के लिए फ़ोल्डर</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync अपने समन्वयित फ़ोल्डरों की एक पूर्ण स्कैन प्रदर्शन करेंगे
+        <translation type="obsolete">MEGAsync अपने समन्वयित फ़ोल्डरों की एक पूर्ण स्कैन प्रदर्शन करेंगे
 
 आप अब MEGAsync पुनः आरंभ करना चाहते हैं?
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>अद्यतन स्थापित करें</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>इस कंप्यूटर से अपलोड करने के लिए फ़ोल्डर</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>सेटिंग्स - मेगा सिंक</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>स्टार्टअप पर शुरू</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>सूचनाएं दिखाएं</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync अपने समन्वयित फ़ोल्डरों की एक पूर्ण स्कैन प्रदर्शन करेंगे
+
+आप अब MEGAsync पुनः आरंभ करना चाहते हैं?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>फाइल सिस्टम प्राप्त करने में असमर्थ.
 पुन: प्रयास करें. यदि समस्या बनी रहती bug@mega.co.nz से संपर्क करें</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>सेटअप विज़ार्ड - मेगा सिंक</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2023]</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2023]</translation>
     </message>
 </context>
 <context>
@@ -519,27 +519,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
-        <translation type="unfinished">[$2015]</translation>
+        <translation>[$2015]</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">[$1644]</translation>
+        <translation>[$1644]</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">[$1646]</translation>
+        <translation>[$1646]</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
-        <translation type="unfinished">[$1803]</translation>
+        <translation>[$1803]</translation>
     </message>
     <message>
         <source>Show status</source>
-        <translation type="unfinished">XXXXX</translation>
+        <translation>[$2016]</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2024]</translation>
     </message>
 </context>
 <context>
@@ -1161,31 +1161,31 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="unfinished">XXXXX</translation>
+        <translation>[$2017]</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translation type="unfinished">[$1646] - [$1626]</translation>
+        <translation>[$1646] - [$1626]</translation>
     </message>
     <message>
         <source>Open at login</source>
-        <translation type="unfinished">[$1721]</translation>
+        <translation>[$1721]</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
-        <translation type="unfinished">[$1720]</translation>
+        <translation>[$1720]</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="unfinished">[$2011]
+        <translation>[$2011]
 
 [$2012]</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2023]</translation>
     </message>
 </context>
 <context>
@@ -1411,19 +1411,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
-        <translation type="unfinished">[$1760] - [$1626]</translation>
+        <translation>[$1760] - [$1626]</translation>
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2020]</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2021]</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2022]</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2023]</translation>
     </message>
 </context>
 <context>

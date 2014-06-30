@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="id" sourcelanguage="en">
+<TS version="2.1" language="id" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Pilih folder lokal</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Anda akan meng-import beberapa file ke folder yang telah disinkronisasikan. Jika anda mengaktifkan download, file-file tersebut akan terduplikasi pada komputer anda Anda yakin?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload file/ folder</translation>
+        <translation type="obsolete">Upload file/ folder</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync sedang berjalan. Klik ikon system tray untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Versi terbaru MEGAsync telah tersedia!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync sedang berjalan. Klik ikon system tray untuk membuka jendela status.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Keluar</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Pengaturan</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Upload ke MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Tampilkan status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Harap pastikan anda tidak menggunakan karakter seperti \ / atau : pada nama fold
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Folder untuk upload dari Windows Explorer</translation>
+        <translation type="obsolete">Folder untuk upload dari Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync akan melakukan scan menyeluruh folder anda yang telah di sync
+        <translation type="obsolete">MEGAsync akan melakukan scan menyeluruh folder anda yang telah di sync
 
 Apakah anda ingin mengulang MEGAsync sekarang?
 </translation>
@@ -1126,6 +1158,34 @@ Apakah anda ingin mengulang MEGAsync sekarang?
     <message>
         <source>Install update</source>
         <translation>Install update</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder upload dari komputer ini</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Pengaturan - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Aktifkan pada saat memulai</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Tampilkan pemberitahuan</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync akan melakukan scan menyeluruh folder anda yang telah di sync
+
+Apakah anda ingin mengulang MEGAsync sekarang?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Tidak dapat menemukan file sistem.
 Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Pengaturan Wizard - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz
     <message>
         <source>Cancel</source>
         <translation>Batal</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

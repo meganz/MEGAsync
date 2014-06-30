@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="af" sourcelanguage="en">
+<TS version="2.1" language="af" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Kies plaaslike gids</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Jy is op die punt om hierdie lêers na &apos;n gesinkroniseerde gids in te voer. As jy aflaaiing in staat stel, sal die lêers gedupliseer word op jou rekenaar. Is jy seker?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,7 +507,7 @@ Please try again. If the problem persists please contact bug@mega.co.nz</transla
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation type="obsolete">Upload files/folders</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -508,6 +516,30 @@ Please try again. If the problem persists please contact bug@mega.co.nz</transla
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translation>A new version of MEGAsync is available!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Verlaat</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Verstellings</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Oplaai na MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Please ensure that you don&apos;t use characters like \ / or : in your folder na
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Gids vir oplaaiings vanaf Windows Explorer</translation>
+        <translation type="obsolete">Gids vir oplaaiings vanaf Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folderswhen it starts.
 
 Do you want to restart MEGAsync now?
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?
     <message>
         <source>Install update</source>
         <translation>Installeer opdatering</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Verstellings - MEGAsinkronisering</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Begin by die begin</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Wys kennisgewing</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+
+Do you want to restart MEGAsync now?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unable to get the file system.
 Please try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Opstel  wizard - MEGAsinkronisering</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Please try again. If the problem persists please contact bug@mega.co.nz</transla
     <message>
         <source>Cancel</source>
         <translation>Kanselleer</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
