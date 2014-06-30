@@ -7,6 +7,7 @@ RESOURCES=resourcesDMG
 rm -rf Release_x64
 mkdir Release_x64
 cd Release_x64
+~/Qt5.3.0/5.3/clang_64/bin/lrelease ../Source/MEGASync/MEGASync.pro
 ~/Qt5.3.0/5.3/clang_64/bin/qmake -r ../Source -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
 make
 ~/Qt5.3.0/5.3/clang_64/bin/macdeployqt MEGASync/MEGAsync.app
@@ -53,4 +54,3 @@ rm $APP_NAME-tmp.dmg
 rmdir $MOUNTDIR
 
 echo "DONE"
-
