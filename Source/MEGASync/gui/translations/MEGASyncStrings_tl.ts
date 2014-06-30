@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tl" sourcelanguage="en">
+<TS version="2.1" language="tl" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Pumili ng local folder</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Ikaw ay maglalagay ng files sa isang synced folder. Kung pinayagan mo ang downloading, ang files ay maduduplicated sa computer mo. Sigurado ka ba?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Ipakita ang status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>Ang MEGAsync ay gagawa ng buong scan ng iyong synced folders
+        <translation type="obsolete">Ang MEGAsync ay gagawa ng buong scan ng iyong synced folders
 
 Gusto mo bang irestart ang MEGAsync?
 </translation>
@@ -1149,7 +1161,7 @@ Gusto mo bang irestart ang MEGAsync?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Folder para sa uploads ng computer na ito</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Gusto mo bang irestart ang MEGAsync?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Ipakita ang mga abiso</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>Ang MEGAsync ay gagawa ng buong scan ng iyong synced folders
+
+Gusto mo bang irestart ang MEGAsync?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
         <source>Setup Assistant - MEGAsync</source>
         <translation>Setup Wizard - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     <message>
         <source>Cancel</source>
         <translation>Kanselahin</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

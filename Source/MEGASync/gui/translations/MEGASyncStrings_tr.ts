@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tr" sourcelanguage="en">
+<TS version="2.1" language="tr" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Yerel klasör seçin</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Bu dosyaları senkronize edilmiş bir klasöre aktarmak üzeresiniz. İndirmeyi etkinleştirirseniz,  bilgisayarınızda mükerrer dosyalar oluşur. Emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -528,6 +536,10 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     <message>
         <source>Show status</source>
         <translation>Show status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync senkronize edilmiş klasörlerinizde tam bir tarama gerçekleştirecek
+        <translation type="obsolete">MEGAsync senkronize edilmiş klasörlerinizde tam bir tarama gerçekleştirecek
 
 MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?
 </translation>
@@ -1162,6 +1174,18 @@ MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Bildirimleri göster</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync senkronize edilmiş klasörlerinizde tam bir tarama gerçekleştirecek
+
+MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
         <source>Setup Assistant - MEGAsync</source>
         <translation>Kurulum Sihirbazı - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     <message>
         <source>Cancel</source>
         <translation>İptal Et</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

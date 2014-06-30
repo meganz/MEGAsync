@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="lt" sourcelanguage="en">
+<TS version="2.1" language="lt" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Pasirinkite vietinį aplanką</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Jūs ketinate importuoti šiuos failus į sinchronizuotą aplanką. Jeigu įjungsite atsisiuntimą, failai bus dubliuojami jūsų kompiuteryje. Ar tikrai?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -528,6 +536,10 @@ Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.
     <message>
         <source>Show status</source>
         <translation>Show status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync atliks pilną jūsų sinchronizuotų aplankų skenavimą vos tik ji bus paleista.
+        <translation type="obsolete">MEGAsync atliks pilną jūsų sinchronizuotų aplankų skenavimą vos tik ji bus paleista.
 
 Ar jūs dabar norite paleisti MEGAsync iš naujo?
 </translation>
@@ -1162,6 +1174,18 @@ Ar jūs dabar norite paleisti MEGAsync iš naujo?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Rodyti pranešimus</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync atliks pilną jūsų sinchronizuotų aplankų skenavimą vos tik ji bus paleista.
+
+Ar jūs dabar norite paleisti MEGAsync iš naujo?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.
         <source>Setup Assistant - MEGAsync</source>
         <translation>Sąrankos Vedlys - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.
     <message>
         <source>Cancel</source>
         <translation>Atšaukti</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="sl" sourcelanguage="en">
+<TS version="2.1" language="sl" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Izberite lokalno mapo</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Te datoteke boste uvozili v sinhronizirano mapo. Če omogočite prevzemanje, bodo datoteke na vašem računalniku podvojene. Ali ste prepričani?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Prikaži stanje</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync bo začel s polnim skeniranjem vaših sinhroniziranih map ob zagonu.
+        <translation type="obsolete">MEGAsync bo začel s polnim skeniranjem vaših sinhroniziranih map ob zagonu.
 
 Ali želite ponovno zagnati MEGAsync takoj?
 </translation>
@@ -1149,7 +1161,7 @@ Ali želite ponovno zagnati MEGAsync takoj?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Mapa za nalaganje s tega računalnika</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Ali želite ponovno zagnati MEGAsync takoj?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Prikaži obvestila</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync bo začel s polnim skeniranjem vaših sinhroniziranih map ob zagonu.
+
+Ali želite ponovno zagnati MEGAsync takoj?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
         <source>Setup Assistant - MEGAsync</source>
         <translation>Čarovnik za namestitev - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     <message>
         <source>Cancel</source>
         <translation>Prekliči</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

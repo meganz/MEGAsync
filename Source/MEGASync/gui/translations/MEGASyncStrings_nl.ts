@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<TS version="2.1" language="nl" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Selecteer lokale map</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kies</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Op dit moment importeer je deze bestanden naar een gesynchroniseerde map. Als je downloaden inschakeld, zullen de bestanden gedupliceerd worden op je computer. Weet je het zeker?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kies</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Bekijk status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Uw configuratie bestand is beschadigd, herstart aub</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync zal een volledige scan van uw gesynchoniseerde mappen uitvoeren als het start.
+        <translation type="obsolete">MEGAsync zal een volledige scan van uw gesynchoniseerde mappen uitvoeren als het start.
 
 Wilt u MEGAsync nu herstarten?
 </translation>
@@ -1149,7 +1161,7 @@ Wilt u MEGAsync nu herstarten?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Map voor uploads vanaf deze computer</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Wilt u MEGAsync nu herstarten?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Ontvang meldingen</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync zal een volledige scan van uw gesynchoniseerde mappen uitvoeren als het start.
+
+Wilt u MEGAsync nu herstarten?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kies</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
         <source>Setup Assistant - MEGAsync</source>
         <translation>Installatiewizard - MEGAsync</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Fout tijdens het verkrijgen van de sessie sleutel</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Volledige sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Uw lokale map en uw MEGA Cloud Drive zullen automatisch worden gesynchroniseerd</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
     <message>
         <source>Cancel</source>
         <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kies</translation>
     </message>
 </context>
 <context>

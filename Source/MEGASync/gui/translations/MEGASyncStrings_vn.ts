@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="vn" sourcelanguage="en">
+<TS version="2.1" language="vn" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Chọn thư mục trên máy</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Bạn hiện đang chuyển nhập các tệp này trong một thư mục đã đồng bộ. Nếu bạn hoạt động hóa việc tải xuống, các tệp này sẽ bị nhân đôi trên máy tính của bạn. Bạn có chắc không?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -527,7 +535,11 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Hiển thị trạng thái</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>Trình MEGAsync sẽ tiến hành quét toàn bộ dữ liệu từ các thư mục đuợc đồng bộ của bạn
+        <translation type="obsolete">Trình MEGAsync sẽ tiến hành quét toàn bộ dữ liệu từ các thư mục đuợc đồng bộ của bạn
 
 Bạn có muốn khởi chạy lại MEGAsync ngay không?
 </translation>
@@ -1149,7 +1161,7 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Thư mục dành cho tải lên từ máy tính này</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1162,6 +1174,18 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?
     <message>
         <source>Show Mac OS notifications</source>
         <translation>Hiện thông báo</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>Trình MEGAsync sẽ tiến hành quét toàn bộ dữ liệu từ các thư mục đuợc đồng bộ của bạn
+
+Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1389,6 +1413,18 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
         <source>Setup Assistant - MEGAsync</source>
         <translation>Trình Cài đặt - MEGAsync - Trình Đồng bộ hóa</translation>
     </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1466,6 +1502,10 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     <message>
         <source>Cancel</source>
         <translation>Hủy bỏ</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
