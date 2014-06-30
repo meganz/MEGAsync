@@ -499,15 +499,35 @@ Prøv venligst igen. Hvis problemet fortsætter, så kontakt bug@mega.co.nz</tra
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload filer/mapper</translation>
+        <translation type="obsolete">Upload filer/mapper</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync kører nu. Tryk på ikonet i proceslinjens højre side for at åbne et statusvindue.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>En ny version af MEGAsync er nu tilgængelig!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync kører nu. Tryk på ikonet i proceslinjens højre side for at åbne et statusvindue.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Afbryd</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Indstillinger</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Upload til MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Sikr dig at du ikke brugere tegn som \ / eller : i dine mappenavne.</translation
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mappe til uploads fra Windows Filhåndtering</translation>
+        <translation type="obsolete">Mappe til uploads fra Windows Filhåndtering</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Vil du genstarte MEGAsync nu?
     <message>
         <source>Install update</source>
         <translation>Installér opdatering</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Indstillinger - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Start ved opstart</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Vis notifikationer</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Ikke i stand til at hente filsystem.
 Prøv venligst igen. Hvis problemet fortsætter, så kontakt bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Opsætningsguide - MEGAsync</translation>
     </message>
 </context>
 <context>

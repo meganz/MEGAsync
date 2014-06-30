@@ -499,15 +499,35 @@ Riprova. Se il problema persiste contatta bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Uploa files/cartelle</translation>
+        <translation type="obsolete">Uploa files/cartelle</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync è ora in esecuzione. Fai clic sull&apos;icona della barra delle applicazioni per aprire la finestra di stato.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Una nuova versione di MEGAsync è disponibile!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync è ora in esecuzione. Fai clic sull&apos;icona della barra delle applicazioni per aprire la finestra di stato.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Esci</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Impostazioni</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Carica su MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Verifica di non utilizzare caratteri come \ / o : nei nomi delle cartelle.</tran
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Cartella per uploads da Windows Explorer</translation>
+        <translation type="obsolete">Cartella per uploads da Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Vuoi riavviare MEGAsync adesso?
     <message>
         <source>Install update</source>
         <translation>Installa aggiornamento</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Impostazioni - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Apri all&apos;avvio</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Mostra notifiche</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Impossibile ottenere il file system.
 Riprova. Se il problema persiste contatta bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Setup Wizard - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>ფაილების/ფოლდერების ატვირთვა</translation>
+        <translation type="obsolete">ფაილების/ფოლდერების ატვირთვა</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync-ი უკვე გაშვებულია. სტატუსის ფანჯრის გასახსნელად დააჭირეთ ხატულას ქვედა-მარჯვენა პანელში.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsync-ის ახალი ვერსია უკვე ხელმისაწვდომია</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync-ი უკვე გაშვებულია. სტატუსის ფანჯრის გასახსნელად დააჭირეთ ხატულას ქვედა-მარჯვენა პანელში.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>გასვლა</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>პარამეტრები</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>MEGA-ზე ატვირთვა</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>სტანდარტული ფოლდერი, სადაც Windows Explorer-იდან მოხდება ატვირთვა</translation>
+        <translation type="obsolete">სტანდარტული ფოლდერი, სადაც Windows Explorer-იდან მოხდება ატვირთვა</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>განახლების ინსტალაცია</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>პარამეტრები - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>გაეშვას ჩართვისთანავე</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>მაჩვენე შეტყობინებები (notifications)</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>ამ ფაილური სისტემის ათვისება ვერ ხერხდება.
 გთხოვთ კიდევ სცადოთ. თუ ეს პრობლემა თავისით არ სწორდება, გთხოვთ დაგვიკავშირდეთ ამ იმეილზე bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>ინსტალაცია - MEGAsync</translation>
     </message>
 </context>
 <context>

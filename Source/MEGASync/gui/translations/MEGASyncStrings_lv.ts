@@ -499,15 +499,35 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Augšuplādet failus/mapes</translation>
+        <translation type="obsolete">Augšuplādet failus/mapes</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync tagad darbojas. Spied uz sistēmas paziņojuma ikonas, lai atvērtu statusa logu.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Jauna MEGAsync klienta versija ir pieejama!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync tagad darbojas. Spied uz sistēmas paziņojuma ikonas, lai atvērtu statusa logu.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Iziet</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Iestatījumi</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Augšupielādēt uz MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Lūdzu, pārliecinies, ka Tu neizmanto šādas rakstzīmes kā \/ vai : Tavos ma
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mape augšupielādēm no Windows Explorer</translation>
+        <translation type="obsolete">Mape augšupielādēm no Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Vai tu vēlies restartēt MEGAsync tagad?
     <message>
         <source>Install update</source>
         <translation>Uzstādīt atjauninājumu</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Iestatījumi - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Startēt sākumā</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Rādīt paziņojumus</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Neizdevās nolasīt failu sistēmu. 
 Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Uzstādīšanas Palīgs - MEGAsync</translation>
     </message>
 </context>
 <context>

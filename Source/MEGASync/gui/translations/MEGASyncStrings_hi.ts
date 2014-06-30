@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>फ़ाइलें / फ़ोल्डर अपलोड करें</translation>
+        <translation type="obsolete">फ़ाइलें / फ़ोल्डर अपलोड करें</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync अब चल रहा है. स्थिति विंडो खोलने के लिए सिस्टम ट्रे आइकन पर क्लिक करें.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsync का एक नया संस्करण उपलब्ध है!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync अब चल रहा है. स्थिति विंडो खोलने के लिए सिस्टम ट्रे आइकन पर क्लिक करें.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>निकास</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>सेटिंग्स</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>मेगा पर अपलोड करें</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>विंडोज अंवेषक से अपलोड करने के लिए फ़ोल्डर</translation>
+        <translation type="obsolete">विंडोज अंवेषक से अपलोड करने के लिए फ़ोल्डर</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>अद्यतन स्थापित करें</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>सेटिंग्स - मेगा सिंक</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>स्टार्टअप पर शुरू</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>सूचनाएं दिखाएं</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>फाइल सिस्टम प्राप्त करने में असमर्थ.
 पुन: प्रयास करें. यदि समस्या बनी रहती bug@mega.co.nz से संपर्क करें</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>सेटअप विज़ार्ड - मेगा सिंक</translation>
     </message>
 </context>
 <context>

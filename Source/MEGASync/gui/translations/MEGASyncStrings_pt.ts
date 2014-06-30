@@ -499,15 +499,35 @@ Por favor tenta novamente. Se o problema persistir, contacta-nos através de bug
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Carregar ficheiros/pastas</translation>
+        <translation type="obsolete">Carregar ficheiros/pastas</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>O MEGAsync está agora a ser executado. Clica no ícone na barra de tarefas para abrir a janela de estado.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Uma nova versão do MEGAsync está disponível!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>O MEGAsync está agora a ser executado. Clica no ícone na barra de tarefas para abrir a janela de estado.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Saída</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Definições</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Carregue para o MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Verifica que não estás a utilizar caracteres  como \/ ou : no nome das tuas pa
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Pasta para carregamentos a partir do Explorador do Windows</translation>
+        <translation type="obsolete">Pasta para carregamentos a partir do Explorador do Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Queres reiniciar o MEGAsync agora?
     <message>
         <source>Install update</source>
         <translation>Instalar actualização</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Definições - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Iniciar no arranque</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Mostrar notificações</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Não foi possível aceder ao sistema de ficheiros.
 Por favor tenta novamente. Se o problema persistir, contacta-nos através de bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Assistente de configuração - MEGAsync</translation>
     </message>
 </context>
 <context>

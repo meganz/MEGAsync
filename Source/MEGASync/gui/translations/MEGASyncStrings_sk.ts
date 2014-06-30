@@ -499,15 +499,35 @@ Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</tra
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Nahrať súbory/priečinky</translation>
+        <translation type="obsolete">Nahrať súbory/priečinky</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync beží. Kliknite na stavovú ikonu pre otvorenie stavového okna.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Je dostupná nová verzia MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync beží. Kliknite na stavovú ikonu pre otvorenie stavového okna.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Odísť</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Nastavenia</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Nahrať do MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Ubezpečte sa, že v názvoch vašich priečinkov nepoužívate znaky ako \ / al
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Priečinok pre nahrávanie cez Windows Prieskumník</translation>
+        <translation type="obsolete">Priečinok pre nahrávanie cez Windows Prieskumník</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>Nainštalovať update</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Nastavenia - MEGASync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Spusiť pri štarte</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Zobrazenie notifikácií</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Nemôžem získať prístup k súborovému systému.
 Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Sprievodca inštaláciou - MEGASync</translation>
     </message>
 </context>
 <context>

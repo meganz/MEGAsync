@@ -499,15 +499,35 @@ Por favor, tente novamente. Se o problema continuar, entre em contato pelo bug@m
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload arquivos/pastas</translation>
+        <translation type="obsolete">Upload arquivos/pastas</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync está funcionando. Clique no ícone pequeno para abrir a janela de status.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Uma nova versão do MEGAsync está disponível!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync está funcionando. Clique no ícone pequeno para abrir a janela de status.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Sair</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Configurações</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Enviar ao MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Por favor, não utilize caracteres como \ / ou : no nome da sua pasta.</translat
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Pasta de envios no Windows Explorer</translation>
+        <translation type="obsolete">Pasta de envios no Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Você quer reiniciar o MEGAsync agora?
     <message>
         <source>Install update</source>
         <translation>Instalar atualização</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Configurações - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Iniciar ao ligar</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Mostrar notificações</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Não foi possível identificar o sistema de arquivos.
 Por favor, tente novamente. Se o problema continuar, entre em contato pelo bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Assistente de configuração - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -499,7 +499,7 @@ Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Įkelti failus/aplankus</translation>
+        <translation type="obsolete">Įkelti failus/aplankus</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -508,6 +508,26 @@ Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translation>A new version of MEGAsync is available!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Išeiti</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Nustatymai</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Įkelti į MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Prašome įsitikinti, kad jūs nenaudojate tokių simbolių kaip \ / arba : jūs
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Aplankas įkėlimams iš Windows Explorer</translation>
+        <translation type="obsolete">Aplankas įkėlimams iš Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Ar jūs dabar norite paleisti MEGAsync iš naujo?
     <message>
         <source>Install update</source>
         <translation>Įdiegti atnaujinimą</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Nustatymai - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Paleisti kartu paleidžiant Windows</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Rodyti pranešimus</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Nepavyko gauti failų sistemos informacijos.
 Bandykite dar kartą. Jeigu problema išlieka, susisiekite su mumis bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Sąrankos Vedlys - MEGAsync</translation>
     </message>
 </context>
 <context>

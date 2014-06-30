@@ -499,7 +499,7 @@ Please try again. If the problem persists please contact bug@mega.co.nz</transla
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation type="obsolete">Upload files/folders</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -508,6 +508,26 @@ Please try again. If the problem persists please contact bug@mega.co.nz</transla
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translation>A new version of MEGAsync is available!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Verlaat</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Verstellings</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Oplaai na MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please ensure that you don&apos;t use characters like \ / or : in your folder na
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Gids vir oplaaiings vanaf Windows Explorer</translation>
+        <translation type="obsolete">Gids vir oplaaiings vanaf Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?
     <message>
         <source>Install update</source>
         <translation>Installeer opdatering</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Verstellings - MEGAsinkronisering</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Begin by die begin</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Wys kennisgewing</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Unable to get the file system.
 Please try again. If the problem persists please contact bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Opstel  wizard - MEGAsinkronisering</translation>
     </message>
 </context>
 <context>

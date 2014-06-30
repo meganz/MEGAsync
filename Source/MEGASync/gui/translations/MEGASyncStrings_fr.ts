@@ -499,15 +499,35 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Uploader fichiers/dossiers</translation>
+        <translation type="obsolete">Uploader fichiers/dossiers</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync est lancé. Cliquez sur l&apos;icône de la barre des tâches pour ouvrir la fenêtre de statut.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Une nouvelle version de MEGAsync est disponible !</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync est lancé. Cliquez sur l&apos;icône de la barre des tâches pour ouvrir la fenêtre de statut.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Quitter</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Réglages</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Uploader sur MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Veuillez vous assurer de ne pas utiliser des caractères tels que \ / ou : dans 
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Dossier par défaut dans lequel sont placés automatiquement tout fichier ou dossier uploadé via le menu contextuel de l&apos;Explorateur de Fichiers Windows</translation>
+        <translation type="obsolete">Dossier par défaut dans lequel sont placés automatiquement tout fichier ou dossier uploadé via le menu contextuel de l&apos;Explorateur de Fichiers Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Voulez-vous redémarrer MEGAsync maintenant ?
     <message>
         <source>Install update</source>
         <translation>Installer la mise à jour</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Réglages - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Lancer au démarrage de l&apos;ordinateur</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Montrer les notifications</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Impossible de récupérer le système de fichiers.
 Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Assistant d&apos;Installation - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -499,15 +499,35 @@ Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz<
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Last opp filer/mapper</translation>
+        <translation type="obsolete">Last opp filer/mapper</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync kjører i bakgrunnen. Trykk på ikonet i oppgavelinjen for å åpne statusvinduet.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>En ny versjon av MEGAsync er tilgjengelig!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync kjører i bakgrunnen. Trykk på ikonet i oppgavelinjen for å åpne statusvinduet.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Avslutt</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Innstillinger</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Last opp til MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Pass på at du ikke bruker tegn som \ / eller : når du navngir mapper.</transla
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mappe for opplastinger fra Windows Explorer</translation>
+        <translation type="obsolete">Mappe for opplastinger fra Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1103,7 +1123,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Skjul ikoner</translation>
     </message>
     <message>
         <source>Force a full scan</source>
@@ -1126,6 +1146,22 @@ Vil du starte MEGAsync på nytt?
     <message>
         <source>Install update</source>
         <translation>Installer oppdatering</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Innstillinger - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Start automatisk ved oppstart</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Vis varslinger</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Kunne ikke nå filsystemet.
 Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Installasjonsveiviser - MEGAsync</translation>
     </message>
 </context>
 <context>

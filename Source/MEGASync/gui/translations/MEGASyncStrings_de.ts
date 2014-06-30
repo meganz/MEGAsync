@@ -499,15 +499,35 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Dateien/Ordner hochladen</translation>
+        <translation type="obsolete">Dateien/Ordner hochladen</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync läuft jetzt. Klicken Sie auf das Systemablage-Symbol, um das Status-Fenster zu öffnen.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Eine neue Version von MEGAsync ist verfügbar!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync läuft jetzt. Klicken Sie auf das Systemablage-Symbol, um das Status-Fenster zu öffnen.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Beenden</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Auf MEGA hochladen</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Die Sonderzeichen \ / und : sind in Ordnernamen nicht erlaubt.</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Zielordner für Uploads aus dem Explorer-Kontextmenü</translation>
+        <translation type="obsolete">Zielordner für Uploads aus dem Explorer-Kontextmenü</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Neustart von MEGAsync?
     <message>
         <source>Install update</source>
         <translation>Neue Version installieren</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Einstellungen - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Beim Hochfahren starten</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Ereignisse anzeigen</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Dateisystem nicht verfügbar.
 Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten, kontaktieren Sie bitte bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Installationsassistent - MEGAsync</translation>
     </message>
 </context>
 <context>

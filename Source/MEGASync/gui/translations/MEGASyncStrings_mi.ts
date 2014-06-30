@@ -499,15 +499,35 @@ Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>utaakehia nga konae/kopaki</translation>
+        <translation type="obsolete">utaakehia nga konae/kopaki</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>Kei te mahi a MEGAsyc. Patohia te ata terei punaha  ki te huaki i te matapihi tunga</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>He momo hou a MEGAsync kei te watea mai</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>Kei te mahi a MEGAsyc. Patohia te ata terei punaha  ki te huaki i te matapihi tunga</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>puta</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>hei mahi</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>aketia ki a MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Maumahara kaua e whakamahia enei pu \/ranei</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>he kopaki mo nga utaake mai i a Windows Explorer</translation>
+        <translation type="obsolete">he kopaki mo nga utaake mai i a Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.
     <message>
         <source>Install update</source>
         <translation>utaina nga whakahou</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>hei mahi -  whakaritenga a MEGA</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>huakina i te timata</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>whakaaturia nga panga</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>kore taea te tiki i te punaha konae
 Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>kaiuiui whakatu -  whakaritenga a MEGA</translation>
     </message>
 </context>
 <context>

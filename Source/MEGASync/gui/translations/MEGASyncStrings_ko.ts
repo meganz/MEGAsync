@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>파일/폴더 업로드</translation>
+        <translation type="obsolete">파일/폴더 업로드</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>메가싱크가 작동중입니다. 상태 창을 열려면 시스템 트레이 아이콘을 클릭하세요.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>메가싱크의 새 버전을 사용할 수 있습니다!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>메가싱크가 작동중입니다. 상태 창을 열려면 시스템 트레이 아이콘을 클릭하세요.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>종료</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>설정</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>메가에 업로드</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>윈도우 탐색기의 업로드 폴더</translation>
+        <translation type="obsolete">윈도우 탐색기의 업로드 폴더</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>업데이트 설치</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>설정 - 메가싱크</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>부팅시 시작</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>알림 보이기</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>파일 시스템을 가져올 수 없습니다.
 다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락바랍니다.</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>설정 마법사 - 메가싱크</translation>
     </message>
 </context>
 <context>

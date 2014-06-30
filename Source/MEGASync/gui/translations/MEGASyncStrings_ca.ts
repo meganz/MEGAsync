@@ -499,15 +499,35 @@ Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Puja fitxers/carpetes</translation>
+        <translation type="obsolete">Puja fitxers/carpetes</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>El MEGAsync està funcionant. Fes clic a la icona de la safata del sistema per obrir la finestra d&apos;estat.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Hi ha una nova versió disponible del MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>El MEGAsync està funcionant. Fes clic a la icona de la safata del sistema per obrir la finestra d&apos;estat.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Surt</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Configuració</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Puja a MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Si us plau, assegura&apos;t que no fas servir caràcters com \ / o : als noms de
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Carpeta per a pujades de Windows Explorer</translation>
+        <translation type="obsolete">Carpeta per a pujades de Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Vols reiniciar el MEGAsync ara?
     <message>
         <source>Install update</source>
         <translation>Instal·la l&apos;actualització</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Configuració - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Inicia a l&apos;engegar l&apos;ordinador</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Mostra notificacions</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Impossible aconseguir el sistema de fitxers.
 Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte amb bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Assistent de configuració - MEGAsync</translation>
     </message>
 </context>
 <context>

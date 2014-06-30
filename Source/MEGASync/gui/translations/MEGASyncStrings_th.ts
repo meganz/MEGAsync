@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>อัปโหลดไฟล์/โฟลเดอร์</translation>
+        <translation type="obsolete">อัปโหลดไฟล์/โฟลเดอร์</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync กำลังทำงาน คุณสามารถคลิกที่ไอคอนถาดระบบเพื่อเปิดดูได้</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsync  มีเวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync กำลังทำงาน คุณสามารถคลิกที่ไอคอนถาดระบบเพื่อเปิดดูได้</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>จบการทำงาน</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>ตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>อัปโหลดไปยัง MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>โฟลเดอร์สำหรับการอัปโหลดของ Windows Explorer</translation>
+        <translation type="obsolete">โฟลเดอร์สำหรับการอัปโหลดของ Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>ติดตั้ง</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>ตั้งค่า - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>ทำงานทันทีเมื่อเริ่มต้นระบบ</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>แสดงการแจ้งเตือน</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้
 กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>ตัวช่วยสร้างการติดตั้ง - MEGAsync</translation>
     </message>
 </context>
 <context>
