@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>上傳檔案/資料夾</translation>
+        <translation type="obsolete">上傳檔案/資料夾</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync執行中。點選系統圖示可開啟狀態視窗。</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>已有新版MEGAsync可用!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync執行中。點選系統圖示可開啟狀態視窗。</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>離開</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>上傳至MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>自Windows Explorer上傳的資料夾</translation>
+        <translation type="obsolete">自Windows Explorer上傳的資料夾</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>安裝更新</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>設定 - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>自動開啟</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>顯示通知</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>無法連結檔案系統。
 請再試一次。如問題仍存在，請連繫: bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>設定Wizard精靈 - MEGAsync</translation>
     </message>
 </context>
 <context>

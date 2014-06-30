@@ -499,15 +499,35 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload bestanden/mappen</translation>
+        <translation type="obsolete">Upload bestanden/mappen</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync staat nu aan. Klik op het pictogram in het systeemvak om het statusvenster te openen.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Een nieuwe versie van MEGAsync is beschikbaar!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync staat nu aan. Klik op het pictogram in het systeemvak om het statusvenster te openen.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Instellingen</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Upload naar MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Zorg ervoor dat je geen karakters zoals \ / of : in de namen van je mappen gebru
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Map voor uploads via Windows Explorer</translation>
+        <translation type="obsolete">Map voor uploads via Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Wilt u MEGAsync nu herstarten?
     <message>
         <source>Install update</source>
         <translation>Installeer update</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Instellingen - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Open bij opstarten</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Ontvang meldingen</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Bestandssysteem onbereikbaar.
 Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Installatiewizard - MEGAsync</translation>
     </message>
 </context>
 <context>

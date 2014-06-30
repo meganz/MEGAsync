@@ -499,15 +499,35 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation type="obsolete">Lähetä tiedotoja/kansioita</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync on nyt pyörimässä. Klikkaa ilmoitusalueen kuvaketta avataksesi tilaikkunan.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Uusi versio MEGAsyncista on saatavilla!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync on nyt pyörimässä. Klikkaa ilmoitusalueen kuvaketta avataksesi tilaikkunan.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Lopeta</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Asetukset</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Lähetä MEGAan</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Varmista, ettet käytä merkkejä kuten \ / tai : kansioidesi nimissä.</transla
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Kansio Windowsin resurssienhallinnasta lähteville lähetyksille</translation>
+        <translation type="obsolete">Kansio Windowsin resurssienhallinnasta lähteville lähetyksille</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1099,33 +1119,49 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Muuta</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Poista päällyskuvakkeet käytöstä</translation>
     </message>
     <message>
         <source>Force a full scan</source>
-        <translation>Force a full rescan</translation>
+        <translation>Pakota täysi uudelleenskannaus</translation>
     </message>
     <message>
         <source>Full scan</source>
-        <translation>Full scan</translation>
+        <translation>Täysi skannaus</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>MEGAsync tulee suorittamaan täyden skannin synkronisoimistasi kansioista
 
-Do you want to restart MEGAsync now?
+Haluatko käynnistää MEGAsyncin uudelleen nyt?
 </translation>
     </message>
     <message>
         <source>Install update</source>
         <translation>Päivitä</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Asetukset - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Käynnistä automaattisesti tietokoneen käynnistyksen yhteydessä</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Näytä ilmoitukset</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Tiedostojärjestelmää ei voitu hakea.
 Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähköpostilla bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Ohjattu asennus - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -511,23 +511,23 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
-        <translation type="unfinished">[$2015]</translation>
+        <translation>[$2015]</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">[$1644]</translation>
+        <translation>[$1644]</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">[$1646]</translation>
+        <translation>[$1646]</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
-        <translation type="unfinished">[$1803]</translation>
+        <translation>[$1803]</translation>
     </message>
     <message>
         <source>Show status</source>
-        <translation type="unfinished">XXXXX</translation>
+        <translation>[$2018]</translation>
     </message>
 </context>
 <context>
@@ -1149,19 +1149,19 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="unfinished">XXXXX</translation>
+        <translation>[$2019]</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translation type="unfinished">[$1646] - [$1626]</translation>
+        <translation>[$1646] - [$1626]</translation>
     </message>
     <message>
         <source>Open at login</source>
-        <translation type="unfinished">[$1721]</translation>
+        <translation>[$1721]</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
-        <translation type="unfinished">[$1720]</translation>
+        <translation>[$1720]</translation>
     </message>
 </context>
 <context>
@@ -1387,7 +1387,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
-        <translation type="unfinished">[$1760] - [$1626]</translation>
+        <translation>[$1760] - [$1626]</translation>
     </message>
 </context>
 <context>

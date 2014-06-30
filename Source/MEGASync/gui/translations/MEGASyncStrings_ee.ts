@@ -499,15 +499,35 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Lae üles faile/kaustu</translation>
+        <translation type="obsolete">Lae üles faile/kaustu</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsünk on kasutusvalmis. Oleku vaatamiseks vajutage kella kõrval oleval MEGA ikoonil.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsünki uus versioon on saadaval!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsünk on kasutusvalmis. Oleku vaatamiseks vajutage kella kõrval oleval MEGA ikoonil.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Välju</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Seaded</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Lae üles MEGA-sse</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</transla
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Kaust Windows Explorerist tulnud üleslaadimiste jaoks</translation>
+        <translation type="obsolete">Kaust Windows Explorerist tulnud üleslaadimiste jaoks</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Kas soovite praegu taaskäivitada MEGAsünki?
     <message>
         <source>Install update</source>
         <translation>Paigalda uuendus</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Seaded - MEGASync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Käivita koos arvutiga</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Kuva teated</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Failisüsteemi ei suudetud ligi pääseda.
 Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meiega ühendust  e-posti bug@mega.co.nz kaudu</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Paigaldusvõlur - MEGASync</translation>
     </message>
 </context>
 <context>

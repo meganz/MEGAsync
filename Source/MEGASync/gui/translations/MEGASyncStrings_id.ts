@@ -499,15 +499,35 @@ Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload file/ folder</translation>
+        <translation type="obsolete">Upload file/ folder</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync sedang berjalan. Klik ikon system tray untuk membuka jendela status.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Versi terbaru MEGAsync telah tersedia!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync sedang berjalan. Klik ikon system tray untuk membuka jendela status.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Keluar</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Pengaturan</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Upload ke MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Harap pastikan anda tidak menggunakan karakter seperti \ / atau : pada nama fold
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Folder untuk upload dari Windows Explorer</translation>
+        <translation type="obsolete">Folder untuk upload dari Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Apakah anda ingin mengulang MEGAsync sekarang?
     <message>
         <source>Install update</source>
         <translation>Install update</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Pengaturan - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Aktifkan pada saat memulai</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Tampilkan pemberitahuan</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Tidak dapat menemukan file sistem.
 Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Pengaturan Wizard - MEGAsync</translation>
     </message>
 </context>
 <context>

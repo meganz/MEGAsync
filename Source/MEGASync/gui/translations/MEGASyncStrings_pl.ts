@@ -499,15 +499,35 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Wgraj pliki/katalogi</translation>
+        <translation type="obsolete">Wgraj pliki/katalogi</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync jest obecnie uruchomiony. Kliknij ikonę w pasku zadań i otwórz okno z aktualnym statusem.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Nowa wersja MEGAsync jest już dostępna!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync jest obecnie uruchomiony. Kliknij ikonę w pasku zadań i otwórz okno z aktualnym statusem.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Wyjdź</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Ustawienia</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Wgraj na MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Upewnij się, że w nazwie katalogu nie używasz znaków tj. \ / lub :</translat
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Katalog do wgrywania z Windows Explorer</translation>
+        <translation type="obsolete">Katalog do wgrywania z Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Czy chcesz teraz zrestarować MEGAsync?
     <message>
         <source>Install update</source>
         <translation>Zainstaluj</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Ustawienia - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Uruchom przy starcie</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Pokaż powiadomienia</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Nie można dostać się do systemu plików.
 Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o kontakt bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Kreator instalacji - MEGAsync</translation>
     </message>
 </context>
 <context>

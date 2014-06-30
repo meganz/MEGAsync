@@ -499,15 +499,35 @@ Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Ladda upp filer / mappar</translation>
+        <translation type="obsolete">Ladda upp filer / mappar</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync körs nu. Klicka på ikonen i systemfältet för att öppna statusfönstret.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>En ny version av MEGAsync är tillgänglig!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync körs nu. Klicka på ikonen i systemfältet för att öppna statusfönstret.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Avsluta</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Inställningar</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Ladda upp till MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Använd inte tecken som  \ / eller : i namnet på mappen.</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mapp för uppladdningar från Windows Explorer</translation>
+        <translation type="obsolete">Mapp för uppladdningar från Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Vill du starta om MEGAsync nu?
     <message>
         <source>Install update</source>
         <translation>Installerar uppdatering</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Inställningar - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Starta vid uppstart</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Visa noteringar</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Kan ej hitta filsystemet.
 Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Installationsguide - MEGAsync</translation>
     </message>
 </context>
 <context>

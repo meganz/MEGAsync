@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Качване на файлове/папки</translation>
+        <translation type="obsolete">Качване на файлове/папки</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync вече е стартирала. Кликнете върху иконата в системната лента, за да отворите прозореца на състоянието.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Налична е нова версия на MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync вече е стартирала. Кликнете върху иконата в системната лента, за да отворите прозореца на състоянието.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Изход</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Качване в MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Папка за качвания от Windows Explorer</translation>
+        <translation type="obsolete">Папка за качвания от Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>Инсталирай актуализация</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Настройки - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Включване при стартиране на системата</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Показвай известия</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Не може да се отвори файловата система.
 Моля, опитайте отново. Ако проблемът продължава, моля свържете се с bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Съветник за инсталиране - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -42,7 +42,7 @@
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>A(z) &quot;%1&quot; név már használatban van egy másik szinkronhoz Kérem írjon be egy másik nevet ezen szinkronizált mappa azonosításához:</translation>
+        <translation>A(z) &quot;%1&quot; név már használva van egy másik szinkronhoz Kérem írjon be egy másik nevet ezen szinkronizált mappa azonosításához:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -499,15 +499,35 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Fájlok/mappák feltöltése</translation>
+        <translation type="obsolete">Fájlok/mappák feltöltése</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>A MEGAsync most már fut. Kattintson az értesítési területen lévő ikonra az állapotjelző ablak megnyitásához.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Elérhető a MEGAsync egy új verziója!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>A MEGAsync most már fut. Kattintson az értesítési területen lévő ikonra az állapotjelző ablak megnyitásához.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Kilépés</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Beállítások</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Feltöltés a MEGA-ra</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Kérem ügyeljen rá, hogy ne használjon olyan karaktereket, mint \ / vagy : a 
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mappa a feltöltések részére a Windows Intézőből</translation>
+        <translation type="obsolete">Mappa a feltöltések részére a Windows Intézőből</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1127,6 +1147,22 @@ Szeretné most újraindítani a MEGAsync-et?
         <source>Install update</source>
         <translation>Frissítés telepítése</translation>
     </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Beállítások - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Induljon rendszerindításkor</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Értesítések megjelenítése</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -1172,7 +1208,7 @@ Szeretné most újraindítani a MEGAsync-et?
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
-        <translation>Kérem igazolja fiókját a megerősítő link használatával, amit elküldtünk az Ön email fiókjára</translation>
+        <translation>Kérem igazolja fiókját a megerősítő link használatával, amit email fiókjára elküldtünk</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1220,7 +1256,7 @@ Szeretné most újraindítani a MEGAsync-et?
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Az Ön helyi mappája:</translation>
+        <translation>Helyi mappája:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Nem lehet hozzájutni a fájlrendszerhez.
 Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel a kapcsolatot a bug@mega.co.nz címen</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Telepítő varázsló - MEGAsync</translation>
     </message>
 </context>
 <context>

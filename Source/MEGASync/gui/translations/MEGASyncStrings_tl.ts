@@ -499,15 +499,35 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>I-upload ang files/folders</translation>
+        <translation type="obsolete">I-upload ang files/folders</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>Ang MEGAsync ay tumatakbo ngayon. I-click ang system tray icon para magbukas ng status window.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>May bagong bersyon ng MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>Ang MEGAsync ay tumatakbo ngayon. I-click ang system tray icon para magbukas ng status window.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Umalis</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Mga Settings</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>I-upload sa MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Siguraduhing walang mga karacter na \ / o : sa pangalan ng folders ninyo.</trans
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Folder para sa uploads galing Window Explorer</translation>
+        <translation type="obsolete">Folder para sa uploads galing Window Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Gusto mo bang irestart ang MEGAsync?
     <message>
         <source>Install update</source>
         <translation>I-install ang update</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Mga Settings - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Simulan sa pagbubukas</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Ipakita ang mga abiso</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Hindi makuha ang file system.
 Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Setup Wizard - MEGAsync</translation>
     </message>
 </context>
 <context>

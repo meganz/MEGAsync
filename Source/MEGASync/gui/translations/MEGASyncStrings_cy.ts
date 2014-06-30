@@ -499,15 +499,35 @@ Ceisiwch eto os gwelwch yn dda. Os yw&apos;r broblem yn parhau, cysylltwch â bu
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation type="obsolete">Llwytho ffeiliau/ffolderi</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync nawr yn rhedeg. Cliciwch ar yr eicon hambwrdd system i agor y ffenestr statws.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Mae fersiwn newydd o MEGAsync ar gael!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync nawr yn rhedeg. Cliciwch ar yr eicon hambwrdd system i agor y ffenestr statws.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Gadael</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Gosodiadau</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Llwytho i fyny i MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Gwnewch yn siŵr nad ydych yn defnyddio cymeriadau fel \ / neu: yn eich enwau ff
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Ffolder ar gyfer Llwythiadau o Windows Explorer</translation>
+        <translation type="obsolete">Ffolder ar gyfer Llwythiadau o Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1099,33 +1119,49 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Mwy</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Analluoga eiconau troshaen</translation>
     </message>
     <message>
         <source>Force a full scan</source>
-        <translation>Force a full rescan</translation>
+        <translation>Gorfodi Ailsganio llawn</translation>
     </message>
     <message>
         <source>Full scan</source>
-        <translation>Full scan</translation>
+        <translation>Sgan llawn</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation>Bydd MEGAsync perfformio sgan llawn o&apos;ch ffolderi pan fydd yn dechrau.
 
-Do you want to restart MEGAsync now?
+Ydych chi eisiau i ailgychwyn MEGAsync nawr?
 </translation>
     </message>
     <message>
         <source>Install update</source>
         <translation>Osod y diweddariad</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Gosodiadau - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Dechrau ar startup</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Dangos hysbysiadau</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Methu cael y system ffeil.
 Ceisiwch eto os gwelwch yn dda. Os yw&apos;r broblem yn parhau, cysylltwch â bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Dewin gosodiad - MEGAsync</translation>
     </message>
 </context>
 <context>

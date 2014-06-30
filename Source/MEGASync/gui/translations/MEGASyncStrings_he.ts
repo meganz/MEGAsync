@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>העלה קבצים/תיקיות</translation>
+        <translation type="obsolete">העלה קבצים/תיקיות</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync רצה כעת. אנא לחץ על הכפתור בשורת המשימות על מנת לראות את מצב הסנכרון.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>קיימת גרסא חדשה ל-MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync רצה כעת. אנא לחץ על הכפתור בשורת המשימות על מנת לראות את מצב הסנכרון.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>יציאה</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>הגדרות</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>העלאה ל-MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>תיקייה להעלאה למנהל הקבצים</translation>
+        <translation type="obsolete">תיקייה להעלאה למנהל הקבצים</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>התקן עדכון</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>הגדרות - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>התחל באתחול המחשב</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>הצג התראות</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>לא נמצאה מערכת קבצים.
 אנא נסה שוב. אם הבעיה נמשכת, אנא פנה אלינו דרך bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>אשף ההתקנה - MEGAsync</translation>
     </message>
 </context>
 <context>

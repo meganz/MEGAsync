@@ -499,15 +499,35 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Încarcă fişiere/foldere</translation>
+        <translation type="obsolete">Încarcă fişiere/foldere</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync rulează în prezent. Clic pe iconița din bara de sistem pentru a deschide fereastra de stare.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>O versiune nouă de MEGAsync este disponibilă!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync rulează în prezent. Clic pe iconița din bara de sistem pentru a deschide fereastra de stare.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Ieşi</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Setări</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Încarcă pe MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Te rugăm să te asiguri că nu foloseşti caractere precum \ / sau : în numele
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Folderul pentru încărcări din Windows Explorer</translation>
+        <translation type="obsolete">Folderul pentru încărcări din Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Doreşti să reporneşti MEGAsync acum?
     <message>
         <source>Install update</source>
         <translation>Instalează actualizarea</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Setări - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Porneşte aplicaţia la pornire</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Arată notificări</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Nu se poate obţine sistemul de fişiere.
 Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Asistent de instalare - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -499,15 +499,35 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Subir archivos/carpetas</translation>
+        <translation type="obsolete">Subir archivos/carpetas</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync está en funcionamiento. Pulsa el icono de la bandeja para ver la ventana de estado.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>¡Hay una nueva versión de MEGA disponible!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync está en funcionamiento. Pulsa el icono de la bandeja para ver la ventana de estado.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Salir</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Ajustes</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Subir a MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Por favor, asegúrate de que no has utilizado caracteres como \ / ó : en los no
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Carpeta de subidas desde el Explorador de Windows</translation>
+        <translation type="obsolete">Carpeta de subidas desde el Explorador de Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>Instalar actualización</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Ajustes - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Iniciar con el sistema</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Mostrar notificaciones</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>No se pudo acceder el sistema de archivos de MEGA.
 Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en contacto con nosotros en: bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Asistente de Instalación - MEGAsync</translation>
     </message>
 </context>
 <context>

@@ -499,15 +499,35 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Fitxategiak/karpetak igo</translation>
+        <translation type="obsolete">Fitxategiak/karpetak igo</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync martxan dago orain. Klik egin sistemaren barrako ikonoan egoera leihoa irekitzeko.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsync-en bertsio berri bat eskuragarri dago!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync martxan dago orain. Klik egin sistemaren barrako ikonoan egoera leihoa irekitzeko.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Irten</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Aukerak</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>MEGAra igo</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Mesedez, zihurtatu \ / edo : motako karaktererik ez dituzula erabiltzen zure kar
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Windows Esploratzaileatik igotzeko karpetak</translation>
+        <translation type="obsolete">Windows Esploratzaileatik igotzeko karpetak</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ MEGAsync berrabiarazi nahi al duzu orain?
     <message>
         <source>Install update</source>
         <translation>Eguneraketa instalatu</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Aukerak - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Hasieran hasi</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Oharpenak erakutsi</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Ezin izan da fitxategi sistema lortu.
 Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz -rekin</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Instalazio Laguntzailea - MEGAsync</translation>
     </message>
 </context>
 <context>

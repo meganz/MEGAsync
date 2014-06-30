@@ -499,15 +499,35 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Naloži datoteke/mape</translation>
+        <translation type="obsolete">Naloži datoteke/mape</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync je zagnan. Kliknite na ikono v opravilni vrstici, da odprete okno s trenutnim stanjem.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Nova verzija MEGAsync je na voljo!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync je zagnan. Kliknite na ikono v opravilni vrstici, da odprete okno s trenutnim stanjem.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Izhod</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Nastavitve</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Naloži v MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Prosim, poskrbite, da ne uporabljate znakov, kot so \ / ali : v imenu mape.</tra
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mapa za nalaganje iz Windows Raziskovalca</translation>
+        <translation type="obsolete">Mapa za nalaganje iz Windows Raziskovalca</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Ali želite ponovno zagnati MEGAsync takoj?
     <message>
         <source>Install update</source>
         <translation>Namesti nadgradnjo</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Nastavitve - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Zaženi ob zagonu računalnika</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Prikaži obvestila</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Ne morem dostopati do datotečnega sistema.
 Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Čarovnik za namestitev - MEGAsync</translation>
     </message>
 </context>
 <context>

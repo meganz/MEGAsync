@@ -499,15 +499,35 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Dosya/klasör yükle</translation>
+        <translation type="obsolete">Dosya/klasör yükle</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync şuan çalışıyor. Durum penceresini açmak için sistem tepsisi simgesini tıklatın.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGAsync&apos;in yeni bir sürümü mevcut!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync şuan çalışıyor. Durum penceresini açmak için sistem tepsisi simgesini tıklatın.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Çıkış</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>MEGA&apos;ya yükle</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Klasör isimlerinde \ / veya : gibi karakterler kullanmadığınızdan emin olun
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Windows Gezgini&apos;nden yüklemeler için klasör</translation>
+        <translation type="obsolete">Windows Gezgini&apos;nden yüklemeler için klasör</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?
     <message>
         <source>Install update</source>
         <translation>Güncellemeyi yükle</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Ayarlar - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Açılışta otomatik başlat</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Bildirimleri göster</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Dosya sistemi alınamıyor.
 Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Kurulum Sihirbazı - MEGAsync</translation>
     </message>
 </context>
 <context>

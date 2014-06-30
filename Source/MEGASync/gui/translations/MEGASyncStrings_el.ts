@@ -499,15 +499,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Ανεβάστε τα αρχεία/φακέλους</translation>
+        <translation type="obsolete">Ανεβάστε τα αρχεία/φακέλους</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>Το MEGAsync είναι πλέον σε λειτουργία. Κάντε κλικ στο εικονίδιο του συστήματος για να ανοίξετε το παράθυρο κατάστασης.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Μια νέα έκδοση του MEGAsync είναι διαθέσιμη!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>Το MEGAsync είναι πλέον σε λειτουργία. Κάντε κλικ στο εικονίδιο του συστήματος για να ανοίξετε το παράθυρο κατάστασης.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Έξοδος</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Ρυθμίσεις</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Ανεβάστε στο MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
     </message>
 </context>
 <context>
@@ -936,7 +956,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>   	Φάκελος για μεταφορτώσεις από τον Windows Explorer</translation>
+        <translation type="obsolete">   	Φάκελος για μεταφορτώσεις από τον Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1126,6 +1146,22 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>Εγκαταστήστε την ενημέρωση</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Ρυθμίσεις - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Έναρξη με την εκκίνηση</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Εμφάνιση ειδοποιήσεων</translation>
     </message>
 </context>
 <context>
@@ -1348,6 +1384,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translation>Ανίκανο να πάρει το σύστημα αρχείων.
 Παρακαλώ προσπαθείστε ξανά. Αν το πρόβλημα επιμείνει παρακαλώ επικοινωνήστε στο bug@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Οδηγός εγκατάστασης - MEGAsync</translation>
     </message>
 </context>
 <context>
