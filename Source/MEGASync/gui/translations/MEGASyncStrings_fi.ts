@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fi" sourcelanguage="en">
+<TS version="2.1" language="fi" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Valitse paikallinen kansio</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Olet tuomassa näitä tiedostoja synkronoitavaan kansioon. Jos sallit lataamisen, tietokoneellesi tulee identtisiä kopioita tiedostoista. Oletko varma?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload files/folders</translation>
+        <translation type="obsolete">Lähetä tiedotoja/kansioita</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync on nyt pyörimässä. Klikkaa ilmoitusalueen kuvaketta avataksesi tilaikkunan.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Uusi versio MEGAsyncista on saatavilla!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync on nyt pyörimässä. Klikkaa ilmoitusalueen kuvaketta avataksesi tilaikkunan.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Lopeta</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Asetukset</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Lähetä MEGAan</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Näytä tila</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Varmista, ettet käytä merkkejä kuten \ / tai : kansioidesi nimissä.</transla
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Kansio Windowsin resurssienhallinnasta lähteville lähetyksille</translation>
+        <translation type="obsolete">Kansio Windowsin resurssienhallinnasta lähteville lähetyksille</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1099,33 +1131,61 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation>Other</translation>
+        <translation>Muuta</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
-        <translation>Disable overlay icons</translation>
+        <translation>Poista päällyskuvakkeet käytöstä</translation>
     </message>
     <message>
         <source>Force a full scan</source>
-        <translation>Force a full rescan</translation>
+        <translation>Pakota täysi uudelleenskannaus</translation>
     </message>
     <message>
         <source>Full scan</source>
-        <translation>Full scan</translation>
+        <translation>Täysi skannaus</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync will perform a full scan of your synced folderswhen it starts.
+        <translation type="obsolete">MEGAsync tulee suorittamaan täyden skannin synkronisoimistasi kansioista
 
-Do you want to restart MEGAsync now?
+Haluatko käynnistää MEGAsyncin uudelleen nyt?
 </translation>
     </message>
     <message>
         <source>Install update</source>
         <translation>Päivitä</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Kansio lähetyksille tältä tietokoneelta</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Asetukset - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Käynnistä automaattisesti tietokoneen käynnistyksen yhteydessä</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Näytä ilmoitukset</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync tulee suorittamaan täyden skannin synkronisoimistasi kansioista
+
+Haluatko käynnistää MEGAsyncin uudelleen nyt?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Tiedostojärjestelmää ei voitu hakea.
 Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähköpostilla bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Ohjattu asennus - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     <message>
         <source>Cancel</source>
         <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

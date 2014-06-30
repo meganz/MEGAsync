@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr" sourcelanguage="en">
+<TS version="2.1" language="fr" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Sélectionner un dossier local </translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Vous êtes sur le point d&apos;importer ces fichier dans un dossier synchronisé. Si vous activez le téléchargement, ces fichiers seront dupliqués sur votre ordinateur. Êtes-vous sûr ?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Uploader fichiers/dossiers</translation>
+        <translation type="obsolete">Uploader fichiers/dossiers</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync est lancé. Cliquez sur l&apos;icône de la barre des tâches pour ouvrir la fenêtre de statut.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>Une nouvelle version de MEGAsync est disponible !</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync est lancé. Cliquez sur l&apos;icône de la barre des tâches pour ouvrir la fenêtre de statut.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Quitter</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Réglages</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Uploader sur MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Afficher le statut</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Veuillez vous assurer de ne pas utiliser des caractères tels que \ / ou : dans 
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Dossier par défaut dans lequel sont placés automatiquement tout fichier ou dossier uploadé via le menu contextuel de l&apos;Explorateur de Fichiers Windows</translation>
+        <translation type="obsolete">Dossier par défaut dans lequel sont placés automatiquement tout fichier ou dossier uploadé via le menu contextuel de l&apos;Explorateur de Fichiers Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync va effectuer un scan complet de vos dossiers synchronisés.
+        <translation type="obsolete">MEGAsync va effectuer un scan complet de vos dossiers synchronisés.
 
 Voulez-vous redémarrer MEGAsync maintenant ?
 </translation>
@@ -1126,6 +1158,34 @@ Voulez-vous redémarrer MEGAsync maintenant ?
     <message>
         <source>Install update</source>
         <translation>Installer la mise à jour</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Dossier pour les uploads depuis cet ordinateur</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Réglages - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Lancer au démarrage de l&apos;ordinateur</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Montrer les notifications</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync va effectuer un scan complet de vos dossiers synchronisés.
+
+Voulez-vous redémarrer MEGAsync maintenant ?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Impossible de récupérer le système de fichiers.
 Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Assistant d&apos;Installation - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

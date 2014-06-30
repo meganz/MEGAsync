@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="he" sourcelanguage="en">
+<TS version="2.1" language="he" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>בחר תיקייה מקומית</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>אתה עומד לייבא קבצים אלה לתיקייה מסונכרנת. אם אתה מאפשר הורדה, הקבצים ישוכפלו על המחשב שלך. האם אתה בטוח?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>העלה קבצים/תיקיות</translation>
+        <translation type="obsolete">העלה קבצים/תיקיות</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync רצה כעת. אנא לחץ על הכפתור בשורת המשימות על מנת לראות את מצב הסנכרון.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>קיימת גרסא חדשה ל-MEGAsync!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync רצה כעת. אנא לחץ על הכפתור בשורת המשימות על מנת לראות את מצב הסנכרון.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>יציאה</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>הגדרות</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>העלאה ל-MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>הצג סטטוס</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>תיקייה להעלאה למנהל הקבצים</translation>
+        <translation type="obsolete">תיקייה להעלאה למנהל הקבצים</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync יערוך סריקה כוללת של כל התיקיות המסונכרות שלך
+        <translation type="obsolete">MEGAsync יערוך סריקה כוללת של כל התיקיות המסונכרות שלך
 
 האם ברצומך לאתחל את MEGAsync כעת?
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>התקן עדכון</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>תיקייה להעלאה ממחשב זה</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>הגדרות - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>התחל באתחול המחשב</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>הצג התראות</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync יערוך סריקה כוללת של כל התיקיות המסונכרות שלך
+
+האם ברצומך לאתחל את MEGAsync כעת?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>לא נמצאה מערכת קבצים.
 אנא נסה שוב. אם הבעיה נמשכת, אנא פנה אלינו דרך bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>אשף ההתקנה - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>בטל</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

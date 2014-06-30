@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="da" sourcelanguage="en">
+<TS version="2.1" language="da" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Vælg lokal mappe</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Du er ved at importere disse filer til en synkroniseret mappe. Hvis du har tillader download, vil filerne blive duplikeret til din computer. Er du sikker?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Prøv venligst igen. Hvis problemet fortsætter, så kontakt bug@mega.co.nz</tra
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Upload filer/mapper</translation>
+        <translation type="obsolete">Upload filer/mapper</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync kører nu. Tryk på ikonet i proceslinjens højre side for at åbne et statusvindue.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>En ny version af MEGAsync er nu tilgængelig!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync kører nu. Tryk på ikonet i proceslinjens højre side for at åbne et statusvindue.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Afbryd</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Indstillinger</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Upload til MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Vis status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Sikr dig at du ikke brugere tegn som \ / eller : i dine mappenavne.</translation
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Mappe til uploads fra Windows Filhåndtering</translation>
+        <translation type="obsolete">Mappe til uploads fra Windows Filhåndtering</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync vil foretage en fuld skanning af dine synkroniserede mapper
+        <translation type="obsolete">MEGAsync vil foretage en fuld skanning af dine synkroniserede mapper
 
 Vil du genstarte MEGAsync nu?
 </translation>
@@ -1126,6 +1158,34 @@ Vil du genstarte MEGAsync nu?
     <message>
         <source>Install update</source>
         <translation>Installér opdatering</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Mapper til upload fra denne computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Indstillinger - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Start ved opstart</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Vis notifikationer</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync vil foretage en fuld skanning af dine synkroniserede mapper
+
+Vil du genstarte MEGAsync nu?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Ikke i stand til at hente filsystem.
 Prøv venligst igen. Hvis problemet fortsætter, så kontakt bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Opsætningsguide - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Prøv venligst igen. Hvis problemet fortsætter, så kontakt bug@mega.co.nz</tra
     <message>
         <source>Cancel</source>
         <translation>Annullér</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

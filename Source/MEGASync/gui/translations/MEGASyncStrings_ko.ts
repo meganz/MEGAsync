@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ko" sourcelanguage="en">
+<TS version="2.1" language="ko" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>로컬 폴더를 선택하세요</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>당신은 이 파일들을 동기화된 폴더로 들여오려고 합니다. 만약 다운로드를 활성화하면, 파일이 컴퓨터에서 분리가 될 것입니다. 확실하십니까?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>파일/폴더 업로드</translation>
+        <translation type="obsolete">파일/폴더 업로드</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>메가싱크가 작동중입니다. 상태 창을 열려면 시스템 트레이 아이콘을 클릭하세요.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>메가싱크의 새 버전을 사용할 수 있습니다!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>메가싱크가 작동중입니다. 상태 창을 열려면 시스템 트레이 아이콘을 클릭하세요.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>종료</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>설정</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>메가에 업로드</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>상태 보기</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>윈도우 탐색기의 업로드 폴더</translation>
+        <translation type="obsolete">윈도우 탐색기의 업로드 폴더</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>메가싱크가 동기화된 폴더를 모두 검색합니다
+        <translation type="obsolete">메가싱크가 동기화된 폴더를 모두 검색합니다
 
 지금 메가싱크를 다시 시작할까요?
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>업데이트 설치</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>이 컴퓨터에서 업로드한 파일을 위한 폴더</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>설정 - 메가싱크</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>부팅시 시작</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>알림 보이기</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>메가싱크가 동기화된 폴더를 모두 검색합니다
+
+지금 메가싱크를 다시 시작할까요?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>파일 시스템을 가져올 수 없습니다.
 다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락바랍니다.</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>설정 마법사 - 메가싱크</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>취소</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

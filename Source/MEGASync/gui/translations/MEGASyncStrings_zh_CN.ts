@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>选择本地文件夹</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>您将这些文件导入到同步文件夹。如果启用下载，文件将被复制到计算机上。 你确定么？</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>上传文件（夹）</translation>
+        <translation type="obsolete">上传文件（夹）</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGA现在正在运行，点击系统托盘图标打开状态窗口</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>MEGA的全新版本目前可以开始使用了！</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGA现在正在运行，点击系统托盘图标打开状态窗口</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>上传到MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Show status</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>文件夹从Windows资源管理器上传</translation>
+        <translation type="obsolete">文件夹从Windows资源管理器上传</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync开始时将执行您的同步文件夹进行完全扫描 。
+        <translation type="obsolete">MEGAsync开始时将执行您的同步文件夹进行完全扫描 。
 
 是否立即重启MEGAsync
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>安装更新</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Folder for uploads from this computer</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>设置 - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>开始启动</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>展示通知</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync开始时将执行您的同步文件夹进行完全扫描 。
+
+是否立即重启MEGAsync</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>不能获得文进系统
 请再试一次。如果问题仍然存在，请联系bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>设置向导 - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<TS version="2.1" language="es" sourcelanguage="en">
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -105,6 +105,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Select local folder</source>
         <translation>Elegir carpeta local</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -163,6 +167,10 @@ Are you sure?</source>
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
         <translation>Vas a importar estos archivos a una carpeta sincronizada. Si activas la descarga, los archivos se duplicarán en tu ordenador. ¿Estás seguro?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -499,15 +507,39 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation>Subir archivos/carpetas</translation>
+        <translation type="obsolete">Subir archivos/carpetas</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync is now running. Click the system tray icon to open the status window.</translation>
+        <translation>MEGAsync está en funcionamiento. Pulsa el icono de la bandeja para ver la ventana de estado.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
-        <translation>A new version of MEGAsync is available!</translation>
+        <translation>¡Hay una nueva versión de MEGA disponible!</translation>
+    </message>
+    <message>
+        <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
+        <translation>MEGAsync está en funcionamiento. Pulsa el icono de la bandeja para ver la ventana de estado.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Salir</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Ajustes</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation>Subir a MEGA</translation>
+    </message>
+    <message>
+        <source>Show status</source>
+        <translation>Mostrar estado</translation>
+    </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation>Your config is corrupt, please start over</translation>
     </message>
 </context>
 <context>
@@ -936,7 +968,7 @@ Por favor, asegúrate de que no has utilizado caracteres como \ / ó : en los no
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation>Carpeta de subidas desde el Explorador de Windows</translation>
+        <translation type="obsolete">Carpeta de subidas desde el Explorador de Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1118,7 +1150,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync realizará un escaneo completo de las carpetas sincronizadas
+        <translation type="obsolete">MEGAsync realizará un escaneo completo de las carpetas sincronizadas
 
 ¿Quieres reiniciar MEGAsync ahora?
 </translation>
@@ -1126,6 +1158,34 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install update</source>
         <translation>Instalar actualización</translation>
+    </message>
+    <message>
+        <source>Folder for uploads from this computer</source>
+        <translation>Carpeta para subidas desde este PC</translation>
+    </message>
+    <message>
+        <source>Preferences - MEGAsync</source>
+        <translation>Ajustes - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Open at login</source>
+        <translation>Iniciar con el sistema</translation>
+    </message>
+    <message>
+        <source>Show Mac OS notifications</source>
+        <translation>Mostrar notificaciones</translation>
+    </message>
+    <message>
+        <source>MEGAsync will perform a full scan of your synced folders when it starts.
+
+Do you want to restart MEGAsync now?</source>
+        <translation>MEGAsync realizará un escaneo completo de las carpetas sincronizadas
+
+¿Quieres reiniciar MEGAsync ahora?</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
@@ -1349,6 +1409,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>No se pudo acceder el sistema de archivos de MEGA.
 Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en contacto con nosotros en: bug@mega.co.nz</translation>
     </message>
+    <message>
+        <source>Setup Assistant - MEGAsync</source>
+        <translation>Asistente de Instalación - MEGAsync</translation>
+    </message>
+    <message>
+        <source>Error getting session key</source>
+        <translation>Error getting session key</translation>
+    </message>
+    <message>
+        <source>Full sync</source>
+        <translation>Full sync</translation>
+    </message>
+    <message>
+        <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1426,6 +1502,10 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
     </message>
 </context>
 <context>
