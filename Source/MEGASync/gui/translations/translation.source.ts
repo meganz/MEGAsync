@@ -537,6 +537,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Show status</source>
         <translation type="unfinished">XXXXX</translation>
     </message>
+    <message>
+        <source>Your config is corrupt, please start over</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -856,7 +860,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Help</source>
-        <translation type="vanished">[$1717]</translation>
+        <translation>[$1717]</translation>
     </message>
     <message>
         <source>OK</source>
@@ -892,7 +896,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Details</source>
-        <translation type="vanished">[$1724]</translation>
+        <translation>[$1724]</translation>
     </message>
     <message>
         <source>FREE</source>
@@ -912,7 +916,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation type="vanished">[$1729]</translation>
+        <translation>[$1729]</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1127,7 +1131,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Other</source>
-        <translation type="vanished">[$2007]</translation>
+        <translation>[$2007]</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1244,7 +1248,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation type="vanished">[$1771]</translation>
+        <translation>[$1771]</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1276,15 +1280,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation type="vanished">[$1778]</translation>
+        <translation>[$1778]</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation type="vanished">[$1779]</translation>
+        <translation>[$1779]</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation type="vanished">[$1780]</translation>
+        <translation>[$1780]</translation>
     </message>
     <message>
         <source>Back</source>
