@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izvēlēties</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izvēlēties</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Konfigurācijas kļūda, lūdzu,  sāciet no sākuma</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Vai tu vēlies restartēt MEGAsync tagad?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izvēlēties</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Kļūda iegūstot sesijas  atslēgu</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Pilnīga sinhronizācija</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Tava vietējā mape un MEGA Datu Krātuve tiks automātiski sinhronizēti. </translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izvēlēties</translation>
     </message>
 </context>
 <context>

@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Vali</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Vali</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Teie seadistusfail on vigane, palun alustage uuesti</translation>
     </message>
 </context>
 <context>
@@ -848,7 +848,7 @@ Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</transla
     </message>
     <message>
         <source>Syncs</source>
-        <translation>Sünkroniseeringud</translation>
+        <translation>Edastused</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -1185,7 +1185,7 @@ Kas soovite praegu taaskäivitada MEGAsünki?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Vali</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Sessiooni võtme hankimisel ilmnes viga</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Täielik sünk</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Teie kohalikku kausta ja Teie MEGA pilveketast sünkroniseeritakse automaatselt.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Vali</translation>
     </message>
 </context>
 <context>

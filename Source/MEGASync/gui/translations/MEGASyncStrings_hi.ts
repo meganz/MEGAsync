@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>चुनें</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>चुनें</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>अपने config भ्रष्ट है, पर शुरू कृपया</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>चुनें</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>त्रुटि सत्र कुंजी हो रही</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>पूर्ण सिंक</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>अपने स्थानीय फ़ोल्डर और अपने मेगा बादल ड्राइव स्वचालित रूप से सिंक्रनाइज़ किया जाएगा.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>चुनें</translation>
     </message>
 </context>
 <context>
