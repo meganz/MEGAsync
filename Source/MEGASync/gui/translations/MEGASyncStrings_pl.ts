@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Wybierz</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Wybierz</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Twoja konfiguracja zawiera błędy, prosimy spróbować ponownie.</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Czy chcesz teraz zrestarować MEGAsync?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Wybierz</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Wystąpił błąd w kluczu sesji</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Pełna synchronizacja</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Twój lokalny katalog i katalog na MEGA zostaną automatycznie zsynchronizowane.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Wybierz</translation>
     </message>
 </context>
 <context>

@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pilih</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pilih</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Config anda rusak, harap ulang kembali</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Apakah anda ingin mengulang MEGAsync sekarang?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pilih</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Error mendapatkan session key</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Sync menyeluruh</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Folder lokal anda dan MEGA Cloud Drive akan secara otomatis disinkronisasi</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Harap coba kembali. Jika terdapat masalah yang sama harap hubungi bug@mega.co.nz
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pilih</translation>
     </message>
 </context>
 <context>

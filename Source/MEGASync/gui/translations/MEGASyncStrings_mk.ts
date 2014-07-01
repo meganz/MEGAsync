@@ -5,7 +5,7 @@
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
-        <translation>Додани синхронизирана папка</translation>
+        <translation>Додај синхронизирана папка</translation>
     </message>
     <message>
         <source></source>
@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Одберете</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Одберете</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Вашата конфигурација е коруптирана, ве молиме обидете се повторно</translation>
     </message>
 </context>
 <context>
@@ -852,7 +852,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation>Интернет сообраќај </translation>
+        <translation>Сообраќај </translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -976,7 +976,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Proxy Settings</source>
-        <translation>Подвешавања на прокси </translation>
+        <translation>Подвесувања на прокси </translation>
     </message>
     <message>
         <source>No proxy</source>
@@ -984,7 +984,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Auto-detect</source>
-        <translation>Автоматички детектирај</translation>
+        <translation>Препознај</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -1185,7 +1185,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Одберете</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Проблем со добивање на сесија клуч</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Целосна синхронизација</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Вашата локална папка и вашиот МЕГА клауд диск ќе биде автоматски синхронизирана. </translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Одберете</translation>
     </message>
 </context>
 <context>

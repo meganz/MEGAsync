@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Seç</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Seç</translation>
     </message>
 </context>
 <context>
@@ -535,11 +535,11 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>Durumu göster</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Yapılandırmanız bozuk, baştan başlayın</translation>
     </message>
 </context>
 <context>
@@ -1161,7 +1161,7 @@ MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>Bu bilgisayardan yüklenecek klasörler</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1185,7 +1185,7 @@ MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Seç</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Oturum anahtarı alma hatası</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Tam senkr</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Yerel klasörünüz ve MEGA Cloud Drive&apos;ınız otomatik olarak senkronize olacaktır.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Lütfen tekrar deneyin. Sorun devam ederse bug@mega.co.nz ile temas kurun</trans
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Seç</translation>
     </message>
 </context>
 <context>

@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Elegir</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Elegir</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>El archivo de configuración es corrupto, empieza de nuevo</translation>
     </message>
 </context>
 <context>
@@ -848,7 +848,7 @@ Por favor, asegúrate de que no has utilizado caracteres como \ / ó : en los no
     </message>
     <message>
         <source>Syncs</source>
-        <translation>Sincronizaciones</translation>
+        <translation>Sincronizando</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -1185,7 +1185,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Elegir</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Error al recibir la llave de la sesión</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Sincronización completa</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Tu carpeta local y tu Disco en la Nube de MEGA serán sincronizados automaticamente</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Por favor, inténtalo de nuevo. Si el problema persiste, puedes ponerte en conta
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Elegir</translation>
     </message>
 </context>
 <context>

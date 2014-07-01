@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Scegli</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Scegli</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Riprova. Se il problema persiste contatta bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>La tua configurazione è corrotta, per favore ricomincia</translation>
     </message>
 </context>
 <context>
@@ -852,7 +852,7 @@ Verifica di non utilizzare caratteri come \ / o : nei nomi delle cartelle.</tran
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation>Larghezza di banda</translation>
+        <translation>Larghezza banda</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1185,7 +1185,7 @@ Vuoi riavviare MEGAsync adesso?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Scegli</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Riprova. Se il problema persiste contatta bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Errore durante il recupero della chiave di sessione</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Sincronizzazione completa</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>La tua cartella locale e il tuo Cloud Drive MEGA saranno sincronizzati automaticamente.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Riprova. Se il problema persiste contatta bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Scegli</translation>
     </message>
 </context>
 <context>
