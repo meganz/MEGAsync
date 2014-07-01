@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Kiválaszt</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Kiválaszt</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Konfigurációja sérült, kérem kezdje elölről</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Szeretné most újraindítani a MEGAsync-et?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Kiválaszt</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Hiba a munkamenet-kulcs lekérésekor</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Teljes szinkron</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Helyi mappája és MEGA Felhőmeghajtója automatikusan szinkronizálva lesz.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Kiválaszt</translation>
     </message>
 </context>
 <context>

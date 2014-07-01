@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Alege</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Alege</translation>
     </message>
 </context>
 <context>
@@ -511,7 +511,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync rulează în prezent. Clic pe iconița din bara de sistem pentru a deschide fereastra de stare.</translation>
+        <translation>MEGAsync rulează în prezent. Clic pe iconiţa din bara de sistem pentru a deschide fereastra de stare.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -519,7 +519,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
-        <translation>MEGAsync rulează în prezent. Clic pe iconița din bara de sistem pentru a deschide fereastra de stare.</translation>
+        <translation>MEGAsync rulează în prezent. Clic pe iconiţa din bara de sistem pentru a deschide fereastra de stare.</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -539,7 +539,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Fişierul config este corupt, te rugăm să o iei de la început</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Doreşti să reporneşti MEGAsync acum?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Alege</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Eroare la obţinerea cheii pentru sesiune</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Sincronizare completă</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Folderul tău local şi unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Alege</translation>
     </message>
 </context>
 <context>

@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>არჩევა</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>არჩევა</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>თქვენი config-ის ფაილი დაზიანებულია ან არასწორია, გთხოვთ კიდევ სცადოთ</translation>
     </message>
 </context>
 <context>
@@ -856,7 +856,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Advanced</source>
-        <translation>დამატებითი პარამეტრები</translation>
+        <translation>დამატებითი</translation>
     </message>
     <message>
         <source>Help</source>
@@ -988,7 +988,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Proxy</source>
-        <translation>პროქსი (Proxy)</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -1185,7 +1185,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>არჩევა</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>სესიის კოდის მიღება შეცდომით დასრულდა</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>სრული სინქრონიზაცია</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>თქვენი ლოკალური ფოლდერი და თქვენი MEGA-ს ღრუბლოვანი მეხსიერება იქნება ავტომატურად სინქრონიზებული.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>არჩევა</translation>
     </message>
 </context>
 <context>

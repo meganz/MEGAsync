@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Tria</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Tria</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>El teu fitxer config està corromput. Si us plau, comença de nou.</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Vols reiniciar el MEGAsync ara?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Tria</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Error a l&apos;obtenir la clau de sessió</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Sincronització completa</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>La teva carpeta local i el teu compte al núvol de MEGA es sincronitzaran de forma automàtica.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Si us plau, intenta-ho de nou. Si el problema persisteix posa&apos;t en contacte
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Tria</translation>
     </message>
 </context>
 <context>
