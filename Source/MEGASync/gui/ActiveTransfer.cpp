@@ -13,6 +13,7 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
     ui->pProgress->hide();
     ui->lType->hide();
     regular = false;
+    active = false;
     connect(ui->pProgress, SIGNAL(cancel(int,int)), this, SLOT(onCancelClicked(int,int)));
 }
 
@@ -40,6 +41,7 @@ void ActiveTransfer::setProgress(long long completedSize, long long totalSize, b
     ui->pProgress->show();
     ui->lType->show();
     this->show();
+    active = true;
 }
 
 void ActiveTransfer::setType(int type)
@@ -71,6 +73,12 @@ void ActiveTransfer::hideTransfer()
 	ui->pProgress->hide();
     ui->lType->hide();
     this->hide();
+    active = false;
+}
+
+bool ActiveTransfer::isActive()
+{
+    return active;
 }
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
