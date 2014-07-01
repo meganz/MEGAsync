@@ -29,7 +29,7 @@ public:
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
     void setPaused(bool paused);
     void updateTransfers();
-    void transferFinished();
+    void transferFinished(int error);
     void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);

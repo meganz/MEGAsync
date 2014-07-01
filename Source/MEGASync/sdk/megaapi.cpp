@@ -2414,12 +2414,10 @@ void MegaApi::transfer_removed(Transfer *t)
             pendingUploads --;
     }
 
-    if(!pendingUploads && !pendingDownloads) fireOnSyncStateChanged(this);
     if(transferMap.find(t->tag) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(t->tag);
     LOG("transfer_removed");
-    transferMap.erase(transfer->getTag());
-    delete transfer;
+    fireOnTransferFinish(this, transfer, MegaError(API_EINCOMPLETE));
 }
 
 void MegaApi::transfer_prepare(Transfer *t)

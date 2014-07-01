@@ -317,23 +317,38 @@ void InfoDialog::updateTransfers()
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
-void InfoDialog::transferFinished()
+void InfoDialog::transferFinished(int error)
 {
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
     if(!remainingDownloads && ui->wTransfer1->isActive())
-        downloadsFinishedTimer.start();
+    {
+        if(!error)
+            downloadsFinishedTimer.start();
+        else
+            onAllDownloadsFinished();
+    }
     else
         downloadsFinishedTimer.stop();
 
     if(!remainingUploads && ui->wTransfer2->isActive())
-        uploadsFinishedTimer.start();
+    {
+        if(!error)
+            uploadsFinishedTimer.start();
+        else
+            onAllUploadsFinished();
+    }
     else
         uploadsFinishedTimer.stop();
 
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
-        transfersFinishedTimer.start();
+    {
+        if(!error)
+            transfersFinishedTimer.start();
+        else
+            onAllTransfersFinished();
+    }
     else
         transfersFinishedTimer.stop();
 }
