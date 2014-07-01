@@ -83,6 +83,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     setUsage(preferences->totalStorage(), preferences->usedStorage());
     updateSyncsButton();
 
+    ui->wDownloadDesc->hide();
+    ui->wUploadDesc->hide();
+
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
@@ -308,7 +311,7 @@ void InfoDialog::updateTransfers()
         }
     }
 
-    if((remainingUploads || remainingDownloads) && (ui->wTransfer1->isVisible() || ui->wTransfer2->isVisible()))
+    if((remainingUploads || remainingDownloads) && (ui->wTransfer1->isActive() || ui->wTransfer2->isActive()))
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
@@ -319,12 +322,12 @@ void InfoDialog::transferFinished()
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
-    if(!remainingDownloads)
+    if(!remainingDownloads && ui->wTransfer1->isActive())
         downloadsFinishedTimer.start();
     else
         downloadsFinishedTimer.stop();
 
-    if(!remainingUploads)
+    if(!remainingUploads && ui->wTransfer2->isActive())
         uploadsFinishedTimer.start();
     else
         uploadsFinishedTimer.stop();
