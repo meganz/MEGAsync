@@ -1932,9 +1932,6 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
-    if(e->getErrorCode() != MegaError::API_OK)
-        return;
-
     //Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -1983,7 +1980,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
         infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
         infoDialog->updateTransfers();
-        infoDialog->transferFinished();
+        infoDialog->transferFinished(e->getErrorCode());
     }
 
     if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
@@ -2174,7 +2171,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
         infoDialog->setWaiting(waiting);
         infoDialog->setPaused(paused);
         infoDialog->updateState();
-        infoDialog->transferFinished();
+        infoDialog->transferFinished(MegaError::API_OK);
     }
 
     LOG("Current state: ");
