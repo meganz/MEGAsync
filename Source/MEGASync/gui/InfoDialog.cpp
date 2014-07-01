@@ -68,6 +68,18 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     scanningAnimationIndex = 1;
     connect(&scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
+    uploadsFinishedTimer.setSingleShot(true);
+    uploadsFinishedTimer.setInterval(5000);
+    connect(&uploadsFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllUploadsFinished()));
+
+    downloadsFinishedTimer.setSingleShot(true);
+    downloadsFinishedTimer.setInterval(5000);
+    connect(&downloadsFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllDownloadsFinished()));
+
+    transfersFinishedTimer.setSingleShot(true);
+    transfersFinishedTimer.setInterval(5000);
+    connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
+
     setUsage(preferences->totalStorage(), preferences->usedStorage());
     updateSyncsButton();
 
@@ -308,39 +320,19 @@ void InfoDialog::transferFinished()
     remainingDownloads = megaApi->getNumPendingDownloads();
 
     if(!remainingDownloads)
-    {
-        ui->wTransfer1->hideTransfer();
-        ui->lDownloads->setText(QString::fromAscii(""));
-        ui->wDownloadDesc->hide();
-        downloadStartTime = 0;
-        downloadSpeed = 0;
-        currentDownload = 0;
-        totalDownloads = 0;
-        totalDownloadedSize = 0;
-        totalDownloadSize = 0;
-        megaApi->resetTotalDownloads();
-    }
+        downloadsFinishedTimer.start();
+    else
+        downloadsFinishedTimer.stop();
 
     if(!remainingUploads)
-    {
-        ui->wTransfer2->hideTransfer();
-        ui->lUploads->setText(QString::fromAscii(""));
-        ui->wUploadDesc->hide();
-        uploadStartTime = 0;
-        uploadSpeed = 0;
-        currentUpload = 0;
-        totalUploads = 0;
-        totalUploadedSize = 0;
-        totalUploadSize = 0;
-        megaApi->resetTotalUploads();
-    }
+        uploadsFinishedTimer.start();
+    else
+        uploadsFinishedTimer.stop();
 
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
-    {
-        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        app->updateUserStats();
-        app->showNotificationMessage(tr("All transfers have been completed"));
-    }
+        transfersFinishedTimer.start();
+    else
+        transfersFinishedTimer.stop();
 }
 
 void InfoDialog::updateSyncsButton()
@@ -654,6 +646,52 @@ void InfoDialog::cancelCurrentUpload()
 void InfoDialog::cancelCurrentDownload()
 {
     megaApi->cancelTransfer(transfer1);
+}
+
+void InfoDialog::onAllUploadsFinished()
+{
+    remainingUploads = megaApi->getNumPendingUploads();
+    if(!remainingUploads)
+    {
+        ui->wTransfer2->hideTransfer();
+        ui->lUploads->setText(QString::fromAscii(""));
+        ui->wUploadDesc->hide();
+        uploadStartTime = 0;
+        uploadSpeed = 0;
+        currentUpload = 0;
+        totalUploads = 0;
+        totalUploadedSize = 0;
+        totalUploadSize = 0;
+        megaApi->resetTotalUploads();
+    }
+}
+
+void InfoDialog::onAllDownloadsFinished()
+{
+    remainingDownloads = megaApi->getNumPendingDownloads();
+    if(!remainingDownloads)
+    {
+        ui->wTransfer1->hideTransfer();
+        ui->lDownloads->setText(QString::fromAscii(""));
+        ui->wDownloadDesc->hide();
+        downloadStartTime = 0;
+        downloadSpeed = 0;
+        currentDownload = 0;
+        totalDownloads = 0;
+        totalDownloadedSize = 0;
+        totalDownloadSize = 0;
+        megaApi->resetTotalDownloads();
+    }
+}
+
+void InfoDialog::onAllTransfersFinished()
+{
+    if(!remainingDownloads && !remainingUploads && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        app->updateUserStats();
+        app->showNotificationMessage(tr("All transfers have been completed"));
+    }
 }
 
 

@@ -46,6 +46,9 @@ public slots:
    void cancelAllDownloads();
    void cancelCurrentUpload();
    void cancelCurrentDownload();
+   void onAllUploadsFinished();
+   void onAllDownloadsFinished();
+   void onAllTransfersFinished();
 
 private slots:
     void on_bSettings_clicked();
@@ -111,6 +114,9 @@ protected:
 
 	QDateTime lastPopupUpdate;
     QTimer scanningTimer;
+    QTimer downloadsFinishedTimer;
+    QTimer uploadsFinishedTimer;
+    QTimer transfersFinishedTimer;
     int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
