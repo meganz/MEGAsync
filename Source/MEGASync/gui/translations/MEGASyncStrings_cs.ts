@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Zvolte</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Zvolte</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Vaše konfigurace je poškozená, začněte znovu, prosím</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Chcete restartovat MEGAsync nyní?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Zvolte</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Chyba při získávání klíče relace</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Úplná synchronizace</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Vaše místní složka a Cloudová jednotka MEGA budou automaticky synchronizovány.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Zvolte</translation>
     </message>
 </context>
 <context>

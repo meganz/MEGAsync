@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Asetustiedostosi on korruptoitunut, ole hyvä ja aloita alusta</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Haluatko käynnistää MEGAsyncin uudelleen nyt?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Virhe hakiessa istuntoavainta</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Täysi synkronointi</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Paikallinen kansiosi ja MEGA-pilvilevynne tulee synkronoitumaan automaattisesti.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>
