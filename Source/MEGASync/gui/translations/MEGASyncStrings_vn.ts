@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Chọn</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Chọn</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Các thiết đặt của bạn gây ra xung đột, xin làm lại từ đầu</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Chọn</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Lỗi phát sinh khi lấy phiên hoạt động</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Đồng bộ toàn bộ</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Thư mục nội tại trên máy và Ổ Mây MEGA của bạn sẽ được tự động đồng bộ hóa.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Chọn</translation>
     </message>
 </context>
 <context>
