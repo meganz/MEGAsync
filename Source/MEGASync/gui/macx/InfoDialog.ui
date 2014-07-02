@@ -210,7 +210,7 @@ padding-bottom: -1px;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Resources_macx.qrc">
        <normaloff>:/images/top_arrow.png</normaloff>:/images/top_arrow.png</iconset>
      </property>
      <property name="iconSize">
@@ -278,7 +278,7 @@ padding-bottom: -1px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
         </property>
         <property name="iconSize">
@@ -391,7 +391,7 @@ margin-top:-1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -472,7 +472,7 @@ margin-top:-1px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="Resources.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
          </property>
          <property name="iconSize">
@@ -730,7 +730,7 @@ color: rgb(102, 102, 102);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="Resources.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/upload_timer_ico.png</normaloff>:/images/upload_timer_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -813,7 +813,7 @@ color: rgb(102, 102, 102);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="Resources.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1358,7 +1358,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/tray_web_ico@2x.png</normaloff>:/images/tray_web_ico@2x.png</iconset>
         </property>
         <property name="iconSize">
@@ -1431,7 +1431,7 @@ color: #666666;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
