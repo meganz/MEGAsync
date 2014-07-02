@@ -242,7 +242,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -278,7 +278,7 @@ color: #666666;
   </layout>
  </widget>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
