@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pumili</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pumili</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Ang inyong config ay mali, muling magsimula ulit</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Gusto mo bang irestart ang MEGAsync?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pumili</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Hindi makuha ang session key</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Buong sync</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Ang inyong local folder at ang inyong MEGA Cloud Drive ay naka-sync na.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Muling subukan. Kung magpatuloy ang ganito, i-email kami sa bug@mega.co.nz</tran
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Pumili</translation>
     </message>
 </context>
 <context>
