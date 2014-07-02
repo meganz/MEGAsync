@@ -324,30 +324,39 @@ void InfoDialog::transferFinished(int error)
 
     if(!remainingDownloads && ui->wTransfer1->isActive())
     {
-        if(!error)
-            downloadsFinishedTimer.start();
-        else
-            onAllDownloadsFinished();
+        if(!downloadsFinishedTimer.isActive())
+        {
+            if(!error)
+                downloadsFinishedTimer.start();
+            else
+                onAllDownloadsFinished();
+        }
     }
     else
         downloadsFinishedTimer.stop();
 
     if(!remainingUploads && ui->wTransfer2->isActive())
     {
-        if(!error)
-            uploadsFinishedTimer.start();
-        else
-            onAllUploadsFinished();
+        if(!uploadsFinishedTimer.isActive())
+        {
+            if(!error)
+                uploadsFinishedTimer.start();
+            else
+                onAllUploadsFinished();
+        }
     }
     else
         uploadsFinishedTimer.stop();
 
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
     {
-        if(!error)
-            transfersFinishedTimer.start();
-        else
-            onAllTransfersFinished();
+        if(!transfersFinishedTimer.isActive())
+        {
+            if(!error)
+                transfersFinishedTimer.start();
+            else
+                onAllTransfersFinished();
+        }
     }
     else
         transfersFinishedTimer.stop();
