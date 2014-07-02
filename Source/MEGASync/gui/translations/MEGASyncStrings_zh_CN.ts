@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
@@ -535,11 +535,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Show status</source>
-        <translation>Show status</translation>
+        <translation>显示状态</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>你的配置已被损坏，请重新开始</translation>
     </message>
 </context>
 <context>
@@ -1161,7 +1161,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation>从这台计算机上传文件夹</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1185,7 +1185,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>错误获取会话密钥</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>完全同步</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>您的本地文件夹和MEGA云驱动器将被自动同步。</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
