@@ -168,7 +168,7 @@ margin-bottom: 9px;
       <string notr="true">background-image: url(&quot;:/images/background.png&quot;);</string>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <property name="styleSheet">
@@ -199,7 +199,7 @@ margin-bottom: 9px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="Resources.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
          </property>
          <property name="iconSize">
@@ -511,7 +511,7 @@ margin-bottom: 9px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="Resources.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
          </property>
          <property name="iconSize">
@@ -826,7 +826,7 @@ color: #666666;</string>
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="Resources.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1035,7 +1035,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="Resources.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1470,7 +1470,7 @@ margin-left: 2px;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="Resources.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
          </property>
          <property name="iconSize">
@@ -1501,6 +1501,9 @@ margin-left: 2px;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -1593,7 +1596,7 @@ margin-left: 2px;</string>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
  <slots>

@@ -258,6 +258,12 @@ void InfoDialog::updateTransfers()
             else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
 
             ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
+
+            if(!ui->wTransfer1->isActive())
+                ui->wDownloadDesc->hide();
+            else
+                ui->wDownloadDesc->show();
+
         }
     }
 
@@ -308,6 +314,11 @@ void InfoDialog::updateTransfers()
             else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
 
             ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
+
+            if(!ui->wTransfer2->isActive())
+                ui->wUploadDesc->hide();
+            else
+                ui->wUploadDesc->show();
         }
     }
 

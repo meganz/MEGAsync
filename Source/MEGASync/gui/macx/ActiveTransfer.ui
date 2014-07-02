@@ -164,7 +164,7 @@ color: grey;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/tray_download_ico.png</normaloff>:/images/tray_download_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -199,7 +199,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
