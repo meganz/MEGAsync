@@ -103,7 +103,7 @@ border-left: 1px solid #F7F7F7;</string>
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset resource="../Resources_macx.qrc">
      <normaloff>:/images/tray_cancel_ico.png</normaloff>:/images/tray_cancel_ico.png</iconset>
    </property>
   </widget>
@@ -155,7 +155,7 @@ border: 2px solid rgb(178, 178, 178);;
   <zorder>wProgress</zorder>
  </widget>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
