@@ -38,7 +38,7 @@ unzip -d $MOUNTDIR/$APP_NAME ../$RESOURCES.zip
 
 echo "Adding symlinks (4/7)"
 #Add a symbolic link to the Applications directory
-ln -s /Applications/ "$MOUNTDIR/$APP_NAME/ " 
+ln -s /Applications/ $MOUNTDIR/$APP_NAME/Applications 
 
 echo "Detaching temporary Disk Image (5/7)"
 #Detach the temporary image
