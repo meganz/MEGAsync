@@ -11,8 +11,10 @@ RecentFile::RecentFile(QWidget *parent) :
     ui(new Ui::RecentFile)
 {
     ui->setupUi(this);
-    ui->lTime->setText(QString::fromAscii(""));
-    ui->pArrow->hide();
+    ui->lTime->setText(QString::fromUtf8(""));
+    ui->pArrow->setIcon(QIcon());
+    ui->pArrow->setToolTip(QString::fromUtf8(""));
+    info.fileHandle = mega::UNDEF;
     menu = NULL;
 }
 
@@ -37,7 +39,8 @@ void RecentFile::updateWidget()
 	{
         ui->lFileType->setText(QString());
         ui->lTime->setText(QString::fromAscii(""));
-        ui->pArrow->hide();
+        ui->pArrow->setIcon(QIcon());
+        ui->pArrow->setToolTip(QString::fromUtf8(""));
         return;
 	}
 
@@ -57,7 +60,8 @@ void RecentFile::updateWidget()
         ui->lFileType->setPixmap(icon.pixmap(QSize(48, 48)));
 #endif
 
-        ui->pArrow->show();
+        ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
+        ui->pArrow->setToolTip(tr("Get MEGA link"));
     }
 
     QDateTime now = QDateTime::currentDateTime();
@@ -134,7 +138,8 @@ void RecentFile::changeEvent(QEvent *event)
 
 void RecentFile::on_pArrow_clicked()
 {
-    ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
+    if(info.fileHandle != mega::UNDEF)
+        ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
 }
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
