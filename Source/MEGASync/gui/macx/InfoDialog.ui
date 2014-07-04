@@ -1020,7 +1020,10 @@ color: rgb(102, 102, 102);</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: #F7F7F7;</string>
+            <string notr="true">QWidget
+{
+background-color: #F7F7F7;
+}</string>
            </property>
           </widget>
          </item>
@@ -1058,7 +1061,11 @@ color: rgb(102, 102, 102);</string>
             <enum>Qt::LeftToRight</enum>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: #F7F7F7;</string>
+            <string notr="true">QWidget
+{
+background-color: #F7F7F7;
+}
+</string>
            </property>
           </widget>
          </item>

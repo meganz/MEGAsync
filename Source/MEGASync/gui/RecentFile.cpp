@@ -12,7 +12,7 @@ RecentFile::RecentFile(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lTime->setText(QString::fromAscii(""));
-    ui->pArrow->setIcon(QIcon());
+    ui->pArrow->hide();
     menu = NULL;
 }
 
@@ -37,7 +37,7 @@ void RecentFile::updateWidget()
 	{
         ui->lFileType->setText(QString());
         ui->lTime->setText(QString::fromAscii(""));
-        ui->pArrow->setIcon(QIcon());
+        ui->pArrow->hide();
         return;
 	}
 
@@ -57,7 +57,7 @@ void RecentFile::updateWidget()
         ui->lFileType->setPixmap(icon.pixmap(QSize(48, 48)));
 #endif
 
-        ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
+        ui->pArrow->show();
     }
 
     QDateTime now = QDateTime::currentDateTime();
