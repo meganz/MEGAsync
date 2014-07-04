@@ -235,9 +235,6 @@ void MegaApplication::initialize()
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
-    //Hack to have tooltips with a black background
-    QApplication::setStyleSheet(QString::fromAscii("QToolTip { color: #fff; background-color: #151412; border: none; }"));
-
     preferences = Preferences::instance();
     if(preferences->error())
         QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
