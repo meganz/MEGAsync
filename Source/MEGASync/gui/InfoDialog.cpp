@@ -737,7 +737,7 @@ void InfoDialog::on_bSettings_clicked()
 {
     if(!isUnity)
     {
-        QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
+        QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
         app->showTrayMenu(&p);
         #ifdef __APPLE__
             if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
@@ -790,6 +790,9 @@ void InfoDialog::on_bSyncFolder_clicked()
                     "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
                     "QMenu::item {background-color: white; color: black;} "
                     "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+        #else
+            syncsMenu->setStyleSheet(QString::fromAscii("QMenu {padding-left: -10px; padding-top: 4px; } "
+                    "QMenu::separator {height: 8px; margin: 0px; }"));
         #endif
         QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
 #ifdef __APPLE__
@@ -814,7 +817,7 @@ void InfoDialog::on_bSyncFolder_clicked()
             connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
 #ifdef __APPLE__
-        syncsMenu->exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+        syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (num + 1) * 28 - (num ? 16 : 8))));
         if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
             this->hide();
 

@@ -168,7 +168,7 @@ margin-bottom: 9px;
       <string notr="true">background-image: url(&quot;:/images/background.png&quot;);</string>
      </property>
      <property name="currentIndex">
-      <number>6</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <property name="styleSheet">
@@ -1304,8 +1304,7 @@ font-weight: normal;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">margin-top:-2px;
-margin-left: 2px;</string>
+             <string notr="true">margin-left: 2px;</string>
             </property>
             <property name="text">
              <string>Local folder:</string>
@@ -1342,8 +1341,7 @@ margin-left: 2px;</string>
           <item row="2" column="0">
            <widget class="QLabel" name="lMegaFolder">
             <property name="styleSheet">
-             <string notr="true">margin-top:-2px;
-margin-left: 2px;</string>
+             <string notr="true">margin-left: 2px;</string>
             </property>
             <property name="text">
              <string>MEGA folder:</string>
