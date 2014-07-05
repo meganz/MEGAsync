@@ -37,6 +37,7 @@ public:
     void updateState();
     void showRecentlyUpdated(bool show);
     void closeSyncsMenu();
+    void updateRecentFiles();
 
 public slots:
    void addSync();
@@ -110,8 +111,6 @@ protected:
     void changeEvent(QEvent * event);
 
 protected:
-	void updateRecentFiles();
-
 	QDateTime lastPopupUpdate;
     QTimer scanningTimer;
     QTimer downloadsFinishedTimer;

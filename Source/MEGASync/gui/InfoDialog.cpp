@@ -59,7 +59,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
+    ui->wTransfer1->hideTransfer();
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
+    ui->wTransfer2->hideTransfer();
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
