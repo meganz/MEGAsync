@@ -2169,6 +2169,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
         infoDialog->setPaused(paused);
         infoDialog->updateState();
         infoDialog->transferFinished(MegaError::API_OK);
+        infoDialog->updateRecentFiles();
     }
 
     LOG("Current state: ");
