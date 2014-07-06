@@ -133,10 +133,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 				   ui->bBack->setVisible(false);
 				   ui->bNext->setVisible(false);
 				   ui->bCancel->setText(tr("Finish"));
-#ifndef __APPLE__
-                   ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
-                   ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
-#endif
 				   ui->sPages->setCurrentWidget(ui->pWelcome);
                    delete node;
 			   }
@@ -376,12 +372,6 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
-
-#ifndef __APPLE__
-            ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
-            ui->lFinalMegaFolderIntro->setText(tr("and your MEGA Cloud Drive"));
-            ui->bFinalMegaFolder->hide();
-#endif
             ui->sPages->setCurrentWidget(ui->pWelcome);
 
             delete node;
@@ -391,10 +381,6 @@ void SetupWizard::on_bNext_clicked()
         QDir defaultFolder(defaultFolderPath);
         defaultFolder.mkpath(QString::fromAscii("."));
         ui->eLocalFolder->setText(defaultFolderPath);
-
-#ifndef __APPLE__
-        ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
-#endif
     }
     else if(w == ui->pAdvanced)
     {
@@ -433,11 +419,6 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
-
-#ifndef __APPLE__
-            ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
-            ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
-#endif
             ui->sPages->setCurrentWidget(ui->pWelcome);
             delete node;
         }
@@ -580,16 +561,10 @@ void SetupWizard::on_bMegaFolder_clicked()
 
 void SetupWizard::wTypicalSetup_clicked()
 {    
-#ifndef __APPLE__
-    ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
-                                     "#wTypicalSetup {background: rgb(242,242,242);"
-                                     "border: 2px solid rgb(217, 217, 217);"
-                                     "border-radius: 10px;}"));
-    ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
-                                     "#wAdvancedSetup {background: transparent;"
-                                     "border: none;}"));
-#else
-    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    const qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
     if(ratio < 2)
     {
         ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/selected_sync_bt.png\"); }"));
@@ -600,7 +575,6 @@ void SetupWizard::wTypicalSetup_clicked()
         ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/selected_sync_bt@2x.png\"); }"));
         ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
     }
-#endif
 
     ui->rTypicalSetup->setChecked(true);
     ui->rAdvancedSetup->setChecked(false);
@@ -609,16 +583,10 @@ void SetupWizard::wTypicalSetup_clicked()
 
 void SetupWizard::wAdvancedSetup_clicked()
 {
-#ifndef __APPLE__
-    ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
-                                     "#wTypicalSetup {background: transparent;"
-                                     "border: none;}"));
-    ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
-                                     "#wAdvancedSetup {background: rgb(242,242,242);"
-                                     "border: 2px solid rgb(217, 217, 217);"
-                                     "border-radius: 10px;}"));
-#else
-    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    const qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
     if(ratio < 2)
     {
         ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
@@ -629,7 +597,6 @@ void SetupWizard::wAdvancedSetup_clicked()
         ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
         ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/selected_sync_bt@2x.png\"); }"));
     }
-#endif
 
     ui->rTypicalSetup->setChecked(false);
     ui->rAdvancedSetup->setChecked(true);
@@ -650,28 +617,4 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
-}
-
-void SetupWizard::on_bFinalLocalFolder_clicked()
-{
-#ifndef __APPLE__
-    QString localFolderPath = ui->bFinalLocalFolder->text();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
-#endif
-}
-
-void SetupWizard::on_bFinalMegaFolder_clicked()
-{
-#ifndef __APPLE__
-    QString megaFolderPath = ui->bFinalMegaFolder->text();
-    MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-    if(node)
-    {
-        const char *handle = node->getBase64Handle();
-        QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
-        QDesktopServices::openUrl(QUrl(url));
-        delete handle;
-        delete node;
-    }
-#endif
 }

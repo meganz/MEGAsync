@@ -212,5 +212,9 @@
         <file>images/check_mega_version.png</file>
         <file>images/tray_add_sync_ico2.png</file>
         <file>images/tray_sync_ico2.png</file>
+        <file>images/select_sync_bt.png</file>
+        <file>images/selected_sync_bt.png</file>
+        <file>images/full_sync_ico.png</file>
+        <file>images/selective_sync_ico.png</file>
     </qresource>
 </RCC>
