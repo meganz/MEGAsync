@@ -17,12 +17,7 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     ui->cDefaultPath->setChecked(false);
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
-
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
     ui->bOK->setDefault(true);
-#endif
 }
 
 UploadToMegaDialog::~UploadToMegaDialog()

@@ -106,14 +106,9 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
 	connect(linkProcessor, SIGNAL(onLinkInfoRequestFinish()), this, SLOT(onLinkInfoRequestFinish()));
 
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
-    ui->bOk->setDefault(true);
-#endif
-
 	finished = false;
 	linkProcessor->requestLinkInfo();
+    ui->bOk->setDefault(true);
 }
 
 ImportMegaLinksDialog::~ImportMegaLinksDialog()

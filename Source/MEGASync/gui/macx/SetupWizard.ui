@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Setup Wizard - MEGAsync</string>
+   <string>Setup Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -502,6 +502,9 @@ margin-bottom: 9px;
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">border: none;
@@ -1460,6 +1463,9 @@ font-weight: normal;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">border: none;
 </string>
@@ -1550,6 +1556,13 @@ font-weight: normal;
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="bCancel">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="bBack">
         <property name="text">
          <string>Back</string>
@@ -1563,13 +1576,6 @@ font-weight: normal;
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="bCancel">
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -1578,9 +1584,9 @@ font-weight: normal;
  <tabstops>
   <tabstop>rHaveAccount</tabstop>
   <tabstop>rDontHaveAccount</tabstop>
+  <tabstop>bCancel</tabstop>
   <tabstop>bBack</tabstop>
   <tabstop>bNext</tabstop>
-  <tabstop>bCancel</tabstop>
   <tabstop>eName</tabstop>
   <tabstop>eEmail</tabstop>
   <tabstop>ePassword</tabstop>

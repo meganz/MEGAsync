@@ -7,11 +7,7 @@ CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tCrash->setText(crash);
-
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(0, ui->bCancel);
-#endif
+    ui->bOK->setDefault(true);
 }
 
 QString CrashReportDialog::getUserMessage()

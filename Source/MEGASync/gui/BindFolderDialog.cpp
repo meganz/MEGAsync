@@ -15,12 +15,7 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     syncNames = preferences->getSyncNames();
     localFolders = preferences->getLocalFolders();
     megaFolderHandles = preferences->getMegaFolderHandles();
-
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
     ui->bOK->setDefault(true);
-#endif
 }
 
 BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,

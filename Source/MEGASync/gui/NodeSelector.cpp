@@ -17,12 +17,6 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     this->sizeWarning = sizeWarning;
     delegateListener = new QTMegaRequestListener(megaApi, this);
     ui->bOk->setDefault(true);
-
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(2, ui->bCancel);
-    ui->bOk->setDefault(true);
-#endif
 }
 
 NodeSelector::~NodeSelector()

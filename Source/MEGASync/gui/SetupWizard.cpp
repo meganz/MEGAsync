@@ -33,13 +33,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
         QString::fromUtf8("\">"),
         QString::fromUtf8("\" style=\"color:#DC0000\">")));
 
-#ifdef __APPLE__
-    setWindowTitle(tr("Setup Assistant - MEGAsync"));
-
-    ((QBoxLayout *)ui->wButtons->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->wButtons->layout())->insertWidget(1, ui->bCancel);
-#endif
-
     wTypicalSetup_clicked();
 }
 
@@ -561,7 +554,7 @@ void SetupWizard::on_bMegaFolder_clicked()
 
 void SetupWizard::wTypicalSetup_clicked()
 {    
-    const qreal ratio = 1.0;
+    qreal ratio = 1.0;
 #if QT_VERSION >= 0x050000
     ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
 #endif
@@ -583,7 +576,7 @@ void SetupWizard::wTypicalSetup_clicked()
 
 void SetupWizard::wAdvancedSetup_clicked()
 {
-    const qreal ratio = 1.0;
+    qreal ratio = 1.0;
 #if QT_VERSION >= 0x050000
     ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
 #endif
