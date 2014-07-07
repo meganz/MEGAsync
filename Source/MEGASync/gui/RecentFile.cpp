@@ -202,12 +202,18 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::showInFolder()
 {
-    QWidget::window()->hide();
-    Platform::showInFolder(info.localPath);
+    if(!info.localPath.isEmpty())
+    {
+        QWidget::window()->hide();
+        Platform::showInFolder(info.localPath);
+    }
 }
 
 void RecentFile::openFile()
 {
-    QWidget::window()->hide();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(info.localPath));
+    if(!info.localPath.isEmpty())
+    {
+        QWidget::window()->hide();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(info.localPath));
+    }
 }
