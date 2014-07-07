@@ -107,8 +107,7 @@ win32 {
 
 unix:!macx {
     !exists($$PWD/sdk/include/mega/config.h) {
-        message("Configuration file not found! Please re-run configure script located in the project's root directory!")
-        return ##(false)
+        error("Configuration file not found! Please re-run configure script located in the project's root directory!")
     }
     HEADERS  += $$PWD/sdk/include/mega/posix/meganet.h  \
             $$PWD/sdk/include/mega/posix/megasys.h  \

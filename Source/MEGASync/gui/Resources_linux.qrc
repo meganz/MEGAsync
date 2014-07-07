@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>fonts/OpenSans-Regular.ttf</file>
+        <file>fonts/OpenSans-Semibold.ttf</file>
         <file>images/account_32.png</file>
         <file>images/app_32.png</file>
         <file>images/app_48.png</file>
@@ -52,13 +54,9 @@
         <file>images/drag_web_lang.png</file>
         <file>images/drag_word.png</file>
         <file>images/folder.ico</file>
-        <file>images/Free.ico</file>
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
         <file>images/logo.png</file>
-        <file>images/Pro I.ico</file>
-        <file>images/Pro II.ico</file>
-        <file>images/Pro III.ico</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
@@ -184,37 +182,35 @@
         <file>translations/MEGASyncStrings_vn.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
-        <file>fonts/OpenSans-Regular.ttf</file>
-        <file>fonts/OpenSans-Semibold.ttf</file>
         <file>images/Pro_II.png</file>
         <file>images/Pro_III.png</file>
         <file>images/Pro_I.png</file>
         <file>images/Free.png</file>
-        <file>images/scanning_anime1.png</file>
-        <file>images/scanning_anime2.png</file>
-        <file>images/scanning_anime3.png</file>
-        <file>images/scanning_anime4.png</file>
-        <file>images/scanning_anime5.png</file>
-        <file>images/scanning_anime6.png</file>
-        <file>images/scanning_anime7.png</file>
+        <file>images/tray_scanning_large_ico.png</file>
         <file>images/scanning_anime8.png</file>
         <file>images/scanning_anime9.png</file>
-        <file>images/scanning_anime10.png</file>
-        <file>images/scanning_anime11.png</file>
-        <file>images/scanning_anime12.png</file>
-        <file>images/scanning_anime13.png</file>
-        <file>images/scanning_anime14.png</file>
+        <file>images/scanning_anime7.png</file>
+        <file>images/scanning_anime5.png</file>
+        <file>images/scanning_anime6.png</file>
+        <file>images/scanning_anime4.png</file>
+        <file>images/scanning_anime2.png</file>
+        <file>images/scanning_anime3.png</file>
+        <file>images/scanning_anime18.png</file>
+        <file>images/scanning_anime17.png</file>
         <file>images/scanning_anime15.png</file>
         <file>images/scanning_anime16.png</file>
-        <file>images/scanning_anime17.png</file>
-        <file>images/scanning_anime18.png</file>
-        <file>images/tray_scanning_large_ico.png</file>
+        <file>images/scanning_anime14.png</file>
+        <file>images/scanning_anime12.png</file>
+        <file>images/scanning_anime13.png</file>
+        <file>images/scanning_anime11.png</file>
+        <file>images/scanning_anime1.png</file>
+        <file>images/scanning_anime10.png</file>
         <file>images/check_mega_version.png</file>
         <file>images/tray_add_sync_ico2.png</file>
         <file>images/tray_sync_ico2.png</file>
         <file>images/select_sync_bt.png</file>
         <file>images/selected_sync_bt.png</file>
-        <file>images/full_sync_ico.png</file>
         <file>images/selective_sync_ico.png</file>
+        <file>images/full_sync_ico.png</file>
     </qresource>
 </RCC>
