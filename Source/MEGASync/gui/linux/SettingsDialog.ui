@@ -16,7 +16,7 @@
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>20</height>
+    <height>520</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -281,7 +281,7 @@ font-style: italic;
          <string>Proxy</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -316,7 +316,7 @@ font-style: italic;
          <string>Advanced</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -459,7 +459,7 @@ font-style: italic;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
+        <pixmap resource="../Resources_linux.qrc">:/images/mega_logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -998,13 +998,13 @@ font-style: italic;
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>220</number>
+             <number>229</number>
             </attribute>
             <attribute name="horizontalHeaderHighlightSections">
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>220</number>
+             <number>229</number>
             </attribute>
             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
              <bool>false</bool>
@@ -1329,7 +1329,7 @@ padding-right: 20px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>22</height>
+                <height>24</height>
                </size>
               </property>
               <property name="text">
@@ -1410,7 +1410,7 @@ padding: 4px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="Resources.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -1575,7 +1575,7 @@ padding: 4px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>22</height>
+              <height>24</height>
              </size>
             </property>
             <property name="text">
@@ -1598,7 +1598,7 @@ padding: 4px;</string>
          <property name="title">
           <string>Proxy Settings</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0">
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
@@ -1606,7 +1606,7 @@ padding: 4px;</string>
            <number>9</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>9</number>
           </property>
           <property name="rightMargin">
            <number>9</number>
@@ -1614,8 +1614,11 @@ padding: 4px;</string>
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <property name="spacing">
+          <property name="horizontalSpacing">
            <number>6</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>12</number>
           </property>
           <item row="9" column="1">
            <widget class="QWidget" name="wProxyAddress" native="true">
@@ -1677,6 +1680,9 @@ padding: 4px;</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -1851,6 +1857,19 @@ padding: 4px;</string>
          </layout>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -1900,7 +1919,7 @@ padding: 4px;</string>
   <tabstop>eProxyPassword</tabstop>
  </tabstops>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections>
   <connection>
