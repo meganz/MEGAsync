@@ -30,7 +30,7 @@ void MegaProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyl
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
-int	MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option, const QWidget * widget) const
+int MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option, const QWidget * widget) const
 {
     if (metric == QStyle::PM_SmallIconSize)
         return 24;

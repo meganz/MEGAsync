@@ -92,38 +92,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
-
-    //Apply drop shadow to tab header
-    /*QGraphicsDropShadowEffect *wndShadow = new QGraphicsDropShadowEffect(this);
-
-    wndShadow->setBlurRadius(1.0);
-    wndShadow->setColor(QColor(255, 255, 255, 128));
-    wndShadow->setOffset(1.0);
-    ui->bBandwidth->setGraphicsEffect(wndShadow);
-
-    wndShadow = new QGraphicsDropShadowEffect(this);
-    wndShadow->setBlurRadius(1.0);
-    wndShadow->setColor(QColor(255, 255, 255, 128));
-    wndShadow->setOffset(1.0);
-    ui->bSyncs->setGraphicsEffect(wndShadow);
-
-    wndShadow = new QGraphicsDropShadowEffect(this);
-    wndShadow->setBlurRadius(1.0);
-    wndShadow->setColor(QColor(255, 255, 255, 128));
-    wndShadow->setOffset(1.0);
-    ui->bProxies->setGraphicsEffect(wndShadow);
-
-    wndShadow = new QGraphicsDropShadowEffect(this);
-    wndShadow->setBlurRadius(1.0);
-    wndShadow->setColor(QColor(255, 255, 255, 128));
-    wndShadow->setOffset(1.0);
-    ui->bAdvanced->setGraphicsEffect(wndShadow);
-
-    wndShadow = new QGraphicsDropShadowEffect(this);
-    wndShadow->setBlurRadius(1.0);
-    wndShadow->setColor(QColor(255, 255, 255, 128));
-    wndShadow->setOffset(1.0);
-    ui->bAccount->setGraphicsEffect(wndShadow);*/
 #endif
 
     /*if(!proxyOnly && preferences->logged())
