@@ -20,10 +20,7 @@ PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent) :
 	if(extractLinks(text).size()!=0)
 		ui->eLinks->setPlainText(text);
 
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
-#endif
+    ui->bSubmit->setDefault(true);
 }
 
 PasteMegaLinksDialog::~PasteMegaLinksDialog()

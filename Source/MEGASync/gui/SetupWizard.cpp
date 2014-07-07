@@ -29,13 +29,11 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
 
     ui->bNext->setDefault(true);
+    ui->lTermsLink->setText(ui->lTermsLink->text().replace(
+        QString::fromUtf8("\">"),
+        QString::fromUtf8("\" style=\"color:#DC0000\">")));
 
-#ifdef __APPLE__
-    setWindowTitle(tr("Setup Assistant - MEGAsync"));
-
-    ((QBoxLayout *)ui->wButtons->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->wButtons->layout())->insertWidget(1, ui->bCancel);
-#endif
+    wTypicalSetup_clicked();
 }
 
 SetupWizard::~SetupWizard()
@@ -128,8 +126,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 				   ui->bBack->setVisible(false);
 				   ui->bNext->setVisible(false);
 				   ui->bCancel->setText(tr("Finish"));
-                   ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
-                   ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
 				   ui->sPages->setCurrentWidget(ui->pWelcome);
                    delete node;
 			   }
@@ -323,12 +319,19 @@ void SetupWizard::on_bNext_clicked()
     }
     else if(w == ui->pSetupType)
     {
-
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-#else
-    QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-#endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
 
         if(ui->rAdvancedSetup->isChecked())
         {
@@ -362,10 +365,8 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
-            ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
             ui->sPages->setCurrentWidget(ui->pWelcome);
-            ui->lFinalMegaFolderIntro->setText(tr("and your MEGA Cloud Drive"));
-            ui->bFinalMegaFolder->hide();
+
             delete node;
         }
 
@@ -373,7 +374,6 @@ void SetupWizard::on_bNext_clicked()
         QDir defaultFolder(defaultFolderPath);
         defaultFolder.mkpath(QString::fromAscii("."));
         ui->eLocalFolder->setText(defaultFolderPath);
-        ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
     }
     else if(w == ui->pAdvanced)
     {
@@ -412,8 +412,6 @@ void SetupWizard::on_bNext_clicked()
             ui->bNext->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
-            ui->bFinalLocalFolder->setText(ui->eLocalFolder->text());
-            ui->bFinalMegaFolder->setText(ui->eMegaFolder->text());
             ui->sPages->setCurrentWidget(ui->pWelcome);
             delete node;
         }
@@ -472,7 +470,7 @@ void SetupWizard::on_bCancel_clicked()
         QString syncName;
         MegaNode *rootNode = megaApi->getRootNode();
         if(selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
-        preferences->addSyncedFolder(ui->bFinalLocalFolder->text(), ui->bFinalMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         delete rootNode;
 
         preferences->setProxyType(proxyType);
@@ -495,11 +493,19 @@ void SetupWizard::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if(!defaultPath.size())
     {
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
     }
 	QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
                                                       defaultPath,
@@ -547,29 +553,47 @@ void SetupWizard::on_bMegaFolder_clicked()
 }
 
 void SetupWizard::wTypicalSetup_clicked()
-{
-    ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
-                                     "#wTypicalSetup {background: rgb(242,242,242);"
-                                     "border: 2px solid rgb(217, 217, 217);"
-                                     "border-radius: 10px;}"));
-    ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
-                                     "#wAdvancedSetup {background: transparent;"
-                                     "border: none;}"));
+{    
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    if(ratio < 2)
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/selected_sync_bt.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
+    }
+    else
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/selected_sync_bt@2x.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
+    }
+
     ui->rTypicalSetup->setChecked(true);
     ui->rAdvancedSetup->setChecked(false);
+    repaint();
 }
 
 void SetupWizard::wAdvancedSetup_clicked()
 {
-    ui->wTypicalSetup->setStyleSheet(QString::fromAscii(
-                                     "#wTypicalSetup {background: transparent;"
-                                     "border: none;}"));
-    ui->wAdvancedSetup->setStyleSheet(QString::fromAscii(
-                                     "#wAdvancedSetup {background: rgb(242,242,242);"
-                                     "border: 2px solid rgb(217, 217, 217);"
-                                     "border-radius: 10px;}"));
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    if(ratio < 2)
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/selected_sync_bt.png\"); }"));
+    }
+    else
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/selected_sync_bt@2x.png\"); }"));
+    }
+
     ui->rTypicalSetup->setChecked(false);
     ui->rAdvancedSetup->setChecked(true);
+    repaint();
 }
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
@@ -586,24 +610,4 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
-}
-
-void SetupWizard::on_bFinalLocalFolder_clicked()
-{
-    QString localFolderPath = ui->bFinalLocalFolder->text();
-    QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
-}
-
-void SetupWizard::on_bFinalMegaFolder_clicked()
-{
-    QString megaFolderPath = ui->bFinalMegaFolder->text();
-    MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-    if(node)
-    {
-        const char *handle = node->getBase64Handle();
-        QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
-        QDesktopServices::openUrl(QUrl(url));
-        delete handle;
-        delete node;
-    }
 }

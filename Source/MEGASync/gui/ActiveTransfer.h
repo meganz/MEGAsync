@@ -19,6 +19,7 @@ public:
     void setProgress(long long completedSize, long long totalSize, bool cancellable);
     void setType(int type);
 	void hideTransfer();
+    bool isActive();
 
 signals:
     void cancel(int x, int y);
@@ -32,6 +33,7 @@ protected:
     QString fileName;
     int type;
     bool regular;
+    bool active;
 
 public slots:
     void onCancelClicked(int x, int y);

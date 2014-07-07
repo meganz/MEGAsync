@@ -28,14 +28,16 @@ public:
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
     void setPaused(bool paused);
-	void updateDialog();
     void updateTransfers();
-    void transferFinished();
+    void transferFinished(int error);
     void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes);
     void updateState();
+    void showRecentlyUpdated(bool show);
+    void closeSyncsMenu();
+    void updateRecentFiles();
 
 public slots:
    void addSync();
@@ -45,6 +47,9 @@ public slots:
    void cancelAllDownloads();
    void cancelCurrentUpload();
    void cancelCurrentDownload();
+   void onAllUploadsFinished();
+   void onAllDownloadsFinished();
+   void onAllTransfersFinished();
 
 private slots:
     void on_bSettings_clicked();
@@ -58,9 +63,29 @@ private slots:
     void on_bPause_clicked();
 
     void onOverlayClicked();
+
+    void scanningAnimationStep();
+
+#ifdef __APPLE__
+    void on_cRecentlyUpdated_stateChanged(int arg1);
+    void showRecentList();
+    void onAnimationFinished();
+    void on_bOfficialWebIcon_clicked();
+#endif
+
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
+
+#ifdef __APPLE__
+    QPropertyAnimation *minHeightAnimation;
+    QPropertyAnimation *maxHeightAnimation;
+    QParallelAnimationGroup *animationGroup;
+#endif
+
+    QMenu *syncsMenu;
+    QMenu *transferMenu;
+    QSignalMapper *menuSignalMapper;
 
     long long downloadSpeed;
     long long uploadSpeed;
@@ -86,10 +111,12 @@ protected:
     void changeEvent(QEvent * event);
 
 protected:
-	void updateRecentFiles();
-
 	QDateTime lastPopupUpdate;
-    QTimer *timer;
+    QTimer scanningTimer;
+    QTimer downloadsFinishedTimer;
+    QTimer uploadsFinishedTimer;
+    QTimer transfersFinishedTimer;
+    int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
     MegaApi *megaApi;

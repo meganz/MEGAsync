@@ -300,6 +300,9 @@ QStringList CrashHandler::getPendingCrashReports()
     for(int i=0; i<fiList.size(); i++)
     {
         QFile file(fiList[i].absoluteFilePath());
+        if(!file.fileName().endsWith(QString::fromAscii(".dmp")))
+            continue;
+
         if(file.size()>16384)
             continue;
 

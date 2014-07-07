@@ -11,8 +11,11 @@ RecentFile::RecentFile(QWidget *parent) :
     ui(new Ui::RecentFile)
 {
     ui->setupUi(this);
-    ui->lTime->setText(QString::fromAscii(""));
+    ui->lTime->setText(QString::fromUtf8(""));
     ui->pArrow->setIcon(QIcon());
+    ui->pArrow->setToolTip(QString::fromUtf8(""));
+    info.fileHandle = mega::UNDEF;
+    menu = NULL;
 }
 
 RecentFile::~RecentFile()
@@ -22,33 +25,47 @@ RecentFile::~RecentFile()
 
 void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath, long long time)
 {
-    this->fileName = fileName;
-	this->fileHandle = fileHandle;
-	this->localPath = localPath;
-    this->dateTime = QDateTime::fromMSecsSinceEpoch(time);
+    info.fileName = fileName;
+    info.fileHandle = fileHandle;
+    info.localPath = localPath;
+    info.dateTime = QDateTime::fromMSecsSinceEpoch(time);
 }
 
 void RecentFile::updateWidget()
 {
-	if(!fileName.length())
+    closeMenu();
+
+    if(!info.fileName.length())
 	{
-		ui->lFileType->setPixmap(QPixmap());
+        ui->lFileType->setText(QString());
         ui->lTime->setText(QString::fromAscii(""));
         ui->pArrow->setIcon(QIcon());
+        ui->pArrow->setToolTip(QString::fromUtf8(""));
         return;
 	}
 
-    if(fileName.compare(ui->lFileName->text()))
+    if(info.fileName.compare(ui->lFileName->text()))
     {
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
-        ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
-        ui->lFileType->setPixmap(Utilities::getExtensionPixmapMedium(fileName));
+        ui->lFileName->setText(fm.elidedText(info.fileName, Qt::ElideRight,ui->lFileName->width()));
+
+        QIcon icon;
+        icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
+
+#ifdef __APPLE__
+        ui->lFileType->setIcon(icon);
+        ui->lFileType->setIconSize(QSize(48, 48));
+#else
+        ui->lFileType->setPixmap(icon.pixmap(QSize(48, 48)));
+#endif
+
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
+        ui->pArrow->setToolTip(tr("Get MEGA link"));
     }
 
     QDateTime now = QDateTime::currentDateTime();
-    qint64 secs = dateTime.secsTo(now);
+    qint64 secs = info.dateTime.secsTo(now);
     if(secs < 2)
         ui->lTime->setText(tr("just now"));
     else if(secs < 60)
@@ -95,6 +112,22 @@ void RecentFile::updateWidget()
     }
 }
 
+void RecentFile::closeMenu()
+{
+    if(menu)
+        menu->close();
+}
+
+RecentFileInfo RecentFile::getFileInfo()
+{
+    return info;
+}
+
+void RecentFile::setFileInfo(RecentFileInfo info)
+{
+    this->info = info;
+}
+
 void RecentFile::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -105,49 +138,82 @@ void RecentFile::changeEvent(QEvent *event)
 
 void RecentFile::on_pArrow_clicked()
 {
-	((MegaApplication*)qApp)->copyFileLink(fileHandle);
+    if(info.fileHandle != mega::UNDEF)
+        ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
 }
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 {
-    if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
+    if(menu)
+    {
+        menu->close();
+        return;
+    }
 
-	QMenu menu;
-	menu.addAction(tr("Open"), this, SLOT(openFile()));
-    menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-#ifdef WIN32
-    menu.exec(this->mapToGlobal(pos));
-#elif __APPLE__
-    menu.exec(this->mapToGlobal(pos));
-#else
-    menu.exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+    if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
+
+    menu = new QMenu();
+#ifndef __APPLE__
+    menu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
+    menu->addAction(tr("Open"), this, SLOT(openFile()));
+    menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+#ifdef WIN32
+    menu->exec(this->mapToGlobal(pos));
+#else
+    menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+#endif
+
+    menu->deleteLater();
+    menu = NULL;
 }
 
 void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 {
-    if(localPath.isEmpty() || !QFileInfo(localPath).exists()) return;
+    if(menu)
+    {
+        menu->close();
+        return;
+    }
 
-	QMenu menu;
-	menu.addAction(tr("Open"), this, SLOT(openFile()));
-	menu.addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-#ifdef WIN32
-    menu.exec(this->mapToGlobal(pos));
-#elif __APPLE__
-    menu.exec(this->mapToGlobal(pos));
-#else
-    menu.exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+    if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
+
+    menu = new QMenu();
+#ifndef __APPLE__
+    menu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
+    menu->addAction(tr("Open"), this, SLOT(openFile()));
+    menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
+#ifdef WIN32
+    menu->exec(this->mapToGlobal(pos));
+#else
+    menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
+#endif
+
+    menu->deleteLater();
+    menu = NULL;
 }
 
 void RecentFile::showInFolder()
 {
-    QWidget::window()->hide();
-    Platform::showInFolder(localPath);
+    if(!info.localPath.isEmpty())
+    {
+        QWidget::window()->hide();
+        Platform::showInFolder(info.localPath);
+    }
 }
 
 void RecentFile::openFile()
 {
-    QWidget::window()->hide();
-	QDesktopServices::openUrl(QUrl::fromLocalFile(localPath));
+    if(!info.localPath.isEmpty())
+    {
+        QWidget::window()->hide();
+        QDesktopServices::openUrl(QUrl::fromLocalFile(info.localPath));
+    }
 }

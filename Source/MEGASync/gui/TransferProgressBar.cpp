@@ -18,9 +18,9 @@ void TransferProgressBar::setProgress(int permil, bool cancellable)
 	if(permil>1000) permil = 1000;
     ui->bCancel->setVisible(cancellable);
 
-    int newWidth = (ui->wBackground->width() * permil) / 1000;
+    int newWidth = (354 * permil) / 1000;
     if(newWidth<6) newWidth = 6;
-    else if(newWidth>ui->wBackground->width()-ui->bCancel->width())
+    else if(newWidth > 354-ui->bCancel->width())
         ui->bCancel->hide();
     ui->wProgress->resize(newWidth, ui->wProgress->height());
 }

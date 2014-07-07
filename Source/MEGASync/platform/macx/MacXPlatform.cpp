@@ -4,6 +4,10 @@ int MacXPlatform::fd = -1;
 
 void MacXPlatform::initialize(int argc, char *argv[])
 {
+#ifdef QT_DEBUG
+    return;
+#endif
+
     setMacXActivationPolicy();
 
     SetProcessName(QString::fromUtf8("MEGAsync"));
@@ -36,6 +40,10 @@ void MacXPlatform::initialize(int argc, char *argv[])
     }
 }
 
+QStringList MacXPlatform::multipleUpload(QString uploadTitle)
+{
+    return uploadMultipleFiles(uploadTitle);
+}
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
     return false;

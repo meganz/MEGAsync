@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TransferProgressBar</class>
+ <widget class="QWidget" name="TransferProgressBar">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>364</width>
+    <height>21</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#wProgress
+{
+	background-color: white;
+	border-radius: 3px;
+}
+
+#wBackground
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	border-radius: 4px;
+	background-color: rgb(178, 178, 178);
+}</string>
+  </property>
+  <widget class="QWidget" name="wProgress" native="true">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>7</y>
+     <width>60</width>
+     <height>6</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>6</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>6</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wBackground" native="true">
+   <property name="geometry">
+    <rect>
+     <x>4</x>
+     <y>6</y>
+     <width>358</width>
+     <height>8</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>358</width>
+     <height>8</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>358</width>
+     <height>8</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bCancel">
+   <property name="geometry">
+    <rect>
+     <x>349</x>
+     <y>4</y>
+     <width>12</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>12</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>12</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: none;
+border-left: 1px solid #F7F7F7;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../Resources_macx.qrc">
+     <normaloff>:/images/tray_cancel_ico.png</normaloff>:/images/tray_cancel_ico.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="lProgress">
+   <property name="geometry">
+    <rect>
+     <x>3</x>
+     <y>4</y>
+     <width>360</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>360</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>360</width>
+     <height>10</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius: 6px;
+border: 2px solid rgb(178, 178, 178);;
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>364</width>
+     <height>16</height>
+    </size>
+   </property>
+  </widget>
+  <zorder>lProgress</zorder>
+  <zorder>wBackground</zorder>
+  <zorder>bCancel</zorder>
+  <zorder>wProgress</zorder>
+ </widget>
+ <resources>
+  <include location="../Resources_macx.qrc"/>
+ </resources>
+ <connections/>
+</ui>

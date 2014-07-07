@@ -15,6 +15,7 @@
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
+#include "gui/ImportMegaLinksDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "control/Preferences.h"
@@ -23,6 +24,10 @@
 #include "control/UpdateTask.h"
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
+
+#ifdef __APPLE__
+    #include "gui/MegaSystemTrayIcon.h"
+#endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
@@ -103,7 +108,6 @@ public slots:
     void copyFileLink(mega::handle fileHandle);
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
-	void showUploadDialog();
 	void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
@@ -123,6 +127,7 @@ public slots:
     void showInfoDialog();
     bool anUpdateIsAvailable();
     void triggerInstallUpdate();
+    void scanningAnimationStep();
 
 protected:
     void createTrayIcon();
@@ -133,13 +138,17 @@ protected:
     void processUploadQueue(mega::handle nodeHandle);
     void unityFix();
 
+#ifdef __APPLE__
+    MegaSystemTrayIcon *trayIcon;
+#else
     QSystemTrayIcon *trayIcon;
+#endif
+
     QMenu *initialMenu;
     QMenu *trayMenu;
+    QMenu emptyMenu;
     QAction *exitAction;
     QAction *settingsAction;
-    //QAction *pauseAction;
-    //QAction *resumeAction;
 	QAction *importLinksAction;
     QAction *uploadAction;
     QAction *aboutAction;
@@ -147,7 +156,8 @@ protected:
     QAction *initialExitAction;
     QAction *updateAction;
     QAction *showStatusAction;
-
+    QTimer *scanningTimer;
+    int scanningAnimationIndex;
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
@@ -171,6 +181,7 @@ protected:
     QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
+    ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
     QString lastTrayMessage;
 

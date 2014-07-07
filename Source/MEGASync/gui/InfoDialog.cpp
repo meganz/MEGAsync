@@ -23,6 +23,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 
+#ifdef __APPLE__
+    setAttribute(Qt::WA_TranslucentBackground);
+#endif
+
     //Initialize fields
     this->app = app;
 	downloadSpeed = 0;
@@ -45,6 +49,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     waiting = false;
     transfer1 = NULL;
     transfer2 = NULL;
+    syncsMenu = NULL;
+    transferMenu = NULL;
+    menuSignalMapper = NULL;
 
     const QByteArray xdgCurrentDesktop = qgetenv("XDG_CURRENT_DESKTOP");
     isUnity = xdgCurrentDesktop == "Unity";
@@ -52,54 +59,74 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
+    ui->wTransfer1->hideTransfer();
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
+    ui->wTransfer2->hideTransfer();
 
     megaApi = app->getMegaApi();
-
-    //Initialize the "recently updated" list with stored values
     preferences = Preferences::instance();
-    if(preferences->getRecentFileHandle(0) != mega::UNDEF)
-    {
-        ui->wRecent1->setFile(preferences->getRecentFileName(0),
-                          preferences->getRecentFileHandle(0),
-                          preferences->getRecentLocalPath(0),
-                          preferences->getRecentFileTime(0));
+    scanningTimer.setSingleShot(false);
+    scanningTimer.setInterval(60);
+    scanningAnimationIndex = 1;
+    connect(&scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
-        if(preferences->getRecentFileHandle(1) != mega::UNDEF)
-        {
-            ui->wRecent2->setFile(preferences->getRecentFileName(1),
-                                  preferences->getRecentFileHandle(1),
-                                  preferences->getRecentLocalPath(1),
-                                  preferences->getRecentFileTime(1));
+    uploadsFinishedTimer.setSingleShot(true);
+    uploadsFinishedTimer.setInterval(5000);
+    connect(&uploadsFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllUploadsFinished()));
 
-            if(preferences->getRecentFileHandle(2) != mega::UNDEF)
-            {
-                ui->wRecent3->setFile(preferences->getRecentFileName(2),
-                                      preferences->getRecentFileHandle(2),
-                                      preferences->getRecentLocalPath(2),
-                                      preferences->getRecentFileTime(2));
-            }
-        }
-    }
-    updateRecentFiles();
+    downloadsFinishedTimer.setSingleShot(true);
+    downloadsFinishedTimer.setInterval(5000);
+    connect(&downloadsFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllDownloadsFinished()));
+
+    transfersFinishedTimer.setSingleShot(true);
+    transfersFinishedTimer.setInterval(5000);
+    connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
+
+    setUsage(preferences->totalStorage(), preferences->usedStorage());
     updateSyncsButton();
+
+    ui->wDownloadDesc->hide();
+    ui->wUploadDesc->hide();
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
-    overlay->setIcon(QPixmap(QString::fromAscii("://images/tray_paused_large_ico.png")));
+    overlay->setIcon(QIcon(QString::fromAscii("://images/tray_paused_large_ico.png")));
     overlay->setIconSize(QSize(64, 64));
-    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(255, 255, 255, 200);"
-                                              "border: none; "
-                                              "margin-left: 4px; "
-                                              "margin-right: 4px; "));
+    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
+                                              "border: none; "));
 
+#ifdef __APPLE__
+    minHeightAnimation = new QPropertyAnimation();
+    maxHeightAnimation = new QPropertyAnimation();
+    animationGroup = new QParallelAnimationGroup();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    animationGroup->addAnimation(minHeightAnimation);
+    animationGroup->addAnimation(maxHeightAnimation);
+    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+#endif
+
+    ui->wTransfer1->hide();
+    ui->wTransfer1->hide();
     overlay->resize(ui->wTransfers->minimumSize());
-    overlay->move(1, 60);
+    overlay->move(1, 72);
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
     connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
+
+#ifdef __APPLE__
+    ui->wRecentlyUpdated->hide();
+    ui->wRecent1->hide();
+    ui->wRecent2->hide();
+    ui->wRecent3->hide();
+    setMinimumHeight(377);
+    setMaximumHeight(377);
+#endif
 }
 
 InfoDialog::~InfoDialog()
@@ -113,7 +140,7 @@ void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
 
     this->totalBytes = totalBytes;
     this->usedBytes = usedBytes;
-    int percentage = (100 * usedBytes) / totalBytes;
+    int percentage = ceil((100 * usedBytes) / (double)totalBytes);
 	ui->pUsage->setProgress(percentage);
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(totalBytes));
@@ -154,18 +181,25 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
         }
     }
 
+    bool shown = wTransfer->isVisible();
     wTransfer->setFileName(fileName);
     wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer));
+    if(!shown) updateState();
 }
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
 {
-    QVBoxLayout *recentLayout = (QVBoxLayout *)ui->wRecentLayout->layout();
-    QLayoutItem *item = recentLayout->itemAt(2);
-    RecentFile * recentFile = ((RecentFile *)item->widget());
-    recentLayout->insertWidget(0, recentFile);
-    recentFile->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
-    preferences->addRecentFile(fileName, fileHandle, localPath);
+    RecentFileInfo info1 = ui->wRecent1->getFileInfo();
+    RecentFileInfo info2 = ui->wRecent2->getFileInfo();
+    ui->wRecent3->setFileInfo(info2);
+    ui->wRecent2->setFileInfo(info1);
+    ui->wRecent1->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
+
+#ifdef __APPLE__
+    if(!ui->wRecentlyUpdated->isVisible())
+        showRecentList();
+#endif
+    updateRecentFiles();
 }
 
 void InfoDialog::updateTransfers()
@@ -226,6 +260,12 @@ void InfoDialog::updateTransfers()
             else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
 
             ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
+
+            if(!ui->wTransfer1->isActive())
+                ui->wDownloadDesc->hide();
+            else
+                ui->wDownloadDesc->show();
+
         }
     }
 
@@ -276,54 +316,63 @@ void InfoDialog::updateTransfers()
             else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
 
             ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
+
+            if(!ui->wTransfer2->isActive())
+                ui->wUploadDesc->hide();
+            else
+                ui->wUploadDesc->show();
         }
     }
 
-    if(remainingUploads || remainingDownloads)
+    if((remainingUploads || remainingDownloads) && (ui->wTransfer1->isActive() || ui->wTransfer2->isActive()))
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
 
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
-void InfoDialog::transferFinished()
+void InfoDialog::transferFinished(int error)
 {
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
-    if(!remainingDownloads)
+    if(!remainingDownloads && ui->wTransfer1->isActive())
     {
-        ui->wTransfer1->hideTransfer();
-        ui->lDownloads->setText(QString::fromAscii(""));
-        ui->wDownloadDesc->hide();
-        downloadStartTime = 0;
-        downloadSpeed = 0;
-        currentDownload = 0;
-        totalDownloads = 0;
-        totalDownloadedSize = 0;
-        totalDownloadSize = 0;
-        megaApi->resetTotalDownloads();
+        if(!downloadsFinishedTimer.isActive())
+        {
+            if(!error)
+                downloadsFinishedTimer.start();
+            else
+                onAllDownloadsFinished();
+        }
     }
+    else
+        downloadsFinishedTimer.stop();
 
-    if(!remainingUploads)
+    if(!remainingUploads && ui->wTransfer2->isActive())
     {
-        ui->wTransfer2->hideTransfer();
-        ui->lUploads->setText(QString::fromAscii(""));
-        ui->wUploadDesc->hide();
-        uploadStartTime = 0;
-        uploadSpeed = 0;
-        currentUpload = 0;
-        totalUploads = 0;
-        totalUploadedSize = 0;
-        totalUploadSize = 0;
-        megaApi->resetTotalUploads();
+        if(!uploadsFinishedTimer.isActive())
+        {
+            if(!error)
+                uploadsFinishedTimer.start();
+            else
+                onAllUploadsFinished();
+        }
     }
+    else
+        uploadsFinishedTimer.stop();
 
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
     {
-        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        app->updateUserStats();
-        app->showNotificationMessage(tr("All transfers have been completed"));
+        if(!transfersFinishedTimer.isActive())
+        {
+            if(!error)
+                transfersFinishedTimer.start();
+            else
+                onAllTransfersFinished();
+        }
     }
+    else
+        transfersFinishedTimer.stop();
 }
 
 void InfoDialog::updateSyncsButton()
@@ -367,18 +416,113 @@ void InfoDialog::updateState()
 {
     if(ui->bPause->isChecked())
     {
+        if(scanningTimer.isActive())
+            scanningTimer.stop();
+
         setTransferSpeeds(-1, -1);
         ui->lSyncUpdated->setText(tr("File transfers paused"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+
+        #ifdef __APPLE__
+            ui->label->setIcon(icon);
+            ui->label->setIconSize(QSize(64, 64));
+        #else
+            ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+        #endif
+
+        if(ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            overlay->setVisible(true);
+        else
+            overlay->setVisible(false);
     }
     else
     {
+        overlay->setVisible(false);
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        if(indexing || remainingUploads || remainingDownloads) ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-        else if(waiting) ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
-        else ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+        if(indexing || remainingUploads || remainingDownloads)
+        {
+            if(!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
+
+            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+
+            QIcon icon;
+            icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            #ifdef __APPLE__
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            #else
+                ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+            #endif
+        }
+        else if(waiting)
+        {
+            if(scanningTimer.isActive())
+                scanningTimer.stop();
+
+            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+            QIcon icon;
+            icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            #ifdef __APPLE__
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            #else
+                ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+            #endif
+        }
+        else
+        {
+            if(scanningTimer.isActive())
+                scanningTimer.stop();
+
+            ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+            QIcon icon;
+            icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            #ifdef __APPLE__
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            #else
+                ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+            #endif
+        }
     }
+}
+
+#ifdef __APPLE__
+void InfoDialog::showRecentlyUpdated(bool show)
+{
+    ui->wRecent->setVisible(show);
+    if(!show)
+    {
+        this->setMinimumHeight(377);
+        this->setMaximumHeight(377);
+    }
+    else
+    {
+        on_cRecentlyUpdated_stateChanged(0);
+    }
+}
+#endif
+
+void InfoDialog::closeSyncsMenu()
+{
+#ifdef __APPLE__
+    if(syncsMenu && syncsMenu->isVisible())
+        syncsMenu->close();
+
+    if(transferMenu && transferMenu->isVisible())
+        transferMenu->close();
+
+    ui->wRecent1->closeMenu();
+    ui->wRecent2->closeMenu();
+    ui->wRecent3->closeMenu();
+#endif
 }
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
@@ -406,12 +550,6 @@ void InfoDialog::setPaused(bool paused)
 {
     ui->bPause->setChecked(paused);
     ui->bPause->setEnabled(true);
-    overlay->setVisible(paused);
-}
-
-void InfoDialog::updateDialog()
-{
-    updateRecentFiles();
 }
 
 void InfoDialog::addSync()
@@ -460,22 +598,74 @@ void InfoDialog::addSync()
 
 void InfoDialog::onTransfer1Cancel(int x, int y)
 {
-    QMenu menu;
-    QAction *cancelAll = menu.addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
-    QAction *cancelCurrent = menu.addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
-    menu.addAction(cancelCurrent);
-    menu.addAction(cancelAll);
-    menu.exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    if(transferMenu)
+    {
+#ifdef __APPLE__
+        transferMenu->close();
+        return;
+#else
+        transferMenu->deleteLater();
+#endif
+    }
+
+    transferMenu = new QMenu();
+#ifndef __APPLE__
+    transferMenu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+#endif
+
+    QAction *cancelAll = transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+    transferMenu->addAction(cancelCurrent);
+    transferMenu->addAction(cancelAll);
+
+#ifdef __APPLE__
+    transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        this->hide();
+    transferMenu->deleteLater();
+    transferMenu = NULL;
+#else
+    transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+#endif
 }
 
 void InfoDialog::onTransfer2Cancel(int x, int y)
 {
-    QMenu menu;
-    QAction *cancelAll = menu.addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
-    QAction *cancelCurrent = menu.addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
-    menu.addAction(cancelCurrent);
-    menu.addAction(cancelAll);
-    menu.exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    if(transferMenu)
+    {
+#ifdef __APPLE__
+        transferMenu->close();
+        return;
+#else
+        transferMenu->deleteLater();
+#endif
+    }
+
+    transferMenu = new QMenu();
+#ifndef __APPLE__
+    transferMenu->setStyleSheet(QString::fromAscii(
+            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu::item {background-color: white; color: black;} "
+            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+#endif
+
+    QAction *cancelAll = transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+    transferMenu->addAction(cancelCurrent);
+    transferMenu->addAction(cancelAll);
+
+#ifdef __APPLE__
+    transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        this->hide();
+    transferMenu->deleteLater();
+    transferMenu = NULL;
+#else
+    transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+#endif
 }
 
 void InfoDialog::cancelAllUploads()
@@ -498,13 +688,63 @@ void InfoDialog::cancelCurrentDownload()
     megaApi->cancelTransfer(transfer1);
 }
 
+void InfoDialog::onAllUploadsFinished()
+{
+    remainingUploads = megaApi->getNumPendingUploads();
+    if(!remainingUploads)
+    {
+        ui->wTransfer2->hideTransfer();
+        ui->lUploads->setText(QString::fromAscii(""));
+        ui->wUploadDesc->hide();
+        uploadStartTime = 0;
+        uploadSpeed = 0;
+        currentUpload = 0;
+        totalUploads = 0;
+        totalUploadedSize = 0;
+        totalUploadSize = 0;
+        megaApi->resetTotalUploads();
+    }
+}
+
+void InfoDialog::onAllDownloadsFinished()
+{
+    remainingDownloads = megaApi->getNumPendingDownloads();
+    if(!remainingDownloads)
+    {
+        ui->wTransfer1->hideTransfer();
+        ui->lDownloads->setText(QString::fromAscii(""));
+        ui->wDownloadDesc->hide();
+        downloadStartTime = 0;
+        downloadSpeed = 0;
+        currentDownload = 0;
+        totalDownloads = 0;
+        totalDownloadedSize = 0;
+        totalDownloadSize = 0;
+        megaApi->resetTotalDownloads();
+    }
+}
+
+void InfoDialog::onAllTransfersFinished()
+{
+    if(!remainingDownloads && !remainingUploads && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        app->updateUserStats();
+        app->showNotificationMessage(tr("All transfers have been completed"));
+    }
+}
+
 
 void InfoDialog::on_bSettings_clicked()
 {
     if(!isUnity)
     {
-        QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()+5, ui->bSettings->height()-5));
+        QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
         app->showTrayMenu(&p);
+        #ifdef __APPLE__
+            if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+                this->hide();
+        #endif
     }
     else app->openSettings();
 }
@@ -517,6 +757,19 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
+    if(syncsMenu)
+    {
+        #ifdef __APPLE__
+            syncsMenu->close();
+            return;
+        #else
+            syncsMenu->deleteLater();
+            menuSignalMapper->deleteLater();
+            syncsMenu = NULL;
+            menuSignalMapper = NULL;
+        #endif
+    }
+
     int num = preferences->getNumSyncedFolders();
 
     MegaNode *rootNode = megaApi->getRootNode();
@@ -533,26 +786,50 @@ void InfoDialog::on_bSyncFolder_clicked()
     }
     else
     {
-        QMenu menu;
-        menu.setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-            "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
-        QAction *addSyncAction = menu.addAction(tr("Add Sync"), this, SLOT(addSync()));
+        syncsMenu = new QMenu();
+        #ifndef __APPLE__
+            syncsMenu->setStyleSheet(QString::fromAscii(
+                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+                    "QMenu::item {background-color: white; color: black;} "
+                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+        #else
+            syncsMenu->setStyleSheet(QString::fromAscii("QMenu {padding-left: -10px; padding-top: 4px; } "
+                    "QMenu::separator {height: 8px; margin: 0px; }"));
+        #endif
+        QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
+#ifdef __APPLE__
         addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
+#else
+        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico2.png")));
+#endif
         addSyncAction->setIconVisibleInMenu(true);
-        menu.addSeparator();
+        syncsMenu->addSeparator();
 
-        QSignalMapper signalMapper;
+        menuSignalMapper = new QSignalMapper();
         for(int i=0; i<num; i++)
         {
-            QAction *action = menu.addAction(preferences->getSyncName(i), &signalMapper, SLOT(map()));
+            QAction *action = syncsMenu->addAction(preferences->getSyncName(i), menuSignalMapper, SLOT(map()));
+#ifdef __APPLE__
             action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
+#else
+            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico2.png")));
+#endif
             action->setIconVisibleInMenu(true);
-            signalMapper.setMapping(action, preferences->getLocalFolder(i));
-            connect(&signalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
+            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+            connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
-        menu.exec(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*30)));
+#ifdef __APPLE__
+        syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (num + 1) * 28 - (num ? 16 : 8))));
+        if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+            this->hide();
+
+        syncsMenu->deleteLater();
+        menuSignalMapper->deleteLater();
+        menuSignalMapper = NULL;
+        syncsMenu = NULL;
+#else
+        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*35)));
+#endif
     }
     delete rootNode;
 }
@@ -591,3 +868,85 @@ void InfoDialog::changeEvent(QEvent *event)
     }
     QDialog::changeEvent(event);
 }
+
+void InfoDialog::scanningAnimationStep()
+{
+    scanningAnimationIndex = scanningAnimationIndex%18;
+    scanningAnimationIndex++;
+    QIcon icon;
+    icon.addFile(QString::fromUtf8(":/images/scanning_anime")+
+                 QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
+
+#ifdef __APPLE__
+    ui->label->setIcon(icon);
+    ui->label->setIconSize(QSize(64, 64));
+#else
+    ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
+#endif
+}
+
+#ifdef __APPLE__
+void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
+{
+    ui->wRecent1->hide();
+    ui->wRecent2->hide();
+    ui->wRecent3->hide();
+    ui->cRecentlyUpdated->setEnabled(false);
+
+    if(ui->cRecentlyUpdated->isChecked())
+    {
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(408);
+        maxHeightAnimation->setEndValue(408);
+        minHeightAnimation->setDuration(150);
+        maxHeightAnimation->setDuration(150);
+        animationGroup->start();
+    }
+    else
+    {
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(552);
+        maxHeightAnimation->setEndValue(552);
+        minHeightAnimation->setDuration(150);
+        maxHeightAnimation->setDuration(150);
+        animationGroup->start();
+    }
+}
+
+void InfoDialog::onAnimationFinished()
+{
+    if(this->minimumHeight() == 552)
+    {
+        ui->wRecent1->show();
+        ui->wRecent2->show();
+        ui->wRecent3->show();
+    }
+
+    ui->lRecentlyUpdated->show();
+    ui->cRecentlyUpdated->show();
+    ui->wRecentlyUpdated->show();
+    ui->cRecentlyUpdated->setEnabled(true);
+}
+
+
+void InfoDialog::showRecentList()
+{
+    on_cRecentlyUpdated_stateChanged(0);
+}
+
+
+void InfoDialog::on_bOfficialWebIcon_clicked()
+{
+    on_bOfficialWeb_clicked();
+}
+#endif
