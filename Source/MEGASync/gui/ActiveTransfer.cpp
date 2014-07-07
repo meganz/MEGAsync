@@ -8,11 +8,12 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
 {
     ui->setupUi(this);
     fileName = QString::fromAscii("");
-    ui->lType->setPixmap(QPixmap());
+    ui->lType->setText(QString());
     ui->lPercentage->setText(QString());
     ui->pProgress->hide();
     ui->lType->hide();
     regular = false;
+    active = false;
     connect(ui->pProgress, SIGNAL(cancel(int,int)), this, SLOT(onCancelClicked(int,int)));
 }
 
@@ -39,21 +40,30 @@ void ActiveTransfer::setProgress(long long completedSize, long long totalSize, b
     ui->lPercentage->setText(QString::number((permil+5)/10) + QString::fromAscii("%"));
     ui->pProgress->show();
     ui->lType->show();
+    this->show();
+    active = true;
 }
 
 void ActiveTransfer::setType(int type)
 {
     this->type = type;
+    QIcon icon;
     if(type)
     {
-        ui->lType->setPixmap(QPixmap(QString::fromAscii("://images/tray_upload_ico.png")));
+        icon.addFile(QString::fromUtf8(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(119, 186, 216);"));
     }
     else
     {
-        ui->lType->setPixmap(QPixmap(QString::fromAscii("://images/tray_download_ico.png")));
+        icon.addFile(QString::fromUtf8(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
     }
+#ifdef __APPLE__
+        ui->lType->setIcon(icon);
+        ui->lType->setIconSize(QSize(24, 24));
+#else
+        ui->lType->setPixmap(icon.pixmap(QSize(24, 24)));
+#endif
 }
 
 void ActiveTransfer::hideTransfer()
@@ -62,6 +72,13 @@ void ActiveTransfer::hideTransfer()
     ui->lPercentage->setText(QString::fromAscii(""));
 	ui->pProgress->hide();
     ui->lType->hide();
+    this->hide();
+    active = false;
+}
+
+bool ActiveTransfer::isActive()
+{
+    return active;
 }
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)

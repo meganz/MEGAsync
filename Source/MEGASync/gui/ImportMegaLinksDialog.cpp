@@ -30,13 +30,13 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
 	if(linkProcessor->size()<=8)
 	{
-		ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+32*(linkProcessor->size()-1));
-		this->setMinimumHeight(this->minimumHeight()+32*(linkProcessor->size()-1));
+        ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+35*(linkProcessor->size()-1));
+        this->setMinimumHeight(this->minimumHeight()+35*(linkProcessor->size()-1));
 	}
 	else
 	{
-		ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+32*7);
-		this->setMinimumHeight(this->minimumHeight()+32*7);
+        ui->linkList->setMinimumHeight(ui->linkList->minimumHeight()+35*7);
+        this->setMinimumHeight(this->minimumHeight()+35*7);
 	}
 
 	ui->linkList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -46,11 +46,20 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	QFileInfo test(preferences->downloadFolder());
 	if(!test.isDir())
 	{
-		#if QT_VERSION < 0x050000
-            QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads"));
-		#else
-            QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads"));
-		#endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads"));
+            #else
+                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads"));
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads"));
+            #else
+                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads"));
+            #endif
+        #endif
+
         defaultFolder.mkpath(QString::fromAscii("."));
 		defaultFolderPath = defaultFolder.absolutePath();
 		defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -97,13 +106,9 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
 	connect(linkProcessor, SIGNAL(onLinkInfoRequestFinish()), this, SLOT(onLinkInfoRequestFinish()));
 
-#ifdef __APPLE__
-    ((QBoxLayout *)ui->bLayout->layout())->removeWidget(ui->bCancel);
-    ((QBoxLayout *)ui->bLayout->layout())->insertWidget(1, ui->bCancel);
-#endif
-
 	finished = false;
 	linkProcessor->requestLinkInfo();
+    ui->bOk->setDefault(true);
 }
 
 ImportMegaLinksDialog::~ImportMegaLinksDialog()
@@ -197,11 +202,19 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if(!defaultPath.size())
     {
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
     }
 	QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
                                                       defaultPath,

@@ -95,6 +95,7 @@ private slots:
     void on_bUpdate_clicked();
     void on_bSyncChange_clicked();
     void on_bFullCheck_clicked();
+    void onAnimationFinished();
 
 protected:
     void changeEvent(QEvent * event);
@@ -115,6 +116,12 @@ private:
     QTimer proxyTestTimer;
     bool shouldClose;
     int modifyingSettings;
+
+#ifdef __APPLE__
+    QPropertyAnimation *minHeightAnimation;
+    QPropertyAnimation *maxHeightAnimation;
+    QParallelAnimationGroup *animationGroup;
+#endif
 
     void loadSyncSettings();
     bool saveSettings();

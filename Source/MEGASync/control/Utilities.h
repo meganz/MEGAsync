@@ -24,13 +24,13 @@ private:
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
     static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
-    static QPixmap getExtensionPixmap(QString fileName, QString prefix);
+    static QString getExtensionPixmap(QString fileName, QString prefix);
 
 //Platform dependent functions
 public:
     static QString languageCodeToString(QString code);
-    static QPixmap getExtensionPixmapSmall(QString fileName);
-    static QPixmap getExtensionPixmapMedium(QString fileName);
+    static QString getExtensionPixmapSmall(QString fileName);
+    static QString getExtensionPixmapMedium(QString fileName);
     static bool removeRecursively(QDir dir);
     static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);

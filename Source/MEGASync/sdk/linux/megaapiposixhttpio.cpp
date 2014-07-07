@@ -48,9 +48,6 @@ void MegaApiCurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
 
     if ((curl = curl_easy_init()))
     {
-        curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1);
-        curl_easy_setopt(curl, CURLOPT_TCP_KEEPIDLE, 10);
-        curl_easy_setopt(curl, CURLOPT_TCP_KEEPINTVL, 5);
         curl_easy_setopt(curl, CURLOPT_URL, req->posturl.c_str());
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data ? data : req->out->data());
         curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, data ? len : req->out->size());
@@ -63,6 +60,9 @@ void MegaApiCurlHttpIO::post(HttpReq* req, const char* data, unsigned len)
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, check_header);
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, (void*)req);
         curl_easy_setopt(curl, CURLOPT_PRIVATE, (void*)req);
+        curl_easy_setopt(curl, CURLOPT_SSL_CTX_FUNCTION, ssl_ctx_function);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0);
 
         if(proxyEnabled && proxy.size())
         {

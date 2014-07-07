@@ -17,6 +17,8 @@ UsageProgressBar::~UsageProgressBar()
 void UsageProgressBar::setProgress(int value)
 {
     if(value>100) value = 100;
+    if(value<5) value=5;
+
     this->progress = value;
 	ui->wProgress->resize(value*3.6, ui->wProgress->height());
     if(value<80)

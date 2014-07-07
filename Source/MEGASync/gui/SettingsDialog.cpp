@@ -3,6 +3,7 @@
 #include <QUrl>
 #include <QRect>
 #include <QTranslator>
+#include <QGraphicsDropShadowEffect>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -13,6 +14,10 @@
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
+
+#ifdef __APPLE__
+    #include "gui/CocoaHelpButton.h"
+#endif
 
 #ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
@@ -83,6 +88,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cStartOnStartup->setText(tr("Open at login"));
     ui->cShowNotifications->setText(tr("Show Mac OS notifications"));
     ui->cOverlayIcons->hide();
+
+    CocoaHelpButton *helpButton = new CocoaHelpButton(this);
+    ui->layoutBottom->insertWidget(0, helpButton);
+    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 #endif
 
     /*if(!proxyOnly && preferences->logged())
@@ -95,11 +104,58 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     ui->bOk->hide();
     ui->bCancel->hide();
+    ui->gBandwidthQuota->hide();
+
+    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    if(ratio < 2)
+    {
+        ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
+
+        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    }
+    else
+    {
+        ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header@2x.png\"); }"));
+
+        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+    }
+
+    ui->lCacheTitle->hide();
+    ui->lCacheSeparator->hide();
 #endif
 
     ui->gCache->setVisible(false);
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
+
+#ifdef __APPLE__
+    minHeightAnimation = new QPropertyAnimation();
+    maxHeightAnimation = new QPropertyAnimation();
+    animationGroup = new QParallelAnimationGroup();
+    animationGroup->addAnimation(minHeightAnimation);
+    animationGroup->addAnimation(maxHeightAnimation);
+    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pSyncs->hide();
+
+    if(!proxyOnly)
+    {
+        ui->pProxies->hide();
+        setMinimumHeight(485);
+        setMaximumHeight(485);
+        ui->bApply->hide();
+    }
+#endif
 }
 
 SettingsDialog::~SettingsDialog()
@@ -123,6 +179,9 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bBandwidth->setChecked(false);
         ui->bProxies->setChecked(true);
         ui->wStack->setCurrentWidget(ui->pProxies);
+        setMinimumHeight(410);
+        setMaximumHeight(410);
+        ui->pProxies->show();
 
         #ifdef __APPLE__
             ui->bApply->show();
@@ -134,10 +193,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bAdvanced->setEnabled(true);
         ui->bSyncs->setEnabled(true);
         ui->bBandwidth->setEnabled(true);
-
-        #ifdef __APPLE__
-            ui->bApply->hide();
-        #endif
     }
 }
 
@@ -171,6 +226,12 @@ void SettingsDialog::onCacheSizeAvailable()
 
 void SettingsDialog::on_bAccount_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pAccount)
+    {
+        ui->bAccount->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -182,10 +243,36 @@ void SettingsDialog::on_bAccount_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
+
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(485);
+    maxHeightAnimation->setEndValue(485);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 void SettingsDialog::on_bSyncs_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pSyncs)
+    {
+        ui->bSyncs->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -198,10 +285,46 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible( true );
     ui->bOk->setFocus();
+
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        minHeightAnimation->setEndValue(266);
+        maxHeightAnimation->setEndValue(266);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(420);
+        maxHeightAnimation->setEndValue(420);
+    }
+
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 void SettingsDialog::on_bBandwidth_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pBandwidth)
+    {
+        ui->bBandwidth->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -213,10 +336,36 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
+
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(266);
+    maxHeightAnimation->setEndValue(266);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pAdvanced)
+    {
+        ui->bAdvanced->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
@@ -228,11 +377,37 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->bProxies->setChecked(false);
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
+
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(455);
+    maxHeightAnimation->setEndValue(455);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 
 void SettingsDialog::on_bProxies_clicked()
 {
+    if(ui->wStack->currentWidget() == ui->pProxies)
+    {
+        ui->bProxies->setChecked(true);
+        return;
+    }
+
 #ifdef __APPLE__
     ui->bApply->show();
 #endif
@@ -244,6 +419,26 @@ void SettingsDialog::on_bProxies_clicked()
     ui->bProxies->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
+
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(416);
+    maxHeightAnimation->setEndValue(416);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 
@@ -436,25 +631,33 @@ void SettingsDialog::loadSettings()
                   .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
+
+        QIcon icon;
         switch(preferences->accountType())
         {
             case Preferences::ACCOUNT_TYPE_FREE:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Free.ico")));
+                icon.addFile(QString::fromUtf8(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("FREE"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROI:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro I.ico")));
+                icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO I"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROII:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro II.ico")));
+                icon.addFile(QString::fromUtf8(":/images/Pro_II.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO II"));
                 break;
             case Preferences::ACCOUNT_TYPE_PROIII:
-                ui->lAccountImage->setPixmap(QPixmap(QString::fromAscii("://images/Pro III.ico")));
+                icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
         }
+#ifdef __APPLE__
+        ui->lAccountImage->setIcon(icon);
+        ui->lAccountImage->setIconSize(QSize(32, 32));
+#else
+        ui->lAccountImage->setPixmap(icon.pixmap(QSize(32, 32)));
+#endif
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
         if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
@@ -589,7 +792,7 @@ bool SettingsDialog::saveSettings()
 
         //Account
         MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
-        if(node && ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")))
+        if(node && (ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")) || preferences->uploadFolder()))
             preferences->setUploadFolder(node->getHandle());
         delete node;
 
@@ -811,6 +1014,7 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setRowCount(0);
         syncNames.clear();
         syncsChanged = true;
+        updateAddButton();
         stateChanged();
     }
     else
@@ -819,13 +1023,20 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setRowCount(0);
         syncNames.clear();
         syncsChanged = true;
-        stateChanged();
 
-    #if QT_VERSION < 0x050000
-        QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+        #ifdef WIN32
+            #if QT_VERSION < 0x050000
+                QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            #else
+                QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+            #endif
+        #else
+            #if QT_VERSION < 0x050000
+                QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+            #else
+                QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+            #endif
+        #endif
 
         localFolderPath.append(QString::fromAscii("/MEGA"));
         localFolderPath = QDir::toNativeSeparators(localFolderPath);
@@ -843,9 +1054,33 @@ void SettingsDialog::on_bSyncChange_clicked()
         ui->tSyncs->setItem(pos, 0, localFolder);
         ui->tSyncs->setItem(pos, 1, megaFolder);
         syncNames.append(QString::fromAscii("MEGA"));
+        updateAddButton();
+        stateChanged();
     }
 
-    updateAddButton();
+#ifdef __APPLE__
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        minHeightAnimation->setEndValue(266);
+        maxHeightAnimation->setEndValue(266);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(420);
+        maxHeightAnimation->setEndValue(420);
+    }
+
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 
@@ -859,8 +1094,8 @@ void SettingsDialog::on_bDelete_clicked()
     syncNames.removeAt(index);
 
 	syncsChanged = true;
-	stateChanged();
     updateAddButton();
+    stateChanged();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -934,8 +1169,8 @@ void SettingsDialog::on_bAdd_clicked()
    delete nPath;
 
    syncsChanged = true;
-   stateChanged();
    updateAddButton();
+   stateChanged();
 }
 
 void SettingsDialog::on_bApply_clicked()
@@ -1175,11 +1410,25 @@ void SettingsDialog::on_bUpdate_clicked()
 void SettingsDialog::on_bFullCheck_clicked()
 {
     preferences->setCrashed(true);
-    if(QMessageBox::warning(this, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders\nwhen it starts.\n\nDo you want to restart MEGAsync now?"),
+    if(QMessageBox::warning(this, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
                          QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
     {
         app->rebootApplication(false);
     }
+}
+
+void SettingsDialog::onAnimationFinished()
+{
+    if(ui->wStack->currentWidget() == ui->pAccount)
+        ui->pAccount->show();
+    else if(ui->wStack->currentWidget() == ui->pSyncs)
+        ui->pSyncs->show();
+    else if(ui->wStack->currentWidget() == ui->pBandwidth)
+        ui->pBandwidth->show();
+    else if(ui->wStack->currentWidget() == ui->pProxies)
+        ui->pProxies->show();
+    else if(ui->wStack->currentWidget() == ui->pAdvanced)
+        ui->pAdvanced->show();
 }
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)

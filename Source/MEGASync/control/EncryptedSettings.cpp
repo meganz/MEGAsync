@@ -57,6 +57,11 @@ void EncryptedSettings::remove(const QString &key)
     else QSettings::remove(hash(key));
 }
 
+void EncryptedSettings::clear()
+{
+    QSettings::clear();
+}
+
 void EncryptedSettings::sync()
 {
     QSettings::sync();
