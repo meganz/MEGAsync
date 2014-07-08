@@ -281,7 +281,7 @@ font-style: italic;
          <string>Proxy</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -316,7 +316,7 @@ font-style: italic;
          <string>Advanced</string>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -354,10 +354,10 @@ font-style: italic;
          <number>9</number>
         </property>
         <property name="rightMargin">
-         <number>12</number>
+         <number>8</number>
         </property>
         <property name="bottomMargin">
-         <number>9</number>
+         <number>8</number>
         </property>
         <item>
          <widget class="QLabel" name="lHelp">
@@ -459,7 +459,7 @@ font-style: italic;
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
+        <pixmap resource="../Resources_win.qrc">:/images/mega_logo.png</pixmap>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -624,6 +624,9 @@ font-style: italic;
           <string>Storage space</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="rightMargin">
+           <number>8</number>
+          </property>
           <item>
            <widget class="QProgressBar" name="pStorage">
             <property name="value">
@@ -641,6 +644,9 @@ font-style: italic;
               <width>16777215</width>
               <height>26</height>
              </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="spacing">
@@ -800,18 +806,30 @@ font-style: italic;
                    </size>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_13">
-                   <property name="margin">
+                   <property name="leftMargin">
                     <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>3</number>
                    </property>
                    <item>
                     <spacer name="horizontalSpacer_6">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Minimum</enum>
+                     </property>
                      <property name="sizeHint" stdset="0">
                       <size>
                        <width>40</width>
-                       <height>20</height>
+                       <height>23</height>
                       </size>
                      </property>
                     </spacer>
@@ -847,6 +865,9 @@ font-style: italic;
           <string>Language</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="rightMargin">
+           <number>8</number>
+          </property>
           <item>
            <widget class="QComboBox" name="cLanguage">
             <property name="sizePolicy">
@@ -885,7 +906,7 @@ font-style: italic;
            <number>9</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>3</number>
           </property>
           <property name="rightMargin">
            <number>9</number>
@@ -998,13 +1019,13 @@ font-style: italic;
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>220</number>
+             <number>230</number>
             </attribute>
             <attribute name="horizontalHeaderHighlightSections">
              <bool>true</bool>
             </attribute>
             <attribute name="horizontalHeaderMinimumSectionSize">
-             <number>220</number>
+             <number>230</number>
             </attribute>
             <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
              <bool>false</bool>
@@ -1203,13 +1224,34 @@ padding-right: 20px;</string>
           <item row="2" column="1">
            <widget class="QWidget" name="wUploadLimit" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_7">
-             <property name="margin">
+             <property name="leftMargin">
               <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>1</number>
              </property>
              <item>
               <widget class="QLineEdit" name="eLimit">
                <property name="enabled">
                 <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
                </property>
                <property name="maximumSize">
                 <size>
@@ -1221,7 +1263,7 @@ padding-right: 20px;</string>
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string/>
+                <string>0</string>
                </property>
                <property name="frame">
                 <bool>true</bool>
@@ -1393,6 +1435,9 @@ padding-right: 20px;</string>
           <string>Folder for uploads from this computer</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="rightMargin">
+           <number>3</number>
+          </property>
           <item>
            <widget class="QLineEdit" name="eUploadFolder">
             <property name="readOnly">
@@ -1410,7 +1455,7 @@ padding: 4px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="Resources.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -1442,8 +1487,17 @@ padding: 4px;</string>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <property name="margin">
+             <property name="leftMargin">
               <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>1</number>
              </property>
              <item>
               <spacer name="horizontalSpacer_3">
@@ -1551,6 +1605,9 @@ padding: 4px;</string>
           <string>Other</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <property name="rightMargin">
+           <number>8</number>
+          </property>
           <item>
            <widget class="QCheckBox" name="cOverlayIcons">
             <property name="sizePolicy">
@@ -1900,7 +1957,7 @@ padding: 4px;</string>
   <tabstop>eProxyPassword</tabstop>
  </tabstops>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
