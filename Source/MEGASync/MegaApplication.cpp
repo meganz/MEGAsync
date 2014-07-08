@@ -924,6 +924,34 @@ void MegaApplication::showInfoDialog()
                 posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
                 posy = screenGeometry.top();
             #else
+                #ifdef WIN32
+                    QRect totalGeometry = QApplication::desktop()->screenGeometry();
+                    if(totalGeometry == screenGeometry)
+                    {
+                        APPBARDATA pabd;
+                        pabd.cbSize = sizeof(APPBARDATA);
+                        pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+                        if(pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd))
+                        {
+                            switch (pabd.uEdge)
+                            {
+                                case ABE_LEFT:
+                                    screenGeometry.setLeft(pabd.rc.right+1);
+                                    break;
+                                case ABE_RIGHT:
+                                    screenGeometry.setRight(pabd.rc.left-1);
+                                    break;
+                                case ABE_TOP:
+                                    screenGeometry.setTop(pabd.rc.bottom+1);
+                                    break;
+                                case ABE_BOTTOM:
+                                    screenGeometry.setBottom(pabd.rc.top-1);
+                                    break;
+                            }
+                        }
+                    }
+                #endif
+
                 position = QCursor::pos();
 
                 if(position.x() > (screenGeometry.right()/2))
