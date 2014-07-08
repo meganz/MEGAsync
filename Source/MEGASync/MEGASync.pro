@@ -81,6 +81,7 @@ CODECFORTR = UTF8
 
 win32 {
     RC_FILE = icon.rc
+    QMAKE_LFLAGS += /LARGEADDRESSAWARE
 }
 
 
