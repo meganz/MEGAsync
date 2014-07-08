@@ -113,7 +113,12 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer1->hide();
     ui->wTransfer1->hide();
     overlay->resize(ui->wTransfers->minimumSize());
+#ifdef __APPLE__
     overlay->move(1, 72);
+#else
+    overlay->move(2, 60);
+    overlay->resize(overlay->width()-4, overlay->height());
+#endif
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));

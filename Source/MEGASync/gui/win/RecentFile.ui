@@ -75,7 +75,7 @@ font-size: 11px;
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>3</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -188,7 +188,7 @@ font-size: 11px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Resources_win.qrc">
        <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
      </property>
      <property name="iconSize">
@@ -205,7 +205,7 @@ font-size: 11px;
   </layout>
  </widget>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
