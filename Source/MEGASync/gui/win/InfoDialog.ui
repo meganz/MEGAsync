@@ -194,7 +194,7 @@ font-weight: bold;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>16</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -205,7 +205,7 @@ font-weight: bold;
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/images/mega_logo.png</pixmap>
+         <pixmap resource="../Resources_win.qrc">:/images/mega_logo.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -281,7 +281,7 @@ border: none;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -488,10 +488,13 @@ border: none;</string>
            <widget class="QWidget" name="wUploadDesc" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0,0">
              <property name="leftMargin">
-              <number>16</number>
+              <number>18</number>
              </property>
              <property name="topMargin">
               <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>15</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -503,22 +506,6 @@ border: none;</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="minimumSize">
-                <size>
-                 <width>24</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="Resources.qrc">:/images/upload_timer_ico.png</pixmap>
                </property>
               </widget>
              </item>
@@ -537,14 +524,29 @@ border: none;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">margin-right: 8px;
-color: rgb(102, 102, 102);</string>
+                <string notr="true">color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../Resources_win.qrc">:/images/upload_timer_ico.png</pixmap>
                </property>
               </widget>
              </item>
@@ -555,10 +557,13 @@ color: rgb(102, 102, 102);</string>
            <widget class="QWidget" name="wDownloadDesc" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0">
              <property name="leftMargin">
-              <number>17</number>
+              <number>18</number>
              </property>
              <property name="topMargin">
               <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>15</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -570,22 +575,6 @@ color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
                 <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="minimumSize">
-                <size>
-                 <width>24</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap resource="Resources.qrc">:/images/download_timer_ico.png</pixmap>
                </property>
               </widget>
              </item>
@@ -604,14 +593,29 @@ color: rgb(102, 102, 102);</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">margin-right: 8px;
-color: rgb(102, 102, 102);</string>
+                <string notr="true">color: rgb(102, 102, 102);</string>
                </property>
                <property name="text">
                 <string/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../Resources_win.qrc">:/images/download_timer_ico.png</pixmap>
                </property>
               </widget>
              </item>
@@ -752,7 +756,16 @@ color: rgb(102, 102, 102);</string>
       <item>
        <widget class="QWidget" name="widget_8" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -809,7 +822,7 @@ color: rgb(102, 102, 102);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
-       <number>20</number>
+       <number>18</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -929,7 +942,7 @@ color: rgb(102, 102, 102);</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
