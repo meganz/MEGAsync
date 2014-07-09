@@ -1,20 +1,34 @@
 #!/bin/sh
 
 # make sure the source tree is in "clean" state
+cwd=$(pwd)
 cd ../Source
 make distclean 2> /dev/null || true
 cd MEGASync
 make distclean 2> /dev/null || true
-cd ../../build
+cd sdk
+rm -fr 3rdparty/*
+cd sdk
+make distclean 2> /dev/null || true
+cd $cwd
 
 # download cURL
 export CURL_VERSION=7.32.0
 export CURL_SOURCE_FILE=curl-$CURL_VERSION.tar.gz
 export CURL_SOURCE_FOLDER=curl-$CURL_VERSION
-export CURL_CONFIGURED=$CURL/$CURL_SOURCE_FOLDER/curl-config
 export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
 if [ ! -f $CURL_SOURCE_FILE ]; then
     wget -c $CURL_DOWNLOAD_URL || exit 1
+fi
+
+# download libsodium
+export SODIUM=libsodium
+export SODIUM_VERSION=0.5.0
+export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
+export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
+export SODIUM_DOWNLOAD_URL=https://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
+if [ ! -f $SODIUM_SOURCE_FILE ]; then
+    wget -c $SODIUM_DOWNLOAD_URL || exit 1
 fi
 
 # get current version
@@ -39,6 +53,7 @@ ln -s ../../Source/configure $MEGASYNC_NAME/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
+ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAME/$SODIUM_SOURCE_FILE
 tar czfh $MEGASYNC_NAME.tar.gz --exclude $MEGASYNC_NAME/MEGASync/sdk/sqlite3.c --exclude Makefile --exclude '*.o' $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
@@ -79,6 +94,7 @@ ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
+export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
 
