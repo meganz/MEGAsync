@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Aukeratu</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Aukeratu</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Zure konfigurazioa ustela da, mesedez hasi berriz</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ MEGAsync berrabiarazi nahi al duzu orain?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Aukeratu</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Errorea sesio bezero gakoa lortzean</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Sinkronizazio osoa</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Zure karpeta lokala eta zure MEGA Hodeia automatikoki sinkronizatuak izango dira.</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Mesedez, saiatu berriz. Arazoa jarraitzen badu mesedez kontaktatu bug@mega.co.nz
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Aukeratu</translation>
     </message>
 </context>
 <context>
