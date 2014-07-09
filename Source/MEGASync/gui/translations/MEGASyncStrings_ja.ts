@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選択する</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選択する</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>構成に欠陥がありますので、やり直して下さい。</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ MEGAsync  をリスタートしますか？</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選択する</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>セッション鍵は取得できませんでした。</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>全体シンク</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>あなたのローカルフォルダとMEGAクラウドドライブは自動的にシンクされます。</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選択する</translation>
     </message>
 </context>
 <context>

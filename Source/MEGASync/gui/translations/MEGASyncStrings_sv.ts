@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Välj</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Välj</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Din konfiguration är korrupt. Var vänlig och börja om.</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Vill du starta om MEGAsync nu?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Välj</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Det inträffade ett fel när sessionsnyckeln skulle hämtas</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Fullständig synkronisering</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Din lokala mapp och din MEGA molnlagring kommer att synkroniseras automatiskt</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Var vänlig, försök igen. Om problemen fortsätter, kontakta contact bug@mega.
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Välj</translation>
     </message>
 </context>
 <context>

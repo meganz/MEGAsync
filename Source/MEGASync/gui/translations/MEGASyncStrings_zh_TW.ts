@@ -107,7 +107,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選取</translation>
     </message>
 </context>
 <context>
@@ -170,7 +170,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選取</translation>
     </message>
 </context>
 <context>
@@ -539,7 +539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>您的config已損壞，請重新開始。</translation>
     </message>
 </context>
 <context>
@@ -1185,7 +1185,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選取</translation>
     </message>
 </context>
 <context>
@@ -1415,15 +1415,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>取得session key時發生錯誤</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>完全同步</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>您的本機資料夾與您的MEGA雲端硬碟將自動同步。</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1505,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>選取</translation>
     </message>
 </context>
 <context>
