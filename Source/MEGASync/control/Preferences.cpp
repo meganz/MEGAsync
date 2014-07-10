@@ -32,7 +32,6 @@ const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("<title>MEGA</title>");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
-const QString Preferences::recentGroupKey           = QString::fromAscii("Recent");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
 const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
@@ -94,7 +93,6 @@ const int Preferences::defaultProxyPort             = 8080;
 const bool Preferences::defaultProxyRequiresAuth    = false;
 const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
-const int Preferences::NUM_RECENT_ITEMS             = 3;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -772,61 +770,6 @@ void Preferences::removeAllFolders()
     mutex.unlock();
 }
 
-void Preferences::addRecentFile(QString fileName, long long fileHandle, QString localPath)
-{
-    mutex.lock();
-    assert(logged());
-
-    recentFileNames.pop_back();
-    recentFileHandles.pop_back();
-    recentLocalPaths.pop_back();
-    recentFileTime.pop_back();
-
-    recentFileNames.insert(0, fileName);
-    recentFileHandles.insert(0, fileHandle);
-    recentLocalPaths.insert(0, localPath);
-    recentFileTime.insert(0, QDateTime::currentDateTime().toMSecsSinceEpoch());
-
-    writeRecentFiles();
-    mutex.unlock();
-}
-
-QString Preferences::getRecentFileName(int num)
-{
-    mutex.lock();
-    assert(logged() && recentFileNames.size()>num);
-    QString value = recentFileNames[num];
-    mutex.unlock();
-    return value;
-}
-
-mega::handle Preferences::getRecentFileHandle(int num)
-{
-    mutex.lock();
-    assert(logged() && recentFileHandles.size()>num);
-    long long value = recentFileHandles[num];
-    mutex.unlock();
-    return value;
-}
-
-QString Preferences::getRecentLocalPath(int num)
-{
-    mutex.lock();
-    assert(logged() && recentLocalPaths.size()>num);
-    QString value = recentLocalPaths[num];
-    mutex.unlock();
-    return value;
-}
-
-long long Preferences::getRecentFileTime(int num)
-{
-    mutex.lock();
-    assert(logged() && recentLocalPaths.size()>num);
-    long long value = recentFileTime[num];
-    mutex.unlock();
-    return value;
-}
-
 QStringList Preferences::getExcludedSyncNames()
 {
     mutex.lock();
@@ -974,7 +917,6 @@ void Preferences::enterUser(int i)
     if(i<settings->numChildGroups())
         settings->beginGroup(i);
     readFolders();
-    readRecentFiles();
     loadExcludedSyncNames();
     mutex.unlock();
 }
@@ -989,10 +931,6 @@ void Preferences::leaveUser()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
-    recentFileNames.clear();
-    recentFileHandles.clear();
-    recentLocalPaths.clear();
-    recentFileTime.clear();
     mutex.unlock();
 }
 
@@ -1010,10 +948,6 @@ void Preferences::unlink()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
-    recentFileNames.clear();
-    recentFileHandles.clear();
-    recentLocalPaths.clear();
-    recentFileTime.clear();
     mutex.unlock();
 }
 
@@ -1104,7 +1038,6 @@ void Preferences::login(QString account)
     settings->setValue(currentAccountKey, account);
     settings->beginGroup(account);
     readFolders();
-    readRecentFiles();
     loadExcludedSyncNames();
     int lastVersion = settings->value(lastVersionKey).toInt();
     if(lastVersion != MegaApplication::VERSION_CODE)
@@ -1150,10 +1083,6 @@ void Preferences::logout()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
-    recentFileNames.clear();
-    recentFileHandles.clear();
-    recentLocalPaths.clear();
-    recentFileTime.clear();
     mutex.unlock();
 }
 
@@ -1229,48 +1158,6 @@ void Preferences::writeFolders()
                 settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
             settings->endGroup();
         }
-    settings->endGroup();
-    settings->sync();
-    mutex.unlock();
-}
-
-void Preferences::readRecentFiles()
-{
-    mutex.lock();
-    assert(logged());
-    recentFileNames.clear();
-    recentFileHandles.clear();
-    recentLocalPaths.clear();
-    recentFileTime.clear();
-
-    settings->beginGroup(recentGroupKey);
-    for(int i=0; i<NUM_RECENT_ITEMS; i++)
-    {
-        settings->beginGroup(QString::number(i));
-            recentFileNames.append(settings->value(fileNameKey).toString());
-            recentFileHandles.append(settings->value(fileHandleKey).toLongLong());
-            recentLocalPaths.append(settings->value(localPathKey).toString());
-            recentFileTime.append(settings->value(fileTimeKey, QDateTime::currentDateTime().toMSecsSinceEpoch()).toLongLong());
-        settings->endGroup();
-    }
-    settings->endGroup();
-    mutex.unlock();
-}
-
-void Preferences::writeRecentFiles()
-{
-    mutex.lock();
-    assert(logged());
-    settings->beginGroup(recentGroupKey);
-    for(int i=0; i<NUM_RECENT_ITEMS; i++)
-    {
-        settings->beginGroup(QString::number(i));
-            settings->setValue(fileNameKey, recentFileNames[i]);
-            settings->setValue(fileHandleKey, recentFileHandles[i]);
-            settings->setValue(localPathKey, recentLocalPaths[i]);
-            settings->setValue(fileTimeKey, recentFileTime[i]);
-        settings->endGroup();
-    }
     settings->endGroup();
     settings->sync();
     mutex.unlock();

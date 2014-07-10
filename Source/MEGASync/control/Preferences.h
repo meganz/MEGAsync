@@ -100,12 +100,6 @@ public:
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath);
-    QString getRecentFileName(int num);
-    mega::handle getRecentFileHandle(int num);
-    QString getRecentLocalPath(int num);
-    long long getRecentFileTime(int num);
-
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
     QStringList getPreviousCrashes();
@@ -179,26 +173,16 @@ protected:
     void readFolders();
     void writeFolders();
 
-    void readRecentFiles();
-    void writeRecentFiles();
-
     EncryptedSettings *settings;
     QStringList syncNames;
     QStringList megaFolders;
     QStringList localFolders;
     QList<long long> megaFolderHandles;
-
-    QStringList recentFileNames;
-    QList<long long> recentFileHandles;
-    QStringList recentLocalPaths;
-    QList<long long> recentFileTime;
-
     QStringList excludedSyncNames;
     bool errorFlag;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
-    static const QString recentGroupKey;
     static const QString emailKey;
     static const QString emailHashKey;
     static const QString privatePwKey;
@@ -256,7 +240,6 @@ protected:
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
     static const QString defaultProxyPassword;	
-    static const int NUM_RECENT_ITEMS;
 };
 
 #endif // PREFERENCES_H
