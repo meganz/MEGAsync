@@ -12,4 +12,5 @@ qrc_*
 MEGASync/MEGAsync
 MEGACrashAnalyzer/MEGACrashAnalyzer
 curl
+libsodium
 .*.py
