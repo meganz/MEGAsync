@@ -27,6 +27,7 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/logging.cpp \
     $$PWD/sdk/src/waiterbase.cpp  \
     $$PWD/sdk/src/crypto/cryptopp.cpp  \
+    $$PWD/sdk/src/crypto/sodium.cpp  \
     $$PWD/sdk/src/db/sqlite.cpp  \
     $$PWD/sdk/src/gfx/qt.cpp \
     $$PWD/sdk/third_party/utf8proc/utf8proc.cpp \
@@ -85,6 +86,7 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/sdk/include/mega/logging.h \
 	    $$PWD/sdk/include/mega/waiter.h \
 	    $$PWD/sdk/include/mega/crypto/cryptopp.h  \
+            $$PWD/sdk/include/mega/crypto/sodium.h  \
 	    $$PWD/sdk/include/mega/db/sqlite.h  \
 	    $$PWD/sdk/include/mega/gfx/qt.h \
             $$PWD/sdk/third_party/utf8proc/utf8proc.h \
@@ -117,8 +119,8 @@ unix:!macx {
             $$PWD/sdk/include/mega/config.h
 }
 
-DEFINES += USE_SQLITE USE_CRYPTOPP USE_QT MEGA_QT_LOGGING
-LIBS += -lcryptopp
+DEFINES += USE_SQLITE USE_CRYPTOPP USE_SODIUM USE_QT MEGA_QT_LOGGING
+LIBS += -lcryptopp -lsodium
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += $$PWD/sdk/include
 INCLUDEPATH += $$PWD/sdk/third_party/utf8proc
@@ -139,6 +141,8 @@ win32 {
     INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
     INCLUDEPATH += $$PWD/sdk/include/mega/win32
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
+    INCLUDEPATH += $$PWD/3rdparty/include/libsodium
+    DEFINES += SODIUM_STATIC
 
     contains(CONFIG, BUILDX64) {
 	release {
@@ -181,9 +185,11 @@ macx {
    INCLUDEPATH += $$PWD/sdk/include
    INCLUDEPATH += $$PWD/sdk/include/mega/posix
    INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
+   INCLUDEPATH += $$PWD/3rdparty/include/libsodium
+   DEFINES += SODIUM_STATIC
 
    LIBS += -lsqlite3
 
    INCLUDEPATH += $$PWD/3rdparty/include/curl
-   LIBS += -L$$PWD/3rdparty/libs/ $$PWD/3rdparty/libs/libcares.a $$PWD/3rdparty/libs/libcurl.a -lz -lssl -lcrypto
+   LIBS += -L$$PWD/3rdparty/libs/ $$PWD/3rdparty/libs/libcares.a $$PWD/3rdparty/libs/libcurl.a $$PWD/3rdparty/libs/libsodium.a -lz -lssl -lcrypto
 }
