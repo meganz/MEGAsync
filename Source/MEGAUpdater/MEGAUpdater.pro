@@ -24,14 +24,18 @@ win32 {
         LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs/staticd"
     }
 
+    DEFINES += SODIUM_STATIC
+    INCLUDEPATH += $$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/include/libsodium
     LIBS += -lws2_32
 }
 
 macx {
+   DEFINES += SODIUM_STATIC
+   INCLUDEPATH += $$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/include/libsodium
    LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/sdk/3rdparty/libs
 }
 
-DEFINES += USE_CRYPTOPP
+DEFINES += USE_CRYPTOPP USE_SODIUM
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD ../MEGASync/sdk/3rdparty/include ../MEGASync/sdk/3rdparty/include/cryptopp ../MEGASync/sdk/include/ ../MEGASync/sdk/sdk/include/
 
