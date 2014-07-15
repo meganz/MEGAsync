@@ -148,6 +148,8 @@ void NodeSelector::on_bNewFolder_clicked()
 void NodeSelector::on_bOk_clicked()
 {
     MegaNode *rootNode = megaApi->getRootNode();
+    if(!rootNode) return;
+
     if(!rootAllowed && (selectedFolder == rootNode->getHandle()))
     {
         QMessageBox::warning(this, tr("Error"), tr("The root folder can't be synced.\n"

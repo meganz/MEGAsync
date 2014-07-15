@@ -386,7 +386,9 @@ void InfoDialog::updateSyncsButton()
     MegaNode *rootNode = megaApi->getRootNode();
     if(!rootNode)
     {
-        LOG("rootNode is NULL. I'm about to crash :-(");
+        preferences->setCrashed(true);
+        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
+        return;
     }
     long long rootHandle = rootNode->getHandle();
     long long firstSyncHandle = 0;
@@ -781,7 +783,6 @@ void InfoDialog::on_bSyncFolder_clicked()
     if(!rootNode)
     {
         preferences->setCrashed(true);
-        megaApi->fetchNodes();
         return;
     }
 
