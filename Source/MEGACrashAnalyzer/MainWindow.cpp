@@ -62,19 +62,19 @@ void MainWindow::parseCrashes(QString folder)
                 continue;
             }
 
-            //Discard errors after updates
-            //because the real version is unknown :-/
-            if(lines.at(5) == QString::fromAscii("Error info:"))
-                continue;
-
             if(!reports.contains(lines.at(2)))
                 reports.insert(lines.at(2), QHash<QString, QStringList>());
 
             QHash<QString, QStringList> &version = reports[lines.at(2)];
-            if(!version.contains(lines.at(5)))
-                version.insert(lines.at(5), QStringList());
+            int locationIndex = 5;
+            if(lines.at(4).startsWith(QString::fromUtf8("Operating")))
+                locationIndex = 6;
+            if(lines.at(5).startsWith(QString::fromUtf8("System")))
+                locationIndex = 9;
+            if(!version.contains(lines.at(locationIndex)))
+                version.insert(lines.at(locationIndex), QStringList());
 
-            QStringList &fullReports = version[lines.at(5)];
+            QStringList &fullReports = version[lines.at(locationIndex)];
             crashReport.insert(0, tr("File: ") + fiList[i].fileName() + QString::fromAscii("\n\n"));
             if(crashReports[crashReports.size()-1].size())
                 crashReport.append(tr("\nUser comment: ") + crashReports[crashReports.size()-1]);
@@ -106,7 +106,13 @@ void MainWindow::on_cVersion_currentIndexChanged(const QString &version)
         crashLocations.sort();
         ui->cLocation->addItems(crashLocations);
         ui->cLocation->setCurrentIndex(0);
-        ui->eVersion->setText(QString::number(crashLocations.size()));
+
+        int acum = 0;
+        QHash<QString, QStringList> &hVersion = reports[ui->cVersion->currentText()];
+        for(int i=0; i<crashLocations.size(); i++)
+            acum += hVersion[crashLocations[i]].size();
+
+        ui->eVersion->setText(QString::number(acum));
     }
     else
     {
