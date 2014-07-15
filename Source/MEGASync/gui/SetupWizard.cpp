@@ -360,6 +360,17 @@ void SetupWizard::on_bNext_clicked()
 
             ui->eMegaFolder->setText(QString::fromAscii("/"));
             MegaNode *node = megaApi->getRootNode();
+            if(!node)
+            {
+                ui->sPages->setCurrentWidget(ui->pLogin);
+                ui->eLoginPassword->clear();
+                ui->lVerify->hide();
+                sessionKey.clear();
+                wTypicalSetup_clicked();
+                megaApi->logout();
+                return;
+            }
+
             selectedMegaFolderHandle = node->getHandle();
             ui->bBack->setVisible(false);
             ui->bNext->setVisible(false);
@@ -400,6 +411,17 @@ void SetupWizard::on_bNext_clicked()
         if(!node)
         {
             MegaNode *rootNode = megaApi->getRootNode();
+            if(!rootNode)
+            {
+                ui->sPages->setCurrentWidget(ui->pLogin);
+                ui->eLoginPassword->clear();
+                ui->lVerify->hide();
+                sessionKey.clear();
+                wTypicalSetup_clicked();
+                megaApi->logout();
+                return;
+            }
+
             megaApi->createFolder("MEGAsync", rootNode, delegateListener);
             delete rootNode;
             ui->bNext->setEnabled(false);
@@ -469,7 +491,7 @@ void SetupWizard::on_bCancel_clicked()
 
         QString syncName;
         MegaNode *rootNode = megaApi->getRootNode();
-        if(selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
+        if(rootNode && selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         delete rootNode;
 
