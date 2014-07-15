@@ -1472,15 +1472,15 @@ void MegaApi::loop()
         }
 	}
 
-#ifdef WIN32
+//#ifdef USE_QT
     delete client->dbaccess; //Warning, it's deleted in MegaClient's destructor
     delete client->sctable;  //Warning, it's deleted in MegaClient's destructor
-#else
-    delete client;
-    delete httpio;
-    delete waiter;
-    delete fsAccess;
-#endif
+//#else
+//    delete client;
+//    delete httpio;
+//    delete waiter;
+//    delete fsAccess;
+//#endif
 
     MUTEX_DELETE(sdkMutex);
 }
