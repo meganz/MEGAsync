@@ -50,7 +50,7 @@ export SODIUM=libsodium
 export SODIUM_VERSION=0.5.0
 export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
 export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
-export SODIUM_DOWNLOAD_URL=https://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
+export SODIUM_DOWNLOAD_URL=http://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
 export SODIUM_SOURCE_DIR=$root_dir/$SODIUM/$SODIUM_SOURCE_FOLDER
 export SODIUM_INSTALL_DIR=$root_dir/MEGASync/sdk/3rdparty/
 

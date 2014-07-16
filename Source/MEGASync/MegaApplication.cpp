@@ -1797,8 +1797,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 		{
 			if(e->getErrorCode() == MegaError::API_OK)
 			{
-                if(megaApi->getRootNode())
+                MegaNode *rootNode = megaApi->getRootNode();
+                if(rootNode)
                 {
+                    delete rootNode;
+
                     //If we have got the filesystem, start the app
                     loggedIn();
                 }

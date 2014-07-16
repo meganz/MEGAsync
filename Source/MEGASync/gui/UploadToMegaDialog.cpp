@@ -112,6 +112,8 @@ void UploadToMegaDialog::on_bOK_clicked()
         ui->bChange->setEnabled(false);
         ui->bOK->setEnabled(false);
         MegaNode *rootNode = megaApi->getRootNode();
+        if(!rootNode) return;
+
         megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
         delete rootNode;
         return;

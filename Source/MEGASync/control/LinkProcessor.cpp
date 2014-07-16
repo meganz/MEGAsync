@@ -109,7 +109,13 @@ void LinkProcessor::importLinks(QString megaPath)
     else
     {
         MegaNode *rootNode = megaApi->getRootNode();
-        megaApi->createFolder("MEGAsync Imports", megaApi->getRootNode(), this);
+        if(!rootNode)
+        {
+            emit onLinkImportFinish();
+            return;
+        }
+
+        megaApi->createFolder("MEGAsync Imports", rootNode, this);
         delete rootNode;
     }
 }
