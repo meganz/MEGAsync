@@ -47,7 +47,10 @@ void MainWindow::parseCrashes(QString folder)
             continue;
 
         QString fileContents = QString::fromUtf8(file.readAll());
-        QStringList crashReports = fileContents.split(QString::fromAscii("------------------------------\n"));
+        QStringList crashReports = fileContents.split(QString::fromAscii("------------------------------\n"), QString::SkipEmptyParts);
+        if(crashReports.size()-2 >= 0 && crashReports[crashReports.size()-2].split(QString::fromAscii("\n")).size()<3)
+                crashReports.removeLast();
+
         for(int j=0; j<crashReports.size()-1; j++)
         {
             QString crashReport = crashReports[j];
@@ -77,7 +80,7 @@ void MainWindow::parseCrashes(QString folder)
             QStringList &fullReports = version[lines.at(locationIndex)];
             crashReport.insert(0, tr("File: ") + fiList[i].fileName() + QString::fromAscii("\n\n"));
             if(crashReports[crashReports.size()-1].size())
-                crashReport.append(tr("\nUser comment: ") + crashReports[crashReports.size()-1]);
+                crashReport.insert(0, tr("User comment: ") + crashReports[crashReports.size()-1]);
             fullReports.append(crashReport);
         }
     }
