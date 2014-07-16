@@ -4232,7 +4232,6 @@ void MegaApi::sendPendingTransfers()
                             MegaTransfer* previousTransfer = transferMap.at(previousTag);
                             previousTransfer->setSyncTransfer(false);
                             delete transfer;
-                            cout << "DELETE OKKKKKKK" << endl;
                         }
                     }
                 }
