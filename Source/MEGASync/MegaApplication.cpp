@@ -1928,6 +1928,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
+    if(finished) return;
+
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -1960,6 +1962,8 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
+    if(finished) return;
+
     //Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -2038,6 +2042,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
+    if(finished) return;
+
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
