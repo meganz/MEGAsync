@@ -188,7 +188,7 @@ macx {
    INCLUDEPATH += $$PWD/3rdparty/include/libsodium
    DEFINES += SODIUM_STATIC
 
-   LIBS += -lsqlite3
+   SOURCES += $$PWD/sqlite3.c
 
    INCLUDEPATH += $$PWD/3rdparty/include/curl
    LIBS += -L$$PWD/3rdparty/libs/ $$PWD/3rdparty/libs/libcares.a $$PWD/3rdparty/libs/libcurl.a $$PWD/3rdparty/libs/libsodium.a -lz -lssl -lcrypto
