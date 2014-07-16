@@ -120,6 +120,13 @@ void BindFolderDialog::on_bOK_clicked()
             else if(megaPath==QString::fromAscii("/") || (p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/')))
             {
                 MegaNode *rootNode = megaApi->getRootNode();
+                if(!rootNode)
+                {
+                    delete n;
+                    delete node;
+                    return;
+                }
+
                 if(handle == rootNode->getHandle())
                     QMessageBox::warning(this, tr("Error"), tr("Full account syncing is only possible without any selective syncs"), QMessageBox::Ok);
                 else

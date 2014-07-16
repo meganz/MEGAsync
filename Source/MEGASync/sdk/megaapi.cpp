@@ -1463,25 +1463,24 @@ void MegaApi::loop()
             sendPendingTransfers();
             sendPendingRequests();
             if(threadExit)
-            {
-                MUTEX_UNLOCK(sdkMutex);
                 break;
-            }
+
             client->exec();
             MUTEX_UNLOCK(sdkMutex);
         }
 	}
 
-#ifdef WIN32
+//#ifdef USE_QT
     delete client->dbaccess; //Warning, it's deleted in MegaClient's destructor
     delete client->sctable;  //Warning, it's deleted in MegaClient's destructor
-#else
-    delete client;
-    delete httpio;
-    delete waiter;
-    delete fsAccess;
-#endif
+//#else
+//    delete client;
+//    delete httpio;
+//    delete waiter;
+//    delete fsAccess;
+//#endif
 
+    MUTEX_UNLOCK(sdkMutex);
     MUTEX_DELETE(sdkMutex);
 }
 
