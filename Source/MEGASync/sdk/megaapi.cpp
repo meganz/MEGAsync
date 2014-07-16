@@ -1463,10 +1463,8 @@ void MegaApi::loop()
             sendPendingTransfers();
             sendPendingRequests();
             if(threadExit)
-            {
-                MUTEX_UNLOCK(sdkMutex);
                 break;
-            }
+
             client->exec();
             MUTEX_UNLOCK(sdkMutex);
         }
@@ -1482,6 +1480,7 @@ void MegaApi::loop()
 //    delete fsAccess;
 //#endif
 
+    MUTEX_UNLOCK(sdkMutex);
     MUTEX_DELETE(sdkMutex);
 }
 
