@@ -188,7 +188,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
     bool shown = wTransfer->isVisible();
     wTransfer->setFileName(fileName);
-    wTransfer->setProgress(completedSize, totalSize, megaApi->isRegularTransfer(transfer));
+    wTransfer->setProgress(completedSize, totalSize, !transfer->isSyncTransfer());
     if(!shown) updateState();
 }
 
