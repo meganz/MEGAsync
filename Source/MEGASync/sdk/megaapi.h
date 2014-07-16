@@ -934,7 +934,6 @@ public:
 
     void startPublicDownload(MegaNode* node, const char* localPath, MegaTransferListener *listener = NULL);
     //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
-    bool isRegularTransfer(MegaTransfer *transfer);
     void cancelTransfer(MegaTransfer *transfer, MegaRequestListener *listener=NULL);
     void cancelTransfers(int direction, MegaRequestListener *listener=NULL);
     void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);

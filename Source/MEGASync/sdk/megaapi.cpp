@@ -272,7 +272,7 @@ TransferList::TransferList(MegaTransfer** newlist, int size)
 	list = NULL; s = size;
 	if(!size) return;
 
-	list = new MegaTransfer*[size];
+    list = new MegaTransfer*[size];
 	for(int i=0; i<size; i++)
 		list[i] = newlist[i]->copy();
 }
@@ -1913,32 +1913,6 @@ bool MegaApi::moveToLocalDebris(const char *path)
     return result;
 }
 
-bool MegaApi::isRegularTransfer(MegaTransfer *t)
-{
-    bool regular = false;
-    MUTEX_LOCK(sdkMutex);
-    if(transferMap.find(t->getTag()) == transferMap.end())
-    {
-        MUTEX_UNLOCK(sdkMutex);
-    	return false;
-    }
-
-    Transfer *transfer = t->getTransfer();
-    file_list::const_iterator iterator;
-    for (iterator = transfer->files.begin(); iterator != transfer->files.end(); iterator++)
-    {
-        File *file = *iterator;
-        if(!file->syncxfer)
-        {
-            regular = true;
-            break;
-        }
-    }
-    MUTEX_UNLOCK(sdkMutex);
-    return regular;
-}
-
-
 treestate_t MegaApi::syncPathState(string* path)
 {
 #ifdef WIN32
@@ -2387,10 +2361,10 @@ void MegaApi::transfer_added(Transfer *t)
     }
 
 	currentTransfer = NULL;
-	transferMap[t->tag]=transfer;
     transfer->setTransfer(t);
-	transfer->setTotalBytes(t->size);
-	transfer->setTag(t->tag);
+    transfer->setTotalBytes(t->size);
+    transfer->setTag(t->tag);
+	transferMap[t->tag]=transfer;
 
     if (t->type == GET) totalDownloads++;
     else totalUploads++;
@@ -2402,21 +2376,25 @@ void MegaApi::transfer_added(Transfer *t)
 void MegaApi::transfer_removed(Transfer *t)
 {
     updateStatics();
-    if (t->type == GET)
-    {
-        if(pendingDownloads > 0)
-            pendingDownloads--;
-    }
-    else
-    {
-        if(pendingUploads > 0)
-            pendingUploads --;
-    }
 
-    if(transferMap.find(t->tag) == transferMap.end()) return;
-    MegaTransfer* transfer = transferMap.at(t->tag);
-    LOG("transfer_removed");
-    fireOnTransferFinish(this, transfer, MegaError(API_EINCOMPLETE));
+    if (t->files.size() == 1)
+    {
+        if (t->type == GET)
+        {
+            if(pendingDownloads > 0)
+                pendingDownloads--;
+        }
+        else
+        {
+            if(pendingUploads > 0)
+                pendingUploads --;
+        }
+
+        if(transferMap.find(t->tag) == transferMap.end()) return;
+        MegaTransfer* transfer = transferMap.at(t->tag);
+        LOG("transfer_removed");
+        fireOnTransferFinish(this, transfer, MegaError(API_EINCOMPLETE));
+    }
 }
 
 void MegaApi::transfer_prepare(Transfer *t)
@@ -4232,15 +4210,33 @@ void MegaApi::sendPendingTransfers()
 			case MegaTransfer::TYPE_UPLOAD:
 			{
                 const char* localPath = transfer->getPath();
-                LOG("Checking local path");
-				if(!localPath) { e = API_EARGS; break; }
+
+                if(!localPath) { e = API_EARGS; break; }
 				currentTransfer=transfer;
 				string tmpString = localPath;
 				string wLocalPath;
 				client->fsaccess->path2local(&tmpString, &wLocalPath);
 				MegaFilePut *f = new MegaFilePut(client, &wLocalPath, transfer->getParentHandle(), "");
-                LOG("Calling startxfer");
-				client->startxfer(PUT,f);
+
+                client->startxfer(PUT,f);
+                if(transfer->getTag() == -1)
+                {
+                    //Already existing transfer
+                    //Delete the new one and set the transfer as regular
+                    transfer_map::iterator it = client->transfers[PUT].find(f);
+                    if(it != client->transfers[PUT].end())
+                    {
+                        int previousTag = it->second->tag;
+                        if(transferMap.find(previousTag) != transferMap.end())
+                        {
+                            MegaTransfer* previousTransfer = transferMap.at(previousTag);
+                            previousTransfer->setSyncTransfer(false);
+                            delete transfer;
+                            cout << "DELETE OKKKKKKK" << endl;
+                        }
+                    }
+                }
+                currentTransfer=NULL;
 				break;
 			}
 			case MegaTransfer::TYPE_DOWNLOAD:
@@ -4284,8 +4280,25 @@ void MegaApi::sendPendingTransfers()
 						path += name;
 						f = new MegaFileGet(client, publicNode, path);
 					}
+
 					transfer->setPath(path.c_str());
 					client->startxfer(GET,f);
+                    if(transfer->getTag() == -1)
+                    {
+                        //Already existing transfer
+                        //Delete the new one and set the transfer as regular
+                        transfer_map::iterator it = client->transfers[GET].find(f);
+                        if(it != client->transfers[GET].end())
+                        {
+                            int previousTag = it->second->tag;
+                            if(transferMap.find(previousTag) != transferMap.end())
+                            {
+                                MegaTransfer* previousTransfer = transferMap.at(previousTag);
+                                previousTransfer->setSyncTransfer(false);
+                                delete transfer;
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -4311,6 +4324,7 @@ void MegaApi::sendPendingTransfers()
                 		//TODO: Implement streaming of public nodes
                 	}
                 }
+                currentTransfer=NULL;
 
 				break;
 			}
@@ -4835,6 +4849,7 @@ void MegaApi::sendPendingRequests()
             if(transferMap.find(transferTag) == transferMap.end()) { e = API_ENOENT; break; };
 
             MegaTransfer* megaTransfer = transferMap.at(transferTag);
+            megaTransfer->setSyncTransfer(true);
             Transfer *transfer = megaTransfer->getTransfer();
 
             file_list files = transfer->files;
@@ -4858,6 +4873,9 @@ void MegaApi::sendPendingRequests()
             for (transfer_map::iterator it = client->transfers[direction].begin() ; it != client->transfers[direction].end() ; )
             {
                 Transfer *transfer = it->second;
+                if(transferMap.find(transfer->tag) != transferMap.end())
+                    transferMap.at(transfer->tag)->setSyncTransfer(true);
+
                 it++;
 
                 file_list files = transfer->files;
