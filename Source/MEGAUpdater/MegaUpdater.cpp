@@ -182,39 +182,36 @@ char (&static_sizeof_array( T(&)[N] ))[N];
 
 void printUsage(const char* appname)
 {
-    cout << "Usage: " << endl;
-    cout << "Sign an update:" << endl;
-    cout << "    " << appname << " -s <win|osx> <update folder> <keyfile> <version_code>" << endl;
-    cout << "Generate a keypair" << endl;
-    cout << "    " << appname << " -g" << endl;
+    cerr << "Usage: " << endl;
+    cerr << "Sign an update:" << endl;
+    cerr << "    " << appname << " -s <win|osx> <update folder> <keyfile> <version_code>" << endl;
+    cerr << "Generate a keypair" << endl;
+    cerr << "    " << appname << " -g" << endl;
 }
 
-const byte *signFile(const char * filePath, AsymmCipher* key)
+unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsigned signbuflen)
 {
-    byte *signature = new byte[SIGNATURE_LENGTH];
     HashSignature signatureGenerator(new Hash());
     char buffer[1024];
 
     ifstream input(filePath, std::ios::in | std::ios::binary);
     if(input.fail())
     {
-        delete signature;
-        return NULL;
+        return 0;
     }
 
     while(input.good())
     {
         input.read(buffer, sizeof(buffer));
-        signatureGenerator.add((byte *)buffer, input.gcount());
+        signatureGenerator.add((byte *)buffer, (unsigned)input.gcount());
     }
 
-    if(input.bad() || !signatureGenerator.get(key, signature, SIGNATURE_LENGTH))
+    if(input.bad())
     {
-        delete signature;
-        return NULL;
+        return 0;
     }
 
-    return signature;
+    return signatureGenerator.get(key, signature, signbuflen);
 }
 
 int main(int argc, char *argv[])
@@ -223,6 +220,8 @@ int main(int argc, char *argv[])
     AsymmCipher aprivk;
     vector<string> downloadURLs;
     vector<string> signatures;
+    byte signature[SIGNATURE_LENGTH];
+    unsigned signatureSize;
     string pubk;
     string privk;
     bool win = true;
@@ -275,7 +274,7 @@ int main(int argc, char *argv[])
         getline(keyFile, privk);
         if(!pubk.size() || !privk.size())
         {
-            cout << "Invalid key file" << endl;
+            cerr << "Invalid key file" << endl;
             keyFile.close();
             return 3;
         }
@@ -284,7 +283,7 @@ int main(int argc, char *argv[])
         long versionCode = strtol (argv[5], NULL, 10);
         if(!versionCode)
         {
-            cout << "Invalid version code" << endl;
+            cerr << "Invalid version code" << endl;
             return 5;
         }
 
@@ -297,25 +296,24 @@ int main(int argc, char *argv[])
         //Generate update file signature
         signatureGenerator.add((const byte *)argv[5], strlen(argv[5]));
 
-        int numFiles;
+        unsigned int numFiles;
         if(win) numFiles = SIZEOF_ARRAY(UPDATE_FILES_WIN);
         else numFiles = SIZEOF_ARRAY(UPDATE_FILES_OSX);
 
         for(unsigned int i=0; i<numFiles; i++)
         {
             string filePath = updateFolder + (win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i];
-            const byte *signature = signFile(filePath.data(), &aprivk);
-            if(!signature)
+            signatureSize = signFile(filePath.data(), &aprivk, signature, sizeof(signature));
+            if(!signatureSize)
             {
-                cout << "Error signing file: " << filePath << endl;
+                cerr << "Error signing file: " << filePath << endl;
                 return 4;
             }
 
             string s;
-            s.resize((SIGNATURE_LENGTH*4)/3+4);
-            s.resize(Base64::btoa((byte *)signature,SIGNATURE_LENGTH, (char *)s.data()));
+            s.resize((signatureSize*4)/3+4);
+            s.resize(Base64::btoa((byte *)signature, signatureSize, (char *)s.data()));
             signatures.push_back(s);
-            delete signature;
 
             string fileUrl((win ? SERVER_BASE_URL_WIN : SERVER_BASE_URL_OSX));
             fileUrl.append((win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i]);
@@ -327,11 +325,15 @@ int main(int argc, char *argv[])
             signatureGenerator.add((const byte*)s.data(), s.length());
         }
 
-        byte buffer[SIGNATURE_LENGTH];
-        signatureGenerator.get(&aprivk, buffer, sizeof(buffer));
+        signatureSize = signatureGenerator.get(&aprivk, signature, sizeof(signature));
+        if(!signatureSize)
+        {
+            cerr << "Error signing the update file" << endl;
+            return 6;
+        }
         string updateFileSignature;
-        updateFileSignature.resize((SIGNATURE_LENGTH*4)/3+4);
-        updateFileSignature.resize(Base64::btoa((byte *)buffer,sizeof(buffer), (char *)updateFileSignature.data()));
+        updateFileSignature.resize((signatureSize*4)/3+4);
+        updateFileSignature.resize(Base64::btoa((byte *)signature, signatureSize, (char *)updateFileSignature.data()));
 
         //Print update file
         cout << argv[5] << endl;
