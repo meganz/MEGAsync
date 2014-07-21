@@ -49,15 +49,22 @@ void UpdateTask::startUpdateThread()
     timeoutTimer->setSingleShot(true);
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
-    QString basePath = MegaApplication::applicationDirPath() + QDir::separator();
-    appFolder = QDir(basePath);
+    //Set the working directory
+#if QT_VERSION < 0x050000
+    basePath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#else
+    basePath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+#endif
+
+    appFolder = QDir(MegaApplication::applicationDirPath() + QDir::separator());
 
     #ifdef __APPLE__
         appFolder.cdUp();
         appFolder.cdUp();
     #endif
 
-    updateFolder = QDir(basePath + Preferences::UPDATE_FOLDER_NAME);
+    updateFolder = QDir(basePath + QDir::separator() + Preferences::UPDATE_FOLDER_NAME);
+    cout << "UPDATEFOLDER " << updateFolder.absolutePath().toStdString() << endl;
     m_WebCtrl = new QNetworkAccessManager();
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
@@ -103,12 +110,28 @@ void UpdateTask::onTimeout()
 void UpdateTask::initialCleanup()
 {
     //Delete previous backups if possible (they could be still in use)
+    //Old location (app folder)
     QStringList subdirs = appFolder.entryList(QDir::Dirs);
     for(int i=0; i<subdirs.size(); i++)
     {
         if(subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
             Utilities::removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
     }
+
+    //New location (data folder)
+    QDir basePathDir(basePath);
+    subdirs = basePathDir.entryList(QDir::Dirs);
+    for(int i=0; i<subdirs.size(); i++)
+    {
+        if(subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
+            Utilities::removeRecursively(QDir(basePathDir.absoluteFilePath(subdirs[i])));
+    }
+
+    //Remove update folder (old location)
+    QDir oldUpdateFolder(MegaApplication::applicationDirPath() +
+                           QDir::separator() +
+                           Preferences::UPDATE_FOLDER_NAME);
+    Utilities::removeRecursively(oldUpdateFolder);
 
     //Initialize update info
     downloadURLs.clear();
@@ -123,7 +146,7 @@ void UpdateTask::finalCleanup()
     //Change the version info to skip checking the same update again.
     QApplication::setApplicationVersion(QString::number(updateVersion));
 
-    //Remove the update folder
+    //Remove the update folder (new location)
     Utilities::removeRecursively(QDir(updateFolder));
 
     #ifdef __APPLE__
@@ -294,7 +317,8 @@ bool UpdateTask::performUpdate()
     LOG("performUpdate");
 
     //Create backup folder
-    backupFolder = QDir(appFolder.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
+    QDir basePathDir(basePath);
+    backupFolder = QDir(basePathDir.absoluteFilePath(Preferences::UPDATE_BACKUP_FOLDER_NAME + QDateTime::currentDateTime().toString(QString::fromAscii("_dd_MM_yy__hh_mm_ss"))));
     backupFolder.mkdir(QString::fromAscii("."));
 
     for(int i=0; i<localPaths.size(); i++)
