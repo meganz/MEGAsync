@@ -56,6 +56,7 @@ protected:
    QDir updateFolder;
    QDir backupFolder;
    QDir appFolder;
+   QString basePath;
    QTimer *updateTimer;
    QTimer *timeoutTimer;
    bool forceInstall;
