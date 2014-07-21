@@ -25,10 +25,14 @@ cp ~/Qt5.3.1/5.3/clang_64/lib/QtMacExtras.framework/Contents/Info.plist MEGAsync
 cp ~/Qt5.3.1/5.3/clang_64/lib/QtNetwork.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtNetwork.framework/Resources/
 cp ~/Qt5.3.1/5.3/clang_64/lib/QtPrintSupport.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtPrintSupport.framework/Resources/
 cp ~/Qt5.3.1/5.3/clang_64/lib/QtWidgets.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtWidgets.framework/Resources/
-echo "Signing 'APPBUNDLE'"
-    
-codesign --force --verify --verbose --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
 
+#Overwrite resources to manage update processes. Use modified QtNetwork to get a valid signature
+cp -f ~/DesarrolloSW/MEGA_work/overwriteResources/QtNetwork MEGAsync.app/Contents/Frameworks/QtNetwork.framework/Versions/5/
+
+cp -R $APP_NAME.app ${APP_NAME}_unsigned.app
+
+echo "Signing 'APPBUNDLE'"
+codesign --force --verify --verbose --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
 
 echo "DMG CREATION PROCESS..."
 echo "Creating temporary Disk Image (1/7)"
@@ -66,3 +70,4 @@ echo "DONE"
 
 echo "Checking signature"
 spctl -vvvvvvvvv -a $APP_NAME.app
+
