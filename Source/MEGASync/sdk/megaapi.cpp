@@ -4011,6 +4011,8 @@ const char* MegaApi::getNodePath(MegaNode *node)
 
 MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 {
+    if(!path) return NULL;
+
     MUTEX_LOCK(sdkMutex);
     Node *cwd = NULL;
     if(node) cwd = client->nodebyhandle(node->getHandle());

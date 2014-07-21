@@ -739,6 +739,12 @@ void MegaApplication::rebootApplication(bool update)
         pasteMegaLinksDialog->hide();
     if(importDialog && importDialog->isVisible())
         importDialog->hide();
+
+#ifdef __APPLE__
+    cleanAll();
+    ::exit(0);
+#endif
+
     QApplication::exit();
 }
 

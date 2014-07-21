@@ -8,6 +8,10 @@
 #include <QDateTime>
 #include <iostream>
 
+#ifndef WIN32
+#include "sdk/megaapi.h"
+#endif
+
 using namespace std;
 
 QHash<QString, QString> Utilities::extensionIcons;
@@ -267,12 +271,21 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
 
 bool Utilities::removeRecursively(QDir dir)
 {
-    return true;
+    bool success = false;
+
+#ifndef WIN32
+    QString qpath = QDir::toNativeSeparators(dir.absolutePath());
+    string path = qpath.toUtf8().constData();
+    mega::PosixFileSystemAccess::emptydirlocal(&path);
+    success = dir.rmdir(dir.absolutePath());
+#endif
+
+    return success;
+
     /*
     if (!dir.exists())
         return true;
 
-    bool success = true;
     const QString dirPath = dir.path();
     // not empty -- we must empty it first
     QDirIterator di(dirPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
