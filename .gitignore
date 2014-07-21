@@ -5,6 +5,7 @@ MegaSyncSetup*.exe
 Release_x32
 Release_x64
 MEGAupdater
+installer_mac.sh
 
 # executable on Linux
 Source/MEGASync/megasync
