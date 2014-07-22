@@ -1787,6 +1787,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 	}
     case MegaRequest::TYPE_LOGOUT:
     {
+        if(e->getErrorCode())
+            showErrorMessage(tr("Error") + QString::fromAscii(": ") + e->QgetErrorString());
+
         if(preferences && preferences->logged())
         {
             preferences->unlink();
