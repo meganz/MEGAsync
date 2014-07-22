@@ -39,7 +39,7 @@ DEALINGS IN THE SOFTWARE.
 #define CLIENT_USER_AGENT "MEGA Android/2.0 BETA"
 #else
 #define CLIENT_KEY "FhMgXbqb"
-#define CLIENT_USER_AGENT "MEGAsync/1.0.26"
+#define CLIENT_USER_AGENT "MEGAsync/1.0.27"
 #endif
 
 #ifdef __APPLE__
