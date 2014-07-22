@@ -2977,10 +2977,10 @@ void MegaApi::notify_retry(dstime dsdelta)
 // this can occur e.g. with syntactically malformed requests (due to a bug) or due to an invalid application key
 void MegaApi::request_error(error e)
 {
-	MegaError megaError(e);
-#ifdef USE_QT
-    ((MegaApplication *)qApp)->showErrorMessage(QCoreApplication::translate("MegaError", "Error") + QString::fromAscii(": ") + megaError.QgetErrorString());
-#endif
+    MegaRequest *request = new MegaRequest(MegaRequest::TYPE_LOGOUT);
+    request->setParamType(e);
+    requestQueue.push(request);
+    waiter->notify();
 }
 
 void MegaApi::request_response_progress(m_off_t currentProgress, m_off_t totalProgress)
@@ -4646,6 +4646,7 @@ void MegaApi::sendPendingRequests()
 		}
 		case MegaRequest::TYPE_LOGOUT:
 		{
+            int errorCode = request->getParamType();
             requestMap.erase(nextTag);
             while(!requestMap.empty())
             {
@@ -4664,7 +4665,14 @@ void MegaApi::sendPendingRequests()
 
             requestMap[nextTag]=request;
 			client->restag = nextTag;
-			fireOnRequestFinish(this, request, MegaError(e));
+            pausetime = 0;
+            pendingUploads = 0;
+            pendingDownloads = 0;
+            totalUploads = 0;
+            totalDownloads = 0;
+            waiting = false;
+            waitingRequest = false;
+            fireOnRequestFinish(this, request, MegaError(errorCode));
 			break;
 		}
 		case MegaRequest::TYPE_FAST_LOGIN:
