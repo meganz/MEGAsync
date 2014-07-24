@@ -56,6 +56,8 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 #ifdef _WIN32
+#include <pcre.h>
+
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
 #define strcasecmp _stricmp

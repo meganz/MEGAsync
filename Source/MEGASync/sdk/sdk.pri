@@ -142,7 +142,7 @@ win32 {
     INCLUDEPATH += $$PWD/sdk/include/mega/win32
     INCLUDEPATH += $$PWD/3rdparty/include/cryptopp
     INCLUDEPATH += $$PWD/3rdparty/include/libsodium
-    DEFINES += SODIUM_STATIC
+    DEFINES += SODIUM_STATIC PCRE_STATIC
 
     contains(CONFIG, BUILDX64) {
 	release {
@@ -162,7 +162,7 @@ win32 {
 	}
     }
 
-    LIBS += -lwinhttp -lws2_32 -luser32
+    LIBS += -lwinhttp -lws2_32 -luser32 -lpcre
 }
 
 unix:!macx {
