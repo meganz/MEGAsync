@@ -96,6 +96,8 @@ ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
+ln -s ../MEGASync/MEGAShellExtNautilus/debian.postinst $EXT_NAME/debian.postinst
+ln -s ../MEGASync/MEGAShellExtNautilus/debian.postrm $EXT_NAME/debian.postrm
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME

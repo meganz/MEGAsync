@@ -1,0 +1,54 @@
+#!/bin/bash
+
+distro=$(lsb_release -ds)
+ver=$(lsb_release -rs)
+
+if [[ $ver = "14.04" ]]; then
+    str="xUbuntu_14.04"
+elif [[ $ver = "13.10" ]]; then
+    str="xUbuntu_13.10"
+elif [[ $ver = "12.10" ]]; then
+    str="xUbuntu_12.10"
+elif [[ $ver = "12.04" ]]; then
+    str="xUbuntu_12.04"
+elif [[ $ver = "6.0" ]]; then
+    str="Debian_6.0"
+elif [[ $ver = "6.0" ]]; then
+    str="Debian_7.0"
+else
+    exit 1
+fi
+
+if [ -d /etc/apt/sources.list.d ]; then
+cat >/etc/apt/sources.list.d/megasync.list <<EOF
+deb http://build.developers.mega.co.nz:82/MEGASync/$str/ ./
+EOF
+fi
+
+apt-key add - >/dev/null 2>&1 <<KEY
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+mQENBFPeXUsBCAC+1cVz+1OYJbgyAsAgxHfoJnQVXrjtKL9eZp1LYq1QXMEo7zOF
+lD8qgm5UCSfIukzx5uJRB/fWzCtzcAQz3zemrkM+qwpJ2vczOhnyVmyClOXOQDQE
+J2oFkpUlS42EQkenxHG57enFPdSzfhXwuDL/8SRE3HXuTBHbdRQ1i82edMRJU1hC
+p9GZ+/R48KIndGBXfUic6CnHx5hGkdEf9Dx5Az4UUOoUcfjbJMvlLXjrbjZFTq3U
+5/PbkjiIHuH6l3B7svPyxqWo2DmdGCDfcghSOvkaJZq1cjHP6sHcPEv6uBtJDatG
+2GGfC8dAW++8VAQy02Eha72FYV++sNHM39LTABEBAAG0JE1FR0FTeW5jIE9CUyBQ
+cm9qZWN0IDxNRUdBU3luY0BNZWdhPokBPwQTAQIAKQUCU95dSwIbAwUJBB6wAAcL
+CQgHAwIBBhUIAgkKCwQWAgMBAh4BAheAAAoJEFk14MunGCPrBrMIALUHBHMV2x43
+sDqgCFapI0puRXQoSJoh7BFNj0pXhrFb7bpflqCHeYfAE9Lv2SS7SJlvS6JEmOLV
+9lkhZdSUrspomvpcNu7m98GZUmdqxfLVPybvWZID+M3PqfLwpc8VcLWwdABDCApO
+l55s73+7rVVTcRL9T5/C4JbocuRGt0/xYYDrDBf0tKag2gLDzYco4/w54SXYgLU6
+wm75kahKtgAbPEHNOUki5mTb6Fv2Hw/uPu32ZxhYwRQ0nROGKKyrEh/5D+rda+Ee
++CCy+adv0KnIYudSdMtqcSNH2NVkXd7IYj55VkWB1arP8Dnm/chkzKDDpHvoWuLB
+XooLX4fAdOKJARwEEwECAAYFAlPeXUsACgkQS056lSOs0gFamAgAscTzZfPiJXDz
+WtYxI1dYkIHGKSRhbjfVdi+rcZ5ZQz9x1ZVDmmn7sqWfI1xVjGeLErA8E7Bdmaaz
+WujJE87ZO5ChHmtLdZN7/pw1MvZ8TWMsvwXsrzYlgUbT88lDaJXak5zylds64xR1
+WE1Yf5pTxxM/UTmw6PUiUdlORYJVP/hqUMnW55HOi8S622M64HFueX+YdlZLvGfJ
+Erwlkz/ANinEQGId+hPFZmYvdUMuUVsj8Hs46s1Grt+6Tuye2KqkBJYl4yGKhMuf
+RL8Iftt93+CH5e7rKaU5hxQAYyJeXLcKo956XVGSjg8b/Blfy62B7SlEc4RG7rVR
+IqvIDMDunA==
+=pFdg
+-----END PGP PUBLIC KEY BLOCK-----
+KEY
