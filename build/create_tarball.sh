@@ -49,6 +49,8 @@ sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGASync/PKGBUILD > ME
 # create archive
 mkdir $MEGASYNC_NAME
 ln -s ../MEGASync/MEGASync/megasync.spec $MEGASYNC_NAME/megasync.spec
+ln -s ../MEGASync/MEGASync/debian.postinst $MEGASYNC_NAME/debian.postinst
+ln -s ../MEGASync/MEGASync/debian.postrm $MEGASYNC_NAME/debian.postrm
 ln -s ../../Source/configure $MEGASYNC_NAME/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
