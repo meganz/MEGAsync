@@ -564,6 +564,12 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {
+    if(infoDialog)
+    {
+        infoDialog->init();
+        return;
+    }
+
     if(settingsDialog)
         settingsDialog->setProxyOnly(false);
 
@@ -978,6 +984,7 @@ void MegaApplication::showInfoDialog()
             infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
+            infoDialog->updateTransfers();
         }
         else
         {
