@@ -1,0 +1,24 @@
+#!/bin/sh
+
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+
+if [ -f /etc/fedora-release ] ; then
+    DNAME="Fedora"
+    VER=`cat /etc/fedora-release | sed s/.*release\ // | sed s/\ .*//`
+    DIST="${DNAME}_${VER}"
+fi
+
+if [[ $DNAME = "Fedora" ]]; then
+    # assume that this is a yum based distro
+    if [ -d "/etc/yum.repos.d" ]; then
+    cat > "$YUM_FILE" << DATA
+[MEGASync]
+name=MEGASync
+type=rpm-md
+baseurl=http://build.developers.mega.co.nz:82/MEGASync/$DIST/
+gpgcheck=1
+gpgkey=http://build.developers.mega.co.nz:82/MEGASync/$DIST/repodata/repomd.xml.key
+enabled=1
+DATA
+    fi
+fi

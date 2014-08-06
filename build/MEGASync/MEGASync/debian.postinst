@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 distro=$(lsb_release -ds)
 ver=$(lsb_release -rs)
