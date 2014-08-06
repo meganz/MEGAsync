@@ -56,7 +56,7 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 #ifdef _WIN32
-#include <pcre.h>
+//#include <pcre.h>
 
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
@@ -2789,6 +2789,8 @@ void MegaApi::fetchnodes_result(error e)
 		cout << "INCORRECT REQUEST OBJECT (4)";
 
     fireOnRequestFinish(this, request, megaError);
+    if(e != API_OK)
+        return;
 
 #ifdef USE_QT
     Preferences *preferences = Preferences::instance();
@@ -2979,6 +2981,12 @@ void MegaApi::notify_retry(dstime dsdelta)
 // this can occur e.g. with syntactically malformed requests (due to a bug) or due to an invalid application key
 void MegaApi::request_error(error e)
 {
+    if(e == API_ENOENT)
+    {
+        fetchNodes();
+        return;
+    }
+
     MegaRequest *request = new MegaRequest(MegaRequest::TYPE_LOGOUT);
     request->setParamType(e);
     requestQueue.push(request);

@@ -134,6 +134,27 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 #endif
 }
 
+void InfoDialog::init()
+{
+    downloadSpeed = 0;
+    uploadSpeed = 0;
+    currentUpload = 0;
+    currentDownload = 0;
+    totalUploads = 0;
+    totalDownloads = 0;
+    totalDownloadedSize = totalUploadedSize = 0;
+    totalDownloadSize = totalUploadSize = 0;
+    remainingUploads = remainingDownloads = 0;
+    uploadStartTime = 0;
+    downloadStartTime = 0;
+    effectiveDownloadSpeed = 200000;
+    effectiveUploadSpeed = 200000;
+    indexing = false;
+    waiting = false;
+    megaApi->resetTotalDownloads();
+    megaApi->resetTotalUploads();
+}
+
 InfoDialog::~InfoDialog()
 {
     delete ui;

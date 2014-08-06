@@ -19,6 +19,7 @@ class InfoDialog : public QDialog
 
 public:
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
+    void init();
     ~InfoDialog();
 
 	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
