@@ -51,6 +51,8 @@ mkdir $MEGASYNC_NAME
 ln -s ../MEGASync/MEGASync/megasync.spec $MEGASYNC_NAME/megasync.spec
 ln -s ../MEGASync/MEGASync/debian.postinst $MEGASYNC_NAME/debian.postinst
 ln -s ../MEGASync/MEGASync/debian.postrm $MEGASYNC_NAME/debian.postrm
+ln -s ../MEGASync/MEGASync/postin $MEGASYNC_NAME/postin
+ln -s ../MEGASync/MEGASync/postun $MEGASYNC_NAME/postun
 ln -s ../../Source/configure $MEGASYNC_NAME/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
@@ -97,6 +99,7 @@ ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
 ln -s ../MEGASync/MEGAShellExtNautilus/debian.postinst $EXT_NAME/debian.postinst
+ln -s ../MEGASync/MEGAShellExtNautilus/postin $EXT_NAME/postin
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
