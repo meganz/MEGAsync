@@ -1540,7 +1540,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 setupWizard->raise();
                 setupWizard->activateWindow();
             }
-            else showInfoMessage(tr("Logging in..."));
+            else if(reason == QSystemTrayIcon::Trigger)
+                showInfoMessage(tr("Logging in..."));
 
             return;
         }
