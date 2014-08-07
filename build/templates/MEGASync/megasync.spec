@@ -74,6 +74,37 @@ desktop-file-install \
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
 
+%postin
+
+# Fedora 20
+%if 0%{?fedora_version} == 20
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGASync]
+name=MEGASync
+type=rpm-md
+baseurl=http://build.developers.mega.co.nz:82/MEGASync/Fedora
+gpgcheck=1
+gpgkey=http://build.developers.mega.co.nz:82/MEGASync/Fedora_20/repodata/repomd.xml.key
+enabled=1
+DATA
+%endif
+
+# Fedora 19
+%if 0%{?fedora_version} == 19
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGASync]
+name=MEGASync
+type=rpm-md
+baseurl=http://build.developers.mega.co.nz:82/MEGASync/Fedora
+gpgcheck=1
+gpgkey=http://build.developers.mega.co.nz:82/MEGASync/Fedora_19/repodata/repomd.xml.key
+enabled=1
+DATA
+%endif
+
+
 %postun
 %if 0%{?suse_version} >= 1140
 %desktop_database_postun
@@ -84,6 +115,10 @@ if [ $1 -eq 0 ] ; then
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 %endif
+# remove repo files
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+rm $YUM_FILE || true
+
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 %posttrans
