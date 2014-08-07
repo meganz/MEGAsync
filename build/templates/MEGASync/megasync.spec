@@ -74,7 +74,6 @@ desktop-file-install \
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
 
-%postin
 
 # Fedora 20
 %if 0%{?fedora_version} == 20
@@ -103,7 +102,6 @@ gpgkey=http://build.developers.mega.co.nz:82/MEGASync/Fedora_19/repodata/repomd.
 enabled=1
 DATA
 %endif
-
 
 %postun
 %if 0%{?suse_version} >= 1140
