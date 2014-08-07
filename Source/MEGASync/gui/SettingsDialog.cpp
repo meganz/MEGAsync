@@ -179,11 +179,11 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bBandwidth->setChecked(false);
         ui->bProxies->setChecked(true);
         ui->wStack->setCurrentWidget(ui->pProxies);
-        setMinimumHeight(410);
-        setMaximumHeight(410);
         ui->pProxies->show();
 
         #ifdef __APPLE__
+            setMinimumHeight(410);
+            setMaximumHeight(410);
             ui->bApply->show();
         #endif
     }
