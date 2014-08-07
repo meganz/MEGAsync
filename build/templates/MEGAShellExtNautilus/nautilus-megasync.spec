@@ -51,6 +51,27 @@ rm -rf $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache
 %else
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
+# restart Nautilus
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Nautilus."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+    if pgrep -x nautilus > /dev/null 2>&1 ;  then
+        cat > $UPDATENOTIFIERDIR/megasync-restart-required <<DATA
+Name: Nautilus Restart Required
+Priority: High
+Terminal: False
+Command: nautilus -q
+ButtonText: _Restart Nautilus
+DontShowAfterReboot: True
+DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
+Description: MEGASync requires Nautilus to be restarted to function properly.
+DATA
+        touch /var/lib/update-notifier/dpkg-run-stamp
+    else
+        rm -f $UPDATENOTIFIERDIR/megasync-restart-required
+    fi
+fi
 
 %postun
 %if 0%{?suse_version} >= 1140
@@ -61,6 +82,28 @@ if [ $1 -eq 0 ] ; then
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 %endif
+# restart Nautilus
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Nautilus."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+    if pgrep -x nautilus > /dev/null 2>&1 ;  then
+        cat > $UPDATENOTIFIERDIR/megasync-restart-required <<DATA
+Name: Nautilus Restart Required
+Priority: High
+Terminal: False
+Command: nautilus -q
+ButtonText: _Restart Nautilus
+DontShowAfterReboot: True
+DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
+Description: MEGASync requires Nautilus to be restarted to function properly.
+DATA
+        touch /var/lib/update-notifier/dpkg-run-stamp
+    else
+        rm -f $UPDATENOTIFIERDIR/megasync-restart-required
+    fi
+fi
+
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 %posttrans
