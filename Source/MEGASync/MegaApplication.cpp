@@ -1856,7 +1856,35 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setUsedStorage(details->storage_used);
 		preferences->setTotalBandwidth(details->transfer_max);
 		preferences->setUsedBandwidth(details->transfer_own_used);
+
+        MegaNode *root = megaApi->getRootNode();
+        handle rootHandle = root->getHandle();
+        NodeStorage &rootDetails = details->storage[rootHandle];
+        preferences->setCloudDriveStorage(rootDetails.bytes);
+        preferences->setCloudDriveFiles(rootDetails.files);
+        preferences->setCloudDriveFolders(rootDetails.folders);
+        delete root;
+
+        MegaNode *inbox = megaApi->getInboxNode();
+        handle inboxHandle = inbox->getHandle();
+        NodeStorage &inboxDetails = details->storage[inboxHandle];
+        preferences->setInboxStorage(inboxDetails.bytes);
+        preferences->setInboxFiles(inboxDetails.files);
+        preferences->setInboxFolders(inboxDetails.folders);
+        delete inbox;
+
+        MegaNode *rubbish = megaApi->getInboxNode();
+        handle rubbishHandle = rubbish->getHandle();
+        NodeStorage &rubbishDetails = details->storage[rubbishHandle];
+        preferences->setRubbishStorage(rubbishDetails.bytes);
+        preferences->setRubbishFiles(rubbishDetails.files);
+        preferences->setRubbishFolders(rubbishDetails.folders);
+        delete rubbish;
+
+        preferences->sync();
+
         if(infoDialog) infoDialog->setUsage(details->storage_max, details->storage_used);
+        if(settingsDialog) settingsDialog->refreshAccountDetails();
         break;
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
@@ -2042,6 +2070,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if(lastStartedUpload == transfer->getStartTime())
             lastStartedUpload = 0;
         preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
+        preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + transfer->getTotalBytes());
+        preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
+        if(settingsDialog) settingsDialog->refreshAccountDetails();
+
         if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
     }
 

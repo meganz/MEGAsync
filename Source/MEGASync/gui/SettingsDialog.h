@@ -11,6 +11,7 @@
 #include <QCloseEvent>
 #include <QAuthenticator>
 
+#include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "Preferences.h"
 #include "sdk/megaapi.h"
@@ -38,6 +39,7 @@ public:
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
     void loadSettings();
+    void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
 
 public slots:
@@ -95,6 +97,11 @@ private slots:
     void on_bUpdate_clicked();
     void on_bSyncChange_clicked();
     void on_bFullCheck_clicked();
+
+#ifdef WIN32
+    void on_bStorageDetails_clicked();
+#endif
+
     void onAnimationFinished();
 
 protected:
@@ -113,6 +120,8 @@ private:
     QFutureWatcher<long long> cacheSizeWatcher;
     QNetworkAccessManager *networkAccess;
     MegaProgressDialog *proxyTestProgressDialog;
+    AccountDetailsDialog *accountDetailsDialog;
+
     QTimer proxyTestTimer;
     bool shouldClose;
     int modifyingSettings;
