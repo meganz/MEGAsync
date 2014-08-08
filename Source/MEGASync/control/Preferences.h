@@ -38,6 +38,28 @@ public:
     void setTotalStorage(long long value);
     long long usedStorage();
     void setUsedStorage(long long value);
+
+    long long cloudDriveStorage();
+    void setCloudDriveStorage(long long value);
+    long long inboxStorage();
+    void setInboxStorage(long long value);
+    long long rubbishStorage();
+    void setRubbishStorage(long long value);
+
+    long long cloudDriveFiles();
+    void setCloudDriveFiles(long long value);
+    long long inboxFiles();
+    void setInboxFiles(long long value);
+    long long rubbishFiles();
+    void setRubbishFiles(long long value);
+
+    long long cloudDriveFolders();
+    void setCloudDriveFolders(long long value);
+    long long inboxFolders();
+    void setInboxFolders(long long value);
+    long long rubbishFolders();
+    void setRubbishFolders(long long value);
+
 	long long totalBandwidth();
 	void setTotalBandwidth(long long value);
 	long long usedBandwidth();
@@ -128,6 +150,7 @@ public:
     bool error();
 
     void clearAll();
+    void sync();
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -188,6 +211,15 @@ protected:
     static const QString privatePwKey;
     static const QString totalStorageKey;
     static const QString usedStorageKey;
+    static const QString cloudDriveStorageKey;
+    static const QString inboxStorageKey;
+    static const QString rubbishStorageKey;
+    static const QString cloudDriveFilesKey;
+    static const QString inboxFilesKey;
+    static const QString rubbishFilesKey;
+    static const QString cloudDriveFoldersKey;
+    static const QString inboxFoldersKey;
+    static const QString rubbishFoldersKey;
 	static const QString totalBandwidthKey;
 	static const QString usedBandwidthKey;
     static const QString accountTypeKey;

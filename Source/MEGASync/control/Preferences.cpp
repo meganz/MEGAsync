@@ -38,6 +38,15 @@ const QString Preferences::emailHashKey             = QString::fromAscii("emailH
 const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
 const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
 const QString Preferences::usedStorageKey           = QString::fromAscii("usedStorage");
+const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudDriveStorage");
+const QString Preferences::inboxStorageKey          = QString::fromAscii("inboxStorage");
+const QString Preferences::rubbishStorageKey        = QString::fromAscii("rubbishStorage");
+const QString Preferences::cloudDriveFilesKey       = QString::fromAscii("cloudDriveFiles");
+const QString Preferences::inboxFilesKey            = QString::fromAscii("inboxFiles");
+const QString Preferences::rubbishFilesKey          = QString::fromAscii("rubbishFiles");
+const QString Preferences::cloudDriveFoldersKey     = QString::fromAscii("cloudDriveFolders");
+const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxFolders");
+const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::totalBandwidthKey		= QString::fromAscii("totalBandwidth");
 const QString Preferences::usedBandwidthKey			= QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
@@ -201,7 +210,6 @@ void Preferences::setTotalStorage(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(totalStorageKey, value);
-    settings->sync();
     mutex.unlock();
 }
 
@@ -219,7 +227,159 @@ void Preferences::setUsedStorage(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(usedStorageKey, value);
-	settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::cloudDriveStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(cloudDriveStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCloudDriveStorage(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(cloudDriveStorageKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::inboxStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(inboxStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setInboxStorage(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(inboxStorageKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::rubbishStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(rubbishStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setRubbishStorage(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(rubbishStorageKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::cloudDriveFiles()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(cloudDriveFilesKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCloudDriveFiles(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(cloudDriveFilesKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::inboxFiles()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(inboxFilesKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setInboxFiles(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(inboxFilesKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::rubbishFiles()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(rubbishFilesKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setRubbishFiles(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(rubbishFilesKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::cloudDriveFolders()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(cloudDriveFoldersKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCloudDriveFolders(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(cloudDriveFoldersKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::inboxFolders()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(inboxFoldersKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setInboxFolders(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(inboxFoldersKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::rubbishFolders()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(rubbishFoldersKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setRubbishFolders(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(rubbishFoldersKey, value);
     mutex.unlock();
 }
 
@@ -237,7 +397,6 @@ void Preferences::setTotalBandwidth(long long value)
     mutex.lock();
     assert(logged());
 	settings->setValue(totalBandwidthKey, value);
-	settings->sync();
     mutex.unlock();
 }
 
@@ -255,7 +414,6 @@ void Preferences::setUsedBandwidth(long long value)
     mutex.lock();
     assert(logged());
 	settings->setValue(usedBandwidthKey, value);
-	settings->sync();
     mutex.unlock();
 }
 
@@ -273,7 +431,6 @@ void Preferences::setAccountType(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(accountTypeKey, value);
-    settings->sync();
     mutex.unlock();
 }
 
@@ -1029,6 +1186,11 @@ void Preferences::clearAll()
     settings->clear();
     settings->sync();
     mutex.unlock();
+}
+
+void Preferences::sync()
+{
+    settings->sync();
 }
 
 void Preferences::login(QString account)

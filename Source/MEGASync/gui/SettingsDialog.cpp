@@ -69,6 +69,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     networkAccess = NULL;
     shouldClose = false;
     modifyingSettings = 0;
+    accountDetailsDialog = NULL;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -617,20 +618,7 @@ void SettingsDialog::loadSettings()
 
         //Account
         ui->lEmail->setText(preferences->email());
-        if(preferences->totalStorage()==0)
-        {
-            ui->pStorage->setValue(0);
-            ui->lStorage->setText(tr("Data temporarily unavailable"));
-        }
-        else
-        {
-            int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
-            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
-                  .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage))
-                  .arg(Utilities::getSizeString(preferences->totalStorage())));
-        }
+        refreshAccountDetails();
 
         QIcon icon;
         switch(preferences->accountType())
@@ -755,6 +743,33 @@ void SettingsDialog::loadSettings()
     ui->bApply->setEnabled(false);
     this->update();
     modifyingSettings--;
+}
+
+void SettingsDialog::refreshAccountDetails()
+{
+    if(preferences->totalStorage()==0)
+    {
+        ui->pStorage->setValue(0);
+        ui->lStorage->setText(tr("Data temporarily unavailable"));
+
+#ifdef WIN32
+        ui->bStorageDetails->setEnabled(false);
+#endif
+    }
+    else
+    {
+#ifdef WIN32
+        ui->bStorageDetails->setEnabled(true);
+#endif
+        int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
+        ui->pStorage->setValue((percentage < 100) ? percentage : 100);
+        ui->lStorage->setText(tr("%1 (%2%) of %3 used")
+              .arg(Utilities::getSizeString(preferences->usedStorage()))
+              .arg(QString::number(percentage))
+              .arg(Utilities::getSizeString(preferences->totalStorage())));
+    }
+    if(accountDetailsDialog)
+        accountDetailsDialog->refresh();
 }
 
 bool SettingsDialog::saveSettings()
@@ -1430,6 +1445,16 @@ void SettingsDialog::onAnimationFinished()
     else if(ui->wStack->currentWidget() == ui->pAdvanced)
         ui->pAdvanced->show();
 }
+
+#ifdef WIN32
+void SettingsDialog::on_bStorageDetails_clicked()
+{
+    accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
+    accountDetailsDialog->exec();
+    delete accountDetailsDialog;
+    accountDetailsDialog = NULL;
+}
+#endif
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 {

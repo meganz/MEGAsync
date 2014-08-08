@@ -586,6 +586,7 @@ MegaRequest::MegaRequest(MegaRequest &request)
 		this->accountDetails->transfer_hist_interval = temp->transfer_hist_interval;
 		this->accountDetails->transfer_reserved = temp->transfer_reserved;
 		this->accountDetails->transfer_limit = temp->transfer_limit;
+        this->accountDetails->storage = temp->storage;
 	}
 }
 
