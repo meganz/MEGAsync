@@ -121,15 +121,11 @@ using namespace std;
 
 #ifdef WIN32
 
-#include "win32/megaapiwinhttpio.h"
-#include "mega/win32/megafs.h"
-#include "win32/megaapiwait.h"
 #include "mega.h"
-#include "MegaProxySettings.h"
 
-class MegaHttpIO : public mega::MegaApiWinHttpIO {};
+class MegaHttpIO : public mega::WinHttpIO {};
 class MegaFileSystemAccess : public mega::WinFileSystemAccess {};
-class MegaWaiter : public mega::MegaApiWinWaiter {};
+class MegaWaiter : public mega::WinWaiter {};
 
 #else
 
@@ -154,6 +150,8 @@ class MegaWaiter : public mega::MegaApiLinuxWaiter {};
 #endif
 
 #endif
+
+typedef mega::Proxy MegaProxy;
 
 class MegaDbAccess : public mega::SqliteDbAccess
 {
@@ -895,8 +893,8 @@ public:
 	void querySignupLink(const char* link, MegaRequestListener *listener = NULL);
 	void confirmAccount(const char* link, const char *password, MegaRequestListener *listener = NULL);
 	void fastConfirmAccount(const char* link, const char *base64pwkey, MegaRequestListener *listener = NULL);
-    void setProxySettings(MegaProxySettings *proxySettings);
-    MegaProxySettings *getAutoProxySettings();
+    void setProxySettings(MegaProxy *proxySettings);
+    MegaProxy *getAutoProxySettings();
     int isLoggedIn();
 	const char* getMyEmail();
 

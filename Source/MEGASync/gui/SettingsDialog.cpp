@@ -932,51 +932,37 @@ bool SettingsDialog::saveSettings()
         (preferences->getProxyPassword() != ui->eProxyPassword->text()))
     {
         proxyChanged = true;
-        LOG("New proxy settings");
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::NoProxy);
         if(ui->rProxyManual->isChecked())
         {
-            LOG("Manual proxy");
-            LOG(ui->eProxyServer->text().trimmed());
-            LOG(ui->eProxyPort->text().trimmed());
             proxy.setType(QNetworkProxy::HttpProxy);
             proxy.setHostName(ui->eProxyServer->text().trimmed());
             proxy.setPort(ui->eProxyPort->text().trimmed().toInt());
             if(ui->cProxyRequiresPassword->isChecked())
             {
-                LOG("Auth proxy");
-                LOG(ui->eProxyUsername->text());
-                LOG(ui->eProxyPassword->text());
                 proxy.setUser(ui->eProxyUsername->text());
                 proxy.setPassword(ui->eProxyPassword->text());
             }
         }
         else if(ui->rProxyAuto->isChecked())
         {
-            LOG("Auto proxy");
-            MegaProxySettings *proxySettings = megaApi->getAutoProxySettings();
-            if(proxySettings->getProxyType()==MegaProxySettings::CUSTOM)
+            MegaProxy *proxySettings = megaApi->getAutoProxySettings();
+            if(proxySettings->getProxyType()==MegaProxy::CUSTOM)
             {
-                LOG("Custom proxy");
                 string sProxyURL = proxySettings->getProxyURL();
                 QString proxyURL = QString::fromUtf8(sProxyURL.data());
-                LOG(proxyURL);
+
                 QStringList arguments = proxyURL.split(QString::fromAscii(":"));
                 if(arguments.size() == 2)
                 {
-                    LOG(arguments[0]);
-                    LOG(arguments[1]);
                     proxy.setType(QNetworkProxy::HttpProxy);
                     proxy.setHostName(arguments[0]);
                     proxy.setPort(arguments[1].toInt());
                 }
             }
-            else LOG("No proxy");
-
             delete proxySettings;
         }
-        else LOG("No proxy");
 
         QNetworkRequest proxyTestRequest(Preferences::PROXY_TEST_URL);
         proxyTestRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
