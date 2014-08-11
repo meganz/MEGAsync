@@ -1124,62 +1124,52 @@ void MegaApplication::stopUpdateTask()
 
 void MegaApplication::applyProxySettings()
 {
-    QNetworkProxy proxy;
+    QNetworkProxy proxy(QNetworkProxy::NoProxy);
+    MegaProxy *proxySettings = new MegaProxy();
+    proxySettings->setProxyType(preferences->proxyType());
 
-    MegaProxySettings proxySettings;
-    proxySettings.setProxyType(preferences->proxyType());
-    string proxyString = preferences->proxyHostAndPort().toStdString();
-    proxySettings.setProxyURL(&proxyString);
-
-    if(preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
+    if(preferences->proxyType() == MegaProxy::CUSTOM)
     {
-        LOG("Custom proxy QT");
-        LOG(preferences->proxyServer());
-        LOG(QString::number(preferences->proxyPort()));
+        string proxyString = preferences->proxyHostAndPort().toStdString();
+        proxySettings->setProxyURL(&proxyString);
 
         proxy.setType(QNetworkProxy::HttpProxy);
         proxy.setHostName(preferences->proxyServer());
         proxy.setPort(preferences->proxyPort());
         if(preferences->proxyRequiresAuth())
         {
-            LOG("Auth proxy QT");
             string username = preferences->getProxyUsername().toStdString();
             string password = preferences->getProxyPassword().toStdString();
-            proxySettings.setCredentials(&username, &password);
+            proxySettings->setCredentials(&username, &password);
 
             proxy.setUser(preferences->getProxyUsername());
             proxy.setPassword(preferences->getProxyPassword());
         }
-        megaApi->setProxySettings(&proxySettings);
     }
-    else if(preferences->proxyType() == Preferences::PROXY_TYPE_AUTO)
+    else if(preferences->proxyType() == MegaProxy::AUTO)
     {
-        LOG("Auto proxy QT");
+        MegaProxy* autoProxy = megaApi->getAutoProxySettings();
+        delete proxySettings;
+        proxySettings = autoProxy;
 
-        megaApi->setProxySettings(&proxySettings);
-        if(preferences->proxyServer().size())
+        if(proxySettings->getProxyType()==MegaProxy::CUSTOM)
         {
-            LOG(preferences->proxyServer());
-            LOG(QString::number(preferences->proxyPort()));
+            string sProxyURL = proxySettings->getProxyURL();
+            QString proxyURL = QString::fromUtf8(sProxyURL.data());
 
-            proxy.setType(QNetworkProxy::HttpProxy);
-            proxy.setHostName(preferences->proxyServer());
-            proxy.setPort(preferences->proxyPort());
+            QStringList arguments = proxyURL.split(QString::fromAscii(":"));
+            if(arguments.size() == 2)
+            {
+                proxy.setType(QNetworkProxy::HttpProxy);
+                proxy.setHostName(arguments[0]);
+                proxy.setPort(arguments[1].toInt());
+            }
         }
-        else
-        {
-            LOG("No proxy found QT");
-            proxy.setType(QNetworkProxy::NoProxy);
-        }
-
     }
-    else
-    {
-        LOG("No proxy QT");
 
-        proxy.setType(QNetworkProxy::NoProxy);
-        megaApi->setProxySettings(&proxySettings);
-    }
+    cout << "PPP " << proxySettings->getProxyURL() << endl;
+    megaApi->setProxySettings(proxySettings);
+    delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
 }
 

@@ -1406,9 +1406,9 @@ void MegaApi::fastConfirmAccount(const char* link, const char *base64pwkey, Mega
     waiter->notify();
 }
 
-void MegaApi::setProxySettings(MegaProxySettings *proxySettings)
+void MegaApi::setProxySettings(MegaProxy *proxySettings)
 {
-    MegaProxySettings localProxySettings;
+    Proxy localProxySettings;
     localProxySettings.setProxyType(proxySettings->getProxyType());
 
     string url = proxySettings->getProxyURL();
@@ -1432,24 +1432,22 @@ void MegaApi::setProxySettings(MegaProxySettings *proxySettings)
         localProxySettings.setCredentials(&localusername, &localpassword);
     }
 
-    httpio->setProxy(&localProxySettings);
+    httpio->setproxy(&localProxySettings);
 }
 
-MegaProxySettings *MegaApi::getAutoProxySettings()
+MegaProxy *MegaApi::getAutoProxySettings()
 {
-    MegaProxySettings *proxySettings = new MegaProxySettings;
-    MegaProxySettings *localProxySettings = httpio->getAutoProxySettings();
+    Proxy *proxySettings = new Proxy;
+    Proxy *localProxySettings = httpio->getautoproxy();
     proxySettings->setProxyType(localProxySettings->getProxyType());
-    if(localProxySettings->getProxyType() == MegaProxySettings::CUSTOM)
+    if(localProxySettings->getProxyType() == Proxy::CUSTOM)
     {
         LOG("Custom AutoProxy");
         string localProxyURL = localProxySettings->getProxyURL();
         string proxyURL;
         fsAccess->local2path(&localProxyURL, &proxyURL);
         proxySettings->setProxyURL(&proxyURL);
-        LOG(proxyURL.c_str());
     }
-    else LOG("No AutoProxy");
 
     delete localProxySettings;
     return proxySettings;

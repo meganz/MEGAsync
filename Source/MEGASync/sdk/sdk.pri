@@ -26,6 +26,7 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/utils.cpp \
     $$PWD/sdk/src/logging.cpp \
     $$PWD/sdk/src/waiterbase.cpp  \
+    $$PWD/sdk/src/proxy.cpp \
     $$PWD/sdk/src/crypto/cryptopp.cpp  \
     $$PWD/sdk/src/crypto/sodium.cpp  \
     $$PWD/sdk/src/db/sqlite.cpp  \
@@ -34,23 +35,18 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/megaapi.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
-    $$PWD/qt/QTMegaListener.cpp \
-    $$PWD/MegaProxySettings.cpp
+    $$PWD/qt/QTMegaListener.cpp
 
 win32 {
 SOURCES += $$PWD/sdk/src/win32/net.cpp  \
     $$PWD/sdk/src/win32/fs.cpp  \
-    $$PWD/sdk/src/win32/waiter.cpp  \
-    $$PWD/win32/megaapiwait.cpp \
-    $$PWD/win32/megaapiwinhttpio.cpp
+    $$PWD/sdk/src/win32/waiter.cpp
 }
 
 unix {
 SOURCES += $$PWD/sdk/src/posix/net.cpp  \
     $$PWD/sdk/src/posix/fs.cpp  \
-    $$PWD/sdk/src/posix/waiter.cpp \
-    $$PWD/linux/megaapiwait.cpp \
-    $$PWD/linux/megaapiposixhttpio.cpp
+    $$PWD/sdk/src/posix/waiter.cpp
 }
 
 HEADERS  += $$PWD/sdk/include/mega.h \
@@ -85,6 +81,7 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/sdk/include/mega/utils.h \
 	    $$PWD/sdk/include/mega/logging.h \
 	    $$PWD/sdk/include/mega/waiter.h \
+            $$PWD/sdk/include/mega/proxy.h \
 	    $$PWD/sdk/include/mega/crypto/cryptopp.h  \
             $$PWD/sdk/include/mega/crypto/sodium.h  \
 	    $$PWD/sdk/include/mega/db/sqlite.h  \
@@ -93,16 +90,13 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
-	    $$PWD/qt/QTMegaListener.h \
-	    $$PWD/MegaProxySettings.h
+            $$PWD/qt/QTMegaListener.h
 
 win32 {
     HEADERS  += $$PWD/sdk/include/mega/win32/meganet.h  \
             $$PWD/sdk/include/mega/win32/megasys.h  \
             $$PWD/sdk/include/mega/win32/megafs.h  \
-            $$PWD/sdk/include/mega/win32/megawaiter.h  \
-	    $$PWD/win32/megaapiwait.h \
-	    $$PWD/win32/megaapiwinhttpio.h
+            $$PWD/sdk/include/mega/win32/megawaiter.h
 
     SOURCES += $$PWD/sqlite3.c
 }
@@ -115,7 +109,6 @@ unix:!macx {
             $$PWD/sdk/include/mega/posix/megasys.h  \
             $$PWD/sdk/include/mega/posix/megafs.h  \
             $$PWD/sdk/include/mega/posix/megawaiter.h \
-            $$PWD/linux/megaapiwait.h  \
             $$PWD/sdk/include/mega/config.h
 }
 
