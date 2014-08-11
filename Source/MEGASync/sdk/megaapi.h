@@ -117,11 +117,11 @@ public:
 class MegaGfxProc : public mega::GfxProcAndroid {};
 #endif
 
+#include "mega.h"
+
 using namespace std;
 
 #ifdef WIN32
-
-#include "mega.h"
 
 class MegaHttpIO : public mega::WinHttpIO {};
 class MegaFileSystemAccess : public mega::WinFileSystemAccess {};
@@ -131,22 +131,16 @@ class MegaWaiter : public mega::WinWaiter {};
 
 #ifdef __ANDROID__
 #include "android/megaapiandroidhttpio.h"
-#else
-#include "linux/megaapiposixhttpio.h"
 #endif
 
-#include "mega/posix/meganet.h"
-#include "mega/posix/megafs.h"
-#include "linux/megaapiwait.h"
-
 #ifdef __APPLE__
-typedef mega::MegaApiCurlHttpIO MegaHttpIO;
+typedef mega::CurlHttpIO MegaHttpIO;
 typedef mega::PosixFileSystemAccess MegaFileSystemAccess;
-typedef mega::MegaApiLinuxWaiter MegaWaiter;
+typedef mega::PosixWaiter MegaWaiter;
 #else
-class MegaHttpIO : public mega::MegaApiCurlHttpIO {};
+class MegaHttpIO : public mega::CurlHttpIO {};
 class MegaFileSystemAccess : public mega::PosixFileSystemAccess {};
-class MegaWaiter : public mega::MegaApiLinuxWaiter {};
+class MegaWaiter : public mega::PosixWaiter {};
 #endif
 
 #endif
