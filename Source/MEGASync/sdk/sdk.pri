@@ -35,7 +35,8 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/megaapi.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
-    $$PWD/qt/QTMegaListener.cpp
+    $$PWD/qt/QTMegaListener.cpp \
+    $$PWD/sdk/src/thread/qtthread.cpp
 
 win32 {
 SOURCES += $$PWD/sdk/src/win32/net.cpp  \
@@ -46,8 +47,7 @@ SOURCES += $$PWD/sdk/src/win32/net.cpp  \
 unix {
 SOURCES += $$PWD/sdk/src/posix/net.cpp  \
     $$PWD/sdk/src/posix/fs.cpp  \
-    $$PWD/sdk/src/posix/waiter.cpp \
-    $$PWD/sdk/src/thread/qtthread.cpp
+    $$PWD/sdk/src/posix/waiter.cpp
 }
 
 HEADERS  += $$PWD/sdk/include/mega.h \
@@ -91,7 +91,9 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/megaapi.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
-            $$PWD/qt/QTMegaListener.h
+            $$PWD/qt/QTMegaListener.h \
+            $$PWD/sdk/include/mega/thread.h \
+            $$PWD/sdk/include/mega/thread/qtthread.h \
 
 win32 {
     HEADERS  += $$PWD/sdk/include/mega/win32/meganet.h  \
@@ -110,8 +112,6 @@ unix {
             $$PWD/sdk/include/mega/posix/megasys.h  \
             $$PWD/sdk/include/mega/posix/megafs.h  \
             $$PWD/sdk/include/mega/posix/megawaiter.h \
-            $$PWD/sdk/include/mega/thread.h \
-            $$PWD/sdk/include/mega/thread/qtthread.h \
             $$PWD/sdk/include/mega/config.h
 }
 
