@@ -101,25 +101,25 @@ class MegaGfxProc : public mega::GfxProcQT {};
 
 #endif
 
-#ifdef USE_ANDROID
-class GfxProcessor
+#include "mega.h"
+using namespace std;
+
+#ifdef USE_EXTERNAL_GFX
+#include "mega/gfx/external.h"
+class MegaGfxProcessor : public mega::GfxProcessor 
 {
 public:
 	virtual bool readBitmap(const char* path) { return false; }
 	virtual int getWidth() { return 0; }
 	virtual int getHeight() { return 0; }
-	virtual char *resizeBitmap(int w, int h, int px, int py, int rw, int rh) { return NULL; }
+	virtual int getBitmapDataSize(int w, int h, int px, int py, int rw, int rh) { return 0; }
+	virtual bool getBitmapData(char *bitmapData, size_t size) { return false; }
 	virtual void freeBitmap() {}
-	virtual ~GfxProcessor() {};
+	virtual ~MegaGfxProcessor() {};
 };
 
-#include "mega/gfx/android.h"
-class MegaGfxProc : public mega::GfxProcAndroid {};
+class MegaGfxProc : public mega::GfxProcExternal {};
 #endif
-
-#include "mega.h"
-
-using namespace std;
 
 #ifdef WIN32
 
@@ -128,10 +128,6 @@ class MegaFileSystemAccess : public mega::WinFileSystemAccess {};
 class MegaWaiter : public mega::WinWaiter {};
 
 #else
-
-#ifdef __ANDROID__
-#include "android/megaapiandroidhttpio.h"
-#endif
 
 #ifdef __APPLE__
 typedef mega::CurlHttpIO MegaHttpIO;
@@ -630,6 +626,13 @@ class TreeProcessor
 	virtual ~TreeProcessor();
 };
 
+class MegaTreeProcessor
+{
+	public:
+	virtual bool processMegaNode(MegaNode* node);
+	virtual ~MegaTreeProcessor();
+};
+
 class SearchTreeProcessor : public TreeProcessor
 {
     public:
@@ -851,8 +854,8 @@ public:
     static bool nodeComparatorAlphabeticalDESC  (mega::Node *i, mega::Node *j);
 	static bool userComparatorDefaultASC (mega::User *i, mega::User *j);
 
-	#ifdef __ANDROID__
-		MegaApi(const char *basePath = NULL, GfxProcessor* processor = NULL);
+	#ifdef USE_EXTERNAL_GFX
+		MegaApi(const char *basePath = NULL, MegaGfxProcessor* processor = NULL);
 	#else
 		MegaApi(const char *basePath = NULL);
 	#endif
@@ -897,6 +900,8 @@ public:
     void copyNode(MegaNode* node, MegaNode *newParent, MegaRequestListener *listener = NULL);
     void renameNode(MegaNode* node, const char* newName, MegaRequestListener *listener = NULL);
     void remove(MegaNode* node, MegaRequestListener *listener = NULL);
+    void sendFileToUser(MegaNode *node, MegaUser *user, MegaRequestListener *listener = NULL);
+	void sendFileToUser(MegaNode *node, const char* email, MegaRequestListener *listener = NULL);
     void share(MegaNode *node, MegaUser* user, int level, MegaRequestListener *listener = NULL);
     void share(MegaNode* node, const char* email, int level, MegaRequestListener *listener = NULL);
 	void folderAccess(const char* megaFolderLink, MegaRequestListener *listener = NULL);
@@ -977,6 +982,9 @@ public:
     MegaNode *getRootNode();
     MegaNode* getInboxNode();
     MegaNode *getRubbishNode();
+	NodeList* search(MegaNode* node, const char* searchString, bool recursive = 1);
+	bool processMegaTree(MegaNode* node, MegaTreeProcessor* processor, bool recursive = 1);
+
 	//StringList *getRootNodeNames();
 	//StringList *getRootNodePaths();
 

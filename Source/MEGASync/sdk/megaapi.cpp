@@ -56,8 +56,6 @@ DEALINGS IN THE SOFTWARE.
 #endif
 
 #ifdef _WIN32
-//#include <pcre.h>
-
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
 #define strcasecmp _stricmp
@@ -1157,6 +1155,9 @@ MegaListener::~MegaListener() {}
 int TreeProcessor::processNode(Node*){ return 0; /* Stops the processing */ }
 TreeProcessor::~TreeProcessor() {}
 
+bool MegaTreeProcessor::processMegaNode(MegaNode*){ return false; /* Stops the processing */ }
+MegaTreeProcessor::~MegaTreeProcessor() {}
+
 //Entry point for the blocking thread
 void *MegaApi::threadEntryPoint(void *param)
 {
@@ -1172,8 +1173,8 @@ void *MegaApi::threadEntryPoint(void *param)
 	return 0;
 }
 
-#ifdef __ANDROID__
-MegaApi::MegaApi(const char *basePath, GfxProcessor* processor)
+#ifdef USE_EXTERNAL_GFX
+MegaApi::MegaApi(const char *basePath, MegaGfxProcessor* processor)
 #else
 MegaApi::MegaApi(const char *basePath)
 #endif
@@ -1208,7 +1209,7 @@ MegaApi::MegaApi(const char *basePath)
     dbAccess = new MegaDbAccess(&sBasePath);
     gfxAccess = new MegaGfxProc();
 
-#ifdef __ANDROID__
+#ifdef USE_EXTERNAL_GFX
     gfxAccess->setProcessor(processor);
 #endif
 
@@ -1526,6 +1527,20 @@ void MegaApi::remove(MegaNode *node, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_REMOVE, listener);
     if(node) request->setNodeHandle(node->getHandle());
+	requestQueue.push(request);
+    waiter->notify();
+}
+
+void MegaApi::sendFileToUser(MegaNode *node, MegaUser *user, MegaRequestListener *listener)
+{
+	return sendFileToUser(node, user ? user->getEmail() : NULL, listener);
+}
+
+void MegaApi::sendFileToUser(MegaNode *node, const char* email, MegaRequestListener *listener)
+{
+	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_COPY, listener);
+    if(node) request->setNodeHandle(node->getHandle());
+    request->setEmail(email);
 	requestQueue.push(request);
     waiter->notify();
 }
@@ -2228,6 +2243,51 @@ int MegaApi::getAccess(MegaNode* megaNode)
 	}
 }
 
+bool MegaApi::processMegaTree(MegaNode* n, MegaTreeProcessor* processor, bool recursive)
+{
+	if(!n) return true;
+	if(!processor) return false;
+
+    MUTEX_LOCK(sdkMutex);
+	Node *node = client->nodebyhandle(n->getHandle());
+	if(!node)
+	{
+        MUTEX_UNLOCK(sdkMutex);
+		return true;
+	}
+
+	if (node->type != FILENODE)
+	{
+		for (node_list::iterator it = node->children.begin(); it != node->children.end(); )
+		{
+			MegaNode *megaNode = MegaNode::fromNode(*it++);
+			if(recursive)
+			{
+				if(!processMegaTree(megaNode,processor))
+				{
+					delete megaNode;
+                    MUTEX_UNLOCK(sdkMutex);
+					return 0;
+				}
+			}
+			else
+			{
+				if(!processor->processMegaNode(megaNode))
+				{
+					delete megaNode;
+                    MUTEX_UNLOCK(sdkMutex);
+					return 0;
+				}
+			}
+			delete megaNode;
+		}
+	}
+	bool result = processor->processMegaNode(n);
+
+    MUTEX_UNLOCK(sdkMutex);
+	return result;
+}
+
 bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 {
 	if(!node) return 1;
@@ -2269,16 +2329,15 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 	return result;
 }
 
-NodeList* MegaApi::search(Node* node, const char* searchString, bool recursive)
+NodeList* MegaApi::search(MegaNode* n, const char* searchString, bool recursive)
 {
-    if(!node || !searchString) return new NodeList();
-
-    MUTEX_LOCK(sdkMutex);
-	node = client->nodebyhandle(node->nodehandle);
+	if(!n || !searchString) return new NodeList();
+	MUTEX_LOCK(sdkMutex);
+	Node *node = client->nodebyhandle(n->getHandle());
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-        return new NodeList();
+		MUTEX_UNLOCK(sdkMutex);
+		return new NodeList();
 	}
 
 	SearchTreeProcessor searchProcessor(searchString);
@@ -2839,19 +2898,22 @@ void MegaApi::fetchnodes_result(error e)
 void MegaApi::putnodes_result(error e, targettype_t t, NewNode* nn)
 {
 	MegaError megaError(e);
+
+	if(requestMap.find(client->restag) == requestMap.end()) return;
+	MegaRequest* request = requestMap.at(client->restag);
+	if(!request) return;
+
 	if (t == USER_HANDLE)
 	{
-		delete[] nn;	// free array allocated by the app
 		if (!e) cout << "Success." << endl;
-        return;
+
+		fireOnRequestFinish(this, request, megaError);
+		delete[] nn;	// free array allocated by the app
+
+		return;
 	}
 
 	if(e) cout << "Node addition failed (" << megaError.getErrorString() << ")" << endl;
-
-    if(requestMap.find(client->restag) == requestMap.end()) return;
-    MegaRequest* request = requestMap.at(client->restag);
-    if(!request) return;
-
 
 	if((request->getType() != MegaRequest::TYPE_IMPORT_LINK) && (request->getType() != MegaRequest::TYPE_MKDIR) &&
             (request->getType() != MegaRequest::TYPE_COPY) &&
@@ -3127,72 +3189,71 @@ void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, stri
 	if((request->getType() != MegaRequest::TYPE_IMPORT_LINK) && (request->getType() != MegaRequest::TYPE_GET_PUBLIC_NODE))
 		cout << "INCORRECT REQUEST OBJECT (12)";
 
-	if (!client->loggedin())
+	if (!client->loggedin() && (request->getType() == MegaRequest::TYPE_IMPORT_LINK))
 	{
         LOG("Need to be logged in to import file links.");
 		fireOnRequestFinish(this, request, MegaError(MegaError::API_EACCESS));
+		return;
+	}
+
+	if(request->getType() == MegaRequest::TYPE_IMPORT_LINK)
+	{
+		NewNode* newnode = new NewNode[1];
+
+		// set up new node as folder node
+		newnode->source = NEW_PUBLIC;
+		newnode->type = FILENODE;
+		newnode->nodehandle = ph;
+		newnode->clienttimestamp = tm;
+		newnode->parenthandle = UNDEF;
+		newnode->nodekey.assign((char*)key,FILENODEKEYLENGTH);
+		newnode->attrstring = *a;
+
+		// add node
+		requestMap.erase(client->restag);
+		requestMap[client->nextreqtag()]=request;
+		client->putnodes(request->getParentHandle(),newnode,1);
 	}
 	else
 	{
-		if(request->getType() == MegaRequest::TYPE_IMPORT_LINK)
+		string attrstring;
+		string fileName;
+		string keystring;
+
+		attrstring.resize(a->length()*4/3+4);
+		attrstring.resize(Base64::btoa((const byte *)a->data(),a->length(), (char *)attrstring.data()));
+
+		if(key)
 		{
-			NewNode* newnode = new NewNode[1];
+			SymmCipher nodeKey;
+			keystring.assign((char*)key,FILENODEKEYLENGTH);
+			nodeKey.setkey(key, FILENODE);
 
-			// set up new node as folder node
-			newnode->source = NEW_PUBLIC;
-			newnode->type = FILENODE;
-			newnode->nodehandle = ph;
-			newnode->clienttimestamp = tm;
-			newnode->parenthandle = UNDEF;
-			newnode->nodekey.assign((char*)key,FILENODEKEYLENGTH);
-			newnode->attrstring = *a;
+			byte *buf = Node::decryptattr(&nodeKey,attrstring.c_str(),attrstring.size());
+			if(buf)
+			{
+				JSON json;
+				nameid name;
+				string* t;
+				AttrMap attrs;
 
-			// add node
-			requestMap.erase(client->restag);
-			requestMap[client->nextreqtag()]=request;
-			client->putnodes(request->getParentHandle(),newnode,1);
+				json.begin((char*)buf+5);
+				while ((name = json.getnameid()) != EOO && json.storeobject((t = &attrs.map[name]))) JSON::unescape(t);
+				delete[] buf;
+
+				attr_map::iterator it;
+				it = attrs.map.find('n');
+				if (it == attrs.map.end()) fileName = "CRYPTO_ERROR";
+				else if (!it->second.size()) fileName = "BLANK";
+				else fileName = it->second.c_str();
+			}
+			else fileName = "CRYPTO_ERROR";
 		}
-		else
-		{
-            string attrstring;
-            string fileName;
-            string keystring;
+		else fileName = "NO_KEY";
 
-            attrstring.resize(a->length()*4/3+4);
-            attrstring.resize(Base64::btoa((const byte *)a->data(),a->length(), (char *)attrstring.data()));
-
-            if(key)
-            {
-                SymmCipher nodeKey;
-                keystring.assign((char*)key,FILENODEKEYLENGTH);
-                nodeKey.setkey(key, FILENODE);
-
-                byte *buf = Node::decryptattr(&nodeKey,attrstring.c_str(),attrstring.size());
-                if(buf)
-                {
-                    JSON json;
-                    nameid name;
-                    string* t;
-                    AttrMap attrs;
-
-                    json.begin((char*)buf+5);
-                    while ((name = json.getnameid()) != EOO && json.storeobject((t = &attrs.map[name]))) JSON::unescape(t);
-                    delete[] buf;
-
-                    attr_map::iterator it;
-                    it = attrs.map.find('n');
-                    if (it == attrs.map.end()) fileName = "CRYPTO_ERROR";
-                    else if (!it->second.size()) fileName = "BLANK";
-                    else fileName = it->second.c_str();
-                }
-                else fileName = "CRYPTO_ERROR";
-            }
-            else fileName = "NO_KEY";
-
-            request->setPublicNode(new MegaNode(fileName.c_str(), FILENODE, size, ts, tm, ph, &keystring, a));
-			fireOnRequestFinish(this, request, MegaError(MegaError::API_OK));
-		}
-    }
+		request->setPublicNode(new MegaNode(fileName.c_str(), FILENODE, size, ts, tm, ph, &keystring, a));
+		fireOnRequestFinish(this, request, MegaError(MegaError::API_OK));
+	}
 }
 
 // reload needed
@@ -4490,21 +4551,43 @@ void MegaApi::sendPendingRequests()
 		{
 			Node *node = client->nodebyhandle(request->getNodeHandle());
 			Node *target = client->nodebyhandle(request->getParentHandle());
-			if(!node || !target) { e = API_EARGS; break; }
+			const char* email = request->getEmail();
+			if(!node || (!target && !email)) { e = API_EARGS; break; }
 
-			unsigned nc;
-			TreeProcCopy tc;
-			// determine number of nodes to be copied
-			client->proctree(node,&tc);
-			tc.allocnodes();
-			nc = tc.nc;
-			// build new nodes array
-			client->proctree(node,&tc);
-			if (!nc) { e = API_EARGS; break; }
+			if (target){
+				unsigned nc;
+				TreeProcCopy tc;
+				// determine number of nodes to be copied
+				client->proctree(node,&tc);
+				tc.allocnodes();
+				nc = tc.nc;
+				// build new nodes array
+				client->proctree(node,&tc);
+				if (!nc) { e = API_EARGS; break; }
 
-			tc.nn->parenthandle = UNDEF;
+				tc.nn->parenthandle = UNDEF;
 
-			client->putnodes(target->nodehandle,tc.nn,nc);
+				client->putnodes(target->nodehandle,tc.nn,nc);
+			}
+			else{
+				TreeProcCopy tc;
+				unsigned nc;
+
+				// determine number of nodes to be copied
+				client->proctree(node, &tc);
+
+				tc.allocnodes();
+				nc = tc.nc;
+
+				// build new nodes array
+				client->proctree(node, &tc);
+				if (!nc) { e = API_EARGS; break; }
+
+				// tree root: no parent
+				tc.nn->parenthandle = UNDEF;
+
+				client->putnodes(email, tc.nn, nc);
+			}
 			break;
 		}
 		case MegaRequest::TYPE_RENAME:
