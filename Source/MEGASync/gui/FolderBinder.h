@@ -37,7 +37,7 @@ protected:
 private:
     Ui::FolderBinder *ui;
     MegaApplication *app;
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
     long long selectedMegaFolderHandle;
 
 };

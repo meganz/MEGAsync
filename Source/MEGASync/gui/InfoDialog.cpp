@@ -14,6 +14,8 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 
+using namespace mega;
+
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoDialog)

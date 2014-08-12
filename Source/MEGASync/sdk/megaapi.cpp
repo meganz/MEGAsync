@@ -62,9 +62,9 @@ DEALINGS IN THE SOFTWARE.
 #define strncasecmp _strnicmp
 #endif
 
-extern bool mega::debug;
-
 using namespace mega;
+
+extern bool debug;
 
 int MegaFile::nextseqno = 0;
 
@@ -166,7 +166,7 @@ void MegaFilePut::completed(Transfer* t, LocalNode*)
 NodeList::NodeList()
 { list = NULL; s = 0; }
 
-NodeList::NodeList(mega::Node** newlist, int size)
+NodeList::NodeList(Node** newlist, int size)
 {
 	list = NULL; s = size;
 	if(!size) return;
@@ -200,7 +200,7 @@ int NodeList::size()
 UserList::UserList()
 { list = NULL; s = 0; }
 
-UserList::UserList(mega::User** newlist, int size)
+UserList::UserList(User** newlist, int size)
 {
 	list = NULL; s = size;
 	if(!size) return;
@@ -233,7 +233,7 @@ int UserList::size()
 ShareList::ShareList()
 { list = NULL; s = 0; }
 
-ShareList::ShareList(mega::Share** newlist, handle *handlelist, int size)
+ShareList::ShareList(Share** newlist, handle *handlelist, int size)
 {
 	list = NULL; s = size;
 	if(!size) return;
@@ -429,7 +429,7 @@ bool MegaNode::hasPreview()
 	return previewAvailable;
 }
 
-MegaUser::MegaUser(mega::User *user)
+MegaUser::MegaUser(User *user)
 {
 	email = MegaApi::strdup(user->email.c_str());
 	visibility = user->show;
@@ -456,12 +456,12 @@ time_t MegaUser::getTimestamp()
 	return ctime;
 }
 
-MegaUser *MegaUser::fromUser(mega::User *user)
+MegaUser *MegaUser::fromUser(User *user)
 {
 	return new MegaUser(user);
 }
 
-MegaShare::MegaShare(handle handle, mega::Share *share)
+MegaShare::MegaShare(handle handle, Share *share)
 {
 	this->nodehandle = handle;
 	this->user = share->user ? MegaApi::strdup(share->user->email.c_str()) : NULL;
@@ -494,7 +494,7 @@ int MegaShare::getTimestamp()
 	return ts;
 }
 
-MegaShare *MegaShare::fromShare(handle nodehandle, mega::Share *share)
+MegaShare *MegaShare::fromShare(handle nodehandle, Share *share)
 {
 	return new MegaShare(nodehandle, share);
 }
@@ -1207,7 +1207,12 @@ MegaApi::MegaApi(const char *basePath)
 
     string sBasePath = basePath;
     dbAccess = new MegaDbAccess(&sBasePath);
+
+#ifndef WINDOWS_PHONE
     gfxAccess = new MegaGfxProc();
+#else
+	gfxAccess = NULL;
+#endif
 
 #ifdef USE_EXTERNAL_GFX
     gfxAccess->setProcessor(processor);
@@ -1591,27 +1596,27 @@ void MegaApi::getPublicNode(const char* megaFileLink, MegaRequestListener *liste
     waiter->notify();
 }
 
-void MegaApi::getThumbnail(MegaNode* node, char *dstFilePath, MegaRequestListener *listener)
+void MegaApi::getThumbnail(MegaNode* node, const char *dstFilePath, MegaRequestListener *listener)
 {
 	getNodeAttribute(node, 0, dstFilePath, listener);
 }
 
-void MegaApi::setThumbnail(MegaNode* node, char *srcFilePath, MegaRequestListener *listener)
+void MegaApi::setThumbnail(MegaNode* node, const char *srcFilePath, MegaRequestListener *listener)
 {
 	setNodeAttribute(node, 0, srcFilePath, listener);
 }
 
-void MegaApi::getPreview(MegaNode* node, char *dstFilePath, MegaRequestListener *listener)
+void MegaApi::getPreview(MegaNode* node, const char *dstFilePath, MegaRequestListener *listener)
 {
 	getNodeAttribute(node, 1, dstFilePath, listener);
 }
 
-void MegaApi::setPreview(MegaNode* node, char *srcFilePath, MegaRequestListener *listener)
+void MegaApi::setPreview(MegaNode* node, const char *srcFilePath, MegaRequestListener *listener)
 {
 	setNodeAttribute(node, 1, srcFilePath, listener);
 }
 
-void MegaApi::getUserAvatar(MegaUser* user, char *dstFilePath, MegaRequestListener *listener)
+void MegaApi::getUserAvatar(MegaUser* user, const char *dstFilePath, MegaRequestListener *listener)
 {
 	getUserAttribute(user, 0, dstFilePath, listener);
 }
@@ -1684,7 +1689,7 @@ void MegaApi::logout(MegaRequestListener *listener)
     waiter->notify();
 }
 
-void MegaApi::getNodeAttribute(MegaNode *node, int type, char *dstFilePath, MegaRequestListener *listener)
+void MegaApi::getNodeAttribute(MegaNode *node, int type, const char *dstFilePath, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_GET_ATTR_FILE, listener);
 	request->setFile(dstFilePath);
@@ -1694,7 +1699,7 @@ void MegaApi::getNodeAttribute(MegaNode *node, int type, char *dstFilePath, Mega
     waiter->notify();
 }
 
-void MegaApi::setNodeAttribute(MegaNode *node, int type, char *srcFilePath, MegaRequestListener *listener)
+void MegaApi::setNodeAttribute(MegaNode *node, int type, const char *srcFilePath, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_SET_ATTR_FILE, listener);
 	request->setFile(srcFilePath);
@@ -1704,7 +1709,7 @@ void MegaApi::setNodeAttribute(MegaNode *node, int type, char *srcFilePath, Mega
     waiter->notify();
 }
 
-void MegaApi::getUserAttribute(MegaUser *user, int type, char *dstFilePath, MegaRequestListener *listener)
+void MegaApi::getUserAttribute(MegaUser *user, int type, const char *dstFilePath, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_GET_ATTR_USER, listener);
 	request->setFile(dstFilePath);
@@ -1714,7 +1719,7 @@ void MegaApi::getUserAttribute(MegaUser *user, int type, char *dstFilePath, Mega
     waiter->notify();
 }
 
-void MegaApi::setUserAttribute(MegaUser *user, int type, char *srcFilePath, MegaRequestListener *listener)
+void MegaApi::setUserAttribute(MegaUser *user, int type, const char *srcFilePath, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_SET_ATTR_USER, listener);
 	request->setFile(srcFilePath);
@@ -2499,10 +2504,11 @@ void MegaApi::transfer_update(Transfer *tr)
         if(!tr->files.front()->syncxfer && !tr->slot->progressreported && (tr->type==GET))
         {
             tr->localfilename.append("",1);
-            DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
-            if(a != INVALID_FILE_ATTRIBUTES)
-                SetFileAttributesW((LPCWSTR)tr->localfilename.data(),a | FILE_ATTRIBUTE_HIDDEN);
-            tr->localfilename.resize(tr->localfilename.size()-1);
+   
+			WIN32_FILE_ATTRIBUTE_DATA fad;
+			if (GetFileAttributesExW((LPCWSTR)tr->localfilename.data(), GetFileExInfoStandard, &fad))
+				SetFileAttributesW((LPCWSTR)tr->localfilename.data(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
+			tr->localfilename.resize(tr->localfilename.size() - 1);
         }
 #endif
 
@@ -2605,9 +2611,9 @@ void MegaApi::transfer_complete(Transfer* tr)
 #ifdef WIN32
     if((!tr->files.front()->syncxfer) && (tr->type==GET))
     {
-        DWORD a = GetFileAttributesW((LPCWSTR) tr->localfilename.data());
-        if(a != INVALID_FILE_ATTRIBUTES)
-            SetFileAttributesW((LPCWSTR)tr->localfilename.data(),a & ~FILE_ATTRIBUTE_HIDDEN);
+		WIN32_FILE_ATTRIBUTE_DATA fad;
+		if (GetFileAttributesExW((LPCWSTR)tr->localfilename.data(), GetFileExInfoStandard, &fad))
+			SetFileAttributesW((LPCWSTR)tr->localfilename.data(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
     }
 #endif
 
@@ -5207,4 +5213,33 @@ void TreeProcCopy::proc(MegaClient* client, Node* n)
 	}
 	else nc++;
 }
+
+#ifdef WIN32
+// convert Windows Unicode to UTF-8
+void MegaApi::utf16ToUtf8(const wchar_t* utf16data, int utf16size, string* path)
+{
+	path->resize((utf16size + 1) * 4);
+
+	path->resize(WideCharToMultiByte(CP_UTF8, 0, utf16data,
+		utf16size,
+		(char*)path->data(),
+		path->size() + 1,
+		NULL, NULL));
+}
+
+void MegaApi::utf8ToUtf16(const char* utf8data, string* utf16string)
+{
+	int size = strlen(utf8data) + 1;
+
+	// make space for the worst case
+	utf16string->resize(size * sizeof(wchar_t));
+
+	// resize to actual result
+	utf16string->resize(sizeof(wchar_t) * (MultiByteToWideChar(CP_UTF8, 0,
+		utf8data,
+		size,
+		(wchar_t*)utf16string->data(),
+		utf16string->size())));
+}
+#endif
 

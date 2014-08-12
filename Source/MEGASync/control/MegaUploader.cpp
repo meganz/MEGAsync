@@ -8,6 +8,8 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+using namespace mega;
+
 MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;

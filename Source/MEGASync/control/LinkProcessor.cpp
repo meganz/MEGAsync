@@ -2,6 +2,8 @@
 #include "Utilities.h"
 #include <QDir>
 
+using namespace mega;
+
 LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener(megaApi)
 {
 	this->megaApi = megaApi;

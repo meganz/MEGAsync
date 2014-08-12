@@ -8,6 +8,7 @@ VOID DisconnectAndReconnect(DWORD i);
 BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
+using namespace mega;
 
 typedef enum {
        STRING_UPLOAD = 0,

@@ -4,6 +4,8 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 
+using namespace mega;
+
 SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetupWizard)

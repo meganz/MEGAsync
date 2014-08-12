@@ -13,19 +13,19 @@ namespace Ui {
 class NodeSelector;
 }
 
-class NodeSelector : public QDialog, public MegaRequestListener
+class NodeSelector : public QDialog, public mega::MegaRequestListener
 {
     Q_OBJECT
 
 public:
-    explicit NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent = 0);
+    explicit NodeSelector(mega::MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent = 0);
     ~NodeSelector();
     void nodesReady();
     long long getSelectedFolderHandle();
 
 private:
     Ui::NodeSelector *ui;
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
     QIcon folderIcon;
     unsigned long long selectedFolder;
     QTreeWidgetItem *selectedItem;
@@ -33,11 +33,11 @@ private:
     bool sizeWarning;
 
 protected:
-    void addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode);
-	QTMegaRequestListener *delegateListener;
+    void addChildren(QTreeWidgetItem *parentItem, mega::MegaNode *parentNode);
+    mega::QTMegaRequestListener *delegateListener;
 
 public slots:
-	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 protected:
     void changeEvent(QEvent * event);

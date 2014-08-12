@@ -3,6 +3,8 @@
 
 #include "MegaApplication.h"
 
+using namespace mega;
+
 FolderBinder::FolderBinder(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FolderBinder)

@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include "control/Utilities.h"
 
+using namespace mega;
+
 NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NodeSelector)

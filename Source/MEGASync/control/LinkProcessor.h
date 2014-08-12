@@ -6,23 +6,23 @@
 #include "sdk/megaapi.h"
 #include "sdk/qt/QTMegaRequestListener.h"
 
-class LinkProcessor: public QTMegaRequestListener
+class LinkProcessor: public mega::QTMegaRequestListener
 {
 	Q_OBJECT
 
 public:
-	LinkProcessor(MegaApi *megaApi, QStringList linkList);
+    LinkProcessor(mega::MegaApi *megaApi, QStringList linkList);
 	virtual ~LinkProcessor();
 
 	QString getLink(int id);
 	bool isSelected(int id);
 	int getError(int id);
-    MegaNode *getNode(int id);
+    mega::MegaNode *getNode(int id);
 	int size();
 
 	void requestLinkInfo();
 	void importLinks(QString nodePath);
-    void importLinks(MegaNode *node);
+    void importLinks(mega::MegaNode *node);
     mega::handle getImportParentFolder();
 
 	void downloadLinks(QString localPath);
@@ -33,10 +33,10 @@ public:
     int getCurrentIndex();
 
 protected:
-	MegaApi *megaApi;
+    mega::MegaApi *megaApi;
 	QStringList linkList;
 	QList<bool> linkSelected;
-    QList<MegaNode *> linkNode;
+    QList<mega::MegaNode *> linkNode;
 	QList<int> linkError;
 	int currentIndex;
 	int remainingNodes;
@@ -51,7 +51,7 @@ signals:
     void onDupplicateLink(QString link, QString name, long long handle);
 
 public slots:
-	virtual void QTonRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void QTonRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 };
 
 #endif // LINKPROCESSOR_H
