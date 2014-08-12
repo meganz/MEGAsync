@@ -1185,7 +1185,7 @@ MegaApi::MegaApi(const char *basePath)
     debug = false;
 #endif
 
-    INIT_RECURSIVE_MUTEX(sdkMutex);
+    sdkMutex.init(true);
 	maxRetries = 5;
 	currentTransfer = NULL;
     pausetime = 0;
@@ -1217,7 +1217,7 @@ MegaApi::MegaApi(const char *basePath)
 
     //Start blocking thread
 	threadExit = 0;
-    INIT_THREAD(thread, threadEntryPoint, this);
+    thread.start(threadEntryPoint, this);
 }
 
 MegaApi::~MegaApi()
@@ -1225,26 +1225,24 @@ MegaApi::~MegaApi()
     MegaRequest *request = new MegaRequest(MegaRequest::TYPE_DELETE);
     requestQueue.push(request);
     waiter->notify();
-    JOIN_THREAD(thread);
-    DELETE_THREAD(thread);
+    thread.join();
 }
 
 int MegaApi::isLoggedIn()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     int result = client->loggedin();
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return result;
 }
 
 const char* MegaApi::getMyEmail()
 {
 	User* u;
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	if (!client->loggedin() || !(u = client->finduser(client->me))) return NULL;
-	const char *result = u->email.c_str();
-	//TODO: Copy string?
-    MUTEX_UNLOCK(sdkMutex);
+    const char *result = MegaApi::strdup(u->email.c_str());
+    sdkMutex.unlock();
 	return result;
 }
 
@@ -1346,7 +1344,7 @@ void MegaApi::login(const char *login, const char *password, MegaRequestListener
 
 const char *MegaApi::dumpSession()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     byte session[64];
     char* buf = NULL;
     int size;
@@ -1357,7 +1355,7 @@ const char *MegaApi::dumpSession()
         Base64::btoa(session, size, buf);
     }
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return buf;
 }
 
@@ -1461,14 +1459,14 @@ void MegaApi::loop()
         int r = client->wait();
         if(r & Waiter::NEEDEXEC)
         {
-            MUTEX_LOCK(sdkMutex);
+            sdkMutex.lock();
             sendPendingTransfers();
             sendPendingRequests();
             if(threadExit)
                 break;
 
             client->exec();
-            MUTEX_UNLOCK(sdkMutex);
+            sdkMutex.unlock();
         }
 	}
 
@@ -1482,8 +1480,7 @@ void MegaApi::loop()
 //    delete fsAccess;
 //#endif
 
-    MUTEX_UNLOCK(sdkMutex);
-    MUTEX_DELETE(sdkMutex);
+    sdkMutex.unlock();
 }
 
 
@@ -1759,7 +1756,7 @@ void MegaApi::setUploadLimit(int bpslimit)
 
 TransferList *MegaApi::getTransfers()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 
     vector<MegaTransfer *> transfers;
     for (map<int, MegaTransfer *>::iterator it = transferMap.begin(); it != transferMap.end(); it++)
@@ -1767,7 +1764,7 @@ TransferList *MegaApi::getTransfers()
 
     TransferList *result = new TransferList(transfers.data(), transfers.size());
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return result;
 }
 
@@ -1893,7 +1890,7 @@ void MegaApi::startStreaming(MegaNode* node, m_off_t startPos, m_off_t size, Meg
 //Move local files inside synced folders to the "Rubbish" folder.
 bool MegaApi::moveToLocalDebris(const char *path)
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 
     string utf8path = path;
 #ifdef WIN32
@@ -1919,12 +1916,12 @@ bool MegaApi::moveToLocalDebris(const char *path)
 
     if(!sync)
     {
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
         return false;
     }
 
     bool result = sync->movetolocaldebris(&localpath);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
     return result;
 }
@@ -1940,7 +1937,7 @@ treestate_t MegaApi::syncPathState(string* path)
 #endif
 
     treestate_t state = TREESTATE_NONE;
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     for (sync_list::iterator it = client->syncs.begin(); it != client->syncs.end(); it++)
     {
         Sync *sync = (*it);
@@ -1962,14 +1959,14 @@ treestate_t MegaApi::syncPathState(string* path)
             break;
         }
     }
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return state;
 }
 
 
 MegaNode *MegaApi::getSyncedNode(string *path)
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     MegaNode *node = NULL;
     for (sync_list::iterator it = client->syncs.begin(); (it != client->syncs.end()) && (node == NULL); it++)
     {
@@ -1977,7 +1974,7 @@ MegaNode *MegaApi::getSyncedNode(string *path)
         LocalNode * localNode = sync->localnodebypath(NULL, path);
         if(localNode) node = MegaNode::fromNode(localNode->node);
     }
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return node;
 }
 
@@ -2009,9 +2006,9 @@ void MegaApi::removeSync(handle nodehandle, MegaRequestListener* listener)
 
 int MegaApi::getNumActiveSyncs()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     int num = client->syncs.size();
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return num;
 }
 
@@ -2055,42 +2052,42 @@ void MegaApi::resetTotalUploads()
 string MegaApi::getLocalPath(MegaNode *n)
 {
     if(!n) return string();
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *node = client->nodebyhandle(n->getHandle());
     if(!node || !node->localnode)
     {
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
         return string();
     }
 
     string result;
     node->localnode->getlocalpath(&result, true);
     result.append("", 1);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return result;
 }
 
 MegaNode *MegaApi::getRootNode()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     MegaNode *result = MegaNode::fromNode(client->nodebyhandle(client->rootnodes[0]));
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return result;
 }
 
 MegaNode* MegaApi::getInboxNode()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     MegaNode *result = MegaNode::fromNode(client->nodebyhandle(client->rootnodes[1]));
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return result;
 }
 
 MegaNode* MegaApi::getRubbishNode()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     MegaNode *result = MegaNode::fromNode(client->nodebyhandle(client->rootnodes[2]));
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return result;
 }
 
@@ -2103,7 +2100,7 @@ bool MegaApi::userComparatorDefaultASC (User *i, User *j)
 
 UserList* MegaApi::getContacts()
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 
 	vector<User*> vUsers;
 	for (user_map::iterator it = client->users.begin() ; it != client->users.end() ; it++ )
@@ -2114,7 +2111,7 @@ UserList* MegaApi::getContacts()
 	}
     UserList *userList = new UserList(vUsers.data(), vUsers.size());
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
 	return userList;
 }
@@ -2122,9 +2119,9 @@ UserList* MegaApi::getContacts()
 
 MegaUser* MegaApi::getContact(const char* email)
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	MegaUser *user = MegaUser::fromUser(client->finduser(email, 0));
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return user;
 }
 
@@ -2133,10 +2130,14 @@ NodeList* MegaApi::getInShares(MegaUser *megaUser)
 {
     if(!megaUser) return new NodeList();
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     vector<Node*> vNodes;
     User *user = client->finduser(megaUser->getEmail(), 0);
-    if(!user) return new NodeList();
+    if(!user)
+    {
+        sdkMutex.unlock();
+        return new NodeList();
+    }
 
 	for (handle_set::iterator sit = user->sharing.begin(); sit != user->sharing.end(); sit++)
 	{
@@ -2148,13 +2149,13 @@ NodeList* MegaApi::getInShares(MegaUser *megaUser)
     if(vNodes.size()) nodeList = new NodeList(vNodes.data(), vNodes.size());
     else nodeList = new NodeList();
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return nodeList;
 }
 
 NodeList* MegaApi::getInShares()
 {
-	MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 
     vector<Node*> vNodes;
 	for(user_map::iterator it = client->users.begin(); it != client->users.end(); it++)
@@ -2170,7 +2171,7 @@ NodeList* MegaApi::getInShares()
 	}
 
 	NodeList *nodeList = new NodeList(vNodes.data(), vNodes.size());
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return nodeList;
 }
 
@@ -2179,11 +2180,11 @@ ShareList* MegaApi::getOutShares(MegaNode *megaNode)
 {
     if(!megaNode) return new ShareList();
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	Node *node = client->nodebyhandle(megaNode->getHandle());
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
         return new ShareList();
 	}
 
@@ -2197,7 +2198,7 @@ ShareList* MegaApi::getOutShares(MegaNode *megaNode)
 	}
 
     ShareList *shareList = new ShareList(vShares.data(), vHandles.data(), vShares.size());
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return shareList;
 }
 
@@ -2206,22 +2207,22 @@ int MegaApi::getAccess(MegaNode* megaNode)
 {
 	if(!megaNode) return MegaShare::ACCESS_UNKNOWN;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	Node *node = client->nodebyhandle(megaNode->getHandle());
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
 		return MegaShare::ACCESS_UNKNOWN;
 	}
 
 	if (!client->loggedin())
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
 		return MegaShare::ACCESS_READ;
 	}
 	if(node->type > FOLDERNODE)
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
 		return MegaShare::ACCESS_OWNER;
 	}
 
@@ -2233,7 +2234,7 @@ int MegaApi::getAccess(MegaNode* megaNode)
         n = n->parent;
 	}
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
 	switch(a)
 	{
@@ -2248,11 +2249,11 @@ bool MegaApi::processMegaTree(MegaNode* n, MegaTreeProcessor* processor, bool re
 	if(!n) return true;
 	if(!processor) return false;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	Node *node = client->nodebyhandle(n->getHandle());
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
 		return true;
 	}
 
@@ -2266,7 +2267,7 @@ bool MegaApi::processMegaTree(MegaNode* n, MegaTreeProcessor* processor, bool re
 				if(!processMegaTree(megaNode,processor))
 				{
 					delete megaNode;
-                    MUTEX_UNLOCK(sdkMutex);
+                    sdkMutex.unlock();
 					return 0;
 				}
 			}
@@ -2275,7 +2276,7 @@ bool MegaApi::processMegaTree(MegaNode* n, MegaTreeProcessor* processor, bool re
 				if(!processor->processMegaNode(megaNode))
 				{
 					delete megaNode;
-                    MUTEX_UNLOCK(sdkMutex);
+                    sdkMutex.unlock();
 					return 0;
 				}
 			}
@@ -2284,7 +2285,7 @@ bool MegaApi::processMegaTree(MegaNode* n, MegaTreeProcessor* processor, bool re
 	}
 	bool result = processor->processMegaNode(n);
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return result;
 }
 
@@ -2293,11 +2294,11 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 	if(!node) return 1;
 	if(!processor) return 0;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	node = client->nodebyhandle(node->nodehandle);
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
 		return 1;
 	}
 
@@ -2309,7 +2310,7 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 			{
 				if(!processTree(*it++,processor))
 				{
-                    MUTEX_UNLOCK(sdkMutex);
+                    sdkMutex.unlock();
 					return 0;
 				}
 			}
@@ -2317,7 +2318,7 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 			{
 				if(!processor->processNode(*it++))
 				{
-                    MUTEX_UNLOCK(sdkMutex);
+                    sdkMutex.unlock();
 					return 0;
 				}
 			}
@@ -2325,18 +2326,18 @@ bool MegaApi::processTree(Node* node, TreeProcessor* processor, bool recursive)
 	}
 	bool result = processor->processNode(node);
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 	return result;
 }
 
 NodeList* MegaApi::search(MegaNode* n, const char* searchString, bool recursive)
 {
 	if(!n || !searchString) return new NodeList();
-	MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 	Node *node = client->nodebyhandle(n->getHandle());
 	if(!node)
 	{
-		MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
 		return new NodeList();
 	}
 
@@ -2348,7 +2349,7 @@ NodeList* MegaApi::search(MegaNode* n, const char* searchString, bool recursive)
     if(vNodes.size()) nodeList = new NodeList(vNodes.data(), vNodes.size());
     else nodeList = new NodeList();
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
     return nodeList;
 }
@@ -2357,17 +2358,17 @@ long long MegaApi::getSize(MegaNode *n)
 {
     if(!n) return 0;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *node = client->nodebyhandle(n->getHandle());
     if(!node)
     {
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
         return 0;
     }
     SizeProcessor sizeProcessor;
     processTree(node, &sizeProcessor);
     long long result = sizeProcessor.getTotalBytes();
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
     return result;
 }
@@ -2731,7 +2732,7 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     string path;
     l->getlocalpath(&path, true);
 
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
 #ifdef USE_QT
 	#ifdef WIN32
@@ -2743,23 +2744,23 @@ void MegaApi::syncupdate_treestate(LocalNode *l)
     Platform::notifyItemChange(localPath);
 #endif
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
 }
 
 bool MegaApi::sync_syncable(Node *node)
 {
     const char *name = node->displayname();
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     bool result = is_syncable(name);
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     return result;
 }
 
 bool MegaApi::sync_syncable(const char *name, string *, string *)
 {
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     bool result =  is_syncable(name);
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     return result;
 }
 
@@ -3549,53 +3550,53 @@ void MegaApi::addListener(MegaListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	listeners.insert(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    listeners.insert(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::addRequestListener(MegaRequestListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	requestListeners.insert(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    requestListeners.insert(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::addTransferListener(MegaTransferListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	transferListeners.insert(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    transferListeners.insert(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::addGlobalListener(MegaGlobalListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	globalListeners.insert(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    globalListeners.insert(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::removeListener(MegaListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	listeners.erase(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    listeners.erase(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::removeRequestListener(MegaRequestListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	requestListeners.erase(listener);
+    sdkMutex.lock();
+    requestListeners.erase(listener);
 
     std::map<int,MegaRequest*>::iterator it=requestMap.begin();
     while(it != requestMap.end())
@@ -3608,25 +3609,25 @@ void MegaApi::removeRequestListener(MegaRequestListener* listener)
     }
 
     requestQueue.removeListener(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 }
 
 void MegaApi::removeTransferListener(MegaTransferListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	transferListeners.erase(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    transferListeners.erase(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::removeGlobalListener(MegaGlobalListener* listener)
 {
     if(!listener) return;
 
-    MUTEX_LOCK(sdkMutex);
-	globalListeners.erase(listener);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.lock();
+    globalListeners.erase(listener);
+    sdkMutex.unlock();
 }
 
 void MegaApi::fireOnRequestStart(MegaApi* api, MegaRequest *request)
@@ -3816,12 +3817,12 @@ MegaError MegaApi::checkAccess(MegaNode* megaNode, int level)
 {
 	if(!megaNode || !level)	return MegaError(API_EINTERNAL);
 
-    MUTEX_LOCK(sdkMutex);
-	Node *node = client->nodebyhandle(megaNode->getHandle());
+    sdkMutex.lock();
+    Node *node = client->nodebyhandle(megaNode->getHandle());
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-		return MegaError(API_EINTERNAL);
+        sdkMutex.unlock();
+        return MegaError(API_EINTERNAL);
 	}
 
     accesslevel_t a = OWNER;
@@ -3843,7 +3844,7 @@ MegaError MegaApi::checkAccess(MegaNode* megaNode, int level)
     }
 
 	MegaError e(client->checkaccess(node, a) ? API_OK : API_EACCESS);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
 	return e;
 }
@@ -3852,17 +3853,17 @@ MegaError MegaApi::checkMove(MegaNode* megaNode, MegaNode* targetNode)
 {
 	if(!megaNode || !targetNode) return MegaError(API_EINTERNAL);
 
-    MUTEX_LOCK(sdkMutex);
-	Node *node = client->nodebyhandle(megaNode->getHandle());
+    sdkMutex.lock();
+    Node *node = client->nodebyhandle(megaNode->getHandle());
 	Node *target = client->nodebyhandle(targetNode->getHandle());
 	if(!node || !target)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-		return MegaError(API_EINTERNAL);
+        sdkMutex.unlock();
+        return MegaError(API_EINTERNAL);
 	}
 
 	MegaError e(client->checkmove(node,target));
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
 	return e;
 }
@@ -3908,11 +3909,11 @@ NodeList *MegaApi::getChildren(MegaNode* p, int order)
 {
     if(!p) return new NodeList();
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *parent = client->nodebyhandle(p->getHandle());
 	if(!parent)
 	{
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
         return new NodeList();
 	}
 
@@ -3949,7 +3950,7 @@ NodeList *MegaApi::getChildren(MegaNode* p, int order)
             childrenNodes.insert(i, n);
 		}
 	}
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
     if(childrenNodes.size()) return new NodeList(childrenNodes.data(), childrenNodes.size());
     else return new NodeList();
@@ -3958,28 +3959,28 @@ NodeList *MegaApi::getChildren(MegaNode* p, int order)
 MegaNode *MegaApi::getChildNode(MegaNode *parent, const char* name)
 {
 	if(!parent || !name) return NULL;
-	MUTEX_LOCK(sdkMutex);
-	Node *parentNode = client->nodebyhandle(parent->getHandle());
+    sdkMutex.lock();
+    Node *parentNode = client->nodebyhandle(parent->getHandle());
 	if(!parentNode)
 	{
-		MUTEX_UNLOCK(sdkMutex);
-		return NULL;
+        sdkMutex.unlock();
+        return NULL;
 	}
 
 	MegaNode *node = MegaNode::fromNode(getChildNodeInternal(parentNode, name));
-	MUTEX_UNLOCK(sdkMutex);
-	return node;
+    sdkMutex.unlock();
+    return node;
 }
 
 Node* MegaApi::getChildNodeInternal(Node *parent, const char* name)
 {
 	if(!parent || !name) return NULL;
-    MUTEX_LOCK(sdkMutex);
-	parent = client->nodebyhandle(parent->nodehandle);
+    sdkMutex.lock();
+    parent = client->nodebyhandle(parent->nodehandle);
 	if(!parent)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-		return NULL;
+        sdkMutex.unlock();
+        return NULL;
 	}
 
 	Node *result = NULL;
@@ -3993,24 +3994,24 @@ Node* MegaApi::getChildNodeInternal(Node *parent, const char* name)
 			break;
 		}
 	}
-    MUTEX_UNLOCK(sdkMutex);
-	return result;
+    sdkMutex.unlock();
+    return result;
 }
 
 MegaNode* MegaApi::getParentNode(MegaNode* n)
 {
     if(!n) return NULL;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *node = client->nodebyhandle(n->getHandle());
 	if(!node)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-		return NULL;
+        sdkMutex.unlock();
+        return NULL;
 	}
 
     MegaNode *result = MegaNode::fromNode(node->parent);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 
 	return result;
 }
@@ -4019,20 +4020,20 @@ const char* MegaApi::getNodePath(MegaNode *node)
 {
     if(!node) return NULL;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *n = client->nodebyhandle(node->getHandle());
     if(!n)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-		return NULL;
+        sdkMutex.unlock();
+        return NULL;
 	}
 
 	string path;
 	if (n->nodehandle == client->rootnodes[0])
 	{
 		path = "/";
-        MUTEX_UNLOCK(sdkMutex);
-		return stringToArray(path);
+        sdkMutex.unlock();
+        return stringToArray(path);
 	}
 
 	while (n)
@@ -4047,24 +4048,24 @@ const char* MegaApi::getNodePath(MegaNode *node)
 				path.insert(0,":");
 				if (n->inshare->user) path.insert(0,n->inshare->user->email);
 				else path.insert(0,"UNKNOWN");
-                MUTEX_UNLOCK(sdkMutex);
-				return stringToArray(path);
+                sdkMutex.unlock();
+                return stringToArray(path);
 			}
 			break;
 
 		case INCOMINGNODE:
 			path.insert(0,"//in");
-            MUTEX_UNLOCK(sdkMutex);
-			return stringToArray(path);
+            sdkMutex.unlock();
+            return stringToArray(path);
 
 		case ROOTNODE:
-            MUTEX_UNLOCK(sdkMutex);
-			return stringToArray(path);
+            sdkMutex.unlock();
+            return stringToArray(path);
 
 		case RUBBISHNODE:
 			path.insert(0,"//bin");
-            MUTEX_UNLOCK(sdkMutex);
-			return stringToArray(path);
+            sdkMutex.unlock();
+            return stringToArray(path);
 
 		case TYPE_UNKNOWN:
 		case FILENODE:
@@ -4075,15 +4076,15 @@ const char* MegaApi::getNodePath(MegaNode *node)
 
         n = n->parent;
 	}
-    MUTEX_UNLOCK(sdkMutex);
-	return stringToArray(path);
+    sdkMutex.unlock();
+    return stringToArray(path);
 }
 
 MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 {
     if(!path) return NULL;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *cwd = NULL;
     if(node) cwd = client->nodebyhandle(node->getHandle());
 
@@ -4122,8 +4123,8 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 					{
 						if (c.size())
 						{
-                            MUTEX_UNLOCK(sdkMutex);
-							return NULL;
+                            sdkMutex.unlock();
+                            return NULL;
 						}
 						remote = 1;
 					}
@@ -4147,8 +4148,8 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 
 	if (l)
 	{
-        MUTEX_UNLOCK(sdkMutex);
-		return NULL;
+        sdkMutex.unlock();
+        return NULL;
 	}
 
 	if (remote)
@@ -4157,8 +4158,8 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 		if (c.size() == 2 && !c[1].size())
 		{
 			//if (user) *user = c[0];
-            MUTEX_UNLOCK(sdkMutex);
-			return NULL;
+            sdkMutex.unlock();
+            return NULL;
 		}
 
 		User* u;
@@ -4182,8 +4183,8 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 
 		if (!l)
 		{
-            MUTEX_UNLOCK(sdkMutex);
-			return NULL;
+            sdkMutex.unlock();
+            return NULL;
 		}
 	}
 	else
@@ -4199,8 +4200,8 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 				else if (c[2] == "mail") n = client->nodebyhandle(client->rootnodes[3]);
 				else
 				{
-                    MUTEX_UNLOCK(sdkMutex);
-					return NULL;
+                    sdkMutex.unlock();
+                    return NULL;
 				}
 
 				l = 3;
@@ -4232,8 +4233,8 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 
 					if (!nn)
 					{
-                        MUTEX_UNLOCK(sdkMutex);
-						return NULL;
+                        sdkMutex.unlock();
+                        return NULL;
 					}
 
 					n = nn;
@@ -4244,17 +4245,17 @@ MegaNode* MegaApi::getNodeByPath(const char *path, MegaNode* node)
 		l++;
 	}
     MegaNode *result = MegaNode::fromNode(n);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return result;
 }
 
 MegaNode* MegaApi::getNodeByHandle(handle handle)
 {
 	if(handle == UNDEF) return NULL;
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     MegaNode *result = MegaNode::fromNode(client->nodebyhandle(handle));
-    MUTEX_UNLOCK(sdkMutex);
-	return result;
+    sdkMutex.unlock();
+    return result;
 }
 
 void MegaApi::setDebug(bool debug) { /*curl->setDebug(debug);*/ }
@@ -5059,7 +5060,7 @@ void MegaApi::updateStatics()
     int downloadCount = 0;
     int uploadCount = 0;
 
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     it = client->transfers[0].begin();
     end = client->transfers[0].end();
     while(it != end)
@@ -5082,7 +5083,7 @@ void MegaApi::updateStatics()
 
     pendingDownloads = downloadCount;
     pendingUploads = uploadCount;
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 }
 
 void MegaApi::update()
@@ -5096,7 +5097,7 @@ bool MegaApi::isIndexing()
     if(!client || client->syncscanstate) return true;
 
     bool indexing = false;
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     sync_list::iterator it = client->syncs.begin();
     while(it != client->syncs.end())
     {
@@ -5108,7 +5109,7 @@ bool MegaApi::isIndexing()
         }
         it++;
     }
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return indexing;
 }
 
@@ -5126,24 +5127,24 @@ bool MegaApi::isWaiting()
 bool MegaApi::isSynced(MegaNode *n)
 {
     if(!n) return false;
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     Node *node = client->nodebyhandle(n->getHandle());
     if(!node)
     {
-        MUTEX_UNLOCK(sdkMutex);
+        sdkMutex.unlock();
         return false;
     }
 
     bool result = (node->localnode!=NULL);
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
     return result;
 }
 
 void MegaApi::setExcludedNames(vector<string> *excludedNames)
 {
-    MUTEX_LOCK(sdkMutex);
+    sdkMutex.lock();
     this->excludedNames = *excludedNames;
-    MUTEX_UNLOCK(sdkMutex);
+    sdkMutex.unlock();
 }
 
 char* MegaApi::strdup(const char* buffer)
