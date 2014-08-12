@@ -5,11 +5,11 @@
 #include <sdk/megaapi.h>
 #include <sdk/qt/QTMegaRequestListener.h>
 
-class ExportProcessor : public QTMegaRequestListener
+class ExportProcessor : public mega::QTMegaRequestListener
 {
     Q_OBJECT
 public:
-    explicit ExportProcessor(MegaApi *megaApi, QStringList fileList);
+    explicit ExportProcessor(mega::MegaApi *megaApi, QStringList fileList);
 
     void requestLinks();
     QStringList getValidLinks();
@@ -18,10 +18,10 @@ signals:
     void onRequestLinksFinished();
 
 public slots:
-    virtual void QTonRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
+    virtual void QTonRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 protected:
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
     QStringList fileList;
     QStringList publicLinks;
     QStringList validPublicLinks;

@@ -8,6 +8,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+using namespace mega;
+
 ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::ImportMegaLinksDialog)

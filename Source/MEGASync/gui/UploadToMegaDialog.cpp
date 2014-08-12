@@ -3,6 +3,8 @@
 #include "gui/NodeSelector.h"
 #include "control/Utilities.h"
 
+using namespace mega;
+
 UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::UploadToMegaDialog)

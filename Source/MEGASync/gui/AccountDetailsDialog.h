@@ -14,7 +14,7 @@ class AccountDetailsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AccountDetailsDialog(MegaApi *megaApi, QWidget *parent = 0);
+    explicit AccountDetailsDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~AccountDetailsDialog();
     void refresh();
 
@@ -23,7 +23,7 @@ private slots:
 
 private:
     Ui::AccountDetailsDialog *ui;
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

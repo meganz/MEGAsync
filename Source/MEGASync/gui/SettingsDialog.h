@@ -111,7 +111,7 @@ private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
 	bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;

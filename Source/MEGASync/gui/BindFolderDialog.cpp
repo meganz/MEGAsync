@@ -4,6 +4,8 @@
 #include "control/Utilities.h"
 #include <QInputDialog>
 
+using namespace mega;
+
 BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BindFolderDialog)

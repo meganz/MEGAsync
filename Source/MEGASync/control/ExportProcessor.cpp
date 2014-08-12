@@ -1,5 +1,7 @@
 #include "ExportProcessor.h"
 
+using namespace mega;
+
 ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) :
     QTMegaRequestListener(megaApi)
 {

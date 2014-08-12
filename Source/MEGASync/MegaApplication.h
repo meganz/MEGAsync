@@ -33,7 +33,7 @@ Q_DECLARE_METATYPE(QQueue<QString>)
 
 class Notificator;
 
-class MegaApplication : public QApplication, public MegaListener
+class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
@@ -53,17 +53,17 @@ public:
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
-    virtual void onRequestStart(MegaApi* api, MegaRequest *request);
-    virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
-    virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
-	virtual void onTransferStart(MegaApi *api, MegaTransfer *transfer);
-	virtual void onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* e);
-    virtual void onTransferUpdate(MegaApi *api, MegaTransfer *transfer);
-    virtual void onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e);
-    virtual void onUsersUpdate(MegaApi* api, UserList *users);
-    virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
-    virtual void onReloadNeeded(MegaApi* api);
-    virtual void onSyncStateChanged(MegaApi *api);
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e);
+    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onUsersUpdate(mega::MegaApi* api, mega::UserList *users);
+    virtual void onNodesUpdate(mega::MegaApi* api, mega::NodeList *nodes);
+    virtual void onReloadNeeded(mega::MegaApi* api);
+    virtual void onSyncStateChanged(mega::MegaApi *api);
 
 	/*
     virtual void onSyncStateChanged(Sync*, syncstate);
@@ -72,7 +72,7 @@ public:
     virtual void onSyncPut(Sync*, const char*);
 	*/
 
-    MegaApi *getMegaApi() { return megaApi; }
+    mega::MegaApi *getMegaApi() { return megaApi; }
 
     void unlink();
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
@@ -162,7 +162,7 @@ protected:
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
     Preferences *preferences;
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     MultiQFileDialog *multiUploadFileDialog;
@@ -174,7 +174,7 @@ protected:
     long long lastStartedUpload;
     int exportOps;
     mega::syncstate_t syncState;
-	QTMegaListener *delegateListener;
+    mega::QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     QTimer *refreshTimer;

@@ -10,17 +10,17 @@ namespace Ui {
 class UploadToMegaDialog;
 }
 
-class UploadToMegaDialog : public QDialog, public MegaRequestListener
+class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
 {
 	Q_OBJECT
 
 public:
-    explicit UploadToMegaDialog(MegaApi *megaApi, QWidget *parent = 0);
+    explicit UploadToMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
 	~UploadToMegaDialog();
     mega::handle getSelectedHandle();
 	bool isDefaultFolder();
 
-	virtual void onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e);
+    virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
 
 private slots:
 	void on_bChange_clicked();
@@ -31,9 +31,9 @@ protected:
 
 private:
 	Ui::UploadToMegaDialog *ui;
-	MegaApi *megaApi;
+    mega::MegaApi *megaApi;
     mega::handle selectedHandle;
-	QTMegaRequestListener *delegateListener;
+    mega::QTMegaRequestListener *delegateListener;
 };
 
 #endif // UPLOADTOMEGADIALOG_H
