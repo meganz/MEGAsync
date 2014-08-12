@@ -46,7 +46,8 @@ SOURCES += $$PWD/sdk/src/win32/net.cpp  \
 unix {
 SOURCES += $$PWD/sdk/src/posix/net.cpp  \
     $$PWD/sdk/src/posix/fs.cpp  \
-    $$PWD/sdk/src/posix/waiter.cpp
+    $$PWD/sdk/src/posix/waiter.cpp \
+    $$PWD/sdk/src/thread/qtthread.cpp
 }
 
 HEADERS  += $$PWD/sdk/include/mega.h \
@@ -101,7 +102,7 @@ win32 {
     SOURCES += $$PWD/sqlite3.c
 }
 
-unix:!macx {
+unix {
     !exists($$PWD/sdk/include/mega/config.h) {
         error("Configuration file not found! Please re-run configure script located in the project's root directory!")
     }
@@ -109,6 +110,8 @@ unix:!macx {
             $$PWD/sdk/include/mega/posix/megasys.h  \
             $$PWD/sdk/include/mega/posix/megafs.h  \
             $$PWD/sdk/include/mega/posix/megawaiter.h \
+            $$PWD/sdk/include/mega/thread.h \
+            $$PWD/sdk/include/mega/thread/qtthread.h \
             $$PWD/sdk/include/mega/config.h
 }
 

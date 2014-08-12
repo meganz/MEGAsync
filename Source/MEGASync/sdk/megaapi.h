@@ -32,71 +32,18 @@ typedef int64_t m_off_t;
 #include "mega.h"
 
 #ifdef USE_PTHREAD
-#include <pthread.h>
 
-#define DECLARE_MUTEX(mutex) pthread_mutex_t *mutex
-#define INIT_MUTEX(mutex)                                       \
-    mutex = new pthread_mutex_t;                                \
-    pthread_mutex_init(mutex, NULL);
-
-#define INIT_RECURSIVE_MUTEX(mutex)                             \
-{                                                               \
-    mutex = new pthread_mutex_t;                                \
-    pthread_mutexattr_t attr;                                   \
-    pthread_mutexattr_init(&attr);                              \
-    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);  \
-    pthread_mutex_init(mutex, &attr);                \
-}
-
-
-#define MUTEX_LOCK(mutex) pthread_mutex_lock(mutex);
-#define MUTEX_UNLOCK(mutex) pthread_mutex_unlock(mutex);
-#define MUTEX_DELETE(mutex) delete mutex;
-
-#define DECLARE_THREAD(thread) pthread_t thread;
-#define INIT_THREAD(thread, threadEntryPoint, pointer) 	pthread_create(&thread, NULL, threadEntryPoint, pointer);
-#define JOIN_THREAD(thread) pthread_join(thread, NULL);
-#define DELETE_THREAD(thread)
+#include "mega/thread/posixthread.h"
+typedef mega::PosixThread MegaThread;
+typedef mega::PosixMutex MegaMutex;
 
 #elif USE_QT
-#include <QThread>
-#include <QMutex>
+
+#include "mega/thread/qtthread.h"
+typedef mega::QtThread MegaThread;
+typedef mega::QtMutex MegaMutex;
+
 #include "mega/gfx/qt.h"
-
-class MegaThread: public QThread
-{
-public:
-    MegaThread(void *(*start_routine)(void*), void *pointer)
-    {
-        this->start_routine = start_routine;
-        this->pointer = pointer;
-    }
-
-protected:
-    void *(*start_routine)(void*);
-    void *pointer;
-
-    virtual void run()
-    {
-        start_routine(pointer);
-    }
-};
-
-#define DECLARE_MUTEX(mutex) QMutex *mutex;
-#define INIT_MUTEX(mutex) mutex = new QMutex();
-#define INIT_RECURSIVE_MUTEX(mutex) mutex = new QMutex(QMutex::Recursive);
-#define MUTEX_LOCK(mutex) mutex->lock();
-#define MUTEX_UNLOCK(mutex) mutex->unlock();
-#define MUTEX_DELETE(mutex) delete mutex;
-
-#define DECLARE_THREAD(thread) MegaThread *thread;
-#define INIT_THREAD(thread, threadEntryPoint, pointer) \
-    thread = new MegaThread(threadEntryPoint, pointer);\
-    thread->start();
-
-#define JOIN_THREAD(thread) thread->wait();
-#define DELETE_THREAD(thread) delete thread;
-
 class MegaGfxProc : public mega::GfxProcQT {};
 
 #endif
@@ -736,45 +683,45 @@ class RequestQueue
 {
     protected:
         std::deque<MegaRequest *> requests;
-        DECLARE_MUTEX(mutex);
+        MegaMutex mutex;
 
     public:
 	RequestQueue()
 	{
-        INIT_MUTEX(mutex);
+        mutex.init(false);
 	}
 
 	void push(MegaRequest *request)
 	{
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 	    requests.push_back(request);
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
 	}
 
 	void push_front(MegaRequest *request)
 	{
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 	    requests.push_front(request);
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
 	}
 
 	MegaRequest * pop()
 	{
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 	    if(requests.empty())
 	    {
-            MUTEX_UNLOCK(mutex);
+            mutex.unlock();
             return NULL;
 	    }
 	    MegaRequest *request = requests.front();
 	    requests.pop_front();
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
 	    return request;
 	}
 
     void removeListener(MegaRequestListener *listener)
     {
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 
         std::deque<MegaRequest *>::iterator it = requests.begin();
         while(it != requests.end())
@@ -785,7 +732,7 @@ class RequestQueue
             it++;
         }
 
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
     }
 };
 
@@ -795,39 +742,39 @@ class TransferQueue
 {
     protected:
         std::deque<MegaTransfer *> transfers;
-        DECLARE_MUTEX(mutex);
+        MegaMutex mutex;
 
     public:
     TransferQueue()
 	{
-        INIT_MUTEX(mutex);
+        mutex.init(false);
     }
 
 	void push(MegaTransfer *transfer)
 	{
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 	    transfers.push_back(transfer);
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
 	}
 
 	void push_front(MegaTransfer *transfer)
 	{
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 	    transfers.push_front(transfer);
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
 	}
 
 	MegaTransfer * pop()
 	{
-        MUTEX_LOCK(mutex);
+        mutex.lock();
 	    if(transfers.empty())
 	    {
-            MUTEX_UNLOCK(mutex);
+            mutex.unlock();
 	    	return NULL;
 	    }
 	    MegaTransfer *transfer = transfers.front();
 	    transfers.pop_front();
-        MUTEX_UNLOCK(mutex);
+        mutex.unlock();
 	    return transfer;
 	}
 };
@@ -1018,7 +965,7 @@ protected:
 	void fireOnReloadNeeded(MegaApi* api);
     void fireOnSyncStateChanged(MegaApi* api);
 
-    DECLARE_THREAD(thread);
+    MegaThread thread;
 	mega::MegaClient *client;
     MegaHttpIO *httpio;
     MegaWaiter *waiter;
@@ -1042,7 +989,7 @@ protected:
     bool waitingRequest;
     vector<string> excludedNames;
 
-    DECLARE_MUTEX(sdkMutex);
+    MegaMutex sdkMutex;
 
 	MegaTransfer *currentTransfer;
 	int threadExit;
