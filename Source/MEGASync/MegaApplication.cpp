@@ -4,6 +4,7 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "control/QTMegaApi.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 
@@ -14,11 +15,6 @@
 #include <QNetworkProxy>
 
 using namespace mega;
-
-const int MegaApplication::VERSION_CODE = 1029;
-const QString MegaApplication::VERSION_STRING = QString::fromAscii("1.0.29");
-const QString MegaApplication::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
-const QString MegaApplication::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
@@ -141,6 +137,31 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("Installer", "Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)");
     QT_TRANSLATE_NOOP("Installer", "Install for anyone using this computer");
     QT_TRANSLATE_NOOP("Installer", "Install just for me");
+
+    QT_TRANSLATE_NOOP("MegaError", "No error");
+    QT_TRANSLATE_NOOP("MegaError", "Internal error");
+    QT_TRANSLATE_NOOP("MegaError", "Invalid argument");
+    QT_TRANSLATE_NOOP("MegaError", "Request failed, retrying");
+    QT_TRANSLATE_NOOP("MegaError", "Rate limit exceeded");
+    QT_TRANSLATE_NOOP("MegaError", "Failed permanently");
+    QT_TRANSLATE_NOOP("MegaError", "Too many concurrent connections or transfers");
+    QT_TRANSLATE_NOOP("MegaError", "Out of range");
+    QT_TRANSLATE_NOOP("MegaError", "Expired");
+    QT_TRANSLATE_NOOP("MegaError", "Not found");
+    QT_TRANSLATE_NOOP("MegaError", "Circular linkage detected");
+    QT_TRANSLATE_NOOP("MegaError", "Access denied");
+    QT_TRANSLATE_NOOP("MegaError", "Already exists");
+    QT_TRANSLATE_NOOP("MegaError", "Incomplete");
+    QT_TRANSLATE_NOOP("MegaError", "Invalid key/Decryption error");
+    QT_TRANSLATE_NOOP("MegaError", "Bad session ID");
+    QT_TRANSLATE_NOOP("MegaError", "Blocked");
+    QT_TRANSLATE_NOOP("MegaError", "Over quota");
+    QT_TRANSLATE_NOOP("MegaError", "Temporarily not available");
+    QT_TRANSLATE_NOOP("MegaError", "Connection overflow");
+    QT_TRANSLATE_NOOP("MegaError", "Write error");
+    QT_TRANSLATE_NOOP("MegaError", "Read error");
+    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
+    QT_TRANSLATE_NOOP("MegaError", "Unknown error");
 #endif
 
 }
@@ -162,7 +183,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
     setApplicationName(QString::fromAscii("MEGAsync"));
-    setApplicationVersion(QString::number(VERSION_CODE));
+    setApplicationVersion(QString::number(Preferences::VERSION_CODE));
     appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
     appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
@@ -255,7 +276,7 @@ void MegaApplication::initialize()
     }
 #endif
 
-    megaApi = new MegaApi(basePath.toUtf8().constData());
+    megaApi = new QTMegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
@@ -356,7 +377,7 @@ void MegaApplication::changeLanguage(QString languageCode)
     }
 
     QTranslator *newTranslator = new QTranslator();
-    if(newTranslator->load(MegaApplication::TRANSLATION_FOLDER + MegaApplication::TRANSLATION_PREFIX + languageCode))
+    if(newTranslator->load(Preferences::TRANSLATION_FOLDER + Preferences::TRANSLATION_PREFIX + languageCode))
     {
         installTranslator(newTranslator);
         translator = newTranslator;
@@ -380,12 +401,12 @@ void MegaApplication::updateTrayIcon()
             if(scanningTimer->isActive())
                 scanningTimer->stop();
         #endif
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     }
     else if(paused)
     {
         LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
-        QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
+        QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
         if(!updateAvailable)
         {
             #ifndef __APPLE__
@@ -430,9 +451,9 @@ void MegaApplication::updateTrayIcon()
         }
 
         QString tooltip;
-        if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
-        else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
-        else tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing");
+        if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
+        else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
+        else tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing");
 
         if(!updateAvailable)
         {
@@ -477,7 +498,7 @@ void MegaApplication::updateTrayIcon()
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
         }
         else
         {
@@ -489,7 +510,7 @@ void MegaApplication::updateTrayIcon()
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
+            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
         }
 
         if(reboot)
@@ -510,7 +531,7 @@ void MegaApplication::start()
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")));
 #endif
     trayIcon->setContextMenu(initialMenu);
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
     if(!preferences->lastExecutionTime())
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
@@ -1167,7 +1188,6 @@ void MegaApplication::applyProxySettings()
         }
     }
 
-    cout << "PPP " << proxySettings->getProxyURL() << endl;
     megaApi->setProxySettings(proxySettings);
     delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
@@ -1311,7 +1331,6 @@ void MegaApplication::uploadActionClicked()
                     foreach(QString file, files)
                     {
                         qFiles.append(file);
-                        cout << "ELEMENT TO UPLOAD: " << file.toUtf8().constData() << endl;
                     }
 
                     shellUpload(qFiles);
@@ -1461,7 +1480,7 @@ void MegaApplication::onUpdateCompleted()
     LOG("Update completed. Initializing a silent reboot...");
     if(trayMenu)
     {
-        updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING);
+        updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING);
         updateAction->setEnabled(false);
     }
     updateAvailable = false;
@@ -1693,7 +1712,7 @@ void MegaApplication::createTrayIcon()
     }
     else
     {
-        updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING, this);
+        updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING, this);
 #ifndef __APPLE__
         updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
@@ -1733,7 +1752,7 @@ void MegaApplication::createTrayIcon()
             }
         #endif
     }
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + MegaApplication::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
+    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
 }
 
 //Called when a request is about to start
@@ -1786,7 +1805,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_LOGOUT:
     {
         if(e->getErrorCode())
-            showErrorMessage(tr("Error") + QString::fromAscii(": ") + e->QgetErrorString());
+            showErrorMessage(tr("Error") + QString::fromAscii(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
 
         if(preferences && preferences->logged())
         {
@@ -1825,7 +1844,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             else
             {
                 LOG("Error fetching nodes");
-                QMessageBox::warning(NULL, tr("Error"), e->QgetErrorString(), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
                 unlink();
             }
 		}
@@ -1916,7 +1935,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                 "because the remote folder doesn't exist")
                                              .arg(preferences->getSyncName(i)));
                     }
-                    else showErrorMessage(e->QgetErrorString());
+                    else showErrorMessage(QCoreApplication::translate("MegaError", e->getErrorString()));
 
                     delete[] nodePath;
 
@@ -2117,7 +2136,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 {
     //Show information to users
     if(megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
-        showWarningMessage(tr("Temporary transmission error: ") + e->QgetErrorString(), QString::fromUtf8(transfer->getFileName()));
+        showWarningMessage(tr("Temporary transmission error: ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     else
         onSyncStateChanged(megaApi);
 }
@@ -2259,34 +2278,3 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     if(!isUnity) updateTrayIcon();
 }
 
-//TODO: Manage sync callbacks here
-/*
-void MegaApplication::onSyncStateChanged(Sync *, syncstate state)
-{
-	//syncState = state;
-	//cout << "New STATE: " << state << endl;
-	//QApplication::postEvent(this, new QEvent(QEvent::User));
-}
-
-void MegaApplication::onSyncRemoteCopy(Sync *, const char *name)
-{
-	//cout << "Added upload - remote copy" << endl;
-	//transfer = new MegaTransfer(MegaTransfer::TYPE_UPLOAD);
-	//transfer->setTotalBytes(1000);
-	//transfer->setTransferredBytes(1000);
-	//transfer->setPath(name);
-	//QApplication::postEvent(this, new QEvent(QEvent::User));
-}
-
-void MegaApplication::onSyncGet(Sync *, const char *)
-{
-	//cout << "Added download - sync get" << endl;
-	//QApplication::postEvent(this, new QEvent(QEvent::User));
-}
-
-void MegaApplication::onSyncPut(Sync *, const char *)
-{
-	//cout << "Added upload - sync put" << endl;
-	//QApplication::postEvent(this, new QEvent(QEvent::User));
-}
-*/

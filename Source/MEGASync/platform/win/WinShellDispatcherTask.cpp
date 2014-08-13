@@ -462,20 +462,16 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             switch(state)
             {
                 case mega::TREESTATE_SYNCED:
-                    //cout << "Synced: " << lastPath.toStdString() << endl;
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
                  case mega::TREESTATE_SYNCING:
-                     //cout << "Syncing: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
                 case mega::TREESTATE_PENDING:
-                     //cout << "Pending: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
                  case mega::TREESTATE_NONE:
                  default:
-                     //cout << "Not found: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }
             break;
