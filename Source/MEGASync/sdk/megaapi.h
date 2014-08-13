@@ -201,7 +201,7 @@ class MegaShare
 		const char *getUser();
 		handle getNodeHandle();
 		int getAccess();
-		int getTimestamp();
+		m_time_t getTimestamp();
         static MegaShare *fromShare(handle nodehandle, Share *share);
 
 	private:
@@ -284,20 +284,11 @@ class ShareList
 		int s;
 };
 
-//typedef ArrayWrapper<AccountBalance> BalanceList;
-//typedef ArrayWrapper<AccountSession> SessionList;
-//typedef ArrayWrapper<AccountPurchase> PurchaseList;
-//typedef ArrayWrapper<AccountTransaction> TransactionList;
-//typedef ArrayWrapper<const char*> StringList;
-//typedef ArrayWrapper<Share*> ShareList;
-
 class MegaRequestListener;
 class MegaTransferListener;
 class MegaTransfer;
 class MegaApi;
 
-//Encapsulates the information about a request instead of return it as individual parameters in the callbacks.
-//This allow extending the information adding more getters without breaking client's code.
 class MegaRequest
 {
 	public:
@@ -415,7 +406,7 @@ class MegaTransfer
 		const char* toString() const;
 		const char* __str__() const;
 
-		long long getStartTime() const;
+		m_time_t getStartTime() const;
 		long long getTransferredBytes() const;
 		long long getTotalBytes() const;
 		const char* getPath() const;
@@ -430,19 +421,19 @@ class MegaTransfer
 		MegaTransferListener* getListener() const;
 		int getNumRetry() const;
 		int getMaxRetries() const;
-		long long getTime() const;
+		m_time_t getTime() const;
 		const char* getBase64Key() const;
 		int getTag() const;
         Transfer *getTransfer() const;
 		long long getSpeed() const;
 		long long getDeltaSize() const;
-		long long getUpdateTime() const;
+		m_time_t getUpdateTime() const;
         MegaNode *getPublicNode() const;
         bool isSyncTransfer() const;
         bool isStreamingTransfer() const;
 		char *getLastBytes() const;
 
-		void setStartTime(long long startTime);
+		void setStartTime(m_time_t startTime);
 		void setTransferredBytes(long long transferredBytes);
 		void setTotalBytes(long long totalBytes);
 		void setPath(const char* path);
@@ -455,7 +446,7 @@ class MegaTransfer
 		void setMaxSpeed(int maxSpeed);
 		void setNumRetry(int retry);
 		void setMaxRetries(int retry);
-		void setTime(long long time);
+		void setTime(m_time_t time);
 		void setFileName(const char* fileName);
 		void setSlot(int id);
 		void setBase64Key(const char* base64Key);
@@ -463,7 +454,7 @@ class MegaTransfer
         void setTransfer(Transfer *transfer);
 		void setSpeed(long long speed);
 		void setDeltaSize(long long deltaSize);
-		void setUpdateTime(long long updateTime);
+		void setUpdateTime(m_time_t updateTime);
         void setPublicNode(MegaNode *publicNode);
         void setSyncTransfer(bool syncTransfer);
 		void setLastBytes(char *lastBytes);
@@ -473,9 +464,9 @@ class MegaTransfer
 		int type;
 		int tag;
         bool syncTransfer;
-		long long startTime;
-		long long updateTime;
-		long long time;
+		m_time_t startTime;
+		m_time_t updateTime;
+		m_time_t time;
 		long long transferredBytes;
 		long long totalBytes;
 		long long speed;
@@ -575,7 +566,7 @@ class MegaError
 class TreeProcessor
 {
 	public:
-	virtual int processNode(Node* node);
+	virtual bool processNode(Node* node);
 	virtual ~TreeProcessor();
 };
 
@@ -590,7 +581,7 @@ class SearchTreeProcessor : public TreeProcessor
 {
     public:
 	SearchTreeProcessor(const char *search);
-	virtual int processNode(Node* node);
+	virtual bool processNode(Node* node);
     virtual ~SearchTreeProcessor() {}
     vector<Node *> &getResults();
 
@@ -604,12 +595,9 @@ class SizeProcessor : public TreeProcessor
     long long totalBytes;
 public:
     SizeProcessor();
-    virtual int processNode(Node* node);
+    virtual bool processNode(Node* node);
     long long getTotalBytes();
 };
-
-//Separate listeners for requests, transfers and global events
-//It could be useful for some applications
 
 //Request callbacks
 class MegaRequestListener
@@ -618,7 +606,7 @@ class MegaRequestListener
 	//Request callbacks
 	virtual void onRequestStart(MegaApi* api, MegaRequest *request);
 	virtual void onRequestFinish(MegaApi* api, MegaRequest *request, MegaError* e);
-    virtual void onRequestUpdate(MegaApi* api, MegaRequest *request);
+    virtual void onRequestUpdate(MegaApi*, MegaRequest *);
 	virtual void onRequestTemporaryError(MegaApi *api, MegaRequest *request, MegaError* e);
 	virtual ~MegaRequestListener();
 };
@@ -675,11 +663,6 @@ class MegaListener
 #endif
 	virtual void onReloadNeeded(MegaApi* api);
     virtual void onSyncStateChanged(MegaApi *api);
-
-	//virtual void onSyncStateChanged(Sync*, syncstate) {}
-	//virtual void onSyncGet(Sync*, const char*) {}
-	//virtual void onSyncPut(Sync*, const char*) {}
-	//virtual void onSyncRemoteCopy(Sync*, const char*) {}
 
 	virtual ~MegaListener();
 };
@@ -821,7 +804,6 @@ public:
 	virtual ~MegaApi();
 
 	//Multiple listener management.
-	//Allowing multiple listeners could be useful for some applications.
 	void addListener(MegaListener* listener);
 	void addRequestListener(MegaRequestListener* listener);
 	void addTransferListener(MegaTransferListener* listener);
@@ -871,8 +853,7 @@ public:
 	void getPreview(MegaNode* node, const char *dstFilePath, MegaRequestListener *listener = NULL);
 	void setPreview(MegaNode* node, const char *srcFilePath, MegaRequestListener *listener = NULL);
 	void getUserAvatar(MegaUser* user, const char *dstFilePath, MegaRequestListener *listener = NULL);
-	//void setUserAvatar(MegaUser* user, char *srcFilePath, MegaRequestListener *listener = NULL);
-	void exportNode(MegaNode *node, MegaRequestListener *listener = NULL);
+    void exportNode(MegaNode *node, MegaRequestListener *listener = NULL);
     void disableExport(MegaNode *node, MegaRequestListener *listener = NULL);
 	void fetchNodes(MegaRequestListener *listener = NULL);
 	void getAccountDetails(MegaRequestListener *listener = NULL);
@@ -886,9 +867,7 @@ public:
     void startUpload(const char* localPath, MegaNode* parent, const char* fileName, MegaTransferListener *listener = NULL);
     void startDownload(MegaNode* node, const char* localPath, MegaTransferListener *listener = NULL);
     void startStreaming(MegaNode* node, m_off_t startPos, m_off_t size, MegaTransferListener *listener);
-
     void startPublicDownload(MegaNode* node, const char* localPath, MegaTransferListener *listener = NULL);
-    //	void startPublicDownload(handle nodehandle, const char * base64key, const char* localFolder, MegaTransferListener *listener = NULL);
     void cancelTransfer(MegaTransfer *transfer, MegaRequestListener *listener=NULL);
     void cancelTransfers(int direction, MegaRequestListener *listener=NULL);
     void pauseTransfers(bool pause, MegaRequestListener* listener=NULL);
@@ -921,7 +900,6 @@ public:
 	//Filesystem
     NodeList* getChildren(MegaNode *parent, int order=1);
     MegaNode *getChildNode(MegaNode *parent, const char* name);
-
     MegaNode *getParentNode(MegaNode *node);
     const char* getNodePath(MegaNode *node);
     MegaNode *getNodeByPath(const char *path, MegaNode *n = NULL);
@@ -943,24 +921,11 @@ public:
 	NodeList* search(MegaNode* node, const char* searchString, bool recursive = 1);
 	bool processMegaTree(MegaNode* node, MegaTreeProcessor* processor, bool recursive = 1);
 
-	//StringList *getRootNodeNames();
-	//StringList *getRootNodePaths();
-
-	//Debug
-	void setDebug(bool debug);
-	bool getDebug();
-
 	//General porpuse
 	static char* strdup(const char* buffer);
 
-	//Do not use
-	static void *threadEntryPoint(void *param);
-
 protected:
-	//static const char* rootnodenames[];
-	//static const char* rootnodepaths[];
-	//static StringList *rootNodeNames;
-	//static StringList *rootNodePaths;
+    static void *threadEntryPoint(void *param);
 
 	void fireOnRequestStart(MegaApi* api, MegaRequest *request);
 	void fireOnRequestFinish(MegaApi* api, MegaRequest *request, MegaError e);
@@ -999,9 +964,7 @@ protected:
     bool waiting;
     bool waitingRequest;
     vector<string> excludedNames;
-
     MegaMutex sdkMutex;
-
 	MegaTransfer *currentTransfer;
 	int threadExit;
     dstime pausetime;
@@ -1011,7 +974,6 @@ protected:
 
     // a request-level error occurred
     virtual void request_error(error);
-
     virtual void request_response_progress(m_off_t, m_off_t);
 
     // login result
@@ -1133,11 +1095,11 @@ protected:
 	void sendPendingTransfers();
 	char *stringToArray(string &buffer);
 
-	//Pending
+    //Internal
 	Node* getChildNodeInternal(Node *parent, const char* name);
 	bool processTree(Node* node, TreeProcessor* processor, bool recursive = 1);
 	NodeList* search(Node* node, const char* searchString, bool recursive = 1);
-	void getAccountDetails(int storage, int transfer, int pro, int transactions, int purchases, int sessions, MegaRequestListener *listener = NULL);
+    void getAccountDetails(bool storage, bool transfer, bool pro, bool transactions, bool purchases, bool sessions, MegaRequestListener *listener = NULL);
     void getNodeAttribute(MegaNode* node, int type, const char *dstFilePath, MegaRequestListener *listener = NULL);
     void setNodeAttribute(MegaNode* node, int type, const char *srcFilePath, MegaRequestListener *listener = NULL);
     void getUserAttribute(MegaUser* node, int type, const char *dstFilePath, MegaRequestListener *listener = NULL);
@@ -1145,7 +1107,6 @@ protected:
     void startUpload(const char* localPath, MegaNode* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
     void startUpload(const char* localPath, MegaNode* parent, int maxSpeed, MegaTransferListener *listener = NULL);
 	void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
-    void startDownload(MegaNode* node, const char* localFolder, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
     void startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
 };
 
