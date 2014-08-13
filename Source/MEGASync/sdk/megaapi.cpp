@@ -1205,8 +1205,12 @@ MegaApi::MegaApi(const char *basePath)
     fsAccess = new MegaFileSystemAccess(MacXPlatform::fd);
 #endif
 
-    string sBasePath = basePath;
-    dbAccess = new MegaDbAccess(&sBasePath);
+	if (basePath)
+	{
+		string sBasePath = basePath;
+		dbAccess = new MegaDbAccess(&sBasePath);
+	}
+	else dbAccess = NULL;
 
 #ifndef WINDOWS_PHONE
     gfxAccess = new MegaGfxProc();
