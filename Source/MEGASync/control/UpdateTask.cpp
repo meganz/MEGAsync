@@ -64,7 +64,6 @@ void UpdateTask::startUpdateThread()
     #endif
 
     updateFolder = QDir(basePath + QDir::separator() + Preferences::UPDATE_FOLDER_NAME);
-    cout << "UPDATEFOLDER " << updateFolder.absolutePath().toStdString() << endl;
     m_WebCtrl = new QNetworkAccessManager();
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));

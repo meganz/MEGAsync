@@ -564,8 +564,8 @@ void SettingsDialog::loadSettings()
         //Language
         ui->cLanguage->clear();
         languageCodes.clear();
-        QString fullPrefix = MegaApplication::TRANSLATION_FOLDER+MegaApplication::TRANSLATION_PREFIX;
-        QDirIterator it(MegaApplication::TRANSLATION_FOLDER);
+        QString fullPrefix = Preferences::TRANSLATION_FOLDER+Preferences::TRANSLATION_PREFIX;
+        QDirIterator it(Preferences::TRANSLATION_FOLDER);
         QStringList languages;
         languages.append(QString::fromAscii("English"));
         languageCodes.append(QString::fromAscii("en"));

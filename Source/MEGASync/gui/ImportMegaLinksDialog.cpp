@@ -285,7 +285,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
             if(e == MegaError::API_ETEMPUNAVAIL)
 				status = ImportListWidgetItem::WARNING;
 
-            item->setData(MegaError::QgetErrorString(e), status);
+            item->setData(QCoreApplication::translate("MegaError", MegaError::getErrorString(e)), status);
 		}
 		else
 		{

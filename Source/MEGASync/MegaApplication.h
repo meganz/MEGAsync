@@ -42,11 +42,6 @@ public:
     ~MegaApplication();
 
     void initialize();
-
-    static const int VERSION_CODE;
-    static const QString VERSION_STRING;
-    static const QString TRANSLATION_FOLDER;
-    static const QString TRANSLATION_PREFIX;
     static QString applicationFilePath();
     static QString applicationDirPath();
     static QString applicationDataPath();

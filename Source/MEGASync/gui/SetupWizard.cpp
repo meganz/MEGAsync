@@ -70,7 +70,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 			else
 			{
 				ui->sPages->setCurrentWidget(ui->pNewAccount);
-                QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
 			}
 			break;
 		}
@@ -107,7 +107,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 				ui->bBack->setEnabled(true);
 				ui->bNext->setEnabled(true);
 				ui->sPages->setCurrentWidget(ui->pLogin);
-                QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
 			}
 			break;
 		}
@@ -134,7 +134,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 		   }
 		   else
 		   {
-               QMessageBox::warning(this, tr("Error"),  error->QgetErrorString(), QMessageBox::Ok);
+               QMessageBox::warning(this, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
 		   }
 		   break;
 		}
@@ -146,7 +146,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->bNext->setEnabled(true);
                 ui->sPages->setCurrentWidget(ui->pLogin);
                 sessionKey.clear();
-                QMessageBox::warning(this, tr("Error"), error->QgetErrorString(), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
             }
             else if(megaApi->getRootNode() == NULL)
             {

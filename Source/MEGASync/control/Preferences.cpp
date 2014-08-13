@@ -8,6 +8,13 @@
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
+const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
+const char Preferences::USER_AGENT[] = "MEGAsync/1.0.29";
+const int Preferences::VERSION_CODE = 1029;
+const QString Preferences::VERSION_STRING = QString::fromAscii("1.0.29");
+const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
+const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
+
 const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 80000;
 const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 15000;
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
@@ -1202,11 +1209,11 @@ void Preferences::login(QString account)
     readFolders();
     loadExcludedSyncNames();
     int lastVersion = settings->value(lastVersionKey).toInt();
-    if(lastVersion != MegaApplication::VERSION_CODE)
+    if(lastVersion != Preferences::VERSION_CODE)
     {
-        if((lastVersion != 0) && (lastVersion < MegaApplication::VERSION_CODE))
+        if((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
             ((MegaApplication *)qApp)->showUpdatedMessage();
-        settings->setValue(lastVersionKey, MegaApplication::VERSION_CODE);
+        settings->setValue(lastVersionKey, Preferences::VERSION_CODE);
     }
     settings->sync();
     mutex.unlock();
@@ -1256,7 +1263,7 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.clear();
 
     if((settings->value(lastVersionKey).toInt() < 108) &&
-       (MegaApplication::VERSION_CODE >= 108))
+       (Preferences::VERSION_CODE >= 108))
     {
         excludedSyncNames.clear();
         excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
@@ -1266,7 +1273,7 @@ void Preferences::loadExcludedSyncNames()
     }
 
     if((settings->value(lastVersionKey).toInt() < 1015) &&
-       (MegaApplication::VERSION_CODE >= 1015))
+       (Preferences::VERSION_CODE >= 1015))
     {
         excludedSyncNames.append(QString::fromUtf8("Icon?"));
     }

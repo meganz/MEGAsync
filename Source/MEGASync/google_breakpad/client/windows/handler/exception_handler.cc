@@ -923,7 +923,7 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   int frame_number=0;
 
   oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-  oss << "Version code: " << QString::number(MegaApplication::VERSION_CODE).toStdString() << "\n";
+  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() << "\n";
 
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];

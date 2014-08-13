@@ -93,7 +93,7 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
             $$PWD/qt/QTMegaListener.h \
             $$PWD/sdk/include/mega/thread.h \
-            $$PWD/sdk/include/mega/thread/qtthread.h \
+            $$PWD/sdk/include/mega/thread/qtthread.h
 
 win32 {
     HEADERS  += $$PWD/sdk/include/mega/win32/meganet.h  \

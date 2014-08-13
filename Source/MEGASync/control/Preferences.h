@@ -185,6 +185,12 @@ public:
     static const QString PROXY_TEST_SUBSTRING;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
+    static const char CLIENT_KEY[];
+    static const char USER_AGENT[];
+    static const int VERSION_CODE;
+    static const QString VERSION_STRING;
+    static const QString TRANSLATION_FOLDER;
+    static const QString TRANSLATION_PREFIX;
 
 protected:
 
