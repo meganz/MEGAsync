@@ -52,7 +52,7 @@ DEALINGS IN THE SOFTWARE.
     #include "control/Utilities.h"
 #else
     #define QT_TR_NOOP(x) (x)
-    #define LOG(x)
+	#define LOG(x) 0
 #endif
 
 #ifdef _WIN32
@@ -346,9 +346,9 @@ MegaNode::MegaNode(Node *node)
     this->attrstring.assign(node->attrstring.data(), node->attrstring.size());
     this->nodekey.assign(node->nodekey.data(),node->nodekey.size());
     this->removed = node->removed;
-    this->syncdeleted = node->syncdeleted;
-    this->thumbnailAvailable = node->hasfileattribute(0);
-    this->previewAvailable = node->hasfileattribute(1);
+	this->syncdeleted = (node->syncdeleted != SYNCDEL_NONE);
+    this->thumbnailAvailable = (node->hasfileattribute(0) != 0);
+    this->previewAvailable = (node->hasfileattribute(1) != 0);
     this->tag = node->tag;
     if(node->localnode)
     {
@@ -489,7 +489,7 @@ int MegaShare::getAccess()
 	return access;
 }
 
-int MegaShare::getTimestamp()
+m_time_t MegaShare::getTimestamp()
 {
 	return ts;
 }
@@ -851,12 +851,12 @@ int MegaTransfer::getTag() const { return tag; }
 Transfer* MegaTransfer::getTransfer() const { return transfer; }
 long long MegaTransfer::getSpeed() const { return speed; }
 long long MegaTransfer::getDeltaSize() const { return deltaSize; }
-long long MegaTransfer::getUpdateTime() const { return updateTime; }
+m_time_t MegaTransfer::getUpdateTime() const { return updateTime; }
 MegaNode *MegaTransfer::getPublicNode() const { return publicNode; }
 bool MegaTransfer::isSyncTransfer() const { return syncTransfer; }
 bool MegaTransfer::isStreamingTransfer() const { return transfer == NULL; }
 int MegaTransfer::getType() const { return type; }
-long long MegaTransfer::getStartTime() const { return startTime; }
+m_time_t MegaTransfer::getStartTime() const { return startTime; }
 long long MegaTransfer::getTransferredBytes() const {return transferredBytes; }
 long long MegaTransfer::getTotalBytes() const { return totalBytes; }
 const char* MegaTransfer::getPath() const { return path; }
@@ -869,7 +869,7 @@ long long MegaTransfer::getEndPos() const { return endPos; }
 int MegaTransfer::getMaxSpeed() const { return maxSpeed; }
 int MegaTransfer::getNumRetry() const { return retry; }
 int MegaTransfer::getMaxRetries() const { return maxRetries; }
-long long MegaTransfer::getTime() const { return time; }
+m_time_t MegaTransfer::getTime() const { return time; }
 const char* MegaTransfer::getFileName() const { return fileName; }
 const char* MegaTransfer::getBase64Key() const { return base64Key; }
 char * MegaTransfer::getLastBytes() const { return lastBytes; }
@@ -879,7 +879,7 @@ void MegaTransfer::setTag(int tag) { this->tag = tag; }
 void MegaTransfer::setTransfer(Transfer *transfer) { this->transfer = transfer; }
 void MegaTransfer::setSpeed(long long speed) { this->speed = speed; }
 void MegaTransfer::setDeltaSize(long long deltaSize){ this->deltaSize = deltaSize; }
-void MegaTransfer::setUpdateTime(long long updateTime) { this->updateTime = updateTime; }
+void MegaTransfer::setUpdateTime(m_time_t updateTime) { this->updateTime = updateTime; }
 
 void MegaTransfer::setPublicNode(MegaNode *publicNode)
 {
@@ -889,7 +889,7 @@ void MegaTransfer::setPublicNode(MegaNode *publicNode)
 }
 
 void MegaTransfer::setSyncTransfer(bool syncTransfer) { this->syncTransfer = syncTransfer; }
-void MegaTransfer::setStartTime(long long startTime) { this->startTime = startTime; }
+void MegaTransfer::setStartTime(m_time_t startTime) { this->startTime = startTime; }
 void MegaTransfer::setTransferredBytes(long long transferredBytes) { this->transferredBytes = transferredBytes; }
 void MegaTransfer::setTotalBytes(long long totalBytes) { this->totalBytes = totalBytes; }
 void MegaTransfer::setLastBytes(char *lastBytes) { this->lastBytes = lastBytes; }
@@ -936,11 +936,10 @@ void MegaTransfer::setEndPos(long long endPos) { this->endPos = endPos; }
 void MegaTransfer::setMaxSpeed(int maxSpeed) {this->maxSpeed = maxSpeed; }
 void MegaTransfer::setNumRetry(int retry) {this->retry = retry; }
 void MegaTransfer::setMaxRetries(int maxRetries) {this->maxRetries = maxRetries; }
-void MegaTransfer::setTime(long long time) { this->time = time; }
+void MegaTransfer::setTime(m_time_t time) { this->time = time; }
 
 const char * MegaTransfer::getTransferString() const
 {
-
 	switch(type)
 	{
 	case TYPE_UPLOAD:
@@ -1075,7 +1074,7 @@ void MegaRequestListener::onRequestStart(MegaApi*, MegaRequest *request)
 { cout << "onRequestStartA " << "   Type: " << request->getRequestString() << endl; }
 void MegaRequestListener::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 { cout << "onRequestFinishA " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
-void MegaRequestListener::onRequestUpdate(MegaApi* api, MegaRequest *request)
+void MegaRequestListener::onRequestUpdate(MegaApi* , MegaRequest *)
 {}
 void MegaRequestListener::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 { cout << "onRequestTemporaryError " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
@@ -1088,7 +1087,7 @@ void MegaTransferListener::onTransferFinish(MegaApi*, MegaTransfer *transfer, Me
 { cout << "onTransferFinish.   Node:  " << transfer->getFileName() << "    Error: " << e->getErrorString() << endl; }
 void MegaTransferListener::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 { cout << "onTransferUpdate.   Node:  " << transfer->getFileName() << "    Progress: " << transfer->getTransferredBytes() << endl; }
-bool MegaTransferListener::onTransferData(MegaApi *api, MegaTransfer *transfer, char *buffer, size_t size)
+bool MegaTransferListener::onTransferData(MegaApi *, MegaTransfer *, char *, size_t size)
 { cout << "onTransferData. Received " << size << " bytes" << endl;
   return true;
 }
@@ -1119,7 +1118,7 @@ void MegaListener::onRequestStart(MegaApi*, MegaRequest *request)
 { cout << "onRequestStartA " << "   Type: " << request->getRequestString() << endl; }
 void MegaListener::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 { cout << "onRequestFinishB " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
-void MegaListener::onRequestUpdate(MegaApi* api, MegaRequest *request)
+void MegaListener::onRequestUpdate(MegaApi* , MegaRequest *)
 {}
 void MegaListener::onRequestTemporaryError(MegaApi *, MegaRequest *request, MegaError* e)
 { cout << "onRequestTemporaryError " << "   Type: " << request->getRequestString() << "   Error: " << e->getErrorString() << endl; }
@@ -1130,7 +1129,7 @@ void MegaListener::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError*
 { cout << "onTransferFinish.   Node:  " << transfer->getFileName() << "    Error: " << e->getErrorString() << endl; }
 void MegaListener::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 { cout << "onTransferUpdate.   Name:  " << transfer->getFileName() << "    Progress: " << transfer->getTransferredBytes() << endl; }
-void MegaListener::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
+void MegaListener::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 { cout << "onTransferTemporaryError.   Name: " << transfer->getFileName() << "    Error: " << e->getErrorString() << endl; }
 
 #ifdef __ANDROID__
@@ -1147,12 +1146,12 @@ void MegaListener::onNodesUpdate(MegaApi*, NodeList *)
 
 void MegaListener::onReloadNeeded(MegaApi*)
 { cout << "onReloadNeeded" << endl; }
-void MegaListener::onSyncStateChanged(MegaApi *api)
+void MegaListener::onSyncStateChanged(MegaApi *)
 { cout << "onSyncStateChanged" << endl; }
 
 MegaListener::~MegaListener() {}
 
-int TreeProcessor::processNode(Node*){ return 0; /* Stops the processing */ }
+bool TreeProcessor::processNode(Node*){ return false; /* Stops the processing */ }
 TreeProcessor::~TreeProcessor() {}
 
 bool MegaTreeProcessor::processMegaNode(MegaNode*){ return false; /* Stops the processing */ }
@@ -1625,12 +1624,6 @@ void MegaApi::getUserAvatar(MegaUser* user, const char *dstFilePath, MegaRequest
 	getUserAttribute(user, 0, dstFilePath, listener);
 }
 
-/*
-void MegaApi::setUserAvatar(MegaUser* user, char *srcFilePath, MegaRequestListener *listener)
-{
-	setUserAttribute(user, 0, srcFilePath, listener);
-}*/
-
 void MegaApi::exportNode(MegaNode *node, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_EXPORT, listener);
@@ -1658,10 +1651,10 @@ void MegaApi::fetchNodes(MegaRequestListener *listener)
 
 void MegaApi::getAccountDetails(MegaRequestListener *listener)
 {
-	getAccountDetails(1, 1, 1, 0, 0, 0, listener);
+    getAccountDetails(true, true, true, false, false, false, listener);
 }
 
-void MegaApi::getAccountDetails(int storage, int transfer, int pro, int transactions, int purchases, int sessions, MegaRequestListener *listener)
+void MegaApi::getAccountDetails(bool storage, bool transfer, bool pro, bool transactions, bool purchases, bool sessions, MegaRequestListener *listener)
 {
 	MegaRequest *request = new MegaRequest(MegaRequest::TYPE_ACCOUNT_DETAILS, listener);
 	int numDetails = 0;
@@ -1836,9 +1829,6 @@ void MegaApi::startDownload(handle nodehandle, const char* localPath, int connec
 	transferQueue.push(transfer);
 	waiter->notify();
 }
-
-void MegaApi::startDownload(MegaNode* node, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener)
-{ startDownload((node != NULL) ? node->getHandle() : UNDEF,target,1,startPos,endPos,base64key,listener); }
 
 void MegaApi::startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener)
 { startDownload((node != NULL) ? node->getHandle() : UNDEF,localFolder,1,startPos,endPos,NULL,listener); }
@@ -2384,17 +2374,17 @@ long long MegaApi::getSize(MegaNode *n)
 
 SearchTreeProcessor::SearchTreeProcessor(const char *search) { this->search = search; }
 
-int SearchTreeProcessor::processNode(Node* node)
+bool SearchTreeProcessor::processNode(Node* node)
 {
-	if(!node) return 1;
-	if(!search) return 0;
+	if(!node) return true;
+	if(!search) return false;
 #ifndef _WIN32
 #ifndef __APPLE__
     if(strcasestr(node->displayname(), search)!=NULL) results.push_back(node);
 //TODO: Implement this for Windows and MacOS
 #endif
 #endif
-	return 1;
+	return true;
 }
 
 vector<Node *> &SearchTreeProcessor::getResults()
@@ -2407,8 +2397,7 @@ SizeProcessor::SizeProcessor()
     totalBytes=0;
 }
 
-
-int SizeProcessor::processNode(Node *node)
+bool SizeProcessor::processNode(Node *node)
 {
     if(node->type == FILENODE)
         totalBytes += node->size;
@@ -2524,7 +2513,7 @@ void MegaApi::transfer_update(Transfer *tr)
             transfer->setDeltaSize(tr->slot->progressreported - transfer->getTransferredBytes());
             transfer->setTransferredBytes(tr->slot->progressreported);
 
-            unsigned long long currentTime = Waiter::ds;
+            dstime currentTime = Waiter::ds;
             if(currentTime<transfer->getStartTime())
                 transfer->setStartTime(currentTime);
 
@@ -2590,7 +2579,7 @@ void MegaApi::transfer_complete(Transfer* tr)
     if(transferMap.find(tr->tag) == transferMap.end()) return;
     MegaTransfer* transfer = transferMap.at(tr->tag);
 
-    unsigned long long currentTime = Waiter::ds;
+    dstime currentTime = Waiter::ds;
     if(!transfer->getStartTime())
         transfer->setStartTime(currentTime);
     if(currentTime<transfer->getStartTime())
@@ -2639,7 +2628,7 @@ dstime MegaApi::pread_failure(error e, int retry, void* param)
 	}
 }
 
-bool MegaApi::pread_data(byte *buffer, m_off_t len, m_off_t pos, void* param)
+bool MegaApi::pread_data(byte *buffer, m_off_t len, m_off_t, void* param)
 {
 	MegaTransfer *transfer = (MegaTransfer *)param;
 	transfer->setLastBytes((char *)buffer);
@@ -2656,9 +2645,8 @@ bool MegaApi::pread_data(byte *buffer, m_off_t len, m_off_t pos, void* param)
 	return true;
 }
 
-void MegaApi::syncupdate_state(Sync *sync, syncstate_t s)
+void MegaApi::syncupdate_state(Sync *, syncstate_t)
 {
-    LOG("syncupdate_state");
     fireOnSyncStateChanged(this);
 }
 
@@ -2668,77 +2656,73 @@ void MegaApi::syncupdate_scanning(bool scanning)
     fireOnSyncStateChanged(this);
 }
 
-void MegaApi::syncupdate_stuck(string *s)
+void MegaApi::syncupdate_stuck(string *)
 {
-    LOG("syncupdate_stuck");
+    //TODO: Notice the app about this
 }
 
-void MegaApi::syncupdate_local_folder_addition(Sync *sync, const char *s)
+void MegaApi::syncupdate_local_folder_addition(Sync *, const char *)
 {
-    //LOG("syncupdate_local_folder_addition");
+
 }
 
-void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *s)
+void MegaApi::syncupdate_local_folder_deletion(Sync *, const char *)
 {
-    LOG("syncupdate_local_folder_deletion");
+
 }
 
-void MegaApi::syncupdate_local_file_addition(Sync *sync, const char *s)
+void MegaApi::syncupdate_local_file_addition(Sync *, const char *)
 {
-    //LOG("syncupdate_local_file_addition");
+
 }
 
-void MegaApi::syncupdate_local_file_deletion(Sync *, const char *s)
+void MegaApi::syncupdate_local_file_deletion(Sync *, const char *)
 {
-    LOG("syncupdate_local_file_deletion");
+
 }
 
-void MegaApi::syncupdate_get(Sync *, const char *s)
+void MegaApi::syncupdate_get(Sync *, const char *)
 {
-    LOG("syncupdate_get");
+
 }
 
-void MegaApi::syncupdate_put(Sync *sync, const char *s)
+void MegaApi::syncupdate_put(Sync *, const char *)
 {
-    LOG("syncupdate_put");
+
 }
 
 void MegaApi::syncupdate_remote_file_addition(Node *)
 {
-    LOG("syncupdate_remote_file_addition");
+
 }
 
 void MegaApi::syncupdate_remote_file_deletion(Node *)
 {
-    LOG("syncupdate_remote_file_deletion");
 
 }
 
 void MegaApi::syncupdate_remote_folder_addition(Node *)
 {
-    LOG("syncupdate_remote_folder_addition");
 
 }
 
 void MegaApi::syncupdate_remote_folder_deletion(Node *)
 {
-    LOG("syncupdate_remote_folder_deletion");
 
 }
 
-void MegaApi::syncupdate_remote_copy(Sync *, const char *s)
+void MegaApi::syncupdate_remote_copy(Sync *, const char *)
 {
-    LOG("syncupdate_remote_copy");
+
 }
 
-void MegaApi::syncupdate_remote_move(string *a, string *b)
+void MegaApi::syncupdate_remote_move(string *, string *)
 {
-    LOG("syncupdate_remote_move");
+
 }
 
 void MegaApi::syncupdate_treestate(LocalNode *l)
 {
-    //LOG("syncupdate_treestate");
     string path;
     l->getlocalpath(&path, true);
 
@@ -2931,7 +2915,6 @@ void MegaApi::putnodes_result(error e, targettype_t t, NewNode* nn)
 			(request->getType() != MegaRequest::TYPE_IMPORT_NODE))
 		cout << "INCORRECT REQUEST OBJECT (5)";
 
-
 	handle h = UNDEF;
 	Node *n = NULL;
 	if(client->nodenotify.size()) n = client->nodenotify.back();
@@ -2959,16 +2942,9 @@ void MegaApi::share_result(error e)
 	fireOnRequestFinish(this, request, megaError);
 }
 
-void MegaApi::share_result(int, error e)
+void MegaApi::share_result(int, error)
 {
-	MegaError megaError(e);
-	if (e) cout << "Share creation/modification failed (" << megaError.getErrorString() << ")" << endl;
-
 	//The other callback will be called at the end of the request
-	//MegaRequest *request = requestQueue.front();
-	//if(request->getType() == MegaRequest::TYPE_EXPORT) return; //exportnode_result will be called to end the request.
-	//if(request->getType() != MegaRequest::TYPE_SHARE) cout << "INCORRECT REQUEST OBJECT";
-	//fireOnRequestFinish(this, request, megaError);
 }
 
 void MegaApi::fa_complete(Node* n, fatype type, const char* data, uint32_t len)
@@ -3024,28 +3000,14 @@ void MegaApi::clearing()
 void MegaApi::notify_retry(dstime dsdelta)
 {
     LOG("notify_retry ");
-
     bool previousFlag = waitingRequest;
     if(!dsdelta)
-    {
-        LOG("NO REQUESTS WAITING");
         waitingRequest = false;
-    }
     else if(dsdelta > 10)
-    {
-        LOG("A REQUESTS WAITING");
         waitingRequest = true;
-    }
 
     if(previousFlag != waitingRequest)
         fireOnSyncStateChanged(this);
-
-    /*
-	 * MegaRequest *request = requestMap[client->restag];
-	 * request->setNextRetryDelay(dsdelta*100);
-	 * request->setNumRetry(request->getNumRetry()+1);
-	 * fireOnRequestTemporaryError(this, request, MegaError(API_EAGAIN));
-	 * */
 }
 
 // callback for non-EAGAIN request-level errors
@@ -3189,10 +3151,10 @@ void MegaApi::openfilelink_result(error result)
 
 // the requested link was opened successfully
 // (it is the application's responsibility to delete n!)
-void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char* fa, m_time_t ts, m_time_t tm, int)
+void MegaApi::openfilelink_result(handle ph, const byte* key, m_off_t size, string* a, const char*, m_time_t ts, m_time_t tm, int)
 {
     LOG("openfilelink_result");
-	//cout << "Importing " << n->displayname() << "..." << endl;
+
     if(requestMap.find(client->restag) == requestMap.end()) return;
     MegaRequest* request = requestMap.at(client->restag);
     if(!request) return;
@@ -3275,7 +3237,7 @@ void MegaApi::reload(const char* reason)
 }
 
 
-void MegaApi::debug_log(const char* message)
+void MegaApi::debug_log(const char*)
 {
 	//cout << "DEBUG: " << message << endl;
 }
@@ -3320,7 +3282,7 @@ void MegaApi::nodes_updated(Node** n, int count)
 }
 
 // display account details/history
-void MegaApi::account_details(AccountDetails* ad, bool storage, bool transfer, bool pro, bool purchases, bool transactions, bool sessions)
+void MegaApi::account_details(AccountDetails*, bool, bool, bool, bool, bool, bool)
 {
     if(requestMap.find(client->restag) == requestMap.end()) return;
     MegaRequest* request = requestMap.at(client->restag);
@@ -3336,7 +3298,7 @@ void MegaApi::account_details(AccountDetails* ad, bool storage, bool transfer, b
 	}
 }
 
-void MegaApi::account_details(AccountDetails* ad, error e)
+void MegaApi::account_details(AccountDetails*, error e)
 {
 	MegaError megaError(e);
 	cout << "Account details retrieval failed (" << megaError.getErrorString() << ")" << endl;
@@ -3396,9 +3358,9 @@ void MegaApi::getua_result(byte* data, unsigned len)
 }
 
 // user attribute update notification
-void MegaApi::userattr_update(User* u, int priv, const char* n)
+void MegaApi::userattr_update(User*, int, const char*)
 {
-    //cout << "Notification: User " << u->email << " -" << (priv ? " private" : "") << " attribute " << n << " added or updated" << endl;
+
 }
 
 void MegaApi::ephemeral_result(error e)
@@ -3414,10 +3376,8 @@ void MegaApi::ephemeral_result(error e)
 	fireOnRequestFinish(this, request, megaError);
 }
 
-void MegaApi::ephemeral_result(handle uh, const byte* pw)
+void MegaApi::ephemeral_result(handle, const byte*)
 {
-    LOG("Ephemeral ok");
-
     if(requestMap.find(client->restag) == requestMap.end()) return;
     MegaRequest* request = requestMap.at(client->restag);
     if(!request) return;
@@ -3466,7 +3426,7 @@ void MegaApi::querysignuplink_result(error e)
 	fireOnRequestFinish(this, request, megaError);
 }
 
-void MegaApi::querysignuplink_result(handle uh, const char* email, const char* name, const byte* pwc, const byte* kc, const byte* c, size_t len)
+void MegaApi::querysignuplink_result(handle, const char* email, const char* name, const byte* pwc, const byte*, const byte* c, size_t len)
 {
     if(requestMap.find(client->restag) == requestMap.end()) return;
     MegaRequest* request = requestMap.at(client->restag);
@@ -3516,8 +3476,6 @@ void MegaApi::querysignuplink_result(handle uh, const char* email, const char* n
 
 		requestMap.erase(client->restag);
 		requestMap[client->nextreqtag()]=request;
-		//fireOnRequestFinish(this, request, MegaError(API_EACCESS));
-
 		client->confirmsignuplink((const byte*)signupcode.data(),signupcode.size(),MegaClient::stringhash64(&signupemail,&pwcipher));
 	}
 }
@@ -3529,12 +3487,6 @@ void MegaApi::confirmsignuplink_result(error e)
     MegaRequest* request = requestMap.at(client->restag);
     if(!request) return;
 
-    if (e) LOG("Signuplink confirmation failed");
-	else
-	{
-        LOG("Signup confirmed, logging in...");
-		//client->login(signupemail.c_str(),pwkey);
-	}
 	fireOnRequestFinish(this, request, megaError);
 }
 
@@ -3546,14 +3498,14 @@ void MegaApi::setkeypair_result(error e)
     else LOG("RSA keypair added. Account setup complete.");
 }
 
-void MegaApi::checkfile_result(handle h, error e)
+void MegaApi::checkfile_result(handle, error)
 {
-    LOG("Link check failed");
+
 }
 
-void MegaApi::checkfile_result(handle h, error e, byte* filekey, m_off_t size, m_time_t ts, m_time_t tm, string* filename, string* fingerprint, string* fileattrstring)
+void MegaApi::checkfile_result(handle, error, byte*, m_off_t, m_time_t, m_time_t, string*, string*, string*)
 {
-    LOG("Link check OK");
+
 }
 
 void MegaApi::addListener(MegaListener* listener)
@@ -4268,16 +4220,6 @@ MegaNode* MegaApi::getNodeByHandle(handle handle)
     return result;
 }
 
-void MegaApi::setDebug(bool debug) { /*curl->setDebug(debug);*/ }
-bool MegaApi::getDebug() { return false; }//curl->getDebug(); }
-
-//StringList *MegaApi::getRootNodeNames() { return rootNodeNames; }
-//StringList *MegaApi::getRootNodePaths() { return rootNodePaths; }
-//const char* MegaApi::rootnodenames[] = { "ROOT", "INBOX", "RUBBISH", "MAIL" };
-//const char* MegaApi::rootnodepaths[] = { "/", "//in", "//bin", "//mail" };
-//StringList * MegaApi::rootNodeNames = new StringList(rootnodenames, 4, false);
-//StringList * MegaApi::rootNodePaths = new StringList(rootnodepaths, 4, false);
-
 void MegaApi::sendPendingTransfers()
 {
 	MegaTransfer *transfer;
@@ -4467,7 +4409,7 @@ bool WildcardMatch(const char *pszString, const char *pszMatch)
 
 bool MegaApi::is_syncable(const char *name)
 {
-    for(int i=0; i< excludedNames.size(); i++)
+    for(unsigned int i=0; i< excludedNames.size(); i++)
     {
         if(WildcardMatch(name, excludedNames[i].c_str()))
         {
@@ -4717,12 +4659,12 @@ void MegaApi::sendPendingRequests()
 		case MegaRequest::TYPE_ACCOUNT_DETAILS:
 		{
 			int numDetails = request->getNumDetails();
-			int storage = numDetails & 0x01;
-			int transfer = numDetails & 0x02;
-			int pro = numDetails & 0x04;
-			int transactions = numDetails & 0x08;
-			int purchases = numDetails & 0x10;
-			int sessions =  numDetails & 0x20;
+			bool storage = (numDetails & 0x01) != 0;
+			bool transfer = (numDetails & 0x02) != 0;
+			bool pro = (numDetails & 0x04) != 0;
+			bool transactions = (numDetails & 0x08) != 0;
+			bool purchases = (numDetails & 0x10) != 0;
+			bool sessions = (numDetails & 0x20) != 0;
 
 			numDetails = 1;
 			if(transactions) numDetails++;
@@ -4731,7 +4673,7 @@ void MegaApi::sendPendingRequests()
 
 			request->setNumDetails(numDetails);
 
-			client->getaccountdetails(request->getAccountDetails(),storage,transfer,pro,transactions,purchases,sessions);
+			client->getaccountdetails(request->getAccountDetails(), storage, transfer, pro, transactions, purchases, sessions);
 			break;
 		}
 		case MegaRequest::TYPE_CHANGE_PW:
@@ -4939,10 +4881,10 @@ void MegaApi::sendPendingRequests()
                 for(std::map<int, MegaTransfer *>::iterator iter = transferMap.begin(); iter != transferMap.end(); iter++)
                 {
                     MegaTransfer *transfer = iter->second;
-                    dstime starttime = transfer->getStartTime();
+                    m_time_t starttime = transfer->getStartTime();
                     if(starttime)
                     {
-                        dstime timepaused = Waiter::ds - pausetime;
+						m_time_t timepaused = Waiter::ds - pausetime;
                         iter->second->setStartTime(starttime + timepaused);
                     }
                 }
@@ -5058,7 +5000,7 @@ void MegaApi::sendPendingRequests()
 char* MegaApi::stringToArray(string &buffer)
 {
 	char *newbuffer = new char[buffer.size()+1];
-	buffer.copy(newbuffer, buffer.size());
+	memcpy(newbuffer, buffer.data(), buffer.size());
 	newbuffer[buffer.size()]='\0';
     return newbuffer;
 }
@@ -5125,12 +5067,6 @@ bool MegaApi::isIndexing()
 
 bool MegaApi::isWaiting()
 {
-    if(waiting) LOG("STATE: SDK waiting = true");
-    else LOG("STATE: SDK waiting = false");
-
-    if(waitingRequest) LOG("STATE: SDK waitingForRequest = true");
-    else LOG("STATE: SDK waitingForRequest = false");
-
     return waiting || waitingRequest;
 }
 
@@ -5246,4 +5182,3 @@ void MegaApi::utf8ToUtf16(const char* utf8data, string* utf16string)
 		utf16string->size())));
 }
 #endif
-
