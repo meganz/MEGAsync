@@ -21,7 +21,7 @@ fi
 
 if [ -d /etc/apt/sources.list.d ]; then
 cat >/etc/apt/sources.list.d/megasync.list <<EOF
-deb http://linux.developers.mega.co.nz/MEGASync/$str/ ./
+deb https://linux.developers.mega.co.nz/MEGASync/$str/ ./
 EOF
 fi
 
