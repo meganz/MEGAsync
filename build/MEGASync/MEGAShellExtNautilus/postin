@@ -15,9 +15,9 @@ if [[ $DNAME = "Fedora" ]]; then
 [MEGASync]
 name=MEGASync
 type=rpm-md
-baseurl=http://build.developers.mega.co.nz:82/MEGASync/$DIST/
+baseurl=http://linux.developers.mega.co.nz/MEGASync/$DIST/
 gpgcheck=1
-gpgkey=http://build.developers.mega.co.nz:82/MEGASync/$DIST/repodata/repomd.xml.key
+gpgkey=http://linux.developers.mega.co.nz/MEGASync/$DIST/repodata/repomd.xml.key
 enabled=1
 DATA
     fi
