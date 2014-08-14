@@ -253,7 +253,7 @@ struct MegaFileGet : public MegaFile
 struct MegaFilePut : public MegaFile
 {
     void completed(Transfer* t, LocalNode*);
-    MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser);
+    MegaFilePut(MegaClient *client, string* clocalname, string *filename, handle ch, const char* ctargetuser);
     ~MegaFilePut() {}
 };
 
@@ -1036,7 +1036,6 @@ class MegaApi : public MegaApp
         void startUpload(const char* localPath, MegaNode* parent, int connections, int maxSpeed, const char* fileName, MegaTransferListener *listener);
         void startUpload(const char* localPath, MegaNode* parent, int maxSpeed, MegaTransferListener *listener = NULL);
         void startDownload(handle nodehandle, const char* target, int connections, long startPos, long endPos, const char* base64key, MegaTransferListener *listener);
-        void startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener);
 };
 
 }

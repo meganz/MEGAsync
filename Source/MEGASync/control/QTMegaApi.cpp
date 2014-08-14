@@ -11,6 +11,8 @@ QTMegaApi::QTMegaApi(const char *appKey, const char *basePath, const char *userA
 void QTMegaApi::fetchnodes_result(error e)
 {
     MegaApi::fetchnodes_result(e);
+    if(e != API_OK)
+        return;
 
     Preferences *preferences = Preferences::instance();
     if(preferences->logged() && preferences->wasPaused())

@@ -118,11 +118,8 @@ void MegaFileGet::completed(Transfer*, LocalNode*)
     delete this;
 }
 
-MegaFilePut::MegaFilePut(MegaClient *client, string* clocalname, handle ch, const char* ctargetuser) : MegaFile()
+MegaFilePut::MegaFilePut(MegaClient *client, string* clocalname, string *filename, handle ch, const char* ctargetuser) : MegaFile()
 {
-    // this assumes that the local OS uses an ASCII path separator, which should be true for most
-    string separator = client->fsaccess->localseparator;
-
     // full local path
     localname = *clocalname;
 
@@ -132,12 +129,8 @@ MegaFilePut::MegaFilePut(MegaClient *client, string* clocalname, handle ch, cons
     // target user
     targetuser = ctargetuser;
 
-    // erase path component
-    name = *clocalname;
-    client->fsaccess->local2name(&name);
-    client->fsaccess->local2name(&separator);
-
-    name.erase(0,name.find_last_of(*separator.c_str())+1);
+    // new node name
+    name = *filename;
 }
 
 void MegaFilePut::completed(Transfer* t, LocalNode*)
@@ -889,6 +882,10 @@ void MegaTransfer::setPath(const char* path)
 		if((path[i]=='\\') || (path[i]=='/'))
 		{
 			setFileName(&(path[i+1]));
+            char *parentPath = MegaApi::strdup(path);
+            parentPath[i+1] = '\0';
+            setParentPath(parentPath);
+            delete parentPath;
 			return;
 		}
 	}
@@ -1798,9 +1795,6 @@ void MegaApi::startDownload(handle nodehandle, const char* localPath, int connec
 	transferQueue.push(transfer);
 	waiter->notify();
 }
-
-void MegaApi::startDownload(MegaNode* node, const char* localFolder, long startPos, long endPos, MegaTransferListener *listener)
-{ startDownload((node != NULL) ? node->getHandle() : UNDEF,localFolder,1,startPos,endPos,NULL,listener); }
 
 void MegaApi::startDownload(MegaNode *node, const char* localFolder, MegaTransferListener *listener)
 { startDownload((node != NULL) ? node->getHandle() : UNDEF, localFolder, 1, 0, 0, NULL, listener); }
@@ -4085,13 +4079,16 @@ void MegaApi::sendPendingTransfers()
 			case MegaTransfer::TYPE_UPLOAD:
 			{
                 const char* localPath = transfer->getPath();
+                const char* fileName = transfer->getFileName();
 
                 if(!localPath) { e = API_EARGS; break; }
-				currentTransfer=transfer;
+                currentTransfer = transfer;
 				string tmpString = localPath;
 				string wLocalPath;
 				client->fsaccess->path2local(&tmpString, &wLocalPath);
-				MegaFilePut *f = new MegaFilePut(client, &wLocalPath, transfer->getParentHandle(), "");
+
+                string wFileName = fileName;
+                MegaFilePut *f = new MegaFilePut(client, &wLocalPath, &wFileName, transfer->getParentHandle(), "");
 
                 client->startxfer(PUT,f);
                 if(transfer->getTag() == -1)
@@ -4124,34 +4121,33 @@ void MegaApi::sendPendingTransfers()
                 currentTransfer=transfer;
                 if(parentPath)
                 {
+                    string name;
+                    string securename;
 					string path = parentPath;
 					MegaFileGet *f;
+
 					if(node)
 					{
-						string name;
 						if(!transfer->getFileName())
-						{
-							string securename = node->displayname();
-							client->fsaccess->name2local(&securename);
-							client->fsaccess->local2path(&securename, &name);
-						}
-						else name = transfer->getFileName();
+                            name = node->displayname();
+                        else
+                            name = transfer->getFileName();
 
-						path += name;
+                        client->fsaccess->name2local(&name);
+                        client->fsaccess->local2path(&name, &securename);
+                        path += securename;
 						f = new MegaFileGet(client, node, path);
 					}
 					else
 					{
-						string name;
 						if(!transfer->getFileName())
-						{
-							string securename = publicNode->getName();
-							client->fsaccess->name2local(&securename);
-							client->fsaccess->local2path(&securename, &name);
-						}
-						else name = transfer->getFileName();
+                            name = publicNode->getName();
+                        else
+                            name = transfer->getFileName();
 
-						path += name;
+                        client->fsaccess->name2local(&name);
+                        client->fsaccess->local2path(&name, &securename);
+                        path += securename;
 						f = new MegaFileGet(client, publicNode, path);
 					}
 
