@@ -33,6 +33,7 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/gfx/qt.cpp \
     $$PWD/sdk/third_party/utf8proc/utf8proc.cpp \
     $$PWD/megaapi.cpp \
+    $$PWD/megaapi_impl.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp \
@@ -89,6 +90,7 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/sdk/include/mega/gfx/qt.h \
             $$PWD/sdk/third_party/utf8proc/utf8proc.h \
 	    $$PWD/megaapi.h \
+            $$PWD/megaapi_impl.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
             $$PWD/qt/QTMegaListener.h \

@@ -20,7 +20,7 @@ public:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 signals:
-    void dupplicateUpload(QString localPath, QString name, long long handle);
+    void dupplicateUpload(QString localPath, QString name, mega::MegaHandle handle);
 
 protected:
     void upload(QFileInfo info, mega::MegaNode *parent);

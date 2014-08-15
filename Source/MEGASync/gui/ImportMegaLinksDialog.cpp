@@ -241,7 +241,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
         return;
     }
 
-    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if(!selectedFolder)
     {

@@ -4,7 +4,6 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
-#include "control/QTMegaApi.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 
@@ -57,7 +56,7 @@ int main(int argc, char *argv[])
                 {
                     Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
                     Utilities::removeRecursively(preferences->getLocalFolder(j) +
-                                                 QDir::separator() + QString::fromAscii(DEBRISFOLDER));
+                                                 QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
                 }
                 preferences->leaveUser();
             }
@@ -170,14 +169,19 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
     // set log level
+
+/*TODO: Enable logs
+
 #if DEBUG
     mega::SimpleLogger::setLogLevel(mega::logDebug);
     mega::SimpleLogger::setOutputSettings(mega::logDebug, true, true, true);
 #else
     mega::SimpleLogger::setLogLevel(mega::logInfo);
 #endif
+
     // set output to stdout
     mega::SimpleLogger::setAllOutputs(&std::cout);
+*/
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -276,8 +280,8 @@ void MegaApplication::initialize()
     }
 #endif
 
-    megaApi = new QTMegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
-    delegateListener = new QTMegaListener(megaApi, this);
+    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     scanningTimer = new QTimer();
@@ -286,7 +290,7 @@ void MegaApplication::initialize()
     scanningAnimationIndex = 1;
     connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
-    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, long long)), this, SLOT(onDupplicateUpload(QString, QString, long long)));
+    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
 
     if(preferences->isCrashed())
     {
@@ -600,7 +604,7 @@ void MegaApplication::loggedIn()
     // try to enable / disable startup (e.g. copy or delete desktop file)
     if (!Platform::startOnStartup(startOnStartup)) {
         // in case of failure - make sure configuration keeps the right value
-        LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
+        //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
         preferences->setStartOnStartup(!startOnStartup);
     }
 
@@ -681,7 +685,7 @@ void MegaApplication::stopSyncs()
 
 //This function is called to upload all files in the uploadQueue field
 //to the Mega node that is passed as parameter
-void MegaApplication::processUploadQueue(mega::handle nodeHandle)
+void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
 {
     MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
     QStringList notUploaded;
@@ -926,12 +930,12 @@ void MegaApplication::cleanAll()
     //QFontDatabase::removeAllApplicationFonts();
 }
 
-void MegaApplication::onDupplicateLink(QString, QString name, long long handle)
+void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
 {
     addRecentFile(name, handle);
 }
 
-void MegaApplication::onDupplicateUpload(QString localPath, QString name, long long handle)
+void MegaApplication::onDupplicateUpload(QString localPath, QString name, MegaHandle handle)
 {
     addRecentFile(name, handle, localPath);
 }
@@ -1378,7 +1382,7 @@ void MegaApplication::uploadActionClicked()
 }
 
 //Called when the user wants to generate the public link for a node
-void MegaApplication::copyFileLink(mega::handle fileHandle)
+void MegaApplication::copyFileLink(MegaHandle fileHandle)
 {
     //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
@@ -1431,7 +1435,7 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     if(uploadFolderSelector->result()==QDialog::Accepted)
     {
         //If the dialog is accepted, get the destination node
-        mega::handle nodeHandle = uploadFolderSelector->getSelectedHandle();
+        MegaHandle nodeHandle = uploadFolderSelector->getSelectedHandle();
         if(uploadFolderSelector->isDefaultFolder())
             preferences->setUploadFolder(nodeHandle);
         processUploadQueue(nodeHandle);
@@ -1829,6 +1833,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete rootNode;
 
                     //If we have got the filesystem, start the app
+                    Preferences *preferences = Preferences::instance();
+                    if(preferences->logged() && preferences->wasPaused())
+                        pauseTransfers(true);
+
                     loggedIn();
                 }
                 else
@@ -1859,41 +1867,39 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 			break;
 
         //Account details retrieved, update the preferences and the information dialog
-        mega::AccountDetails *details = request->getAccountDetails();
-        preferences->setAccountType(details->pro_level);
-        preferences->setTotalStorage(details->storage_max);
-        preferences->setUsedStorage(details->storage_used);
-		preferences->setTotalBandwidth(details->transfer_max);
-		preferences->setUsedBandwidth(details->transfer_own_used);
+        MegaAccountDetails *details = request->getMegaAccountDetails();
+        preferences->setAccountType(details->getProLevel());
+        preferences->setTotalStorage(details->getStorageMax());
+        preferences->setUsedStorage(details->getStorageUsed());
+        preferences->setTotalBandwidth(details->getTransferMax());
+        preferences->setUsedBandwidth(details->getTransferOwnUsed());
 
         MegaNode *root = megaApi->getRootNode();
-        handle rootHandle = root->getHandle();
-        NodeStorage &rootDetails = details->storage[rootHandle];
-        preferences->setCloudDriveStorage(rootDetails.bytes);
-        preferences->setCloudDriveFiles(rootDetails.files);
-        preferences->setCloudDriveFolders(rootDetails.folders);
+        MegaHandle rootHandle = root->getHandle();
+        preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
+        preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
+        preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
         delete root;
 
         MegaNode *inbox = megaApi->getInboxNode();
-        handle inboxHandle = inbox->getHandle();
-        NodeStorage &inboxDetails = details->storage[inboxHandle];
-        preferences->setInboxStorage(inboxDetails.bytes);
-        preferences->setInboxFiles(inboxDetails.files);
-        preferences->setInboxFolders(inboxDetails.folders);
+        MegaHandle inboxHandle = inbox->getHandle();
+        preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
+        preferences->setInboxFiles(details->getNumFiles(inboxHandle));
+        preferences->setInboxFolders(details->getNumFolders(inboxHandle));
         delete inbox;
 
         MegaNode *rubbish = megaApi->getInboxNode();
-        handle rubbishHandle = rubbish->getHandle();
-        NodeStorage &rubbishDetails = details->storage[rubbishHandle];
-        preferences->setRubbishStorage(rubbishDetails.bytes);
-        preferences->setRubbishFiles(rubbishDetails.files);
-        preferences->setRubbishFolders(rubbishDetails.folders);
+        MegaHandle rubbishHandle = rubbish->getHandle();
+        preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
+        preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
+        preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
         delete rubbish;
 
         preferences->sync();
 
-        if(infoDialog) infoDialog->setUsage(details->storage_max, details->storage_used);
+        if(infoDialog) infoDialog->setUsage(details->getStorageMax(), details->getStorageUsed());
         if(settingsDialog) settingsDialog->refreshAccountDetails();
+        delete details;
         break;
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
@@ -1966,7 +1972,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 syncPath = syncPath.mid(4);
             #endif
 
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
             Platform::notifyItemChange(syncPath);
         }
         if(infoDialog) infoDialog->updateSyncsButton();
@@ -2187,7 +2193,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
                                          .arg(preferences->getSyncName(i)));
                     }
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
-                    Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(DEBRISFOLDER));
+                    Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
                     Platform::notifyItemChange(preferences->getLocalFolder(i));
                     megaApi->removeSync(preferences->getMegaFolderHandle(i));
                     preferences->removeSyncedFolder(i);
@@ -2278,3 +2284,33 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     if(!isUnity) updateTrayIcon();
 }
 
+void MegaApplication::onSyncFileStateChanged(MegaApi *api, const char *filePath, MegaSyncState newState)
+{
+    QString localPath = QString::fromUtf8(filePath);
+    Platform::notifyItemChange(localPath);
+}
+
+MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent)
+    : QTMegaListener(megaApi, parent)
+{ }
+
+void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+{
+    QTMegaListener::onRequestFinish(api, request, e);
+
+    if(request->getType() != MegaRequest::TYPE_FETCH_NODES || e->getErrorCode() != MegaError::API_OK)
+        return;
+
+    Preferences *preferences = Preferences::instance();
+    if(preferences->logged() && !api->getNumActiveSyncs())
+    {
+        //Start syncs
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        {
+            MegaNode *node = api->getNodeByHandle(preferences->getMegaFolderHandle(i));
+            QString localFolder = preferences->getLocalFolder(i);
+            api->resumeSync(localFolder.toUtf8().constData(), node);
+            delete node;
+        }
+    }
+}

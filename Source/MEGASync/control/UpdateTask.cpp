@@ -4,6 +4,7 @@
 #include <iostream>
 #include <QAuthenticator>
 
+using namespace mega;
 using namespace std;
 
 UpdateTask::UpdateTask(QObject *parent) :
@@ -68,13 +69,7 @@ void UpdateTask::startUpdateThread()
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
-    int len = strlen(Preferences::UPDATE_PUBLIC_KEY)/4*3+3;
-    string pubks;
-    pubks.resize(len);
-    pubks.resize(mega::Base64::atob(Preferences::UPDATE_PUBLIC_KEY, (byte *)pubks.data(), len));
-    asymkey.setkey(mega::AsymmCipher::PUBKEY,(byte*)pubks.data(), pubks.size());
-
-    signatureChecker = new mega::HashSignature(new mega::Hash());
+    signatureChecker = new MegaHashSignature((const char *)Preferences::UPDATE_PUBLIC_KEY);
     preferences = Preferences::instance();
 
     updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
@@ -367,24 +362,17 @@ void UpdateTask::addToSignature(QString value)
 
 void UpdateTask::addToSignature(QByteArray bytes)
 {
-    signatureChecker->add((const byte *)bytes.constData(), bytes.length());
+    signatureChecker->add((const unsigned char *)bytes.constData(), bytes.length());
 }
 
 void UpdateTask::initSignature()
 {
-    signatureChecker->get(&asymkey, NULL, 0);
+    signatureChecker->init();
 }
 
 bool UpdateTask::checkSignature(QString value)
 {
-    int l = mega::Base64::atob(value.toAscii().constData(), (byte *)signature, sizeof(signature));
-    if(l != sizeof(signature))
-    {
-        LOG(QString::fromAscii("Invalid signature size: ") + QString::number(l));
-        return false;
-    }
-
-    int result = signatureChecker->check(&asymkey, (const byte *)signature, sizeof(signature));
+    int result = signatureChecker->check(value.toAscii().constData());
     if(result) LOG("Valid signature");
     else  LOG("Invalid signature");
 
@@ -403,20 +391,16 @@ bool UpdateTask::alreadyDownloaded(QString relativePath, QString fileSignature)
 
 bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
 {
-    mega::HashSignature tmpHash(new mega::Hash());
-    char tmpSignature[512];
-    if(mega::Base64::atob(fileSignature.toAscii().constData(), (byte *)tmpSignature, sizeof(tmpSignature)) != sizeof(tmpSignature))
-        return false;
-
+    MegaHashSignature tmpHash((const char *)Preferences::UPDATE_PUBLIC_KEY);
     QFile file(absolutePath);
     if(!file.open(QIODevice::ReadOnly))
         return false;
 
     QByteArray bytes = file.readAll();
-    tmpHash.add((byte *)bytes.constData(), bytes.size());
+    tmpHash.add((const unsigned char *)bytes.constData(), bytes.size());
     file.close();
 
-    return tmpHash.check(&asymkey, (const byte *)tmpSignature, sizeof(tmpSignature));
+    return tmpHash.check(fileSignature.toAscii().constData());
 }
 
 void UpdateTask::downloadFinished(QNetworkReply *reply)

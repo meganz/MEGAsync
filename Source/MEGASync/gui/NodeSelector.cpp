@@ -13,7 +13,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     ui->setupUi(this);
     this->megaApi = megaApi;
     folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
-    selectedFolder = mega::UNDEF;
+    selectedFolder = mega::INVALID_HANDLE;
     selectedItem = NULL;
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;

@@ -26,6 +26,7 @@ public:
 	virtual void onNodesUpdate(MegaApi* api, NodeList *nodes);
 	virtual void onReloadNeeded(MegaApi* api);
     virtual void onSyncStateChanged(MegaApi* api);
+    virtual void onSyncFileStateChanged(MegaApi *api, const char *filePath, MegaSyncState newState);
 
 signals:
     void QTonRequestStartSignal(MegaApi* api, MegaRequest *request);
@@ -40,6 +41,7 @@ signals:
     void QTonNodesUpdateSignal(MegaApi* api, NodeList *nodes);
     void QTonReloadNeededSignal(MegaApi* api);
     void QTonSyncStateChangedSignal(MegaApi* api);
+    void QTonSyncFileStateChangedSignal(MegaApi *api, const char *filePath, MegaSyncState newState);
 
 public slots:
 	virtual void QTonRequestStart(MegaApi* api, MegaRequest *request);
@@ -54,6 +56,7 @@ public slots:
 	virtual void QTonNodesUpdate(MegaApi* api, NodeList *nodes);
 	virtual void QTonReloadNeeded(MegaApi* api);
     virtual void QTonSyncStateChanged(MegaApi* api);
+    virtual void QTonSyncFileStateChanged(MegaApi *api, const char *filePath, MegaSyncState newState);
 
 protected:
     MegaApi *megaApi;

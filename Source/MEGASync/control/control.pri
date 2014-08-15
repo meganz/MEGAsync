@@ -11,8 +11,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/EncryptedSettings.cpp \
     $$PWD/CrashHandler.cpp \
     $$PWD/ExportProcessor.cpp \
-    $$PWD/Utilities.cpp \
-    $$PWD/QTMegaApi.cpp
+    $$PWD/Utilities.cpp
 
 HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/Preferences.h \
@@ -22,8 +21,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/EncryptedSettings.h \
     $$PWD/CrashHandler.h \
     $$PWD/ExportProcessor.h \
-    $$PWD/Utilities.h \
-    $$PWD/QTMegaApi.h
+    $$PWD/Utilities.h
 
 debug {
     DEFINES += SHOW_LOGS

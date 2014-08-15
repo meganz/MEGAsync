@@ -23,7 +23,7 @@ public:
 	void requestLinkInfo();
 	void importLinks(QString nodePath);
     void importLinks(mega::MegaNode *node);
-    mega::handle getImportParentFolder();
+    mega::MegaHandle getImportParentFolder();
 
 	void downloadLinks(QString localPath);
 	void setSelected(int linkId, bool selected);
@@ -42,13 +42,13 @@ protected:
 	int remainingNodes;
 	int importSuccess;
 	int importFailed;
-    mega::handle importParentFolder;
+    mega::MegaHandle importParentFolder;
 
 signals:
 	void onLinkInfoAvailable(int i);
 	void onLinkInfoRequestFinish();
 	void onLinkImportFinish();
-    void onDupplicateLink(QString link, QString name, long long handle);
+    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
 
 public slots:
     virtual void QTonRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);

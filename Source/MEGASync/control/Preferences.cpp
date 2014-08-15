@@ -4,6 +4,8 @@
 #include <QDesktopServices>
 #include <assert.h>
 
+using namespace mega;
+
 #ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
@@ -841,14 +843,14 @@ QString Preferences::getMegaFolder(int num)
     return value;
 }
 
-mega::handle Preferences::getMegaFolderHandle(int num)
+MegaHandle Preferences::getMegaFolderHandle(int num)
 {
     mutex.lock();
     assert(logged() && (megaFolderHandles.size()>num));
     if(num >= megaFolderHandles.size())
     {
         mutex.unlock();
-        return mega::UNDEF;
+        return mega::INVALID_HANDLE;
     }
     long long value = megaFolderHandles.at(num);
     mutex.unlock();
@@ -887,7 +889,7 @@ QList<long long> Preferences::getMegaFolderHandles()
     return value;
 }
 
-void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::handle megaFolderHandle, QString syncName)
+void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName)
 {
     mutex.lock();
     assert(logged());

@@ -33,7 +33,7 @@ long long calculateCacheSize()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER), &cacheSize);
     }
     return cacheSize;
 }
@@ -45,7 +45,7 @@ void deleteCache()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER)));
+            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER)));
     }
 }
 
@@ -791,7 +791,7 @@ bool SettingsDialog::saveSettings()
         bool startOnStartup = ui->cStartOnStartup->isChecked();
         if (!Platform::startOnStartup(startOnStartup)) {
             // in case of failure - make sure configuration keeps the right value
-            LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
+            //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
             preferences->setStartOnStartup(!startOnStartup);
         } else
             preferences->setStartOnStartup(startOnStartup);
@@ -818,7 +818,7 @@ bool SettingsDialog::saveSettings()
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
                 QString localPath = preferences->getLocalFolder(i);
-                mega::handle megaHandle = preferences->getMegaFolderHandle(i);
+                MegaHandle megaHandle = preferences->getMegaFolderHandle(i);
 
                 int j;
                 for(j=0; j<ui->tSyncs->rowCount(); j++)
@@ -863,7 +863,7 @@ bool SettingsDialog::saveSettings()
                 for(j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
                     QString previousLocalPath = preferences->getLocalFolder(j);
-                    mega::handle previousMegaHandle = preferences->getMegaFolderHandle(j);
+                    MegaHandle previousMegaHandle = preferences->getMegaFolderHandle(j);
 
                     if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
                         break;
@@ -1143,7 +1143,7 @@ void SettingsDialog::on_bAdd_clicked()
         return;
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    long long handle = dialog->getMegaFolder();
+    MegaHandle handle = dialog->getMegaFolder();
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
     {
@@ -1223,7 +1223,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
     }
 
-    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if(!node)
     {
@@ -1348,7 +1348,7 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
 
     QString data = QString::fromUtf8(reply->readAll());
     if (!data.contains(Preferences::PROXY_TEST_SUBSTRING)) {
-        LOG_debug << "Proxy request failed.";
+        //LOG_debug << "Proxy request failed.";
         onProxyTestTimeout();
         return;
     }

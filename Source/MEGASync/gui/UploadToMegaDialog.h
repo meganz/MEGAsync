@@ -17,7 +17,7 @@ class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
 public:
     explicit UploadToMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
 	~UploadToMegaDialog();
-    mega::handle getSelectedHandle();
+    mega::MegaHandle getSelectedHandle();
 	bool isDefaultFolder();
 
     virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
@@ -32,7 +32,7 @@ protected:
 private:
 	Ui::UploadToMegaDialog *ui;
     mega::MegaApi *megaApi;
-    mega::handle selectedHandle;
+    mega::MegaHandle selectedHandle;
     mega::QTMegaRequestListener *delegateListener;
 };
 
