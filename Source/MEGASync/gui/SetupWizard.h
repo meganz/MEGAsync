@@ -54,7 +54,7 @@ private:
     MegaApplication *app;
     mega::MegaApi *megaApi;
     Preferences *preferences;
-    mega::handle selectedMegaFolderHandle;
+    uint64_t selectedMegaFolderHandle;
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
 };

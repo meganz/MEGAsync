@@ -32,6 +32,7 @@
 Q_DECLARE_METATYPE(QQueue<QString>)
 
 class Notificator;
+class MEGASyncDelegateListener;
 
 class MegaApplication : public QApplication, public mega::MegaListener
 {
@@ -59,13 +60,8 @@ public:
     virtual void onNodesUpdate(mega::MegaApi* api, mega::NodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
     virtual void onSyncStateChanged(mega::MegaApi *api);
+    virtual void onSyncFileStateChanged(mega::MegaApi *api, const char *filePath, mega::MegaSyncState newState);
 
-	/*
-    virtual void onSyncStateChanged(Sync*, syncstate);
-    virtual void onSyncRemoteCopy(Sync*, const char*);
-    virtual void onSyncGet(Sync*, const char*);
-    virtual void onSyncPut(Sync*, const char*);
-	*/
 
     mega::MegaApi *getMegaApi() { return megaApi; }
 
@@ -100,7 +96,7 @@ public slots:
     void resumeSync();
 	void importLinks();
     void uploadActionClicked();
-    void copyFileLink(mega::handle fileHandle);
+    void copyFileLink(mega::MegaHandle fileHandle);
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
 	void onLinkImportFinished();
@@ -116,8 +112,8 @@ public slots:
     void aboutDialog();
     void refreshTrayIcon();
     void cleanAll();
-    void onDupplicateLink(QString link, QString name, long long handle);
-    void onDupplicateUpload(QString localPath, QString name, long long handle);
+    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
+    void onDupplicateUpload(QString localPath, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void showInfoDialog();
     bool anUpdateIsAvailable();
@@ -130,7 +126,7 @@ protected:
     void loggedIn();
     void startSyncs();
 	void stopSyncs();
-    void processUploadQueue(mega::handle nodeHandle);
+    void processUploadQueue(mega::MegaHandle nodeHandle);
     void unityFix();
 
 #ifdef __APPLE__
@@ -168,7 +164,7 @@ protected:
     long long lastStartedDownload;
     long long lastStartedUpload;
     int exportOps;
-    mega::syncstate_t syncState;
+    mega::MegaSyncState syncState;
     mega::QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
@@ -199,6 +195,13 @@ protected:
     bool finished;
     bool updateAvailable;
     bool isUnity;
+};
+
+class MEGASyncDelegateListener: public mega::QTMegaListener
+{
+public:
+    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent=NULL);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 };
 
 #endif // MEGAAPPLICATION_H

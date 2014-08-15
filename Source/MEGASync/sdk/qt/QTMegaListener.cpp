@@ -32,6 +32,8 @@ QTMegaListener::QTMegaListener(MegaApi *megaApi, MegaListener *listener) : QObje
 			this, SLOT(QTonReloadNeeded(MegaApi *)));
     connect(this, SIGNAL(QTonSyncStateChangedSignal(MegaApi *)),
             this, SLOT(QTonSyncStateChanged(MegaApi *)));
+    connect(this, SIGNAL(QTonSyncFileStateChangedSignal(MegaApi *, const char *, MegaSyncState)),
+            this, SLOT(QTonSyncFileStateChanged(MegaApi *, const char *, MegaSyncState)));
 }
 
 QTMegaListener::~QTMegaListener()
@@ -98,6 +100,11 @@ void QTMegaListener::onReloadNeeded(MegaApi *api)
 void QTMegaListener::onSyncStateChanged(MegaApi *api)
 {
     emit QTonSyncStateChangedSignal(api);
+}
+
+void QTMegaListener::onSyncFileStateChanged(MegaApi *api, const char *filePath, MegaSyncState newState)
+{
+    emit QTonSyncFileStateChanged(api, MegaApi::strdup(filePath), newState);
 }
 
 void QTMegaListener::QTonRequestStart(MegaApi *api, MegaRequest *request)
@@ -171,4 +178,10 @@ void QTMegaListener::QTonReloadNeeded(MegaApi *api)
 void QTMegaListener::QTonSyncStateChanged(MegaApi *api)
 {
     if(listener) listener->onSyncStateChanged(api);
+}
+
+void QTMegaListener::QTonSyncFileStateChanged(MegaApi *api, const char *filePath, MegaSyncState newState)
+{
+    if(listener) listener->onSyncFileStateChanged(api, filePath, newState);
+    delete filePath;
 }

@@ -14,7 +14,7 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     this->megaApi = megaApi;
     this->delegateListener = new QTMegaRequestListener(megaApi, this);
 
-    selectedHandle = mega::UNDEF;
+    selectedHandle = mega::INVALID_HANDLE;
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
     ui->cDefaultPath->setChecked(false);
     ui->bChange->setEnabled(true);
@@ -28,7 +28,7 @@ UploadToMegaDialog::~UploadToMegaDialog()
     delete ui;
 }
 
-mega::handle UploadToMegaDialog::getSelectedHandle()
+MegaHandle UploadToMegaDialog::getSelectedHandle()
 {
 	return selectedHandle;
 }
@@ -67,7 +67,7 @@ void UploadToMegaDialog::on_bChange_clicked()
         return;
     }
 
-    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if(!node)
     {

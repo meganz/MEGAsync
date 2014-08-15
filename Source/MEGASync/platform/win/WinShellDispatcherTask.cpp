@@ -438,7 +438,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             if((lstrlen(pipe->chRequest)<3) || (Preferences::instance()->overlayIconsDisabled()))
                     break;
 
-            mega::treestate_t state;
+            MegaSyncState state;
             QString temp = QString::fromWCharArray(content);
             if(temp.startsWith(QString::fromAscii("\\\\?\\")))
                 temp = temp.mid(4);
@@ -461,16 +461,16 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             switch(state)
             {
-                case mega::TREESTATE_SYNCED:
+                case mega::STATE_SYNCED:
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
-                 case mega::TREESTATE_SYNCING:
+                 case mega::STATE_SYNCING:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
-                case mega::TREESTATE_PENDING:
+                case mega::STATE_PENDING:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
-                 case mega::TREESTATE_NONE:
+                 case mega::STATE_NONE:
                  default:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }
