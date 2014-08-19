@@ -1390,6 +1390,7 @@ void MegaApplication::uploadActionClicked()
 void MegaApplication::copyFileLink(MegaHandle fileHandle)
 {
     //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
+    if(infoDialog) infoDialog->disableGetLink(true);
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
 }
 
@@ -1783,6 +1784,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             QApplication::clipboard()->setText(linkForClipboard);
             showInfoMessage(tr("The link has been copied to the clipboard"));
 		}
+
+        if(e->getErrorCode() != MegaError::API_OK)
+            showErrorMessage(tr("Error getting link: ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+
+        if(infoDialog) infoDialog->disableGetLink(false);
 		break;
 	}
 	case MegaRequest::TYPE_LOGIN:

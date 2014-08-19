@@ -875,6 +875,13 @@ void InfoDialog::updateRecentFiles()
     ui->wRecent3->updateWidget();
 }
 
+void InfoDialog::disableGetLink(bool disable)
+{
+    ui->wRecent1->disableGetLink(disable);
+    ui->wRecent2->disableGetLink(disable);
+    ui->wRecent3->disableGetLink(disable);
+}
+
 void InfoDialog::on_bPause_clicked()
 {
     app->pauseTransfers(ui->bPause->isChecked());

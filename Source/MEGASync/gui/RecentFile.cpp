@@ -18,6 +18,7 @@ RecentFile::RecentFile(QWidget *parent) :
     ui->pArrow->setToolTip(QString::fromUtf8(""));
     info.fileHandle = mega::INVALID_HANDLE;
     menu = NULL;
+    getLinkDisabled = false;
 }
 
 RecentFile::~RecentFile()
@@ -61,7 +62,15 @@ void RecentFile::updateWidget()
 #else
         ui->lFileType->setPixmap(icon.pixmap(QSize(48, 48)));
 #endif
+    }
 
+    if(getLinkDisabled)
+    {
+        ui->pArrow->setIcon(QIcon());
+        ui->pArrow->setToolTip(QString::fromUtf8(""));
+    }
+    else
+    {
         ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
         ui->pArrow->setToolTip(tr("Get MEGA link"));
     }
@@ -130,6 +139,13 @@ void RecentFile::setFileInfo(RecentFileInfo info)
     this->info = info;
 }
 
+void RecentFile::disableGetLink(bool disable)
+{
+    this->getLinkDisabled = disable;
+    updateWidget();
+    update();
+}
+
 void RecentFile::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -140,6 +156,9 @@ void RecentFile::changeEvent(QEvent *event)
 
 void RecentFile::on_pArrow_clicked()
 {
+    if(getLinkDisabled)
+        return;
+
     if(info.fileHandle != mega::INVALID_HANDLE)
         ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
 }
