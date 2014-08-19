@@ -1893,7 +1893,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setInboxFolders(details->getNumFolders(inboxHandle));
         delete inbox;
 
-        MegaNode *rubbish = megaApi->getInboxNode();
+        MegaNode *rubbish = megaApi->getRubbishNode();
         MegaHandle rubbishHandle = rubbish->getHandle();
         preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
         preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
