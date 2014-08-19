@@ -752,13 +752,13 @@ void SettingsDialog::refreshAccountDetails()
         ui->pStorage->setValue(0);
         ui->lStorage->setText(tr("Data temporarily unavailable"));
 
-#ifdef WIN32
+#ifndef __APPLE__
         ui->bStorageDetails->setEnabled(false);
 #endif
     }
     else
     {
-#ifdef WIN32
+#ifndef __APPLE__
         ui->bStorageDetails->setEnabled(true);
 #endif
         int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
@@ -1432,7 +1432,7 @@ void SettingsDialog::onAnimationFinished()
         ui->pAdvanced->show();
 }
 
-#ifdef WIN32
+#ifndef __APPLE__
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
