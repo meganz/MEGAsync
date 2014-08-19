@@ -14,6 +14,8 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 
+using namespace mega;
+
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
@@ -160,7 +162,7 @@ InfoDialog::~InfoDialog()
     delete ui;
 }
 
-void InfoDialog::setUsage(m_off_t totalBytes, m_off_t usedBytes)
+void InfoDialog::setUsage(int64_t totalBytes, int64_t usedBytes)
 {
     if(!totalBytes) return;
 
@@ -599,7 +601,7 @@ void InfoDialog::addSync()
     }
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    long long handle = dialog->getMegaFolder();
+    MegaHandle handle = dialog->getMegaFolder();
     MegaNode *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
     delete dialog;

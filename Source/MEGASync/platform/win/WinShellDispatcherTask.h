@@ -5,7 +5,7 @@
 #include <QThread>
 
 #include "MegaApplication.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/Preferences.h"
 
 #include <windows.h>
@@ -55,7 +55,7 @@ class WinShellDispatcherTask : public QThread
     QQueue<QString> exportQueue;
     MegaApplication *receiver;
     QString lastPath;
-    mega::treestate_t lastState;
+    int lastState;
     int numHits;
 
  signals:

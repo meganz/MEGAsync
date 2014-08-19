@@ -14,7 +14,7 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "Preferences.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 
 namespace Ui {
 class SettingsDialog;
@@ -98,7 +98,7 @@ private slots:
     void on_bSyncChange_clicked();
     void on_bFullCheck_clicked();
 
-#ifdef WIN32
+#ifndef __APPLE__
     void on_bStorageDetails_clicked();
 #endif
 
@@ -111,7 +111,7 @@ private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
-    MegaApi *megaApi;
+    mega::MegaApi *megaApi;
 	bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;

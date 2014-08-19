@@ -14,7 +14,7 @@
 #include <QDirIterator>
 #include <QDateTime>
 
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/Preferences.h"
 
 class UpdateTask : public QObject
@@ -47,9 +47,8 @@ protected:
    QStringList downloadURLs;
    QStringList localPaths;
    QStringList fileSignatures;
-   mega::AsymmCipher asymkey;
    QNetworkAccessManager *m_WebCtrl;
-   mega::HashSignature *signatureChecker;
+   mega::MegaHashSignature *signatureChecker;
    char signature[512];
    int updateVersion;
    int currentFile;

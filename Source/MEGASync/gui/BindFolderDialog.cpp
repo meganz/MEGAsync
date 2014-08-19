@@ -4,6 +4,8 @@
 #include "control/Utilities.h"
 #include <QInputDialog>
 
+using namespace mega;
+
 BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::BindFolderDialog)
@@ -58,7 +60,7 @@ void BindFolderDialog::on_bOK_clicked()
 {
     QString localFolderPath = QDir::toNativeSeparators(QDir(ui->wBinder->selectedLocalFolder()).canonicalPath());
     MegaApi *megaApi = app->getMegaApi();
-    mega::handle handle = ui->wBinder->selectedMegaFolder();
+    MegaHandle handle = ui->wBinder->selectedMegaFolder();
 
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)

@@ -1,5 +1,7 @@
 #include "QTMegaRequestListener.h"
 
+using namespace mega;
+
 QTMegaRequestListener::QTMegaRequestListener(MegaApi *megaApi, MegaRequestListener *listener) : QObject()
 {
     this->megaApi = megaApi;

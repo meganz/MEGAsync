@@ -4,6 +4,8 @@
 #include <QObject>
 #include "megaapi.h"
 
+namespace mega
+{
 class QTMegaRequestListener : public QObject, public MegaRequestListener
 {
 	Q_OBJECT
@@ -34,5 +36,6 @@ protected:
 	MegaRequestListener *listener;
     MegaApi *megaApi;
 };
+}
 
 #endif // QTMEGAREQUESTLISTENER_H
