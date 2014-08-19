@@ -3,6 +3,7 @@
 #include <QtCore/QProcess>
 #include <QtCore/QCoreApplication>
 #include <QString>
+#include <sstream>
 #include "MegaApplication.h"
 
 #if defined(Q_OS_MAC)
