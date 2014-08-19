@@ -5,7 +5,7 @@
 #include <QThread>
 
 #include "MegaApplication.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/Preferences.h"
 
 #include <windows.h>

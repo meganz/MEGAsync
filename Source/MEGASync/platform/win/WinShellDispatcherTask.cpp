@@ -461,16 +461,16 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             switch(state)
             {
-                case mega::STATE_SYNCED:
+                case MegaApi::STATE_SYNCED:
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
-                 case mega::STATE_SYNCING:
+                 case MegaApi::STATE_SYNCING:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
-                case mega::STATE_PENDING:
+                case MegaApi::STATE_PENDING:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
-                 case mega::STATE_NONE:
+                 case MegaApi::STATE_NONE:
                  default:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }
