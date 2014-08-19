@@ -644,7 +644,7 @@ font-style: italic;
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="spacing">
-              <number>0</number>
+              <number>6</number>
              </property>
              <property name="margin">
               <number>0</number>
@@ -668,6 +668,13 @@ font-style: italic;
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bStorageDetails">
+               <property name="text">
+                <string>Details</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="bUpgrade">

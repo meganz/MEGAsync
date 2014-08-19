@@ -98,7 +98,7 @@ private slots:
     void on_bSyncChange_clicked();
     void on_bFullCheck_clicked();
 
-#ifdef WIN32
+#ifndef __APPLE__
     void on_bStorageDetails_clicked();
 #endif
 
