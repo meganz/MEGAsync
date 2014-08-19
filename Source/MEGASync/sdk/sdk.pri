@@ -26,31 +26,30 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/utils.cpp \
     $$PWD/sdk/src/logging.cpp \
     $$PWD/sdk/src/waiterbase.cpp  \
+    $$PWD/sdk/src/proxy.cpp \
     $$PWD/sdk/src/crypto/cryptopp.cpp  \
     $$PWD/sdk/src/crypto/sodium.cpp  \
     $$PWD/sdk/src/db/sqlite.cpp  \
     $$PWD/sdk/src/gfx/qt.cpp \
+    $$PWD/sdk/src/gfx/external.cpp \
     $$PWD/sdk/third_party/utf8proc/utf8proc.cpp \
-    $$PWD/megaapi.cpp \
+    $$PWD/sdk/src/megaapi.cpp \
+    $$PWD/sdk/src/megaapi_impl.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp \
-    $$PWD/MegaProxySettings.cpp
+    $$PWD/sdk/src/thread/qtthread.cpp
 
 win32 {
 SOURCES += $$PWD/sdk/src/win32/net.cpp  \
     $$PWD/sdk/src/win32/fs.cpp  \
-    $$PWD/sdk/src/win32/waiter.cpp  \
-    $$PWD/win32/megaapiwait.cpp \
-    $$PWD/win32/megaapiwinhttpio.cpp
+    $$PWD/sdk/src/win32/waiter.cpp
 }
 
 unix {
 SOURCES += $$PWD/sdk/src/posix/net.cpp  \
     $$PWD/sdk/src/posix/fs.cpp  \
-    $$PWD/sdk/src/posix/waiter.cpp \
-    $$PWD/linux/megaapiwait.cpp \
-    $$PWD/linux/megaapiposixhttpio.cpp
+    $$PWD/sdk/src/posix/waiter.cpp
 }
 
 HEADERS  += $$PWD/sdk/include/mega.h \
@@ -85,29 +84,31 @@ HEADERS  += $$PWD/sdk/include/mega.h \
 	    $$PWD/sdk/include/mega/utils.h \
 	    $$PWD/sdk/include/mega/logging.h \
 	    $$PWD/sdk/include/mega/waiter.h \
+            $$PWD/sdk/include/mega/proxy.h \
 	    $$PWD/sdk/include/mega/crypto/cryptopp.h  \
             $$PWD/sdk/include/mega/crypto/sodium.h  \
 	    $$PWD/sdk/include/mega/db/sqlite.h  \
 	    $$PWD/sdk/include/mega/gfx/qt.h \
+            $$PWD/sdk/include/mega/gfx/external.h \
             $$PWD/sdk/third_party/utf8proc/utf8proc.h \
-	    $$PWD/megaapi.h \
+            $$PWD/sdk/include/megaapi.h \
+            $$PWD/sdk/include/megaapi_impl.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
-	    $$PWD/qt/QTMegaListener.h \
-	    $$PWD/MegaProxySettings.h
+            $$PWD/qt/QTMegaListener.h \
+            $$PWD/sdk/include/mega/thread.h \
+            $$PWD/sdk/include/mega/thread/qtthread.h
 
 win32 {
     HEADERS  += $$PWD/sdk/include/mega/win32/meganet.h  \
             $$PWD/sdk/include/mega/win32/megasys.h  \
             $$PWD/sdk/include/mega/win32/megafs.h  \
-            $$PWD/sdk/include/mega/win32/megawaiter.h  \
-	    $$PWD/win32/megaapiwait.h \
-	    $$PWD/win32/megaapiwinhttpio.h
+            $$PWD/sdk/include/mega/win32/megawaiter.h
 
     SOURCES += $$PWD/sqlite3.c
 }
 
-unix:!macx {
+unix {
     !exists($$PWD/sdk/include/mega/config.h) {
         error("Configuration file not found! Please re-run configure script located in the project's root directory!")
     }
@@ -115,7 +116,6 @@ unix:!macx {
             $$PWD/sdk/include/mega/posix/megasys.h  \
             $$PWD/sdk/include/mega/posix/megafs.h  \
             $$PWD/sdk/include/mega/posix/megawaiter.h \
-            $$PWD/linux/megaapiwait.h  \
             $$PWD/sdk/include/mega/config.h
 }
 

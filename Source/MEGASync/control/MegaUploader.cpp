@@ -8,6 +8,8 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+using namespace mega;
+
 MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
@@ -37,7 +39,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
             ((info.isDir() && (child->getType()==MegaNode::TYPE_FOLDER)) ||
             (info.isFile() && (child->getType()==MegaNode::TYPE_FILE) && (info.size() == child->getSize()))))
         {
-            dupplicate = new MegaNode(child);
+            dupplicate = child->copy();
             break;
         }
     }
@@ -61,7 +63,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     }
 
     string localPath = megaApi->getLocalPath(parent);
-    if(localPath.size() && megaApi->is_syncable(info.fileName().toUtf8().constData()))
+    if(localPath.size() && megaApi->isSyncable(info.fileName().toUtf8().constData()))
     {
     #ifdef WIN32
         QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName());

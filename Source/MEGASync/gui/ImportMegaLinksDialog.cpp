@@ -8,6 +8,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+using namespace mega;
+
 ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::ImportMegaLinksDialog)
@@ -239,7 +241,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
         return;
     }
 
-    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if(!selectedFolder)
     {
@@ -283,7 +285,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
             if(e == MegaError::API_ETEMPUNAVAIL)
 				status = ImportListWidgetItem::WARNING;
 
-            item->setData(MegaError::QgetErrorString(e), status);
+            item->setData(QCoreApplication::translate("MegaError", MegaError::getErrorString(e)), status);
 		}
 		else
 		{

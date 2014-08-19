@@ -22,8 +22,8 @@ public:
     void init();
     ~InfoDialog();
 
-	void setUsage(m_off_t totalBytes, m_off_t usedBytes);
-    void setTransfer(MegaTransfer *transfer);
+    void setUsage(int64_t totalBytes, int64_t usedBytes);
+    void setTransfer(mega::MegaTransfer *transfer);
 	void addRecentFile(QString fileName, long long fileHandle, QString localPath);
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
@@ -120,11 +120,11 @@ protected:
     int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
-    MegaApi *megaApi;
-    MegaTransfer *transfer1;
-    MegaTransfer *transfer2;
-    m_off_t totalBytes;
-    m_off_t usedBytes;
+    mega::MegaApi *megaApi;
+    mega::MegaTransfer *transfer1;
+    mega::MegaTransfer *transfer2;
+    int64_t totalBytes;
+    int64_t usedBytes;
 };
 
 #endif // INFODIALOG_H

@@ -2,8 +2,10 @@
 #define QTMEGATRANSFERLISTENER_H
 
 #include <QObject>
-#include <sdk/megaapi.h>
+#include <megaapi.h>
 
+namespace mega
+{
 class QTMegaTransferListener : public QObject, public MegaTransferListener
 {
 	Q_OBJECT
@@ -34,5 +36,6 @@ protected:
     MegaApi *megaApi;
 	MegaTransferListener *listener;
 };
+}
 
 #endif // QTMEGATRANSFERLISTENER_H

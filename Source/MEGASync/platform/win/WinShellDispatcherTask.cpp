@@ -8,6 +8,7 @@ VOID DisconnectAndReconnect(DWORD i);
 BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo);
 
 using namespace std;
+using namespace mega;
 
 typedef enum {
        STRING_UPLOAD = 0,
@@ -437,7 +438,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             if((lstrlen(pipe->chRequest)<3) || (Preferences::instance()->overlayIconsDisabled()))
                     break;
 
-            mega::treestate_t state;
+            int state;
             QString temp = QString::fromWCharArray(content);
             if(temp.startsWith(QString::fromAscii("\\\\?\\")))
                 temp = temp.mid(4);
@@ -460,21 +461,17 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             switch(state)
             {
-                case mega::TREESTATE_SYNCED:
-                    //cout << "Synced: " << lastPath.toStdString() << endl;
+                case MegaApi::STATE_SYNCED:
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED );
                     break;
-                 case mega::TREESTATE_SYNCING:
-                     //cout << "Syncing: " << lastPath.toStdString() << endl;
+                 case MegaApi::STATE_SYNCING:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
                      break;
-                case mega::TREESTATE_PENDING:
-                     //cout << "Pending: " << lastPath.toStdString() << endl;
+                case MegaApi::STATE_PENDING:
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                      break;
-                 case mega::TREESTATE_NONE:
+                 case MegaApi::STATE_NONE:
                  default:
-                     //cout << "Not found: " << lastPath.toStdString() << endl;
                      wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }
             break;

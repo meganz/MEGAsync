@@ -6,6 +6,8 @@
 
 #include <QImageReader>
 
+using namespace mega;
+
 RecentFile::RecentFile(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RecentFile)
@@ -14,7 +16,7 @@ RecentFile::RecentFile(QWidget *parent) :
     ui->lTime->setText(QString::fromUtf8(""));
     ui->pArrow->setIcon(QIcon());
     ui->pArrow->setToolTip(QString::fromUtf8(""));
-    info.fileHandle = mega::UNDEF;
+    info.fileHandle = mega::INVALID_HANDLE;
     menu = NULL;
 }
 
@@ -138,7 +140,7 @@ void RecentFile::changeEvent(QEvent *event)
 
 void RecentFile::on_pArrow_clicked()
 {
-    if(info.fileHandle != mega::UNDEF)
+    if(info.fileHandle != mega::INVALID_HANDLE)
         ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
 }
 

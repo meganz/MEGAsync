@@ -112,13 +112,13 @@ public:
     QString getSyncName(int num);
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
-    mega::handle getMegaFolderHandle(int num);
+    mega::MegaHandle getMegaFolderHandle(int num);
     QStringList getSyncNames();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
     QList<long long> getMegaFolderHandles();
 
-    void addSyncedFolder(QString localFolder, QString megaFolder, mega::handle megaFolderHandle, QString syncName = QString());
+    void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString());
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
@@ -185,6 +185,12 @@ public:
     static const QString PROXY_TEST_SUBSTRING;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
+    static const char CLIENT_KEY[];
+    static const char USER_AGENT[];
+    static const int VERSION_CODE;
+    static const QString VERSION_STRING;
+    static const QString TRANSLATION_FOLDER;
+    static const QString TRANSLATION_PREFIX;
 
 protected:
 

@@ -33,7 +33,7 @@ long long calculateCacheSize()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER), &cacheSize);
     }
     return cacheSize;
 }
@@ -45,7 +45,7 @@ void deleteCache()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(DEBRISFOLDER)));
+            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
     }
 }
 
@@ -564,8 +564,8 @@ void SettingsDialog::loadSettings()
         //Language
         ui->cLanguage->clear();
         languageCodes.clear();
-        QString fullPrefix = MegaApplication::TRANSLATION_FOLDER+MegaApplication::TRANSLATION_PREFIX;
-        QDirIterator it(MegaApplication::TRANSLATION_FOLDER);
+        QString fullPrefix = Preferences::TRANSLATION_FOLDER+Preferences::TRANSLATION_PREFIX;
+        QDirIterator it(Preferences::TRANSLATION_FOLDER);
         QStringList languages;
         languages.append(QString::fromAscii("English"));
         languageCodes.append(QString::fromAscii("en"));
@@ -752,13 +752,13 @@ void SettingsDialog::refreshAccountDetails()
         ui->pStorage->setValue(0);
         ui->lStorage->setText(tr("Data temporarily unavailable"));
 
-#ifdef WIN32
+#ifndef __APPLE__
         ui->bStorageDetails->setEnabled(false);
 #endif
     }
     else
     {
-#ifdef WIN32
+#ifndef __APPLE__
         ui->bStorageDetails->setEnabled(true);
 #endif
         int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
@@ -791,7 +791,7 @@ bool SettingsDialog::saveSettings()
         bool startOnStartup = ui->cStartOnStartup->isChecked();
         if (!Platform::startOnStartup(startOnStartup)) {
             // in case of failure - make sure configuration keeps the right value
-            LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
+            //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
             preferences->setStartOnStartup(!startOnStartup);
         } else
             preferences->setStartOnStartup(startOnStartup);
@@ -818,7 +818,7 @@ bool SettingsDialog::saveSettings()
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
                 QString localPath = preferences->getLocalFolder(i);
-                mega::handle megaHandle = preferences->getMegaFolderHandle(i);
+                MegaHandle megaHandle = preferences->getMegaFolderHandle(i);
 
                 int j;
                 for(j=0; j<ui->tSyncs->rowCount(); j++)
@@ -863,7 +863,7 @@ bool SettingsDialog::saveSettings()
                 for(j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
                     QString previousLocalPath = preferences->getLocalFolder(j);
-                    mega::handle previousMegaHandle = preferences->getMegaFolderHandle(j);
+                    MegaHandle previousMegaHandle = preferences->getMegaFolderHandle(j);
 
                     if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
                         break;
@@ -932,51 +932,37 @@ bool SettingsDialog::saveSettings()
         (preferences->getProxyPassword() != ui->eProxyPassword->text()))
     {
         proxyChanged = true;
-        LOG("New proxy settings");
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::NoProxy);
         if(ui->rProxyManual->isChecked())
         {
-            LOG("Manual proxy");
-            LOG(ui->eProxyServer->text().trimmed());
-            LOG(ui->eProxyPort->text().trimmed());
             proxy.setType(QNetworkProxy::HttpProxy);
             proxy.setHostName(ui->eProxyServer->text().trimmed());
             proxy.setPort(ui->eProxyPort->text().trimmed().toInt());
             if(ui->cProxyRequiresPassword->isChecked())
             {
-                LOG("Auth proxy");
-                LOG(ui->eProxyUsername->text());
-                LOG(ui->eProxyPassword->text());
                 proxy.setUser(ui->eProxyUsername->text());
                 proxy.setPassword(ui->eProxyPassword->text());
             }
         }
         else if(ui->rProxyAuto->isChecked())
         {
-            LOG("Auto proxy");
-            MegaProxySettings *proxySettings = megaApi->getAutoProxySettings();
-            if(proxySettings->getProxyType()==MegaProxySettings::CUSTOM)
+            MegaProxy *proxySettings = megaApi->getAutoProxySettings();
+            if(proxySettings->getProxyType()==MegaProxy::PROXY_CUSTOM)
             {
-                LOG("Custom proxy");
                 string sProxyURL = proxySettings->getProxyURL();
                 QString proxyURL = QString::fromUtf8(sProxyURL.data());
-                LOG(proxyURL);
+
                 QStringList arguments = proxyURL.split(QString::fromAscii(":"));
                 if(arguments.size() == 2)
                 {
-                    LOG(arguments[0]);
-                    LOG(arguments[1]);
                     proxy.setType(QNetworkProxy::HttpProxy);
                     proxy.setHostName(arguments[0]);
                     proxy.setPort(arguments[1].toInt());
                 }
             }
-            else LOG("No proxy");
-
             delete proxySettings;
         }
-        else LOG("No proxy");
 
         QNetworkRequest proxyTestRequest(Preferences::PROXY_TEST_URL);
         proxyTestRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
@@ -1157,7 +1143,7 @@ void SettingsDialog::on_bAdd_clicked()
         return;
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    long long handle = dialog->getMegaFolder();
+    MegaHandle handle = dialog->getMegaFolder();
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
     {
@@ -1237,7 +1223,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
     }
 
-    mega::handle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if(!node)
     {
@@ -1362,7 +1348,7 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
 
     QString data = QString::fromUtf8(reply->readAll());
     if (!data.contains(Preferences::PROXY_TEST_SUBSTRING)) {
-        LOG_debug << "Proxy request failed.";
+        //LOG_debug << "Proxy request failed.";
         onProxyTestTimeout();
         return;
     }
@@ -1446,7 +1432,7 @@ void SettingsDialog::onAnimationFinished()
         ui->pAdvanced->show();
 }
 
-#ifdef WIN32
+#ifndef __APPLE__
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);

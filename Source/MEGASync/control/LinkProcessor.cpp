@@ -2,6 +2,8 @@
 #include "Utilities.h"
 #include <QDir>
 
+using namespace mega;
+
 LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener(megaApi)
 {
 	this->megaApi = megaApi;
@@ -13,7 +15,7 @@ LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaReq
 		linkError.append(MegaError::API_ENOENT);
 	}
 
-    importParentFolder = mega::UNDEF;
+    importParentFolder = mega::INVALID_HANDLE;
 	currentIndex = 0;
 	remainingNodes = 0;
 	importSuccess = 0;
@@ -167,7 +169,7 @@ void LinkProcessor::importLinks(MegaNode *node)
     delete children;
 }
 
-mega::handle LinkProcessor::getImportParentFolder()
+MegaHandle LinkProcessor::getImportParentFolder()
 {
 	return importParentFolder;
 }

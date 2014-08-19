@@ -4,6 +4,8 @@
 #include "control/Preferences.h"
 #include "control/Utilities.h"
 
+using namespace mega;
+
 AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AccountDetailsDialog)

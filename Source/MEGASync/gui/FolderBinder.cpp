@@ -3,11 +3,13 @@
 
 #include "MegaApplication.h"
 
+using namespace mega;
+
 FolderBinder::FolderBinder(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FolderBinder)
 {
-    selectedMegaFolderHandle = mega::UNDEF;
+    selectedMegaFolderHandle = mega::INVALID_HANDLE;
     ui->setupUi(this);
     app = (MegaApplication *)qApp;
     megaApi = app->getMegaApi();
@@ -74,7 +76,7 @@ void FolderBinder::on_bMegaFolder_clicked()
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     if(!selectedFolder)
     {
-        selectedMegaFolderHandle = mega::UNDEF;
+        selectedMegaFolderHandle = mega::INVALID_HANDLE;
         delete nodeSelector;
         return;
     }
@@ -82,7 +84,7 @@ void FolderBinder::on_bMegaFolder_clicked()
     const char *fPath = megaApi->getNodePath(selectedFolder);
     if(!fPath)
     {
-        selectedMegaFolderHandle = mega::UNDEF;
+        selectedMegaFolderHandle = mega::INVALID_HANDLE;
         delete nodeSelector;
         delete selectedFolder;
         return;

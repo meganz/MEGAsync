@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QStringList>
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/LinkProcessor.h"
 #include "control/Preferences.h"
 
@@ -16,7 +16,7 @@ class ImportMegaLinksDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *linkProcessor, QWidget *parent = 0);
+    explicit ImportMegaLinksDialog(mega::MegaApi *megaApi, Preferences *preferences, LinkProcessor *linkProcessor, QWidget *parent = 0);
 	~ImportMegaLinksDialog();
 
 	bool shouldImport();
@@ -40,7 +40,7 @@ protected:
 
 private:
 	Ui::ImportMegaLinksDialog *ui;
-	MegaApi *megaApi;
+    mega::MegaApi *megaApi;
 	LinkProcessor *linkProcessor;
 	bool finished;
 };

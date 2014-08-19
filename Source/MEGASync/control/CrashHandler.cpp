@@ -35,7 +35,7 @@
         std::ostringstream oss;
         oss << "MEGAprivate ERROR DUMP\n";
         oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-        oss << "Version code: " << QString::number(MegaApplication::VERSION_CODE).toStdString() << "\n";
+        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() << "\n";
         oss << "Module name: " << "megasync" << "\n";
 
         struct utsname osData;
@@ -316,7 +316,7 @@ QStringList CrashHandler::getPendingCrashReports()
         if((lines.size()<3) ||
          (lines.at(0) != QString::fromAscii("MEGAprivate ERROR DUMP")) ||
                 (!lines.at(1).startsWith(QString::fromAscii("Application: ") + QApplication::applicationName())) ||
-                (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(MegaApplication::VERSION_CODE))))
+                (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(Preferences::VERSION_CODE))))
         {
             LOG(QString::fromAscii("Invalid or outdated dump file: ") + file.fileName());
             LOG(crashReport);
