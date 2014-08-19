@@ -39,6 +39,7 @@ public:
     void showRecentlyUpdated(bool show);
     void closeSyncsMenu();
     void updateRecentFiles();
+    void disableGetLink(bool disable);
 
 public slots:
    void addSync();

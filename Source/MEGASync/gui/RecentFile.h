@@ -31,6 +31,7 @@ public:
     void closeMenu();
     RecentFileInfo getFileInfo();
     void setFileInfo(RecentFileInfo info);
+    void disableGetLink(bool disable);
 
 private:
     Ui::RecentFile *ui;
@@ -39,6 +40,7 @@ protected:
     RecentFileInfo info;
     QMenu *menu;
     void changeEvent(QEvent * event);
+    bool getLinkDisabled;
 
 private slots:
 	void on_pArrow_clicked();
