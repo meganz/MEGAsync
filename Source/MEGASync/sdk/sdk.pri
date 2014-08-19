@@ -31,9 +31,10 @@ SOURCES += $$PWD/sdk/src/attrmap.cpp \
     $$PWD/sdk/src/crypto/sodium.cpp  \
     $$PWD/sdk/src/db/sqlite.cpp  \
     $$PWD/sdk/src/gfx/qt.cpp \
+    $$PWD/sdk/src/gfx/external.cpp \
     $$PWD/sdk/third_party/utf8proc/utf8proc.cpp \
-    $$PWD/megaapi.cpp \
-    $$PWD/megaapi_impl.cpp \
+    $$PWD/sdk/src/megaapi.cpp \
+    $$PWD/sdk/src/megaapi_impl.cpp \
     $$PWD/qt/QTMegaRequestListener.cpp \
     $$PWD/qt/QTMegaTransferListener.cpp \
     $$PWD/qt/QTMegaListener.cpp \
@@ -88,9 +89,10 @@ HEADERS  += $$PWD/sdk/include/mega.h \
             $$PWD/sdk/include/mega/crypto/sodium.h  \
 	    $$PWD/sdk/include/mega/db/sqlite.h  \
 	    $$PWD/sdk/include/mega/gfx/qt.h \
+            $$PWD/sdk/include/mega/gfx/external.h \
             $$PWD/sdk/third_party/utf8proc/utf8proc.h \
-	    $$PWD/megaapi.h \
-            $$PWD/megaapi_impl.h \
+            $$PWD/sdk/include/megaapi.h \
+            $$PWD/sdk/include/megaapi_impl.h \
 	    $$PWD/qt/QTMegaRequestListener.h \
 	    $$PWD/qt/QTMegaTransferListener.h \
             $$PWD/qt/QTMegaListener.h \

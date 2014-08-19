@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QStringList>
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/LinkProcessor.h"
 #include "control/Preferences.h"
 

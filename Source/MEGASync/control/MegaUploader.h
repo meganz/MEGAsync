@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QQueue>
 #include "Preferences.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "sdk/qt/QTMegaRequestListener.h"
 
 class MegaUploader : public QObject, public mega::MegaRequestListener

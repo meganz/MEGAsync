@@ -15,7 +15,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("mega.socket");
 
-    LOG_info << "Starting Ext server";
+    //LOG_info << "Starting Ext server";
 
     // make sure previous socket file is removed
     QLocalServer::removeServer(sockPath);
@@ -25,7 +25,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
     // start listening for new connections
     if (!m_localServer->listen(sockPath)) {
         // XXX: failed to open local socket, retry ?
-        LOG_err << "Failed to listen()";
+        //LOG_err << "Failed to listen()";
         return;
     }
 
@@ -46,7 +46,7 @@ void ExtServer::acceptConnection()
     while (m_localServer->hasPendingConnections()) {
         QLocalSocket *client = m_localServer->nextPendingConnection();
 
-        LOG_debug << "Incoming connection";
+        //LOG_debug << "Incoming connection";
         if (!client)
             return;
 
@@ -66,7 +66,7 @@ void ExtServer::onClientDisconnected()
     m_clients.removeAll(client);
     client->deleteLater();
 
-    LOG_debug << "Client disconnected";
+    //LOG_debug << "Client disconnected";
 }
 
 // client sends some data
@@ -77,7 +77,7 @@ void ExtServer::onClientData()
         return;
 
     if (m_clients.indexOf(client) == -1 ) {
-        LOG_err << "QLocalSocket not found !";
+        //LOG_err << "QLocalSocket not found !";
         return;
     }
 
@@ -164,7 +164,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             QFileInfo file(filePath);
             if(file.exists())
             {
-                LOG_debug << "Adding file to upload queue";
+                //LOG_debug << "Adding file to upload queue";
                 uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
             break;
@@ -182,7 +182,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         // get the state of an object
         case 'P':
         {
-            mega::treestate_t state = TREESTATE_NONE;
+            int state = MegaApi::STATE_NONE;
             if(!Preferences::instance()->overlayIconsDisabled())
             {
                 string tmpPath(content);
@@ -191,16 +191,16 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
 
             switch(state)
             {
-                case TREESTATE_SYNCED:
+                case MegaApi::STATE_SYNCED:
                     strncpy(out, RESPONSE_SYNCED, BUFSIZE);
                     break;
-                 case TREESTATE_SYNCING:
+                 case MegaApi::STATE_SYNCING:
                      strncpy(out, RESPONSE_SYNCING, BUFSIZE);
                      break;
-                case TREESTATE_PENDING:
+                case MegaApi::STATE_PENDING:
                      strncpy(out, RESPONSE_PENDING, BUFSIZE);
                      break;
-                 case TREESTATE_NONE:
+                 case MegaApi::STATE_NONE:
                  default:
                      strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
             }

@@ -55,7 +55,7 @@ class WinShellDispatcherTask : public QThread
     QQueue<QString> exportQueue;
     MegaApplication *receiver;
     QString lastPath;
-    mega::MegaSyncState lastState;
+    int lastState;
     int numHits;
 
  signals:

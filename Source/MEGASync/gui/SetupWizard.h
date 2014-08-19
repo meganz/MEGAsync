@@ -9,7 +9,7 @@
 
 #include "NodeSelector.h"
 #include "Preferences.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "sdk/qt/QTMegaRequestListener.h"
 
 namespace Ui {

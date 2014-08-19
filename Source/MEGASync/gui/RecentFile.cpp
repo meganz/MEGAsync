@@ -6,6 +6,8 @@
 
 #include <QImageReader>
 
+using namespace mega;
+
 RecentFile::RecentFile(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RecentFile)

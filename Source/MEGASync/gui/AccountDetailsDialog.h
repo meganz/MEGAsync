@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 
 namespace Ui {
 class AccountDetailsDialog;

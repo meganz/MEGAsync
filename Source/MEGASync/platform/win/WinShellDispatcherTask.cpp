@@ -438,7 +438,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             if((lstrlen(pipe->chRequest)<3) || (Preferences::instance()->overlayIconsDisabled()))
                     break;
 
-            MegaSyncState state;
+            int state;
             QString temp = QString::fromWCharArray(content);
             if(temp.startsWith(QString::fromAscii("\\\\?\\")))
                 temp = temp.mid(4);

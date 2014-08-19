@@ -12,7 +12,7 @@ NotifyServer::NotifyServer(): QObject(),
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("notify.socket");
 
-    LOG_info << "Starting Notify server";
+    //LOG_info << "Starting Notify server";
 
     // make sure previous socket file is removed
     QLocalServer::removeServer(sockPath);
@@ -22,7 +22,7 @@ NotifyServer::NotifyServer(): QObject(),
     // start listening for new connections
     if (!m_localServer->listen(sockPath)) {
         // XXX: failed to open local socket, retry ?
-        LOG_err << "Failed to listen()";
+        //LOG_err << "Failed to listen()";
         return;
     }
 
@@ -44,7 +44,7 @@ void NotifyServer::acceptConnection()
     while (m_localServer->hasPendingConnections()) {
         QLocalSocket *client = m_localServer->nextPendingConnection();
 
-        LOG_debug << "Incoming connection";
+        //LOG_debug << "Incoming connection";
         if (!client)
             return;
 
@@ -81,7 +81,7 @@ void NotifyServer::onClientDisconnected()
     m_clients.removeAll(client);
     client->deleteLater();
 
-    LOG_debug << "Client disconnected";
+    //LOG_debug << "Client disconnected";
 }
 
 // send string to all connected clients
