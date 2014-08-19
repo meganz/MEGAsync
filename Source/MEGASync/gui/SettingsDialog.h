@@ -14,7 +14,7 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "Preferences.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 
 namespace Ui {
 class SettingsDialog;

@@ -2,7 +2,7 @@
 #define EXTSERVER_H
 
 #include "MegaApplication.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/Preferences.h"
 
 typedef enum {

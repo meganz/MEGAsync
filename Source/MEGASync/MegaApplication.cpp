@@ -13,6 +13,11 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
+#ifndef WIN32
+//sleep
+#include <unistd.h>
+#endif
+
 using namespace mega;
 
 QString MegaApplication::appPath = QString();
@@ -1153,31 +1158,31 @@ void MegaApplication::applyProxySettings()
     MegaProxy *proxySettings = new MegaProxy();
     proxySettings->setProxyType(preferences->proxyType());
 
-    if(preferences->proxyType() == MegaProxy::CUSTOM)
+    if(preferences->proxyType() == MegaProxy::PROXY_CUSTOM)
     {
-        string proxyString = preferences->proxyHostAndPort().toStdString();
-        proxySettings->setProxyURL(&proxyString);
+        QString proxyString = preferences->proxyHostAndPort();
+        proxySettings->setProxyURL(proxyString.toUtf8().constData());
 
         proxy.setType(QNetworkProxy::HttpProxy);
         proxy.setHostName(preferences->proxyServer());
         proxy.setPort(preferences->proxyPort());
         if(preferences->proxyRequiresAuth())
         {
-            string username = preferences->getProxyUsername().toStdString();
-            string password = preferences->getProxyPassword().toStdString();
-            proxySettings->setCredentials(&username, &password);
+            QString username = preferences->getProxyUsername();
+            QString password = preferences->getProxyPassword();
+            proxySettings->setCredentials(username.toUtf8().constData(), password.toUtf8().constData());
 
             proxy.setUser(preferences->getProxyUsername());
             proxy.setPassword(preferences->getProxyPassword());
         }
     }
-    else if(preferences->proxyType() == MegaProxy::AUTO)
+    else if(preferences->proxyType() == MegaProxy::PROXY_AUTO)
     {
         MegaProxy* autoProxy = megaApi->getAutoProxySettings();
         delete proxySettings;
         proxySettings = autoProxy;
 
-        if(proxySettings->getProxyType()==MegaProxy::CUSTOM)
+        if(proxySettings->getProxyType()==MegaProxy::PROXY_CUSTOM)
         {
             string sProxyURL = proxySettings->getProxyURL();
             QString proxyURL = QString::fromUtf8(sProxyURL.data());
@@ -2284,7 +2289,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     if(!isUnity) updateTrayIcon();
 }
 
-void MegaApplication::onSyncFileStateChanged(MegaApi *api, const char *filePath, MegaSyncState newState)
+void MegaApplication::onSyncFileStateChanged(MegaApi *, const char *filePath, int)
 {
     QString localPath = QString::fromUtf8(filePath);
     Platform::notifyItemChange(localPath);

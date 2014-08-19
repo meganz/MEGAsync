@@ -22,7 +22,7 @@
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
 #include "control/UpdateTask.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "sdk/qt/QTMegaListener.h"
 
 #ifdef __APPLE__
@@ -60,7 +60,7 @@ public:
     virtual void onNodesUpdate(mega::MegaApi* api, mega::NodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
     virtual void onSyncStateChanged(mega::MegaApi *api);
-    virtual void onSyncFileStateChanged(mega::MegaApi *api, const char *filePath, mega::MegaSyncState newState);
+    virtual void onSyncFileStateChanged(mega::MegaApi *api, const char *filePath, int newState);
 
 
     mega::MegaApi *getMegaApi() { return megaApi; }
@@ -164,7 +164,7 @@ protected:
     long long lastStartedDownload;
     long long lastStartedUpload;
     int exportOps;
-    mega::MegaSyncState syncState;
+    int syncState;
     mega::QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;

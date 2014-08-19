@@ -6,7 +6,7 @@
 #include <QTreeWidgetItem>
 #include <QDir>
 
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "sdk/qt/QTMegaRequestListener.h"
 
 namespace Ui {

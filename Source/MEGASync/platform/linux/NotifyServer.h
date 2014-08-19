@@ -2,7 +2,7 @@
 #define NOTIFYSERVER_H
 
 #include "MegaApplication.h"
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/Preferences.h"
 
 class NotifyServer: public QObject

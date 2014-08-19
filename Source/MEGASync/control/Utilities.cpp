@@ -9,7 +9,7 @@
 #include <iostream>
 
 #ifndef WIN32
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #endif
 
 using namespace std;
@@ -272,14 +272,9 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
 bool Utilities::removeRecursively(QDir dir)
 {
     bool success = false;
-
-#ifndef WIN32
     QString qpath = QDir::toNativeSeparators(dir.absolutePath());
-    string path = qpath.toUtf8().constData();
-    mega::PosixFileSystemAccess::emptydirlocal(&path);
+    mega::MegaApi::removeRecursively(qpath.toUtf8().constData());
     success = dir.rmdir(dir.absolutePath());
-#endif
-
     return success;
 
     /*

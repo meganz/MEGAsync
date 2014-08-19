@@ -14,7 +14,7 @@
 #include <QDirIterator>
 #include <QDateTime>
 
-#include "sdk/megaapi.h"
+#include "megaapi.h"
 #include "control/Preferences.h"
 
 class UpdateTask : public QObject

@@ -38,7 +38,7 @@ bool LinuxPlatform::startOnStartup(bool value)
             // make sure directory exist
             if (!QDir(autostart_dir).exists()) {
                 if (!QDir().mkdir(autostart_dir)) {
-                    LOG_debug << "Failed to create autostart dir: " << autostart_dir;
+                    //LOG_debug << "Failed to create autostart dir: " << autostart_dir;
                     return false;
                 }
             }
@@ -46,7 +46,7 @@ bool LinuxPlatform::startOnStartup(bool value)
             if (QFile(app_desktop).exists()) {
                 return QFile::copy(app_desktop, desktop_file);
             } else {
-                LOG_debug << "Desktop file does not exist: " << app_desktop;
+                //LOG_debug << "Desktop file does not exist: " << app_desktop;
                 return false;
             }
         }

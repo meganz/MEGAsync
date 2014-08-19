@@ -2,7 +2,7 @@
 #define QTMEGATRANSFERLISTENER_H
 
 #include <QObject>
-#include <sdk/megaapi.h>
+#include <megaapi.h>
 
 namespace mega
 {
