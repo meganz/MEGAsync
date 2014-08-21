@@ -8,7 +8,8 @@ cd MEGASync
 make distclean 2> /dev/null || true
 cd sdk
 rm -fr 3rdparty/*
-cd sdk
+cd ..
+cd mega
 make distclean 2> /dev/null || true
 cd $cwd
 
@@ -32,7 +33,7 @@ if [ ! -f $SODIUM_SOURCE_FILE ]; then
 fi
 
 # get current version
-MEGASYNC_VERSION=`grep -Po 'const QString MegaApplication::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../Source/MEGASync/MegaApplication.cpp`
+MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../Source/MEGASync/control/Preferences.cpp`
 export MEGASYNC_NAME=megasync-$MEGASYNC_VERSION
 rm -rf $MEGASYNC_NAME.tar.gz
 rm -rf $MEGASYNC_NAME
