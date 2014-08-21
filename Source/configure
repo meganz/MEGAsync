@@ -11,7 +11,7 @@ export CURL_SOURCE_FOLDER=$CURL-$CURL_VERSION
 export CURL_CONFIGURED=$CURL/$CURL_SOURCE_FOLDER/curl-config
 export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
 export CURL_SOURCE_DIR=$root_dir/$CURL/$CURL_SOURCE_FOLDER
-export CURL_INSTALL_DIR=$root_dir/MEGASync/sdk/3rdparty/
+export CURL_INSTALL_DIR=$root_dir/MEGASync/3rdparty/
 
 export MAKE_OPTS="-j1"
 
@@ -52,7 +52,7 @@ export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
 export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
 export SODIUM_DOWNLOAD_URL=http://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
 export SODIUM_SOURCE_DIR=$root_dir/$SODIUM/$SODIUM_SOURCE_FOLDER
-export SODIUM_INSTALL_DIR=$root_dir/MEGASync/sdk/3rdparty/
+export SODIUM_INSTALL_DIR=$root_dir/MEGASync/3rdparty/
 
 if [ ! -f $SODIUM_SOURCE_FILE ]; then
     wget -c $SODIUM_DOWNLOAD_URL || exit 1
