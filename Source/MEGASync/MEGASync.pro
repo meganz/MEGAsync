@@ -38,7 +38,7 @@ debug {
 }
 
 include(gui/gui.pri)
-include(sdk/sdk.pri)
+include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)

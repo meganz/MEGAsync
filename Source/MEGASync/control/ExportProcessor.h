@@ -3,7 +3,7 @@
 
 #include <QStringList>
 #include <megaapi.h>
-#include <sdk/qt/QTMegaRequestListener.h>
+#include <QTMegaRequestListener.h>
 
 class ExportProcessor : public mega::QTMegaRequestListener
 {

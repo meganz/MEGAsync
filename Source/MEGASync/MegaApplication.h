@@ -23,7 +23,7 @@
 #include "control/MegaUploader.h"
 #include "control/UpdateTask.h"
 #include "megaapi.h"
-#include "sdk/qt/QTMegaListener.h"
+#include "QTMegaListener.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
