@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include "megaapi.h"
-#include "sdk/qt/QTMegaRequestListener.h"
+#include "QTMegaRequestListener.h"
 
 
 namespace Ui {

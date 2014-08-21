@@ -7,7 +7,7 @@
 #include <QQueue>
 #include "Preferences.h"
 #include "megaapi.h"
-#include "sdk/qt/QTMegaRequestListener.h"
+#include "QTMegaRequestListener.h"
 
 class MegaUploader : public QObject, public mega::MegaRequestListener
 {
