@@ -7,7 +7,7 @@
 #include <QDir>
 
 #include "megaapi.h"
-#include "sdk/qt/QTMegaRequestListener.h"
+#include "QTMegaRequestListener.h"
 
 namespace Ui {
 class NodeSelector;

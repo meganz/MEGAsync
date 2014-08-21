@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include "megaapi.h"
-#include "sdk/qt/QTMegaRequestListener.h"
+#include "QTMegaRequestListener.h"
 
 class LinkProcessor: public mega::QTMegaRequestListener
 {
