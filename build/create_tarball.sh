@@ -6,9 +6,7 @@ cd ../Source
 make distclean 2> /dev/null || true
 cd MEGASync
 make distclean 2> /dev/null || true
-cd sdk
 rm -fr 3rdparty/*
-cd ..
 cd mega
 make distclean 2> /dev/null || true
 cd $cwd
@@ -57,7 +55,7 @@ ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
 ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAME/$SODIUM_SOURCE_FILE
-tar czfh $MEGASYNC_NAME.tar.gz --exclude $MEGASYNC_NAME/MEGASync/sdk/sqlite3.c --exclude Makefile --exclude '*.o' $MEGASYNC_NAME
+tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
 # delete any previous archive
