@@ -68,6 +68,7 @@ cd $SODIUM_SOURCE_FOLDER || exit 1
 make $MAKE_OPTS || exit 1
 cd ../..
 mkdir -p $SODIUM_INSTALL_DIR
+mkdir $SODIUM_INSTALL_DIR/include/
 cp -R $SODIUM_SOURCE_DIR/src/libsodium/include/* $SODIUM_INSTALL_DIR/include/
 mkdir -p $SODIUM_INSTALL_DIR/lib/
 mkdir -p $SODIUM_INSTALL_DIR/libs/
@@ -75,7 +76,7 @@ ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/li
 ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/lib/libsodium.a
 sodium_conf="--with-sodium=$SODIUM_INSTALL_DIR"
 
-cd MEGASync/sdk/sdk
+cd MEGASync/mega
 ./autogen.sh || exit 1
 ./configure --disable-curl-checks $curl_conf $sodium_conf --without-freeimage || exit 1
 cd ../..
