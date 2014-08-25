@@ -11,11 +11,12 @@ export CURL_SOURCE_FOLDER=$CURL-$CURL_VERSION
 export CURL_CONFIGURED=$CURL/$CURL_SOURCE_FOLDER/curl-config
 export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
 export CURL_SOURCE_DIR=$root_dir/$CURL/$CURL_SOURCE_FOLDER
-export CURL_INSTALL_DIR=$root_dir/MEGASync/3rdparty/
+export CURL_INSTALL_DIR=$root_dir/MEGASync/mega/bindings/qt/3rdparty
 
 export MAKE_OPTS="-j1"
 
 echo "Checking if native cURL uses c-ares..."
+#if curl-config --configure  2>&1 | grep enable-ares > /dev/null;
 if curl-config --configure  2>&1 | grep enable-ares > /dev/null;
 then
 	echo "cURL uses c-ares. We will use it!"
@@ -52,7 +53,7 @@ export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
 export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
 export SODIUM_DOWNLOAD_URL=http://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
 export SODIUM_SOURCE_DIR=$root_dir/$SODIUM/$SODIUM_SOURCE_FOLDER
-export SODIUM_INSTALL_DIR=$root_dir/MEGASync/3rdparty/
+export SODIUM_INSTALL_DIR=$root_dir/MEGASync/mega/bindings/qt/3rdparty
 
 if [ ! -f $SODIUM_SOURCE_FILE ]; then
     wget -c $SODIUM_DOWNLOAD_URL || exit 1
@@ -64,7 +65,7 @@ cd $SODIUM
 tar --overwrite -xf ../$SODIUM_SOURCE_FILE
 ln -sf $SODIUM_SOURCE_FOLDER $SODIUM
 cd $SODIUM_SOURCE_FOLDER || exit 1
-./configure --enable-shared=no --enable-static || exit 1
+./configure --disable-shared --enable-static || exit 1
 make $MAKE_OPTS || exit 1
 cd ../..
 mkdir -p $SODIUM_INSTALL_DIR
@@ -72,8 +73,8 @@ mkdir $SODIUM_INSTALL_DIR/include/
 cp -R $SODIUM_SOURCE_DIR/src/libsodium/include/* $SODIUM_INSTALL_DIR/include/
 mkdir -p $SODIUM_INSTALL_DIR/lib/
 mkdir -p $SODIUM_INSTALL_DIR/libs/
-ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/libs/libsodium.a
-ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/lib/libsodium.a
+ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/libs/
+ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/lib/
 sodium_conf="--with-sodium=$SODIUM_INSTALL_DIR"
 
 cd MEGASync/mega

@@ -6,9 +6,9 @@ cd ../Source
 make distclean 2> /dev/null || true
 cd MEGASync
 make distclean 2> /dev/null || true
-rm -fr 3rdparty/*
 cd mega
 make distclean 2> /dev/null || true
+rm -fr bindings/qt/3rdparty || true
 cd $cwd
 
 # download cURL
