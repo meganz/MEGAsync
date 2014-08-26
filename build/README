@@ -1,4 +1,4 @@
-MEGASync and MEGAShellExtNautilus projects OBS files.
+MEGAsync and MEGAShellExtNautilus projects OBS files.
 
 Supported distributives and versions (i586 and x86_64 platforms):
 * Ubuntu 14.04
@@ -18,7 +18,7 @@ Currently non supported:
 "build" directory structure is ready for Open Build Service integration.
 
 * MEGAsync
-    * MEGASync
+    * MEGAsync
     * MEGAShellExtNautilus
 
 Subprojects:
@@ -57,6 +57,6 @@ pass = YYY
 
 
 To get the initial copy of OBS repository:
-osc co MEGASync
+osc co MEGAsync
 
 osc documentation: http://en.opensuse.org/Build_Service/CLI

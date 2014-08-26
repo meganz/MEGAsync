@@ -79,12 +79,12 @@ desktop-file-install \
 %if 0%{?fedora_version} == 20
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
-[MEGASync]
-name=MEGASync
+[MEGAsync]
+name=MEGAsync
 type=rpm-md
-baseurl=https://mega.co.nz/linux/MEGASync/Fedora_20/
+baseurl=https://mega.co.nz/linux/MEGAsync/Fedora_20/
 gpgcheck=1
-gpgkey=https://mega.co.nz/linux/MEGASync/Fedora_20/repodata/repomd.xml.key
+gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_20/repodata/repomd.xml.key
 enabled=1
 DATA
 %endif
@@ -93,12 +93,12 @@ DATA
 %if 0%{?fedora_version} == 19
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
-[MEGASync]
-name=MEGASync
+[MEGAsync]
+name=MEGAsync
 type=rpm-md
-baseurl=https://mega.co.nz/linux/MEGASync/Fedora_19
+baseurl=https://mega.co.nz/linux/MEGAsync/Fedora_19
 gpgcheck=1
-gpgkey=https://mega.co.nz/linux/MEGASync/Fedora_19/repodata/repomd.xml.key
+gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
 enabled=1
 DATA
 %endif
