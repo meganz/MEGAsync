@@ -5,7 +5,7 @@ build-stamp:
 	dh_testdir
 	./configure
 	qmake
-	lrelease MEGsync/MEGASync.pro
+	lrelease MEGAsync/MEGASync.pro
 	make
 	touch build-stamp
 
