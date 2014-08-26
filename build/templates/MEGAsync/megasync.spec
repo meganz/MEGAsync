@@ -44,10 +44,10 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir}
-lrelease-qt4  MEGAsync/MEGAsync.pro
+lrelease-qt4  MEGASync/MEGASync.pro
 %else
 qmake DESTDIR=%{buildroot}%{_bindir}
-lrelease MEGAsync/MEGAsync.pro
+lrelease MEGASync/MEGASync.pro
 %endif
 
 make

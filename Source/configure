@@ -11,7 +11,7 @@ export CURL_SOURCE_FOLDER=$CURL-$CURL_VERSION
 export CURL_CONFIGURED=$CURL/$CURL_SOURCE_FOLDER/curl-config
 export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
 export CURL_SOURCE_DIR=$root_dir/$CURL/$CURL_SOURCE_FOLDER
-export CURL_INSTALL_DIR=$root_dir/MEGAsync/mega/bindings/qt/3rdparty
+export CURL_INSTALL_DIR=$root_dir/MEGASync/mega/bindings/qt/3rdparty
 
 export MAKE_OPTS="-j1"
 
@@ -53,7 +53,7 @@ export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
 export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
 export SODIUM_DOWNLOAD_URL=http://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
 export SODIUM_SOURCE_DIR=$root_dir/$SODIUM/$SODIUM_SOURCE_FOLDER
-export SODIUM_INSTALL_DIR=$root_dir/MEGAsync/mega/bindings/qt/3rdparty
+export SODIUM_INSTALL_DIR=$root_dir/MEGASync/mega/bindings/qt/3rdparty
 
 if [ ! -f $SODIUM_SOURCE_FILE ]; then
     wget -c $SODIUM_DOWNLOAD_URL || exit 1
@@ -77,7 +77,7 @@ ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/li
 ln -sf $SODIUM_SOURCE_DIR/src/libsodium/.libs/libsodium.a $SODIUM_INSTALL_DIR/lib/
 sodium_conf="--with-sodium=$SODIUM_INSTALL_DIR"
 
-cd MEGAsync/mega
+cd MEGASync/mega
 ./autogen.sh || exit 1
 ./configure --disable-curl-checks $curl_conf $sodium_conf --without-freeimage --disable-posix-threads || exit 1
 cd ../..
