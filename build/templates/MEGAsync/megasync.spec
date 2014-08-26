@@ -44,10 +44,10 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir}
-lrelease-qt4  MEGASync/MEGASync.pro
+lrelease-qt4  MEGAsync/MEGAsync.pro
 %else
 qmake DESTDIR=%{buildroot}%{_bindir}
-lrelease MEGASync/MEGASync.pro
+lrelease MEGAsync/MEGAsync.pro
 %endif
 
 make
@@ -55,7 +55,7 @@ make
 %install
 make install DESTDIR=%{buildroot}%{_bindir}
 #mkdir -p %{buildroot}%{_datadir}/applications
-#%{__install} MEGASync/platform/linux/data/megasync.desktop -D %{buildroot}%{_datadir}/applications
+#%{__install} MEGAsync/platform/linux/data/megasync.desktop -D %{buildroot}%{_datadir}/applications
 
 %if 0%{?suse_version}
 %suse_update_desktop_file -n -i %{name} Network System
