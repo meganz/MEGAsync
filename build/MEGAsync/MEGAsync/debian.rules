@@ -5,7 +5,7 @@ build-stamp:
 	dh_testdir
 	./configure
 	qmake
-	lrelease MEGASync/MEGASync.pro
+	lrelease MEGsync/MEGASync.pro
 	make
 	touch build-stamp
 
@@ -16,7 +16,7 @@ clean:
 
 install: build
 	dh_auto_install
-	dh_install MEGASync/megasync /usr/bin/
+	dh_install MEGAsync/megasync /usr/bin/
 
 # Build architecture-independent files here.
 binary-indep: build install
