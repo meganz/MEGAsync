@@ -54,7 +54,7 @@ ln -s ../MEGAsync/MEGAsync/debian.postinst $MEGASYNC_NAME/debian.postinst
 ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
 ln -s ../../Source/configure $MEGASYNC_NAME/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
-ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGAsync
+ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
 ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAME/$SODIUM_SOURCE_FILE
 tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
