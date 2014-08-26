@@ -65,7 +65,7 @@ Command: nautilus -q
 ButtonText: _Restart Nautilus
 DontShowAfterReboot: True
 DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
-Description: MEGASync requires Nautilus to be restarted to function properly.
+Description: MEGAsync requires Nautilus to be restarted to function properly.
 DATA
         touch /var/lib/update-notifier/dpkg-run-stamp
     else
@@ -96,7 +96,7 @@ Command: nautilus -q
 ButtonText: _Restart Nautilus
 DontShowAfterReboot: True
 DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
-Description: MEGASync requires Nautilus to be restarted to function properly.
+Description: MEGAsync requires Nautilus to be restarted to function properly.
 DATA
         touch /var/lib/update-notifier/dpkg-run-stamp
     else
