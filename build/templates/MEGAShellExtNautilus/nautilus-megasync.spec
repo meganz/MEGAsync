@@ -56,21 +56,18 @@ UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
 echo "Please restart all running instances of Nautilus."
 
 if [ -d $UPDATENOTIFIERDIR ] ; then
-    if pgrep -x nautilus > /dev/null 2>&1 ;  then
-        cat > $UPDATENOTIFIERDIR/megasync-restart-required <<DATA
+        cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
 Name: Nautilus Restart Required
 Priority: High
 Terminal: False
 Command: nautilus -q
-ButtonText: _Restart Nautilus
 DontShowAfterReboot: True
+ButtonText: _Restart Nautilus
 DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
-Description: MEGAsync requires Nautilus to be restarted to function properly.
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Nautilus to be restarted to function properly.
 DATA
-        touch /var/lib/update-notifier/dpkg-run-stamp
-    else
-        rm -f $UPDATENOTIFIERDIR/megasync-restart-required
-    fi
 fi
 
 %postun
@@ -87,21 +84,18 @@ UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
 echo "Please restart all running instances of Nautilus."
 
 if [ -d $UPDATENOTIFIERDIR ] ; then
-    if pgrep -x nautilus > /dev/null 2>&1 ;  then
-        cat > $UPDATENOTIFIERDIR/megasync-restart-required <<DATA
+        cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
 Name: Nautilus Restart Required
 Priority: High
 Terminal: False
 Command: nautilus -q
-ButtonText: _Restart Nautilus
 DontShowAfterReboot: True
+ButtonText: _Restart Nautilus
 DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
-Description: MEGAsync requires Nautilus to be restarted to function properly.
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Nautilus to be restarted to function properly.
 DATA
-        touch /var/lib/update-notifier/dpkg-run-stamp
-    else
-        rm -f $UPDATENOTIFIERDIR/megasync-restart-required
-    fi
 fi
 
 

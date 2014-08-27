@@ -82,9 +82,9 @@ cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
 type=rpm-md
-baseurl=https://mega.co.nz/linux/MEGAsync/Fedora_20/
+baseurl=http://mega.co.nz/linux/MEGAsync/Fedora_20/
 gpgcheck=1
-gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_20/repodata/repomd.xml.key
+gpgkey=http://mega.co.nz/linux/MEGAsync/Fedora_20/repodata/repomd.xml.key
 enabled=1
 DATA
 %endif
@@ -96,9 +96,9 @@ cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
 type=rpm-md
-baseurl=https://mega.co.nz/linux/MEGAsync/Fedora_19
+baseurl=http://mega.co.nz/linux/MEGAsync/Fedora_19
 gpgcheck=1
-gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
+gpgkey=http://mega.co.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
 enabled=1
 DATA
 %endif
