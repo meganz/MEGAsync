@@ -1,6 +1,12 @@
+megasync (1.0.29) beta; urgency=low
+
+  * First Public Beta
+
+ -- Javier Serrano <js@mega.co.nz>  Thu, 27 Aug 2014 12:00:00 +0100
+
 megasync (1.0) beta; urgency=low
 
   * First Beta
 
  -- Javier Serrano <js@mega.co.nz>  Thu, 13 Mar 2014 16:50:38 +0100
- 
+
