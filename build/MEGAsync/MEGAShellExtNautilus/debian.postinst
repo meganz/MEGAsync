@@ -15,11 +15,9 @@ elif [[ $ver = "6.0" ]]; then
     str="Debian_6.0"
 elif [[ $ver = "7.0" ]]; then
     str="Debian_7.0"
-elif [[ $ver = "8.0" ]]; then
-# fallback
-    str="Debian_7.0"
 else
-    exit 1
+# fallback
+    str="xUbuntu_14.04"
 fi
 
 if [ -d /etc/apt/sources.list.d ]; then
