@@ -194,15 +194,16 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 case MegaApi::STATE_SYNCED:
                     strncpy(out, RESPONSE_SYNCED, BUFSIZE);
                     break;
-                 case MegaApi::STATE_SYNCING:
-                     strncpy(out, RESPONSE_SYNCING, BUFSIZE);
-                     break;
+                case MegaApi::STATE_SYNCING:
+                    strncpy(out, RESPONSE_SYNCING, BUFSIZE);
+                    break;
                 case MegaApi::STATE_PENDING:
-                     strncpy(out, RESPONSE_PENDING, BUFSIZE);
-                     break;
-                 case MegaApi::STATE_NONE:
-                 default:
-                     strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
+                    strncpy(out, RESPONSE_PENDING, BUFSIZE);
+                    break;
+                case MegaApi::STATE_NONE:
+                case MegaApi::STATE_IGNORED:
+                default:
+                    strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
             }
             break;
         }
