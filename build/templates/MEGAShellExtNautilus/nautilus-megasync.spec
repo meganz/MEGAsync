@@ -9,7 +9,7 @@ Source0:	nautilus-megasync_%{version}.tar.gz
 BuildRequires:  qt-devel, glib2-devel, nautilus-devel, gnome-common
 BuildRequires:  pkgconfig(libnautilus-extension) >= 2.16.0
 BuildRequires:	hicolor-icon-theme
-Requires:       nautilus
+Requires:       nautilus, megasync
 
 %description
 Secure:
