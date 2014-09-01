@@ -1,3 +1,5 @@
 #!/bin/bash
 
-rm /etc/apt/sources.list.d/megasync.list || true
+if [ -f  /etc/apt/sources.list.d/megasync.list ]; then
+    rm /etc/apt/sources.list.d/megasync.list || true
+fi
