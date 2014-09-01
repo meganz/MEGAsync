@@ -14,7 +14,8 @@ Build-Depends:  debhelper,
 Package: nautilus-megasync
 Architecture: any
 Depends: ${shlibs:Depends},
-         ${misc:Depends}
+         ${misc:Depends},
+         megasync
 Recommends: nautilus (>= 2.16.0)
 Description: Easy automated syncing between your computers and your MEGA cloud drive
  Secure:
