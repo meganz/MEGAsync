@@ -1755,7 +1755,12 @@ void MegaApplication::createTrayIcon()
     }
     else
     {
-        trayIcon->setContextMenu(&emptyMenu);
+        #if defined(Q_OS_LINUX) && !defined(Q_OS_MAC)
+            trayIcon->setContextMenu(NULL);
+        #else
+            trayIcon->setContextMenu(&emptyMenu);
+        #endif
+
         #ifndef __APPLE__
             trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
         #else
