@@ -115,7 +115,9 @@ fi
 %endif
 # remove repo files
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
-rm $YUM_FILE || true
+rm -f $YUM_FILE 2> /dev/null || true
+# kill running MEGAsync instance
+killall megasync 2> /dev/null || true
 
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
