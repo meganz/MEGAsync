@@ -74,7 +74,6 @@ desktop-file-install \
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
 
-
 # Fedora 20
 %if 0%{?fedora_version} == 20
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
@@ -103,6 +102,49 @@ enabled=1
 DATA
 %endif
 
+# openSUSE 13.1
+%if 0%{?suse_version} == 1310
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.co.nz/linux/MEGAsync/openSUSE_13.1/
+gpgcheck=1
+gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_13.1/repodata/repomd.xml.key
+enabled=1
+DATA
+%endif
+
+# openSUSE 12.3
+%if 0%{?suse_version} == 1230
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.co.nz/linux/MEGAsync/openSUSE_12.3/
+gpgcheck=1
+gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_12.3/repodata/repomd.xml.key
+enabled=1
+DATA
+%endif
+
+# openSUSE 12.2
+%if 0%{?suse_version} == 1220
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.co.nz/linux/MEGAsync/openSUSE_12.2/
+gpgcheck=1
+gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_12.2/repodata/repomd.xml.key
+enabled=1
+DATA
+%endif
+
+
 %postun
 %if 0%{?suse_version} >= 1140
 %desktop_database_postun
@@ -116,6 +158,8 @@ fi
 # remove repo files
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 rm -f $YUM_FILE 2> /dev/null || true
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+rm -f $ZYPP_FILE 2> /dev/null || true
 # kill running MEGAsync instance
 killall megasync 2> /dev/null || true
 
