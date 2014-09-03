@@ -104,6 +104,7 @@ DATA
 
 # openSUSE 13.1
 %if 0%{?suse_version} == 1310
+if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
@@ -114,10 +115,12 @@ gpgcheck=1
 gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_13.1/repodata/repomd.xml.key
 enabled=1
 DATA
+fi
 %endif
 
 # openSUSE 12.3
 %if 0%{?suse_version} == 1230
+if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
@@ -128,10 +131,12 @@ gpgcheck=1
 gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_12.3/repodata/repomd.xml.key
 enabled=1
 DATA
+fi
 %endif
 
 # openSUSE 12.2
 %if 0%{?suse_version} == 1220
+if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
@@ -142,6 +147,7 @@ gpgcheck=1
 gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_12.2/repodata/repomd.xml.key
 enabled=1
 DATA
+fi
 %endif
 
 
