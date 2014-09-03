@@ -43,7 +43,7 @@ make install
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-3.0
 %{__install} libMEGAShellExtNautilus.so -D $RPM_BUILD_ROOT%{_libdir}/nautilus/extensions-3.0
 # clean up
-rm -rf $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache
+rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
 
 %post
 %if 0%{?suse_version} >= 1140
