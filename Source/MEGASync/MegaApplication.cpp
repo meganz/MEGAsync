@@ -964,10 +964,18 @@ void MegaApplication::showInfoDialog()
         {
             int posx, posy;
             QPoint position;
-            QRect screenGeometry = QApplication::desktop()->availableGeometry();
 
             #ifdef __APPLE__
                 position = trayIcon->getPosition();
+            #else
+                position = QCursor::pos();
+            #endif
+
+            QDesktopWidget *desktop = QApplication::desktop();
+            int screenIndex = desktop->screenNumber(position);
+            QRect screenGeometry = desktop->availableGeometry(screenIndex);
+
+            #ifdef __APPLE__
                 posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
                 posy = screenGeometry.top();
             #else
@@ -999,15 +1007,13 @@ void MegaApplication::showInfoDialog()
                     }
                 #endif
 
-                position = QCursor::pos();
-
                 if(position.x() > (screenGeometry.right()/2))
-                    posx = screenGeometry.right() - 400 - 2;
+                    posx = screenGeometry.right() - infoDialog->width() - 2;
                 else
                     posx = screenGeometry.left() + 2;
 
                 if(position.y() > (screenGeometry.bottom()/2))
-                    posy = screenGeometry.bottom() - 545 - 2;
+                    posy = screenGeometry.bottom() - infoDialog->height() - 2;
                 else
                     posy = screenGeometry.top() + 2;
             #endif
