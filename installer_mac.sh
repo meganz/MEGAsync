@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 APP_NAME=MEGAsync
 MOUNTDIR=tmp
