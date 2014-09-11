@@ -11,6 +11,7 @@
 #include <QDataStream>
 #include <QQueue>
 
+#include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
@@ -21,6 +22,7 @@
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
+#include "control/MegaDownloader.h"
 #include "control/UpdateTask.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
@@ -97,6 +99,7 @@ public slots:
 	void importLinks();
     void uploadActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle);
+    void downloadActionClicked();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
 	void onLinkImportFinished();
@@ -142,6 +145,7 @@ protected:
     QAction *settingsAction;
 	QAction *importLinksAction;
     QAction *uploadAction;
+    QAction *downloadAction;
     QAction *aboutAction;
     QAction *changeProxyAction;
     QAction *initialExitAction;
@@ -168,6 +172,7 @@ protected:
     mega::QTMegaListener *delegateListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
+    MegaDownloader *downloader;
     QTimer *refreshTimer;
     QTimer *infoDialogTimer;
     QTranslator *translator;
