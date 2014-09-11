@@ -454,7 +454,7 @@ void InfoDialog::updateState()
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 
-        #ifdef __APPLE__
+        #ifndef __linux__
             ui->label->setIcon(icon);
             ui->label->setIconSize(QSize(64, 64));
         #else
@@ -484,7 +484,7 @@ void InfoDialog::updateState()
 
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            #ifdef __APPLE__
+            #ifndef __linux__
                 ui->label->setIcon(icon);
                 ui->label->setIconSize(QSize(64, 64));
             #else
@@ -499,7 +499,7 @@ void InfoDialog::updateState()
             ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            #ifdef __APPLE__
+            #ifndef __linux__
                 ui->label->setIcon(icon);
                 ui->label->setIconSize(QSize(64, 64));
             #else
@@ -514,7 +514,7 @@ void InfoDialog::updateState()
             ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            #ifdef __APPLE__
+            #ifndef __linux__
                 ui->label->setIcon(icon);
                 ui->label->setIconSize(QSize(64, 64));
             #else
@@ -913,7 +913,7 @@ void InfoDialog::scanningAnimationStep()
     icon.addFile(QString::fromUtf8(":/images/scanning_anime")+
                  QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
 
-#ifdef __APPLE__
+#ifndef __linux__
     ui->label->setIcon(icon);
     ui->label->setIconSize(QSize(64, 64));
 #else

@@ -6,20 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>50</height>
+    <width>400</width>
+    <height>48</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>398</width>
-    <height>50</height>
+    <width>400</width>
+    <height>48</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>398</width>
-    <height>50</height>
+    <width>400</width>
+    <height>48</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -28,77 +34,67 @@
   <property name="styleSheet">
    <string notr="true">#RecentFile
 {
-margin-left: 1px;
-margin-right: 1px;
+   border-bottom: 2px solid rgb(241, 240, 240);
 }
 
-#wText
-{
-border-bottom: 2px solid rgb(241, 240, 240);
-}
 
-#pArrow
-{
-margin-right: 1px;
-border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
-}
 
-#lFileType
-{
-margin-left: 1px;
-padding-left: 10px;
-border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
-}
-
-#lTime
-{
-color: rgb(102, 102, 102);
-font-size: 10px;
-}
-
-#lFileName
-{
-color: rgb(51, 51, 51);
-font-size: 11px;
-}</string>
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>3</number>
+    <number>2</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="lFileType">
+    <widget class="QPushButton" name="lFileType">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>60</width>
-       <height>50</height>
+       <width>59</width>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>60</width>
-       <height>50</height>
+       <width>59</width>
+       <height>48</height>
       </size>
      </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
+     <property name="styleSheet">
+      <string notr="true">#lFileType
+{
+	border-bottom: 2px solid rgb(241, 240, 240);
+	padding-left: 16px;
+}</string>
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>48</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -107,24 +103,30 @@ font-size: 11px;
      <property name="minimumSize">
       <size>
        <width>288</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>288</width>
-       <height>50</height>
+       <height>48</height>
       </size>
      </property>
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">#wText
+{
+	 border-bottom: 2px solid rgb(241, 240, 240);
+}</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>7</number>
       </property>
       <property name="topMargin">
        <number>6</number>
@@ -152,6 +154,16 @@ font-size: 11px;
           <height>16777215</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">#lFileName
+{
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #333333;
+}
+</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -159,6 +171,15 @@ font-size: 11px;
       </item>
       <item>
        <widget class="QLabel" name="lTime">
+        <property name="styleSheet">
+         <string notr="true">#lTime
+{
+font: &quot;Helvetica&quot;;
+font-size: 10px;
+font-weight: normal;
+color: #666666;
+}</string>
+        </property>
         <property name="text">
          <string>%1 hours ago</string>
         </property>
@@ -168,37 +189,120 @@ font-size: 11px;
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pArrow">
+    <widget class="QWidget" name="s1" native="true">
      <property name="minimumSize">
       <size>
-       <width>50</width>
-       <height>0</height>
+       <width>7</width>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>50</width>
-       <height>50</height>
+       <width>7</width>
+       <height>48</height>
       </size>
      </property>
-     <property name="toolTip">
-      <string>Get MEGA link</string>
+     <property name="styleSheet">
+      <string notr="true">#s1
+{
+ border-bottom: 2px solid rgb(241, 240, 240);
+}</string>
      </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../Resources_win.qrc">
-       <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
-     </property>
-     <property name="iconSize">
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="v" native="true">
+     <property name="minimumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>30</width>
+       <height>48</height>
       </size>
      </property>
-     <property name="flat">
-      <bool>true</bool>
+     <property name="maximumSize">
+      <size>
+       <width>30</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#v
+{ 
+border-bottom: 2px solid rgb(241, 240, 240);
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="pArrow">
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Get MEGA link</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="s2" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#s2
+{
+	 border-bottom: 2px solid rgb(241, 240, 240);
+}</string>
      </property>
     </widget>
    </item>

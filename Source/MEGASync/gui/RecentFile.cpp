@@ -56,7 +56,7 @@ void RecentFile::updateWidget()
         QIcon icon;
         icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
 
-#ifdef __APPLE__
+#ifndef __linux__
         ui->lFileType->setIcon(icon);
         ui->lFileType->setIconSize(QSize(48, 48));
 #else

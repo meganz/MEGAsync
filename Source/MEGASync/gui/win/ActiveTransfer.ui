@@ -26,11 +26,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#ActiveTransfer
-{
-}
-
-#lPercentage
+   <string notr="true">#lPercentage
 {
 color: green;
 padding-right: 5px;
@@ -64,7 +60,16 @@ padding-left: 1px;
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
@@ -123,7 +128,7 @@ padding-left: 1px;
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="Resources.qrc">:/images/tray_download_ico.png</pixmap>
+         <pixmap resource="../Resources_win.qrc">:/images/tray_download_ico.png</pixmap>
         </property>
        </widget>
       </item>
@@ -173,7 +178,7 @@ padding-left: 1px;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
