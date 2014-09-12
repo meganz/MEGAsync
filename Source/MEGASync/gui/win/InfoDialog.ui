@@ -194,16 +194,7 @@ padding-left: 1px;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -225,7 +216,7 @@ padding-left: 1px;
        <number>15</number>
       </property>
       <property name="leftMargin">
-       <number>17</number>
+       <number>18</number>
       </property>
       <property name="topMargin">
        <number>8</number>
@@ -424,16 +415,7 @@ margin-top:-1px;
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
        <item>
@@ -539,16 +521,7 @@ padding-bottom: 25px;
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
+       <property name="margin">
         <number>0</number>
        </property>
        <item>
@@ -569,16 +542,7 @@ padding-bottom: 25px;
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -656,13 +620,13 @@ padding-bottom: 25px;
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>20</number>
+              <number>19</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>15</number>
+              <number>13</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -739,13 +703,13 @@ color: rgb(102, 102, 102);</string>
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>20</number>
+              <number>19</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>15</number>
+              <number>13</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -843,16 +807,7 @@ color: rgb(102, 102, 102);</string>
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
+      <property name="margin">
        <number>0</number>
       </property>
       <item>
@@ -874,7 +829,7 @@ color: rgb(102, 102, 102);</string>
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>19</number>
+          <number>18</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -981,16 +936,7 @@ color: rgb(102, 102, 102);</string>
          <property name="spacing">
           <number>0</number>
          </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
+         <property name="margin">
           <number>0</number>
          </property>
          <item>
@@ -1123,7 +1069,7 @@ color: rgb(102, 102, 102);</string>
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -1256,7 +1202,7 @@ color: #333333;
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>17</number>
+       <number>18</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -1350,7 +1296,7 @@ color: #666666;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/tray_web_ico@2x.png</normaloff>:/images/tray_web_ico@2x.png</iconset>
+          <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
