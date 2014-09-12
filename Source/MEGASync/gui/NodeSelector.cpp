@@ -4,9 +4,10 @@
 #include <QMessageBox>
 #include "control/Utilities.h"
 
+
 using namespace mega;
 
-NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent) :
+NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent, bool showFiles) :
     QDialog(parent),
     ui(new Ui::NodeSelector)
 {
@@ -17,6 +18,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     selectedItem = NULL;
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;
+    this->showFiles = showFiles;
     delegateListener = new QTMegaRequestListener(megaApi, this);
     ui->bOk->setDefault(true);
 }
@@ -98,7 +100,20 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode
             item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
             parentItem->addChild(item);
             addChildren(item, node);
+
+        }else if(showFiles)
+        {
+            QIcon icon;
+            icon.addFile(Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName())), QSize(), QIcon::Normal, QIcon::Off);
+            QTreeWidgetItem *item = new QTreeWidgetItem();
+            item->setText(0, QString::fromUtf8(node->getName()));
+            item->setIcon(0, icon);
+            item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
+            parentItem->addChild(item);
+            addChildren(item, node);
         }
+
+
     }
     delete children;
 }

@@ -97,10 +97,7 @@ private slots:
     void on_bUpdate_clicked();
     void on_bSyncChange_clicked();
     void on_bFullCheck_clicked();
-
-#ifndef __APPLE__
     void on_bStorageDetails_clicked();
-#endif
 
     void onAnimationFinished();
 

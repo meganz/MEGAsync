@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>364</width>
-    <height>21</height>
+    <width>362</width>
+    <height>24</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>362</width>
+    <height>24</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>362</width>
+    <height>24</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string/>
@@ -16,19 +34,26 @@
   <property name="styleSheet">
    <string notr="true">#wProgress
 {
-	background-color: red;
-	border-radius: 6px;
-	margin-left: 5px;
-}</string>
+        background-color: red;
+        border-radius: 6px;
+        margin-left: 5px;
+}
+</string>
   </property>
   <widget class="QWidget" name="wProgress" native="true">
    <property name="geometry">
     <rect>
-     <x>2</x>
-     <y>4</y>
+     <x>0</x>
+     <y>6</y>
      <width>50</width>
      <height>12</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="minimumSize">
     <size>
@@ -42,24 +67,62 @@
      <height>12</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
   </widget>
-  <widget class="QLabel" name="lProgress">
+  <widget class="QPushButton" name="lProgress">
    <property name="geometry">
     <rect>
-     <x>2</x>
+     <x>0</x>
      <y>0</y>
      <width>362</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>362</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>362</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: none;</string>
    </property>
    <property name="text">
     <string/>
    </property>
-   <property name="pixmap">
-    <pixmap>://images/usageProgress.png</pixmap>
+   <property name="icon">
+    <iconset resource="../Resources_win.qrc">
+     <normaloff>:/images/usageProgress.png</normaloff>:/images/usageProgress.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>362</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
+  <zorder>lProgress</zorder>
+  <zorder>wProgress</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_win.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -229,6 +229,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsAction = NULL;
     importLinksAction = NULL;
     uploadAction = NULL;
+    downloadAction = NULL;
     trayMenu = NULL;
     waiting = false;
     updated = false;
@@ -294,6 +295,7 @@ void MegaApplication::initialize()
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
+    downloader = new MegaDownloader(megaApi);
     scanningTimer = new QTimer();
     scanningTimer->setSingleShot(false);
     scanningTimer->setInterval(500);
@@ -964,16 +966,17 @@ void MegaApplication::showInfoDialog()
         {
             int posx, posy;
             QPoint position;
+            QRect screenGeometry;
 
             #ifdef __APPLE__
                 position = trayIcon->getPosition();
+                screenGeometry = QApplication::desktop()->availableGeometry();
             #else
                 position = QCursor::pos();
+                QDesktopWidget *desktop = QApplication::desktop();
+                int screenIndex = desktop->screenNumber(position);
+                screenGeometry = desktop->availableGeometry(screenIndex);
             #endif
-
-            QDesktopWidget *desktop = QApplication::desktop();
-            int screenIndex = desktop->screenNumber(position);
-            QRect screenGeometry = desktop->availableGeometry(screenIndex);
 
             #ifdef __APPLE__
                 posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
@@ -1397,6 +1400,57 @@ void MegaApplication::uploadActionClicked()
     multiUploadFileDialog = NULL;
 }
 
+void MegaApplication::downloadActionClicked()
+{
+    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, 0,true);
+    nodeSelector->nodesReady();
+    int result = nodeSelector->exec();
+    if(result != QDialog::Accepted)
+    {
+        delete nodeSelector;
+        return;
+    }
+
+    long long selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
+    MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    if(!selectedFolder)
+    {
+        selectedMegaFolderHandle = mega::INVALID_HANDLE;
+        delete nodeSelector;
+        return;
+    }
+
+    QString defaultPath;
+    #ifdef WIN32
+        #if QT_VERSION < 0x050000
+            defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        #else
+            defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+        #endif
+    #else
+        #if QT_VERSION < 0x050000
+            defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+        #else
+            defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+        #endif
+    #endif
+
+    QString fPath =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
+                                                  defaultPath,
+                                                  QFileDialog::ShowDirsOnly
+                                                  | QFileDialog::DontResolveSymlinks);
+    if(fPath.length())
+    {
+        QDir dir(fPath);
+        if(!dir.exists() && !dir.mkpath(QString::fromAscii("."))) return;
+        downloader->download(selectedFolder, fPath+QDir::separator());
+    }
+
+    delete nodeSelector;
+    delete selectedFolder;
+
+}
+
 //Called when the user wants to generate the public link for a node
 void MegaApplication::copyFileLink(MegaHandle fileHandle)
 {
@@ -1725,6 +1779,10 @@ void MegaApplication::createTrayIcon()
     uploadAction = new QAction(tr("Upload to MEGA"), this);
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
 
+    if(downloadAction) delete downloadAction;
+    downloadAction = new QAction(tr("Download from MEGA"), this);
+    connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
+
     if(updateAction) delete updateAction;
     if(updateAvailable)
     {
@@ -1746,6 +1804,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addSeparator();
 	trayMenu->addAction(importLinksAction);
     trayMenu->addAction(uploadAction);
+    trayMenu->addAction(downloadAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);

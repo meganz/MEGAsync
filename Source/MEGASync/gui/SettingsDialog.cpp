@@ -131,6 +131,20 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->lCacheTitle->hide();
     ui->lCacheSeparator->hide();
+
+#elif WIN32
+    ui->gBandwidthQuota->hide();
+
+    ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
+
+    ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+
+    ui->lCacheTitle->hide();
+    ui->lCacheSeparator->hide();
 #endif
 
     ui->gCache->setVisible(false);
@@ -640,7 +654,7 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
         }
-#ifdef __APPLE__
+#ifndef __linux__
         ui->lAccountImage->setIcon(icon);
         ui->lAccountImage->setIconSize(QSize(32, 32));
 #else
@@ -751,16 +765,13 @@ void SettingsDialog::refreshAccountDetails()
     {
         ui->pStorage->setValue(0);
         ui->lStorage->setText(tr("Data temporarily unavailable"));
-
-#ifndef __APPLE__
         ui->bStorageDetails->setEnabled(false);
-#endif
+
     }
     else
     {
-#ifndef __APPLE__
+
         ui->bStorageDetails->setEnabled(true);
-#endif
         int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
         ui->pStorage->setValue((percentage < 100) ? percentage : 100);
         ui->lStorage->setText(tr("%1 (%2%) of %3 used")
@@ -1432,7 +1443,6 @@ void SettingsDialog::onAnimationFinished()
         ui->pAdvanced->show();
 }
 
-#ifndef __APPLE__
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
@@ -1440,7 +1450,6 @@ void SettingsDialog::on_bStorageDetails_clicked()
     delete accountDetailsDialog;
     accountDetailsDialog = NULL;
 }
-#endif
 
 void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 {

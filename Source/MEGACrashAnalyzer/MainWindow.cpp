@@ -47,8 +47,8 @@ void MainWindow::parseCrashes(QString folder)
             continue;
 
         QString fileContents = QString::fromUtf8(file.readAll());
-        QStringList crashReports = fileContents.split(QString::fromAscii("------------------------------\n"), QString::SkipEmptyParts);
-        if(crashReports.size()-2 >= 0 && crashReports[crashReports.size()-2].split(QString::fromAscii("\n")).size()<3)
+        QStringList crashReports = fileContents.split(QString::fromUtf8("------------------------------\n"), QString::SkipEmptyParts);
+        if(crashReports.size()-2 >= 0 && crashReports[crashReports.size()-2].split(QString::fromUtf8("\n")).size()<3)
                 crashReports.removeLast();
 
         for(int j=0; j<crashReports.size()-1; j++)
@@ -56,11 +56,11 @@ void MainWindow::parseCrashes(QString folder)
             QString crashReport = crashReports[j];
             file.close();
 
-            QStringList lines = crashReport.split(QString::fromAscii("\n"));
+            QStringList lines = crashReport.split(QString::fromUtf8("\n"));
             if((lines.size()<3) ||
-             (lines.at(0) != QString::fromAscii("MEGAprivate ERROR DUMP")) ||
-             (!lines.at(1).startsWith(QString::fromAscii("Application: "))) ||
-             (!lines.at(2).startsWith(QString::fromAscii("Version"))))
+             (lines.at(0) != QString::fromUtf8("MEGAprivate ERROR DUMP")) ||
+             (!lines.at(1).startsWith(QString::fromUtf8("Application: "))) ||
+             (!lines.at(2).startsWith(QString::fromUtf8("Version"))))
             {
                 continue;
             }
@@ -78,7 +78,7 @@ void MainWindow::parseCrashes(QString folder)
                 version.insert(lines.at(locationIndex), QStringList());
 
             QStringList &fullReports = version[lines.at(locationIndex)];
-            crashReport.insert(0, tr("File: ") + fiList[i].fileName() + QString::fromAscii("\n\n"));
+            crashReport.insert(0, tr("File: ") + fiList[i].fileName() + QString::fromUtf8("\n\n"));
             if(crashReports[crashReports.size()-1].size())
                 crashReport.insert(0, tr("User comment: ") + crashReports[crashReports.size()-1]);
             fullReports.append(crashReport);
