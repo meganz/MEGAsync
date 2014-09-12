@@ -213,6 +213,5 @@
         <file>images/menu_header.png</file>
         <file>images/menu_selected.png</file>
         <file>images/separator line.png</file>
-        <file>images/separator line@2x.png</file>
     </qresource>
 </RCC>
