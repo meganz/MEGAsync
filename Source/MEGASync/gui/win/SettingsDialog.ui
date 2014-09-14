@@ -1647,13 +1647,13 @@ border: none;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>219</number>
+                <number>210</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>219</number>
+                <number>210</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>
@@ -1694,6 +1694,16 @@ border: none;</string>
                  <string>MEGA folder</string>
                 </property>
                </column>
+               <column>
+                <property name="text">
+                 <string/>
+                </property>
+               </column>
+               <item row="0" column="2">
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>

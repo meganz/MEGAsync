@@ -113,12 +113,15 @@ public:
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
     mega::MegaHandle getMegaFolderHandle(int num);
+    bool isFolderActive(int num);
+    void setSyncState(int num, bool enabled);
+
     QStringList getSyncNames();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
     QList<long long> getMegaFolderHandles();
 
-    void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString());
+    void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString(), bool active = true);
     void removeSyncedFolder(int num);
     void removeAllFolders();
 
@@ -207,6 +210,7 @@ protected:
     QStringList megaFolders;
     QStringList localFolders;
     QList<long long> megaFolderHandles;
+    QList<bool> activeFolders;
     QStringList excludedSyncNames;
     bool errorFlag;
 
@@ -246,6 +250,7 @@ protected:
     static const QString localFolderKey;
     static const QString megaFolderKey;
     static const QString megaFolderHandleKey;
+    static const QString folderActiveKey;
 	static const QString downloadFolderKey;
 	static const QString uploadFolderKey;
 	static const QString importFolderKey;

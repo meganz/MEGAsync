@@ -221,6 +221,44 @@ void SettingsDialog::stateChanged()
 #endif
 }
 
+void SettingsDialog::syncStateChanged(int state)
+{
+    if(state)
+    {
+        QCheckBox *c = ((QCheckBox *)QObject::sender());
+        for(int j=0; j<ui->tSyncs->rowCount(); j++)
+        {
+            if(ui->tSyncs->cellWidget(j, 2) == c)
+            {
+                QString newLocalPath = ui->tSyncs->item(j, 0)->text().trimmed();
+                QFileInfo fi(newLocalPath);
+                if(!fi.exists() || !fi.isDir())
+                {
+                    QMessageBox::critical(this, tr("Error"),
+                       tr("This sync can't be enabled because the local folder doesn't exist"));
+                    c->setCheckState(Qt::Unchecked);
+                    return;
+                }
+
+                QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
+                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+                if(!n)
+                {
+                    QMessageBox::critical(this, tr("Error"),
+                       tr("This sync can't be enabled because the remote folder doesn't exist"));
+                    c->setCheckState(Qt::Unchecked);
+                    return;
+                }
+                delete n;
+                break;
+            }
+        }
+    }
+
+    syncsChanged = true;
+    stateChanged();
+}
+
 void SettingsDialog::proxyStateChanged()
 {
     if(modifyingSettings) return;
@@ -861,7 +899,7 @@ bool SettingsDialog::saveSettings()
         //Syncs
         if(syncsChanged)
         {
-            //Check for removed folders
+            //Check for removed or disabled folders
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
                 QString localPath = preferences->getLocalFolder(i);
@@ -872,11 +910,19 @@ bool SettingsDialog::saveSettings()
                 {
                     QString newLocalPath = ui->tSyncs->item(j, 0)->text().trimmed();
                     QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
+                    bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
+
                     MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
                     if(!n) continue;
 
                     if((n->getHandle() == megaHandle) && !localPath.compare(newLocalPath))
                     {
+                        if(!enabled && preferences->isFolderActive(i) != enabled)
+                        {
+                            Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                            preferences->setSyncState(i, enabled);
+                            megaApi->removeSync(megaHandle);
+                        }
                         delete n;
                         break;
                     }
@@ -893,19 +939,32 @@ bool SettingsDialog::saveSettings()
                 }
             }
 
-            //Check for new folders
+            //Check for new or enabled folders
             for(int i=0; i<ui->tSyncs->rowCount(); i++)
             {
                 QString localFolderPath = ui->tSyncs->item(i, 0)->text().trimmed();
                 QString megaFolderPath = ui->tSyncs->item(i, 1)->text().trimmed();
+                bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->isChecked();
+
                 QString syncName = syncNames.at(i);
                 MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-                if(!node) continue;
+                if(!node)
+                {
+                    if(enabled)
+                        ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
+                    continue;
+                }
+
                 int j;
 
                 QFileInfo localFolderInfo(localFolderPath);
                 localFolderPath = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
-                if(!localFolderPath.size() || !localFolderInfo.isDir()) continue;
+                if(!localFolderPath.size() || !localFolderInfo.isDir())
+                {
+                    if(enabled)
+                        ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
+                    continue;
+                }
 
                 for(j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
@@ -913,7 +972,14 @@ bool SettingsDialog::saveSettings()
                     MegaHandle previousMegaHandle = preferences->getMegaFolderHandle(j);
 
                     if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
+                    {
+                        if(enabled && preferences->isFolderActive(j) != enabled)
+                        {
+                            preferences->setSyncState(i, enabled);
+                            megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                        }
                         break;
+                    }
                 }
 
                 if(j == preferences->getNumSyncedFolders())
@@ -922,8 +988,10 @@ bool SettingsDialog::saveSettings()
                     preferences->addSyncedFolder(localFolderPath,
                                                  megaFolderPath,
                                                  node->getHandle(),
-                                                 syncName);
-                    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                                                 syncName, enabled);
+
+                    if(enabled)
+                        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
                 }
                 delete node;
             }
@@ -1156,7 +1224,8 @@ void SettingsDialog::loadSyncSettings()
     ui->tSyncs->horizontalHeader()->setVisible(true);
     int numFolders = preferences->getNumSyncedFolders();
     ui->tSyncs->setRowCount(numFolders);
-    ui->tSyncs->setColumnCount(2);
+    ui->tSyncs->setColumnCount(3);
+    ui->tSyncs->setColumnWidth(2, 18);
     for(int i=0; i<numFolders; i++)
     {
         QTableWidgetItem *localFolder = new QTableWidgetItem();
@@ -1168,6 +1237,11 @@ void SettingsDialog::loadSyncSettings()
         megaFolder->setToolTip(preferences->getMegaFolder(i));
         ui->tSyncs->setItem(i, 1, megaFolder);
         syncNames.append(preferences->getSyncName(i));
+        QCheckBox *c = new QCheckBox();
+        c->setChecked(preferences->isFolderActive(i));
+        c->setToolTip(tr("Enable / disable"));
+        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+        ui->tSyncs->setCellWidget(i, 2, c);
     }
     updateAddButton();
 }
@@ -1218,6 +1292,13 @@ void SettingsDialog::on_bAdd_clicked()
    ui->tSyncs->setItem(pos, 0, localFolder);
    megaFolder->setToolTip(QString::fromUtf8(nPath));
    ui->tSyncs->setItem(pos, 1, megaFolder);
+
+   QCheckBox *c = new QCheckBox();
+   c->setChecked(true);
+   c->setToolTip(tr("Enable / disable"));
+   connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+   ui->tSyncs->setCellWidget(pos, 2, c);
+
    syncNames.append(dialog->getSyncName());
    delete node;
    delete nPath;

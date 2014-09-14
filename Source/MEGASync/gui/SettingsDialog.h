@@ -44,6 +44,7 @@ public:
 
 public slots:
     void stateChanged();
+    void syncStateChanged(int state);
     void proxyStateChanged();
     void onCacheSizeAvailable();
     
