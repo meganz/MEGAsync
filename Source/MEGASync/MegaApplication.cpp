@@ -661,13 +661,16 @@ void MegaApplication::startSyncs()
     MegaNode *rubbishNode =  megaApi->getRubbishNode();
 	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
 	{
+        if(!preferences->isFolderActive(i))
+            continue;
+
         MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
         if(!node)
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                 "because the remote folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
-            preferences->removeSyncedFolder(i);
+            preferences->setSyncState(i, false);
             i--;
             continue;
         }
@@ -678,7 +681,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                 "because the local folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
-            preferences->removeSyncedFolder(i);
+            preferences->setSyncState(i, false);
             i--;
             continue;
         }
@@ -2077,7 +2080,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     LOG("Sync error! Removed");
                     Platform::syncFolderRemoved(localFolder, preferences->getSyncName(i));
-                    preferences->removeSyncedFolder(i);
+                    preferences->setSyncState(i, false);
                     if(settingsDialog)
                         settingsDialog->loadSettings();
                 }
@@ -2326,7 +2329,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
                     Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
                     Platform::notifyItemChange(preferences->getLocalFolder(i));
                     megaApi->removeSync(preferences->getMegaFolderHandle(i));
-                    preferences->removeSyncedFolder(i);
+                    preferences->setSyncState(i, false);
                     i--;
                 }
 
@@ -2437,6 +2440,9 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         //Start syncs
         for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         {
+            if(!preferences->isFolderActive(i))
+                continue;
+
             MegaNode *node = api->getNodeByHandle(preferences->getMegaFolderHandle(i));
             QString localFolder = preferences->getLocalFolder(i);
             api->resumeSync(localFolder.toUtf8().constData(), node);

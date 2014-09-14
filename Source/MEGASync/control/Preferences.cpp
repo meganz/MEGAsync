@@ -76,6 +76,7 @@ const QString Preferences::syncNameKey              = QString::fromAscii("syncNa
 const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
 const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
 const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
+const QString Preferences::folderActiveKey          = QString::fromAscii("folderActive");
 const QString Preferences::downloadFolderKey		= QString::fromAscii("downloadFolder");
 const QString Preferences::uploadFolderKey			= QString::fromAscii("uploadFolder");
 const QString Preferences::importFolderKey			= QString::fromAscii("importFolder");
@@ -858,6 +859,32 @@ MegaHandle Preferences::getMegaFolderHandle(int num)
     return value;
 }
 
+bool Preferences::isFolderActive(int num)
+{
+    mutex.lock();
+    if(num >= activeFolders.size())
+    {
+        mutex.unlock();
+        return false;
+    }
+    bool value = activeFolders.at(num);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setSyncState(int num, bool enabled)
+{
+    mutex.lock();
+    if(num >= activeFolders.size())
+    {
+        mutex.unlock();
+        return;
+    }
+    activeFolders[num] = enabled;
+    writeFolders();
+    mutex.unlock();
+}
+
 QStringList Preferences::getSyncNames()
 {
     mutex.lock();
@@ -890,7 +917,7 @@ QList<long long> Preferences::getMegaFolderHandles()
     return value;
 }
 
-void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName)
+void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName,  bool active)
 {
     mutex.lock();
     assert(logged());
@@ -905,6 +932,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     localFolders.append(localFolder);
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
+    activeFolders.append(active);
     writeFolders();
     mutex.unlock();
     Platform::syncFolderAdded(localFolder, syncName);
@@ -918,6 +946,7 @@ void Preferences::removeSyncedFolder(int num)
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
+    activeFolders.removeAt(num);
     writeFolders();
     mutex.unlock();
 }
@@ -933,6 +962,7 @@ void Preferences::removeAllFolders()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    activeFolders.clear();
     writeFolders();
     mutex.unlock();
 }
@@ -1098,6 +1128,7 @@ void Preferences::leaveUser()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    activeFolders.clear();
     mutex.unlock();
 }
 
@@ -1115,6 +1146,7 @@ void Preferences::unlink()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    activeFolders.clear();
     mutex.unlock();
 }
 
@@ -1255,6 +1287,7 @@ void Preferences::logout()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    activeFolders.clear();
     mutex.unlock();
 }
 
@@ -1298,6 +1331,7 @@ void Preferences::readFolders()
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
+    activeFolders.clear();
 
     settings->beginGroup(syncsGroupKey);
     int numSyncs = settings->numChildGroups();
@@ -1308,6 +1342,7 @@ void Preferences::readFolders()
             localFolders.append(settings->value(localFolderKey).toString());
             megaFolders.append(settings->value(megaFolderKey).toString());
             megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
+            activeFolders.append(settings->value(folderActiveKey, true).toBool());
         settings->endGroup();
     }
     settings->endGroup();
@@ -1328,6 +1363,7 @@ void Preferences::writeFolders()
                 settings->setValue(localFolderKey, localFolders[i]);
                 settings->setValue(megaFolderKey, megaFolders[i]);
                 settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
+                settings->setValue(folderActiveKey, activeFolders[i]);
             settings->endGroup();
         }
     settings->endGroup();

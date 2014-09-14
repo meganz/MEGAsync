@@ -406,6 +406,10 @@ void InfoDialog::transferFinished(int error)
 void InfoDialog::updateSyncsButton()
 {
     int num = preferences->getNumSyncedFolders();
+    long long firstSyncHandle = mega::INVALID_HANDLE;
+    if(num == 1)
+        firstSyncHandle = preferences->getMegaFolderHandle(0);
+
     MegaNode *rootNode = megaApi->getRootNode();
     if(!rootNode)
     {
@@ -414,9 +418,6 @@ void InfoDialog::updateSyncsButton()
         return;
     }
     long long rootHandle = rootNode->getHandle();
-    long long firstSyncHandle = 0;
-    if(num == 1)
-        firstSyncHandle = preferences->getMegaFolderHandle(0);
 
     if((num == 1) && (firstSyncHandle==rootHandle))
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
@@ -837,6 +838,9 @@ void InfoDialog::on_bSyncFolder_clicked()
         menuSignalMapper = new QSignalMapper();
         for(int i=0; i<num; i++)
         {
+            if(!preferences->isFolderActive(i))
+                continue;
+
             QAction *action = syncsMenu->addAction(preferences->getSyncName(i), menuSignalMapper, SLOT(map()));
 #ifdef __APPLE__
             action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
