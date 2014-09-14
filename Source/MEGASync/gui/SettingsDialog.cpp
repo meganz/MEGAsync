@@ -1099,7 +1099,9 @@ void SettingsDialog::on_bSyncChange_clicked()
 
         int pos = ui->tSyncs->rowCount();
         ui->tSyncs->setRowCount(pos+1);
+        localFolder->setToolTip(localFolderPath);
         ui->tSyncs->setItem(pos, 0, localFolder);
+        megaFolder->setToolTip(QString::fromUtf8("/"));
         ui->tSyncs->setItem(pos, 1, megaFolder);
         syncNames.append(QString::fromAscii("MEGA"));
         updateAddButton();
@@ -1161,7 +1163,9 @@ void SettingsDialog::loadSyncSettings()
         localFolder->setText(QString::fromAscii("  ") + preferences->getLocalFolder(i) + QString::fromAscii("  "));
         QTableWidgetItem *megaFolder = new QTableWidgetItem();
         megaFolder->setText(QString::fromAscii("  ") + preferences->getMegaFolder(i) + QString::fromAscii("  "));
+        localFolder->setToolTip(preferences->getLocalFolder(i));
         ui->tSyncs->setItem(i, 0, localFolder);
+        megaFolder->setToolTip(preferences->getMegaFolder(i));
         ui->tSyncs->setItem(i, 1, megaFolder);
         syncNames.append(preferences->getSyncName(i));
     }
@@ -1210,7 +1214,9 @@ void SettingsDialog::on_bAdd_clicked()
    megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(nPath) + QString::fromAscii("  "));
    int pos = ui->tSyncs->rowCount();
    ui->tSyncs->setRowCount(pos+1);
+   localFolder->setToolTip(localFolderPath);
    ui->tSyncs->setItem(pos, 0, localFolder);
+   megaFolder->setToolTip(QString::fromUtf8(nPath));
    ui->tSyncs->setItem(pos, 1, megaFolder);
    syncNames.append(dialog->getSyncName());
    delete node;
