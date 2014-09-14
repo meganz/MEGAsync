@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTemporaryFile>
 
 using namespace mega;
 
@@ -226,6 +227,14 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     {
         QDir dir(path);
         if(!dir.exists() && !dir.mkpath(QString::fromAscii("."))) return;
+
+        QTemporaryFile test(path + QDir::separator());
+        if(!test.open())
+        {
+            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions on this local folder."));
+            return;
+        }
+
         ui->eLocalFolder->setText(path);
     }
 }

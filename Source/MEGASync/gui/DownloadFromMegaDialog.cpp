@@ -4,6 +4,8 @@
 
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QTemporaryFile>
+#include <QMessageBox>
 
 DownloadFromMegaDialog::DownloadFromMegaDialog(QWidget *parent) :
 	QDialog(parent),
@@ -57,8 +59,17 @@ void DownloadFromMegaDialog::on_bChange_clicked()
                                                   QFileDialog::ShowDirsOnly
                                                   | QFileDialog::DontResolveSymlinks);
 
-    if(fPath.size())
-        ui->eFolderPath->setText(fPath);
+    if(!fPath.size())
+        return;
+
+    QTemporaryFile test(fPath + QDir::separator());
+    if(!test.open())
+    {
+        QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions on this local folder."));
+        return;
+    }
+
+    ui->eFolderPath->setText(fPath);
 }
 
 void DownloadFromMegaDialog::changeEvent(QEvent *event)
