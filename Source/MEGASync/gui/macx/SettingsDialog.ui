@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>585</height>
+    <height>593</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -2324,7 +2324,7 @@ padding-bottom: 2px;</string>
 padding-bottom: 3px;</string>
          </property>
          <property name="text">
-          <string>Folder for uploads from this computer</string>
+          <string>Default folders</string>
          </property>
         </widget>
        </item>
@@ -2363,40 +2363,166 @@ padding-bottom: 3px;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_17">
-             <property name="leftMargin">
-              <number>19</number>
-             </property>
-             <property name="topMargin">
+            <layout class="QHBoxLayout" name="horizontalLayout_19">
+             <property name="spacing">
               <number>0</number>
              </property>
-             <property name="rightMargin">
-              <number>19</number>
-             </property>
-             <property name="bottomMargin">
-              <number>10</number>
+             <property name="margin">
+              <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="eUploadFolder">
-               <property name="readOnly">
+              <widget class="QGroupBox" name="groupBox_4">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string/>
+               </property>
+               <property name="flat">
                 <bool>true</bool>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="bUploadFolder">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Choose</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
+               <layout class="QFormLayout" name="formLayout_3">
+                <property name="leftMargin">
+                 <number>19</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>9</number>
+                </property>
+                <item row="1" column="1">
+                 <widget class="QWidget" name="widget_15" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_18">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>19</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLineEdit" name="eUploadFolder">
+                     <property name="readOnly">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="bUploadFolder">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Choose</string>
+                     </property>
+                     <property name="autoDefault">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QWidget" name="widget_17" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_21">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>19</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLineEdit" name="eDownloadFolder">
+                     <property name="readOnly">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="bDownloadFolder">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Choose</string>
+                     </property>
+                     <property name="autoDefault">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="lUploadFolder">
+                  <property name="text">
+                   <string>Uploads:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="lDownloadFolder">
+                  <property name="font">
+                   <font>
+                    <pointsize>-1</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Downloads:</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -2677,22 +2803,6 @@ background:transparent;</string>
            <width>500</width>
            <height>2</height>
           </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lCacheTitle">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">padding-left: 27px;</string>
-         </property>
-         <property name="text">
-          <string>Cache</string>
          </property>
         </widget>
        </item>
@@ -3361,8 +3471,6 @@ background:transparent;</string>
   <tabstop>rLimit</tabstop>
   <tabstop>eLimit</tabstop>
   <tabstop>bUpgradeBandwidth</tabstop>
-  <tabstop>eUploadFolder</tabstop>
-  <tabstop>bUploadFolder</tabstop>
   <tabstop>bDeleteName</tabstop>
   <tabstop>bAddName</tabstop>
   <tabstop>bClearCache</tabstop>

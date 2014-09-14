@@ -143,7 +143,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
 
-    ui->lCacheTitle->hide();
     ui->lCacheSeparator->hide();
 #endif
 
@@ -678,6 +677,26 @@ void SettingsDialog::loadSettings()
         }
         delete node;
 
+        QString downloadPath = preferences->downloadFolder();
+        if(!downloadPath.size())
+        {
+            #ifdef WIN32
+                #if QT_VERSION < 0x050000
+                    downloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads");
+                #else
+                    downloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads");
+                #endif
+            #else
+                #if QT_VERSION < 0x050000
+                    downloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads");
+                #else
+                    downloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads");
+                #endif
+            #endif
+        }
+        downloadPath = QDir::toNativeSeparators(downloadPath);
+        ui->eDownloadFolder->setText(downloadPath);
+
         //Syncs
         loadSyncSettings();
 
@@ -821,6 +840,23 @@ bool SettingsDialog::saveSettings()
         if(node && (ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")) || preferences->uploadFolder()))
             preferences->setUploadFolder(node->getHandle());
         delete node;
+
+        QString defaultDownloadPath;
+#ifdef WIN32
+    #if QT_VERSION < 0x050000
+        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads");
+    #else
+        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads");
+    #endif
+#else
+    #if QT_VERSION < 0x050000
+        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads");
+    #else
+        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads");
+    #endif
+#endif
+        if(ui->eDownloadFolder->text().compare(defaultDownloadPath) || preferences->downloadFolder().size())
+            preferences->setDownloadFolder(ui->eDownloadFolder->text());
 
         //Syncs
         if(syncsChanged)
@@ -1257,6 +1293,20 @@ void SettingsDialog::on_bUploadFolder_clicked()
     if(newPath.compare(ui->eUploadFolder->text()))
     {
         ui->eUploadFolder->setText(newPath);
+        stateChanged();
+    }
+}
+
+void SettingsDialog::on_bDownloadFolder_clicked()
+{
+    QString fPath =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
+                                                  ui->eDownloadFolder->text(),
+                                                  QFileDialog::ShowDirsOnly
+                                                  | QFileDialog::DontResolveSymlinks);
+
+    if(fPath.size() && fPath.compare(ui->eDownloadFolder->text()))
+    {
+        ui->eDownloadFolder->setText(fPath);
         stateChanged();
     }
 }

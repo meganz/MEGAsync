@@ -212,5 +212,8 @@
         <file>images/selected_sync_bt.png</file>
         <file>images/selective_sync_ico.png</file>
         <file>images/full_sync_ico.png</file>
+        <file>images/menu_header.png</file>
+        <file>images/menu_selected.png</file>
+        <file>images/separator line.png</file>
     </qresource>
 </RCC>
