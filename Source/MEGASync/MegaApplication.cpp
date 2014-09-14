@@ -238,6 +238,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     pasteMegaLinksDialog = NULL;
     importDialog = NULL;
     uploadFolderSelector = NULL;
+    downloadFolderSelector = NULL;
     updateBlocked = false;
     updateThread = NULL;
     updateTask = NULL;
@@ -741,6 +742,23 @@ void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
     }
 }
 
+void MegaApplication::processDownloadQueue(QString path)
+{
+    QDir dir(path);
+    if(!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+    {
+        downloadQueue.clear();
+        return;
+    }
+
+    while(!downloadQueue.isEmpty())
+    {
+        mega::MegaHandle nodeHandle = downloadQueue.dequeue();
+        MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
+        downloader->download(node, path + QDir::separator());
+    }
+}
+
 void MegaApplication::unityFix()
 {
     static QMenu *dummyMenu = NULL;
@@ -776,6 +794,8 @@ void MegaApplication::rebootApplication(bool update)
         infoDialog->hide();
     if(uploadFolderSelector && uploadFolderSelector->isVisible())
         uploadFolderSelector->hide();
+    if(downloadFolderSelector && downloadFolderSelector->isVisible())
+        downloadFolderSelector->hide();
     if(multiUploadFileDialog && multiUploadFileDialog->isVisible())
         multiUploadFileDialog->hide();
     if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
@@ -807,6 +827,8 @@ void MegaApplication::exitApplication()
             infoDialog->hide();
         if(uploadFolderSelector && uploadFolderSelector->isVisible())
             uploadFolderSelector->hide();
+        if(downloadFolderSelector && downloadFolderSelector->isVisible())
+            downloadFolderSelector->hide();
         if(multiUploadFileDialog && multiUploadFileDialog->isVisible())
             multiUploadFileDialog->hide();
         if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
@@ -844,6 +866,8 @@ void MegaApplication::exitApplication()
                 infoDialog->hide();
             if(uploadFolderSelector && uploadFolderSelector->isVisible())
                 uploadFolderSelector->hide();
+            if(downloadFolderSelector && downloadFolderSelector->isVisible())
+                downloadFolderSelector->hide();
             if(multiUploadFileDialog && multiUploadFileDialog->isVisible())
                 multiUploadFileDialog->hide();
             if(pasteMegaLinksDialog && pasteMegaLinksDialog->isVisible())
@@ -907,6 +931,7 @@ void MegaApplication::cleanAll()
     delete pasteMegaLinksDialog;
     delete importDialog;
     delete uploadFolderSelector;
+    delete downloadFolderSelector;
     delete delegateListener;
     delete megaApi;
 
@@ -1402,6 +1427,8 @@ void MegaApplication::uploadActionClicked()
 
 void MegaApplication::downloadActionClicked()
 {
+    if(finished) return;
+
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, 0,true);
     nodeSelector->nodesReady();
     int result = nodeSelector->exec();
@@ -1420,35 +1447,52 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    QString defaultPath;
-    #ifdef WIN32
-        #if QT_VERSION < 0x050000
-            defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-        #else
-            defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-        #endif
-    #else
-        #if QT_VERSION < 0x050000
-            defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        #else
-            defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-        #endif
-    #endif
-
-    QString fPath =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
-                                                  defaultPath,
-                                                  QFileDialog::ShowDirsOnly
-                                                  | QFileDialog::DontResolveSymlinks);
-    if(fPath.length())
+    downloadQueue.append(selectedMegaFolderHandle);
+    if(downloadFolderSelector)
     {
-        QDir dir(fPath);
-        if(!dir.exists() && !dir.mkpath(QString::fromAscii("."))) return;
-        downloader->download(selectedFolder, fPath+QDir::separator());
+        downloadFolderSelector->setVisible(true);
+        #ifdef WIN32
+            downloadFolderSelector->showMinimized();
+            downloadFolderSelector->setWindowState(Qt::WindowActive);
+            downloadFolderSelector->showNormal();
+        #endif
+        downloadFolderSelector->raise();
+        downloadFolderSelector->activateWindow();
+        downloadFolderSelector->setFocus();
+        return;
     }
 
-    delete nodeSelector;
-    delete selectedFolder;
+    QString defaultPath = preferences->downloadFolder();
+    if(QFile(defaultPath).exists())
+    {
+        processDownloadQueue(defaultPath);
+        return;
+    }
 
+    downloadFolderSelector = new DownloadFromMegaDialog();
+    #ifdef WIN32
+        downloadFolderSelector->showMinimized();
+        downloadFolderSelector->setWindowState(Qt::WindowActive);
+        downloadFolderSelector->showNormal();
+    #endif
+    downloadFolderSelector->raise();
+    downloadFolderSelector->activateWindow();
+    downloadFolderSelector->setFocus();
+    downloadFolderSelector->exec();
+    if(downloadFolderSelector->result()==QDialog::Accepted)
+    {
+        //If the dialog is accepted, get the destination node
+        QString path = downloadFolderSelector->getPath();
+        if(downloadFolderSelector->isDefaultFolder())
+            preferences->setDownloadFolder(path);
+        processDownloadQueue(path);
+    }
+    //If the dialog is rejected, cancel uploads
+    else downloadQueue.clear();
+
+    delete downloadFolderSelector;
+    downloadFolderSelector = NULL;
+    return;
 }
 
 //Called when the user wants to generate the public link for a node
@@ -2400,3 +2444,4 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         }
     }
 }
+

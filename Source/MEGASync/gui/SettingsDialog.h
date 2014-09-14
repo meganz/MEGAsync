@@ -87,6 +87,7 @@ private slots:
 
     void on_tSyncs_doubleClicked(const QModelIndex &index);
     void on_bUploadFolder_clicked();
+    void on_bDownloadFolder_clicked();
 
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();

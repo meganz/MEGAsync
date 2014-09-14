@@ -16,6 +16,7 @@
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
+#include "gui/DownloadFromMegaDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
@@ -130,6 +131,7 @@ protected:
     void startSyncs();
 	void stopSyncs();
     void processUploadQueue(mega::MegaHandle nodeHandle);
+    void processDownloadQueue(QString path);
     void unityFix();
 
 #ifdef __APPLE__
@@ -160,8 +162,10 @@ protected:
     mega::MegaApi *megaApi;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
+    DownloadFromMegaDialog *downloadFolderSelector;
     MultiQFileDialog *multiUploadFileDialog;
 	QQueue<QString> uploadQueue;
+    QQueue<long long> downloadQueue;
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
 	long long uploadSpeed, downloadSpeed;

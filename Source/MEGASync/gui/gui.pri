@@ -17,7 +17,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/CrashReportDialog.cpp \
     $$PWD/MultiQFileDialog.cpp \
     $$PWD/MegaProxyStyle.cpp \
-    $$PWD/AccountDetailsDialog.cpp
+    $$PWD/AccountDetailsDialog.cpp \
+    $$PWD/DownloadFromMegaDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -36,7 +37,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/CrashReportDialog.h \
     $$PWD/MultiQFileDialog.h \
     $$PWD/MegaProxyStyle.h \
-    $$PWD/AccountDetailsDialog.h
+    $$PWD/AccountDetailsDialog.h \
+    $$PWD/DownloadFromMegaDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -62,7 +64,8 @@ win32 {
                 $$PWD/win/CrashReportDialog.ui \
                 $$PWD/win/SetupWizard.ui \
                 $$PWD/win/SettingsDialog.ui \
-                $$PWD/win/AccountDetailsDialog.ui
+                $$PWD/win/AccountDetailsDialog.ui \
+                $$PWD/win/DownloadFromMegaDialog.ui
 }
 
 macx {
@@ -83,7 +86,8 @@ macx {
                 $$PWD/macx/CrashReportDialog.ui \
                 $$PWD/macx/SetupWizard.ui \
                 $$PWD/macx/SettingsDialog.ui \
-                $$PWD/macx/AccountDetailsDialog.ui
+                $$PWD/macx/AccountDetailsDialog.ui \
+                $$PWD/macx/DownloadFromMegaDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -108,6 +112,7 @@ unix:!macx {
                 $$PWD/linux/CrashReportDialog.ui \
                 $$PWD/linux/SetupWizard.ui \
                 $$PWD/linux/SettingsDialog.ui \
-                $$PWD/linux/AccountDetailsDialog.ui
+                $$PWD/linux/AccountDetailsDialog.ui \
+                $$PWD/linux/DownloadFromMegaDialog.ui
 }
 
