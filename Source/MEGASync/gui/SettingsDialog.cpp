@@ -1312,6 +1312,13 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 
     if(fPath.size() && fPath.compare(ui->eDownloadFolder->text()))
     {
+        QTemporaryFile test(fPath + QDir::separator());
+        if(!test.open())
+        {
+            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions on this local folder."));
+            return;
+        }
+
         ui->eDownloadFolder->setText(fPath);
         stateChanged();
     }
