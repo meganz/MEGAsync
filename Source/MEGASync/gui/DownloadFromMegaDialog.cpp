@@ -83,8 +83,11 @@ void DownloadFromMegaDialog::changeEvent(QEvent *event)
 
 void DownloadFromMegaDialog::on_bOK_clicked()
 {
-    QDir dir(ui->eFolderPath->text());
-    if(!dir.exists())
-        dir.mkpath(QString::fromUtf8("."));
-    accept();
+    if(ui->eFolderPath->text().size())
+    {
+        QDir dir(ui->eFolderPath->text());
+        if(!dir.exists())
+            dir.mkpath(QString::fromUtf8("."));
+        accept();
+    }
 }

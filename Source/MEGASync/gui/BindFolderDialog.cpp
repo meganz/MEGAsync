@@ -58,7 +58,7 @@ QString BindFolderDialog::getSyncName()
 
 void BindFolderDialog::on_bOK_clicked()
 {
-    QString localFolderPath = QDir::toNativeSeparators(QDir(ui->wBinder->selectedLocalFolder()).canonicalPath());
+    QString localFolderPath = ui->wBinder->selectedLocalFolder();
     MegaApi *megaApi = app->getMegaApi();
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
 
@@ -70,6 +70,7 @@ void BindFolderDialog::on_bOK_clicked()
         return;
     }
 
+    localFolderPath = QDir::toNativeSeparators(QDir(localFolderPath).canonicalPath());
     for(int i=0; i<localFolders.size(); i++)
     {
         QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
