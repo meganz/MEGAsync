@@ -1080,7 +1080,7 @@ void MegaApplication::setupWizardFinished()
 {
     if(!preferences->logged())
         ::exit(0);
-    delete setupWizard;
+    setupWizard->deleteLater();
     setupWizard = NULL;
 
     QStringList exclusions = preferences->getExcludedSyncNames();
