@@ -70,6 +70,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     shouldClose = false;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
+    cacheSize = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -95,7 +96,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 #endif
 
-#ifdef __linux__
+#ifndef __WIN32__
     if(!proxyOnly && preferences->logged())
     {
         connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
@@ -269,13 +270,30 @@ void SettingsDialog::proxyStateChanged()
 
 void SettingsDialog::onCacheSizeAvailable()
 {
-    long long cacheSize = cacheSizeWatcher.result();
+    cacheSize = cacheSizeWatcher.result();
     if(!cacheSize)
         return;
 
     ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
     ui->gCache->setVisible(true);
     ui->lCacheSeparator->show();
+
+#ifdef __APPLE__
+    if(ui->wStack->currentWidget() == ui->pAdvanced)
+    {
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(540);
+        maxHeightAnimation->setEndValue(540);
+        minHeightAnimation->setDuration(150);
+        maxHeightAnimation->setDuration(150);
+        animationGroup->start();
+    }
+#endif
 }
 
 void SettingsDialog::on_bAccount_clicked()
@@ -354,17 +372,8 @@ void SettingsDialog::on_bSyncs_clicked()
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
 
-    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-    {
-        minHeightAnimation->setEndValue(266);
-        maxHeightAnimation->setEndValue(266);
-    }
-    else
-    {
-        minHeightAnimation->setEndValue(420);
-        maxHeightAnimation->setEndValue(420);
-    }
-
+    minHeightAnimation->setEndValue(420);
+    maxHeightAnimation->setEndValue(420);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -445,8 +454,16 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(488);
-    maxHeightAnimation->setEndValue(488);
+    if(!cacheSize)
+    {
+        minHeightAnimation->setEndValue(488);
+        maxHeightAnimation->setEndValue(488);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(540);
+        maxHeightAnimation->setEndValue(540);
+    }
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -1132,7 +1149,7 @@ void SettingsDialog::loadSyncSettings()
     int numFolders = preferences->getNumSyncedFolders();
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(3);
-    ui->tSyncs->setColumnWidth(2, 18);
+    ui->tSyncs->setColumnWidth(2, 21);
     for(int i=0; i<numFolders; i++)
     {
         QTableWidgetItem *localFolder = new QTableWidgetItem();
@@ -1382,6 +1399,21 @@ void SettingsDialog::on_bClearCache_clicked()
     QtConcurrent::run(deleteCache);
     ui->gCache->setVisible(false);
     ui->lCacheSeparator->hide();
+    cacheSize = 0;
+
+#ifdef __APPLE__
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(488);
+    maxHeightAnimation->setEndValue(488);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
 }
 
 void SettingsDialog::onProxyTestTimeout()

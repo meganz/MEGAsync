@@ -123,6 +123,7 @@ private:
     QTimer proxyTestTimer;
     bool shouldClose;
     int modifyingSettings;
+    long long cacheSize;
 
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
