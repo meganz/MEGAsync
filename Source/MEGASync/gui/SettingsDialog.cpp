@@ -691,12 +691,9 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
         }
-#ifndef __linux__
+
         ui->lAccountImage->setIcon(icon);
         ui->lAccountImage->setIconSize(QSize(32, 32));
-#else
-        ui->lAccountImage->setPixmap(icon.pixmap(QSize(32, 32)));
-#endif
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
         if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
