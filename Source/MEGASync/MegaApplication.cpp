@@ -563,20 +563,10 @@ void MegaApplication::start()
     {
         updated = false;
         setupWizard = new SetupWizard(this);
-        setupWizard->exec();
-        if(!preferences->logged())
-            ::exit(0);
-        delete setupWizard;
-        setupWizard = NULL;
-
-        QStringList exclusions = preferences->getExcludedSyncNames();
-        vector<string> vExclusions;
-        for(int i=0; i<exclusions.size(); i++)
-            vExclusions.push_back(exclusions[i].toUtf8().constData());
-        megaApi->setExcludedNames(&vExclusions);
-
-        loggedIn();
-        startSyncs();
+        setupWizard->setModal(false);
+        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished()));
+        setupWizard->show();
+        return;
     }
 	else
 	{
@@ -1083,7 +1073,24 @@ void MegaApplication::scanningAnimationStep()
     scanningAnimationIndex = scanningAnimationIndex%4;
     scanningAnimationIndex++;
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac") +
-                      QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
+                            QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
+}
+
+void MegaApplication::setupWizardFinished()
+{
+    if(!preferences->logged())
+        ::exit(0);
+    delete setupWizard;
+    setupWizard = NULL;
+
+    QStringList exclusions = preferences->getExcludedSyncNames();
+    vector<string> vExclusions;
+    for(int i=0; i<exclusions.size(); i++)
+        vExclusions.push_back(exclusions[i].toUtf8().constData());
+    megaApi->setExcludedNames(&vExclusions);
+
+    loggedIn();
+    startSyncs();
 }
 
 void MegaApplication::unlink()
@@ -1747,9 +1754,8 @@ void MegaApplication::openSettings()
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
     settingsDialog->setUpdateAvailable(updateAvailable);
-    settingsDialog->exec();
-    delete settingsDialog;
-    settingsDialog = NULL;
+    settingsDialog->setModal(false);
+    settingsDialog->show();
 }
 
 void MegaApplication::changeProxy()
@@ -1773,6 +1779,7 @@ void MegaApplication::changeProxy()
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this, true);
+    settingsDialog->setModal(false);
     settingsDialog->show();
 }
 

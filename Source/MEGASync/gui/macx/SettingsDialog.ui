@@ -556,7 +556,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -1588,6 +1588,9 @@ border: none;</string>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOn</enum>
+               </property>
                <property name="autoScroll">
                 <bool>false</bool>
                </property>
@@ -1625,13 +1628,13 @@ border: none;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>210</number>
+                <number>201</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>210</number>
+                <number>201</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>
@@ -1777,19 +1780,6 @@ border: none;</string>
              </item>
             </layout>
            </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_6">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>

@@ -123,6 +123,7 @@ public slots:
     bool anUpdateIsAvailable();
     void triggerInstallUpdate();
     void scanningAnimationStep();
+    void setupWizardFinished();
 
 protected:
     void createTrayIcon();
