@@ -102,11 +102,9 @@
         <file>images/small_word.png</file>
         <file>images/tray_download_ico.png</file>
         <file>images/tray_folder_ico.png</file>
-        <file>images/tray_pause.ico</file>
         <file>images/tray_preferences_ico.png</file>
         <file>images/tray_queued_ico.png</file>
         <file>images/tray_share_ico.png</file>
-        <file>images/tray_sync.ico</file>
         <file>images/tray_updated_large_ico.png</file>
         <file>images/tray_upload_ico.png</file>
         <file>images/tray_web_ico.png</file>
@@ -126,8 +124,6 @@
         <file>images/tray_play_ico.png</file>
         <file>images/tray_tooltip_clock_ico.png</file>
         <file>images/tray_add_sync_ico.png</file>
-        <file>images/app_ico.ico</file>
-        <file>images/login_ico.ico</file>
         <file>images/tray_sync_ico.png</file>
         <file>images/advanced_32.png</file>
         <file>images/tray_cancel_ico.png</file>
@@ -215,5 +211,9 @@
         <file>images/menu_header.png</file>
         <file>images/menu_selected.png</file>
         <file>images/separator line.png</file>
+        <file>images/22_logging.png</file>
+        <file>images/22_paused.png</file>
+        <file>images/22_synching.png</file>
+        <file>images/22_uptodate.png</file>
     </qresource>
 </RCC>
