@@ -1105,102 +1105,10 @@ bool SettingsDialog::saveSettings()
 void SettingsDialog::updateAddButton()
 {
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-    {
-        ui->tSyncs->hide();
-        ui->wSyncsButtons->hide();
-        ui->lSyncType->setText(tr("Full account sync active"));
-        ui->lSyncText->setText(tr("Disabling full account sync will allow you to set up selective folder syncing"));
-        ui->bSyncChange->setText(tr("Disable full account sync"));
-    }
+        ui->bAdd->setToolTip(tr("Your are already syncing your entire account"));
     else
-    {
-        ui->tSyncs->show();
-        ui->wSyncsButtons->show();
-        ui->lSyncType->setText(tr("Selective sync active"));
-        ui->lSyncText->setText(tr("Enabling full account sync will disable all your current syncs"));
-        ui->bSyncChange->setText(tr("Enable full account sync"));
-    }
+        ui->bAdd->setToolTip(QString());
 }
-
-void SettingsDialog::on_bSyncChange_clicked()
-{
-    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-    {
-        ui->tSyncs->clearContents();
-        ui->tSyncs->setRowCount(0);
-        syncNames.clear();
-        syncsChanged = true;
-        updateAddButton();
-        stateChanged();
-    }
-    else
-    {
-        ui->tSyncs->clearContents();
-        ui->tSyncs->setRowCount(0);
-        syncNames.clear();
-        syncsChanged = true;
-
-        #ifdef WIN32
-            #if QT_VERSION < 0x050000
-                QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-            #else
-                QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-            #endif
-        #else
-            #if QT_VERSION < 0x050000
-                QString localFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-            #else
-                QString localFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-            #endif
-        #endif
-
-        localFolderPath.append(QString::fromAscii("/MEGA"));
-        localFolderPath = QDir::toNativeSeparators(localFolderPath);
-        QDir defaultFolder(localFolderPath);
-        defaultFolder.mkpath(QString::fromAscii("."));
-
-        QTableWidgetItem *localFolder = new QTableWidgetItem();
-        localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
-
-        QTableWidgetItem *megaFolder = new QTableWidgetItem();
-        megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8("/") + QString::fromAscii("  "));
-
-        int pos = ui->tSyncs->rowCount();
-        ui->tSyncs->setRowCount(pos+1);
-        localFolder->setToolTip(localFolderPath);
-        ui->tSyncs->setItem(pos, 0, localFolder);
-        megaFolder->setToolTip(QString::fromUtf8("/"));
-        ui->tSyncs->setItem(pos, 1, megaFolder);
-        syncNames.append(QString::fromAscii("MEGA"));
-        updateAddButton();
-        stateChanged();
-    }
-
-#ifdef __APPLE__
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
-
-    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-    {
-        minHeightAnimation->setEndValue(266);
-        maxHeightAnimation->setEndValue(266);
-    }
-    else
-    {
-        minHeightAnimation->setEndValue(420);
-        maxHeightAnimation->setEndValue(420);
-    }
-
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
-#endif
-}
-
 
 void SettingsDialog::on_bDelete_clicked()
 {
@@ -1248,6 +1156,12 @@ void SettingsDialog::loadSyncSettings()
 
 void SettingsDialog::on_bAdd_clicked()
 {
+    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Your are already syncing your entire account"));
+        return;
+    }
+
     QStringList currentLocalFolders;
     QList<long long> currentMegaFolders;
     for(int i=0; i<ui->tSyncs->rowCount(); i++)

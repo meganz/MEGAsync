@@ -1193,7 +1193,7 @@ color: #666666;
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="lAdvancedLabel">
          <property name="font">
           <font>
            <pointsize>-1</pointsize>

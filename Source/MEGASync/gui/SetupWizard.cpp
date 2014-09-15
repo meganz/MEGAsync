@@ -339,7 +339,11 @@ void SetupWizard::on_bNext_clicked()
         {
             defaultFolderPath.append(QString::fromAscii("/MEGAsync"));
             ui->eMegaFolder->setText(QString::fromAscii("/MEGAsync"));
-            ui->sPages->setCurrentWidget(ui->pAdvanced);
+            ui->lAdvancedLabel->setText(tr("The following folders will be automatically synchronized:"));
+            ui->lAdvancedSetup->setText(tr("Selective sync"));
+            ui->bMegaFolder->show();
+            ui->eMegaFolder->show();
+            ui->lMegaFolder->show();
         }
         else
         {
@@ -361,27 +365,14 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromAscii("/"));
-            MegaNode *node = megaApi->getRootNode();
-            if(!node)
-            {
-                ui->sPages->setCurrentWidget(ui->pLogin);
-                ui->eLoginPassword->clear();
-                ui->lVerify->hide();
-                sessionKey.clear();
-                wTypicalSetup_clicked();
-                megaApi->logout();
-                return;
-            }
-
-            selectedMegaFolderHandle = node->getHandle();
-            ui->bBack->setVisible(false);
-            ui->bNext->setVisible(false);
-            ui->bCancel->setText(tr("Finish"));
-            ui->bCancel->setFocus();
-            ui->sPages->setCurrentWidget(ui->pWelcome);
-
-            delete node;
+            ui->lAdvancedLabel->setText(tr("Your Cloud Drive will be synchronized with this folder:"));
+            ui->lAdvancedSetup->setText(tr("Full sync"));
+            ui->bMegaFolder->hide();
+            ui->eMegaFolder->hide();
+            ui->lMegaFolder->hide();
         }
+
+        ui->sPages->setCurrentWidget(ui->pAdvanced);
 
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
         QDir defaultFolder(defaultFolderPath);
