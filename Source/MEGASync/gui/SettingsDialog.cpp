@@ -131,7 +131,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
     }
 
-    ui->lCacheTitle->hide();
     ui->lCacheSeparator->hide();
 
 #else
@@ -446,8 +445,8 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(455);
-    maxHeightAnimation->setEndValue(455);
+    minHeightAnimation->setEndValue(488);
+    maxHeightAnimation->setEndValue(488);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();

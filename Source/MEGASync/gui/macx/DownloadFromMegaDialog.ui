@@ -50,14 +50,29 @@ QPushButton
     min-height: 14px;
 	height: 14px;
 }
+
+#cDefaultPath
+{
+    spacing: 10px;
+}
+
+#bChange
+{
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>6</number>
+   <property name="leftMargin">
+    <number>12</number>
    </property>
-   <property name="margin">
-    <number>9</number>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>10</number>
    </property>
    <item>
     <widget class="QLabel" name="label">
@@ -94,10 +109,10 @@ QPushButton
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>9</number>
       </property>
       <item>
        <widget class="QLabel" name="label_2">
@@ -111,6 +126,15 @@ QPushButton
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
@@ -118,21 +142,20 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bChange">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
-        </property>
-        <property name="iconSize">
+        <property name="minimumSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>0</width>
+          <height>16</height>
          </size>
         </property>
-        <property name="flat">
-         <bool>true</bool>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Choose</string>
         </property>
        </widget>
       </item>
@@ -193,16 +216,16 @@ QPushButton
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="bOK">
+       <widget class="QPushButton" name="bCancel">
         <property name="text">
-         <string>OK</string>
+         <string>Cancel</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="bCancel">
+       <widget class="QPushButton" name="bOK">
         <property name="text">
-         <string>Cancel</string>
+         <string>OK</string>
         </property>
        </widget>
       </item>
@@ -211,9 +234,7 @@ QPushButton
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bCancel</sender>

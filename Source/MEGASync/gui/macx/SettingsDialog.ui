@@ -556,7 +556,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -1615,6 +1615,9 @@ border: none;</string>
                <property name="cornerButtonEnabled">
                 <bool>true</bool>
                </property>
+               <property name="columnCount">
+                <number>3</number>
+               </property>
                <attribute name="horizontalHeaderVisible">
                 <bool>false</bool>
                </attribute>
@@ -1622,13 +1625,13 @@ border: none;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>219</number>
+                <number>210</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>219</number>
+                <number>210</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>
@@ -1667,6 +1670,11 @@ border: none;</string>
                <column>
                 <property name="text">
                  <string>MEGA folder</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string/>
                 </property>
                </column>
               </widget>
@@ -2229,7 +2237,7 @@ padding-bottom: 3px;</string>
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -2241,6 +2249,9 @@ padding-bottom: 3px;</string>
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>11</number>
           </property>
@@ -2256,7 +2267,7 @@ padding-bottom: 3px;</string>
           <item>
            <widget class="QWidget" name="widget" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -2265,13 +2276,22 @@ padding-bottom: 3px;</string>
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
               <widget class="QGroupBox" name="groupBox_4">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -2283,17 +2303,26 @@ padding-bottom: 3px;</string>
                 <bool>true</bool>
                </property>
                <layout class="QFormLayout" name="formLayout_3">
+                <property name="fieldGrowthPolicy">
+                 <enum>QFormLayout::ExpandingFieldsGrow</enum>
+                </property>
+                <property name="labelAlignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="verticalSpacing">
+                 <number>0</number>
+                </property>
                 <property name="leftMargin">
                  <number>19</number>
                 </property>
                 <property name="topMargin">
-                 <number>5</number>
+                 <number>0</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>9</number>
+                 <number>0</number>
                 </property>
                 <item row="1" column="1">
                  <widget class="QWidget" name="widget_15" native="true">
@@ -2318,6 +2347,9 @@ padding-bottom: 3px;</string>
                    </property>
                    <item>
                     <widget class="QLineEdit" name="eUploadFolder">
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
                      <property name="readOnly">
                       <bool>true</bool>
                      </property>
@@ -2403,6 +2435,18 @@ padding-bottom: 3px;</string>
                 </item>
                 <item row="1" column="0">
                  <widget class="QLabel" name="lUploadFolder">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>16</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string>Uploads:</string>
                   </property>
@@ -2410,6 +2454,18 @@ padding-bottom: 3px;</string>
                 </item>
                 <item row="2" column="0">
                  <widget class="QLabel" name="lDownloadFolder">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>16</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>-1</pointsize>
