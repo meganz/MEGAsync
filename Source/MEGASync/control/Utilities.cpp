@@ -154,6 +154,9 @@ void Utilities::initializeExtensions()
 
 void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
 {
+    if(!path.size())
+        return;
+
 #ifdef WIN32
     if(path.startsWith(QString::fromAscii("\\\\?\\")))
         path = path.mid(4);
@@ -181,6 +184,9 @@ void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFold
 
 void Utilities::getFolderSize(QString folderPath, long long *size)
 {
+    if(!folderPath.size())
+        return;
+
     QDir dir(folderPath);
     QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
     for(int i=0; i<entries.size(); i++)
@@ -269,8 +275,12 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
     return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
 }
 
-bool Utilities::removeRecursively(QDir dir)
+bool Utilities::removeRecursively(QString path)
 {
+    if(!path.size())
+        return false;
+
+    QDir dir(path);
     bool success = false;
     QString qpath = QDir::toNativeSeparators(dir.absolutePath());
     mega::MegaApi::removeRecursively(qpath.toUtf8().constData());
@@ -304,6 +314,9 @@ bool Utilities::removeRecursively(QDir dir)
 
 void Utilities::copyRecursively(QString srcPath, QString dstPath)
 {
+    if(!srcPath.size() || !dstPath.size())
+        return;
+
     QFileInfo source(srcPath);
     if(!source.exists()) return;
     if(srcPath == dstPath) return;

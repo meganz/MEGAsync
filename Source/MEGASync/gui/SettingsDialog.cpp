@@ -45,7 +45,7 @@ void deleteCache()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
     }
 }
 
@@ -95,12 +95,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 #endif
 
-    /*if(!proxyOnly && preferences->logged())
+#ifdef __linux__
+    if(!proxyOnly && preferences->logged())
     {
         connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
         QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
         cacheSizeWatcher.setFuture(futureCacheSize);
-    }*/
+    }
+#endif
 
 #ifdef __APPLE__
     ui->bOk->hide();
@@ -132,7 +134,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->lCacheTitle->hide();
     ui->lCacheSeparator->hide();
 
-#elif WIN32
+#else
     ui->gBandwidthQuota->hide();
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
@@ -274,6 +276,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
     ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
     ui->gCache->setVisible(true);
+    ui->lCacheSeparator->show();
 }
 
 void SettingsDialog::on_bAccount_clicked()
@@ -1379,6 +1382,7 @@ void SettingsDialog::on_bClearCache_clicked()
 {
     QtConcurrent::run(deleteCache);
     ui->gCache->setVisible(false);
+    ui->lCacheSeparator->hide();
 }
 
 void SettingsDialog::onProxyTestTimeout()
