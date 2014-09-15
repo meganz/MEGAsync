@@ -109,7 +109,7 @@ void UpdateTask::initialCleanup()
     for(int i=0; i<subdirs.size(); i++)
     {
         if(subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
-            Utilities::removeRecursively(QDir(appFolder.absoluteFilePath(subdirs[i])));
+            Utilities::removeRecursively(appFolder.absoluteFilePath(subdirs[i]));
     }
 
     //New location (data folder)
@@ -118,14 +118,13 @@ void UpdateTask::initialCleanup()
     for(int i=0; i<subdirs.size(); i++)
     {
         if(subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
-            Utilities::removeRecursively(QDir(basePathDir.absoluteFilePath(subdirs[i])));
+            Utilities::removeRecursively(basePathDir.absoluteFilePath(subdirs[i]));
     }
 
     //Remove update folder (old location)
-    QDir oldUpdateFolder(MegaApplication::applicationDirPath() +
-                           QDir::separator() +
-                           Preferences::UPDATE_FOLDER_NAME);
-    Utilities::removeRecursively(oldUpdateFolder);
+    Utilities::removeRecursively(MegaApplication::applicationDirPath() +
+                                 QDir::separator() +
+                                 Preferences::UPDATE_FOLDER_NAME);
 
     //Initialize update info
     downloadURLs.clear();
@@ -141,7 +140,7 @@ void UpdateTask::finalCleanup()
     QApplication::setApplicationVersion(QString::number(updateVersion));
 
     //Remove the update folder (new location)
-    Utilities::removeRecursively(QDir(updateFolder));
+    Utilities::removeRecursively(updateFolder.absolutePath());
 
     #ifdef __APPLE__
         QFile exeFile(MegaApplication::applicationFilePath());
