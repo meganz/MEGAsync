@@ -45,7 +45,7 @@ void deleteCache()
     {
         QString syncPath = preferences->getLocalFolder(i);
         if(!syncPath.isEmpty())
-            Utilities::removeRecursively(QDir(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
     }
 }
 

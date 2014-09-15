@@ -166,6 +166,8 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
         syncPath = syncPath.mid(4);
 
+    if(!syncPath.size()) return;
+
     QDir syncDir(syncPath);
     if(!syncDir.exists()) return;
 
