@@ -2,6 +2,8 @@
 
 RequestExecutionLevel user
 
+#!define BUILD_UNINSTALLER
+
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "MEGAsync"
 !define PRODUCT_VERSION "1.0.29"
@@ -21,6 +23,9 @@ RequestExecutionLevel user
 !define MULTIUSER_MUI
 !define MULTIUSER_EXECUTIONLEVEL Standard
 !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
+
+!define MEGA_DATA "mega.ini"
+!define UNINSTALLER_NAME "uninst.exe"
 
 !include "MUI2.nsh"
 !include "Library.nsh"
@@ -150,7 +155,12 @@ var ALL_USERS_INSTDIR
 ; MUI end ------
 
 Name $APP_NAME
+!ifdef BUILD_UNINSTALLER
+OutFile "UninstallerGenerator.exe"
+!else
 OutFile "MEGAsyncSetup.exe"
+!endif
+
 InstallDir "$PROGRAMFILES\MEGAsync"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails nevershow
@@ -171,6 +181,12 @@ FunctionEnd
 
 Function .onInit
   StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+  
+  !ifdef BUILD_UNINSTALLER
+         WriteUninstaller "$EXEDIR\${UNINSTALLER_NAME}"
+         Quit
+  !endif
+
   ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   ;strCpy $INSTALLDAY "$2$1$0"
   ;strCpy $EXPIRATIONDAY "20140121"
@@ -391,6 +407,10 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAsync.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAsync.exe" "$USERNAME" "GenericRead + GenericWrite"
     
+  File "${UNINSTALLER_NAME}"
+  AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
+  
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
 
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
@@ -442,7 +462,7 @@ modeselected:
   CreateShortCut "$DESKTOP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
   WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url" "" "$INSTDIR\MEGAsync.exe" 1
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\${UNINSTALLER_NAME}"
   !insertmacro MUI_STARTMENU_WRITE_END
   goto modeselected2
 currentuser2:
@@ -459,7 +479,7 @@ Function CreateMegaShortcuts
   CreateShortCut "$DESKTOP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
   WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url" "" "$INSTDIR\MEGAsync.exe" 1
-  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\${UNINSTALLER_NAME}"
   !insertmacro MUI_STARTMENU_WRITE_END
 FunctionEnd
 
@@ -468,10 +488,9 @@ Section -AdditionalIcons
 SectionEnd
 
 Section -Post
-  WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\MEGAsync.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "${PRODUCT_NAME}"
-  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
+  WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\${UNINSTALLER_NAME}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\MEGAsync.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" ""
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
@@ -479,12 +498,24 @@ Section -Post
   
   AccessControl::SetFileOwner "$INSTDIR\MEGA Website.url" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGA Website.url" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\uninst.exe" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\uninst.exe" "$USERNAME" "GenericRead + GenericWrite"
+  
+  Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 SectionEnd
 
 Function un.onInit
 StrCpy $APP_NAME "${PRODUCT_NAME}"
+
+ReadIniStr $0 "$ExeDir\${MEGA_DATA}" UAC first
+${IF} $0 <> 1
+	;SetSilent silent
+	InitPluginsDir
+	WriteIniStr "$PluginsDir\${MEGA_DATA}" UAC first 1
+	CopyFiles /SILENT "$EXEPATH" "$PluginsDir\${UNINSTALLER_NAME}"
+	ExecWait '"$PluginsDir\${UNINSTALLER_NAME}" _?=$INSTDIR' $0
+	SetErrorLevel $0
+	Quit
+${EndIf}
+
 UAC::RunElevated
   ${Switch} $0
   ${Case} 0
@@ -517,7 +548,7 @@ Section Uninstall
 
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
-  Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\${UNINSTALLER_NAME}"
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
@@ -531,7 +562,7 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qtga4.dll"
   Delete "$INSTDIR\imageformats\qtiff4.dll"
   Delete "$INSTDIR\MEGAsync.exe"
-  Delete "$INSTDIR\MEGAsync.cfg"
+  Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
