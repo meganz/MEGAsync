@@ -1696,6 +1696,8 @@ void MegaApplication::onUpdateError()
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     LOG("Tray icon clicked");
+    megaApi->retryPendingConnections();
+
     if(reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
     {
         LOG("Event QSystemTrayIcon::Trigger");
