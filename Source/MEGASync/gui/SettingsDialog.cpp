@@ -96,7 +96,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 #endif
 
-#ifndef __WIN32__
+#ifndef _WIN32
     if(!proxyOnly && preferences->logged())
     {
         connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
@@ -1147,6 +1147,7 @@ void SettingsDialog::loadSyncSettings()
 
     ui->tSyncs->horizontalHeader()->setVisible(true);
     int numFolders = preferences->getNumSyncedFolders();
+    ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(3);
     ui->tSyncs->setColumnWidth(2, 21);
