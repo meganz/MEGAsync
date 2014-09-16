@@ -412,7 +412,7 @@ void MegaApplication::updateTrayIcon()
     {
         LOG("STATE: Logging in...");
         #ifndef __APPLE__
-            #ifdef __WIN32__
+            #ifdef _WIN32
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
@@ -431,7 +431,7 @@ void MegaApplication::updateTrayIcon()
         if(!updateAvailable)
         {
             #ifndef __APPLE__
-                #ifdef __WIN32__
+                #ifdef _WIN32
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
                 #else
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
@@ -447,7 +447,7 @@ void MegaApplication::updateTrayIcon()
         {
             //TODO: Change icon
             #ifndef __APPLE__
-                #ifdef __WIN32__
+                #ifdef _WIN32
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
                 #else
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
@@ -487,7 +487,7 @@ void MegaApplication::updateTrayIcon()
         if(!updateAvailable)
         {
             #ifndef __APPLE__
-                #ifdef __WIN32__
+                #ifdef _WIN32
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
                 #else
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
@@ -506,7 +506,7 @@ void MegaApplication::updateTrayIcon()
         {
             //TODO: Change icon
             #ifndef __APPLE__
-                #ifdef __WIN32__
+                #ifdef _WIN32
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
                 #else
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
@@ -529,7 +529,7 @@ void MegaApplication::updateTrayIcon()
         if(!updateAvailable)
         {
             #ifndef __APPLE__
-                #ifdef __WIN32__
+                #ifdef _WIN32
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
                 #else
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
@@ -545,7 +545,7 @@ void MegaApplication::updateTrayIcon()
         {
             //TODO: Change icon
             #ifndef __APPLE__
-                #ifdef __WIN32__
+                #ifdef _WIN32
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
                 #else
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
@@ -571,7 +571,7 @@ void MegaApplication::start()
     multiUploadFileDialog = NULL;
 
 #ifndef __APPLE__
-    #ifdef __WIN32__
+    #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
     #else
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
@@ -1913,7 +1913,7 @@ void MegaApplication::createTrayIcon()
         #endif
 
         #ifndef __APPLE__
-            #ifdef __WIN32__
+            #ifdef _WIN32
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
             #else
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));

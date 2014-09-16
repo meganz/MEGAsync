@@ -70,6 +70,8 @@ void AccountDetailsDialog::refresh()
     rubbishFolders->setText(QString::number(preferences->rubbishFolders()));
     rubbishFolders->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     ui->tValues->setItem(2, 2, rubbishFolders);
+
+    ui->tValues->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
 }
 
 void AccountDetailsDialog::on_bRefresh_clicked()

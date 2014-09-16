@@ -53,6 +53,9 @@
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::NoSelection</enum>
+        </property>
         <row>
          <property name="text">
           <string>Cloud Drive</string>
