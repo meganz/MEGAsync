@@ -736,15 +736,15 @@ void SettingsDialog::loadSettings()
         {
             #ifdef WIN32
                 #if QT_VERSION < 0x050000
-                    downloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads");
+                    downloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
                 #else
-                    downloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads");
+                    downloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
                 #endif
             #else
                 #if QT_VERSION < 0x050000
-                    downloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads");
+                    downloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
                 #else
-                    downloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads");
+                    downloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
                 #endif
             #endif
         }
@@ -898,15 +898,15 @@ bool SettingsDialog::saveSettings()
         QString defaultDownloadPath;
 #ifdef WIN32
     #if QT_VERSION < 0x050000
-        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads");
+        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
     #else
-        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads");
+        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
     #endif
 #else
     #if QT_VERSION < 0x050000
-        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads");
+        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
     #else
-        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads");
+        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
     #endif
 #endif
         if(ui->eDownloadFolder->text().compare(defaultDownloadPath) || preferences->downloadFolder().size())

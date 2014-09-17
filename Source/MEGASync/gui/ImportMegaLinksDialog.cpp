@@ -51,15 +51,15 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	{
         #ifdef WIN32
             #if QT_VERSION < 0x050000
-                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + tr("/MEGAsync Downloads"));
+                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads"));
             #else
-                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + tr("/MEGAsync Downloads"));
+                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads"));
             #endif
         #else
             #if QT_VERSION < 0x050000
-                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + tr("/MEGAsync Downloads"));
+                QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads"));
             #else
-                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + tr("/MEGAsync Downloads"));
+                QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads"));
             #endif
         #endif
 

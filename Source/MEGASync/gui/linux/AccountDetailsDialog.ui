@@ -76,7 +76,7 @@
         </column>
         <item row="0" column="0">
          <property name="text">
-          <string>456 MB</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -84,7 +84,7 @@
         </item>
         <item row="0" column="1">
          <property name="text">
-          <string>53345</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -92,7 +92,7 @@
         </item>
         <item row="0" column="2">
          <property name="text">
-          <string>345</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -100,7 +100,7 @@
         </item>
         <item row="1" column="0">
          <property name="text">
-          <string>23 MB</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -108,7 +108,7 @@
         </item>
         <item row="1" column="1">
          <property name="text">
-          <string>34</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -116,7 +116,7 @@
         </item>
         <item row="1" column="2">
          <property name="text">
-          <string>2</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -124,7 +124,7 @@
         </item>
         <item row="2" column="0">
          <property name="text">
-          <string>122 MB</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -132,7 +132,7 @@
         </item>
         <item row="2" column="1">
          <property name="text">
-          <string>4321</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
@@ -140,7 +140,7 @@
         </item>
         <item row="2" column="2">
          <property name="text">
-          <string>763</string>
+          <string/>
          </property>
          <property name="textAlignment">
           <set>AlignRight|AlignVCenter</set>
