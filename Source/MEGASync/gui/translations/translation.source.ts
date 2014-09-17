@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="[LANG]" sourcelanguage="en">
+<TS version="2.0" language="[LANG]" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">[$1687]</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please, select the download folder for your files:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation type="unfinished">[$2023]</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">[$1578]</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions on this local folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>[$2023]</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions on this folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -134,7 +232,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +269,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>[$2023]</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">[$1578]</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions on this local folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -541,6 +647,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translation>[$2024]</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +756,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation>[$1578]</translation>
+        <translation type="obsolete">[$1578]</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1030,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>[$1729]</translation>
+        <translation type="obsolete">[$1729]</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1078,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>[$1740]</translation>
+        <translation type="obsolete">[$1740]</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1079,7 +1193,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>[$1877]</translation>
+        <translation type="obsolete">[$1877]</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1221,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>[$1923]</translation>
+        <translation type="obsolete">[$1923]</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>[$1924]</translation>
+        <translation type="obsolete">[$1924]</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>[$1925]</translation>
+        <translation type="obsolete">[$1925]</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>[$1926]</translation>
+        <translation type="obsolete">[$1926]</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>[$1928]</translation>
+        <translation type="obsolete">[$1928]</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>[$1927]</translation>
+        <translation type="obsolete">[$1927]</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>[$2007]</translation>
+        <translation type="obsolete">[$2007]</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1275,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>[$2017]</translation>
+        <translation type="obsolete">[$2017]</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1300,42 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translation>[$2023]</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your are already syncing your entire account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions on this local folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1398,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>[$1771]</translation>
+        <translation type="obsolete">[$1771]</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1430,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>[$1778]</translation>
+        <translation type="obsolete">[$1778]</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>[$1779]</translation>
+        <translation type="obsolete">[$1779]</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>[$1780]</translation>
+        <translation type="obsolete">[$1780]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1524,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>[$1799]</translation>
+        <translation type="obsolete">[$1799]</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1574,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>[$2022]</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions on this local folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
