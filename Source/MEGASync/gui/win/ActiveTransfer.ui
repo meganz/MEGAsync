@@ -118,13 +118,13 @@ color: grey;
        <widget class="QLabel" name="lPercentage">
         <property name="minimumSize">
          <size>
-          <width>39</width>
+          <width>50</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>39</width>
+          <width>50</width>
           <height>16777215</height>
          </size>
         </property>
@@ -136,7 +136,7 @@ color: grey;
          </font>
         </property>
         <property name="text">
-         <string/>
+         <string>100%</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
