@@ -36,7 +36,8 @@
         std::ostringstream oss;
         oss << "MEGAprivate ERROR DUMP\n";
         oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() << "\n";
+        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() <<
+               "." << QString::number(Preferences::BUILD_ID).toStdString() << "\n";
         oss << "Module name: " << "megasync" << "\n";
 
         struct utsname osData;

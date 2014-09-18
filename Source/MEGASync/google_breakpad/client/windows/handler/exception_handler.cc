@@ -923,8 +923,8 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   int frame_number=0;
 
   oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() << "\n";
-
+  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() <<
+         "." << QString::number(Preferences::BUILD_ID).toStdString() << "\n";
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
   int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));

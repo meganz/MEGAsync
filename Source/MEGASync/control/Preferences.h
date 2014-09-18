@@ -191,6 +191,7 @@ public:
     static const char CLIENT_KEY[];
     static const char USER_AGENT[];
     static const int VERSION_CODE;
+    static const int BUILD_ID;
     static const QString VERSION_STRING;
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
