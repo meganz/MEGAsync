@@ -7,10 +7,10 @@ RESOURCES=resourcesDMG
 rm -rf Release_x64
 mkdir Release_x64
 cd Release_x64
-~/Qt5.3.1/5.3/clang_64/bin/lrelease ../Source/MEGASync/MEGASync.pro
-~/Qt5.3.1/5.3/clang_64/bin/qmake -r ../Source -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
+~/Qt5.3.2/5.3/clang_64/bin/lrelease ../Source/MEGASync/MEGASync.pro
+~/Qt5.3.2/5.3/clang_64/bin/qmake -r ../Source -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
 make
-~/Qt5.3.1/5.3/clang_64/bin/macdeployqt MEGASync/MEGAsync.app
+~/Qt5.3.2/5.3/clang_64/bin/macdeployqt MEGASync/MEGAsync.app
 dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
 strip MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
@@ -19,12 +19,12 @@ mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/
 mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 mv MEGASync/MEGAsync.app ./
 
-cp ~/Qt5.3.1/5.3/clang_64/lib/QtCore.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtCore.framework/Resources/
-cp ~/Qt5.3.1/5.3/clang_64/lib/QtGui.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtGui.framework/Resources/
-cp ~/Qt5.3.1/5.3/clang_64/lib/QtMacExtras.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtMacExtras.framework/Resources/
-cp ~/Qt5.3.1/5.3/clang_64/lib/QtNetwork.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtNetwork.framework/Resources/
-cp ~/Qt5.3.1/5.3/clang_64/lib/QtPrintSupport.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtPrintSupport.framework/Resources/
-cp ~/Qt5.3.1/5.3/clang_64/lib/QtWidgets.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtWidgets.framework/Resources/
+cp ~/Qt5.3.2/5.3/clang_64/lib/QtCore.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtCore.framework/Resources/
+cp ~/Qt5.3.2/5.3/clang_64/lib/QtGui.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtGui.framework/Resources/
+cp ~/Qt5.3.2/5.3/clang_64/lib/QtMacExtras.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtMacExtras.framework/Resources/
+cp ~/Qt5.3.2/5.3/clang_64/lib/QtNetwork.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtNetwork.framework/Resources/
+cp ~/Qt5.3.2/5.3/clang_64/lib/QtPrintSupport.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtPrintSupport.framework/Resources/
+cp ~/Qt5.3.2/5.3/clang_64/lib/QtWidgets.framework/Contents/Info.plist MEGAsync.app/Contents/Frameworks/QtWidgets.framework/Resources/
 
 #Overwrite resources to manage update processes. Use modified QtNetwork to get a valid signature
 #For signing Installer, use original QtNetwork, otherwise use modified QtNetwork
