@@ -22,19 +22,15 @@ win32 {
         LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs/staticd"
     }
 
-    DEFINES += SODIUM_STATIC
-    INCLUDEPATH += $$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/include/libsodium
     INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
     LIBS += -lws2_32
 }
 
 macx {
-   DEFINES += SODIUM_STATIC
-   INCLUDEPATH += $$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/include/libsodium
    LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
 }
 
-DEFINES += USE_CRYPTOPP USE_SODIUM
+DEFINES += USE_CRYPTOPP
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD ../MEGASync/mega/bindings/qt/3rdparty/include ../MEGASync/mega/bindings/qt/3rdparty/include/cryptopp ../MEGASync/mega/include/
 
