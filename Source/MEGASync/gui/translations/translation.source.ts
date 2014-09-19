@@ -137,7 +137,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>[$2037]</translation>
     </message>
     <message>
-        <source>Please, select the download folder for your files:</source>
+        <source>Please select the download folder for your files:</source>
         <translation>[$2038]</translation>
     </message>
     <message>
@@ -1157,7 +1157,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>[$1680]</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">[$1754]</translation>
     </message>
     <message>
@@ -1322,7 +1322,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>[$2049]</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account</source>
+        <source>You are already syncing your entire Cloud Drive</source>
         <translation>[$2051]</translation>
     </message>
     <message>
