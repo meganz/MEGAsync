@@ -1121,7 +1121,7 @@ bool SettingsDialog::saveSettings()
 void SettingsDialog::updateAddButton()
 {
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-        ui->bAdd->setToolTip(tr("Your are already syncing your entire account"));
+        ui->bAdd->setToolTip(tr("You are already syncing your entire Cloud Drive"));
     else
         ui->bAdd->setToolTip(QString());
 }
@@ -1175,7 +1175,7 @@ void SettingsDialog::on_bAdd_clicked()
 {
     if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
     {
-        QMessageBox::critical(this, tr("Error"), tr("Your are already syncing your entire account"));
+        QMessageBox::critical(this, tr("Error"), tr("You are already syncing your entire Cloud Drive"));
         return;
     }
 
@@ -1327,7 +1327,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
         QTemporaryFile test(fPath + QDir::separator());
         if(!test.open())
         {
-            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions on this local folder."));
+            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 
