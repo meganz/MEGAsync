@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sl" sourcelanguage="en">
+<TS version="2.0" language="sl" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Oblak</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Prejeto</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Koš</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Prostora</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Lokalna mapa:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Prekliči</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Izberite</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Izberite lokalno mapo</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Napaka</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -107,7 +189,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izberite</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Pozor</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -170,7 +272,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izberite</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Napaka</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -539,7 +649,15 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Vaša konfiguracija je pokvarjena, prosim začnite znova</translation>
+    </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
     </message>
 </context>
 <context>
@@ -642,7 +760,7 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Error</source>
-        <translation>Napaka</translation>
+        <translation type="obsolete">Napaka</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Prosim, poskrbite, da ne uporabljate znakov, kot so \ / ali : v imenu mape.</tra
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Sinhronizirane mape</translation>
+        <translation type="obsolete">Sinhronizirane mape</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Prosim, poskrbite, da ne uporabljate znakov, kot so \ / ali : v imenu mape.</tra
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Omejitve nalaganja se štejejo po strežniku za nalaganje in se uveljavijo, ko se začne novo nalaganje</translation>
+        <translation type="obsolete">Omejitve nalaganja se štejejo po strežniku za nalaganje in se uveljavijo, ko se začne novo nalaganje</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Prosim, poskrbite, da ne uporabljate znakov, kot so \ / ali : v imenu mape.</tra
         <translation>Opozorilo</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Že sinhronizirate cel račun.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Medpomnilnik</translation>
+        <translation type="obsolete">Medpomnilnik</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Aktivna selektivna sinhronizacija</translation>
+        <translation type="obsolete">Aktivna selektivna sinhronizacija</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Omogoči polno sinhronizacijo računa</translation>
+        <translation type="obsolete">Omogoči polno sinhronizacijo računa</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Omogočenje polne sinhronizacije računa bo onemogočilo vse vaše trenutne sinhronizacije.</translation>
+        <translation type="obsolete">Omogočenje polne sinhronizacije računa bo onemogočilo vse vaše trenutne sinhronizacije.</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Aktivna polna sinhronizacija računa</translation>
+        <translation type="obsolete">Aktivna polna sinhronizacija računa</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Onemogočenje polne sinhronizacije računa bo omogočilo nastavljanje selektivne sinhronizacije.</translation>
+        <translation type="obsolete">Onemogočenje polne sinhronizacije računa bo omogočilo nastavljanje selektivne sinhronizacije.</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Onemogoči polno sinhronizacijo računa</translation>
+        <translation type="obsolete">Onemogoči polno sinhronizacijo računa</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Drugo</translation>
+        <translation type="obsolete">Drugo</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Ali želite ponovno zagnati MEGAsync takoj?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Mapa za nalaganje s tega računalnika</translation>
+        <translation type="obsolete">Mapa za nalaganje s tega računalnika</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1185,7 +1303,43 @@ Ali želite ponovno zagnati MEGAsync takoj?</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izberite</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Ali želite ponovno zagnati MEGAsync takoj?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Polna sinhronizacija računa</translation>
+        <translation type="obsolete">Polna sinhronizacija računa</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Ali želite ponovno zagnati MEGAsync takoj?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Vaša lokalna mapa:</translation>
+        <translation type="obsolete">Vaša lokalna mapa:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>in vaša MEGA mapa:</translation>
+        <translation type="obsolete">in vaša MEGA mapa:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>bosta avtomatsko sinhronizirani.</translation>
+        <translation type="obsolete">bosta avtomatsko sinhronizirani.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Ali ste prepričani, da želite sinhronizirati celoten svoj oblak?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>in vaš MEGA oblak</translation>
+        <translation type="obsolete">in vaš MEGA oblak</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1415,15 +1569,31 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Napaka - ne morem pridobiti ključa seje</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Polna sinhronizacija</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Vaša lokalna mapa in vaš MEGA oblak bosta avtomatsko sinhronizirana.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1675,7 @@ Prosim, poskusite ponovno. Če težava ostane, nas prosim kontaktirajte na bug@m
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Izberite</translation>
     </message>
 </context>
 <context>

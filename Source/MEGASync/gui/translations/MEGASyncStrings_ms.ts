@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ms" sourcelanguage="en">
+<TS version="2.0" language="ms" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Cakera Awan</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Peti Masuk</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Tong Sampah</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Penyimpanan</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Folder Tempatan:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Batal</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Pilih folder tempatan</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ralat</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Amaran</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ralat</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Sila cuba lagi. Jika masalah berterusan sila hubungi bug@mega.co.nz</translation
         <source>Your config is corrupt, please start over</source>
         <translation>Konfig anda rosak, sila mula semula</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Sila cuba lagi. Jika masalah berterusan sila hubungi bug@mega.co.nz</translation
     </message>
     <message>
         <source>Error</source>
-        <translation>Ralat</translation>
+        <translation type="obsolete">Ralat</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Sila pastikan anda tidak menggunakan karakter-karakter seperti \ / or : di dalam
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Folder disegerak</translation>
+        <translation type="obsolete">Folder disegerak</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Sila pastikan anda tidak menggunakan karakter-karakter seperti \ / or : di dalam
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Had muat naik adalah untuk setiap pelayan muat naik dan digunakan apabila memulakan muat naik baru</translation>
+        <translation type="obsolete">Had muat naik adalah untuk setiap pelayan muat naik dan digunakan apabila memulakan muat naik baru</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Sila pastikan anda tidak menggunakan karakter-karakter seperti \ / or : di dalam
         <translation>Amaran</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Anda sudah menyegerak keseluruhan akaun anda</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation type="obsolete">Cache</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Penyegerakan terpilih aktif</translation>
+        <translation type="obsolete">Penyegerakan terpilih aktif</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Bolehkan penyegerakan akaun penuh</translation>
+        <translation type="obsolete">Bolehkan penyegerakan akaun penuh</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Membolehkan penyegerakan akaun penuh akan melumpukan semua penyegerakan semasa anda</translation>
+        <translation type="obsolete">Membolehkan penyegerakan akaun penuh akan melumpukan semua penyegerakan semasa anda</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Penyegerakan akaun penuh aktif</translation>
+        <translation type="obsolete">Penyegerakan akaun penuh aktif</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Melumpuhkan penyegerakan akaun penuh akan membenarkan anda untuk membuat penyegerakan folder terpilih</translation>
+        <translation type="obsolete">Melumpuhkan penyegerakan akaun penuh akan membenarkan anda untuk membuat penyegerakan folder terpilih</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Lumpuhkan penyegerakan akaun penuh</translation>
+        <translation type="obsolete">Lumpuhkan penyegerakan akaun penuh</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Lain-lain</translation>
+        <translation type="obsolete">Lain-lain</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Adakah anda ingin memulakan semula MEGAsync sekarang?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder untuk muat naik daripada komputer ini</translation>
+        <translation type="obsolete">Folder untuk muat naik daripada komputer ini</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Adakah anda ingin memulakan semula MEGAsync sekarang?</translation>
     <message>
         <source>Choose</source>
         <translation>Pilih</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Adakah anda ingin memulakan semula MEGAsync sekarang?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Penyegerakan akaun penuh</translation>
+        <translation type="obsolete">Penyegerakan akaun penuh</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Adakah anda ingin memulakan semula MEGAsync sekarang?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Folder tempatan anda:</translation>
+        <translation type="obsolete">Folder tempatan anda:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>dan folder MEGA anda</translation>
+        <translation type="obsolete">dan folder MEGA anda</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>akan disegerak secara automatik</translation>
+        <translation type="obsolete">akan disegerak secara automatik</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Adakah anda pasti untuk menyegerak seluruh Cakera Awan anda?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>dan Cakera Awan MEGA anda</translation>
+        <translation type="obsolete">dan Cakera Awan MEGA anda</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Sila cuba lagi. Jika masalah berterusan sila hubungi bug@mega.co.nz</translation
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Folder tempatan anda dan Cakera Awan MEGA anda akan disegerak secara automatik.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

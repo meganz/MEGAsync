@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="lv" sourcelanguage="en">
+<TS version="2.0" language="lv" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Datu Krātuve</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Iesūtne</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Miskaste</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Diska vieta</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>LABI</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Lokālā mape:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>LABI</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Atcelt</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Izvēlēties</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Izvēlieties lokālo mapi</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Kļūda</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Izvēlēties</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Brīdinājums</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Izvēlēties</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Kļūda</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
         <source>Your config is corrupt, please start over</source>
         <translation>Konfigurācijas kļūda, lūdzu,  sāciet no sākuma</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     </message>
     <message>
         <source>Error</source>
-        <translation>Kļūda</translation>
+        <translation type="obsolete">Kļūda</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Lūdzu, pārliecinies, ka Tu neizmanto šādas rakstzīmes kā \/ vai : Tavos ma
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Sinhronizētās mapes</translation>
+        <translation type="obsolete">Sinhronizētās mapes</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Lūdzu, pārliecinies, ka Tu neizmanto šādas rakstzīmes kā \/ vai : Tavos ma
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Augšupielādes ierobežojumi tiek iegūti  no augšupielādes servera un tiek piemēroti, sākoties jaunai augšupielādei</translation>
+        <translation type="obsolete">Augšupielādes ierobežojumi tiek iegūti  no augšupielādes servera un tiek piemēroti, sākoties jaunai augšupielādei</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -988,7 +1106,7 @@ Lūdzu, pārliecinies, ka Tu neizmanto šādas rakstzīmes kā \/ vai : Tavos ma
     </message>
     <message>
         <source>Proxy</source>
-        <translation>Starpniekserveris</translation>
+        <translation>Starpserveris</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -1043,7 +1161,7 @@ Lūdzu, pārliecinies, ka Tu neizmanto šādas rakstzīmes kā \/ vai : Tavos ma
         <translation>Brīdinājums</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Jūs jau sinhronizējat visu savu kontu.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Kešatmiņa</translation>
+        <translation type="obsolete">Kešatmiņa</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Izvēlētā sinhronizācija ir aktīva</translation>
+        <translation type="obsolete">Izvēlētā sinhronizācija ir aktīva</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Aktivizēt pilnu konta sinhronizāciju</translation>
+        <translation type="obsolete">Aktivizēt pilnu konta sinhronizāciju</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Aktivizējot pilnu konta sinhronizāciju tiks atslēgtas visas iepriekšējās sinhronizācijas</translation>
+        <translation type="obsolete">Aktivizējot pilnu konta sinhronizāciju tiks atslēgtas visas iepriekšējās sinhronizācijas</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Pilna konta sinhronizācija ir aktīva</translation>
+        <translation type="obsolete">Pilna konta sinhronizācija ir aktīva</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Atspējojot pilnu konta sinhronizāciju, tiks dota iespēja Tev veikt izvēlētu mapju sinhronizāciju</translation>
+        <translation type="obsolete">Atspējojot pilnu konta sinhronizāciju, tiks dota iespēja Tev veikt izvēlētu mapju sinhronizāciju</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Atspējot pilnu konta sinhronizāciju</translation>
+        <translation type="obsolete">Atspējot pilnu konta sinhronizāciju</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Papildus</translation>
+        <translation type="obsolete">Papildus</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Vai tu vēlies restartēt MEGAsync tagad?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Mapes attēli no šī datora</translation>
+        <translation type="obsolete">Mapes attēli no šī datora</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Vai tu vēlies restartēt MEGAsync tagad?</translation>
     <message>
         <source>Choose</source>
         <translation>Izvēlēties</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Vai tu vēlies restartēt MEGAsync tagad?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Pilna konta sinhronizācija</translation>
+        <translation type="obsolete">Pilna konta sinhronizācija</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Vai tu vēlies restartēt MEGAsync tagad?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Jūsu lokālā mape:</translation>
+        <translation type="obsolete">Jūsu lokālā mape:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>un Jūsu MEGA mape:</translation>
+        <translation type="obsolete">un Jūsu MEGA mape:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation> tiks automātiski sinhronizētas.</translation>
+        <translation type="obsolete"> tiks automātiski sinhronizētas.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Vai esat pārliecināts, ka vēlaties sinhronizēt visu Jūsu Datu Krātuvi?</tr
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>un Jūsu MEGA Datu Krātuve</translation>
+        <translation type="obsolete">un Jūsu MEGA Datu Krātuve</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Lūdzu, mēģini vēlreiz. Ja problēma atkārtojas, lūdzu sazinies ar bug@mega
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Tava vietējā mape un MEGA Datu Krātuve tiks automātiski sinhronizēti. </translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

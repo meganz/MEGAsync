@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="el" sourcelanguage="en">
+<TS version="2.0" language="el" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Δίσκος Cloud</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Εισερχόμενα</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Κάδος απορριμάτων</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Εντάξει</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Τοπικός Φάκελος:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Εντάξει</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Επιλέξτε</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Επιλέξτε τοπικό φάκελο</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -107,7 +189,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Επιλέξτε</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Προειδοποίηση</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -170,7 +272,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Επιλέξτε</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -539,7 +649,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
-        <translation>Your config is corrupt, please start over</translation>
+        <translation>Οι ρυθμίσεις σας είναι κατεστραμμένες, παρακαλούμε ξεκινήστε από την αρχή</translation>
+    </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
     </message>
 </context>
 <context>
@@ -642,7 +760,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation>Σφάλμα</translation>
+        <translation type="obsolete">Σφάλμα</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Συγχρονισμένοι φάκελοι</translation>
+        <translation type="obsolete">Συγχρονισμένοι φάκελοι</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Τα όρια μεταφόρτωσης είναι ανά διακομιστή  και εφαρμόζονται κατά την έναρξη της νέας προσθήκης</translation>
+        <translation type="obsolete">Τα όρια μεταφόρτωσης είναι ανά διακομιστή  και εφαρμόζονται κατά την έναρξη της νέας προσθήκης</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Προειδοποίηση</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Συγχρονίζετε ήδη ολόκληρο το λογαριασμό σας.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Μνήμη Cache</translation>
+        <translation type="obsolete">Μνήμη Cache</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Επιλεκτικός συγχρονισμός ενεργός</translation>
+        <translation type="obsolete">Επιλεκτικός συγχρονισμός ενεργός</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Ενεργοποίηση πλήρους συγχρονισμού λογαριασμού</translation>
+        <translation type="obsolete">Ενεργοποίηση πλήρους συγχρονισμού λογαριασμού</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Η ενεργοποίηση πλήρους συγχρονισμού λογαριασμού θα σταματήσει όλα τα τρέχοντα συχρονιζόμενα</translation>
+        <translation type="obsolete">Η ενεργοποίηση πλήρους συγχρονισμού λογαριασμού θα σταματήσει όλα τα τρέχοντα συχρονιζόμενα</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Πλήρης συγχρονισμός λογαριασμού ενεργός</translation>
+        <translation type="obsolete">Πλήρης συγχρονισμός λογαριασμού ενεργός</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Η απενεργοποίηση πλήρη συγχρονισμού λογαριασμού θα σας επιτρέψει να κάνετε συγχρονισμό του επίλεκτου φακέλου</translation>
+        <translation type="obsolete">Η απενεργοποίηση πλήρη συγχρονισμού λογαριασμού θα σας επιτρέψει να κάνετε συγχρονισμό του επίλεκτου φακέλου</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Απενεργοποίηση πλήρη συγχρονισμού λογαριασμού</translation>
+        <translation type="obsolete">Απενεργοποίηση πλήρη συγχρονισμού λογαριασμού</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>&apos;Αλλα</translation>
+        <translation type="obsolete">&apos;Αλλα</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Φάκελος για μεταφορτώσεις από αυτόν τον υπολογιστή</translation>
+        <translation type="obsolete">Φάκελος για μεταφορτώσεις από αυτόν τον υπολογιστή</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1185,7 +1303,43 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Επιλέξτε</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Πλήρης συγχρονισμός λογαριασμού</translation>
+        <translation type="obsolete">Πλήρης συγχρονισμός λογαριασμού</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Ο τοπικός σας φάκελος:</translation>
+        <translation type="obsolete">Ο τοπικός σας φάκελος:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>και ο MEGA φάκελός σας</translation>
+        <translation type="obsolete">και ο MEGA φάκελός σας</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>θα συγχρονιστούν αυτόματα.</translation>
+        <translation type="obsolete">θα συγχρονιστούν αυτόματα.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>και τον MEGA Cloud δίσκο</translation>
+        <translation type="obsolete">και τον MEGA Cloud δίσκο</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1415,15 +1569,31 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error getting session key</source>
-        <translation>Error getting session key</translation>
+        <translation>Σφάλμα κατά τη λήψη του κλειδιου της συνεδρίας</translation>
     </message>
     <message>
         <source>Full sync</source>
-        <translation>Full sync</translation>
+        <translation>Πλήρης συγχρονισμός</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>Ο τοπικός φάκελός σας και ο MEGA Cloud Δίσκος σας θα συγχρονίζονται αυτόματα.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1675,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose</source>
-        <translation>Choose</translation>
+        <translation>Επιλέξτε</translation>
     </message>
 </context>
 <context>

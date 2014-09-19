@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ee" sourcelanguage="en">
+<TS version="2.0" language="ee" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Pilveketas</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Postkast</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Prügikast</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Hoiustamine</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Kohalik kaust:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Loobu</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Vali</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Vali kohalik kaust</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Viga</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Vali</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Hoiatus</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Vali</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Viga</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
         <source>Your config is corrupt, please start over</source>
         <translation>Teie seadistusfail on vigane, palun alustage uuesti</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     </message>
     <message>
         <source>Error</source>
-        <translation>Viga</translation>
+        <translation type="obsolete">Viga</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</transla
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Sünkroniseeritud kaustad</translation>
+        <translation type="obsolete">Sünkroniseeritud kaustad</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</transla
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Üleslaadimise piirangud kehtivad üleslaadimisserveri kohta ja jõustuva uue üleslaadimise käivitamisel</translation>
+        <translation type="obsolete">Üleslaadimise piirangud kehtivad üleslaadimisserveri kohta ja jõustuva uue üleslaadimise käivitamisel</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Palun kontrollige, et Te ei kasuta kausta nimedes sümboleid \ / või :</transla
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Te juba sünkroniseerite kogu oma kontot.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Vahemälu</translation>
+        <translation type="obsolete">Vahemälu</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Valikuline sünkroniseering on sees</translation>
+        <translation type="obsolete">Valikuline sünkroniseering on sees</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Luba kogu sisu sünkroniseering</translation>
+        <translation type="obsolete">Luba kogu sisu sünkroniseering</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Kogu sisu sünkroniseeringu lubamine keelab kõik praegused sünkroniseeringud</translation>
+        <translation type="obsolete">Kogu sisu sünkroniseeringu lubamine keelab kõik praegused sünkroniseeringud</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Kogu sisu sünkroniseering on sees</translation>
+        <translation type="obsolete">Kogu sisu sünkroniseering on sees</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Kogu sisu sünkroniseerimise keelamine võimaldab sünkroniseerida ainult valitud kauste</translation>
+        <translation type="obsolete">Kogu sisu sünkroniseerimise keelamine võimaldab sünkroniseerida ainult valitud kauste</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Keela kogu sisu sünkroniseerimine</translation>
+        <translation type="obsolete">Keela kogu sisu sünkroniseerimine</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Ülejäänud</translation>
+        <translation type="obsolete">Ülejäänud</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Kas soovite praegu taaskäivitada MEGAsünki?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Sellest arvutist üleslaetavate failide kaust</translation>
+        <translation type="obsolete">Sellest arvutist üleslaetavate failide kaust</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Kas soovite praegu taaskäivitada MEGAsünki?</translation>
     <message>
         <source>Choose</source>
         <translation>Vali</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Kas soovite praegu taaskäivitada MEGAsünki?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Konto täielik sünkroniseerimine</translation>
+        <translation type="obsolete">Konto täielik sünkroniseerimine</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Kas soovite praegu taaskäivitada MEGAsünki?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Teie kohalikku kausta:</translation>
+        <translation type="obsolete">Teie kohalikku kausta:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>ja Teie MEGA kausta:</translation>
+        <translation type="obsolete">ja Teie MEGA kausta:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>sünkroniseeritakse automaatselt.</translation>
+        <translation type="obsolete">sünkroniseeritakse automaatselt.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Olete kindel, et tahate sünkroniseerida kogu oma pilveketast?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>ja oma MEGA pilveketast?</translation>
+        <translation type="obsolete">ja oma MEGA pilveketast?</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Palun proovige uuesti. Juhul, kui probleem peaks uuesti ilmuma siis võtke meieg
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Teie kohalikku kausta ja Teie MEGA pilveketast sünkroniseeritakse automaatselt.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

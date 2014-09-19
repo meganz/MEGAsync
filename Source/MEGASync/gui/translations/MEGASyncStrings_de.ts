@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de" sourcelanguage="en">
+<TS version="2.0" language="de" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Nutzungsdetails</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Postfach</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Papierkorb</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Speicher</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Dateien</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Ordner</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Von MEGA herunterladen</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Download-Zielordner wählen:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Lokaler Ordner:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Als Standard-Downloadziel verwenden</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Auswählen</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Wählen Sie einen lokalen Ordner aus</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Auswählen</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Achtung - Demomodus</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">Sie haben keine Schreibrechte in diesem Ordner.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync kann ihn nicht als Downloadziel verwenden.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Fortfahren?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Auswählen</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
         <source>Your config is corrupt, please start over</source>
         <translation>Ihre Einstellungen konnten nicht gelesen werden. Bitte erstellen Sie sie erneut.</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Von MEGA herunterladen</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Fehler bei der Linkerstellung:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
     </message>
     <message>
         <source>Error</source>
-        <translation>Fehler</translation>
+        <translation type="obsolete">Fehler</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Die Sonderzeichen \ / und : sind in Ordnernamen nicht erlaubt.</translation>
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Synchronisierte Ordner</translation>
+        <translation type="obsolete">Synchronisierte Ordner</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Die Sonderzeichen \ / und : sind in Ordnernamen nicht erlaubt.</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Die Bandbreitenbegrenzung wirkt pro Zielserver und wird beim Uploadbeginn aktualisiert.</translation>
+        <translation type="obsolete">Die Bandbreitenbegrenzung wirkt pro Zielserver und wird beim Uploadbeginn aktualisiert.</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Die Sonderzeichen \ / und : sind in Ordnernamen nicht erlaubt.</translation>
         <translation>Achtung</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Sie synchronisieren bereits Ihren gesamten Account</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Zwischenspeicher</translation>
+        <translation type="obsolete">Zwischenspeicher</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Ordnerspezifische Synchronisierung aktiv</translation>
+        <translation type="obsolete">Ordnerspezifische Synchronisierung aktiv</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Auf Vollsynchronisierung umstellen</translation>
+        <translation type="obsolete">Auf Vollsynchronisierung umstellen</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Die Umstellung auf Vollsynchronisierung deaktiviert alle bestehenden Syncs</translation>
+        <translation type="obsolete">Die Umstellung auf Vollsynchronisierung deaktiviert alle bestehenden Syncs</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Vollsynchronisierung aktiv</translation>
+        <translation type="obsolete">Vollsynchronisierung aktiv</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Um spezifische Ordner synchronisieren zu können, deaktivieren Sie bitte die Vollsynchronisierung.</translation>
+        <translation type="obsolete">Um spezifische Ordner synchronisieren zu können, deaktivieren Sie bitte die Vollsynchronisierung.</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Vollsynchronisierung deaktivieren</translation>
+        <translation type="obsolete">Vollsynchronisierung deaktivieren</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Erweitert</translation>
+        <translation type="obsolete">Erweitert</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Neustart von MEGAsync?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Zielordner für manuelle Uploads</translation>
+        <translation type="obsolete">Zielordner für manuelle Uploads</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Neustart von MEGAsync?</translation>
     <message>
         <source>Choose</source>
         <translation>Auswählen</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Standardordner</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>Dieser Sync kann nicht aktiviert werden, weil der lokale Ordner fehlt</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>Dieser Sync kann nicht aktiviert werden, weil der lokale Ordner fehlt</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>Sie synchronisieren bereits Ihr gesamtes Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Aktivieren / deaktivieren</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Lokalen Ordner wählen</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Neustart von MEGAsync?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Komplettsync</translation>
+        <translation type="obsolete">Komplettsync</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Neustart von MEGAsync?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Ihr lokaler Ordner</translation>
+        <translation type="obsolete">Ihr lokaler Ordner</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>und Ihr MEGA-Ordner</translation>
+        <translation type="obsolete">und Ihr MEGA-Ordner</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>werden automatisch synchronisiert.</translation>
+        <translation type="obsolete">werden automatisch synchronisiert.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Sind Sie sicher, dass Sie Ihre gesamtes Cloud Drive synchronisieren möchten?</t
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>und Ihr MEGA Cloud Drive</translation>
+        <translation type="obsolete">und Ihr MEGA Cloud Drive</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Bitte versuchen Sie es später noch einmal. Sollte das Problem erneut auftreten,
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Ihr lokaler Ordner und Ihr MEGA-Cloud Drive werden automatisch synchronisiert.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Ihr Cloud Drive wird mit diesem Ordner synchronisiert:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Sie haben keine Schreibrechte in diesem Pfad.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync kann ihn nicht als Downloadziel verwenden.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Fortfahren?</translation>
     </message>
 </context>
 <context>

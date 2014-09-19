@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ro" sourcelanguage="en">
+<TS version="2.0" language="ro" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Unitate cloud</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Mesaje primite</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Coş de gunoi</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Memorie</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Ok</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Folder local:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Renunţă</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Alege</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Selectează folderul local</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Eroare</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Alege</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertisment</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -172,6 +274,14 @@ Are you sure?</source>
         <source>Choose</source>
         <translation>Alege</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Eroare</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
 </context>
 <context>
     <name>InfoDialog</name>
@@ -185,7 +295,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
-        <translation>Date temporar indisponibile</translation>
+        <translation>Utilizare: Date temporar indisponibile</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -346,7 +456,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 foldere nu au fost încărcate deoarece este prea mare (această versiune este limitată la %2 foldere şi %3 fişiere.</translation>
+        <translation type="obsolete">%1 foldere nu au fost încărcate deoarece sunt prea mari (această versiune este limitată la %2 foldere şi %3 fişiere).</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -354,7 +464,7 @@ Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
         <translation type="obsolete">Sincronizarea se va opri.
-Ştergerile care se produc cât timp nu rulează nu vor fi propagate.
+Ştergerile care se produc cât timp aplicaţia nu rulează nu vor fi propagate.
 
 Ieşi oricum?</translation>
     </message>
@@ -541,6 +651,14 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
         <source>Your config is corrupt, please start over</source>
         <translation>Fişierul config este corupt, te rugăm să o iei de la început</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -558,11 +676,11 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Request failed, retrying</source>
-        <translation>Cerere eşuată, reîncercare</translation>
+        <translation>Cerere eşuată, se reîncearcă</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
-        <translation>Limită depăşită</translation>
+        <translation>Limita de rată depăşită</translation>
     </message>
     <message>
         <source>Failed permanently</source>
@@ -570,7 +688,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
-        <translation>Prea multe conexiuni sau transferuri</translation>
+        <translation>Prea multe conexiuni sau transferuri simultane</translation>
     </message>
     <message>
         <source>Out of range</source>
@@ -642,7 +760,7 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     </message>
     <message>
         <source>Error</source>
-        <translation>Eroare</translation>
+        <translation type="obsolete">Eroare</translation>
     </message>
 </context>
 <context>
@@ -691,7 +809,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Enter the new folder name:</source>
-        <translation>Introdu noul nume pentru folder:</translation>
+        <translation>Introdu noul nume pt. folder:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -916,7 +1034,7 @@ Te rugăm să te asiguri că nu foloseşti caractere precum \ / sau : în numele
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Foldere sincronizate</translation>
+        <translation type="obsolete">Foldere sincronizate</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Te rugăm să te asiguri că nu foloseşti caractere precum \ / sau : în numele
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Limitele de încărcare sunt per serverul de încărcare şi sunt aplicate când încep noi încărcări</translation>
+        <translation type="obsolete">Limitele de încărcare sunt per serverul de încărcare şi sunt aplicate când încep noi încărcări</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Te rugăm să te asiguri că nu foloseşti caractere precum \ / sau : în numele
         <translation>Avertisment</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Deja sincronizezi întreg contul tău.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation type="obsolete">Cache</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Sincronizarea selectivă activă</translation>
+        <translation type="obsolete">Sincronizarea selectivă activă</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Activează sincronizarea completă a contului</translation>
+        <translation type="obsolete">Activează sincronizarea completă a contului</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Activarea sincronizării complete a contului va dezactiva toate sincronizările actuale</translation>
+        <translation type="obsolete">Activarea sincronizării complete a contului va dezactiva toate sincronizările actuale</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Sincronizarea completă a contului activă</translation>
+        <translation type="obsolete">Sincronizarea completă a contului activă</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Dezactivarea sincronizării complete a contului îţi va permite să configurezi sincronizarea selectivă a folderelor</translation>
+        <translation type="obsolete">Dezactivarea sincronizării complete a contului îţi va permite să configurezi sincronizarea selectivă a folderelor</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Dezactivează sincronizarea completă a contului</translation>
+        <translation type="obsolete">Dezactivează sincronizarea completă a contului</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Alte setări</translation>
+        <translation type="obsolete">Alte setări</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Doreşti să reporneşti MEGAsync acum?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folderul pentru încărcări din acest calculator</translation>
+        <translation type="obsolete">Folderul pentru încărcări din acest calculator</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Doreşti să reporneşti MEGAsync acum?</translation>
     <message>
         <source>Choose</source>
         <translation>Alege</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Doreşti să reporneşti MEGAsync acum?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Sincronizarea completă a contului</translation>
+        <translation type="obsolete">Sincronizarea completă a contului</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Doreşti să reporneşti MEGAsync acum?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Folderul tău local:</translation>
+        <translation type="obsolete">Folderul tău local:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>şi folderul tău MEGA:</translation>
+        <translation type="obsolete">şi folderul tău MEGA:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>vor fi sincronizate automat:</translation>
+        <translation type="obsolete">vor fi sincronizate automat:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Sigur doreşti să sincronizezi întreaga unitate cloud?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>şi unitatea ta cloud MEGA</translation>
+        <translation type="obsolete">şi unitatea ta cloud MEGA</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Te rugăm să reîncerci. Dacă problema persistă te rugăm să contactezi bug@
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Folderul tău local şi unitatea ta cloud MEGA vor fi sincronizate automat.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

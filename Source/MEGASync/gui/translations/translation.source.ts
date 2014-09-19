@@ -209,7 +209,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation type="unfinished">[$2041]</translation>
+        <translation>[$2041]</translation>
     </message>
 </context>
 <context>

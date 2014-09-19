@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl" sourcelanguage="en">
+<TS version="2.0" language="nl" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account  gebruik details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Inbox</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Prullenbak</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Opslagruimte</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Bestanden</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Mappen</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Vernieuwen</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download van MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Selecteer aub de download locatie voor uw bestanden:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Lokale Map:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Altijd download naar deze locatie</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kies</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Selecteer lokale map</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Kies</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Waarschuwing</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">U heeft geen schrijf rechten in deze map</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync is niet in staat hier te downloaden</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Wilt u doorgaan?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Kies</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
         <source>Your config is corrupt, please start over</source>
         <translation>Uw configuratie bestand is beschadigd, herstart aub</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download van MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Fout tijdens het verkrijgen van de link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
     </message>
     <message>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation type="obsolete">Fout</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Zorg ervoor dat je geen karakters zoals \ / of : in de namen van je mappen gebru
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Gesynchroniseerde mappen</translation>
+        <translation type="obsolete">Gesynchroniseerde mappen</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Zorg ervoor dat je geen karakters zoals \ / of : in de namen van je mappen gebru
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Upload limieten zijn per upload server en worden toegepast bij het starten van nieuwe uploads</translation>
+        <translation type="obsolete">Upload limieten zijn per upload server en worden toegepast bij het starten van nieuwe uploads</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Zorg ervoor dat je geen karakters zoals \ / of : in de namen van je mappen gebru
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Je gehele account wordt al gesynchroniseerd.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation type="obsolete">Cache</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selectieve synchronisatie actief</translation>
+        <translation type="obsolete">Selectieve synchronisatie actief</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Volledige accountsynchronisatie inschakelen</translation>
+        <translation type="obsolete">Volledige accountsynchronisatie inschakelen</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Het inschakelen van volledige accountsynchronisatie zal alle lopende synchronisaties stop zetten</translation>
+        <translation type="obsolete">Het inschakelen van volledige accountsynchronisatie zal alle lopende synchronisaties stop zetten</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Volledige accountsynchronisatie actief</translation>
+        <translation type="obsolete">Volledige accountsynchronisatie actief</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Het uitschakelen van volledige accountsynchronisatie zal je de mogelijkheid geven om selectieve mappen te synchroniseren</translation>
+        <translation type="obsolete">Het uitschakelen van volledige accountsynchronisatie zal je de mogelijkheid geven om selectieve mappen te synchroniseren</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Schakel volledige accountsynchronisatie uit</translation>
+        <translation type="obsolete">Schakel volledige accountsynchronisatie uit</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Overige</translation>
+        <translation type="obsolete">Overige</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Wilt u MEGAsync nu herstarten?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Map voor uploads vanaf deze computer</translation>
+        <translation type="obsolete">Map voor uploads vanaf deze computer</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Wilt u MEGAsync nu herstarten?</translation>
     <message>
         <source>Choose</source>
         <translation>Kies</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Standaard mappen</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>De sync kan niet worden geactiveerd want de lokale map bestaat niet</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>De sync kan niet worden geactiveerd want de lokale map bestaat niet</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>U synchroniseert uw complete account al</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Activeren / Deactiveren</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Selecteer lokale map</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Wilt u MEGAsync nu herstarten?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Synchroniseer volledig account</translation>
+        <translation type="obsolete">Synchroniseer volledig account</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Wilt u MEGAsync nu herstarten?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Je lokale map:</translation>
+        <translation type="obsolete">Je lokale map:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>en je MEGA map:</translation>
+        <translation type="obsolete">en je MEGA map:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>worden automatisch gesynchroniseerd.</translation>
+        <translation type="obsolete">worden automatisch gesynchroniseerd.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Weet je zeker dat je je gehele Cloud Drive wilt synchroniseren?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>en je MEGA Cloud Drive</translation>
+        <translation type="obsolete">en je MEGA Cloud Drive</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Probeer opnieuw. Als de problemen aanhouden neem dan contact op met bug@mega.co.
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Uw lokale map en uw MEGA Cloud Drive zullen automatisch worden gesynchroniseerd</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Uw Cloud Drive zal gesynchroniseerd worden met deze map:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync is niet in staat hier te downloaden</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Wilt u doorgaan?</translation>
     </message>
 </context>
 <context>
