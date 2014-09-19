@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="hu" sourcelanguage="en">
+<TS version="2.0" language="hu" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Felhőmeghajtó</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Postaláda</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Szemetesláda</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Tárhely</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Helyi mappa:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kiválaszt</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Helyi mappa kiválasztása</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Kiválaszt</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Figyelmeztetés</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Kiválaszt</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Hiba</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -424,7 +534,7 @@ Akkor is kilép?</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
-        <translation>Önnek új vagy frissített fájljai vannak a fiókjában</translation>
+        <translation>Önnek új vagy frissített fájljai vannak fiókjában</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -541,6 +651,14 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
         <source>Your config is corrupt, please start over</source>
         <translation>Konfigurációja sérült, kérem kezdje elölről</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     </message>
     <message>
         <source>Error</source>
-        <translation>Hiba</translation>
+        <translation type="obsolete">Hiba</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Kérem ügyeljen rá, hogy ne használjon olyan karaktereket, mint \ / vagy : a 
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Szinkronizált mappák</translation>
+        <translation type="obsolete">Szinkronizált mappák</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Kérem ügyeljen rá, hogy ne használjon olyan karaktereket, mint \ / vagy : a 
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>A feltöltési korlátozások feltöltő szerverenként vannak, és új feltöltés indításakor alkalmazódnak</translation>
+        <translation type="obsolete">A feltöltési korlátozások feltöltő szerverenként vannak, és új feltöltés indításakor alkalmazódnak</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Kérem ügyeljen rá, hogy ne használjon olyan karaktereket, mint \ / vagy : a 
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Ön ár szinkronizálja az egész fiókját</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Gyorsítótár</translation>
+        <translation type="obsolete">Gyorsítótár</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>A szelektív szinkron aktív</translation>
+        <translation type="obsolete">A szelektív szinkron aktív</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Teljes fiókszinkron engedélyezése</translation>
+        <translation type="obsolete">Teljes fiókszinkron engedélyezése</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>A teljes fiókszinkron engedélyezésével letiltódik minden aktuális szinkron</translation>
+        <translation type="obsolete">A teljes fiókszinkron engedélyezésével letiltódik minden aktuális szinkron</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>A teljes fiókszinkron aktív</translation>
+        <translation type="obsolete">A teljes fiókszinkron aktív</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>A teljes fiókszinkron letiltása lehetővé teszi szelektív mappa szinkron kiépítését</translation>
+        <translation type="obsolete">A teljes fiókszinkron letiltása lehetővé teszi szelektív mappa szinkron kiépítését</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Teljes fiókszinkron letiltása</translation>
+        <translation type="obsolete">Teljes fiókszinkron letiltása</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Egyéb</translation>
+        <translation type="obsolete">Egyéb</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Szeretné most újraindítani a MEGAsync-et?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Feltöltésekre szánt mappa erről a számítógépről</translation>
+        <translation type="obsolete">Feltöltésekre szánt mappa erről a számítógépről</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Szeretné most újraindítani a MEGAsync-et?</translation>
     <message>
         <source>Choose</source>
         <translation>Kiválaszt</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Szeretné most újraindítani a MEGAsync-et?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Teljes fiók szinkronizálás</translation>
+        <translation type="obsolete">Teljes fiók szinkronizálás</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Szeretné most újraindítani a MEGAsync-et?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Helyi mappája:</translation>
+        <translation type="obsolete">Helyi mappája:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>és MEGA mappája:</translation>
+        <translation type="obsolete">és MEGA mappája:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>automatikusan szinkronizálva lesznek.</translation>
+        <translation type="obsolete">automatikusan szinkronizálva lesznek.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Biztosan szeretné szinkronizálni az egész Felhőmeghajtóját?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>és MEGA Felhőmeghajtója</translation>
+        <translation type="obsolete">és MEGA Felhőmeghajtója</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Kérem próbálja újra. Ha a probléma továbbra is fennáll, kérem vegye fel 
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Helyi mappája és MEGA Felhőmeghajtója automatikusan szinkronizálva lesz.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

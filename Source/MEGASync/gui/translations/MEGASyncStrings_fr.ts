@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr" sourcelanguage="en">
+<TS version="2.0" language="fr" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Espace de Stockage</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Boîte de Réception</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Corbeille</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Stockage</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Dossier Local:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choisir</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Sélectionner un dossier local </translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Choisir</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Choisir</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
         <source>Your config is corrupt, please start over</source>
         <translation>Fichier config corrompu, veuillez recommencer.</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="obsolete">Erreur</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Veuillez vous assurer de ne pas utiliser des caractères tels que \ / ou : dans 
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Dossiers synchronisés</translation>
+        <translation type="obsolete">Dossiers synchronisés</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Veuillez vous assurer de ne pas utiliser des caractères tels que \ / ou : dans 
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Les limites d&apos;upload sont entendues par serveur d&apos;upload et appliquées lors du démarrage de nouveaux uploads</translation>
+        <translation type="obsolete">Les limites d&apos;upload sont entendues par serveur d&apos;upload et appliquées lors du démarrage de nouveaux uploads</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Veuillez vous assurer de ne pas utiliser des caractères tels que \ / ou : dans 
         <translation>Attention</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">La synchronisation de l&apos;intégralité de votre compte est déjà active.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Cache</translation>
+        <translation type="obsolete">Cache</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Synchronisation selective active</translation>
+        <translation type="obsolete">Synchronisation selective active</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Activer la synchronisation intégrale du compte</translation>
+        <translation type="obsolete">Activer la synchronisation intégrale du compte</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Activer la synchronisation intégrale de votre compte désactivera toutes vos synchronisations existantes</translation>
+        <translation type="obsolete">Activer la synchronisation intégrale de votre compte désactivera toutes vos synchronisations existantes</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Synchronisation intégrale du compte active</translation>
+        <translation type="obsolete">Synchronisation intégrale du compte active</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Désactiver la synchronisation intégrale de votre compte vous permettra de mettre en place la synchronisation selective par dossier</translation>
+        <translation type="obsolete">Désactiver la synchronisation intégrale de votre compte vous permettra de mettre en place la synchronisation selective par dossier</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Désactiver la synchronisation intégrale du compte</translation>
+        <translation type="obsolete">Désactiver la synchronisation intégrale du compte</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Autre</translation>
+        <translation type="obsolete">Autre</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Voulez-vous redémarrer MEGAsync maintenant ?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Dossier pour les uploads depuis cet ordinateur</translation>
+        <translation type="obsolete">Dossier pour les uploads depuis cet ordinateur</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     <message>
         <source>Choose</source>
         <translation>Choisir</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Synchronisation de l&apos;intégralité du compte</translation>
+        <translation type="obsolete">Synchronisation de l&apos;intégralité du compte</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Votre dossier local :</translation>
+        <translation type="obsolete">Votre dossier local :</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>et votre dossier MEGA :</translation>
+        <translation type="obsolete">et votre dossier MEGA :</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>seront automatiquement synchronisés.</translation>
+        <translation type="obsolete">seront automatiquement synchronisés.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>et votre Espace de Stockage MEGA</translation>
+        <translation type="obsolete">et votre Espace de Stockage MEGA</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Veuillez réessayer. Si le problème persiste merci de contacter bug@mega.co.nz<
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Votre dossier local et votre stockage MEGA vont être automatiquement synchronisés.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

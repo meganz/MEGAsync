@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="vn" sourcelanguage="en">
+<TS version="2.0" language="vn" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Ổ Mây</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Hộp thư đến</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Thùng Rác</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Lưu trữ</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Thư mục trên máy:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Hủy bỏ</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Chọn</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Chọn thư mục trên máy</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Lỗi</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Chọn</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Cảnh báo</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Chọn</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Lỗi</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
         <source>Your config is corrupt, please start over</source>
         <translation>Các thiết đặt của bạn gây ra xung đột, xin làm lại từ đầu</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Error</source>
-        <translation>Lỗi</translation>
+        <translation type="obsolete">Lỗi</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Xin hãy chắc rằng bạn không sử dụng các ký tự như \ / hoặc : 
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Các thư mục đã đồng bộ</translation>
+        <translation type="obsolete">Các thư mục đã đồng bộ</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Xin hãy chắc rằng bạn không sử dụng các ký tự như \ / hoặc : 
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Thiết lập giới hạn tải lên cho mỗi máy chủ sẽ được thực hiện mỗi khi bắt đầu các quá trình tải lên mới</translation>
+        <translation type="obsolete">Thiết lập giới hạn tải lên cho mỗi máy chủ sẽ được thực hiện mỗi khi bắt đầu các quá trình tải lên mới</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Xin hãy chắc rằng bạn không sử dụng các ký tự như \ / hoặc : 
         <translation>Cảnh báo</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Bạn đang được đồng bộ toàn bộ toàn khoản</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Bộ nhớ tạm</translation>
+        <translation type="obsolete">Bộ nhớ tạm</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Chế độ đồng bộ riêng lẻ được kích hoạt</translation>
+        <translation type="obsolete">Chế độ đồng bộ riêng lẻ được kích hoạt</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Hiệu hóa đồng bộ cho toàn bộ tài khoản</translation>
+        <translation type="obsolete">Hiệu hóa đồng bộ cho toàn bộ tài khoản</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Việc đồng bộ toàn bộ tài khoản sẽ vô hiệu hóa hết các việc động bộ riêng rẻ đang chạy của bạn</translation>
+        <translation type="obsolete">Việc đồng bộ toàn bộ tài khoản sẽ vô hiệu hóa hết các việc động bộ riêng rẻ đang chạy của bạn</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Chế độ đồng bộ toàn bộ được kích hoạt</translation>
+        <translation type="obsolete">Chế độ đồng bộ toàn bộ được kích hoạt</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Việc tắt đồng bộ toàn bộ tài khoản sẽ cho phép bạn thiết lập đồng bộ từng thư mục riêng lẻ</translation>
+        <translation type="obsolete">Việc tắt đồng bộ toàn bộ tài khoản sẽ cho phép bạn thiết lập đồng bộ từng thư mục riêng lẻ</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Vô hiệu chế độ đồng bộ toàn tài khoản</translation>
+        <translation type="obsolete">Vô hiệu chế độ đồng bộ toàn tài khoản</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Khác</translation>
+        <translation type="obsolete">Khác</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Thư mục dành cho tải lên từ máy tính này</translation>
+        <translation type="obsolete">Thư mục dành cho tải lên từ máy tính này</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
     <message>
         <source>Choose</source>
         <translation>Chọn</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Đồng bộ toàn bộ tài khoản</translation>
+        <translation type="obsolete">Đồng bộ toàn bộ tài khoản</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Thư mục nội bộ này của bạn:</translation>
+        <translation type="obsolete">Thư mục nội bộ này của bạn:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>và thư mục trên MEGA của bạn:</translation>
+        <translation type="obsolete">và thư mục trên MEGA của bạn:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation> sẽ được đồng bộ hóa tự động.</translation>
+        <translation type="obsolete"> sẽ được đồng bộ hóa tự động.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Bạn có chắc là muốn đồng bộ toàn bộ Ổ Mây của bạn?</trans
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>và Ổ Mây MEGA của bạn</translation>
+        <translation type="obsolete">và Ổ Mây MEGA của bạn</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Thư mục nội tại trên máy và Ổ Mây MEGA của bạn sẽ được tự động đồng bộ hóa.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

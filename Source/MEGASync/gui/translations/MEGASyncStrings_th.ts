@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="th" sourcelanguage="en">
+<TS version="2.0" language="th" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>คลาวด์ไดรฟ์</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>กล่องขาเข้า</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>ถังขยะ</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>พื้นที่จัดเก็บ</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>ตกลง</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>โฟลเดอร์ในเครื่องพีซี:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>ตกลง</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>เลือก</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>เลือกโฟลเดอร์ภายใน</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>เลือก</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>คำเตือน</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>เลือก</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translation>การปรับแต่งของคุณเสียหาย กรุณาเริ่มใหม่</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation>ผิดพลาด</translation>
+        <translation type="obsolete">ผิดพลาด</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>โฟลเดอร์ที่ซิงค์แล้ว</translation>
+        <translation type="obsolete">โฟลเดอร์ที่ซิงค์แล้ว</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>การจำกัดอัปโหลด เป็นการอัปโหลดไปยังแต่ละเซิร์ฟเวอร์ จะใช้ทันทีเมื่อเริ่มต้นการอัปโหลดใหม่</translation>
+        <translation type="obsolete">การจำกัดอัปโหลด เป็นการอัปโหลดไปยังแต่ละเซิร์ฟเวอร์ จะใช้ทันทีเมื่อเริ่มต้นการอัปโหลดใหม่</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>คำเตือน</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">คุณมีการซิงค์ทั้งบัญชีของคุณอยู่แล้ว</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>แคช</translation>
+        <translation type="obsolete">แคช</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>ซิงค์จากการเลือกไว้</translation>
+        <translation type="obsolete">ซิงค์จากการเลือกไว้</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>เปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ</translation>
+        <translation type="obsolete">เปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>การเปิดใช้งานซิงค์บัญชีเต็มรูปแบบ จะปิดใช้งานการซิงค์ในปัจจุบันของคุณ</translation>
+        <translation type="obsolete">การเปิดใช้งานซิงค์บัญชีเต็มรูปแบบ จะปิดใช้งานการซิงค์ในปัจจุบันของคุณ</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>ซิงค์บัญชีเต็มรูปแบบกำลังทำงาน</translation>
+        <translation type="obsolete">ซิงค์บัญชีเต็มรูปแบบกำลังทำงาน</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>การปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ จะช่วยให้คุณสามารถตั้งค่าการซิงค์โฟลเดอร์ที่คุณได้เลือกไว้</translation>
+        <translation type="obsolete">การปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ จะช่วยให้คุณสามารถตั้งค่าการซิงค์โฟลเดอร์ที่คุณได้เลือกไว้</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>ปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ</translation>
+        <translation type="obsolete">ปิดใช้งานการซิงค์บัญชีเต็มรูปแบบ</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>อื่นๆ</translation>
+        <translation type="obsolete">อื่นๆ</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>โฟลเดอร์สำหรับภาพที่ส่งจากคอมพิวเตอร์เครื่องนี้</translation>
+        <translation type="obsolete">โฟลเดอร์สำหรับภาพที่ส่งจากคอมพิวเตอร์เครื่องนี้</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translation>เลือก</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>ซิงค์ในบัญชีทั้งหมด</translation>
+        <translation type="obsolete">ซิงค์ในบัญชีทั้งหมด</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>โฟลเดอร์ในเครื่องพีซีของคุณ:</translation>
+        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีของคุณ:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>และโฟลเดอร์ MEGA ของคุณ:</translation>
+        <translation type="obsolete">และโฟลเดอร์ MEGA ของคุณ:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>จะถูกซิงโครไนซ์โดยอัตโนมัติ</translation>
+        <translation type="obsolete">จะถูกซิงโครไนซ์โดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>และคลาวด์ไดรฟ์บน MEGA ของคุณ</translation>
+        <translation type="obsolete">และคลาวด์ไดรฟ์บน MEGA ของคุณ</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>โฟลเดอร์ในเครื่องพีซีและคลาวด์ไดรฟ์บน MEGA ของคุณจะได้รับการซิงค์โดยอัตโนมัติ</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

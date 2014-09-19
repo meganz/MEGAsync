@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="hi" sourcelanguage="en">
+<TS version="2.0" language="hi" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>बादल ड्राइव</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>इनबॉक्स</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>कचरा बिन</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>भंडारण</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>अच्छा</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>स्थानीय फ़ोल्डर:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>अच्छा</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>रद्द करें</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>चुनें</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>स्थानीय फ़ोल्डर का चयन करें</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>त्रुटि</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>चुनें</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>चेतावनी</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>चुनें</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>त्रुटि</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translation>अपने config भ्रष्ट है, पर शुरू कृपया</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation>त्रुटि</translation>
+        <translation type="obsolete">त्रुटि</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>सिंक्रनाइज़ फ़ोल्डर्स</translation>
+        <translation type="obsolete">सिंक्रनाइज़ फ़ोल्डर्स</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>अपलोड सीमा अपलोड सर्वर प्रति कर रहे हैं और नए अपलोड शुरू करने पर लागू कर रहे हैं</translation>
+        <translation type="obsolete">अपलोड सीमा अपलोड सर्वर प्रति कर रहे हैं और नए अपलोड शुरू करने पर लागू कर रहे हैं</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>चेतावनी</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">आप पहले से ही अपने पूरे खाते को सिंक कर रहे हैं.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>कैश</translation>
+        <translation type="obsolete">कैश</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>चयनात्मक सिंक सक्रिय</translation>
+        <translation type="obsolete">चयनात्मक सिंक सक्रिय</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>पूर्ण खाता समन्वयन सक्षम</translation>
+        <translation type="obsolete">पूर्ण खाता समन्वयन सक्षम</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>पूरा लेखा जोखा सिंक सक्षम करने के लिए अपने सभी मौजूदा समन्वयनों निष्क्रिय कर देगा</translation>
+        <translation type="obsolete">पूरा लेखा जोखा सिंक सक्षम करने के लिए अपने सभी मौजूदा समन्वयनों निष्क्रिय कर देगा</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>पूर्ण खाता सिंक सक्रिय</translation>
+        <translation type="obsolete">पूर्ण खाता सिंक सक्रिय</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>पूरा लेखा जोखा सिंक को अक्षम आप चयनात्मक फ़ोल्डर समन्वयन सेट करने की अनुमति देगा</translation>
+        <translation type="obsolete">पूरा लेखा जोखा सिंक को अक्षम आप चयनात्मक फ़ोल्डर समन्वयन सेट करने की अनुमति देगा</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>पूरा लेखा जोखा सिंक अक्षम</translation>
+        <translation type="obsolete">पूरा लेखा जोखा सिंक अक्षम</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>अन्य</translation>
+        <translation type="obsolete">अन्य</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>इस कंप्यूटर से अपलोड करने के लिए फ़ोल्डर</translation>
+        <translation type="obsolete">इस कंप्यूटर से अपलोड करने के लिए फ़ोल्डर</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translation>चुनें</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>पूर्ण खाता सिंक</translation>
+        <translation type="obsolete">पूर्ण खाता सिंक</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>अपने स्थानीय फ़ोल्डर:</translation>
+        <translation type="obsolete">अपने स्थानीय फ़ोल्डर:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>और अपनी मेगा फ़ोल्डर:</translation>
+        <translation type="obsolete">और अपनी मेगा फ़ोल्डर:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>स्वचालित रूप से सिंक्रनाइज़ किया जाएगा.</translation>
+        <translation type="obsolete">स्वचालित रूप से सिंक्रनाइज़ किया जाएगा.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>और अपनी मेगा बादल ड्राइव</translation>
+        <translation type="obsolete">और अपनी मेगा बादल ड्राइव</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>अपने स्थानीय फ़ोल्डर और अपने मेगा बादल ड्राइव स्वचालित रूप से सिंक्रनाइज़ किया जाएगा.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru" sourcelanguage="en">
+<TS version="2.0" language="ru" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Сведения об использовании учётной записи</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Облачный Диск</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Входящие</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Корзина</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Свободного места</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Файлы</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Папки</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Скачать с MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Пожалуйста, выберите папку загрузки для ваших файлов:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Локальная папка:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Всегда скачивать в эту папку</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Выбрать</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Выберите локальную папку</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>У Вас нет прав записи в эту локальную папку.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Выбрать</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Предупреждение</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">У Вас нет прав записи в эту папку.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync не сможет что-либо скачать сюда.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Продолжить?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>У Вас нет прав записи в эту локальную папку.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Выбрать</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>У Вас нет прав записи в эту локальную папку.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your config is corrupt, please start over</source>
         <translation>Ваш файл конфигураций содержит ошибки, начните заново.</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Скачать с MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Ошибка при получении ссылки:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation type="obsolete">Ошибка</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Синхронизированные папки</translation>
+        <translation type="obsolete">Синхронизированные папки</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Ограничение загрузок назначается для каждой загрузки отдельно и применяется при начале новой загрузки</translation>
+        <translation type="obsolete">Ограничение загрузок назначается для каждой загрузки отдельно и применяется при начале новой загрузки</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Вы уже синхронизируете всю свою учётную запись.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Кэш</translation>
+        <translation type="obsolete">Кэш</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Выборочная синхронизация активирована</translation>
+        <translation type="obsolete">Выборочная синхронизация активирована</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Включить полную синхронизацию</translation>
+        <translation type="obsolete">Включить полную синхронизацию</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Включение полной синхронизации отключит все текущие синхронизации</translation>
+        <translation type="obsolete">Включение полной синхронизации отключит все текущие синхронизации</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Полная синхронизация активирована</translation>
+        <translation type="obsolete">Полная синхронизация активирована</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Выключение полной синхронизации позволит настроить выборочную синхронизацию папок</translation>
+        <translation type="obsolete">Выключение полной синхронизации позволит настроить выборочную синхронизацию папок</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Отключить полную синхронизацию</translation>
+        <translation type="obsolete">Отключить полную синхронизацию</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Другие</translation>
+        <translation type="obsolete">Другие</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Папка для закачек с этого компьютера</translation>
+        <translation type="obsolete">Папка для закачек с этого компьютера</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translation>Выбрать</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Папки по-умолчанию</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Закачки:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Скачки:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>Синхронизация не может быть запущена, так как локальная папка не существует.</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>Синхронизация не может быть запущена, так как локальная папка не существует.</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>Вы уже синхронизировали весь Ваш Облачный Диск</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Включить / отключить</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Выберите локальную папку</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>У Вас нет прав записи в эту локальную папку.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Полная синхронизация учётной записи</translation>
+        <translation type="obsolete">Полная синхронизация учётной записи</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Ваша локальная папка:</translation>
+        <translation type="obsolete">Ваша локальная папка:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>и Ваша MEGA папка:</translation>
+        <translation type="obsolete">и Ваша MEGA папка:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>будут автоматически синхронизированы</translation>
+        <translation type="obsolete">будут автоматически синхронизированы</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>и Ваш MEGA Облачный Диск</translation>
+        <translation type="obsolete">и Ваш MEGA Облачный Диск</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Ваша локальная папка и Облачный Диск будут автоматически синхронизированы.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Ваш Облачный Диск будет синхронизирован в данную папку:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>У Вас нет прав записи в эту локальную папку.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync не сможет что-либо скачать сюда.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Продолжить?</translation>
     </message>
 </context>
 <context>

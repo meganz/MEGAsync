@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sk" sourcelanguage="en">
+<TS version="2.0" language="sk" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Detaily využitia účtu</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>Cloudové úložisko</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Inbox</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Kôš</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Úložný priestor</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Súbory</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Priečinky</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Obnoviť</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Stiahnuť z MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Prosím, zvoľte si priečok pre stiahnutie vašich súborov:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>Lokálny priečinok:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Sťahovať vždy do tohoto priečinku</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušiť</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Vyberte</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Vyberte lokálny priečinok</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Pre lokálny priečinok nemáte práva na zápis.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Vyberte</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Upozornenie</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">V tomto priečinku nemáte práva na zápis.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync nebude schopný nič sem stiahnuť.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Chcete pokračovať?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Pre lokálny priečinok nemáte práva na zápis.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Vyberte</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Pre lokálny priečinok nemáte práva na zápis.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</tra
         <source>Your config is corrupt, please start over</source>
         <translation>Vaša konfikúrácia bola poškodená, prosím začnite odznovu</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Stiahnuť z MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Chyba pri získavaní odkazu:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</tra
     </message>
     <message>
         <source>Error</source>
-        <translation>Chyba</translation>
+        <translation type="obsolete">Chyba</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Ubezpečte sa, že v názvoch vašich priečinkov nepoužívate znaky ako \ / al
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>Synchronizované priečinky</translation>
+        <translation type="obsolete">Synchronizované priečinky</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Ubezpečte sa, že v názvoch vašich priečinkov nepoužívate znaky ako \ / al
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>Limity nahrávania sa vzťahujú k serveru na ktorý nahrávate a aplikujú sa pri začiatku nového nahrávania na server</translation>
+        <translation type="obsolete">Limity nahrávania sa vzťahujú k serveru na ktorý nahrávate a aplikujú sa pri začiatku nového nahrávania na server</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Ubezpečte sa, že v názvoch vašich priečinkov nepoužívate znaky ako \ / al
         <translation>Upozornenie</translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">Už synchronizujete celý účet.</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>Dočasná pamäť</translation>
+        <translation type="obsolete">Dočasná pamäť</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>Selektívna synchronizácia aktívna</translation>
+        <translation type="obsolete">Selektívna synchronizácia aktívna</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Povoliť úplnú synchronizáciu účtu.</translation>
+        <translation type="obsolete">Povoliť úplnú synchronizáciu účtu.</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Povolenie úplnej synchronzácie účtu zablokuje všetky vaše doterajšie synchronizácie</translation>
+        <translation type="obsolete">Povolenie úplnej synchronzácie účtu zablokuje všetky vaše doterajšie synchronizácie</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Úplná synchronizácia účtu aktívna</translation>
+        <translation type="obsolete">Úplná synchronizácia účtu aktívna</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Zablokovanie úplnej synchronizácie účtu vám umožní nastaviť synchronizácie pre zvolené priečinky</translation>
+        <translation type="obsolete">Zablokovanie úplnej synchronizácie účtu vám umožní nastaviť synchronizácie pre zvolené priečinky</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>Zablokovať úplnú synchronizáciu účtu</translation>
+        <translation type="obsolete">Zablokovať úplnú synchronizáciu účtu</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>Ostatné</translation>
+        <translation type="obsolete">Ostatné</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Priečinok pre uploady z tohoto počítaču</translation>
+        <translation type="obsolete">Priečinok pre uploady z tohoto počítaču</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translation>Vyberte</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Predvolené priečinky</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploady:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Sťahovania:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>Táto synchronizácia sa nedá zapnúť, pretože lokálny priečinok neexistuje</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>Táto synchronizácia sa nedá zapnúť, pretože lokálny priečinok neexistuje</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>Už synchronizujete celé Cloudové Úložisko</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Povoliť / Zakázať</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Zvoľte lokálny priečinok</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Pre lokálny priečinok nemáte práva na zápis.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>Úplná synchornizácia účtu</translation>
+        <translation type="obsolete">Úplná synchornizácia účtu</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>Váš lokálny priečinok:</translation>
+        <translation type="obsolete">Váš lokálny priečinok:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>a váš MEGA priečinok:</translation>
+        <translation type="obsolete">a váš MEGA priečinok:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>bude automaticky synchronizovaný.</translation>
+        <translation type="obsolete">bude automaticky synchronizovaný.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ Ste si istý, že chcete synchronizovať celé vaše Cloudové úložisko?</tran
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>a vaše MEGA Cloudové Úložisko</translation>
+        <translation type="obsolete">a vaše MEGA Cloudové Úložisko</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Skúste to znova, prosím. Ak problém pretrvá, kontaktujte bug@mega.co.nz</tra
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Váš lokálny priečinok a vaše MEGA Cloudové Úložisko budú automaticky synchronizované.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Vaše Cloudové Úložisko bude synchornizované s týmto priečinkom:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Pre lokálny priečinok nemáte práva na zápis.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync nebude schopný nič sem stiahnuť.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Chcete pokračovať?</translation>
     </message>
 </context>
 <context>

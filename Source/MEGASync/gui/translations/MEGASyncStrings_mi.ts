@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="mi" sourcelanguage="en">
+<TS version="2.0" language="mi" sourcelanguage="en">
+<context>
+    <name>AccountDetailsDialog</name>
+    <message>
+        <source>Account usage details</source>
+        <translation>Account usage details</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation>aoatea</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation>Pouakaroto</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation>Paepae para</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation>Tiaki</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Tautoko</translation>
+    </message>
+</context>
 <context>
     <name>BindFolderDialog</name>
     <message>
@@ -92,6 +131,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DownloadFromMegaDialog</name>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Please select the download folder for your files:</source>
+        <translation>Please select the download folder for your files:</translation>
+    </message>
+    <message>
+        <source>Local folder:</source>
+        <translation>kopaki tata:</translation>
+    </message>
+    <message>
+        <source>Always download to this destination</source>
+        <translation>Always download to this destination</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Tautoko</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Whakakorea</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>whiria he kopaki o konei</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>hapa</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -108,6 +190,26 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>tupatotanga</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -134,7 +236,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation>/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -171,6 +273,14 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>hapa</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -541,6 +651,14 @@ Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
         <source>Your config is corrupt, please start over</source>
         <translation>Your config is corrupt, please start over</translation>
     </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation>Download from MEGA</translation>
+    </message>
+    <message>
+        <source>Error getting link: </source>
+        <translation>Error getting link:</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -642,7 +760,7 @@ Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>hapa</translation>
+        <translation type="obsolete">hapa</translation>
     </message>
 </context>
 <context>
@@ -916,7 +1034,7 @@ Maumahara kaua e whakamahia enei pu \/ranei</translation>
     </message>
     <message>
         <source>Synced folders</source>
-        <translation>kopaki whakarite</translation>
+        <translation type="obsolete">kopaki whakarite</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -964,7 +1082,7 @@ Maumahara kaua e whakamahia enei pu \/ranei</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation>he utaake watea kei ia hotaka punaha utaake  ka  mahia i te wa timata ai he utaake hou</translation>
+        <translation type="obsolete">he utaake watea kei ia hotaka punaha utaake  ka  mahia i te wa timata ai he utaake hou</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1043,7 +1161,7 @@ Maumahara kaua e whakamahia enei pu \/ranei</translation>
         <translation>He tupato </translation>
     </message>
     <message>
-        <source>You are already syncing your entire account.</source>
+        <source>You are already syncing your entire Cloud Drive.</source>
         <translation type="obsolete">kua timata ke to whakarite i o nama katoa</translation>
     </message>
     <message>
@@ -1079,7 +1197,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation>ruatiaki</translation>
+        <translation type="obsolete">ruatiaki</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1107,31 +1225,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation>ko te whiritahi i whiria kei te mahi</translation>
+        <translation type="obsolete">ko te whiritahi i whiria kei te mahi</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation>Whakakaha i te whiritahi nama katoa</translation>
+        <translation type="obsolete">Whakakaha i te whiritahi nama katoa</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation>Ma te whakakaha i o whiritahi nama katoa ka wetohia au whiritahi o aianei. </translation>
+        <translation type="obsolete">Ma te whakakaha i o whiritahi nama katoa ka wetohia au whiritahi o aianei. </translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation>Whiritahi nama katoa kei te mahi</translation>
+        <translation type="obsolete">Whiritahi nama katoa kei te mahi</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation>Ki te tineia to whiritahi nama katoa ka watea koe ki te whakatu whiritahi kopaki i whiria. </translation>
+        <translation type="obsolete">Ki te tineia to whiritahi nama katoa ka watea koe ki te whakatu whiritahi kopaki i whiria. </translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation>tineia te whiritahi nama katoa</translation>
+        <translation type="obsolete">tineia te whiritahi nama katoa</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation>tera atu</translation>
+        <translation type="obsolete">tera atu</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -1161,7 +1279,7 @@ Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation>Folder for uploads from this computer</translation>
+        <translation type="obsolete">Folder for uploads from this computer</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1186,6 +1304,42 @@ Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.</translation>
     <message>
         <source>Choose</source>
         <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Default folders</source>
+        <translation>Default folders</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>You are already syncing your entire Cloud Drive</source>
+        <translation>You are already syncing your entire Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Enable / disable</source>
+        <translation>Enable / disable</translation>
+    </message>
+    <message>
+        <source>Select local folder</source>
+        <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1402,7 @@ Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation>whakarite nama katoa </translation>
+        <translation type="obsolete">whakarite nama katoa </translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1280,15 +1434,15 @@ Kei te hiahia whakatimata ano  i a Megawhiritahi i naia nei.</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation>to kopaki tata</translation>
+        <translation type="obsolete">to kopaki tata</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation>me  to kopaki MEGA</translation>
+        <translation type="obsolete">me  to kopaki MEGA</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation>ka aunoatia te whakaritenga</translation>
+        <translation type="obsolete">ka aunoatia te whakaritenga</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1374,7 +1528,7 @@ ata tau o whakaaro ki te whakarite i o aoatea katoa?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation>me to aoatea MEGA</translation>
+        <translation type="obsolete">me to aoatea MEGA</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -1424,6 +1578,22 @@ Mahia anotia. Mena raruraru tonu whakapa atu ki a bug@mega.co.nz</translation>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+    </message>
+    <message>
+        <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>You don&apos;t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+    </message>
+    <message>
+        <source>Do you want to continue?</source>
+        <translation>Do you want to continue?</translation>
     </message>
 </context>
 <context>
