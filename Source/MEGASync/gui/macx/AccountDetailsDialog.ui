@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
+    <width>600</width>
     <height>194</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>417</width>
+    <width>600</width>
     <height>194</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>417</width>
+    <width>600</width>
     <height>194</height>
    </size>
   </property>
@@ -91,6 +91,12 @@
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>true</bool>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>140</number>
+        </attribute>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>140</number>
         </attribute>
         <row>
          <property name="text">
