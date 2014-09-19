@@ -1,7 +1,7 @@
 Source: megasync
 Section: Tools
 Priority: normal
-Maintainer: Javier Serrano <js@mega.co.nz>
+Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Build-Depends:  debhelper,
                 libqt4-dev,
                 libcrypto++-dev,
