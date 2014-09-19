@@ -1319,7 +1319,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>[$2050]</translation>
+        <translation>[$2049]</translation>
     </message>
     <message>
         <source>You are already syncing your entire account</source>
@@ -1334,8 +1334,8 @@ Do you want to restart MEGAsync now?</source>
         <translation>[$2053]</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions on this local folder.</source>
-        <translation>[$2054]</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>[$2041]</translation>
     </message>
 </context>
 <context>
