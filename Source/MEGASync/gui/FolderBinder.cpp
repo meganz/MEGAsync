@@ -60,7 +60,7 @@ void FolderBinder::on_bLocalFolder_clicked()
 
         QTemporaryFile test(path + QDir::separator());
         if(test.open() ||
-                QMessageBox::warning(window(), tr("Warning"), tr("You don't have write permissions on this folder.") +
+                QMessageBox::warning(window(), tr("Warning"), tr("You don't have write permissions in this local folder.") +
                     QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
                     QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
         {

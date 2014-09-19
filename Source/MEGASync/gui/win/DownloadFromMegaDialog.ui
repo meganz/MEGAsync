@@ -74,7 +74,7 @@ QPushButton
       </size>
      </property>
      <property name="text">
-      <string>Please, select the download folder for your files:</string>
+      <string>Please select the download folder for your files:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>

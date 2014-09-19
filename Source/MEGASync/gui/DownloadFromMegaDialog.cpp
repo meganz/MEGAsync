@@ -65,7 +65,7 @@ void DownloadFromMegaDialog::on_bChange_clicked()
     QTemporaryFile test(fPath + QDir::separator());
     if(!test.open())
     {
-        QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions on this local folder."));
+        QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
         return;
     }
 
