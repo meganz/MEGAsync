@@ -5,39 +5,39 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2056]</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">[$1687]</translation>
+        <translation>[$1687]</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished"></translation>
+        <translation>[$166]</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>[$167]</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>[$495]</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2034]</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2035]</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2036]</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>[$81]</translation>
     </message>
 </context>
 <context>
@@ -134,43 +134,43 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2037]</translation>
     </message>
     <message>
         <source>Please, select the download folder for your files:</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2038]</translation>
     </message>
     <message>
         <source>Local folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>[$1732]:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2039]</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>[$81]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>[$82]</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation type="unfinished">[$2023]</translation>
+        <translation>[$2023]</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation type="unfinished"></translation>
+        <translation>[$1592]</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">[$1578]</translation>
+        <translation>[$1578]</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions on this local folder.</source>
-        <translation type="unfinished"></translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>[$2041]</translation>
     </message>
 </context>
 <context>
@@ -193,19 +193,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>[$882]</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions on this folder.</source>
-        <translation type="unfinished"></translation>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation>[$2042]</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2043]</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2044]</translation>
     </message>
 </context>
 <context>
@@ -272,11 +272,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">[$1578]</translation>
+        <translation>[$1578]</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions on this local folder.</source>
-        <translation type="unfinished"></translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>[$2041]</translation>
     </message>
 </context>
 <context>
@@ -649,11 +649,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2037]</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation type="unfinished"></translation>
+        <translation>[$2045]</translation>
     </message>
 </context>
 <context>
@@ -1303,39 +1303,39 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Default folders</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2046]</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2047]</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2048]</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2049]</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2050]</translation>
     </message>
     <message>
-        <source>Your are already syncing your entire account</source>
-        <translation type="unfinished"></translation>
+        <source>You are already syncing your entire account</source>
+        <translation>[$2051]</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2052]</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2053]</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions on this local folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2054]</translation>
     </message>
 </context>
 <context>
@@ -1577,19 +1577,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2055]</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions on this local folder.</source>
-        <translation type="unfinished"></translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>[$2041]</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2043]</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>[$2044]</translation>
     </message>
 </context>
 <context>
