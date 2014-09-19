@@ -18,7 +18,7 @@ const char SERVER_BASE_URL_OSX[] = "http://g.static.mega.co.nz/upd/msync/MEGAsyn
 
 const char *TARGET_PATHS_WIN[] = {
     "MEGAsync.exe",
-    "uninst.exe"
+    "uninst.exe",
     "ShellExtX32.dll",
     "ShellExtX64.dll",
     "QtCore4.dll",
@@ -37,7 +37,7 @@ const char *TARGET_PATHS_WIN[] = {
 
 const char *UPDATE_FILES_WIN[] = {
     "MEGAsync.exe",
-    "uninst.exe"
+    "uninst.exe",
     "ShellExtX32.dll",
     "ShellExtX64.dll",
     "QtCore4.dll",
