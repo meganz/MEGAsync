@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
+    <width>585</width>
     <height>165</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>397</width>
+    <width>585</width>
     <height>165</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>397</width>
+    <width>585</width>
     <height>165</height>
    </size>
   </property>
@@ -56,6 +56,15 @@
         <property name="selectionMode">
          <enum>QAbstractItemView::NoSelection</enum>
         </property>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>140</number>
+        </attribute>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>140</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
         <row>
          <property name="text">
           <string>Cloud Drive</string>

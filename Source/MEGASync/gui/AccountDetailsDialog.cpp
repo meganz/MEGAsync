@@ -72,6 +72,8 @@ void AccountDetailsDialog::refresh()
     ui->tValues->setItem(2, 2, rubbishFolders);
 
     ui->tValues->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+
+    ui->tValues->verticalHeader()->setFixedWidth(140);
 }
 
 void AccountDetailsDialog::on_bRefresh_clicked()
