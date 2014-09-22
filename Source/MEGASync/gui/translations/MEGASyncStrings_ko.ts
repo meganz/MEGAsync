@@ -5,7 +5,7 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translation>계정 사용 내역</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>파일</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>폴더</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>새로 고침</translation>
     </message>
     <message>
         <source>OK</source>
@@ -134,11 +134,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>메가에서 다운로드하기</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>파일을 다운로드할 폴더를 선택하세요:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>항상 이 곳으로 다운로드 하기</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -197,19 +197,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">당신은 이 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>메가싱크가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>계속하시겠습니까?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -653,11 +653,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>메가에서 다운로드하기</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translation>링크 받기 오류:</translation>
     </message>
 </context>
 <context>
@@ -1307,39 +1307,39 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translation>기본 폴더</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translation>업로드:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translation>다운로드:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>로컬 폴더가 존재하지 않아서 동기화를 진행할 수 없습니다.</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>로컬 폴더가 존재하지 않아서 동기화를 진행할 수 없습니다.</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation>이미 전체 클라우드 드라이브의 동기화가 진행중입니다.</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translation>활성화 / 비활성화</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>로컬 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -1581,19 +1581,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation>당신의 클라우드 드라이브가 이 폴더로 동기화됩니다:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>메가싱크가 이 곳에 아무 것도 다운로드 할 수 없을 것입니다.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>계속하시겠습니까?</translation>
     </message>
 </context>
 <context>

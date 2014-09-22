@@ -5,7 +5,7 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translation>Kontodetaljer</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>Filer</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>Mapper</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Oppdater</translation>
     </message>
     <message>
         <source>OK</source>
@@ -134,7 +134,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Last ned fra MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>Bruk som standardmappe for nedlastinger</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
 </context>
 <context>
@@ -197,7 +197,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">Du har ikke skriverettigheter til denne mappen.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -205,11 +205,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Vil du fortsette?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
 </context>
 <context>
@@ -653,11 +653,11 @@ Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz<
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Last ned fra MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translation>Kunne ikke hente lenke:</translation>
     </message>
 </context>
 <context>
@@ -1307,15 +1307,15 @@ Vil du starte MEGAsync på nytt?</translation>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translation>Standardmapper</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translation>Opplastinger:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translation>Nedlastinger:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
@@ -1327,19 +1327,19 @@ Vil du starte MEGAsync på nytt?</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation>Du synkroniserer allerede hele din Cloud Drive</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translation>Aktiver / deaktiver</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Velg lokal mappe</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
 </context>
 <context>
@@ -1585,7 +1585,7 @@ Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz<
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -1593,7 +1593,7 @@ Vennligst prøv igjen. Dersom problemet vedvarer, ta kontakt med bug@mega.co.nz<
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Vil du fortsette?</translation>
     </message>
 </context>
 <context>

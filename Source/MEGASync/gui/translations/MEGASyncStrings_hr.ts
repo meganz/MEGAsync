@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>Datoteke</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>Mape</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Osvježi</translation>
     </message>
     <message>
         <source>OK</source>
@@ -134,11 +134,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Preuzmite sa MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Molimo odaberite mapu za preuzimanje vaših datoteka:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>Uvijek preuzmi na ovo odredište</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
 </context>
 <context>
@@ -197,7 +197,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">Nemate dopuštenje da zapisujete u ovu mapu.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -209,7 +209,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
 </context>
 <context>
@@ -653,7 +653,7 @@ Molim pokušajte ponovno. Ako se problem nastavi molimo da nas kontaktirate na b
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Preuzmite sa MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1339,7 +1339,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
 </context>
 <context>
@@ -1585,7 +1585,7 @@ Molim pokušajte ponovno. Ako se problem nastavi molimo da nas kontaktirate na b
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>

@@ -5,7 +5,7 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translation>Детали за користење на профил </translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>Датотеки </translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>Папки</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Освежи </translation>
     </message>
     <message>
         <source>OK</source>
@@ -134,11 +134,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Превземи од МЕГА</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Ве молиме одберете ја папката за превземување на вашите датотеки:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>Секогаш превземај до оваа дестинација</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Вие немате дозвола да пишувате во оваа локална папка.</translation>
     </message>
 </context>
 <context>
@@ -197,19 +197,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">Вие немеате дозвола за пишување во оваа папка. </translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync нема да може да превземе ништо овде. </translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Дали сакате да продолжите? </translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Вие немате дозвола да пишувате во оваа локална папка.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Вие немате дозвола да пишувате во оваа локална папка.</translation>
     </message>
 </context>
 <context>
@@ -653,11 +653,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Превземи од МЕГА</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translation>Проблем со добивање на линк: </translation>
     </message>
 </context>
 <context>
@@ -1307,39 +1307,39 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translation>Стандардни папки </translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translation>Прикачувања:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translation>Превземувања: </translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Синхронизацијата не може да се уклучи бидејќи локалната папка не постои </translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Синхронизацијата не може да се уклучи бидејќи локалната папка не постои </translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation>Веќем го синхронизиравте целиот Cloud диск</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translation>Уклучи / исклучи </translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Одбери локална папка </translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Вие немате дозвола да пишувате во оваа локална папка.</translation>
     </message>
 </context>
 <context>
@@ -1581,19 +1581,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation>Вашиот Cloud диск ќе биде синхронизиран со оваа папка: </translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Вие немате дозвола да пишувате во оваа локална папка.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync нема да може да превземе ништо овде. </translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Дали сакате да продолжите? </translation>
     </message>
 </context>
 <context>

@@ -5,7 +5,7 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translation>Tilin käyttötiedot</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>Tiedostot</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>Kansiot</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <source>OK</source>
@@ -134,11 +134,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Lataa MEGAsta</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Valitse latauskansio tiedostoillesi:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>Lataa aina tähän sijaintiin</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
     </message>
 </context>
 <context>
@@ -197,19 +197,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">Sinulla ei ole kirjoitusoikeuksia tässä kansiossa.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync ei tule kykenemään lataamaan mitään täältä.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Haluatko jatkaa?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
     </message>
 </context>
 <context>
@@ -653,11 +653,11 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Lataa MEGAsta</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translation>Virhe hakiessa linkkiä:</translation>
     </message>
 </context>
 <context>
@@ -1307,39 +1307,39 @@ Haluatko käynnistää MEGAsyncin uudelleen nyt?</translation>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translation>Oletuskansiot</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translation>Lähetykset:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translation>Lataukset:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Tätä synkronisaatiota ei voida ottaa käyttöön, sillä paikalliskansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Tätä synkronisaatiota ei voida ottaa käyttöön, sillä paikalliskansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation>Synkronoit jo koko pilvilevyäsi</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translation>Ota käyttöön / poista käytöstä</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Valitse paikalliskansio</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
     </message>
 </context>
 <context>
@@ -1581,19 +1581,19 @@ Ole hyvä ja yritä uudestaan. Jos ongelma toistuu, ota meihin yhteyttä sähkö
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation>Pilvilevysi tullaan synkronoimaan tämän kansion kanssa:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync ei tule kykenemään lataamaan mitään täältä.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Haluatko jatkaa?</translation>
     </message>
 </context>
 <context>

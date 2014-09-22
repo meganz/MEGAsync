@@ -5,7 +5,7 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translation>Szczegóły użycia konta</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>Pliki</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>Katalogi</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Odśwież</translation>
     </message>
     <message>
         <source>OK</source>
@@ -134,11 +134,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Pobierz z MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Proszę wybrać katalog dla plików:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>Zawsze pobieraj do tej lokalizacji</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
     </message>
 </context>
 <context>
@@ -197,19 +197,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">Nie masz uprawnień zapisu do tego katalogu.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync nie będzie wstanie nic tu pobrać. </translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
     </message>
 </context>
 <context>
@@ -653,11 +653,11 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Pobierz z MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translation>Błąd w pobraniu linku:</translation>
     </message>
 </context>
 <context>
@@ -1307,39 +1307,39 @@ Czy chcesz teraz zrestarować MEGAsync?</translation>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translation>Domyślne katalogi</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translation>Wgrywanie:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translation>Pobieranie:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Ta synchronizacja nie może zostać uruchomiona ponieważ katalog lokalny nie istnieje.</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Ta synchronizacja nie może zostać uruchomiona ponieważ katalog lokalny nie istnieje.</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation>Aktualnie już synchronizujesz cały dysk</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translation>Odblokuj / zablokuj</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Wybierz lokalny katalog</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
     </message>
 </context>
 <context>
@@ -1581,19 +1581,19 @@ Prosimy spróbować ponownie. Jeżeli problem będzie się powtarzać, prosimy o
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation>Twój dysk będzie synchronizowany do tego katalogu:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Nie masz uprawnień zapisu do tego lokalnego katalogu.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync nie będzie wstanie nic tu pobrać. </translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Czy chcesz kontynuować?</translation>
     </message>
 </context>
 <context>
