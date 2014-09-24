@@ -693,7 +693,6 @@ void MegaApplication::startSyncs()
                                 "because the remote folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
-            i--;
             continue;
         }
 
@@ -704,7 +703,6 @@ void MegaApplication::startSyncs()
                                 "because the local folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
-            i--;
             continue;
         }
 
@@ -2380,7 +2378,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
                     Platform::notifyItemChange(preferences->getLocalFolder(i));
                     megaApi->removeSync(preferences->getMegaFolderHandle(i));
                     preferences->setSyncState(i, false);
-                    i--;
                 }
 
                 delete nodeByHandle;
