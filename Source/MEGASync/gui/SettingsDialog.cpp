@@ -919,6 +919,7 @@ bool SettingsDialog::saveSettings()
             for(int i=0; i<preferences->getNumSyncedFolders(); i++)
             {
                 QString localPath = preferences->getLocalFolder(i);
+                QString megaPath = preferences->getMegaFolder(i);
                 MegaHandle megaHandle = preferences->getMegaFolderHandle(i);
 
                 int j;
@@ -928,10 +929,7 @@ bool SettingsDialog::saveSettings()
                     QString newMegaPath = ui->tSyncs->item(j, 1)->text().trimmed();
                     bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
 
-                    MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-                    if(!n) continue;
-
-                    if((n->getHandle() == megaHandle) && !localPath.compare(newLocalPath))
+                    if(!megaPath.compare(newMegaPath) && !localPath.compare(newLocalPath))
                     {
                         if(!enabled && preferences->isFolderActive(i) != enabled)
                         {
@@ -939,10 +937,8 @@ bool SettingsDialog::saveSettings()
                             preferences->setSyncState(i, enabled);
                             megaApi->removeSync(megaHandle);
                         }
-                        delete n;
                         break;
                     }
-                    delete n;
                 }
 
                 if(j == ui->tSyncs->rowCount())
