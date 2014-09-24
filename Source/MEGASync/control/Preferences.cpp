@@ -884,6 +884,9 @@ void Preferences::setSyncState(int num, bool enabled)
     activeFolders[num] = enabled;
     writeFolders();
     mutex.unlock();
+
+    if(enabled)
+        Platform::syncFolderAdded(localFolder, syncName);
 }
 
 QStringList Preferences::getSyncNames()
