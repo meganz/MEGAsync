@@ -942,6 +942,19 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     Platform::syncFolderAdded(localFolder, syncName);
 }
 
+void Preferences::setMegaFolderHandle(int num, MegaHandle handle)
+{
+    mutex.lock();
+    if(num >= megaFolderHandles.size())
+    {
+        mutex.unlock();
+        return;
+    }
+    megaFolderHandles[num] = handle;
+    writeFolders();
+    mutex.unlock();
+}
+
 void Preferences::removeSyncedFolder(int num)
 {
     mutex.lock();

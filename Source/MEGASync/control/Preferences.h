@@ -122,6 +122,7 @@ public:
     QList<long long> getMegaFolderHandles();
 
     void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString(), bool active = true);
+    void setMegaFolderHandle(int num, mega::MegaHandle handle);
     void removeSyncedFolder(int num);
     void removeAllFolders();
 

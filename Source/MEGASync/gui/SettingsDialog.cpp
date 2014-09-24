@@ -981,12 +981,13 @@ bool SettingsDialog::saveSettings()
                 for(j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
                     QString previousLocalPath = preferences->getLocalFolder(j);
-                    MegaHandle previousMegaHandle = preferences->getMegaFolderHandle(j);
+                    QString previousMegaPath = preferences->getMegaFolder(j);
 
-                    if((node->getHandle() == previousMegaHandle) && !localFolderPath.compare(previousLocalPath))
+                    if(!megaFolderPath.compare(previousMegaPath) && !localFolderPath.compare(previousLocalPath))
                     {
                         if(enabled && preferences->isFolderActive(j) != enabled)
                         {
+                            preferences->setMegaFolderHandle(j, node->getHandle());
                             preferences->setSyncState(j, enabled);
                             megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
                         }
