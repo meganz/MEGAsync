@@ -3,6 +3,7 @@
 #include "control/Utilities.h"
 #include <QMessageBox>
 #include <QtCore>
+#include <QApplication>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -28,6 +29,8 @@ void MegaUploader::upload(QString path, MegaNode *parent)
 
 void MegaUploader::upload(QFileInfo info, MegaNode *parent)
 {
+    QApplication::processEvents();
+
     NodeList *children =  megaApi->getChildren(parent);
     QByteArray utf8name = info.fileName().toUtf8();
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());

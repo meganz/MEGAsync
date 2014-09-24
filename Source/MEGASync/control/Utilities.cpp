@@ -1,6 +1,7 @@
 #include "Utilities.h"
 #include "control/Preferences.h"
 
+#include <QApplication>
 #include <QImageReader>
 #include <QDirIterator>
 #include <QDesktopServices>
@@ -156,6 +157,8 @@ void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFold
 {
     if(!path.size())
         return;
+
+    QApplication::processEvents();
 
 #ifdef WIN32
     if(path.startsWith(QString::fromAscii("\\\\?\\")))

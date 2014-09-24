@@ -1,4 +1,5 @@
 #include "MegaDownloader.h"
+#include <QApplication>
 
 using namespace mega;
 
@@ -19,6 +20,8 @@ void MegaDownloader::download(MegaNode *parent, QString path)
 
 void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 {
+    QApplication::processEvents();
+
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
 
     if(parent->getType() == MegaNode::TYPE_FILE)

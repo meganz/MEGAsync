@@ -2168,6 +2168,8 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
     if(finished) return;
 
+    QApplication::processEvents();
+
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -2202,7 +2204,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 {
     if(finished) return;
 
-    //Update statics
+    QApplication::processEvents();
+
+	//Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
 	{
 		totalDownloadedSize += transfer->getDeltaSize();
@@ -2237,7 +2241,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             #endif
             uploadLocalPaths[transfer->getTag()]=localPath;
         }
-        else LOG("Sync Transfer");
 	}
 
     //Send updated statics to the information dialog
@@ -2346,6 +2349,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
     QString localPath;
     for(int i=0; i<nodes->size(); i++)
 	{
+		QApplication::processEvents();
+
         localPath.clear();
         MegaNode *node = nodes->get(i);
 
