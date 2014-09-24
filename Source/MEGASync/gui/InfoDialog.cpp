@@ -282,10 +282,12 @@ void InfoDialog::updateTransfers()
             QString operation = tr("Downloading ");
             QString pattern(tr("%1 of %2 (%3/s)"));
             QString pausedPattern(tr("%1 of %2 (paused)"));
+            QString invalidSpeedPattern(tr("%1 of %2"));
             QString downloadString;
 
-            if(downloadSpeed >= 0)  downloadString = pattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
-            else downloadString += pausedPattern.arg(currentDownload).arg(totalDownloads);
+            if(downloadSpeed >= 20000)  downloadString = pattern.arg(currentDownload).arg(totalDownloads).arg(Utilities::getSizeString(downloadSpeed));
+            else if(downloadSpeed >= 0) downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
+            else downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
 
             ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
 
@@ -338,9 +340,11 @@ void InfoDialog::updateTransfers()
             QString operation = tr("Uploading ");
             QString pattern(tr("%1 of %2 (%3/s)"));
             QString pausedPattern(tr("%1 of %2 (paused)"));
+            QString invalidSpeedPattern(tr("%1 of %2"));
             QString uploadString;
 
-            if(uploadSpeed >= 0) uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+            if(uploadSpeed >= 20000) uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+            else if(uploadSpeed >= 0) uploadString = invalidSpeedPattern.arg(currentUpload).arg(totalUploads);
             else uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
 
             ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
