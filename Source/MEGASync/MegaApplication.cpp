@@ -2354,9 +2354,9 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
         localPath.clear();
         MegaNode *node = nodes->get(i);
 
-        if(node->getType()==MegaNode::TYPE_FOLDER)
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         {
-            for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+            if(node->getType()==MegaNode::TYPE_FOLDER && (node->getHandle() == preferences->getMegaFolderHandle(i)))
             {
                 MegaNode *nodeByHandle = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
                 const char *nodePath = megaApi->getNodePath(nodeByHandle);
