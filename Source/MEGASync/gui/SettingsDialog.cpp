@@ -991,7 +991,7 @@ bool SettingsDialog::saveSettings()
                     {
                         if(enabled && preferences->isFolderActive(j) != enabled)
                         {
-                            preferences->setSyncState(i, enabled);
+                            preferences->setSyncState(j, enabled);
                             megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
                         }
                         break;
