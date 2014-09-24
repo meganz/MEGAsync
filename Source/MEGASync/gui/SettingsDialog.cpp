@@ -1470,7 +1470,7 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
     preferences->setProxyPassword(ui->eProxyPassword->text());
 
     app->applyProxySettings();
-    megaApi->retryPendingConnections(true);
+    megaApi->retryPendingConnections(true, true);
 
     if(networkAccess)
     {
