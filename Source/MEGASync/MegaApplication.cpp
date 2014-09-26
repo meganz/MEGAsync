@@ -2166,6 +2166,12 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
     if(finished) return;
 
+    if(!totalUploadSize && !totalDownloadSize)
+    {
+        infoDialog->setWaiting(true);
+        onSyncStateChanged(megaApi);
+    }
+
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
 	{
@@ -2185,9 +2191,6 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
         infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
         infoDialog->updateTransfers();
     }
-
-    if((megaApi->getNumPendingDownloads() + megaApi->getNumPendingDownloads()) == 1)
-        infoDialog->setWaiting(true);
 }
 
 //Called when there is a temporal problem in a request
@@ -2240,12 +2243,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Send updated statics to the information dialog
     if(infoDialog)
     {
-        if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
-            ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
-            infoDialog->setTransfer(transfer);
+        if(e->getErrorCode() == MegaError::API_OK)
+        {
+            if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
+                ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
+                infoDialog->setTransfer(transfer);
 
-        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-        infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+        }
+
         infoDialog->updateTransfers();
         infoDialog->transferFinished(e->getErrorCode());
     }
@@ -2259,22 +2266,27 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if(lastStartedUpload == transfer->getStartTime())
             lastStartedUpload = 0;
-        preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
-        preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + transfer->getTotalBytes());
-        preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
-        if(settingsDialog) settingsDialog->refreshAccountDetails();
 
-        if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
+        if((e->getErrorCode() == MegaError::API_OK))
+        {
+            preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
+            preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + transfer->getTotalBytes());
+            preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
+            if(settingsDialog) settingsDialog->refreshAccountDetails();
+
+            if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
+        }
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
     {
+        if(totalUploadSize || totalDownloadSize)
+            onSyncStateChanged(megaApi);
+
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
-		uploadSpeed = downloadSpeed = 0;
-        if(e->getErrorCode() == MegaError::API_OK)
-            onSyncStateChanged(megaApi);
+        uploadSpeed = downloadSpeed = 0;
 	}
 }
 
