@@ -840,11 +840,13 @@ void InfoDialog::on_bSyncFolder_clicked()
         syncsMenu->addSeparator();
 
         menuSignalMapper = new QSignalMapper();
+        int activeFolders;
         for(int i=0; i<num; i++)
         {
             if(!preferences->isFolderActive(i))
                 continue;
 
+            activeFolders++;
             QAction *action = syncsMenu->addAction(preferences->getSyncName(i), menuSignalMapper, SLOT(map()));
 #ifdef __APPLE__
             action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
@@ -865,7 +867,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         menuSignalMapper = NULL;
         syncsMenu = NULL;
 #else
-        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -num*35)));
+        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
 #endif
     }
     delete rootNode;
