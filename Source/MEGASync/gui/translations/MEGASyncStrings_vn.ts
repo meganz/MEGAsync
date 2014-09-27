@@ -5,7 +5,7 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translation>Chi tiết sử dụng của tài khoản</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -25,15 +25,15 @@
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translation>Tệp tin</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translation>Thư mục</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Tải lại</translation>
     </message>
     <message>
         <source>OK</source>
@@ -52,7 +52,7 @@
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
-        <translation>Xin chọn một thư mục nội bộ và một thư mục MEGA</translation>
+        <translation>Xin chọn một thư mục trong máy và một thư mục MEGA</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
@@ -134,11 +134,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Tải về từ MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Xin chọn một thư mục để tệp tin được tải xuống:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translation>Luôn tải xuống vào vị trí này</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
 </context>
 <context>
@@ -197,19 +197,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">Bạn không có quyền hạn ghi dữ liệu trong thư mục này.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Bạn có muốn tiếp tục không?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
 </context>
 <context>
@@ -280,7 +280,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
 </context>
 <context>
@@ -444,7 +444,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Đồng bộ &quot;%1&quot; của bạn đã bị ngắt do thư mục nội tại không có tồn tại</translation>
+        <translation>Đồng bộ &quot;%1&quot; của bạn đã bị ngắtdo thư mục nội tại không có tồn tại</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -653,11 +653,11 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translation>Tải về từ MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translation>Lỗi khi lấy liên kết:</translation>
     </message>
 </context>
 <context>
@@ -774,7 +774,7 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>Thư mục đích đã được đồng bộ và trong thư mục đó đã tồn tại một tệp tin cùng tên (%1). Nếu bạn tiếp tục tải lên, tệp tin cũ sẽ bị ghi đè thành bản mới.</translation>
+        <translation>Thư mục đích đã được đồng bộ và trong thư mục đó đã tồn tại một tệp tin cùng tên (%1). Nếu bạn tiếp tục tải lên, tệp tin cũ sẽ bị ghi đè thành bản mới.Bạn có chắc không?</translation>
     </message>
 </context>
 <context>
@@ -828,7 +828,7 @@ Please, select a subfolder.</source>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
         <translation>Bạn có %1 trong thư mục này.
-Bạn có chắc muốn đồng bộ nó?</translation>
+Bạn có chắc muốn đồng bộ nó không?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -1307,39 +1307,39 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translation>Thư mục mặc định</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translation>Tải lên:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translation>Tải xuống:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Việc đồng bộ này không thể hoạt động vì thư mục đích không tồn tại</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>Việc đồng bộ này không thể hoạt động vì thư mục đích không tồn tại</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation>Toàn bộ Ổ Mây của bạn đã được đồng bộ rồi</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translation>Kích hoạt / bất hoạt</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translation>Chọn thư mục</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
 </context>
 <context>
@@ -1474,7 +1474,7 @@ Bạn có muốn khởi chạy lại MEGAsync ngay không?</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
-        <translation>Bạn đã xác thực tài khoản của bạn chưa?</translation>
+        <translation>Bạn đã xác thực tài khoản của bạn hay chưa?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -1581,19 +1581,19 @@ Vui lòng thử lại sau. Nếu vấn đề vẫn còn tiếp diễn xin liên 
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation>Ổ Mây của bạn sẽ được đồng bộ với thư mục này:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync sẽ không tải xuống được gì vào chỗ này.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translation>Bạn có muốn tiếp tục không?</translation>
     </message>
 </context>
 <context>
