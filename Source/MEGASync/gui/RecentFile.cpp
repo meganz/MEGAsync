@@ -14,11 +14,11 @@ RecentFile::RecentFile(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lTime->setText(QString::fromUtf8(""));
-    ui->pArrow->setIcon(QIcon());
-    ui->pArrow->setToolTip(QString::fromUtf8(""));
     info.fileHandle = mega::INVALID_HANDLE;
     menu = NULL;
     getLinkDisabled = false;
+    ui->pArrow->installEventFilter(this);
+    update();
 }
 
 RecentFile::~RecentFile()
@@ -42,8 +42,8 @@ void RecentFile::updateWidget()
 	{
         ui->lFileType->setText(QString());
         ui->lTime->setText(QString::fromAscii(""));
-        ui->pArrow->setIcon(QIcon());
-        ui->pArrow->setToolTip(QString::fromUtf8(""));
+        ui->pArrow->installEventFilter(this);
+        ui->pArrow->update();
         return;
 	}
 
@@ -66,13 +66,13 @@ void RecentFile::updateWidget()
 
     if(getLinkDisabled)
     {
-        ui->pArrow->setIcon(QIcon());
-        ui->pArrow->setToolTip(QString::fromUtf8(""));
+        ui->pArrow->installEventFilter(this);
+        ui->pArrow->update();
     }
     else
     {
-        ui->pArrow->setIcon(QIcon(QString::fromAscii(":/images/tray_share_ico.png")));
-        ui->pArrow->setToolTip(tr("Get MEGA link"));
+        ui->pArrow->removeEventFilter(this);
+        ui->pArrow->update();
     }
 
     QDateTime now = QDateTime::currentDateTime();
@@ -144,6 +144,11 @@ void RecentFile::disableGetLink(bool disable)
     this->getLinkDisabled = disable;
     updateWidget();
     update();
+}
+
+bool RecentFile::eventFilter(QObject *, QEvent *ev)
+{
+    return ev->type() == QEvent::Paint || ev->type() == QEvent::ToolTip;
 }
 
 void RecentFile::changeEvent(QEvent *event)
