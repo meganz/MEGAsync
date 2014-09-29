@@ -943,13 +943,13 @@ color: rgb(102, 102, 102);</string>
           <widget class="RecentFile" name="wRecent1" native="true">
            <property name="minimumSize">
             <size>
-             <width>400</width>
+             <width>399</width>
              <height>48</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>400</width>
+             <width>399</width>
              <height>48</height>
             </size>
            </property>
@@ -962,13 +962,13 @@ color: rgb(102, 102, 102);</string>
           <widget class="RecentFile" name="wRecent2" native="true">
            <property name="minimumSize">
             <size>
-             <width>400</width>
+             <width>399</width>
              <height>48</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>400</width>
+             <width>399</width>
              <height>48</height>
             </size>
            </property>
@@ -981,13 +981,13 @@ color: rgb(102, 102, 102);</string>
           <widget class="RecentFile" name="wRecent3" native="true">
            <property name="minimumSize">
             <size>
-             <width>400</width>
+             <width>399</width>
              <height>48</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>400</width>
+             <width>399</width>
              <height>48</height>
             </size>
            </property>
