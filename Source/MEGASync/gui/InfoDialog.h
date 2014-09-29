@@ -107,7 +107,6 @@ private:
 	int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;
-    bool isUnity;
 
 protected:
     void changeEvent(QEvent * event);

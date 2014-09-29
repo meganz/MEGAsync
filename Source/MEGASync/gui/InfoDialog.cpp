@@ -55,9 +55,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transferMenu = NULL;
     menuSignalMapper = NULL;
 
-    const QByteArray xdgCurrentDesktop = qgetenv("XDG_CURRENT_DESKTOP");
-    isUnity = xdgCurrentDesktop == "Unity";
-
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
@@ -771,17 +768,13 @@ void InfoDialog::onAllTransfersFinished()
 
 
 void InfoDialog::on_bSettings_clicked()
-{
-    if(!isUnity)
-    {
-        QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
-        app->showTrayMenu(&p);
-        #ifdef __APPLE__
-            if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
-                this->hide();
-        #endif
-    }
-    else app->openSettings();
+{   
+    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
+    app->showTrayMenu(&p);
+    #ifdef __APPLE__
+        if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+            this->hide();
+    #endif
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()
@@ -840,7 +833,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         syncsMenu->addSeparator();
 
         menuSignalMapper = new QSignalMapper();
-        int activeFolders;
+        int activeFolders = 0;
         for(int i=0; i<num; i++)
         {
             if(!preferences->isFolderActive(i))

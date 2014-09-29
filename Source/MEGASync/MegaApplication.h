@@ -204,7 +204,7 @@ protected:
     long long lastExit;
     bool finished;
     bool updateAvailable;
-    bool isUnity;
+    bool isLinux;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

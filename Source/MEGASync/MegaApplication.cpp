@@ -260,8 +260,11 @@ void MegaApplication::initialize()
     indexing = false;
     setQuitOnLastWindowClosed(false);
 
-    const QByteArray xdgCurrentDesktop = qgetenv("XDG_CURRENT_DESKTOP");
-    isUnity = xdgCurrentDesktop == "Unity";
+#ifdef Q_OS_LINUX
+    isLinux = true;
+#else
+    isLinux = false;
+#endif
 
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
@@ -934,7 +937,7 @@ void MegaApplication::refreshTrayIcon()
 
         megaApi->updateStatics();
         onSyncStateChanged(megaApi);
-        if(isUnity) updateTrayIcon();
+        if(isLinux) updateTrayIcon();
     }
     if(trayIcon) trayIcon->show();
 }
@@ -1069,7 +1072,7 @@ void MegaApplication::showInfoDialog()
                     posy = screenGeometry.top() + 2;
             #endif
 
-            if(isUnity) unityFix();
+            if(isLinux) unityFix();
 
             infoDialog->move(posx, posy);
             infoDialog->show();
@@ -1895,7 +1898,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
 
-    if (isUnity)
+    if (isLinux)
     {
         if(showStatusAction) delete showStatusAction;
         showStatusAction = new QAction(tr("Show status"), this);
@@ -2467,7 +2470,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     if(waiting) LOG("Waiting = true");
     else LOG("Waiting = false");
 
-    if(!isUnity) updateTrayIcon();
+    if(!isLinux) updateTrayIcon();
 }
 
 void MegaApplication::onSyncFileStateChanged(MegaApi *, const char *filePath, int)
