@@ -32,6 +32,7 @@ public:
     RecentFileInfo getFileInfo();
     void setFileInfo(RecentFileInfo info);
     void disableGetLink(bool disable);
+    bool eventFilter(QObject *, QEvent * ev);
 
 private:
     Ui::RecentFile *ui;
