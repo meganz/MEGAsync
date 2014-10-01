@@ -26,6 +26,23 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 
     if(parent->getType() == MegaNode::TYPE_FILE)
     {
+        QDir dir(currentPath);
+        QString fullPath = dir.filePath(QString::fromUtf8(parent->getName()));
+        if(QFileInfo(fullPath).exists())
+        {
+            const char *fpLocal = megaApi->getFingerprint(fullPath.toUtf8().constData());
+            const char *fpRemote = megaApi->getFingerprint(parent);
+
+            if(fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
+            {
+                delete fpLocal;
+                delete fpRemote;
+                return;
+            }
+            delete fpLocal;
+            delete fpRemote;
+        }
+
         megaApi->startDownload(parent,currentPath.toUtf8().constData());
     }
     else if(parent->getType() == MegaNode::TYPE_FOLDER)
