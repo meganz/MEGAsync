@@ -215,5 +215,9 @@
         <file>images/22_paused.png</file>
         <file>images/22_synching.png</file>
         <file>images/22_uptodate.png</file>
+        <file>images/tray_pause_over_ico.png</file>
+        <file>images/tray_play_over_ico.png</file>
+        <file>images/tray_preferences_over_ico.png</file>
+        <file>images/tray_share_over_ico.png</file>
     </qresource>
 </RCC>

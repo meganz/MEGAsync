@@ -345,5 +345,13 @@
         <file>images/drag_web_data@2x.png</file>
         <file>images/drag_web_lang@2x.png</file>
         <file>images/drag_word@2x.png</file>
+        <file>images/tray_pause_over_ico.png</file>
+        <file>images/tray_pause_over_ico@2x.png</file>
+        <file>images/tray_play_over_ico.png</file>
+        <file>images/tray_play_over_ico@2x.png</file>
+        <file>images/tray_preferences_over_ico.png</file>
+        <file>images/tray_preferences_over_ico@2x.png</file>
+        <file>images/tray_share_over_ico.png</file>
+        <file>images/tray_share_over_ico@2x.png</file>
     </qresource>
 </RCC>
