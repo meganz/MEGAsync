@@ -223,33 +223,50 @@ color: #666666;
       </property>
       <item>
        <widget class="QPushButton" name="pArrow">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>0</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>16777215</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="toolTip">
          <string>Get MEGA link</string>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+	image: url(://images/tray_share_ico.png);
+
+}
+QPushButton:hover
+{
+	image: url(://images/tray_share_over_ico.png);
+
+}</string>
+        </property>
         <property name="text">
          <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
           <width>24</width>
           <height>24</height>
          </size>
+        </property>
+        <property name="autoDefault">
+         <bool>true</bool>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -277,8 +294,6 @@ color: #666666;
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resources_macx.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
