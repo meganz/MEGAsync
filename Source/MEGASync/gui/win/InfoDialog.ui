@@ -36,7 +36,10 @@ QPushButton
 {
     border: none;
 }
-
+QPushButton#bSettings:hover
+{
+	image: url(://images/tray_preferences_over_ico.png);
+}
 QWidget
 {
 font-size: 11px;
@@ -309,14 +312,24 @@ QCheckBox::indicator {
 	 subcontrol-position:  center;
  }
 
+
   QCheckBox::indicator:checked
   {
     image: url(://images/tray_play_ico.png);
+  }
+QCheckBox::indicator:checked:hover
+  {
+    image: url(://images/tray_play_over_ico.png);
   }
   QCheckBox::indicator:unchecked
   {
     image: url(://images/tray_pause_ico.png);
   }
+QCheckBox::indicator:unchecked:hover
+  {
+    image: url(://images/tray_pause_over_ico.png);
+  }
+
 </string>
         </property>
         <property name="text">
