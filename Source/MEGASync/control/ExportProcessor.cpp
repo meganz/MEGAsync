@@ -37,7 +37,7 @@ QStringList ExportProcessor::getValidLinks()
     return validPublicLinks;
 }
 
-void ExportProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
+void ExportProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     currentIndex++;
     remainingNodes--;

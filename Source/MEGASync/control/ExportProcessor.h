@@ -18,7 +18,7 @@ signals:
     void onRequestLinksFinished();
 
 public slots:
-    virtual void QTonRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 protected:
     mega::MegaApi *megaApi;

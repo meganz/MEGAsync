@@ -53,7 +53,7 @@ int LinkProcessor::size()
 	return linkList.size();
 }
 
-void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
+void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
@@ -61,11 +61,13 @@ void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError
         LOG(QString::number(currentIndex));
         LOG(QString::number(e->getErrorCode()));
 
-        if(e->getErrorCode() != MegaError::API_OK)  linkNode[currentIndex] = NULL;
-        else linkNode[currentIndex] = request->getPublicNode()->copy();
+        if(e->getErrorCode() != MegaError::API_OK)
+            linkNode[currentIndex] = NULL;
+        else
+            linkNode[currentIndex] = request->getPublicNode()->copy();
 
 		linkError[currentIndex] = e->getErrorCode();
-		linkSelected[currentIndex] = (linkError[currentIndex]==MegaError::API_OK);
+        linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
 		if(!linkError[currentIndex])
 		{
             QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
@@ -74,7 +76,7 @@ void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError
 		}
 		currentIndex++;
 		emit onLinkInfoAvailable(currentIndex-1);
-		if(currentIndex==linkList.size())
+        if(currentIndex == linkList.size())
 			emit onLinkInfoRequestFinish();
 	}
 	else if(request->getType() == MegaRequest::TYPE_MKDIR)
@@ -84,12 +86,14 @@ void LinkProcessor::QTonRequestFinish(MegaApi *, MegaRequest *request, MegaError
 	else if(request->getType() == MegaRequest::TYPE_IMPORT_NODE)
 	{
 		remainingNodes--;
-		if(e->getErrorCode()==MegaError::API_OK) importSuccess++;
-		else importFailed ++;
-		if(!remainingNodes) emit onLinkImportFinish();
+        if(e->getErrorCode()==MegaError::API_OK)
+            importSuccess++;
+        else
+            importFailed++;
+
+        if(!remainingNodes)
+            emit onLinkImportFinish();
 	}
-    delete request;
-    delete e;
 }
 
 void LinkProcessor::requestLinkInfo()

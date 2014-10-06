@@ -51,7 +51,7 @@ signals:
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
 
 public slots:
-    virtual void QTonRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 };
 
 #endif // LINKPROCESSOR_H
