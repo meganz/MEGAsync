@@ -2169,7 +2169,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
     if(finished) return;
 
-    if(!totalUploadSize && !totalDownloadSize)
+    if(infoDialog && !totalUploadSize && !totalDownloadSize)
     {
         infoDialog->setWaiting(true);
         onSyncStateChanged(megaApi);
