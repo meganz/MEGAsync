@@ -3,6 +3,7 @@
 RequestExecutionLevel user
 
 #!define BUILD_UNINSTALLER
+#!define BUILD_X64_VERSION
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "MEGAsync"
@@ -17,7 +18,12 @@ RequestExecutionLevel user
 !define CSIDL_LOCALAPPDATA '0x1C' ;Local Application Data path
 !define CSIDL_COMMON_APPDATA '0x23'
 
-!define SRCDIR_MEGASYNC_X32 "Release_x32\MEGAsync\release"
+!ifdef BUILD_X64_VERSION
+!define SRCDIR_MEGASYNC "Release_x64\MEGAsync\release"
+!else
+!define SRCDIR_MEGASYNC "Release_x32\MEGAsync\release"
+!endif
+
 !define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
 !define SRCDIR_MEGASHELLEXT_X64 "Release_x64\MEGAShellExt\release"
 !define MULTIUSER_MUI
@@ -349,61 +355,61 @@ modeselected:
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
   
   ;x86_32 files
-  File "${SRCDIR_MEGASYNC_X32}\QtCore4.dll"
+  File "${SRCDIR_MEGASYNC}\QtCore4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtCore4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtCore4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC_X32}\QtGui4.dll"
+  File "${SRCDIR_MEGASYNC}\QtGui4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtGui4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtGui4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC_X32}\QtNetwork4.dll"
+  File "${SRCDIR_MEGASYNC}\QtNetwork4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtNetwork4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtNetwork4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC_X32}\QtXml4.dll"
+  File "${SRCDIR_MEGASYNC}\QtXml4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtXml4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtXml4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC_X32}\QtSvg4.dll"
+  File "${SRCDIR_MEGASYNC}\QtSvg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtSvg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtSvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   SetOutPath "$INSTDIR\imageformats"
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qgif4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qgif4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qico4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qico4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qico4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qico4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qjpeg4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qjpeg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qmng4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qmng4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qsvg4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qsvg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qtga4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qtga4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtga4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtga4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC_X32}\imageformats\qtiff4.dll"
+  File "${SRCDIR_MEGASYNC}\imageformats\qtiff4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
           
   SetOutPath "$INSTDIR"
   SetOverwrite on
   AllowSkipFiles off
-  File "${SRCDIR_MEGASYNC_X32}\MEGAsync.exe"
+  File "${SRCDIR_MEGASYNC}\MEGAsync.exe"
   AccessControl::SetFileOwner "$INSTDIR\MEGAsync.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAsync.exe" "$USERNAME" "GenericRead + GenericWrite"
     
