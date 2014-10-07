@@ -4,7 +4,7 @@
 
 using namespace mega;
 
-LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaRequestListener(megaApi)
+LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QObject()
 {
 	this->megaApi = megaApi;
 	this->linkList = linkList;
@@ -20,10 +20,13 @@ LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QTMegaReq
 	remainingNodes = 0;
 	importSuccess = 0;
 	importFailed = 0;
+
+    delegateListener = new QTMegaRequestListener(megaApi, this);
 }
 
 LinkProcessor::~LinkProcessor()
 {
+    delete delegateListener;
 	for(int i=0; i<linkNode.size();i++)
 		delete linkNode[i];
 }
@@ -81,7 +84,9 @@ void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *
 	}
 	else if(request->getType() == MegaRequest::TYPE_MKDIR)
 	{
-		importLinks(megaApi->getNodeByHandle(request->getNodeHandle()));
+        MegaNode *n = megaApi->getNodeByHandle(request->getNodeHandle());
+        importLinks(n);
+        delete n;
 	}
 	else if(request->getType() == MegaRequest::TYPE_IMPORT_NODE)
 	{
@@ -100,7 +105,7 @@ void LinkProcessor::requestLinkInfo()
 {
 	for(int i=0; i<linkList.size(); i++)
 	{
-		megaApi->getPublicNode(linkList[i].toUtf8().constData(), this);
+        megaApi->getPublicNode(linkList[i].toUtf8().constData(), delegateListener);
 	}
 }
 
@@ -121,7 +126,7 @@ void LinkProcessor::importLinks(QString megaPath)
             return;
         }
 
-        megaApi->createFolder("MEGAsync Imports", rootNode, this);
+        megaApi->createFolder("MEGAsync Imports", rootNode, delegateListener);
         delete rootNode;
     }
 }
@@ -162,7 +167,7 @@ void LinkProcessor::importLinks(MegaNode *node)
             if(!dupplicate)
             {
                 remainingNodes++;
-                megaApi->importPublicNode(linkNode[i], node, this);
+                megaApi->importPublicNode(linkNode[i], node, delegateListener);
             }
             else
             {

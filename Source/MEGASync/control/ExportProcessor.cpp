@@ -3,8 +3,7 @@
 using namespace mega;
 using namespace std;
 
-ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) :
-    QTMegaRequestListener(megaApi)
+ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) : QObject()
 {
     this->megaApi = megaApi;
     this->fileList = fileList;
@@ -13,6 +12,13 @@ ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) :
     remainingNodes = fileList.size();
     importSuccess = 0;
     importFailed = 0;
+
+    delegateListener = new QTMegaRequestListener(megaApi, this);
+}
+
+ExportProcessor::~ExportProcessor()
+{
+    delete delegateListener;
 }
 
 void ExportProcessor::requestLinks()
@@ -27,7 +33,7 @@ void ExportProcessor::requestLinks()
         string tmpPath((const char*)fileList[i].toUtf8().constData());
 #endif
         MegaNode *node = megaApi->getSyncedNode(&tmpPath);
-        megaApi->exportNode(node, this);
+        megaApi->exportNode(node, delegateListener);
         delete node;
     }
 }
