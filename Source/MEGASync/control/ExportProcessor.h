@@ -5,11 +5,12 @@
 #include <megaapi.h>
 #include <QTMegaRequestListener.h>
 
-class ExportProcessor : public mega::QTMegaRequestListener
+class ExportProcessor :  public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 public:
     explicit ExportProcessor(mega::MegaApi *megaApi, QStringList fileList);
+    virtual ~ExportProcessor();
 
     void requestLinks();
     QStringList getValidLinks();
@@ -29,6 +30,7 @@ protected:
     int remainingNodes;
     int importSuccess;
     int importFailed;
+    mega::QTMegaRequestListener *delegateListener;
 };
 
 #endif // EXPORTPROCESSOR_H

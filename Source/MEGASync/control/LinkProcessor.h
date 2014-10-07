@@ -6,7 +6,7 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 
-class LinkProcessor: public mega::QTMegaRequestListener
+class LinkProcessor: public QObject, public mega::MegaRequestListener
 {
 	Q_OBJECT
 
@@ -43,6 +43,7 @@ protected:
 	int importSuccess;
 	int importFailed;
     mega::MegaHandle importParentFolder;
+    mega::QTMegaRequestListener *delegateListener;
 
 signals:
 	void onLinkInfoAvailable(int i);
