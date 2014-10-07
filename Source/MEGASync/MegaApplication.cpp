@@ -312,11 +312,16 @@ void MegaApplication::initialize()
     {
         preferences->setCrashed(false);
         QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
-        while (di.hasNext()) {
+        while (di.hasNext())
+        {
             di.next();
             const QFileInfo& fi = di.fileInfo();
-            if(fi.fileName().endsWith(QString::fromAscii(".db")))
+            if(fi.fileName().endsWith(QString::fromAscii(".db")) ||
+               fi.fileName().endsWith(QString::fromAscii(".db-wal")) ||
+               fi.fileName().endsWith(QString::fromAscii(".db-shm")))
+            {
                 QFile::remove(di.filePath());
+            }
         }
 
         QStringList reports = CrashHandler::instance()->getPendingCrashReports();
@@ -2496,6 +2501,16 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         //Start syncs
         for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         {
+            QString tmpPath = preferences->getLocalFolder(i) + QDir::separator() + QString::fromUtf8(mega::MEGA_DEBRIS_FOLDER) + QString::fromUtf8("/tmp");
+            QDirIterator di(tmpPath, QDir::Files | QDir::NoDotAndDotDot);
+            while (di.hasNext())
+            {
+                di.next();
+                const QFileInfo& fi = di.fileInfo();
+                if(fi.fileName().endsWith(QString::fromAscii(".mega")))
+                    QFile::remove(di.filePath());
+            }
+
             if(!preferences->isFolderActive(i))
                 continue;
 
