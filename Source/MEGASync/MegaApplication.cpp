@@ -2336,7 +2336,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
     //Show information to users
-    if(transfer->getNumRetry() == 4)
+    if(transfer->getNumRetry() == 1)
         showWarningMessage(tr("Temporary transmission error: ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     else
         onSyncStateChanged(megaApi);
