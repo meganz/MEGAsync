@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation>[$1585]</translation>
+        <translation type="obsolete">[$1585]</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -104,7 +104,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>[$1883]</translation>
+        <translation type="obsolete">[$1883]</translation>
     </message>
 </context>
 <context>
@@ -210,6 +210,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>[$2041]</translation>
+    </message>
+    <message>
+        <source>You are trying to sync an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translation type="unfinished">[$1883]</translation>
     </message>
 </context>
 <context>
@@ -546,11 +552,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>[$1884]</translation>
+        <translation type="obsolete">[$1884]</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>[$1885]</translation>
+        <translation type="obsolete">[$1885]</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -827,7 +833,7 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>[$1691]
+        <translation type="obsolete">[$1691]
 [$1692]</translation>
     </message>
     <message>
@@ -1523,7 +1529,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>[$1797]
+        <translation type="obsolete">[$1797]
 [$1798]</translation>
     </message>
     <message>
