@@ -732,7 +732,6 @@ void MegaApplication::stopSyncs()
 void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
 {
     MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
-    QStringList notUploaded;
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
     if(!node || node->isFile())
@@ -747,30 +746,9 @@ void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
 	while(!uploadQueue.isEmpty())
 	{
 		QString filePath = uploadQueue.dequeue();
-        if(!Utilities::verifySyncedFolderLimits(filePath))
-        {
-            //If a folder can't be uploaded, save its name
-            notUploaded.append(QFileInfo(filePath).fileName());
-            continue;
-        }
         uploader->upload(filePath, node);
     }
     delete node;
-
-    //If any file or folder couldn't be uploaded, inform users
-    if(notUploaded.size())
-    {
-        if(notUploaded.size()==1)
-        {
-            showInfoMessage(tr("The folder (%1) wasn't uploaded because it's extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.")
-                .arg(notUploaded[0]));
-        }
-        else
-        {
-            showInfoMessage(tr("%1 folders weren't uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.")
-                .arg(notUploaded.size()));
-        }
-    }
 }
 
 void MegaApplication::processDownloadQueue(QString path)

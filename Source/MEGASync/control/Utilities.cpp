@@ -377,16 +377,8 @@ bool Utilities::verifySyncedFolderLimits(QString path)
         path = path.mid(4);
 #endif
 
-    long numFiles = 0;
-    long numFolders = 0;
-    QFileInfo info(path);
-    if(!info.isDir()) return true;
-    countFilesAndFolders(path, &numFiles, &numFolders,
-                         Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER,
-                         Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER);
-
-    if(((numFolders > Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER)) ||
-       ((numFiles > Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER)))
+    QString rootPath = QDir::toNativeSeparators(QDir::rootPath());
+    if(rootPath == path)
         return false;
     return true;
 }
