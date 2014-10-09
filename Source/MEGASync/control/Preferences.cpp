@@ -19,8 +19,6 @@ const QString Preferences::VERSION_STRING = QString::fromAscii("1.0.33");
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
-const int Preferences::MAX_FILES_IN_NEW_SYNC_FOLDER     = 80000;
-const int Preferences::MAX_FOLDERS_IN_NEW_SYNC_FOLDER   = 15000;
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;

@@ -187,21 +187,5 @@ void NodeSelector::on_bOk_clicked()
         return;
     }
 
-    if(sizeWarning)
-    {
-        long long totalSize = megaApi->getSize(megaApi->getNodeByHandle(selectedFolder));
-        if(totalSize > 2147483648)
-        {
-            int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in this folder.\n"
-                                                         "Are you sure you want to sync it?")
-                                                        .arg(Utilities::getSizeString(totalSize)),
-                                 QMessageBox::Yes, QMessageBox::No);
-            if(res != QMessageBox::Yes)
-            {
-                return;
-            }
-        }
-    }
-
     accept();
 }

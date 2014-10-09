@@ -348,22 +348,6 @@ void SetupWizard::on_bNext_clicked()
         else
         {
             defaultFolderPath.append(QString::fromAscii("/MEGA"));
-            MegaNode *rootNode = megaApi->getRootNode();
-            long long totalSize = megaApi->getSize(rootNode);
-            delete rootNode;
-            if(totalSize > 2147483648)
-            {
-                int res = QMessageBox::warning(this, tr("Warning"), tr("You have %1 in your Cloud Drive.\n"
-                                                             "Are you sure you want to sync your entire Cloud Drive?")
-                                                            .arg(Utilities::getSizeString(totalSize)),
-                                     QMessageBox::Yes, QMessageBox::No);
-                if(res != QMessageBox::Yes)
-                {
-                    this->wAdvancedSetup_clicked();
-                    return;
-                }
-            }
-
             ui->eMegaFolder->setText(QString::fromAscii("/"));
             ui->lAdvancedLabel->setText(tr("Your Cloud Drive will be synchronized with this folder:"));
             ui->lAdvancedSetup->setText(tr("Full sync"));
