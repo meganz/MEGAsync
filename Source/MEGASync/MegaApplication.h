@@ -79,7 +79,7 @@ public:
     void applyProxySettings();
     void showUpdatedMessage();
     void updateUserStats();
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString());
+    void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
 
@@ -99,7 +99,7 @@ public slots:
     void resumeSync();
 	void importLinks();
     void uploadActionClicked();
-    void copyFileLink(mega::MegaHandle fileHandle);
+    void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);

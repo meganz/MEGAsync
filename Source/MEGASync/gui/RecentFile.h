@@ -17,6 +17,7 @@ public:
     long long fileHandle;
     QDateTime dateTime;
     QString localPath;
+    QString nodeKey;
 };
 
 class RecentFile : public QWidget
@@ -26,7 +27,7 @@ class RecentFile : public QWidget
 public:
     explicit RecentFile(QWidget *parent = 0);
     ~RecentFile();
-    void setFile(QString fileName, long long fileHandle, QString localPath, long long time);
+    void setFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey, long long time);
 	void updateWidget();
     void closeMenu();
     RecentFileInfo getFileInfo();

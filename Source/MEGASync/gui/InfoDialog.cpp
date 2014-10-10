@@ -212,13 +212,13 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     if(!shown) updateState();
 }
 
-void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath)
+void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
 {
     RecentFileInfo info1 = ui->wRecent1->getFileInfo();
     RecentFileInfo info2 = ui->wRecent2->getFileInfo();
     ui->wRecent3->setFileInfo(info2);
     ui->wRecent2->setFileInfo(info1);
-    ui->wRecent1->setFile(fileName, fileHandle, localPath, QDateTime::currentDateTime().toMSecsSinceEpoch());
+    ui->wRecent1->setFile(fileName, fileHandle, localPath, nodeKey, QDateTime::currentDateTime().toMSecsSinceEpoch());
 
 #ifdef __APPLE__
     if(!ui->wRecentlyUpdated->isVisible())
