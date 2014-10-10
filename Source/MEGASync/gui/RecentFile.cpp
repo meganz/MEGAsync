@@ -26,11 +26,12 @@ RecentFile::~RecentFile()
     delete ui;
 }
 
-void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath, long long time)
+void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey, long long time)
 {
     info.fileName = fileName;
     info.fileHandle = fileHandle;
     info.localPath = localPath;
+    info.nodeKey = nodeKey;
     info.dateTime = QDateTime::fromMSecsSinceEpoch(time);
 }
 
@@ -165,7 +166,7 @@ void RecentFile::on_pArrow_clicked()
         return;
 
     if(info.fileHandle != mega::INVALID_HANDLE)
-        ((MegaApplication*)qApp)->copyFileLink(info.fileHandle);
+        ((MegaApplication*)qApp)->copyFileLink(info.fileHandle, info.nodeKey);
 }
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)

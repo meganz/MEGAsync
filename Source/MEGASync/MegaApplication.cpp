@@ -1282,10 +1282,10 @@ void MegaApplication::updateUserStats()
     }
 }
 
-void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QString localPath)
+void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
 {
     if(infoDialog)
-        infoDialog->addRecentFile(fileName, fileHandle, localPath);
+        infoDialog->addRecentFile(fileName, fileHandle, localPath, nodeKey);
 }
 
 void MegaApplication::checkForUpdates()
@@ -1522,8 +1522,20 @@ void MegaApplication::downloadActionClicked()
 }
 
 //Called when the user wants to generate the public link for a node
-void MegaApplication::copyFileLink(MegaHandle fileHandle)
+void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
 {
+    if(nodeKey.size())
+    {
+        //Public node
+        const char* base64Handle = MegaApi::handleToBase64(fileHandle);
+        QString handle = QString::fromUtf8(base64Handle);
+        QString linkForClipboard = QString::fromUtf8("https://mega.co.nz/#!%1!%2").arg(handle).arg(nodeKey);
+        delete [] base64Handle;
+        QApplication::clipboard()->setText(linkForClipboard);
+        showInfoMessage(tr("The link has been copied to the clipboard"));
+        return;
+    }
+
     //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
     if(infoDialog) infoDialog->disableGetLink(true);
 	megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
@@ -2202,7 +2214,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             #ifdef WIN32
                 if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
             #endif
-            addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath);
+
+            MegaNode *node = transfer->getPublicNode();
+            QString publicKey;
+            if(node)
+            {
+                const char* key = node->getBase64Key();
+                publicKey = QString::fromUtf8(key);
+                delete [] key;
+            }
+            addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
         }
 	}
 	else
