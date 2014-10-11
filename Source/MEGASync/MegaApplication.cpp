@@ -1741,9 +1741,18 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
+        int i;
+        for(i = 0; i < preferences->getNumSyncedFolders(); i++)
+        {
+            if(preferences->isFolderActive(i))
+                break;
+        }
+        if(i == preferences->getNumSyncedFolders())
+            return;
+
         infoDialogTimer->stop();
         infoDialog->hide();
-        QString localFolderPath = preferences->getLocalFolder(0);
+        QString localFolderPath = preferences->getLocalFolder(i);
         if(!localFolderPath.isEmpty())
             QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
     }
