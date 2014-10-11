@@ -112,6 +112,8 @@ public:
     QString getSyncName(int num);
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
+    long long getLocalFingerprint(int num);
+    void setLocalFingerprint(int num, long long fingerprint);
     mega::MegaHandle getMegaFolderHandle(int num);
     bool isFolderActive(int num);
     void setSyncState(int num, bool enabled);
@@ -212,6 +214,7 @@ protected:
     QStringList megaFolders;
     QStringList localFolders;
     QList<long long> megaFolderHandles;
+    QList<long long> localFingerprints;
     QList<bool> activeFolders;
     QStringList excludedSyncNames;
     bool errorFlag;
@@ -259,6 +262,7 @@ protected:
     static const QString fileNameKey;
     static const QString fileHandleKey;
     static const QString localPathKey;
+    static const QString localFingerprintKey;
     static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
