@@ -2105,15 +2105,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
                     else if(nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
                     {
-                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                                 "because the remote folder is in the rubbish bin")
-                                             .arg(preferences->getSyncName(i)));
+                                         .arg(preferences->getSyncName(i)));
                     }
                     else if(!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
                     {
-                            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
                                                 "because the remote folder doesn't exist")
-                                             .arg(preferences->getSyncName(i)));
+                                         .arg(preferences->getSyncName(i)));
+                    }
+                    else if(e->getErrorCode() == MegaError::API_EFAILED)
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                            "because the local folder has changed")
+                                         .arg(preferences->getSyncName(i)));
                     }
                     else showErrorMessage(QCoreApplication::translate("MegaError", e->getErrorString()));
 
@@ -2124,6 +2130,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     preferences->setSyncState(i, false);
                     if(settingsDialog)
                         settingsDialog->loadSettings();
+                }
+                else
+                {
+                    preferences->setLocalFingerprint(i, request->getParentHandle());
                 }
                 break;
             }
@@ -2515,7 +2525,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
             MegaNode *node = api->getNodeByHandle(preferences->getMegaFolderHandle(i));
             QString localFolder = preferences->getLocalFolder(i);
-            api->resumeSync(localFolder.toUtf8().constData(), node);
+            api->resumeSync(localFolder.toUtf8().constData(), preferences->getLocalFingerprint(i), node);
             delete node;
         }
     }

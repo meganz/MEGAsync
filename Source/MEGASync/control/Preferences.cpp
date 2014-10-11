@@ -82,6 +82,7 @@ const QString Preferences::importFolderKey			= QString::fromAscii("importFolder"
 const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
+const QString Preferences::localFingerprintKey      = QString::fromAscii("localFingerprint");
 const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
@@ -844,6 +845,33 @@ QString Preferences::getMegaFolder(int num)
     return value;
 }
 
+long long Preferences::getLocalFingerprint(int num)
+{
+    mutex.lock();
+    assert(logged() && (localFingerprints.size()>num));
+    if(num >= localFingerprints.size())
+    {
+        mutex.unlock();
+        return 0;
+    }
+    long long value = localFingerprints.at(num);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLocalFingerprint(int num, long long fingerprint)
+{
+    mutex.lock();
+    if(num >= localFingerprints.size())
+    {
+        mutex.unlock();
+        return;
+    }
+    localFingerprints[num] = fingerprint;
+    writeFolders();
+    mutex.unlock();
+}
+
 MegaHandle Preferences::getMegaFolderHandle(int num)
 {
     mutex.lock();
@@ -935,6 +963,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     activeFolders.append(active);
+    localFingerprints.append(0);
     writeFolders();
     mutex.unlock();
     Platform::syncFolderAdded(localFolder, syncName);
@@ -962,6 +991,7 @@ void Preferences::removeSyncedFolder(int num)
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
     activeFolders.removeAt(num);
+    localFingerprints.removeAt(num);
     writeFolders();
     mutex.unlock();
 }
@@ -978,6 +1008,7 @@ void Preferences::removeAllFolders()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    localFingerprints.clear();
     writeFolders();
     mutex.unlock();
 }
@@ -1144,6 +1175,7 @@ void Preferences::leaveUser()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    localFingerprints.clear();
     mutex.unlock();
 }
 
@@ -1162,6 +1194,7 @@ void Preferences::unlink()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    localFingerprints.clear();
     mutex.unlock();
 }
 
@@ -1303,6 +1336,7 @@ void Preferences::logout()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    localFingerprints.clear();
     mutex.unlock();
 }
 
@@ -1347,6 +1381,7 @@ void Preferences::readFolders()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    localFingerprints.clear();
 
     settings->beginGroup(syncsGroupKey);
     int numSyncs = settings->numChildGroups();
@@ -1358,6 +1393,7 @@ void Preferences::readFolders()
             megaFolders.append(settings->value(megaFolderKey).toString());
             megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
             activeFolders.append(settings->value(folderActiveKey, true).toBool());
+            localFingerprints.append(settings->value(localFingerprintKey, 0).toLongLong());
         settings->endGroup();
     }
     settings->endGroup();
@@ -1379,6 +1415,7 @@ void Preferences::writeFolders()
                 settings->setValue(megaFolderKey, megaFolders[i]);
                 settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
                 settings->setValue(folderActiveKey, activeFolders[i]);
+                settings->setValue(localFingerprintKey, localFingerprints[i]);
             settings->endGroup();
         }
     settings->endGroup();
