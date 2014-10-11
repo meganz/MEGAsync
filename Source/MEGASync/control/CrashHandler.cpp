@@ -253,7 +253,22 @@ void CrashHandler::tryReboot()
         LOG("Reboot");
         preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
 
-        ((MegaApplication *)qApp)->rebootApplication(false);
+        #ifndef __APPLE__
+            QString app = MegaApplication::applicationFilePath();
+            QProcess::startDetached(app);
+        #else
+            QString app = MegaApplication::applicationDirPath();
+            QString launchCommand = QString::fromUtf8("open");
+            QStringList args = QStringList();
+
+            QDir appPath(app);
+            appPath.cdUp();
+            appPath.cdUp();
+
+            args.append(QString::fromAscii("-n"));
+            args.append(appPath.absolutePath());
+            QProcess::startDetached(launchCommand, args);
+        #endif
     }
     else
     {

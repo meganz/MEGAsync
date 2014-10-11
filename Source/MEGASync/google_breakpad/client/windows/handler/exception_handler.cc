@@ -898,6 +898,45 @@ BOOL CALLBACK ExceptionHandler::MinidumpWriteDumpCallback(
   return FALSE;
 }
 
+void TranslateOffset(DWORD64 absoluteoffset, DWORD64 *offset, string *modulename)
+{
+    HMODULE hMods[256];
+    MODULEINFO moduleInfo = {0};
+    DWORD cbNeeded;
+    WCHAR ModuleName[MAX_PATH];
+    int i;
+
+    *offset = 0;
+    modulename->clear();
+    if(EnumProcessModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
+    {
+        for ( i = 0; !*offset && i < (cbNeeded / sizeof(HMODULE)); i++ )
+        {
+            if(GetModuleInformation(GetCurrentProcess(), hMods[i], &moduleInfo, sizeof(moduleInfo)))
+            {
+                *offset = (DWORD64)absoluteoffset - (DWORD64)moduleInfo.lpBaseOfDll;
+                if((*offset>=0) && (*offset < (DWORD64)moduleInfo.SizeOfImage))
+                {
+                    int s;
+                    if((s = GetModuleFileNameW(hMods[i], ModuleName, MAX_PATH)) && s != MAX_PATH)
+                    {
+                        mega::MegaApi::utf16ToUtf8(ModuleName, s, modulename);
+                        int index = modulename->find_last_of("\\");
+                        if(index <= string::npos && index < (modulename->size() - 1))
+                            *modulename = modulename->substr(index+1, modulename->size()-(index+1));
+                        return;
+                    }
+                }
+                else
+                {
+                    *offset = 0;
+                }
+            }
+        }
+    }
+}
+
+
 bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     DWORD requesting_thread_id,
     EXCEPTION_POINTERS* exinfo,
@@ -937,18 +976,13 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   }
 
   oss << "Operating system: Windows\n";
-
-  MODULEINFO moduleInfo;
-  GetModuleInformation(GetCurrentProcess(), module, &moduleInfo, sizeof(moduleInfo));
-
-  //oss << "Base address: " << GetModuleHandle(NULL) << "\n";
-  DWORD64 offset = (DWORD64)exinfo->ExceptionRecord->ExceptionAddress - (DWORD64)moduleInfo.lpBaseOfDll;
-  if((offset<0) || (offset > (DWORD64)moduleInfo.SizeOfImage))
-      offset = 0;
-
   oss << "Error info:\n";
+
+  DWORD64 offset;
+  string modulename;
+  TranslateOffset((DWORD64)exinfo->ExceptionRecord->ExceptionAddress, &offset, &modulename);
   oss << "Unhandled exception 0x" << std::uppercase << std::hex << exinfo->ExceptionRecord->ExceptionCode
-      << " at 0x" << std::hex << offset << "\n";
+      << " at 0x" << std::hex << offset << "(" << modulename << ")\n";
 
   if(dbghelp_module_)
   {
@@ -1000,11 +1034,9 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
                   break;
               }
 
-              DWORD64 offset = s.AddrPC.Offset - (DWORD64)moduleInfo.lpBaseOfDll;
-              if((offset<0) || (offset > (DWORD64)moduleInfo.SizeOfImage))
-                  offset = 0;
+              TranslateOffset((DWORD64)s.AddrPC.Offset, &offset, &modulename);
               if(offset)
-                oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << "\n";
+                oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << " (" << modulename << ")\n";
               else
                 oss << "#" << frame_number << " ----------\n";
               ++frame_number;
