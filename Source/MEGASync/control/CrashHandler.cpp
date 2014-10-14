@@ -269,6 +269,12 @@ void CrashHandler::tryReboot()
             args.append(appPath.absolutePath());
             QProcess::startDetached(launchCommand, args);
         #endif
+
+        #ifdef WIN32
+            Sleep(2000);
+        #else
+            sleep(2);
+        #endif
     }
     else
     {
