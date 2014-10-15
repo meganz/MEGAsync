@@ -6,6 +6,7 @@ RequestExecutionLevel user
 #!define BUILD_X64_VERSION
 
 ; HM NIS Edit Wizard helper defines
+BrandingText "MEGA Limited"
 !define PRODUCT_NAME "MEGAsync"
 !define PRODUCT_VERSION "1.0.34"
 !define PRODUCT_PUBLISHER "Mega Limited"
