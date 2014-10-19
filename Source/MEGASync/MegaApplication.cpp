@@ -1716,6 +1716,17 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
         LOG("Information dialog available");
 #ifndef __APPLE__
+        if(isLinux)
+        {
+            if(showStatusAction)
+            {
+                delete showStatusAction;
+                showStatusAction = NULL;
+            }
+
+            if(trayMenu && trayMenu->isVisible())
+                trayMenu->close();
+        }
         infoDialogTimer->start(200);
 #else
         showInfoDialog();
