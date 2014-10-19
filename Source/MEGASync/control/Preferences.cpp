@@ -677,11 +677,19 @@ QString Preferences::proxyHostAndPort()
 {
     mutex.lock();
     QString proxy;
-    proxy.append(proxyServer());
-    proxy.append(QChar::fromAscii(':'));
-    proxy.append(QString::number(proxyPort()));
-    mutex.unlock();
+    QString hostname = proxyServer();
 
+    QHostAddress ipAddress(hostname);
+    if(ipAddress.protocol() == QAbstractSocket::IPv6Protocol)
+    {
+        proxy = QString::fromUtf8("[") + hostname + QString::fromAscii("]:") + QString::number(proxyPort());
+    }
+    else
+    {
+        proxy = hostname + QString::fromAscii(":") + QString::number(proxyPort());
+    }
+
+    mutex.unlock();
     return proxy;
 }
 
