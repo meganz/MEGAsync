@@ -24,8 +24,27 @@ QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 
+void messageHandler(QtMsgType type, const char *msg)
+{
+    switch (type) {
+    case QtDebugMsg:
+        LOG(QString::fromUtf8("QT Debug: ") + QString::fromUtf8(msg));
+        break;
+    case QtWarningMsg:
+        LOG(QString::fromUtf8("QT Warning: ") + QString::fromUtf8(msg));
+        break;
+    case QtCriticalMsg:
+        LOG(QString::fromUtf8("QT Critical: ") + QString::fromUtf8(msg));
+        break;
+    case QtFatalMsg:
+        LOG(QString::fromUtf8("QT FATAL ERROR: ") + QString::fromUtf8(msg));
+        abort();
+    }
+}
+
 int main(int argc, char *argv[])
 {
+    qInstallMsgHandler(messageHandler);
     MegaApplication app(argc, argv);
     app.setStyle(new MegaProxyStyle());
 
