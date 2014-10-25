@@ -3,7 +3,9 @@
 distro=$(lsb_release -ds)
 ver=$(lsb_release -rs)
 
-if [[ $ver = "14.04" ]]; then
+if [[ $ver = "14.10" ]]; then
+    str="xUbuntu_14.10"
+elif [[ $ver = "14.04" ]]; then
     str="xUbuntu_14.04"
 elif [[ $ver = "13.10" ]]; then
     str="xUbuntu_13.10"
@@ -21,7 +23,7 @@ elif [[ $ver == 8.* ]]; then
     str="Debian_7.0"
 elif [[ $ver = "testing" ]]; then
     str="Debian_7.0"
-# fallback, unsupported
+# fallback to LTS version, unsupported
 else
     str="xUbuntu_14.04"
 fi
