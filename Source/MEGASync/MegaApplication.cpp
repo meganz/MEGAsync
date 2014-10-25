@@ -38,7 +38,7 @@ void messageHandler(QtMsgType type, const char *msg)
         break;
     case QtFatalMsg:
         LOG(QString::fromUtf8("QT FATAL ERROR: ") + QString::fromUtf8(msg));
-        abort();
+        break;
     }
 }
 
