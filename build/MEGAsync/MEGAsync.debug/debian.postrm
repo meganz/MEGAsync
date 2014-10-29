@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -f  /etc/apt/sources.list.d/megasync.list ]; then
+    rm -f /etc/apt/sources.list.d/megasync.list 2> /dev/null || true
+fi
+
+# kill running MEGAsync instance
+killall megasync 2> /dev/null || true
