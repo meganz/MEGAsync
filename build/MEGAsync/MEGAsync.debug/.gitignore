@@ -1,0 +1,5 @@
+megasync_*.tar.gz
+# generated files
+megasync.spec
+megasync_*.dsc
+PKGBUILD
