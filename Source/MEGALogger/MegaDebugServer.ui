@@ -48,31 +48,6 @@
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="widget" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Pattern</string>
-         </property>
-         <property name="buddy">
-          <cstring>filterPatternLineEdit</cstring>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="filterPatternLineEdit"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
      <widget class="QWidget" name="widget_2" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="leftMargin">
@@ -87,36 +62,6 @@
           <property name="leftMargin">
            <number>0</number>
           </property>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="minimumSize">
-               <size>
-                <width>49</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Filter</string>
-              </property>
-              <property name="buddy">
-               <cstring>filterTypeComboBox</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="filterTypeComboBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
@@ -147,6 +92,36 @@
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="minimumSize">
+               <size>
+                <width>49</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Filter</string>
+              </property>
+              <property name="buddy">
+               <cstring>filterTypeComboBox</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="filterTypeComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
         </widget>
        </item>
@@ -160,11 +135,36 @@
       </layout>
      </widget>
     </item>
+    <item>
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Pattern</string>
+         </property>
+         <property name="buddy">
+          <cstring>filterPatternLineEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="filterPatternLineEdit"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
    </layout>
-   <zorder>widget</zorder>
    <zorder>messagesTreeView</zorder>
    <zorder>widget_2</zorder>
    <zorder>label_4</zorder>
+   <zorder>widget</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">

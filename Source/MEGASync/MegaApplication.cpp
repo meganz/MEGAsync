@@ -4,6 +4,7 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "control/MegaSyncLogger.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 
@@ -28,22 +29,27 @@ void messageHandler(QtMsgType type, const char *msg)
 {
     switch (type) {
     case QtDebugMsg:
-        LOG(QString::fromUtf8("QT Debug: ") + QString::fromUtf8(msg));
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Debug: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
         break;
     case QtWarningMsg:
-        LOG(QString::fromUtf8("QT Warning: ") + QString::fromUtf8(msg));
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Warning: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
         break;
     case QtCriticalMsg:
-        LOG(QString::fromUtf8("QT Critical: ") + QString::fromUtf8(msg));
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Critical: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
         break;
     case QtFatalMsg:
-        LOG(QString::fromUtf8("QT FATAL ERROR: ") + QString::fromUtf8(msg));
+        MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT FATAL ERROR: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
         break;
     }
 }
 
 int main(int argc, char *argv[])
 {
+#if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
+    MegaSyncLogger *logger = new MegaSyncLogger();
+    MegaApi::setLoggerClass(logger);
+#endif
+
     qInstallMsgHandler(messageHandler);
     MegaApplication app(argc, argv);
     app.setStyle(new MegaProxyStyle());
@@ -116,9 +122,10 @@ int main(int argc, char *argv[])
             sleep(1);
         #endif
     }
+
     if(alreadyStarted)
     {
-        LOG("Already started");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
         return 0;
     }
 
@@ -437,7 +444,7 @@ void MegaApplication::updateTrayIcon()
     if(!trayIcon) return;
     if(!infoDialog)
     {
-        LOG("STATE: Logging in...");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Logging in...");
         #ifndef __APPLE__
             #ifdef _WIN32
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
@@ -453,7 +460,6 @@ void MegaApplication::updateTrayIcon()
     }
     else if(paused)
     {
-        LOG("STATE: Setting the \"pause\" tray icon. The pause flag is active");
         QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
         if(!updateAvailable)
         {
@@ -490,22 +496,6 @@ void MegaApplication::updateTrayIcon()
     }
     else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
     {
-        LOG("STATE: Setting the \"syncing\" tray icon");
-        LOG("Reason:");
-        if(indexing) LOG("Indexing");
-        if(waiting) LOG("Waiting");
-        if(megaApi->getNumPendingUploads())
-        {
-            LOG("Pending uploads");
-            LOG(QString::number(megaApi->getNumPendingUploads()));
-        }
-
-        if(megaApi->getNumPendingDownloads())
-        {
-            LOG("Pending downloads");
-            LOG(QString::number(megaApi->getNumPendingDownloads()));
-        }
-
         QString tooltip;
         if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
         else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
@@ -552,7 +542,6 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        LOG("STATE: Setting the \"synced\" tray icon (default).");
         if(!updateAvailable)
         {
             #ifndef __APPLE__
@@ -733,7 +722,7 @@ void MegaApplication::startSyncs()
             continue;
         }
 
-        LOG(QString::fromAscii("Sync  %1 added.").arg(i));
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Sync  %1 added.").arg(i).toUtf8().constData());
         megaApi->syncFolder(localFolder.toUtf8().constData(), node);
         delete node;
 	}
@@ -933,7 +922,6 @@ void MegaApplication::refreshTrayIcon()
     static int counter = 0;
     if(megaApi)
     {
-        LOG("STATE: Refreshing state");
         if(!(++counter % 6))
             megaApi->update();
 
@@ -946,7 +934,6 @@ void MegaApplication::refreshTrayIcon()
 
 void MegaApplication::cleanAll()
 {
-    LOG("Cleaning resources");
     finished = true;
     refreshTimer->stop();
     stopSyncs();
@@ -1653,7 +1640,6 @@ void MegaApplication::onRequestLinksFinished()
 
 void MegaApplication::onUpdateCompleted()
 {
-    LOG("Update completed. Initializing a silent reboot...");
     if(trayMenu)
     {
         updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING);
@@ -1710,19 +1696,14 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    LOG("Tray icon clicked");
     megaApi->retryPendingConnections();
 
     if(reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
     {
-        LOG("Event QSystemTrayIcon::Trigger");
-
         if(!infoDialog)
         {
-            LOG("NULL information dialog");
             if(setupWizard)
             {
-                LOG("Showing setup wizard");
                 setupWizard->setVisible(true);
                 setupWizard->raise();
                 setupWizard->activateWindow();
@@ -1733,7 +1714,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
-        LOG("Information dialog available");
 #ifndef __APPLE__
         if(isLinux)
         {
@@ -1754,14 +1734,10 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifndef __APPLE__
     else if(reason == QSystemTrayIcon::DoubleClick)
     {
-        LOG("Event QSystemTrayIcon::DoubleClick");
-
         if(!infoDialog)
         {
-            LOG("NULL information dialog");
             if(setupWizard)
             {
-                LOG("Showing setup wizard");
                 setupWizard->setVisible(true);
                 setupWizard->raise();
                 setupWizard->activateWindow();
@@ -1795,7 +1771,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
 void MegaApplication::onMessageClicked()
 {
-    LOG("onMessageClicked");
     if(lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
         triggerInstallUpdate();
     else
@@ -2064,7 +2039,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 			}
             else
             {
-                LOG("Error fetching nodes");
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
+                             .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
                 QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
                 unlink();
             }
@@ -2124,7 +2100,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ADD_SYNC:
     {
-        LOG("Sync added!");
         for(int i=preferences->getNumSyncedFolders()-1; i>=0; i--)
         {
             if((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
@@ -2164,7 +2139,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     delete[] nodePath;
 
-                    LOG("Sync error! Removed");
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error adding sync");
                     Platform::syncFolderRemoved(localFolder, preferences->getSyncName(i));
                     preferences->setSyncState(i, false);
                     if(settingsDialog)
@@ -2177,9 +2152,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 break;
             }
         }
+
         if(infoDialog)
         {
-            LOG("Sync commited! Updating GUI");
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Sync added");
             infoDialog->updateSyncsButton();
         }
         break;
@@ -2287,7 +2263,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //so we save the path of the file to show it later
         if((e->getErrorCode() == MegaError::API_OK) && (!transfer->isSyncTransfer()))
         {
-            LOG(QString::fromAscii("Putting: %1 TAG: %2").arg(QString::fromUtf8(transfer->getPath())).arg(transfer->getTag()));
             QString localPath = QString::fromUtf8(transfer->getPath());
             #ifdef WIN32
                 if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
@@ -2405,7 +2380,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
 
     //If this is a full reload, return
 	if(!nodes) return;
-    LOG(QString::fromAscii("onNodesUpdate ") + QString::number(nodes->size()));
+
+	MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
     QString localPath;
@@ -2453,20 +2429,17 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
         if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==MegaNode::TYPE_FILE))
         {
             //Get the associated local node
-            LOG(QString::fromAscii("Node: %1 TAG: %2").arg(QString::fromUtf8(node->getName())).arg(node->getTag()));
             string path = node->getLocalPath();
             if(path.size())
             {
                 //If the node has been uploaded by a synced folder
-                //The SDK provides its local path
-                LOG("Sync upload");
+                //the SDK provides its local path
             #ifdef WIN32
                 localPath = QString::fromWCharArray((const wchar_t *)path.data());
                 if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
             #else
                 localPath = QString::fromUtf8(path.data());
             #endif
-                LOG(QString::fromAscii("Sync path: %1").arg(localPath));
             }
             else if(uploadLocalPaths.contains(node->getTag()))
             {
@@ -2474,7 +2447,11 @@ void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
                 //we recover the path using the tag of the transfer
                 localPath = uploadLocalPaths.value(node->getTag());
                 uploadLocalPaths.remove(node->getTag());
-                LOG(QString::fromAscii("Local upload: %1").arg(localPath));
+            }
+            else
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get the local path of the file: %1 Tag: %2")
+                             .arg(QString::fromUtf8(node->getName())).arg(node->getTag()).toUtf8().constData());
             }
 
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
@@ -2515,13 +2492,20 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
         infoDialog->updateRecentFiles();
     }
 
-    LOG("Current state: ");
-    if(paused) LOG("Paused = true");
-    else LOG("Paused = false");
-    if(indexing) LOG("Indexing = true");
-    else LOG("Indexing = false");
-    if(waiting) LOG("Waiting = true");
-    else LOG("Waiting = false");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1   Indexing = %2   Waiting = %3")
+                 .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
+
+    int pendingUploads = megaApi->getNumPendingUploads();
+    int pendingDownloads = megaApi->getNumPendingDownloads();
+    if(pendingUploads)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
+    }
+
+    if(pendingDownloads)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+    }
 
     if(!isLinux) updateTrayIcon();
 }

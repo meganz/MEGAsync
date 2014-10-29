@@ -943,7 +943,7 @@ bool SettingsDialog::saveSettings()
 
                 if(j == ui->tSyncs->rowCount())
                 {
-                    LOG(QString::fromAscii("REMOVING SYNC: %1").arg(preferences->getSyncName(i)));
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
                     megaApi->removeSync(megaHandle);
@@ -997,7 +997,7 @@ bool SettingsDialog::saveSettings()
 
                 if(j == preferences->getNumSyncedFolders())
                 {
-                    LOG(QString::fromAscii("ADDING SYNC: %1 - %2").arg(localFolderPath).arg(megaFolderPath));
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync: %1 - %2").arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
                     preferences->addSyncedFolder(localFolderPath,
                                                  megaFolderPath,
                                                  node->getHandle(),
@@ -1106,7 +1106,7 @@ bool SettingsDialog::saveSettings()
         proxyTestProgressDialog = new MegaProgressDialog(tr("Please wait..."), QString(), 0, 0, this, Qt::CustomizeWindowHint|Qt::WindowTitleHint);
         proxyTestProgressDialog->setWindowModality(Qt::WindowModal);
         proxyTestProgressDialog->show();
-        LOG("Testing proxy settings...");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
         proxyTestTimer.start(5000);
     }
 
@@ -1416,6 +1416,8 @@ void SettingsDialog::on_bClearCache_clicked()
 
 void SettingsDialog::onProxyTestTimeout()
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
+
     if(networkAccess)
     {
         networkAccess->deleteLater();
@@ -1447,10 +1449,11 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
 
     QString data = QString::fromUtf8(reply->readAll());
     if (!data.contains(Preferences::PROXY_TEST_SUBSTRING)) {
-        //LOG_debug << "Proxy request failed.";
         onProxyTestTimeout();
         return;
     }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
 
     if(ui->rNoProxy->isChecked())
         preferences->setProxyType(Preferences::PROXY_TYPE_NONE);

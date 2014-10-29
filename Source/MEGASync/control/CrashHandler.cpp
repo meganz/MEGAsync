@@ -6,6 +6,8 @@
 #include <sstream>
 #include "MegaApplication.h"
 
+using namespace mega;
+
 #if defined(Q_OS_MAC)
 #include "client/mac/handler/exception_handler.h"
 #elif defined(Q_OS_LINUX)
@@ -250,7 +252,7 @@ void CrashHandler::tryReboot()
 
     if((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)
     {
-        LOG("Reboot");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Restarting app...");
         preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
 
         #ifndef __APPLE__
@@ -278,7 +280,7 @@ void CrashHandler::tryReboot()
     }
     else
     {
-        LOG("No reboot");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "The app was recently restarted. Restart skipped");
     }
 }
 
@@ -317,7 +319,7 @@ QStringList CrashHandler::getPendingCrashReports()
     QStringList previousCrashes = preferences->getPreviousCrashes();
     QStringList result;
 
-    LOG("Getting pending crash repors");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Checking pending crash repors");
     QDir dir(dumpPath);
     QFileInfoList fiList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
     for(int i=0; i<fiList.size(); i++)
@@ -341,8 +343,7 @@ QStringList CrashHandler::getPendingCrashReports()
                 (!lines.at(1).startsWith(QString::fromAscii("Application: ") + QApplication::applicationName())) ||
                 (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(Preferences::VERSION_CODE))))
         {
-            LOG(QString::fromAscii("Invalid or outdated dump file: ") + file.fileName());
-            LOG(crashReport);
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Invalid or outdated dump file: %1").arg(file.fileName()).toUtf8().constData());
             file.remove();
             continue;
         }
@@ -350,17 +351,17 @@ QStringList CrashHandler::getPendingCrashReports()
         QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashReport.toUtf8(),QCryptographicHash::Md5).toHex());
         if(!previousCrashes.contains(crashHash))
         {
-            LOG(QString::fromAscii("New crash file: ") + file.fileName() + QString::fromAscii("  Hash: ") + crashHash);
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New crash file: %1  Hash: %2")
+                         .arg(file.fileName()).arg(crashHash).toUtf8().constData());
             result.append(crashReport);
             previousCrashes.append(crashHash);
         }
         else
         {
-            LOG("Already sent log file");
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Already sent log file: %1").arg(file.fileName()).toUtf8().constData());
             file.remove();
         }
     }
-    LOG(QString::fromAscii("Number of crash reports: ") + QString::number(result.size()));
     return result;
 }
 
@@ -371,7 +372,6 @@ void CrashHandler::sendPendingCrashReports(QString userMessage)
     QStringList crashes = getPendingCrashReports();
     if(!crashes.size())
     {
-        LOG("No pending crashes");
         return;
     }
 
@@ -384,14 +384,14 @@ void CrashHandler::sendPendingCrashReports(QString userMessage)
             this, SLOT(onPostFinished(QNetworkReply*)), Qt::UniqueConnection);
     request.setUrl(Preferences::CRASH_REPORT_URL);
     request.setHeader(QNetworkRequest::ContentTypeHeader, QString::fromAscii("application/x-www-form-urlencoded"));
-    LOG("Sending crash reports");
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Sending crash reports");
     networkManager->post(request, postString.toUtf8());
     loop.exec();
 }
 
 void CrashHandler::discardPendingCrashReports()
 {
-    LOG("Discarding crashes");
     Preferences *preferences = Preferences::instance();
     QStringList crashes = getPendingCrashReports();
     QStringList previousCrashes = preferences->getPreviousCrashes();
@@ -400,7 +400,6 @@ void CrashHandler::discardPendingCrashReports()
         QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashes[i].toUtf8(),QCryptographicHash::Md5).toHex());
         if(!previousCrashes.contains(crashHash))
         {
-            LOG(QString::fromAscii("Discarding crash: ") + crashHash);
             previousCrashes.append(crashHash);
         }
     }
@@ -421,11 +420,11 @@ void CrashHandler::onPostFinished(QNetworkReply *reply)
     QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
     if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
     {
-        LOG("Error sending crash reports");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error sending crash reports");
         return;
     }
 
-    LOG("Crash reports sent");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Crash reports sent");
     discardPendingCrashReports();
 }
 
@@ -438,13 +437,12 @@ void CrashHandler::onCrashPostTimeout()
         networkManager = NULL;
     }
 
-    LOG("POST timeout");
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Timeout sending crash reports");
     return;
 }
 
 void CrashHandler::deletePendingCrashReports()
 {
-    LOG("Deleting all crash reports");
     QDir dir(dumpPath);
     QFileInfoList fiList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
     for(int i=0; i<fiList.size(); i++)

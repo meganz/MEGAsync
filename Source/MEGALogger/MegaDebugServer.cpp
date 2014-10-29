@@ -1,5 +1,5 @@
-#include "megadebugserver.h"
-#include "ui_megadebugserver.h"
+#include "MegaDebugServer.h"
+#include "ui_MegaDebugServer.h"
 #include <iostream>
 
 using namespace std;
@@ -134,11 +134,11 @@ void MegaDebugServer::readDebugMsg()
 
 void MegaDebugServer::appendDebugRow(DebugRow *dr)
 {
-
-    debugDataModel->insertRow(0);
-    debugDataModel->setData(debugDataModel->index(0,0), dr->timeStamp);
-    debugDataModel->setData(debugDataModel->index(0,1), dr->messageType);
-    debugDataModel->setData(debugDataModel->index(0,2), dr->content);
+    int index = debugDataModel->rowCount();
+    debugDataModel->insertRow(index);
+    debugDataModel->setData(debugDataModel->index(index, 0), dr->timeStamp);
+    debugDataModel->setData(debugDataModel->index(index, 1), dr->messageType);
+    debugDataModel->setData(debugDataModel->index(index, 2), dr->content);
 
     ui->messagesTreeView->scrollToBottom();
 }
@@ -151,6 +151,14 @@ void MegaDebugServer::disconnected()
     ui->actionSave->setEnabled(true);
     ui->actionLoad->setEnabled(true);
     ui->actionClear->setEnabled(true);
+
+    if (!megaServer->listen("MEGA_SERVER"))
+    {
+         qDebug() << "Error";
+         close();
+         return;
+    }
+    ui->statusBar->showMessage("Ready");
 }
 
 void MegaDebugServer::filterTextRegExp()

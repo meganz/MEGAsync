@@ -346,30 +346,6 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     }
 }
 
-void Utilities::log(QString message)
-{
-    Utilities::log(message.toUtf8().constData());
-}
-
-void Utilities::log(const char *message)
-{
-#ifdef LOG_TO_FILE
-    static QString filePath;
-    if(filePath.isEmpty())
-    {
-        QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-        filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
-    }
-
-    QFile file(filePath);
-    file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-    QTextStream out(&file);
-    out << "LOG " << QDateTime::currentMSecsSinceEpoch() << ": " << message << endl;
-#else
-    cout << "LOG " << QDateTime::currentMSecsSinceEpoch() << ": " << message << endl;
-#endif
-}
-
 bool Utilities::verifySyncedFolderLimits(QString path)
 {
 #ifdef WIN32
