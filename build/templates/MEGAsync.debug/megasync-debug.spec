@@ -1,11 +1,11 @@
-Name:		megasync
+Name:		megasync-debug
 Version:	MEGASYNC_VERSION
 Release:	1%{?dist}
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware
 Group:		Applications/Others
 Url:		https://mega.co.nz
-Source0:	megasync_%{version}.tar.gz
+Source0:	megasync-debug_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 

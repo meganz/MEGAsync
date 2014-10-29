@@ -1,4 +1,4 @@
-Source: megasync
+Source: megasync-debug
 Section: Tools
 Priority: normal
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
@@ -15,7 +15,7 @@ Build-Depends:  debhelper,
                 cdbs,
                 libqt4-dbus
 
-Package: megasync
+Package: megasync-debug
 Architecture: any
 Depends: ${shlibs:Depends}, libc-ares2, libcrypto++9
 Description: Easy automated syncing between your computers and your MEGA cloud drive
