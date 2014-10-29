@@ -78,9 +78,9 @@ void UpdateTask::startUpdateThread()
 
 void UpdateTask::tryUpdate()
 {
-    LOG("tryUpdate");
     if(running) return;
 
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Starting update check");
     running = true;
     initialCleanup();
 
@@ -154,7 +154,8 @@ void UpdateTask::finalCleanup()
 
 void UpdateTask::postponeUpdate()
 {
-    LOG("postponeUpdate");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update task finished. No updates available");
+
     if(forceInstall)
         emit updateError();
     else
@@ -167,7 +168,8 @@ void UpdateTask::postponeUpdate()
 
 void UpdateTask::downloadFile(QString url)
 {
-    LOG(QString::fromAscii("downloadFile ") + url);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Downloading updated file from %1").arg(url).toUtf8().constData());
+
     QNetworkRequest request(url);
     request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
                          QVariant( int(QNetworkRequest::AlwaysNetwork)));
@@ -188,11 +190,12 @@ QString UpdateTask::readNextLine(QNetworkReply *reply)
 
 bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 {
-    LOG("Parsing update file");
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Reading update info");
+
     QString version = readNextLine(reply);
     if(!version.size())
     {
-        LOG("Invalid update file (start)");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Invalid update info");
         return false;
     }
 
@@ -200,16 +203,19 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
     int currentVersion = QApplication::applicationVersion().toInt();
     if(updateVersion <= currentVersion)
     {
-        LOG(QString::fromAscii("Update not needed. Current version: ") + QString::number(currentVersion) + QString::fromAscii("  Update version: ") + QString::number(updateVersion));
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     QString::fromUtf8("Update not needed. Current version: %1  Update version: %2")
+                     .arg(currentVersion).arg(updateVersion).toUtf8().constData());
         return false;
     }
 
-    LOG(QString::fromAscii("Update available! Current version: ") + QString::number(currentVersion) + QString::fromAscii("  Update version: ") + QString::number(updateVersion));
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Update available! Current version: %1  Update version: %2")
+                 .arg(currentVersion).arg(updateVersion).toUtf8().constData());
 
     QString updateSignature = readNextLine(reply);
     if(!updateSignature.size())
     {
-        LOG("Invalid update file (empty signature)");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (empty info signature)");
         return false;
     }
 
@@ -222,10 +228,18 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
         if(!url.size()) break;
 
         QString localPath = readNextLine(reply);
-        if(!localPath.size()) return false;
+        if(!localPath.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (empty path)");
+            return false;
+        }
 
         QString fileSignature = readNextLine(reply);
-        if(!fileSignature.size()) return false;
+        if(!fileSignature.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (empty file signature)");
+            return false;
+        }
 
         addToSignature(url);
         addToSignature(localPath);
@@ -233,7 +247,7 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 
         if(alreadyInstalled(localPath, fileSignature))
         {
-            LOG(QString::fromAscii("File already installed: ") + localPath);
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File already installed: %1").arg(localPath).toUtf8().constData());
             continue;
         }
         downloadURLs.append(url);
@@ -243,23 +257,32 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 
     if(!downloadURLs.size())
     {
-        LOG("No new files");
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "All files are up to date");
         return false;
     }
 
-    return checkSignature(updateSignature);
+    if(!checkSignature(updateSignature))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (invalid signature)");
+        return false;
+    }
+
+    return true;
 }
 
 bool UpdateTask::processFile(QNetworkReply *reply)
 {
-    LOG("processFile");
     QByteArray data = reply->readAll();
 
     //Check signature
     initSignature();
     addToSignature(data);
     if(!checkSignature(fileSignatures[currentFile]))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid or corrupt file: %1")
+                     .arg(updateFolder.absoluteFilePath(localPaths[currentFile])).toUtf8().constData());
         return false;
+    }
 
     //Create the folder for the new file
     QFile localFile(updateFolder.absoluteFilePath(localPaths[currentFile]));
@@ -272,7 +295,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     //Open the new file
     if (!localFile.open(QIODevice::WriteOnly))
     {
-        LOG("Error opening file");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening local file from writting: %1").arg(info.absoluteFilePath()).toUtf8().constData());
         return false;
     }
 
@@ -284,7 +307,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
         int written = localFile.write(data.constData()+position, remainingSize);
         if(written == -1)
         {
-            LOG("Error writting file");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error writting file: %1").arg(info.absoluteFilePath()).toUtf8().constData());
             localFile.close();
             return false;
         }
@@ -296,7 +319,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     //Save the new file
     if(!localFile.flush())
     {
-        LOG("Error flushing file");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error flushing file: %1").arg(info.absoluteFilePath()).toUtf8().constData());
         localFile.close();
         return false;
     }
@@ -307,7 +330,7 @@ bool UpdateTask::processFile(QNetworkReply *reply)
 
 bool UpdateTask::performUpdate()
 {
-    LOG("performUpdate");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Applying update...");
 
     //Create backup folder
     QDir basePathDir(basePath);
@@ -329,28 +352,30 @@ bool UpdateTask::performUpdate()
         appFolder.rename(file, backupFolder.absoluteFilePath(file));
         if(!updateFolder.rename(file, appFolder.absoluteFilePath(file)))
         {
-            LOG(QString::fromAscii("Error installing the file ") + file + QString::fromAscii(" in ") + appFolder.absoluteFilePath(file));
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error installing file: %1 in %2")
+                        .arg(file).arg(appFolder.absoluteFilePath(file)).toUtf8().constData());
             rollbackUpdate(i);
             return false;
         }
 
-        LOG(QString::fromAscii("File installed: ") + file);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("File installed: %1").arg(file).toUtf8().constData());
     }
 
-    LOG("Update installed!!");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
     return true;
 }
 
 void UpdateTask::rollbackUpdate(int fileNum)
 {
-    LOG("rollbackUpdate");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Uninstalling update...");
     for(int i=fileNum; i>=0; i--)
     {
         QString file = localPaths[i];
         appFolder.rename(file, updateFolder.absoluteFilePath(file));
         backupFolder.rename(file, appFolder.absoluteFilePath(file));
-        LOG(QString::fromAscii("File restored: ") + file);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,QString::fromUtf8("File restored: %1").arg(file).toUtf8().constData());
     }
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update uninstalled");
 }
 
 void UpdateTask::addToSignature(QString value)
@@ -372,8 +397,10 @@ void UpdateTask::initSignature()
 bool UpdateTask::checkSignature(QString value)
 {
     int result = signatureChecker->check(value.toAscii().constData());
-    if(result) LOG("Valid signature");
-    else  LOG("Invalid signature");
+    if(!result)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid signature");
+    }
 
     return result;
 }
@@ -411,7 +438,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
     if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
     {
-        LOG("Invalid status code");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unable to download file");
         postponeUpdate();
         return;
     }
@@ -422,7 +449,6 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
         //Process the update file
         if(!processUpdateFile(reply))
         {
-            LOG("Update not needed or invalid update file");
             postponeUpdate();
             return;
         }
@@ -433,7 +459,8 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
         //Process the file
         if(!processFile(reply))
         {
-            LOG(QString::fromAscii("Update failed processing file: ") + downloadURLs[currentFile]);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Update failed processing file: %1")
+                         .arg(downloadURLs[currentFile]).toUtf8().constData());
             postponeUpdate();
             return;
         }
@@ -445,11 +472,12 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     {
         if(!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Downloading file: %1").arg(downloadURLs[currentFile]).toUtf8().constData());
             downloadFile(downloadURLs[currentFile]);
             return;
         }
 
-        LOG(QString::fromAscii("File already downloaded: ") + localPaths[currentFile]);
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("File already downloaded: %1").arg(localPaths[currentFile]).toUtf8().constData());
         currentFile++;
     }
 
@@ -466,7 +494,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     }
     else
     {
-        LOG("Update ready");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update installed");
         emit updateAvailable(forceCheck);
         preferences->setLastUpdateTime(QDateTime::currentMSecsSinceEpoch());
         preferences->setLastUpdateVersion(updateVersion);

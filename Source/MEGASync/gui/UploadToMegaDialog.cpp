@@ -45,7 +45,8 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
     MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
 	if(e->getErrorCode() != MegaError::API_OK || !node)
 	{
-        LOG(QString::fromAscii("ERROR: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
+		MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Request error: %1")
+					 .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
 		this->reject();
         delete node;
 		return;
@@ -121,7 +122,7 @@ void UploadToMegaDialog::on_bOK_clicked()
         return;
     }
 
-    LOG("ERROR: FOLDER NOT FOUND");
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Folder not found: %1").arg(ui->eFolderPath->text()).toUtf8().constData());
     ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
     return;
 }

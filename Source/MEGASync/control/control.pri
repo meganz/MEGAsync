@@ -12,7 +12,8 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/CrashHandler.cpp \
     $$PWD/ExportProcessor.cpp \
     $$PWD/Utilities.cpp \
-    $$PWD/MegaDownloader.cpp
+    $$PWD/MegaDownloader.cpp \
+    $$PWD/MegaSyncLogger.cpp
 
 HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/Preferences.h \
@@ -23,9 +24,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/CrashHandler.h \
     $$PWD/ExportProcessor.h \
     $$PWD/Utilities.h \
-    $$PWD/MegaDownloader.h
+    $$PWD/MegaDownloader.h \
+    $$PWD/MegaSyncLogger.h
 
-debug {
-    DEFINES += SHOW_LOGS
-#    DEFINES += LOG_TO_FILE
-}

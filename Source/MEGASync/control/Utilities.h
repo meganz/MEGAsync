@@ -6,12 +6,6 @@
 #include <QPixmap>
 #include <QDir>
 
-#ifdef SHOW_LOGS
-    #define LOG(x) Utilities::log(x)
-#else
-    #define LOG(X)
-#endif
-
 class Utilities
 {
 public:
@@ -34,8 +28,6 @@ public:
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);
-    static void log(QString message);
-    static void log(const char *message);
 };
 
 #endif // UTILITIES_H

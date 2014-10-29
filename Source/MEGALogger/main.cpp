@@ -1,5 +1,5 @@
-#include "megadebugserver.h"
 #include <QApplication>
+#include "MegaDebugServer.h"
 
 int main(int argc, char *argv[])
 {

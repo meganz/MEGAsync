@@ -35,6 +35,9 @@ TEMPLATE = app
 debug {
     CONFIG += console
     DEFINES += CREATE_COMPATIBLE_MINIDUMPS
+    DEFINES += LOG_TO_STDOUT
+#   DEFINES += LOG_TO_FILE
+#   DEFINES += LOG_TO_LOGGER
 }
 
 include(gui/gui.pri)

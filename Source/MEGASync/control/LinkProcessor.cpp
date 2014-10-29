@@ -60,10 +60,6 @@ void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *
 {
 	if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
 	{
-        LOG("Public node");
-        LOG(QString::number(currentIndex));
-        LOG(QString::number(e->getErrorCode()));
-
         if(e->getErrorCode() != MegaError::API_OK)
             linkNode[currentIndex] = NULL;
         else
@@ -142,9 +138,7 @@ void LinkProcessor::importLinks(MegaNode *node)
 	{
         if(!linkNode[i])
         {
-            LOG("TRYING TO IMPORT A NULL NODE");
-            LOG(QString::number(i));
-            LOG(QString::number(linkError[i]));
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Trying to import a NULL node");
         }
 
         if(linkNode[i] && linkSelected[i] && !linkError[i])
