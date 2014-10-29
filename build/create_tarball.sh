@@ -42,14 +42,14 @@ echo "MEGAsync version: $MEGASYNC_VERSION"
 
 # delete previously generated files
 rm -fr MEGAsync/MEGAsync/megasync_*.dsc
-rm -fr MEGAsync/MEGAsync.debug/megasync_*.dsc
+rm -fr MEGAsync/MEGAsync.debug/megasync-debug_*.dsc
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
 
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync.spec > MEGAsync/MEGAsync.debug/megasync.spec
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync.dsc > MEGAsync/MEGAsync.debug/megasync_$MEGASYNC_VERSION.dsc
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync-debug.spec > MEGAsync/MEGAsync.debug/megasync-debug.spec
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync-debug.dsc > MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync.debug/PKGBUILD
 
 
@@ -74,23 +74,24 @@ mv $MEGASYNC_NAME.tar.gz MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz
 
 
 # create archive for debug
-mkdir $MEGASYNC_NAME
-ln -s ../MEGAsync/MEGAsync.debug/megasync-debug.spec $MEGASYNC_NAME/
-ln -s ../MEGAsync/MEGAsync.debug/debian-debug.postinst $MEGASYNC_NAME/
-ln -s ../MEGAsync/MEGAsync.debug/debian-debug.postrm $MEGASYNC_NAME/
-ln -s ../../Source/configure $MEGASYNC_NAME/configure
-ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
-ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
-ln -s ../../Source/MEGALogger $MEGASYNC_NAME/MEGALogger
-ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
-ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAME/$SODIUM_SOURCE_FILE
-tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
-rm -rf $MEGASYNC_NAME
+MEGASYNC_NAMED=megasync-debug-$MEGASYNC_VERSION
+mkdir $MEGASYNC_NAMED
+ln -s ../MEGAsync/MEGAsync.debug/megasync-debug.spec $MEGASYNC_NAMED/
+ln -s ../MEGAsync/MEGAsync.debug/debian.postinst $MEGASYNC_NAMED/
+ln -s ../MEGAsync/MEGAsync.debug/debian.postrm $MEGASYNC_NAMED/
+ln -s ../../Source/configure $MEGASYNC_NAMED/configure
+ln -s ../../Source/MEGA.pro $MEGASYNC_NAMED/MEGA.pro
+ln -s ../../Source/MEGASync $MEGASYNC_NAMED/MEGASync
+ln -s ../../Source/MEGALogger $MEGASYNC_NAMED/MEGALogger
+ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAMED/$CURL_SOURCE_FILE
+ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAMED/$SODIUM_SOURCE_FILE
+tar czfh $MEGASYNC_NAMED.tar.gz $MEGASYNC_NAMED
+rm -rf $MEGASYNC_NAMED
 
 # delete any previous archive
 rm -fr MEGAsync/MEGAsync.debug/megasync-debug_*.tar.gz
 # transform arch name, to satisfy Debian requirements
-mv $MEGASYNC_NAME.tar.gz MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.tar.gz
+mv $MEGASYNC_NAMED.tar.gz MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.tar.gz
 
 
 # make sure the source tree is in "clean" state
