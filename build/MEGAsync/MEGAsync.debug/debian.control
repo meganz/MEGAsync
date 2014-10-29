@@ -11,6 +11,7 @@ Build-Depends:  debhelper,
                 zlib1g-dev,
                 wget,
                 dh-autoreconf,
+                gdb,
                 cdbs,
                 libqt4-dbus
 
