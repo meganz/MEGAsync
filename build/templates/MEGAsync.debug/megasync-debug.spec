@@ -43,12 +43,15 @@ Store up to 50 GB for free!
 %build
 %configure
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+cd MEGASync
 qmake-qt4 "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}
+cd ..
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
+cd MEGASync
 qmake "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}
+cd ..
 lrelease MEGASync/MEGASync.pro
 %endif
 
@@ -60,12 +63,12 @@ make install DESTDIR=%{buildroot}%{_bindir}
 #%{__install} MEGAsync/platform/linux/data/megasync.desktop -D %{buildroot}%{_datadir}/applications
 
 %if 0%{?suse_version}
-%suse_update_desktop_file -n -i %{name} Network System
+%suse_update_desktop_file -n -i megasync Network System
 %else
 desktop-file-install \
     --add-category="Network" \
     --dir %{buildroot}%{_datadir}/applications \
-%{buildroot}%{_datadir}/applications/%{name}.desktop
+%{buildroot}%{_datadir}/applications/megasync.desktop
 %endif
 
 %post
@@ -262,7 +265,7 @@ killall megasync 2> /dev/null || true
 %files
 %defattr(-,root,root)
 %{_bindir}/%{name}
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/megasync.desktop
 %{_datadir}/icons/hicolor/*/apps/mega.png
 %{_datadir}/icons/hicolor/*/*/mega.png
 
