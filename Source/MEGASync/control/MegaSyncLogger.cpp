@@ -4,6 +4,8 @@
 
 #include <QFileInfo>
 #include <QString>
+#include <QDesktopServices>
+#include <QDir>
 
 using namespace mega;
 using namespace std;
@@ -18,9 +20,9 @@ MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
 
 void MegaSyncLogger::log(const char *time, int loglevel, const char *source, const char *message)
 {
-    QString file;
+    QString fileName;
     QFileInfo info(QString::fromUtf8(source));
-    file = info.fileName();
+    fileName = info.fileName();
 
 #ifdef LOG_TO_LOGGER
     emit sendLog(QString::fromUtf8(time), loglevel, QString::fromUtf8(message));
@@ -52,8 +54,8 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
     }
 
     oss << message;
-    if(file.size())
-        oss << " ("<< file.toStdString() << ")";
+    if(fileName.size())
+        oss << " ("<< fileName.toStdString() << ")";
 
     #ifdef LOG_TO_STDOUT
         cout << oss.str() << endl;
@@ -70,7 +72,7 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
         QFile file(filePath);
         file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
         QTextStream out(&file);
-        out << oss.str() << endl;
+        out << oss.str().c_str() << endl;
     #endif
 #endif
 }
