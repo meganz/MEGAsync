@@ -42,10 +42,16 @@ echo "MEGAsync version: $MEGASYNC_VERSION"
 
 # delete previously generated files
 rm -fr MEGAsync/MEGAsync/megasync_*.dsc
+rm -fr MEGAsync/MEGAsync.debug/megasync_*.dsc
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
+
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync.spec > MEGAsync/MEGAsync.debug/megasync.spec
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync.dsc > MEGAsync/MEGAsync.debug/megasync_$MEGASYNC_VERSION.dsc
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync.debug/PKGBUILD
+
 
 # create archive
 mkdir $MEGASYNC_NAME
@@ -64,6 +70,25 @@ rm -rf $MEGASYNC_NAME
 rm -fr MEGAsync/MEGAsync/megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $MEGASYNC_NAME.tar.gz MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz
+
+
+# create archive
+mkdir $MEGASYNC_NAME
+ln -s ../MEGAsync/MEGAsync.debug/megasync.spec $MEGASYNC_NAME/megasync.spec
+ln -s ../MEGAsync/MEGAsync.debug/debian.postinst $MEGASYNC_NAME/debian.postinst
+ln -s ../MEGAsync/MEGAsync.debug/debian.postrm $MEGASYNC_NAME/debian.postrm
+ln -s ../../Source/configure $MEGASYNC_NAME/configure
+ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
+ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
+ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
+ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAME/$SODIUM_SOURCE_FILE
+tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
+rm -rf $MEGASYNC_NAME
+
+# delete any previous archive
+rm -fr MEGAsync/MEGAsync.debug/megasync_*.tar.gz
+# transform arch name, to satisfy Debian requirements
+mv $MEGASYNC_NAME.tar.gz MEGAsync/MEGAsync.debug/megasync_$MEGASYNC_VERSION.tar.gz
 
 
 # make sure the source tree is in "clean" state

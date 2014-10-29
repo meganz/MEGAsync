@@ -1,0 +1,28 @@
+Source: megasync
+Section: Tools
+Priority: normal
+Maintainer: MEGA Linux Team <linux@mega.co.nz>
+Build-Depends:  debhelper,
+                libqt4-dev,
+                libcrypto++-dev,
+                libc-ares-dev,
+                libssl-dev,
+                libsqlite3-dev,
+                zlib1g-dev,
+                wget,
+                dh-autoreconf,
+                cdbs,
+                libqt4-dbus
+
+Package: megasync
+Architecture: any
+Depends: ${shlibs:Depends}, libc-ares2, libcrypto++9
+Description: Easy automated syncing between your computers and your MEGA cloud drive
+ Secure:
+ Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
+ Flexible:
+ Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.
+ Fast:
+ Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
+ Generous:
+ Store up to 50 GB for free!
