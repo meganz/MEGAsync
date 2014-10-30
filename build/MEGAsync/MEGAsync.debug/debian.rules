@@ -4,9 +4,8 @@ build: build-stamp
 build-stamp:
 	dh_testdir
 	./configure
-    cd MEGASync
 	qmake "CONFIG += debug"
-    cd ..
+    qmake "CONFIG += debug" MEGASync/MEGASync.pro
 	lrelease MEGASync/MEGASync.pro
 	make
 	touch build-stamp
