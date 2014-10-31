@@ -1,5 +1,5 @@
 #include "WinShellDispatcherTask.h"
-#include "control/Utilities.h"
+#include "megaapi.h"
 
 PIPEINST Pipe[INSTANCES];
 HANDLE hEvents[INSTANCES+1];
@@ -29,7 +29,7 @@ WinShellDispatcherTask::~WinShellDispatcherTask()
 
 void WinShellDispatcherTask::run()
 {
-    LOG("Shell dispatcher starting...");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
     dispatchPipe();
@@ -46,7 +46,6 @@ int WinShellDispatcherTask::dispatchPipe()
 // overlapped ConnectNamedPipe operation is started for
 // each instance.
 
-   LOG("DISPATCHING PIPE...");
    for (i = 0; i < INSTANCES; i++)
    {
 
@@ -119,7 +118,7 @@ int WinShellDispatcherTask::dispatchPipe()
 	  i = dwWait - WAIT_OBJECT_0;  // determines which pipe
 	  if (i < 0 || i > (INSTANCES - 1))
 	  {
-         LOG("Shell dispatcher closing...");
+         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher closing...");
          for(int j=0; j < INSTANCES; j++)
              CloseHandle(Pipe[j].hPipeInst);
 
@@ -413,7 +412,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             QFileInfo file(filePath);
             if(file.exists())
             {
-                LOG("Adding file to upload queue");
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to upload queue: %1").arg(filePath).toUtf8().constData());
                 uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
             break;
@@ -428,7 +427,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             QFileInfo file(filePath);
             if(file.exists())
             {
-                LOG("Adding file to export queue");
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to export queue: %1").arg(filePath).toUtf8().constData());
                 exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
             break;
