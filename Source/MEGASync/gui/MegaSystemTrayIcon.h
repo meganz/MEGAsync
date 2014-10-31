@@ -18,7 +18,7 @@ public:
 
     virtual void show();
     virtual void hide();
-    virtual void setIcon(const QIcon &icon);
+    virtual void setIcon(const QIcon &icon,const QIcon &iconWhite);
     virtual void setToolTip(const QString &toolTip);
     virtual void setContextMenu(QMenu *menu);
     virtual QRect geometry() const;

@@ -513,7 +513,7 @@ void MegaApplication::updateTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
             #endif
         #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")));
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
             if(scanningTimer->isActive())
                 scanningTimer->stop();
         #endif
@@ -531,7 +531,7 @@ void MegaApplication::updateTrayIcon()
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
                 #endif
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")),QIcon(QString::fromAscii("://images/icon_paused_mac_white.png")));
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
@@ -547,7 +547,7 @@ void MegaApplication::updateTrayIcon()
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
                 #endif
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")),QIcon(QString::fromAscii("://images/icon_paused_mac_white.png")));
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
@@ -571,7 +571,7 @@ void MegaApplication::updateTrayIcon()
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
                 #endif
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
                 if(!scanningTimer->isActive())
                 {
                     scanningAnimationIndex = 1;
@@ -590,7 +590,7 @@ void MegaApplication::updateTrayIcon()
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
                 #endif
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
                 if(!scanningTimer->isActive())
                 {
                     scanningAnimationIndex = 1;
@@ -612,7 +612,7 @@ void MegaApplication::updateTrayIcon()
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
                 #endif
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")),QIcon(QString::fromAscii("://images/icon_synced_mac_white.png")));
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
@@ -628,7 +628,7 @@ void MegaApplication::updateTrayIcon()
                     trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
                 #endif
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")));
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")),QIcon(QString::fromAscii("://images/icon_synced_mac_white.png")));
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
@@ -654,7 +654,7 @@ void MegaApplication::start()
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
     #endif
 #else
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")));
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
 #endif
     trayIcon->setContextMenu(initialMenu);
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
@@ -1292,7 +1292,9 @@ void MegaApplication::scanningAnimationStep()
     scanningAnimationIndex = scanningAnimationIndex%4;
     scanningAnimationIndex++;
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac") +
-                            QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
+                            QString::number(scanningAnimationIndex) + QString::fromAscii(".png")),
+                      QIcon(QString::fromAscii("://images/icon_syncing_mac_white") +
+                                                  QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
 }
 
 void MegaApplication::runConnectivityCheck()
@@ -2192,7 +2194,7 @@ void MegaApplication::createTrayIcon()
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
             #endif
         #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")));
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
             if(!scanningTimer->isActive())
             {
                 scanningAnimationIndex = 1;
