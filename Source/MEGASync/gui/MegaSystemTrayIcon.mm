@@ -13,7 +13,8 @@
     NSStatusItem *item;
     QMenu *menu;
     bool menuVisible;
-    QIcon icon;
+    NSImage *icon;
+    NSImage *iconWhite;
     QPoint point;
     MEGANSImageView *imageCell;
 }
@@ -22,8 +23,9 @@
 -(NSStatusItem*)item;
 -(QRectF)geometry;
 -(QPoint)point;
-- (void)triggerSelector:(id)sender button:(Qt::MouseButton)mouseButton;
-- (void)doubleClickSelector:(id)sender;
+-(void)triggerSelector:(id)sender button:(Qt::MouseButton)mouseButton;
+-(void)doubleClickSelector:(id)sender;
+-(bool)isDarkModeEnabled;
 @end
 
 @interface MEGANSImageView : NSImageView {
@@ -97,12 +99,10 @@ void MegaSystemTrayIcon::hide()
     if(m_sys) m_sys->hide();
 }
 
-void MegaSystemTrayIcon::setIcon(const QIcon &icon)
+void MegaSystemTrayIcon::setIcon(const QIcon &icon, const QIcon &iconWhite)
 {
     if (!m_sys)
         return;
-
-    m_sys->item->icon = icon;
 
     const bool menuVisible = m_sys->item->menu && m_sys->item->menuVisible;
 
@@ -112,12 +112,14 @@ void MegaSystemTrayIcon::setIcon(const QIcon &icon)
     const QIcon::Mode mode = menuVisible ? QIcon::Selected : QIcon::Normal;
     // request a pixmap with correct height and a large width, since the icon might be rectangular
     QPixmap pm = icon.pixmap(QSize(scale*10, scale), mode);
+    QPixmap pmWhite = iconWhite.pixmap(QSize(scale*10, scale), mode);
     // the icon will be stretched over the full height of the menu bar
     // therefore we create a second pixmap which has the full height
     const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio()
                                                                       : 1.0;
     QPixmap pixmap(pm.width(), hgt * ratio);
-    if (!pm.isNull()) {
+    QPixmap pixmapWhite(pmWhite.width(), hgt * ratio);
+    if (!pm.isNull() && !pmWhite.isNull()) {
         pixmap.setDevicePixelRatio(pm.devicePixelRatio());
         pixmap.fill(Qt::transparent);
         QPainter p(&pixmap);
@@ -126,22 +128,44 @@ void MegaSystemTrayIcon::setIcon(const QIcon &icon)
         QRect r = pm.rect();
         r.moveCenter(pixmap.rect().center());
         p.drawPixmap(r, pm);
+
+        pixmapWhite.setDevicePixelRatio(pmWhite.devicePixelRatio());
+        pixmapWhite.fill(Qt::transparent);
+        QPainter pWhite(&pixmapWhite);
+        p.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing |
+                         QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
+        QRect rWhite = pmWhite.rect();
+        rWhite.moveCenter(pixmapWhite.rect().center());
+        pWhite.drawPixmap(rWhite, pmWhite);
     } else {
         pixmap = QPixmap(scale, scale);
         pixmap.fill(Qt::transparent);
+
+        pixmapWhite = QPixmap(scale, scale);
+        pixmapWhite.fill(Qt::transparent);
     }
 
 #if QT_VERSION > 0x050000
     CGImageRef cgImage = QtMac::toCGImageRef(pixmap);
+    CGImageRef cgImageWhite = QtMac::toCGImageRef(pixmapWhite);
 #else
     CGImageRef cgImage = pixmap->toMacCGImageRef();
+    CGImageRef cgImageWhite = pixmapWhite->toMacCGImageRef();
 #endif
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
-    NSImage *nsimage = [[NSImage alloc] init];
-    [nsimage addRepresentation:bitmapRep];
+    [m_sys->item->icon autorelease];
+    m_sys->item->icon = [[NSImage alloc] init];
+    [m_sys->item->icon addRepresentation:bitmapRep];
     [bitmapRep release];
-    [[[m_sys->item item] view] setImage: nsimage];
-    [nsimage release];
+
+    NSBitmapImageRep *bitmapRepWhite = [[NSBitmapImageRep alloc] initWithCGImage:cgImageWhite];
+    [m_sys->item->iconWhite autorelease];
+    m_sys->item->iconWhite =[[NSImage alloc] init];
+    [m_sys->item->iconWhite addRepresentation:bitmapRepWhite];
+    [bitmapRepWhite release];
+
+    [[[m_sys->item item] view] display];
+
 }
 
 void MegaSystemTrayIcon::setContextMenu(QMenu *menu)
@@ -207,7 +231,6 @@ void MegaSystemTrayIcon::showMessage(const QString &title, const QString &messag
 {
     Q_UNUSED(notification);
     down = NO;
-    parent->systray->setIcon(parent->icon);
     parent->menuVisible = false;
     [self setNeedsDisplay:YES];
 }
@@ -217,7 +240,6 @@ void MegaSystemTrayIcon::showMessage(const QString &title, const QString &messag
     down = YES;
     int clickCount = [mouseEvent clickCount];
     [self setNeedsDisplay:YES];
-    parent->systray->setIcon(parent->icon);
     if (clickCount == 2) {
         [self menuTrackingDone:nil];
         [parent doubleClickSelector:self];
@@ -278,6 +300,12 @@ void MegaSystemTrayIcon::showMessage(const QString &title, const QString &messag
 }
 
 -(void)drawRect:(NSRect)rect {
+
+    if([parent isDarkModeEnabled])
+        [[[parent item] view] setImage: parent->iconWhite];
+    else
+        [[[parent item] view] setImage: parent->icon];
+
     [[parent item] drawStatusBarBackgroundInRect:rect withHighlight:down];
     [super drawRect:rect];
 }
@@ -291,6 +319,8 @@ void MegaSystemTrayIcon::showMessage(const QString &title, const QString &messag
     if (self) {
         item = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
         menu = 0;
+        icon = [[NSImage alloc] init];
+        iconWhite = [[NSImage alloc] init];
         menuVisible = false;
         systray = sys;
         imageCell = [[MEGANSImageView alloc] initWithParent:self];
@@ -305,6 +335,8 @@ void MegaSystemTrayIcon::showMessage(const QString &title, const QString &messag
     [[NSStatusBar systemStatusBar] removeStatusItem:item];
     [imageCell release];
     [item release];
+    [icon release];
+    [iconWhite release];
     [super dealloc];
 }
 
@@ -351,6 +383,21 @@ void MegaSystemTrayIcon::showMessage(const QString &title, const QString &messag
     if (!systray)
         return;
     emit systray->activated(QSystemTrayIcon::DoubleClick);
+}
+
+-(bool)isDarkModeEnabled
+{
+    bool returnValue = false;
+    CFStringRef interfaceStyleKey = CFSTR("AppleInterfaceStyle");
+    CFStringRef interfaceStyle = NULL;
+    CFStringRef darkInterfaceStyle = CFSTR("Dark");
+    interfaceStyle = (CFStringRef)CFPreferencesCopyAppValue(interfaceStyleKey,
+                                                            kCFPreferencesCurrentApplication);
+    if (interfaceStyle != NULL) {
+        returnValue = (kCFCompareEqualTo == CFStringCompare(interfaceStyle, darkInterfaceStyle, 0));
+        CFRelease(interfaceStyle);
+    }
+    return returnValue;
 }
 
 @end
