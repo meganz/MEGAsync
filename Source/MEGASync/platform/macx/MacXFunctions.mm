@@ -3,6 +3,10 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 
+#ifndef kCFCoreFoundationVersionNumber10_9
+#define kCFCoreFoundationVersionNumber10_9 855.00
+#endif
+
 void setMacXActivationPolicy()
 {
     //application does not appear in the Dock
@@ -432,7 +436,11 @@ void setFolderIcon(QString path)
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
 
     NSString * appPath = [[NSBundle mainBundle] bundlePath];
-    NSImage* iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder.icns"]];
+    NSImage* iconImage;
+    if (floor(kCFCoreFoundationVersionNumber) > kCFCoreFoundationVersionNumber10_9)
+        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_yosemite.icns"]];
+    else
+        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder.icns"]];
 
     [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
 
