@@ -2,6 +2,7 @@
 #include "ui_MegaDebugServer.h"
 #include <iostream>
 
+#define SERVER_NAME "MEGA_SERVER"
 using namespace std;
 
 MegaDebugServer::MegaDebugServer(QWidget *parent) :
@@ -29,7 +30,7 @@ MegaDebugServer::MegaDebugServer(QWidget *parent) :
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveToFile()));
     connect(ui->actionLoad, SIGNAL(triggered()), this, SLOT(loadFromFile()));
     connect(ui->actionClear, SIGNAL(triggered()), this, SLOT(clearDebugWindow()));
-    connect(ui->actionStop, SIGNAL(triggered()), this, SLOT(disconnected()));
+    //connect(ui->actionStop, SIGNAL(triggered()), this, SLOT(disconnected()));
 
     connect(this, SIGNAL(insertDebugRow(DebugRow *)),this, SLOT(appendDebugRow(DebugRow *)));
 
@@ -50,7 +51,7 @@ MegaDebugServer::MegaDebugServer(QWidget *parent) :
     setWindowTitle(tr("MEGAsync Debug Window"));
 
     megaServer = new QLocalServer(this);
-    if (!megaServer->listen("MEGA_SERVER")) {
+    if (!megaServer->listen(SERVER_NAME)) {
              qDebug() << "Error";
              close();
              return;
@@ -64,7 +65,6 @@ void MegaDebugServer::clientConnected()
 
     ui->actionSave->setEnabled(false);
     ui->actionLoad->setEnabled(false);
-    ui->actionClear->setEnabled(false);
 
     ui->statusBar->showMessage(tr("Connected"));
 
@@ -135,11 +135,20 @@ void MegaDebugServer::readDebugMsg()
 void MegaDebugServer::appendDebugRow(DebugRow *dr)
 {
     int index = debugDataModel->rowCount();
-    debugDataModel->insertRow(index);
-    debugDataModel->setData(debugDataModel->index(index, 0), dr->timeStamp);
-    debugDataModel->setData(debugDataModel->index(index, 1), dr->messageType);
-    debugDataModel->setData(debugDataModel->index(index, 2), dr->content);
 
+    QStandardItem *ts = new QStandardItem(dr->timeStamp);
+    QStandardItem *mt = new QStandardItem(dr->messageType);
+    QStandardItem *c = new QStandardItem(dr->content);
+
+    ts->setToolTip(dr->timeStamp);
+    debugDataModel->setItem(index,0,ts);
+    mt->setToolTip(dr->messageType);
+    debugDataModel->setItem(index,1,mt);
+    c->setToolTip(dr->content);
+    debugDataModel->setItem(index,2,c);
+
+
+    ui->messagesTreeView->resizeColumnToContents(0);
     ui->messagesTreeView->scrollToBottom();
 }
 
@@ -148,16 +157,16 @@ void MegaDebugServer::disconnected()
     ui->statusBar->showMessage(tr("Disconnected"));
 
     megaServer->close();
-    ui->actionSave->setEnabled(true);
-    ui->actionLoad->setEnabled(true);
-    ui->actionClear->setEnabled(true);
-
-    if (!megaServer->listen("MEGA_SERVER"))
+    QLocalServer::removeServer(SERVER_NAME);
+    if (!megaServer->listen(SERVER_NAME))
     {
          qDebug() << "Error";
          close();
          return;
     }
+
+    ui->actionSave->setEnabled(true);
+    ui->actionLoad->setEnabled(true);
     ui->statusBar->showMessage("Ready");
 }
 
