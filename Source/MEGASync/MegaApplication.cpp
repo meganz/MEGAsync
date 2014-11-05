@@ -48,9 +48,11 @@ int main(int argc, char *argv[])
 #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
     MegaSyncLogger *logger = new MegaSyncLogger();
     MegaApi::setLoggerClass(logger);
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
 #endif
 
     qInstallMsgHandler(messageHandler);
+
     MegaApplication app(argc, argv);
     app.setStyle(new MegaProxyStyle());
 
