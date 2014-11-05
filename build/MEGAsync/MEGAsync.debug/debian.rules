@@ -17,7 +17,7 @@ clean:
 
 install: build
 	dh_auto_install
-	dh_install MEGASync/megasync /usr/bin/
+	dh_install megasync /usr/bin/
 
 # Build architecture-independent files here.
 binary-indep: build install
