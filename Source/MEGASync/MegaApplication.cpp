@@ -25,7 +25,7 @@ QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 
-void messageHandler(QtMsgType type, const char *msg)
+void msgHandler(QtMsgType type, const char *msg)
 {
     switch (type) {
     case QtDebugMsg:
@@ -43,8 +43,55 @@ void messageHandler(QtMsgType type, const char *msg)
     }
 }
 
+#if QT_VERSION >= 0x050000
+    void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
+    {
+        switch (type) {
+        case QtDebugMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Debug: %1").arg(msg).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                         .arg(QString::fromUtf8(context.category))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(QString::fromUtf8(context.function))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(context.version).toUtf8().constData());
+            break;
+        case QtWarningMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Warning: %1").arg(msg).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                         .arg(QString::fromUtf8(context.category))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(QString::fromUtf8(context.function))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(context.version).toUtf8().constData());
+            break;
+        case QtCriticalMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Critical: %1").arg(msg).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                         .arg(QString::fromUtf8(context.category))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(QString::fromUtf8(context.function))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(context.version).toUtf8().constData());
+            break;
+        case QtFatalMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT FATAL ERROR: %1").arg(msg).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                         .arg(QString::fromUtf8(context.category))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(QString::fromUtf8(context.function))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(context.version).toUtf8().constData());
+            break;
+        }
+    }
+#endif
+
 int main(int argc, char *argv[])
 {
+    MegaApplication app(argc, argv);
+    app.setStyle(new MegaProxyStyle());
+
 #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
     MegaSyncLogger *logger = new MegaSyncLogger();
     MegaApi::setLoggerClass(logger);
@@ -56,10 +103,12 @@ int main(int argc, char *argv[])
     #endif
 #endif
 
-    qInstallMsgHandler(messageHandler);
+    qInstallMsgHandler(msgHandler);
 
-    MegaApplication app(argc, argv);
-    app.setStyle(new MegaProxyStyle());
+#if QT_VERSION >= 0x050000
+    qInstallMessageHandler(messageHandler);
+#endif
+
 
 #ifdef Q_OS_MACX
     if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
