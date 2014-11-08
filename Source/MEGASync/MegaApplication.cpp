@@ -90,7 +90,6 @@ void msgHandler(QtMsgType type, const char *msg)
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
-    app.setStyle(new MegaProxyStyle());
 
 #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
     MegaSyncLogger *logger = new MegaSyncLogger();
@@ -109,6 +108,7 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(messageHandler);
 #endif
 
+    app.setStyle(new MegaProxyStyle());
 
 #ifdef Q_OS_MACX
     if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )

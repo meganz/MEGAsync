@@ -45,6 +45,12 @@
       <attribute name="headerVisible">
        <bool>true</bool>
       </attribute>
+      <attribute name="headerDefaultSectionSize">
+       <number>100</number>
+      </attribute>
+      <attribute name="headerMinimumSectionSize">
+       <number>100</number>
+      </attribute>
      </widget>
     </item>
     <item>
@@ -54,6 +60,9 @@
         <number>0</number>
        </property>
        <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -141,6 +150,9 @@
        <property name="leftMargin">
         <number>0</number>
        </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
        <property name="rightMargin">
         <number>0</number>
        </property>
@@ -180,10 +192,10 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionLoad"/>
-   <addaction name="actionSave"/>
-   <addaction name="actionClear"/>
    <addaction name="actionStop"/>
+   <addaction name="actionSave"/>
+   <addaction name="actionLoad"/>
+   <addaction name="actionClear"/>
   </widget>
   <action name="actionSave">
    <property name="text">

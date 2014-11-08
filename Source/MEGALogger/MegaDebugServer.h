@@ -10,6 +10,7 @@
 #include <QXmlStreamReader>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTimer>
 
 struct DebugRow
 {
@@ -37,17 +38,18 @@ private:
     QLocalServer *megaServer;
     QLocalSocket *megaSyncClient;
     QXmlStreamReader *reader;
+    QLocalSocket client;
 
     QSortFilterProxyModel *debugProxyModel;
     QStandardItemModel *debugDataModel;
-
-signals:
-    void insertDebugRow(DebugRow *);
+    QTimer timer;
 
 private slots:
     void clientConnected();
     void readDebugMsg();
+    void startstop();
     void disconnected();
+    void tryConnect();
 
     void filterTextRegExp();
     void filterColumn();
