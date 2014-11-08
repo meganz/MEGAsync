@@ -2,6 +2,7 @@
 #define MEGASYNCLOGGER_H
 
 #include <QLocalSocket>
+#include <QLocalServer>
 #include <QXmlStreamWriter>
 
 #include "megaapi.h"
@@ -19,11 +20,14 @@ signals:
 
 public slots:
     void onLogAvailable(QString time, int loglevel, QString message);
+    void clientConnected();
+    void disconnected();
 
 protected:
-    QLocalSocket client;
+    QLocalSocket* client;
+    QLocalServer* megaServer;
     QXmlStreamWriter *xmlWriter;
-
+    bool connected;
 };
 
 #endif // MEGASYNCLOGGER_H
