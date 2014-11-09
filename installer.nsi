@@ -5,6 +5,13 @@ RequestExecutionLevel user
 #!define BUILD_UNINSTALLER
 #!define BUILD_X64_VERSION
 #!define BUILD_WITH_LOGGER
+#!define ENABLE_DEBUG_MESSAGES
+
+!macro DEBUG_MSG message
+!ifdef ENABLE_DEBUG_MESSAGES
+  MessageBox MB_OK "${message}"
+!endif
+!macroend
 
 ; HM NIS Edit Wizard helper defines
 BrandingText "MEGA Limited"
@@ -234,7 +241,6 @@ Function GetPaths
   
   System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
   strCpy $USERNAME $0
-
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $CURRENT_USER_INSTDIR $1
   
@@ -243,6 +249,8 @@ Function GetPaths
 FunctionEnd
 
 Section "Principal" SEC01
+
+  !insertmacro DEBUG_MSG "Getting needed information"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
   strCpy $ALL_USERS_INSTDIR $1
   
@@ -255,13 +263,16 @@ readpaths:
   Sleep 1000
   goto readpaths
 
+  !insertmacro DEBUG_MSG "Checking install mode"
 pathsreaded:
   Delete "$ALL_USERS_INSTDIR\megatmp.ini"
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser
+  !insertmacro DEBUG_MSG "Install for all"
   SetShellVarContext all
   StrCpy $INSTDIR "$ALL_USERS_INSTDIR\MEGAsync"
   goto modeselected
 currentuser:
+ !insertmacro DEBUG_MSG "Install for current user"
   SetShellVarContext current
   StrCpy $INSTDIR "$CURRENT_USER_INSTDIR\MEGAsync"
 modeselected:
@@ -272,6 +283,8 @@ modeselected:
   ;VC++2010 Redistributable x32
   SetOutPath "$INSTDIR"
   
+  !insertmacro DEBUG_MSG "Looking for MSVC++ Redistributable 2010 SP1 (x86)"
+  
   ;VC++ 2010 SP1 x86
   ClearErrors
   ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
@@ -281,6 +294,7 @@ modeselected:
                IfErrors cslbl1
            ${Loop}
            cslbl1:
+           !insertmacro DEBUG_MSG "Downloading MSVC++ Redistributable (x86)"
            ClearErrors
            inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)" "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe" "$INSTDIR\vcredist_x86.exe" /end
            pop $0
@@ -289,6 +303,7 @@ modeselected:
            Abort
            dlok1:
 
+           !insertmacro DEBUG_MSG "Checking MSVC++ Redistributable (x86)"
            md5dll::GetMD5File "$INSTDIR\vcredist_x86.exe"
            Pop $0
            ;DetailPrint "md5: [$0]"
@@ -297,6 +312,7 @@ modeselected:
                   Abort
            md5x32ok:
            
+           !insertmacro DEBUG_MSG "Installing MSVC++ Redistributable (x86)"
            retryvsredistx32:
                 ExecDos::exec /DETAILED '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /passive /showfinalerror /promptrestart'
                 Pop $0
@@ -311,8 +327,10 @@ modeselected:
            vcredist32ok:
            Delete "$INSTDIR\vcredist_x86.exe"
   VSRedist2010x86Installed:
-  
+  !insertmacro DEBUG_MSG "MSVC++ Redistributable (x86) is installed"
+    
   ${If} ${RunningX64}
+        !insertmacro DEBUG_MSG "Looking for MSVC++ Redistributable 2010 SP1 (x64)"
         ;VC++ 2010 SP1 x64
         SetRegView 64
         ClearErrors
@@ -323,6 +341,8 @@ modeselected:
                     IfErrors cslbl2
                 ${Loop}
                 cslbl2:
+                
+                !insertmacro DEBUG_MSG "Downloading for MSVC++ Redistributable (x64)"
                 ClearErrors
                 inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
                 pop $0
@@ -331,6 +351,7 @@ modeselected:
                 Abort
                 dlok2:
                  
+                !insertmacro DEBUG_MSG "Checking MSVC++ Redistributable (x64)"
                 md5dll::GetMD5File "$INSTDIR\vcredist_x64.exe"
                 Pop $0
                 ;DetailPrint "md5: [$0]"
@@ -338,7 +359,8 @@ modeselected:
                        MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Corrupt download, aborting!"
                        Abort
                 md5x64ok:
-                 
+
+                !insertmacro DEBUG_MSG "Installing MSVC++ Redistributable (x64)"
                 retryvsredistx64:
                 ExecDos::exec /DETAILED /DISABLEFSR '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /passive /showfinalerror /promptrestart'
                 Pop $0
@@ -353,11 +375,15 @@ modeselected:
                 vcredist64ok:
                 Delete "$INSTDIR\vcredist_x64.exe"
         VSRedist2010x64Installed:
+        !insertmacro DEBUG_MSG "MSVC++ Redistributable (x64) is installed"
         SetRegView 32
   ${EndIf}
 
+  !insertmacro DEBUG_MSG "Closing MEGAsync"
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAlogger.exe"
+  
+  !insertmacro DEBUG_MSG "Installing files"
   
   ;x86_32 files
   File "${SRCDIR_MEGASYNC}\QtCore4.dll"
@@ -427,7 +453,7 @@ modeselected:
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
 
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
@@ -436,6 +462,8 @@ modeselected:
         Rename "$INSTDIR\ShellExtX32.dll" $0
         Delete /REBOOTOK $0
   new_installation_x32:
+
+  !insertmacro DEBUG_MSG "Registering DLLs"
   
   ; Register shell extension 1 (x86_32)
   !define LIBRARY_COM
@@ -470,11 +498,13 @@ modeselected:
 
   ${UAC.CallFunctionAsUser} RunExplorer
    
+  !insertmacro DEBUG_MSG "Adding firewall rule"
   liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
   Pop $0
   liteFirewall::AddRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
   Pop $0
 
+  !insertmacro DEBUG_MSG "Creating shortcuts"
   SetRebootFlag false
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
   SetShellVarContext all
