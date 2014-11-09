@@ -8,7 +8,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = MEGAsyncDebug
+TARGET = MEGAlogger
 TEMPLATE = app
 
 
@@ -20,3 +20,7 @@ HEADERS  += \
 
 FORMS    += \
     MegaDebugServer.ui
+
+win32 {
+    RC_FILE = icon.rc
+}
