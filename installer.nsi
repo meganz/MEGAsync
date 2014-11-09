@@ -4,6 +4,7 @@ RequestExecutionLevel user
 
 #!define BUILD_UNINSTALLER
 #!define BUILD_X64_VERSION
+#!define BUILD_WITH_LOGGER
 
 ; HM NIS Edit Wizard helper defines
 BrandingText "MEGA Limited"
@@ -21,8 +22,10 @@ BrandingText "MEGA Limited"
 
 !ifdef BUILD_X64_VERSION
 !define SRCDIR_MEGASYNC "Release_x64\MEGAsync\release"
+!define SRCDIR_LOGGER "Release_x64\MEGALogger\release"
 !else
 !define SRCDIR_MEGASYNC "Release_x32\MEGAsync\release"
+!define SRCDIR_LOGGER "Release_x32\MEGALogger\release"
 !endif
 
 !define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
@@ -354,6 +357,7 @@ modeselected:
   ${EndIf}
 
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAlogger.exe"
   
   ;x86_32 files
   File "${SRCDIR_MEGASYNC}\QtCore4.dll"
@@ -413,6 +417,12 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\MEGAsync.exe"
   AccessControl::SetFileOwner "$INSTDIR\MEGAsync.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAsync.exe" "$USERNAME" "GenericRead + GenericWrite"
+  
+!ifdef BUILD_WITH_LOGGER
+  File "${SRCDIR_LOGGER}\MEGAlogger.exe"
+  AccessControl::SetFileOwner "$INSTDIR\MEGAlogger.exe" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\MEGAlogger.exe" "$USERNAME" "GenericRead + GenericWrite"
+!endif
     
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
@@ -460,6 +470,11 @@ modeselected:
 
   ${UAC.CallFunctionAsUser} RunExplorer
    
+  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
+  Pop $0
+  liteFirewall::AddRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
+  Pop $0
+
   SetRebootFlag false
   StrCmp "CurrentUser" $MultiUser.InstallMode currentuser2
   SetShellVarContext all
@@ -484,6 +499,12 @@ Function CreateMegaShortcuts
   CreateDirectory "$SMPROGRAMS\$ICONS_GROUP"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
   CreateShortCut "$DESKTOP\MEGAsync.lnk" "$INSTDIR\MEGAsync.exe"
+
+!ifdef BUILD_WITH_LOGGER
+  CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGAlogger.lnk" "$INSTDIR\MEGAlogger.exe"
+  CreateShortCut "$DESKTOP\MEGAlogger.lnk" "$INSTDIR\MEGAlogger.exe"
+!endif
+
   WriteIniStr "$INSTDIR\MEGA Website.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk" "$INSTDIR\MEGA Website.url" "" "$INSTDIR\MEGAsync.exe" 1
   CreateShortCut "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk" "$INSTDIR\${UNINSTALLER_NAME}"
@@ -569,6 +590,7 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qtga4.dll"
   Delete "$INSTDIR\imageformats\qtiff4.dll"
   Delete "$INSTDIR\MEGAsync.exe"
+  Delete "$INSTDIR\MEGAlogger.exe"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
@@ -603,8 +625,11 @@ Section Uninstall
   Delete "$INSTDIR\MEGA Website.url"
   Delete "$DESKTOP\MEGAsync.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk"
+  Delete "$DESKTOP\MEGAlogger.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAlogger.lnk"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
   Delete "$1\MEGAsync.lnk"
+  Delete "$1\MEGAlogger.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR"
@@ -615,8 +640,11 @@ Section Uninstall
   Delete "$INSTDIR\MEGA Website.url"
   Delete "$DESKTOP\MEGAsync.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAsync.lnk"
+  Delete "$DESKTOP\MEGAlogger.lnk"
+  Delete "$SMPROGRAMS\$ICONS_GROUP\MEGAlogger.lnk"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_STARTUP}, i0)i.r0'
   Delete "$1\MEGAsync.lnk"
+  Delete "$1\MEGAlogger.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR"
