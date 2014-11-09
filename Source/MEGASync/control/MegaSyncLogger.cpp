@@ -44,6 +44,16 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
         if(m.size() > MAX_MESSAGE_SIZE)
             m = m.left(MAX_MESSAGE_SIZE-3).append(QString::fromUtf8("..."));
 
+#ifdef DEBUG
+        QString fileName;
+        QFileInfo info(QString::fromUtf8(source));
+        fileName = info.fileName();
+        if(fileName.size())
+        {
+            m.append(QString::fromUtf8(" (%1)").arg(fileName));
+        }
+#endif
+
         emit sendLog(QString::fromUtf8(time), loglevel, m);
     }
 #endif
