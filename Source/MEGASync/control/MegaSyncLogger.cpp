@@ -26,7 +26,7 @@ MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
 
     connect(megaServer,SIGNAL(newConnection()),this,SLOT(clientConnected()));
     connect(this, SIGNAL(sendLog(QString,int,QString)),
-            this, SLOT(onLogAvailable(QString,int,QString)), Qt::ConnectionType::QueuedConnection);
+            this, SLOT(onLogAvailable(QString,int,QString)), Qt::QueuedConnection);
     connect(client, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(client, SIGNAL(error(QLocalSocket::LocalSocketError)), SLOT(disconnected()));
 
