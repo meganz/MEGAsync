@@ -498,11 +498,11 @@ modeselected:
 
   ${UAC.CallFunctionAsUser} RunExplorer
    
-  !insertmacro DEBUG_MSG "Adding firewall rule"
-  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
-  Pop $0
-  liteFirewall::AddRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
-  Pop $0
+#  !insertmacro DEBUG_MSG "Adding firewall rule"
+#  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
+#  Pop $0
+#  liteFirewall::AddRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
+#  Pop $0
 
   !insertmacro DEBUG_MSG "Creating shortcuts"
   SetRebootFlag false
