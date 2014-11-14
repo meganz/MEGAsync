@@ -2422,13 +2422,13 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 }
 
 //Called when contacts have been updated in MEGA
-void MegaApplication::onUsersUpdate(MegaApi* , UserList *)
+void MegaApplication::onUsersUpdate(MegaApi* , MegaUserList *)
 {
 
 }
 
 //Called when nodes have been updated in MEGA
-void MegaApplication::onNodesUpdate(MegaApi* , NodeList *nodes)
+void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 {
     if(!infoDialog) return;
 

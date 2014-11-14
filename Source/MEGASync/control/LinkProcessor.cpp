@@ -63,7 +63,7 @@ void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *
         if(e->getErrorCode() != MegaError::API_OK)
             linkNode[currentIndex] = NULL;
         else
-            linkNode[currentIndex] = request->getPublicNode()->copy();
+            linkNode[currentIndex] = request->getPublicMegaNode();
 
 		linkError[currentIndex] = e->getErrorCode();
         linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
@@ -78,7 +78,7 @@ void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *
         if(currentIndex == linkList.size())
 			emit onLinkInfoRequestFinish();
 	}
-	else if(request->getType() == MegaRequest::TYPE_MKDIR)
+    else if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
 	{
         MegaNode *n = megaApi->getNodeByHandle(request->getNodeHandle());
         importLinks(n);
@@ -131,7 +131,7 @@ void LinkProcessor::importLinks(MegaNode *node)
 {
 	if(!node) return;
 
-    NodeList *children = megaApi->getChildren(node);
+    MegaNodeList *children = megaApi->getChildren(node);
     importParentFolder = node->getHandle();
 
 	for(int i=0; i<linkList.size(); i++)

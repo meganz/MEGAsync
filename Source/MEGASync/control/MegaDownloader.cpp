@@ -50,7 +50,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
         QString destPath = currentPath + QDir::separator() + QString::fromUtf8(parent->getName());
         QDir dir(destPath);
         if(!dir.exists()) dir.mkpath(QString::fromAscii("."));
-        NodeList *nList = megaApi->getChildren(parent);
+        MegaNodeList *nList = megaApi->getChildren(parent);
         for(int i=0;i<nList->size();i++)
         {
             MegaNode *child = nList->get(i);

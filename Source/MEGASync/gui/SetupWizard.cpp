@@ -111,7 +111,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 			}
 			break;
 		}
-		case MegaRequest::TYPE_MKDIR:
+        case MegaRequest::TYPE_CREATE_FOLDER:
 		{
            ui->bNext->setEnabled(true);
            ui->bBack->setEnabled(true);

@@ -88,7 +88,7 @@ void NodeSelector::changeEvent(QEvent *event)
 
 void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode)
 {
-    NodeList *children = megaApi->getChildren(parentNode);
+    MegaNodeList *children = megaApi->getChildren(parentNode);
     for(int i=0; i<children->size(); i++)
     {
         MegaNode *node = children->get(i);
