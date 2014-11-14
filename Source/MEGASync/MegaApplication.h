@@ -59,8 +59,8 @@ public:
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onUsersUpdate(mega::MegaApi* api, mega::UserList *users);
-    virtual void onNodesUpdate(mega::MegaApi* api, mega::NodeList *nodes);
+    virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
+    virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
     virtual void onSyncStateChanged(mega::MegaApi *api);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, const char *filePath, int newState);

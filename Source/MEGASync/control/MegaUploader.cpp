@@ -31,7 +31,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
 {
     QApplication::processEvents();
 
-    NodeList *children =  megaApi->getChildren(parent);
+    MegaNodeList *children =  megaApi->getChildren(parent);
     QByteArray utf8name = info.fileName().toUtf8();
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     MegaNode *dupplicate = NULL;
@@ -103,7 +103,7 @@ void MegaUploader::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 {
     switch(request->getType())
     {
-        case MegaRequest::TYPE_MKDIR:
+        case MegaRequest::TYPE_CREATE_FOLDER:
             if(e->getErrorCode() == MegaError::API_OK)
             {
                 MegaNode *parent = megaApi->getNodeByHandle(request->getNodeHandle());
