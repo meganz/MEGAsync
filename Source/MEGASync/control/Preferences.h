@@ -183,12 +183,14 @@ public:
     static const unsigned int UPDATE_INITIAL_DELAY_SECS;
     static const unsigned int UPDATE_RETRY_INTERVAL_SECS;
     static const unsigned int UPDATE_TIMEOUT_SECS;
+    static const unsigned int MAX_LOGIN_TIME_MS;
     static const QString UPDATE_CHECK_URL;
     static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
     static const QString PROXY_TEST_URL;
     static const QString PROXY_TEST_SUBSTRING;
+    static const unsigned int PROXY_TEST_TIMEOUT_MS;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
     static const char CLIENT_KEY[];

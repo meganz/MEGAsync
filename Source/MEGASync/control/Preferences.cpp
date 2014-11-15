@@ -27,6 +27,8 @@ const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
+const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 30000;
+const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 5000;
 
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");

@@ -289,7 +289,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     if(!currentDir.exists()) currentDir.mkpath(QString::fromAscii("."));
     QDir::setCurrent(dataPath);
 
-    finished = false;
+    appfinished = false;
     updateAvailable = false;
     lastStartedDownload = 0;
     lastStartedUpload = 0;
@@ -387,6 +387,11 @@ void MegaApplication::initialize()
     scanningTimer->setInterval(500);
     scanningAnimationIndex = 1;
     connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+
+    connectivityTimer = new QTimer();
+    connectivityTimer->setSingleShot(true);
+    connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
+    connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
 
@@ -990,7 +995,7 @@ void MegaApplication::refreshTrayIcon()
 
 void MegaApplication::cleanAll()
 {
-    finished = true;
+    appfinished = true;
     refreshTimer->stop();
     stopSyncs();
     stopUpdateTask();
@@ -1154,6 +1159,63 @@ void MegaApplication::scanningAnimationStep()
                             QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
 }
 
+void MegaApplication::runConnectivityCheck()
+{
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::NoProxy);
+    if(preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
+    {
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(preferences->proxyServer());
+        proxy.setPort(preferences->proxyPort());
+        if(preferences->proxyRequiresAuth())
+        {
+            proxy.setUser(preferences->getProxyUsername());
+            proxy.setPassword(preferences->getProxyPassword());
+        }
+    }
+    else if(preferences->proxyType() == MegaProxy::PROXY_AUTO)
+    {
+        MegaProxy* autoProxy = megaApi->getAutoProxySettings();
+        if(autoProxy && autoProxy->getProxyType()==MegaProxy::PROXY_CUSTOM)
+        {
+            string sProxyURL = autoProxy->getProxyURL();
+            QString proxyURL = QString::fromUtf8(sProxyURL.data());
+
+            QStringList arguments = proxyURL.split(QString::fromAscii(":"));
+            if(arguments.size() == 2)
+            {
+                proxy.setType(QNetworkProxy::HttpProxy);
+                proxy.setHostName(arguments[0]);
+                proxy.setPort(arguments[1].toInt());
+            }
+        }
+        delete autoProxy;
+    }
+
+    ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
+    connectivityChecker->setProxy(proxy);
+    connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
+    connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
+
+    connect(connectivityChecker, SIGNAL(error()), this, SLOT(onConnectivityCheckError()));
+    connect(connectivityChecker, SIGNAL(success()), this, SLOT(onConnectivityCheckSuccess()));
+    connect(connectivityChecker, SIGNAL(finished()), connectivityChecker, SLOT(deleteLater()));
+
+    connectivityChecker->startCheck();
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Running connectivity test...");
+}
+
+void MegaApplication::onConnectivityCheckSuccess()
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Connectivity test finished OK");
+}
+
+void MegaApplication::onConnectivityCheckError()
+{
+    showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
+}
+
 void MegaApplication::setupWizardFinished()
 {
     if(!preferences->logged())
@@ -1184,6 +1246,8 @@ void MegaApplication::unlink()
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
+
     if(notificator)
     {
         #ifdef __APPLE__
@@ -1198,6 +1262,8 @@ void MegaApplication::showInfoMessage(QString message, QString title)
 
 void MegaApplication::showWarningMessage(QString message, QString title)
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, message.toUtf8().constData());
+
     if(!preferences->showNotifications()) return;
     if(notificator)
     {
@@ -1210,6 +1276,7 @@ void MegaApplication::showWarningMessage(QString message, QString title)
 
 void MegaApplication::showErrorMessage(QString message, QString title)
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, message.toUtf8().constData());
     if(notificator)
     {
         #ifdef __APPLE__
@@ -1223,6 +1290,8 @@ void MegaApplication::showErrorMessage(QString message, QString title)
 
 void MegaApplication::showNotificationMessage(QString message, QString title)
 {
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
+
     if(!preferences->showNotifications()) return;
     if(notificator)
     {
@@ -1515,7 +1584,7 @@ void MegaApplication::uploadActionClicked()
 
 void MegaApplication::downloadActionClicked()
 {
-    if(finished) return;
+    if(appfinished) return;
 
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, 0,true);
     nodeSelector->nodesReady();
@@ -1606,7 +1675,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
 //Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 {
-    if(finished) return;
+    if(appfinished) return;
 
     //Append the list of files to the upload queue
 	uploadQueue.append(newUploadQueue);
@@ -1665,7 +1734,7 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
-    if(finished) return;
+    if(appfinished) return;
 
     ExportProcessor *processor = new ExportProcessor(megaApi, newExportQueue);
     connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
@@ -1999,9 +2068,13 @@ void MegaApplication::createTrayIcon()
 }
 
 //Called when a request is about to start
-void MegaApplication::onRequestStart(MegaApi* , MegaRequest *)
+void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
-
+    int type = request->getType();
+    if(type == MegaRequest::TYPE_LOGIN || type == MegaRequest::TYPE_FAST_LOGIN)
+    {
+        connectivityTimer->start();
+    }
 }
 
 //Called when a request has finished
@@ -2027,6 +2100,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 	case MegaRequest::TYPE_LOGIN:
     case MegaRequest::TYPE_FAST_LOGIN:
 	{
+		connectivityTimer->stop();
+
         //This prevents to handle logins in the initial setup wizard
         if(preferences->logged())
 		{
@@ -2243,7 +2318,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    if(finished) return;
+    if(appfinished) return;
 
     if(infoDialog && !totalUploadSize && !totalDownloadSize)
     {
@@ -2280,7 +2355,7 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
-    if(finished) return;
+	if(appfinished) return;
 
 	//Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
@@ -2380,7 +2455,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    if(finished) return;
+    if(appfinished) return;
 
     //Update statics
 	if(transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
