@@ -124,6 +124,9 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished();
+    void runConnectivityCheck();
+    void onConnectivityCheckSuccess();
+    void onConnectivityCheckError();
 
 protected:
     void createTrayIcon();
@@ -155,6 +158,7 @@ protected:
     QAction *updateAction;
     QAction *showStatusAction;
     QTimer *scanningTimer;
+    QTimer *connectivityTimer;
     int scanningAnimationIndex;
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
@@ -202,7 +206,7 @@ protected:
     bool updated;
     bool updateBlocked;
     long long lastExit;
-    bool finished;
+    bool appfinished;
     bool updateAvailable;
     bool isLinux;
 };

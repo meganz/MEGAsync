@@ -6,10 +6,9 @@
 #include <QFutureWatcher>
 #include <QtCore>
 #include <QNetworkProxy>
-#include <QNetworkAccessManager>
 #include <QProgressDialog>
 #include <QCloseEvent>
-#include <QAuthenticator>
+#include <ConnectivityChecker.h>
 
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
@@ -93,9 +92,8 @@ private slots:
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
-    void onProxyTestTimeout();
-    void onProxyTestFinished(QNetworkReply* reply);
-    void onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator* auth);
+    void onProxyTestError();
+    void onProxyTestSuccess();
     void on_bUpdate_clicked();
     void on_bFullCheck_clicked();
     void on_bStorageDetails_clicked();
@@ -116,11 +114,8 @@ private:
     QStringList languageCodes;
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
-    QNetworkAccessManager *networkAccess;
     MegaProgressDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
-
-    QTimer proxyTestTimer;
     bool shouldClose;
     int modifyingSettings;
     long long cacheSize;

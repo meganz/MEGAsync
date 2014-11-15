@@ -64,9 +64,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     excludedNamesChanged = false;
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
-    proxyTestTimer.setSingleShot(true);
-    connect(&proxyTestTimer, SIGNAL(timeout()), this, SLOT(onProxyTestTimeout()));
-    networkAccess = NULL;
     shouldClose = false;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
@@ -1092,22 +1089,21 @@ bool SettingsDialog::saveSettings()
             delete proxySettings;
         }
 
-        QNetworkRequest proxyTestRequest(Preferences::PROXY_TEST_URL);
-        proxyTestRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
-                             QVariant( int(QNetworkRequest::AlwaysNetwork)));
-        networkAccess = new QNetworkAccessManager();
-        connect(networkAccess, SIGNAL(finished(QNetworkReply*)),
-                this, SLOT(onProxyTestFinished(QNetworkReply*)));
-        connect(networkAccess, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)),
-                this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
-
-        networkAccess->setProxy(proxy);
-        networkAccess->get(proxyTestRequest);
         proxyTestProgressDialog = new MegaProgressDialog(tr("Please wait..."), QString(), 0, 0, this, Qt::CustomizeWindowHint|Qt::WindowTitleHint);
         proxyTestProgressDialog->setWindowModality(Qt::WindowModal);
         proxyTestProgressDialog->show();
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
-        proxyTestTimer.start(5000);
+
+        ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
+        connectivityChecker->setProxy(proxy);
+        connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
+        connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
+
+        connect(connectivityChecker, SIGNAL(error()), this, SLOT(onProxyTestError()));
+        connect(connectivityChecker, SIGNAL(success()), this, SLOT(onProxyTestSuccess()));
+        connect(connectivityChecker, SIGNAL(finished()), connectivityChecker, SLOT(deleteLater()));
+
+        connectivityChecker->startCheck();
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");        
     }
 
     ui->bApply->setEnabled(false);
@@ -1414,16 +1410,9 @@ void SettingsDialog::on_bClearCache_clicked()
 #endif
 }
 
-void SettingsDialog::onProxyTestTimeout()
+void SettingsDialog::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
-
-    if(networkAccess)
-    {
-        networkAccess->deleteLater();
-        networkAccess = NULL;
-    }
-
     if(proxyTestProgressDialog)
     {
         proxyTestProgressDialog->hide();
@@ -1436,25 +1425,9 @@ void SettingsDialog::onProxyTestTimeout()
     shouldClose = false;
 }
 
-void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
+void SettingsDialog::onProxyTestSuccess()
 {
-    reply->deleteLater();
-
-    QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
-    if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
-    {
-        onProxyTestTimeout();
-        return;
-    }
-
-    QString data = QString::fromUtf8(reply->readAll());
-    if (!data.contains(Preferences::PROXY_TEST_SUBSTRING)) {
-        onProxyTestTimeout();
-        return;
-    }
-
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
-
     if(ui->rNoProxy->isChecked())
         preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
     else if(ui->rProxyAuto->isChecked())
@@ -1472,12 +1445,6 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
     app->applyProxySettings();
     megaApi->retryPendingConnections(true, true);
 
-    if(networkAccess)
-    {
-        networkAccess->deleteLater();
-        networkAccess = NULL;
-    }
-
     if(proxyTestProgressDialog)
     {
         proxyTestProgressDialog->hide();
@@ -1491,15 +1458,6 @@ void SettingsDialog::onProxyTestFinished(QNetworkReply *reply)
         this->close();
     }
     else loadSettings();
-}
-
-void SettingsDialog::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *auth)
-{
-    if(ui->rProxyManual->isChecked() && ui->cProxyRequiresPassword->isChecked())
-    {
-        auth->setUser(ui->eProxyUsername->text());
-        auth->setPassword(ui->eProxyPassword->text());
-    }
 }
 
 void SettingsDialog::on_bUpdate_clicked()
