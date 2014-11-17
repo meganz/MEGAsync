@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 
 #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
     MegaSyncLogger *logger = new MegaSyncLogger();
-    MegaApi::setLoggerClass(logger);
+    MegaApi::setLoggerObject(logger);
 
     #ifdef DEBUG
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
@@ -2371,13 +2371,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 if(localPath.startsWith(QString::fromAscii("\\\\?\\"))) localPath = localPath.mid(4);
             #endif
 
-            MegaNode *node = transfer->getPublicNode();
+            MegaNode *node = transfer->getPublicMegaNode();
             QString publicKey;
             if(node)
             {
                 const char* key = node->getBase64Key();
                 publicKey = QString::fromUtf8(key);
                 delete [] key;
+                delete node;
             }
             addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
         }

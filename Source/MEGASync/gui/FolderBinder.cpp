@@ -34,6 +34,7 @@ QString FolderBinder::selectedLocalFolder()
 void FolderBinder::on_bLocalFolder_clicked()
 {
     QString defaultPath = ui->eLocalFolder->text().trimmed();
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Default path: %1").arg(defaultPath).toUtf8().constData());
     if(!defaultPath.size())
     {
         #ifdef WIN32
@@ -44,16 +45,24 @@ void FolderBinder::on_bLocalFolder_clicked()
             #endif
         #else
             #if QT_VERSION < 0x050000
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting home path (QT4)");
                 defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
             #else
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting home path (QT5)");
                 defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
             #endif
         #endif
     }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
     QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
                                                       defaultPath,
                                                       QFileDialog::ShowDirsOnly
                                                       | QFileDialog::DontResolveSymlinks);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Folder selector closed. Result: %1").arg(path).toUtf8().constData());
     if(path.length())
     {        
         QDir dir(path);
