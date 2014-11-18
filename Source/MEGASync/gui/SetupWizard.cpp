@@ -75,7 +75,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 			break;
 		}
 		case MegaRequest::TYPE_LOGIN:
-        case MegaRequest::TYPE_FAST_LOGIN:
 		{
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
