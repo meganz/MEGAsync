@@ -793,7 +793,7 @@ void MegaApplication::startSyncs()
 void MegaApplication::stopSyncs()
 {
     //Stop syncs
-    megaApi->stopSyncs();
+    megaApi->removeSyncs();
 }
 
 //This function is called to upload all files in the uploadQueue field
@@ -2071,7 +2071,7 @@ void MegaApplication::createTrayIcon()
 void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
     int type = request->getType();
-    if(type == MegaRequest::TYPE_LOGIN || type == MegaRequest::TYPE_FAST_LOGIN)
+    if(type == MegaRequest::TYPE_LOGIN)
     {
         connectivityTimer->start();
     }
@@ -2098,7 +2098,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 		break;
 	}
 	case MegaRequest::TYPE_LOGIN:
-    case MegaRequest::TYPE_FAST_LOGIN:
 	{
 		connectivityTimer->stop();
 
@@ -2278,7 +2277,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
-                    preferences->setLocalFingerprint(i, request->getParentHandle());
+                    preferences->setLocalFingerprint(i, request->getNumber());
                 }
                 break;
             }
@@ -2546,7 +2545,9 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
                     Platform::notifyItemChange(preferences->getLocalFolder(i));
-                    megaApi->removeSync(preferences->getMegaFolderHandle(i));
+                    MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                    megaApi->removeSync(node);
+                    delete node;
                     preferences->setSyncState(i, false);
                 }
 
@@ -2610,7 +2611,7 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
 {
     if(megaApi)
     {
-        indexing = megaApi->isIndexing();
+        indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
     }
 
@@ -2680,7 +2681,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
             MegaNode *node = api->getNodeByHandle(preferences->getMegaFolderHandle(i));
             QString localFolder = preferences->getLocalFolder(i);
-            api->resumeSync(localFolder.toUtf8().constData(), preferences->getLocalFingerprint(i), node);
+            api->resumeSync(localFolder.toUtf8().constData(), node, preferences->getLocalFingerprint(i));
             delete node;
         }
     }

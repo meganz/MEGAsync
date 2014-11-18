@@ -932,7 +932,10 @@ bool SettingsDialog::saveSettings()
                         {
                             Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                             preferences->setSyncState(i, enabled);
-                            megaApi->removeSync(megaHandle);
+
+                            MegaNode *node = megaApi->getNodeByHandle(megaHandle);
+                            megaApi->removeSync(node);
+                            delete node;
                         }
                         break;
                     }
@@ -943,7 +946,9 @@ bool SettingsDialog::saveSettings()
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                     preferences->removeSyncedFolder(i);
-                    megaApi->removeSync(megaHandle);
+                    MegaNode *node = megaApi->getNodeByHandle(megaHandle);
+                    megaApi->removeSync(node);
+                    delete node;
                     i--;
                 }
             }

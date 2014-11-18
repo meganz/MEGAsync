@@ -84,7 +84,7 @@ void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *
         importLinks(n);
         delete n;
 	}
-	else if(request->getType() == MegaRequest::TYPE_IMPORT_NODE)
+    else if(request->getType() == MegaRequest::TYPE_COPY)
 	{
 		remainingNodes--;
         if(e->getErrorCode()==MegaError::API_OK)
@@ -161,7 +161,7 @@ void LinkProcessor::importLinks(MegaNode *node)
             if(!dupplicate)
             {
                 remainingNodes++;
-                megaApi->importPublicNode(linkNode[i], node, delegateListener);
+                megaApi->copyNode(linkNode[i], node, delegateListener);
             }
             else
             {
@@ -183,7 +183,7 @@ void LinkProcessor::downloadLinks(QString localPath)
 	{
 		if(linkNode[i] && linkSelected[i])
 		{
-            megaApi->startPublicDownload(linkNode[i], (localPath+QDir::separator()).toUtf8().constData());
+            megaApi->startDownload(linkNode[i], (localPath+QDir::separator()).toUtf8().constData());
 		}
 	}
 }
