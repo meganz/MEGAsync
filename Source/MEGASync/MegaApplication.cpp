@@ -986,7 +986,7 @@ void MegaApplication::refreshTrayIcon()
         if(!(++counter % 6))
             megaApi->update();
 
-        megaApi->updateStatics();
+        megaApi->updateStats();
         onSyncStateChanged(megaApi);
         if(isLinux) updateTrayIcon();
     }
