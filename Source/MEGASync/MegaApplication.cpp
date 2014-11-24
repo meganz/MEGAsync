@@ -980,6 +980,58 @@ void MegaApplication::aboutDialog()
 
 void MegaApplication::refreshTrayIcon()
 {
+    QNetworkConfiguration ap = networkManager.defaultConfiguration();
+    if(!ap.name().isEmpty())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Default network interface: %1").arg(ap.name()).toUtf8().constData());
+        QNetworkInterface networkInterface = QNetworkInterface::interfaceFromName(ap.name());
+        bool isUp = networkInterface.flags() & QNetworkInterface::IsUp;
+        bool isRunning = networkInterface.flags() & QNetworkInterface::IsRunning;
+        if(isUp && isRunning)
+        {
+            QString ipv4 = activeIPv4;
+            QString ipv6 = activeIPv6;
+            QList<QNetworkAddressEntry> addresses = networkInterface.addressEntries();
+            for(int i=0; i < addresses.size(); i++)
+            {
+                QHostAddress ip = addresses.at(i).ip();
+                switch(ip.protocol())
+                {
+                case QAbstractSocket::IPv4Protocol:
+                    ipv4 = ip.toString();
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv4: %1").arg(ipv4).toUtf8().constData());
+                    break;
+                case QAbstractSocket::IPv6Protocol:
+                    ipv6 = ip.toString();
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv6: %1").arg(ipv6).toUtf8().constData());
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            if(!activeNetworkInterface.isEmpty() &&
+                    (activeNetworkInterface != ap.name() || activeIPv4 != ipv4 || activeIPv6 != ipv6 || (QDateTime::currentDateTime().toMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS))
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Network adapter change detected. Reconecting.");
+                megaApi->retryPendingConnections(true, true);
+            }
+
+            activeNetworkInterface = ap.name();
+            activeIPv4 = ipv4;
+            activeIPv6 = ipv6;
+            lastActiveTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        }
+        else
+        {
+            networkManager.updateConfigurations();
+        }
+    }
+    else
+    {
+        networkManager.updateConfigurations();
+    }
+
     static int counter = 0;
     if(megaApi)
     {
