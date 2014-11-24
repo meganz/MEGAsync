@@ -10,6 +10,8 @@
 #include <QLocalSocket>
 #include <QDataStream>
 #include <QQueue>
+#include <QNetworkConfigurationManager>
+#include <QNetworkInterface>
 
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
@@ -197,6 +199,11 @@ protected:
     QThread *updateThread;
     UpdateTask *updateTask;
     Notificator *notificator;
+    QNetworkConfigurationManager networkManager;
+    QString activeNetworkInterface;
+    QString activeIPv4;
+    QString activeIPv6;
+    long long lastActiveTime;
 
     bool reboot;
     bool syncActive;
