@@ -199,11 +199,9 @@ protected:
     QThread *updateThread;
     UpdateTask *updateTask;
     Notificator *notificator;
-    QNetworkConfigurationManager networkManager;
-    QString activeNetworkInterface;
-    QString activeIPv4;
-    QString activeIPv6;
     long long lastActiveTime;
+    QNetworkConfigurationManager networkManager;
+    QList<QNetworkInterface> activeNetworkInterfaces;
 
     bool reboot;
     bool syncActive;
