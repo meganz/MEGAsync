@@ -7,7 +7,7 @@
 
 using namespace mega;
 
-NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent, bool showFiles) :
+NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent, bool showFiles,  bool showInshares) :
     QDialog(parent),
     ui(new Ui::NodeSelector)
 {
@@ -19,6 +19,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;
     this->showFiles = showFiles;
+    this->showInshares = showInshares;
     delegateListener = new QTMegaRequestListener(megaApi, this);
     ui->bOk->setDefault(true);
 }
@@ -47,6 +48,31 @@ void NodeSelector::nodesReady()
     selectedItem = root;
     selectedFolder = selectedItem->data(0, Qt::UserRole).toULongLong();
     delete rootNode;
+
+    if(showInshares)
+    {
+        MegaUserList *contacts = megaApi->getContacts();
+        for(int i=0; i < contacts->size(); i++)
+        {
+            MegaUser *contact = contacts->get(i);
+            MegaNodeList *folders = megaApi->getInShares(contact);
+            for(int j=0; j < folders->size(); j++)
+            {
+                MegaNode *folder = folders->get(i);
+                if(megaApi->getAccess(folder) == MegaShare::ACCESS_FULL)
+                {
+                    QTreeWidgetItem *item = new QTreeWidgetItem();
+                    item->setText(0, QString::fromUtf8("%1 (%2)").arg(QString::fromUtf8(folder->getName())).arg(QString::fromUtf8(contact->getEmail())));
+                    item->setIcon(0, folderIcon);
+                    item->setData(0, Qt::UserRole, (qulonglong)folder->getHandle());
+                    addChildren(item, folder);
+                    ui->tMegaFolders->addTopLevelItem(item);
+                }
+            }
+            delete folders;
+        }
+        delete contacts;
+    }
 }
 
 long long NodeSelector::getSelectedFolderHandle()
@@ -177,7 +203,9 @@ void NodeSelector::on_bOk_clicked()
     delete rootNode;
 
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
-    MegaNode *check = megaApi->getNodeByPath(megaApi->getNodePath(node));
+    const char* path = megaApi->getNodePath(node);
+    MegaNode *check = megaApi->getNodeByPath(path);
+    delete [] path;
     delete node;
     if(!check)
     {
@@ -186,6 +214,6 @@ void NodeSelector::on_bOk_clicked()
                              QMessageBox::Ok);
         return;
     }
-
+    delete check;
     accept();
 }
