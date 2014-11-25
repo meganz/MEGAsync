@@ -1292,9 +1292,12 @@ void MegaApplication::scanningAnimationStep()
     scanningAnimationIndex = scanningAnimationIndex%4;
     scanningAnimationIndex++;
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac") +
-                            QString::number(scanningAnimationIndex) + QString::fromAscii(".png")),
-                      QIcon(QString::fromAscii("://images/icon_syncing_mac_white") +
-                                                  QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
+                            QString::number(scanningAnimationIndex) + QString::fromAscii(".png"))
+#ifdef __APPLE__
+    , QIcon(QString::fromAscii("://images/icon_syncing_mac_white") + QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
+#else
+    );
+#endif
 }
 
 void MegaApplication::runConnectivityCheck()
