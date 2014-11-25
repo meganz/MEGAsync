@@ -193,9 +193,9 @@ char *runWithRootPrivileges(char *command)
 
     NSString * pathToIcon = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/Resources/appicon32.png"];
     const char *icon = [pathToIcon fileSystemRepresentation];
-    QString promptTemp = QCoreApplication::translate("MacXFunctions","MEGAsync wants you to make changes. ");
-    QByteArray byteArray = promptTemp.toUtf8();
-    const char *prompt = byteArray.constData();
+    //QString promptTemp = QCoreApplication::translate("MacXFunctions","MEGAsync wants you to make changes. ");
+    //QByteArray byteArray = promptTemp.toUtf8();
+    const char *prompt = "MEGAsync. ";//byteArray.constData();
 
     char *result = NULL;
 
