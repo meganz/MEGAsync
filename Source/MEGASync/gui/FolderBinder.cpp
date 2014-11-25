@@ -119,7 +119,7 @@ void FolderBinder::on_bMegaFolder_clicked()
     ui->eMegaFolder->setText(QString::fromUtf8(fPath));
     delete nodeSelector;
     delete selectedFolder;
-    delete fPath;
+    delete [] fPath;
 }
 
 void FolderBinder::changeEvent(QEvent *event)
