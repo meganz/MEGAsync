@@ -1106,6 +1106,7 @@ void MegaApplication::refreshTrayIcon()
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Reconnecting due to local network changes");
         megaApi->retryPendingConnections(true, true);
         activeNetworkInterfaces = newNetworkInterfaces;
+        lastActiveTime = QDateTime::currentMSecsSinceEpoch();
     }
     else
     {
