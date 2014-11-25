@@ -556,7 +556,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -615,7 +615,7 @@ padding-bottom: 6px;
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
           <property name="spacing">
            <number>6</number>
           </property>
@@ -799,6 +799,25 @@ padding-bottom: 6px;
               </widget>
              </item>
             </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bExportMasterKey">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Export Key</string>
+            </property>
            </widget>
           </item>
           <item>
