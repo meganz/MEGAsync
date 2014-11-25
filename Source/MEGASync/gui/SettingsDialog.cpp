@@ -1255,9 +1255,25 @@ void SettingsDialog::on_bUnlink_clicked()
 
 void SettingsDialog::on_bExportMasterKey_clicked()
 {
+    QString defaultPath;
+#ifdef WIN32
+    #if QT_VERSION < 0x050000
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+    #else
+        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+    #endif
+#else
+    #if QT_VERSION < 0x050000
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+    #else
+        defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+    #endif
+#endif
+
+    QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(this,
-             tr("Export Master key"), QString::fromUtf8("MEGA-MASTERKEY"),
-             tr("Txt file (*.txt);;All Files (*)"),0,QFileDialog::ShowDirsOnly
+             tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-MASTERKEY")),
+             tr("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
 
     if (fileName.isEmpty())
