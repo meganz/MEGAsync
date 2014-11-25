@@ -438,6 +438,9 @@ void MegaApplication::initialize()
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     initialMenu = new QMenu();
+#ifdef _WIN32
+    windowsMenu = new QMenu();
+#endif
     QString language = preferences->language();
     changeLanguage(language);
 
@@ -452,6 +455,12 @@ void MegaApplication::initialize()
     connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
+
+#ifdef _WIN32
+    windowsExitAction = new QAction(tr("Exit"), this);
+    connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    windowsMenu->addAction(windowsExitAction);
+#endif
 
     refreshTimer = new QTimer();
     refreshTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
@@ -1980,6 +1989,13 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
+#ifdef _WIN32
+        if(reason == QSystemTrayIcon::Context)
+        {
+            return;
+        }
+#endif
+
 #ifndef __APPLE__
         if(isLinux)
         {
@@ -2184,8 +2200,8 @@ void MegaApplication::createTrayIcon()
     }
     else
     {
-        #if defined(Q_OS_LINUX) && !defined(Q_OS_MAC)
-            trayIcon->setContextMenu(NULL);
+        #ifdef _WIN32
+            trayIcon->setContextMenu(windowsMenu);
         #else
             trayIcon->setContextMenu(&emptyMenu);
         #endif
