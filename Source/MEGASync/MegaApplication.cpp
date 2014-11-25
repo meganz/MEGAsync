@@ -100,6 +100,8 @@ int main(int argc, char *argv[])
     #else
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
     #endif
+#else
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
 #endif
 
     qInstallMsgHandler(msgHandler);
