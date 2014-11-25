@@ -146,6 +146,11 @@ protected:
     QSystemTrayIcon *trayIcon;
 #endif
 
+#ifdef _WIN32
+    QMenu *windowsMenu;
+    QAction *windowsExitAction;
+#endif
+
     QMenu *initialMenu;
     QMenu *trayMenu;
     QMenu emptyMenu;
