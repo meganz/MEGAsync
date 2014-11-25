@@ -353,5 +353,21 @@
         <file>images/tray_preferences_over_ico@2x.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/tray_share_over_ico@2x.png</file>
+        <file>images/icon_logging_mac_white.png</file>
+        <file>images/icon_logging_mac_white@2x.png</file>
+        <file>images/icon_paused_mac_white.png</file>
+        <file>images/icon_paused_mac_white@2x.png</file>
+        <file>images/icon_synced_mac_white.png</file>
+        <file>images/icon_synced_mac_white@2x.png</file>
+        <file>images/icon_syncing_mac_white.png</file>
+        <file>images/icon_syncing_mac_white@2x.png</file>
+        <file>images/icon_syncing_mac_white1.png</file>
+        <file>images/icon_syncing_mac_white1@2x.png</file>
+        <file>images/icon_syncing_mac_white2.png</file>
+        <file>images/icon_syncing_mac_white2@2x.png</file>
+        <file>images/icon_syncing_mac_white3.png</file>
+        <file>images/icon_syncing_mac_white3@2x.png</file>
+        <file>images/icon_syncing_mac_white4.png</file>
+        <file>images/icon_syncing_mac_white4@2x.png</file>
     </qresource>
 </RCC>
