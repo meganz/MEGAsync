@@ -723,7 +723,7 @@ void SettingsDialog::loadSettings()
             else
             {
                 ui->eUploadFolder->setText(QString::fromUtf8(nPath));
-                delete nPath;
+                delete [] nPath;
             }
         }
         delete node;
@@ -1230,7 +1230,7 @@ void SettingsDialog::on_bAdd_clicked()
 
    syncNames.append(dialog->getSyncName());
    delete node;
-   delete nPath;
+   delete [] nPath;
 
    syncsChanged = true;
    updateAddButton();
@@ -1304,7 +1304,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
 
     QString newPath = QString::fromUtf8(nPath);
     delete nodeSelector;
-    delete nPath;
+    delete [] nPath;
     delete node;
     if(newPath.compare(ui->eUploadFolder->text()))
     {

@@ -554,7 +554,7 @@ void SetupWizard::on_bMegaFolder_clicked()
 
     ui->eMegaFolder->setText(QString::fromUtf8(nPath));
     delete nodeSelector;
-    delete nPath;
+    delete [] nPath;
     delete node;
 }
 

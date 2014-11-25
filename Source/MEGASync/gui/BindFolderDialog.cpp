@@ -101,7 +101,7 @@ void BindFolderDialog::on_bOK_clicked()
             }
 
             QString megaPath = QString::fromUtf8(cPath);
-            delete cPath;
+            delete [] cPath;
 
             const char *nPath = megaApi->getNodePath(n);
             if(!nPath)
@@ -111,7 +111,7 @@ void BindFolderDialog::on_bOK_clicked()
             }
 
             QString p = QString::fromUtf8(nPath);
-            delete nPath;
+            delete [] nPath;
 
             if(megaPath.startsWith(p) && ((p.size() == megaPath.size()) || (megaPath[p.size()]==QChar::fromAscii('/'))))
             {

@@ -622,7 +622,7 @@ void InfoDialog::addSync()
    }
 
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
-   delete nPath;
+   delete [] nPath;
    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
    delete node;
    updateSyncsButton();

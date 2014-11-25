@@ -86,7 +86,7 @@ void UploadToMegaDialog::on_bChange_clicked()
 
     ui->eFolderPath->setText(QString::fromUtf8(nPath));
     delete nodeSelector;
-    delete nPath;
+    delete [] nPath;
     delete node;
 }
 

@@ -77,7 +77,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
         if(tPath)
         {
             ui->eMegaFolder->setText(QString::fromUtf8(tPath));
-            delete tPath;
+            delete [] tPath;
         }
         else
         {
@@ -269,7 +269,7 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
     ui->eMegaFolder->setText(QString::fromUtf8(fPath));
     delete nodeSelector;
     delete selectedFolder;
-    delete fPath;
+    delete [] fPath;
 }
 
 void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
