@@ -1253,6 +1253,37 @@ void SettingsDialog::on_bUnlink_clicked()
     }
 }
 
+void SettingsDialog::on_bExportMasterKey_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+             tr("Export Master key"), QString::fromUtf8("MEGA-MASTERKEY"),
+             tr("Txt file (*.txt);;All Files (*)"),0,QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+
+    if (fileName.isEmpty())
+    {
+        return;
+    }
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+        return;
+    }
+
+    QTextStream out(&file);
+    out << megaApi->exportMasterKey();
+
+    file.close();
+
+    QMessageBox::information(this, tr("Warning"), tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.")+QString::fromUtf8("\n")+
+                                                      tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."), QMessageBox::Ok);
+
+
+
+}
+
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 {
     if(!index.column())
