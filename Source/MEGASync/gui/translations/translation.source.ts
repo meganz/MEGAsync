@@ -665,6 +665,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link: </source>
         <translation>[$2045]</translation>
     </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled
+because the local folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1346,6 +1355,30 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>[$2041]</translation>
+    </message>
+    <message>
+        <source>Export Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Master key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Txt file (*.txt)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to write file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
