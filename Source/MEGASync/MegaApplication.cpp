@@ -2682,6 +2682,11 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
         for(int i=0; i<preferences->getNumSyncedFolders(); i++)
         {
+            if(!preferences->isFolderActive(i))
+            {
+                continue;
+            }
+
             if(node->getType()==MegaNode::TYPE_FOLDER && (node->getHandle() == preferences->getMegaFolderHandle(i)))
             {
                 MegaNode *nodeByHandle = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
