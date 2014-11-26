@@ -58,7 +58,7 @@ void NodeSelector::nodesReady()
             MegaNodeList *folders = megaApi->getInShares(contact);
             for(int j=0; j < folders->size(); j++)
             {
-                MegaNode *folder = folders->get(i);
+                MegaNode *folder = folders->get(j);
                 if(megaApi->getAccess(folder) == MegaShare::ACCESS_FULL)
                 {
                     QTreeWidgetItem *item = new QTreeWidgetItem();
