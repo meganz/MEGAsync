@@ -16,7 +16,7 @@ RequestExecutionLevel user
 ; HM NIS Edit Wizard helper defines
 BrandingText "MEGA Limited"
 !define PRODUCT_NAME "MEGAsync"
-!define PRODUCT_VERSION "1.0.35"
+!define PRODUCT_VERSION "1.0.36"
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.co.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
