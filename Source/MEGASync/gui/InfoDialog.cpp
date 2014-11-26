@@ -851,7 +851,7 @@ void InfoDialog::on_bSyncFolder_clicked()
             connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
 #ifdef __APPLE__
-        syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (num + 1) * 28 - (num ? 16 : 8))));
+        syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
         if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
             this->hide();
 
