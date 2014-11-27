@@ -90,6 +90,7 @@ const char *TARGET_PATHS_OSX[] = {
     "Contents/Resources/appicon32.png",
     "Contents/Resources/empty.lproj",
     "Contents/Resources/folder.icns",
+    "Contents/Resources/folder_yosemite.icns",
     "Contents/Resources/qt.conf"
 };
 
@@ -129,6 +130,7 @@ const char *UPDATE_FILES_OSX[] = {
     "Contents/Resources/appicon32.png",
     "Contents/Resources/empty.lproj",
     "Contents/Resources/folder.icns",
+    "Contents/Resources/folder_yosemite.icns",
     "Contents/Resources/qt.conf"
 };
 
