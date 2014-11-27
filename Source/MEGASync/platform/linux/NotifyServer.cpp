@@ -51,17 +51,24 @@ void NotifyServer::acceptConnection()
         connect(client, SIGNAL(disconnected()), this, SLOT(onClientDisconnected()));
 
         // send the list of current synced folders to the new client
-        QStringList localFolders;
+        int localFolders = 0;
         Preferences *preferences = Preferences::instance();
-        localFolders = preferences->getLocalFolders();
-        if (localFolders.size()) {
-            for(int i=0; i<localFolders.size(); i++) {
-                QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
-                client->write("A");
-                client->write(c.toUtf8().constData());
-                client->write("\n");
+        for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+        {
+            QString c = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
+            if(!c.size() || !preferences->isFolderActive(i))
+            {
+                continue;
             }
-        } else {
+
+            localFolders++;
+            client->write("A");
+            client->write(c.toUtf8().constData());
+            client->write("\n");
+        }
+
+        if(!localFolders)
+        {
             // send an empty sync
             client->write("A");
             client->write(".");
