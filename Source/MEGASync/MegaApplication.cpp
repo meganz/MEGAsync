@@ -2844,6 +2844,12 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 continue;
 
             MegaNode *node = api->getNodeByHandle(preferences->getMegaFolderHandle(i));
+            if(!node)
+            {
+                preferences->setSyncState(i, false);
+                continue;
+            }
+
             QString localFolder = preferences->getLocalFolder(i);
             api->resumeSync(localFolder.toUtf8().constData(), node, preferences->getLocalFingerprint(i));
             delete node;
