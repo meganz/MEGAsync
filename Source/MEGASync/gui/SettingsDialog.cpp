@@ -944,10 +944,14 @@ bool SettingsDialog::saveSettings()
                 if(j == ui->tSyncs->rowCount())
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    bool active = preferences->isFolderActive(i);
                     preferences->removeSyncedFolder(i);
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-                    megaApi->removeSync(node);
+                    if(active)
+                    {
+                        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                        megaApi->removeSync(node);
+                    }
                     delete node;
                     i--;
                 }
