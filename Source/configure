@@ -79,5 +79,5 @@ sodium_conf="--with-sodium=$SODIUM_INSTALL_DIR"
 
 cd MEGASync/mega
 ./autogen.sh || exit 1
-./configure --disable-curl-checks $curl_conf $sodium_conf --without-freeimage --disable-posix-threads || exit 1
+./configure --disable-curl-checks $curl_conf $sodium_conf --without-freeimage --disable-posix-threads --disable-examples || exit 1
 cd ../..
