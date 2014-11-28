@@ -1103,9 +1103,9 @@ bool SettingsDialog::saveSettings()
         connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
         connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
 
-        connect(connectivityChecker, SIGNAL(error()), this, SLOT(onProxyTestError()));
-        connect(connectivityChecker, SIGNAL(success()), this, SLOT(onProxyTestSuccess()));
-        connect(connectivityChecker, SIGNAL(finished()), connectivityChecker, SLOT(deleteLater()));
+        connect(connectivityChecker, SIGNAL(testError()), this, SLOT(onProxyTestError()));
+        connect(connectivityChecker, SIGNAL(testSuccess()), this, SLOT(onProxyTestSuccess()));
+        connect(connectivityChecker, SIGNAL(testFinished()), connectivityChecker, SLOT(deleteLater()));
 
         connectivityChecker->startCheck();
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");        
