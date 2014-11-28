@@ -131,23 +131,11 @@ void BindFolderDialog::on_bOK_clicked()
                 delete node;
                 return;
             }
-            else if(megaPath==QString::fromAscii("/") || (p.startsWith(megaPath) && p[megaPath.size()]==QChar::fromAscii('/')))
+            else if(p.startsWith(megaPath) && ((p.size() == megaPath.size()) || p[megaPath.size()]==QChar::fromAscii('/')))
             {
-                MegaNode *rootNode = megaApi->getRootNode();
-                if(!rootNode)
-                {
-                    delete n;
-                    delete node;
-                    return;
-                }
-
-                if(handle == rootNode->getHandle())
-                    QMessageBox::warning(this, tr("Error"), tr("Full account syncing is only possible without any selective syncs"), QMessageBox::Ok);
-                else
-                    QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
                 delete n;
                 delete node;
-                delete rootNode;
                 return;
             }
             delete n;
