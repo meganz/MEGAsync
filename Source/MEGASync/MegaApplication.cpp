@@ -2251,7 +2251,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 		}
 
         if(e->getErrorCode() != MegaError::API_OK)
-            showErrorMessage(tr("Error getting link: ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+            showErrorMessage(tr("Error getting link: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
 
         if(infoDialog) infoDialog->disableGetLink(false);
 		break;
