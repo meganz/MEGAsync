@@ -15,16 +15,15 @@ class ConnectivityChecker : public QObject
 
 public:
     explicit ConnectivityChecker(QString testURL, QObject *parent = 0);
-    ~ConnectivityChecker();
     void setProxy(QNetworkProxy proxy);
     void setTimeout(int ms);
     void setTestString(QString testString);
     void startCheck();
 
 signals:
-    void error();
-    void success();
-    void finished();
+    void testError();
+    void testSuccess();
+    void testFinished();
 
 protected slots:
     void onTestTimeout();

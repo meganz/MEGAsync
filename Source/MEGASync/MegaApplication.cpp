@@ -390,7 +390,7 @@ void MegaApplication::initialize()
     scanningAnimationIndex = 1;
     connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
-    connectivityTimer = new QTimer();
+    connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
@@ -1350,9 +1350,9 @@ void MegaApplication::runConnectivityCheck()
     connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
     connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
 
-    connect(connectivityChecker, SIGNAL(error()), this, SLOT(onConnectivityCheckError()));
-    connect(connectivityChecker, SIGNAL(success()), this, SLOT(onConnectivityCheckSuccess()));
-    connect(connectivityChecker, SIGNAL(finished()), connectivityChecker, SLOT(deleteLater()));
+    connect(connectivityChecker, SIGNAL(testError()), this, SLOT(onConnectivityCheckError()));
+    connect(connectivityChecker, SIGNAL(testSuccess()), this, SLOT(onConnectivityCheckSuccess()));
+    connect(connectivityChecker, SIGNAL(testFinished()), connectivityChecker, SLOT(deleteLater()));
 
     connectivityChecker->startCheck();
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Running connectivity test...");
