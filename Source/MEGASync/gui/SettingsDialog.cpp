@@ -1011,7 +1011,6 @@ bool SettingsDialog::saveSettings()
                 delete node;
             }
 
-            updateAddButton();
             syncsChanged = false;
         }
 
@@ -1116,14 +1115,6 @@ bool SettingsDialog::saveSettings()
     return !proxyChanged;
 }
 
-void SettingsDialog::updateAddButton()
-{
-    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-        ui->bAdd->setToolTip(tr("You are already syncing your entire Cloud Drive"));
-    else
-        ui->bAdd->setToolTip(QString());
-}
-
 void SettingsDialog::on_bDelete_clicked()
 {
     QList<QTableWidgetSelectionRange> selected = ui->tSyncs->selectedRanges();
@@ -1134,7 +1125,6 @@ void SettingsDialog::on_bDelete_clicked()
     syncNames.removeAt(index);
 
 	syncsChanged = true;
-    updateAddButton();
     stateChanged();
 }
 
@@ -1166,17 +1156,10 @@ void SettingsDialog::loadSyncSettings()
         connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
         ui->tSyncs->setCellWidget(i, 2, c);
     }
-    updateAddButton();
 }
 
 void SettingsDialog::on_bAdd_clicked()
 {
-    if((ui->tSyncs->rowCount() == 1) && (ui->tSyncs->item(0, 1)->text().trimmed()==QString::fromAscii("/")))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("You are already syncing your entire Cloud Drive"));
-        return;
-    }
-
     QStringList currentLocalFolders;
     QList<long long> currentMegaFolders;
     for(int i=0; i<ui->tSyncs->rowCount(); i++)
@@ -1233,7 +1216,6 @@ void SettingsDialog::on_bAdd_clicked()
    delete [] nPath;
 
    syncsChanged = true;
-   updateAddButton();
    stateChanged();
 }
 

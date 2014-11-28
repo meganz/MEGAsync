@@ -129,7 +129,6 @@ private:
 
     void loadSyncSettings();
     bool saveSettings();
-    void updateAddButton();
 };
 
 #endif // SETTINGSDIALOG_H
