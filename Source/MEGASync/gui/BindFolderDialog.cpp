@@ -131,7 +131,7 @@ void BindFolderDialog::on_bOK_clicked()
                 delete node;
                 return;
             }
-            else if(p.startsWith(megaPath) && ((p.size() == megaPath.size()) || p[megaPath.size()]==QChar::fromAscii('/')))
+            else if(p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
             {
                 QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
                 delete n;
