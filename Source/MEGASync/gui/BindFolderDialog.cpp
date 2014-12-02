@@ -85,7 +85,7 @@ void BindFolderDialog::on_bOK_clicked()
             continue;
         }
 
-        if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()]==QDir::separator())))
+        if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()] == QDir::separator())))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             delete node;
@@ -124,7 +124,7 @@ void BindFolderDialog::on_bOK_clicked()
             QString p = QString::fromUtf8(nPath);
             delete [] nPath;
 
-            if(megaPath.startsWith(p) && ((p.size() == megaPath.size()) || (megaPath[p.size()]==QChar::fromAscii('/'))))
+            if(megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
             {
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 delete n;
