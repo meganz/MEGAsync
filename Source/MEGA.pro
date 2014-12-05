@@ -1,6 +1,10 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync MEGALogger
+SUBDIRS += MEGASync
+
+debug {
+    SUBDIRS += MEGALogger
+}
 
 win32 {
     SUBDIRS += MEGACrashAnalyzer
