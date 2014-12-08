@@ -36,7 +36,13 @@ QStringList qt_mac_NSArrayToQStringList(void *nsarray)
     NSArray *array = static_cast<NSArray *>(nsarray);
     for (NSUInteger i=0; i<[array count]; ++i)
     {
-       QString st = fromNSString([[array objectAtIndex:i] path]);
+        QString st;
+
+       if([[array objectAtIndex:i] isKindOfClass:[NSURL class]])
+           st = fromNSString([[array objectAtIndex:i] path]);
+       else
+           st = fromNSString([array objectAtIndex:i]);
+
        result.append(st);
     }
 
