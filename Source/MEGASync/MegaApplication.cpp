@@ -1826,8 +1826,11 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
 
 //Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
-{
-    if(appfinished) return;
+{    
+    if(appfinished || !megaApi->isLoggedIn())
+    {
+        return;
+    }
 
     //Append the list of files to the upload queue
 	uploadQueue.append(newUploadQueue);
@@ -1886,7 +1889,10 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
 void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 {
-    if(appfinished) return;
+    if(appfinished || !megaApi->isLoggedIn())
+    {
+        return;
+    }
 
     ExportProcessor *processor = new ExportProcessor(megaApi, newExportQueue);
     connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
@@ -1906,7 +1912,11 @@ void MegaApplication::onRequestLinksFinished()
 {
     ExportProcessor *exportProcessor = ((ExportProcessor *)QObject::sender());
     QStringList links = exportProcessor->getValidLinks();
-    if(!links.size()) return;
+    if(!links.size())
+    {
+        exportOps--;
+        return;
+    }
     QString linkForClipboard(links.join(QChar::fromAscii('\n')));
     QApplication::clipboard()->setText(linkForClipboard);
     if(links.size()==1) showInfoMessage(tr("The link has been copied to the clipboard"));
