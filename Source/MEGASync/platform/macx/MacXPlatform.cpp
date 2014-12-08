@@ -1,6 +1,7 @@
 #include "MacXPlatform.h"
 
 int MacXPlatform::fd = -1;
+MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 
 void MacXPlatform::initialize(int argc, char *argv[])
 {
@@ -78,6 +79,8 @@ void MacXPlatform::showInFolder(QString pathIn)
 
 void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 {
+    if(systemServiceTask) return;
+    systemServiceTask = new MacXSystemServiceTask(receiver);
 
 }
 

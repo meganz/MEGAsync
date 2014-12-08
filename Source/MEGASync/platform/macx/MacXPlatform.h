@@ -1,6 +1,9 @@
 #ifndef MACXPLATFORM_H
 #define MACXPLATFORM_H
 
+#include "MacXFunctions.h"
+#include "MacXSystemServiceTask.h"
+
 #include <QApplication>
 #include <QString>
 #include <QFile>
@@ -10,15 +13,13 @@
 #include <QDir>
 #include <QProcess>
 
-#include "MegaApplication.h"
-#include "MacXFunctions.h"
-
 class MacXPlatform
 {
 
 private:
     MacXPlatform() {}
     static bool enableSetuidBit();
+    static MacXSystemServiceTask *systemServiceTask;
 
 public:
     static void initialize(int argc, char *argv[]);
