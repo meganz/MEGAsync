@@ -101,6 +101,8 @@ macx {
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES
     ICON = app.icns
 
+    QMAKE_INFO_PLIST = Info_MEGA.plist
+
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
 }

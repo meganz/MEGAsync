@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>CFBundleIconFile</key>
+	<string>app.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+        <key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleExecutable</key>
+	<string>MEGAsync</string>
+	<key>CFBundleIdentifier</key>
+	<string>mega.mac</string>
+	<key>LSUIElement</key>
+        <string>1</string>
+        <key>NSHighResolutionCapable</key>
+            <string>True</string>
+            <key>NSServices</key>
+            <array>
+                    <dict>
+                            <key>NSMenuItem</key>
+                            <dict>
+                                    <key>default</key>
+                                    <string>MEGA</string>
+                            </dict>
+                            <key>NSMessage</key>
+                            <string>handleItems</string>
+                            <key>NSPortName</key>
+                            <string>MEGAsync</string>
+                            <key>NSRequiredContext</key>
+                            <dict>
+                                    <key>NSServiceCategory</key>
+                                    <string>public.item</string>
+                                    <key>NSTextContent</key>
+                                    <string>FilePath</string>
+                            </dict>
+                            <key>NSSendTypes</key>
+                            <array>
+                                    <string>NSFilenamesPboardType</string>
+                            </array>
+                            <key>NSServiceDescription</key>
+                            <string>Upload to MEGA.If exists, generate link.</string>
+                    </dict>
+            </array>
+</dict>
+</plist>
