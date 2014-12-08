@@ -35,12 +35,12 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 
             if(fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
             {
-                delete fpLocal;
-                delete fpRemote;
+                delete [] fpLocal;
+                delete [] fpRemote;
                 return;
             }
-            delete fpLocal;
-            delete fpRemote;
+            delete [] fpLocal;
+            delete [] fpRemote;
         }
 
         megaApi->startDownload(parent,currentPath.toUtf8().constData());
