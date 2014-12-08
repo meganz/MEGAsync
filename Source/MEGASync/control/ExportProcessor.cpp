@@ -33,6 +33,11 @@ void ExportProcessor::requestLinks()
         string tmpPath((const char*)fileList[i].toUtf8().constData());
 #endif
         MegaNode *node = megaApi->getSyncedNode(&tmpPath);
+        if(!node)
+        {
+            const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
+            node = megaApi->getNodeByFingerprint(fpLocal);
+        }
         megaApi->exportNode(node, delegateListener);
         delete node;
     }
