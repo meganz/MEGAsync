@@ -70,18 +70,18 @@ macx {
     HEADERS += $$PWD/macx/MacXPlatform.h \
         $$PWD/macx/MacXFunctions.h \
         $$PWD/macx/macnotificationhandler.h \
-        $$PWD/macx/NotificationDelegate.h
+        $$PWD/macx/NotificationDelegate.h \
+        $$PWD/macx/MacXSystemServiceTask.h  \
+        $$PWD/macx/MEGAService.h
 
     OBJECTIVE_SOURCES += \
             $$PWD/macx/MacXFunctions.mm \
             $$PWD/macx/macnotificationhandler.mm \
-            $$PWD/macx/NotificationDelegate.mm
+            $$PWD/macx/NotificationDelegate.mm \
+            $$PWD/macx/MacXSystemServiceTask.mm \
+            $$PWD/macx/MEGAService.mm
+
 
     LIBS += -framework Cocoa
     LIBS += -framework Security
 }
-
-
-
-
-
