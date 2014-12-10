@@ -1213,22 +1213,22 @@ void MegaApplication::showInfoDialog()
         if(!infoDialog->isVisible())
         {
             int posx, posy;
-            QPoint position;
+            QPoint position, positionTrayIcon;
             QRect screenGeometry;
 
             #ifdef __APPLE__
-                position = trayIcon->getPosition();
-                screenGeometry = QApplication::desktop()->availableGeometry();
-            #else
-                position = QCursor::pos();
-                QDesktopWidget *desktop = QApplication::desktop();
-                int screenIndex = desktop->screenNumber(position);
-                screenGeometry = desktop->availableGeometry(screenIndex);
+                positionTrayIcon = trayIcon->getPosition();
             #endif
 
+            position = QCursor::pos();
+            QDesktopWidget *desktop = QApplication::desktop();
+            int screenIndex = desktop->screenNumber(position);
+            screenGeometry = desktop->availableGeometry(screenIndex);
+
+
             #ifdef __APPLE__
-                posx = position.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
-                posy = screenGeometry.top();
+                posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
+                posy = screenIndex ? screenGeometry.top()+22: screenGeometry.top();
             #else
                 #ifdef WIN32
                     QRect totalGeometry = QApplication::desktop()->screenGeometry();
