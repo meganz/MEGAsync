@@ -41,6 +41,12 @@ height: 16px;
     margin-left: 6px;
     margin-right: 6px;
 }
+
+#cbAlwaysUploadToLocation
+{
+    spacing: 10px;
+	margin-left: 6px;
+}
 </string>
   </property>
   <property name="modal">
@@ -95,6 +101,16 @@ height: 16px;
        <string>Retrieving folders...</string>
       </property>
      </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbAlwaysUploadToLocation">
+     <property name="text">
+      <string>Always upload to this destination</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item>

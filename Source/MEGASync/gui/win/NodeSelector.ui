@@ -41,7 +41,11 @@ QPushButton
     min-height: 14px;
 	height: 14px;
 }
-</string>
+
+#cbAlwaysUploadToLocation
+{
+    spacing: 10px;
+}</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -92,6 +96,13 @@ QPushButton
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="cbAlwaysUploadToLocation">
+     <property name="text">
+      <string>Always upload to this destination</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="bLayout" native="true">
      <property name="maximumSize">
       <size>
@@ -100,7 +111,16 @@ QPushButton
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
