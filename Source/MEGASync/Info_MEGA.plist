@@ -29,7 +29,7 @@
                             <key>NSMessage</key>
                             <string>handleItems</string>
                             <key>NSPortName</key>
-                            <string>MEGAsync</string>
+                            <string>/Applications/MEGAsync</string>
                             <key>NSRequiredContext</key>
                             <dict>
                                     <key>NSServiceCategory</key>
