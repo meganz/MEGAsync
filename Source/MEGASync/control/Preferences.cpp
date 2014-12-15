@@ -532,7 +532,7 @@ void Preferences::setUpdateAutomatically(bool value)
 bool Preferences::hasDefaultUploadFolder()
 {
     mutex.lock();
-    bool value = settings->value(hasDefaultUploadFolderKey, uploadFolder()!=0 ).toBool();
+    bool value = settings->value(hasDefaultUploadFolderKey, uploadFolder() != 0).toBool();
     mutex.unlock();
     return value;
 }
@@ -540,7 +540,7 @@ bool Preferences::hasDefaultUploadFolder()
 bool Preferences::hasDefaultDownloadFolder()
 {
     mutex.lock();
-    bool value = settings->value(hasDefaultUploadFolderKey, !downloadFolder().isEmpty() ).toBool();
+    bool value = settings->value(hasDefaultDownloadFolderKey, !downloadFolder().isEmpty()).toBool();
     mutex.unlock();
     return value;
 }
@@ -548,7 +548,7 @@ bool Preferences::hasDefaultDownloadFolder()
 bool Preferences::hasDefaultImportFolder()
 {
     mutex.lock();
-    bool value = settings->value(hasDefaultUploadFolderKey, importFolder()!=0 ).toBool();
+    bool value = settings->value(hasDefaultImportFolderKey, importFolder() != 0).toBool();
     mutex.unlock();
     return value;
 }

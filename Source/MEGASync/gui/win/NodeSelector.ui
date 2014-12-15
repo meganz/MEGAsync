@@ -45,6 +45,7 @@ QPushButton
 #cbAlwaysUploadToLocation
 {
     spacing: 10px;
+	padding-left: -1px;
 }</string>
   </property>
   <property name="modal">
@@ -111,16 +112,7 @@ QPushButton
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
+      <property name="margin">
        <number>0</number>
       </property>
       <item>

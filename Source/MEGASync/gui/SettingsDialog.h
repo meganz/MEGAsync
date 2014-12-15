@@ -120,6 +120,7 @@ private:
     bool shouldClose;
     int modifyingSettings;
     long long cacheSize;
+    bool hasDefaultUploadOption;
 
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;

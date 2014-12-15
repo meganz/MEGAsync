@@ -293,7 +293,6 @@ protected:
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
-    static const bool defaultUploadFolderOption;
     static const int  defaultUploadLimitKB;
     static const int  defaultProxyType;
     static const QString  defaultProxyProtocol;

@@ -21,7 +21,10 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     this->showFiles = showFiles;
     this->showInshares = showInshares;
     delegateListener = new QTMegaRequestListener(megaApi, this);
+    ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
+
+    nodesReady();
 }
 
 NodeSelector::~NodeSelector()
@@ -75,9 +78,91 @@ void NodeSelector::nodesReady()
     }
 }
 
+void NodeSelector::showDefaultUploadOption(bool show)
+{
+    ui->cbAlwaysUploadToLocation->setVisible(show);
+}
+
+void NodeSelector::setDefaultUploadOption(bool value)
+{
+    ui->cbAlwaysUploadToLocation->setChecked(value);
+}
+
 long long NodeSelector::getSelectedFolderHandle()
 {
     return selectedFolder;
+}
+
+void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedHandle);
+    if(!node)
+    {
+        return;
+    }
+
+    QList<MegaNode *> list;
+    while(node)
+    {
+        list.append(node);
+        node = megaApi->getParentNode(node);
+    }
+
+    if(!list.size())
+    {
+        return;
+    }
+
+    QTreeWidgetItem *item = NULL;
+    int index = list.size() - 1;
+    node = list.at(index);
+
+    for(int i = 0; i < ui->tMegaFolders->topLevelItemCount(); i++)
+    {
+        QTreeWidgetItem *tmp = ui->tMegaFolders->topLevelItem(i);
+        if(tmp->data(0, Qt::UserRole) == node->getHandle())
+        {
+            node = NULL;
+            item = tmp;
+            index--;
+            break;
+        }
+    }
+
+    if(node)
+    {
+        for(int k = 0; k < list.size(); k++)
+            delete list.at(k);
+        return;
+    }
+
+    while(index >= 0)
+    {
+        node = list.at(index);
+        for(int j = 0; j < item->childCount(); j++)
+        {
+            QTreeWidgetItem *tmp = item->child(j);
+            if(tmp->data(0, Qt::UserRole) == node->getHandle())
+            {
+                node = NULL;
+                item = tmp;
+                index--;
+                break;
+            }
+        }
+
+        if(node)
+        {
+            for(int k = 0; k < list.size(); k++)
+                delete list.at(k);
+            return;
+        }
+    }
+
+    for(int k = 0; k < list.size(); k++)
+        delete list.at(k);
+
+    ui->tMegaFolders->setCurrentItem(item);
 }
 
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
@@ -216,4 +301,9 @@ void NodeSelector::on_bOk_clicked()
     }
     delete check;
     accept();
+}
+
+bool NodeSelector::getDefaultUploadOption()
+{
+   return ui->cbAlwaysUploadToLocation->isChecked();
 }
