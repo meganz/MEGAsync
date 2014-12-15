@@ -68,7 +68,7 @@
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>[$1584]</translation>
+        <translation type="obsolete">[$1584]</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -851,6 +851,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>[$1921]
 [$1922]</translation>
     </message>
+    <message>
+        <source>Always upload to this destination</source>
+        <translation type="unfinished">[$1812]</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1342,7 +1346,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>[$2051]</translation>
+        <translation type="obsolete">[$2051]</translation>
     </message>
     <message>
         <source>Enable / disable</source>
