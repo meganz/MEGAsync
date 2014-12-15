@@ -74,6 +74,12 @@ public:
     void setLanguage(QString &value);
     bool updateAutomatically();
     void setUpdateAutomatically(bool value);
+    bool hasDefaultUploadFolder();
+    bool hasDefaultDownloadFolder();
+    bool hasDefaultImportFolder();
+    void setHasDefaultUploadFolder(bool value);
+    void setHasDefaultDownloadFolder(bool value);
+    void setHasDefaultImportFolder(bool value);
     bool canUpdate();
     int uploadLimitKB();
     void setUploadLimitKB(int value);
@@ -261,6 +267,9 @@ protected:
     static const QString folderActiveKey;
 	static const QString downloadFolderKey;
 	static const QString uploadFolderKey;
+    static const QString hasDefaultUploadFolderKey;
+    static const QString hasDefaultDownloadFolderKey;
+    static const QString hasDefaultImportFolderKey;
 	static const QString importFolderKey;
     static const QString fileNameKey;
     static const QString fileHandleKey;
@@ -284,6 +293,7 @@ protected:
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
+    static const bool defaultUploadFolderOption;
     static const int  defaultUploadLimitKB;
     static const int  defaultProxyType;
     static const QString  defaultProxyProtocol;
