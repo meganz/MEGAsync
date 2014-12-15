@@ -82,6 +82,9 @@ const QString Preferences::folderActiveKey          = QString::fromAscii("folder
 const QString Preferences::downloadFolderKey		= QString::fromAscii("downloadFolder");
 const QString Preferences::uploadFolderKey			= QString::fromAscii("uploadFolder");
 const QString Preferences::importFolderKey			= QString::fromAscii("importFolder");
+const QString Preferences::hasDefaultUploadFolderKey	= QString::fromAscii("hasDefaultUploadFolder");
+const QString Preferences::hasDefaultDownloadFolderKey	= QString::fromAscii("hasDefaultDownloadFolder");
+const QString Preferences::hasDefaultImportFolderKey	= QString::fromAscii("hasDefaultImportFolder");
 const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
@@ -522,6 +525,54 @@ void Preferences::setUpdateAutomatically(bool value)
 {
     mutex.lock();
     settings->setValue(updateAutomaticallyKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::hasDefaultUploadFolder()
+{
+    mutex.lock();
+    bool value = settings->value(hasDefaultUploadFolderKey, uploadFolder()!=0 ).toBool();
+    mutex.unlock();
+    return value;
+}
+
+bool Preferences::hasDefaultDownloadFolder()
+{
+    mutex.lock();
+    bool value = settings->value(hasDefaultUploadFolderKey, !downloadFolder().isEmpty() ).toBool();
+    mutex.unlock();
+    return value;
+}
+
+bool Preferences::hasDefaultImportFolder()
+{
+    mutex.lock();
+    bool value = settings->value(hasDefaultUploadFolderKey, importFolder()!=0 ).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setHasDefaultUploadFolder(bool value)
+{
+    mutex.lock();
+    settings->setValue(hasDefaultUploadFolderKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setHasDefaultDownloadFolder(bool value)
+{
+    mutex.lock();
+    settings->setValue(hasDefaultDownloadFolderKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setHasDefaultImportFolder(bool value)
+{
+    mutex.lock();
+    settings->setValue(hasDefaultImportFolderKey, value);
     settings->sync();
     mutex.unlock();
 }
