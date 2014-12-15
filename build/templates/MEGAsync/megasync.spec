@@ -265,7 +265,6 @@ killall megasync 2> /dev/null || true
 %{_datadir}/applications/megasync.desktop
 %{_datadir}/icons/hicolor/*/apps/mega.png
 %{_datadir}/icons/hicolor/*/*/mega.png
-%{_bindir}/MEGAlogger
 
 %changelog
 
