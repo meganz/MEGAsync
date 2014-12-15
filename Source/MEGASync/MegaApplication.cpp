@@ -1878,6 +1878,10 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
         MegaHandle nodeHandle = uploadFolderSelector->getSelectedHandle();
         preferences->setHasDefaultUploadFolder(uploadFolderSelector->isDefaultFolder());
         preferences->setUploadFolder(nodeHandle);
+        if(settingsDialog)
+        {
+            settingsDialog->loadSettings();
+        }
         processUploadQueue(nodeHandle);
     }
     //If the dialog is rejected, cancel uploads
