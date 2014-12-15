@@ -120,7 +120,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
     for(int i = 0; i < ui->tMegaFolders->topLevelItemCount(); i++)
     {
         QTreeWidgetItem *tmp = ui->tMegaFolders->topLevelItem(i);
-        if(tmp->data(0, Qt::UserRole) == node->getHandle())
+        if(tmp->data(0, Qt::UserRole).toLongLong() == node->getHandle())
         {
             node = NULL;
             item = tmp;
@@ -142,7 +142,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         for(int j = 0; j < item->childCount(); j++)
         {
             QTreeWidgetItem *tmp = item->child(j);
-            if(tmp->data(0, Qt::UserRole) == node->getHandle())
+            if(tmp->data(0, Qt::UserRole).toLongLong() == node->getHandle())
             {
                 node = NULL;
                 item = tmp;
