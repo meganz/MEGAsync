@@ -21,8 +21,11 @@ public:
     explicit NodeSelector(mega::MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent = 0, bool showFiles = false, bool showInshares = true);
 
     ~NodeSelector();
-    void nodesReady();
+    void showDefaultUploadOption(bool show = true);
+    void setDefaultUploadOption(bool value);
     long long getSelectedFolderHandle();
+    void setSelectedFolderHandle(long long selectedHandle);
+    bool getDefaultUploadOption();
 
 private:
     Ui::NodeSelector *ui;
@@ -36,6 +39,7 @@ private:
     bool showInshares;
 
 protected:
+    void nodesReady();
     void addChildren(QTreeWidgetItem *parentItem, mega::MegaNode *parentNode);
     mega::QTMegaRequestListener *delegateListener;
 

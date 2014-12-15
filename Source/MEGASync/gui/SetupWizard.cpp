@@ -528,7 +528,6 @@ void SetupWizard::on_bLocalFolder_clicked()
 void SetupWizard::on_bMegaFolder_clicked()
 {
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, this);
-    nodeSelector->nodesReady();
     int result = nodeSelector->exec();
     if(result != QDialog::Accepted)
     {

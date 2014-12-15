@@ -35,7 +35,27 @@ MegaHandle UploadToMegaDialog::getSelectedHandle()
 
 bool UploadToMegaDialog::isDefaultFolder()
 {
-	return ui->cDefaultPath->isChecked();
+    return ui->cDefaultPath->isChecked();
+}
+
+void UploadToMegaDialog::setDefaultFolder(long long handle)
+{
+    MegaNode *node = megaApi->getNodeByHandle(handle);
+    if(!node)
+    {
+        return;
+    }
+
+    const char *path = megaApi->getNodePath(node);
+    if(!path)
+    {
+        delete node;
+        return;
+    }
+
+    ui->eFolderPath->setText(QString::fromUtf8(path));
+    delete [] path;
+    delete node;
 }
 
 void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
@@ -60,7 +80,13 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
 void UploadToMegaDialog::on_bChange_clicked()
 {
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, false, this);
-	nodeSelector->nodesReady();
+    MegaNode *defaultNode = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
+    if(defaultNode)
+    {
+        nodeSelector->setSelectedFolderHandle(defaultNode->getHandle());
+        delete defaultNode;
+    }
+
 	int result = nodeSelector->exec();
 	if(result != QDialog::Accepted)
     {

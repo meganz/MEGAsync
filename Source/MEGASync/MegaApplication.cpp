@@ -1739,7 +1739,6 @@ void MegaApplication::downloadActionClicked()
     if(appfinished) return;
 
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, 0,true);
-    nodeSelector->nodesReady();
     int result = nodeSelector->exec();
     if(result != QDialog::Accepted)
     {
@@ -1853,7 +1852,7 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
     //If there is a default upload folder in the preferences
     MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
-	if(node)
+    if(preferences->hasDefaultUploadFolder() && node)
 	{
         //use it to upload the list of files
         processUploadQueue(node->getHandle());
@@ -1862,6 +1861,8 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 	}
 
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
+    uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
+
     #ifdef WIN32
         uploadFolderSelector->showMinimized();
         uploadFolderSelector->setWindowState(Qt::WindowActive);
@@ -1875,8 +1876,8 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
     {
         //If the dialog is accepted, get the destination node
         MegaHandle nodeHandle = uploadFolderSelector->getSelectedHandle();
-        if(uploadFolderSelector->isDefaultFolder())
-            preferences->setUploadFolder(nodeHandle);
+        preferences->setHasDefaultUploadFolder(uploadFolderSelector->isDefaultFolder());
+        preferences->setUploadFolder(nodeHandle);
         processUploadQueue(nodeHandle);
     }
     //If the dialog is rejected, cancel uploads

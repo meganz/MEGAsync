@@ -712,16 +712,22 @@ void SettingsDialog::loadSettings()
         ui->lAccountImage->setIconSize(QSize(32, 32));
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
-        if(!node) ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+        if(!node)
+        {
+            hasDefaultUploadOption = false;
+            ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+        }
         else
         {
             const char *nPath = megaApi->getNodePath(node);
             if(!nPath)
             {
+                hasDefaultUploadOption = false;
                 ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
             }
             else
             {
+                hasDefaultUploadOption = preferences->hasDefaultUploadFolder();
                 ui->eUploadFolder->setText(QString::fromUtf8(nPath));
                 delete [] nPath;
             }
@@ -888,8 +894,16 @@ bool SettingsDialog::saveSettings()
 
         //Account
         MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
-        if(node && (ui->eUploadFolder->text().compare(tr("/MEGAsync Uploads")) || preferences->uploadFolder()))
+        if(node)
+        {
+            preferences->setHasDefaultUploadFolder(hasDefaultUploadOption);
             preferences->setUploadFolder(node->getHandle());
+        }
+        else
+        {
+            preferences->setHasDefaultUploadFolder(false);
+            preferences->setUploadFolder(0);
+        }
         delete node;
 
         QString defaultDownloadPath;
@@ -1308,7 +1322,15 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 void SettingsDialog::on_bUploadFolder_clicked()
 {
     NodeSelector *nodeSelector = new NodeSelector(megaApi, true, false, this);
-    nodeSelector->nodesReady();
+    MegaNode *defaultNode = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
+    if(defaultNode)
+    {
+        nodeSelector->setSelectedFolderHandle(defaultNode->getHandle());
+        delete defaultNode;
+    }
+
+    nodeSelector->setDefaultUploadOption(hasDefaultUploadOption);
+    nodeSelector->showDefaultUploadOption();
     int result = nodeSelector->exec();
     if(result != QDialog::Accepted)
     {
@@ -1333,14 +1355,15 @@ void SettingsDialog::on_bUploadFolder_clicked()
     }
 
     QString newPath = QString::fromUtf8(nPath);
-    delete nodeSelector;
-    delete [] nPath;
-    delete node;
-    if(newPath.compare(ui->eUploadFolder->text()))
+    if(newPath.compare(ui->eUploadFolder->text()) || hasDefaultUploadOption != nodeSelector->getDefaultUploadOption())
     {
+        hasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
         ui->eUploadFolder->setText(newPath);
         stateChanged();
     }
+    delete nodeSelector;
+    delete [] nPath;
+    delete node;
 }
 
 void SettingsDialog::on_bDownloadFolder_clicked()
