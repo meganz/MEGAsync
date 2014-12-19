@@ -197,7 +197,7 @@ char *runWithRootPrivileges(char *command)
     OSStatus status;
     AuthorizationRef authorizationRef;
 
-    NSString * pathToIcon = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/Resources/appicon32.png"];
+    NSString * pathToIcon = [[[NSBundle mainBundle] bundlePath] stringByAppendingString:@"/Contents/Resources/appicon32.tiff"];
     const char *icon = [pathToIcon fileSystemRepresentation];
     //QString promptTemp = QCoreApplication::translate("MacXFunctions","MEGAsync wants you to make changes. ");
     //QByteArray byteArray = promptTemp.toUtf8();
