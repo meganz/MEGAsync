@@ -173,7 +173,10 @@ padding-left: 1px;
 {
     background-color: white;
 }
-</string>
+#lHeader
+{
+	padding-top: 2px;
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
