@@ -55,7 +55,6 @@ void Utilities::initializeExtensions()
     extensionIcons[QString::fromAscii("as")] = extensionIcons[QString::fromAscii("ascs")] =
                extensionIcons[QString::fromAscii("asc")]  = QString::fromAscii("fla_lang.png");
     extensionIcons[QString::fromAscii("fla")] = QString::fromAscii("flash.png");
-    extensionIcons[QString::fromAscii("flv")] = QString::fromAscii("flash_video.png");
 
     extensionIcons[QString::fromAscii("fnt")] = extensionIcons[QString::fromAscii("otf")] = extensionIcons[QString::fromAscii("ttf")]  =
                             extensionIcons[QString::fromAscii("fon")]  = QString::fromAscii("font.png");
@@ -113,6 +112,7 @@ void Utilities::initializeExtensions()
 
     extensionIcons[QString::fromAscii("swf")] = QString::fromAscii("swf.png");
     extensionIcons[QString::fromAscii("torrent")] = QString::fromAscii("torrent.png");
+    extensionIcons[QString::fromAscii("dmg")] = QString::fromAscii("dmg.png");
 
     extensionIcons[QString::fromAscii("txt")] = extensionIcons[QString::fromAscii("rtf")]  = extensionIcons[QString::fromAscii("ans")]  =
                             extensionIcons[QString::fromAscii("ascii")]  = extensionIcons[QString::fromAscii("log")] =
@@ -131,7 +131,7 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("mpeg")] = extensionIcons[QString::fromAscii("mov")]  =
                             extensionIcons[QString::fromAscii("3g2")] = extensionIcons[QString::fromAscii("3gp")]  =
                             extensionIcons[QString::fromAscii("asf")] = extensionIcons[QString::fromAscii("wmv")]  =
-                            QString::fromAscii("video.png");
+                            extensionIcons[QString::fromAscii("flv")] = QString::fromAscii("video.png");
 
 
      extensionIcons[QString::fromAscii("srt")] = QString::fromAscii("video_subtitles.png");

@@ -15,7 +15,6 @@
         <file>images/drag_executable.png</file>
         <file>images/drag_fla_lang.png</file>
         <file>images/drag_flash.png</file>
-        <file>images/drag_flash_video.png</file>
         <file>images/drag_folder.png</file>
         <file>images/drag_folder_shared.png</file>
         <file>images/drag_font.png</file>
@@ -213,5 +212,6 @@
         <file>images/tray_play_over_ico.png</file>
         <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
+        <file>images/drag_dmg.png</file>
     </qresource>
 </RCC>

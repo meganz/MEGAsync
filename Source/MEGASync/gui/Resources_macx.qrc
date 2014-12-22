@@ -15,7 +15,6 @@
         <file>images/drag_executable.png</file>
         <file>images/drag_fla_lang.png</file>
         <file>images/drag_flash.png</file>
-        <file>images/drag_flash_video.png</file>
         <file>images/drag_folder.png</file>
         <file>images/drag_folder_shared.png</file>
         <file>images/drag_font.png</file>
@@ -306,7 +305,6 @@
         <file>images/drag_excel@2x.png</file>
         <file>images/drag_executable@2x.png</file>
         <file>images/drag_fla_lang@2x.png</file>
-        <file>images/drag_flash_video@2x.png</file>
         <file>images/drag_flash@2x.png</file>
         <file>images/drag_folder_shared@2x.png</file>
         <file>images/drag_folder@2x.png</file>
@@ -365,5 +363,7 @@
         <file>images/icon_syncing_mac_white3@2x.png</file>
         <file>images/icon_syncing_mac_white4.png</file>
         <file>images/icon_syncing_mac_white4@2x.png</file>
+        <file>images/drag_dmg.png</file>
+        <file>images/drag_dmg@2x.png</file>
     </qresource>
 </RCC>
