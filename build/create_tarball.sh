@@ -14,7 +14,7 @@ rm -fr bindings/qt/3rdparty || true
 cd $cwd
 
 # download cURL
-export CURL_VERSION=7.32.0
+export CURL_VERSION=7.39.0
 export CURL_SOURCE_FILE=curl-$CURL_VERSION.tar.gz
 export CURL_SOURCE_FOLDER=curl-$CURL_VERSION
 export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
@@ -24,7 +24,7 @@ fi
 
 # download libsodium
 export SODIUM=libsodium
-export SODIUM_VERSION=0.5.0
+export SODIUM_VERSION=1.0.1
 export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
 export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
 export SODIUM_DOWNLOAD_URL=https://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
