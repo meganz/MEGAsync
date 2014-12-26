@@ -4,7 +4,7 @@ root_dir=`pwd`
 
 # curl
 export CURL=curl
-export CURL_VERSION=7.32.0
+export CURL_VERSION=7.39.0
 export CURL_EXTRA="--disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp --disable-gopher --disable-sspi --without-librtmp --without-libidn --without-libssh2"
 export CURL_SOURCE_FILE=$CURL-$CURL_VERSION.tar.gz
 export CURL_SOURCE_FOLDER=$CURL-$CURL_VERSION
@@ -48,7 +48,7 @@ fi
 
 # libsodium
 export SODIUM=libsodium
-export SODIUM_VERSION=0.5.0
+export SODIUM_VERSION=1.0.1
 export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
 export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
 export SODIUM_DOWNLOAD_URL=http://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
