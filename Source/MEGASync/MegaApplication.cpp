@@ -1134,7 +1134,7 @@ void MegaApplication::refreshTrayIcon()
         }
 
         megaApi->updateStats();
-        onSyncStateChanged(megaApi);
+        onGlobalSyncStateChanged(megaApi);
         if(isLinux) updateTrayIcon();
     }
     if(trayIcon) trayIcon->show();
@@ -2399,7 +2399,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         paused = request->getFlag();
         preferences->setWasPaused(paused);
-        onSyncStateChanged(megaApi);
+        onGlobalSyncStateChanged(megaApi);
         break;
     }
     case MegaRequest::TYPE_ADD_SYNC:
@@ -2480,7 +2480,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         if(infoDialog) infoDialog->updateSyncsButton();
         if(settingsDialog) settingsDialog->loadSettings();
-        onSyncStateChanged(megaApi);
+        onGlobalSyncStateChanged(megaApi);
         break;
     }
     default:
@@ -2496,7 +2496,7 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     if(infoDialog && !totalUploadSize && !totalDownloadSize)
     {
         infoDialog->setWaiting(true);
-        onSyncStateChanged(megaApi);
+        onGlobalSyncStateChanged(megaApi);
     }
 
     //Update statics
@@ -2618,7 +2618,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
     {
         if(totalUploadSize || totalDownloadSize)
-            onSyncStateChanged(megaApi);
+            onGlobalSyncStateChanged(megaApi);
 
 		totalUploadSize = totalDownloadSize = 0;
 		totalUploadedSize = totalDownloadedSize = 0;
@@ -2667,7 +2667,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
     if(transfer->getNumRetry() == 1)
         showWarningMessage(tr("Temporary transmission error: ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     else
-        onSyncStateChanged(megaApi);
+        onGlobalSyncStateChanged(megaApi);
 }
 
 //Called when contacts have been updated in MEGA
@@ -2786,7 +2786,7 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //megaApi->fetchNodes();
 }
 
-void MegaApplication::onSyncStateChanged(MegaApi *)
+void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 {
     if(megaApi)
     {
@@ -2822,7 +2822,12 @@ void MegaApplication::onSyncStateChanged(MegaApi *)
     if(!isLinux) updateTrayIcon();
 }
 
-void MegaApplication::onSyncFileStateChanged(MegaApi *, const char *filePath, int)
+void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
+{
+    onGlobalSyncStateChanged(api);
+}
+
+void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, const char *filePath, int)
 {
     QString localPath = QString::fromUtf8(filePath);
     Platform::notifyItemChange(localPath);
