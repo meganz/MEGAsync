@@ -11,26 +11,14 @@ make distclean 2> /dev/null || true
 cd mega
 make distclean 2> /dev/null || true
 rm -fr bindings/qt/3rdparty || true
+./clean.sh || true
 cd $cwd
 
-# download cURL
-export CURL_VERSION=7.39.0
-export CURL_SOURCE_FILE=curl-$CURL_VERSION.tar.gz
-export CURL_SOURCE_FOLDER=curl-$CURL_VERSION
-export CURL_DOWNLOAD_URL=http://curl.haxx.se/download/$CURL_SOURCE_FILE
-if [ ! -f $CURL_SOURCE_FILE ]; then
-    wget -c $CURL_DOWNLOAD_URL || exit 1
-fi
-
-# download libsodium
-export SODIUM=libsodium
-export SODIUM_VERSION=1.0.1
-export SODIUM_SOURCE_FILE=$SODIUM-$SODIUM_VERSION.tar.gz
-export SODIUM_SOURCE_FOLDER=$SODIUM-$SODIUM_VERSION
-export SODIUM_DOWNLOAD_URL=https://download.libsodium.org/libsodium/releases/$SODIUM_SOURCE_FILE
-if [ ! -f $SODIUM_SOURCE_FILE ]; then
-    wget -c $SODIUM_DOWNLOAD_URL || exit 1
-fi
+# download software archives
+archives=$cwd/archives
+rm -fr $archives
+mkdir $archives
+../Source/MEGASync/mega/contrib/build_static.sh -n -f -w -s -o $archives
 
 # get current version
 MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../Source/MEGASync/control/Preferences.cpp`
@@ -61,8 +49,7 @@ ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
 ln -s ../../Source/configure $MEGASYNC_NAME/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
-ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAME/$CURL_SOURCE_FILE
-ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAME/$SODIUM_SOURCE_FILE
+ln -s $archives $MEGASYNC_NAME/archives
 tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
 
@@ -81,8 +68,7 @@ ln -s ../MEGAsync/MEGAsync.debug/debian.postrm $MEGASYNC_NAMED/
 ln -s ../../Source/configure $MEGASYNC_NAMED/configure
 ln -s ../../Source/MEGA.pro $MEGASYNC_NAMED/MEGA.pro
 ln -s ../../Source/MEGASync $MEGASYNC_NAMED/MEGASync
-ln -s ../$CURL_SOURCE_FILE $MEGASYNC_NAMED/$CURL_SOURCE_FILE
-ln -s ../$SODIUM_SOURCE_FILE $MEGASYNC_NAMED/$SODIUM_SOURCE_FILE
+ln -s $archives $MEGASYNC_NAMED/archives
 tar czfh $MEGASYNC_NAMED.tar.gz $MEGASYNC_NAMED
 rm -rf $MEGASYNC_NAMED
 
@@ -133,3 +119,5 @@ rm -rf $EXT_NAME
 rm -fr MEGAsync/MEGAShellExtNautilus/nautilus-megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.tar.gz
+
+rm -fr $archives
