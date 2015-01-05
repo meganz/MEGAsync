@@ -5,7 +5,7 @@ Architecture: any
 Version: MEGASYNC_VERSION
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.co.nz/#sync
-Build-Depends: debhelper, libqt4-dev, libqt4-dbus, libcrypto++-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs, unzip
+Build-Depends: debhelper, libqt4-dev, libqt4-dbus, libcrypto++-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs, unzip, wget, glibc-devel-static
 Package-List:
  megasync deb gnome optional
 Files:
