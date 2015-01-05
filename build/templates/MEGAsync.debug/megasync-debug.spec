@@ -10,7 +10,7 @@ Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++, gdb
-BuildRequires: hicolor-icon-theme
+BuildRequires: hicolor-icon-theme, unzip
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, libcryptopp-devel
