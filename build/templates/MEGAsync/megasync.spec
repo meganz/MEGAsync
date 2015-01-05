@@ -18,11 +18,23 @@ BuildRequires: update-desktop-files
 BuildRequires: libqt4, libqt4-x11
 %endif
 
-%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora}
+%if 0%{?fedora}
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 %endif
+
+%if 0%{?centos_version}
+BuildRequires: c-ares-devel,
+BuildRequires: desktop-file-utils
+BuildRequires: qt, qt-x11
+%endif
+
+%if 0%{?rhel_version}
+BuildRequires: desktop-file-utils
+BuildRequires: qt, qt-x11
+%endif
+
 
 %description
 Secure:
