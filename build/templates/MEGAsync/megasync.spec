@@ -22,6 +22,7 @@ BuildRequires: libqt4, libqt4-x11
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
+BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
 
 %if 0%{?centos_version}
@@ -55,6 +56,11 @@ Store up to 50 GB for free!
 %build
 %configure
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
+
+# Fedora uses system Crypto++ header files
+%if 0%{?fedora}
+rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
+%endif
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir}
