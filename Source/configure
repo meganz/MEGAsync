@@ -3,6 +3,14 @@
 # Configures MEGA SDK (creates config.h file)
 
 root_dir=`pwd`
+rm_archives=0
+
+# if archives are not yet downloaded
+if [ ! -d "$root_dir/archives" ]; then
+    mkdir $root_dir/archives
+    ./MEGASync/mega/contrib/build_static.sh -n -f -w -s -o $root_dir/archives
+    rm_archives=1
+fi
 
 cd MEGASync/mega
 ./contrib/build_static.sh \
@@ -19,3 +27,7 @@ cd MEGASync/mega
 ln -sf $root_dir/MEGASync/mega/bindings/qt/3rdparty/lib $root_dir/MEGASync/mega/bindings/qt/3rdparty/libs
 
 cd $root_dir
+
+if [ $rm_archives -eq 1 ]; then
+    rm -fr $root_dir/archives
+fi
