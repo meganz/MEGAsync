@@ -139,22 +139,57 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
     QDir dir(dataPath);
     dir.mkpath(QString::fromAscii("."));
     QString settingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg"));
+    QString bakSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.bak"));
+    bool retryFlag = false;
 
-    settings = new EncryptedSettings(settingsFile);
     errorFlag = false;
+    settings = new EncryptedSettings(settingsFile);
 
     QString currentAccount = settings->value(currentAccountKey).toString();
     if(currentAccount.size())
     {
         if(hasEmail(currentAccount))
-            login(currentAccount);
-        else
         {
-            //Corrupt settings
-            clearAll();
+            login(currentAccount);
+        }else
+        {
             errorFlag = true;
+            retryFlag = true;
         }
+
+    }else
+        retryFlag = true;
+
+    if(QFile::exists(bakSettingsFile) && retryFlag)
+    {
+        if(QFile::exists(settingsFile))
+            QFile::remove(settingsFile);
+
+        if(QFile::rename(bakSettingsFile,settingsFile))
+        {
+            delete settings;
+            settings = new EncryptedSettings(settingsFile);
+
+            //Retry with backup file
+            currentAccount = settings->value(currentAccountKey).toString();
+            if(currentAccount.size())
+            {
+                if(hasEmail(currentAccount))
+                {
+                    login(currentAccount);
+                    errorFlag = false;
+                }else
+                    errorFlag = true;
+            }
+        }
+
     }
+
+    if(errorFlag)
+    {
+        clearAll();
+    }
+
 }
 
 QString Preferences::email()
@@ -1257,6 +1292,7 @@ void Preferences::unlink()
     megaFolderHandles.clear();
     activeFolders.clear();
     localFingerprints.clear();
+    settings->sync();
     mutex.unlock();
 }
 

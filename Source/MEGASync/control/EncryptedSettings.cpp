@@ -65,6 +65,9 @@ void EncryptedSettings::clear()
 void EncryptedSettings::sync()
 {
     QSettings::sync();
+
+    QFile::remove(this->fileName().append(QString::fromUtf8(".bak")));
+    QFile::copy(this->fileName(),this->fileName().append(QString::fromUtf8(".bak")));
 }
 
 //Simplified XOR fun
