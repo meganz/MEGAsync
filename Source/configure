@@ -1,20 +1,56 @@
 #!/bin/bash
 
 # Configures MEGA SDK (creates config.h file)
-
 root_dir=`pwd`
 rm_archives=0
+archives=$root_dir/archives
+
+display_help() {
+    local app=$(basename "$0")
+    echo ""
+    echo "Usage:"
+    echo " $app [-f]"
+    echo ""
+    echo "Configure MEGA SDK (creates config.h file)"
+    echo ""
+    echo "Options:"
+    echo " -f : Force software packages rebuild."
+    echo ""
+}
+
+while getopts ":f" opt; do
+    case $opt in
+        f)
+            if [ -d "$archives" ]; then
+                rm -fr $archives
+            fi
+            ;;
+        h)
+            display_help $0
+            exit
+            ;;
+        \?)
+            display_help $0
+            exit
+            ;;
+        *)
+            display_help $0
+            exit
+            ;;
+    esac
+done
+shift $((OPTIND-1))
 
 # if archives are not yet downloaded
-if [ ! -d "$root_dir/archives" ]; then
-    mkdir $root_dir/archives
-    ./MEGASync/mega/contrib/build_static.sh -n -f -w -s -o $root_dir/archives
+if [ ! -d "$archives" ]; then
+    mkdir $archives
+    ./MEGASync/mega/contrib/build_static.sh -n -f -w -s -o $archives
     rm_archives=1
 fi
 
 cd MEGASync/mega
 ./contrib/build_static.sh \
-    -o $root_dir/archives \
+    -o $archives \
     -f \
     -l \
     -n \
@@ -29,5 +65,7 @@ ln -sf $root_dir/MEGASync/mega/bindings/qt/3rdparty/lib $root_dir/MEGASync/mega/
 cd $root_dir
 
 if [ $rm_archives -eq 1 ]; then
-    rm -fr $root_dir/archives
+    if [ -d "$archives" ]; then
+        rm -fr $archives
+    fi
 fi
