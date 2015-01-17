@@ -10,4 +10,5 @@ depends=(
 'nautilus'
 'libnautilus-extension'
 'hicolor-icon-theme'
+'ca-certificates'
 )

@@ -11,4 +11,5 @@ depends=(
 'sqlite'
 'c-ares'
 'crypto++'
+'ca-certificates'
 )

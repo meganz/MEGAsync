@@ -53,9 +53,8 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
-%configure
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
+./configure
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
