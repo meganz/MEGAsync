@@ -36,7 +36,6 @@ BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 %endif
 
-
 %description
 Secure:
 Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
