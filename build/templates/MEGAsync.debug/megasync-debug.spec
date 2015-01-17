@@ -9,8 +9,8 @@ Source0:	megasync-debug_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++, gdb
-BuildRequires: hicolor-icon-theme, unzip
+BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, libcryptopp-devel
@@ -18,8 +18,20 @@ BuildRequires: update-desktop-files
 BuildRequires: libqt4, libqt4-x11
 %endif
 
-%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?fedora}
+%if 0%{?fedora}
 BuildRequires: c-ares-devel, cryptopp-devel
+BuildRequires: desktop-file-utils
+BuildRequires: qt, qt-x11
+BuildRequires: terminus-fonts, fontpackages-filesystem
+%endif
+
+%if 0%{?centos_version}
+BuildRequires: c-ares-devel,
+BuildRequires: desktop-file-utils
+BuildRequires: qt, qt-x11
+%endif
+
+%if 0%{?rhel_version}
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 %endif

@@ -11,7 +11,7 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires:  qt-devel, glib2-devel, nautilus-devel, gnome-common
 BuildRequires:  pkgconfig(libnautilus-extension) >= 2.16.0
-BuildRequires:	hicolor-icon-theme
+BuildRequires:	hicolor-icon-theme, gnome-shell
 Requires:       nautilus, megasync
 
 %description
