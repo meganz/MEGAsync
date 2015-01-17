@@ -53,7 +53,7 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
-%configure
+./configure
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 qmake-qt4 "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}

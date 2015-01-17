@@ -1,4 +1,4 @@
-pkgname=megasync
+pkgname=megasync-debug
 pkgver=MEGASYNC_VERSION
 pkgrel=1
 arch=('any')
@@ -11,4 +11,5 @@ depends=(
 'sqlite'
 'c-ares'
 'crypto++'
+'ca-certificates'
 )
