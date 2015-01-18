@@ -1,7 +1,8 @@
 pkgname=megasync
 pkgver=MEGASYNC_VERSION
 pkgrel=1
-arch=('any')
+arch=('i686' 'x86_64')
+conflicts=('megatools')
 url="https://mega.co.nz/#sync"
 license=('Freeware')
 pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
@@ -12,4 +13,8 @@ depends=(
 'c-ares'
 'crypto++'
 'ca-certificates'
+'libpng'
+'qtchooser'
 )
+install="${pkgname}.install"
+options=(!strip)
