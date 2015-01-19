@@ -251,13 +251,13 @@ padding-left: 1px;
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">margin-top:-2px;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
         </property>
         <property name="iconSize">
@@ -380,7 +380,7 @@ margin-top:-1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -452,7 +452,7 @@ margin-top:-1px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_win.qrc">
+          <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
          </property>
          <property name="iconSize">
@@ -692,7 +692,7 @@ color: rgb(102, 102, 102);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/upload_timer_ico.png</normaloff>:/images/upload_timer_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -775,7 +775,7 @@ color: rgb(102, 102, 102);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1308,7 +1308,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -1381,7 +1381,7 @@ color: #666666;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
