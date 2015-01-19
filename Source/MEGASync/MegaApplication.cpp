@@ -1934,7 +1934,8 @@ void MegaApplication::onUpdateCompleted()
 {
     if(trayMenu)
     {
-        updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING);
+        updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
+                              QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"));
         updateAction->setEnabled(false);
     }
     updateAvailable = false;
@@ -2188,7 +2189,8 @@ void MegaApplication::createTrayIcon()
     }
     else
     {
-        updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING, this);
+        updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
+                                  QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
 #ifndef __APPLE__
         updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
