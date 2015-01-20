@@ -16,5 +16,4 @@ depends=(
 'libpng'
 'qtchooser'
 )
-install="${pkgname}.install"
 options=(!strip)
