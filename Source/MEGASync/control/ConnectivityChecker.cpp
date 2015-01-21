@@ -14,6 +14,8 @@ ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
             this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
     this->testURL = testURL;
+    this->reply = NULL;
+    timeoutms = 5000;
 }
 
 void ConnectivityChecker::setProxy(QNetworkProxy proxy)
@@ -40,13 +42,14 @@ void ConnectivityChecker::startCheck()
     networkAccess->setProxy(proxy);
 
     timer->start(timeoutms);
-    networkAccess->get(proxyTestRequest);
+    reply = networkAccess->get(proxyTestRequest);
 }
 
 void ConnectivityChecker::onTestFinished(QNetworkReply *reply)
 {
     timer->stop();
     reply->deleteLater();
+    this->reply = NULL;
 
     QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
     if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
@@ -69,8 +72,10 @@ void ConnectivityChecker::onTestFinished(QNetworkReply *reply)
 
 void ConnectivityChecker::onTestTimeout()
 {
-    emit testError();
-    emit testFinished();
+    if(reply)
+    {
+        reply->abort();
+    }
 }
 
 void ConnectivityChecker::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *auth)
