@@ -32,6 +32,7 @@ protected slots:
 
 protected:
     QNetworkAccessManager *networkAccess;
+    QNetworkReply *reply;
     QNetworkProxy proxy;
     QTimer *timer;
     int timeoutms;
