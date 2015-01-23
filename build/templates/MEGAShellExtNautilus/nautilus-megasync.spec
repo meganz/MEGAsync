@@ -4,7 +4,7 @@ Release:	1%{?dist}
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware
 Group:		Applications/Others
-Url:		https://mega.co.nz
+Url:		https://mega.nz
 Source0:	nautilus-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>

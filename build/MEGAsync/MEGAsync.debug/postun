@@ -1,5 +1,0 @@
-#!/bin/sh
-
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-
-rm $YUM_FILE || true

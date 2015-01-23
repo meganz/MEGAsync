@@ -4,7 +4,7 @@ Release:	1%{?dist}
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware
 Group:		Applications/Others
-Url:		https://mega.co.nz
+Url:		https://mega.nz
 Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
@@ -98,8 +98,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=http://mega.co.nz/linux/MEGAsync/RHEL_7/
-gpgkey=https://mega.co.nz/linux/MEGAsync/RHEL_7/repodata/repomd.xml.key
+baseurl=http://mega.nz/linux/MEGAsync/RHEL_7/
+gpgkey=https://mega.nz/linux/MEGAsync/RHEL_7/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
@@ -111,8 +111,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=http://mega.co.nz/linux/MEGAsync/CentOS_7/
-gpgkey=https://mega.co.nz/linux/MEGAsync/CentOS_7/repodata/repomd.xml.key
+baseurl=http://mega.nz/linux/MEGAsync/CentOS_7/
+gpgkey=https://mega.nz/linux/MEGAsync/CentOS_7/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
@@ -124,8 +124,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=http://mega.co.nz/linux/MEGAsync/Fedora_21/
-gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_21/repodata/repomd.xml.key
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_21/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_21/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
@@ -137,8 +137,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=http://mega.co.nz/linux/MEGAsync/Fedora_20/
-gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_20/repodata/repomd.xml.key
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_20/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_20/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
@@ -150,8 +150,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=http://mega.co.nz/linux/MEGAsync/Fedora_19
-gpgkey=https://mega.co.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_19
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
@@ -165,10 +165,10 @@ cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
 type=rpm-md
-baseurl=http://mega.co.nz/linux/MEGAsync/openSUSE_13.1/
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_13.1/
 gpgcheck=1
 autorefresh=1
-gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_13.1/repodata/repomd.xml.key
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_13.1/repodata/repomd.xml.key
 enabled=1
 DATA
 fi
@@ -182,10 +182,10 @@ cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
 type=rpm-md
-baseurl=http://mega.co.nz/linux/MEGAsync/openSUSE_12.3/
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_12.3/
 gpgcheck=1
 autorefresh=1
-gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_12.3/repodata/repomd.xml.key
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_12.3/repodata/repomd.xml.key
 enabled=1
 DATA
 fi
@@ -199,10 +199,10 @@ cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
 type=rpm-md
-baseurl=http://mega.co.nz/linux/MEGAsync/openSUSE_12.2/
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_12.2/
 gpgcheck=1
 autorefresh=1
-gpgkey=http://mega.co.nz/linux/MEGAsync/openSUSE_12.2/repodata/repomd.xml.key
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_12.2/repodata/repomd.xml.key
 enabled=1
 DATA
 fi
