@@ -205,7 +205,7 @@ char *runWithRootPrivileges(char *command)
 
     char *result = NULL;
 
-    char* args[2];
+    char* args[3];
     args [0] = "-c";
     args [1] = command;
     args [2] = NULL;
