@@ -30,7 +30,7 @@ fi
 
 if [ -d /etc/apt/sources.list.d ]; then
 cat >/etc/apt/sources.list.d/megasync.list <<EOF
-deb http://mega.co.nz/linux/MEGAsync/$str/ ./
+deb http://mega.nz/linux/MEGAsync/$str/ ./
 EOF
 fi
 
