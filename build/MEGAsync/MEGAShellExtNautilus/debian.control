@@ -2,7 +2,7 @@ Source: nautilus-megasync
 Section: gnome
 Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
-Homepage: https://mega.co.nz/#sync
+Homepage: https://mega.nz/#sync
 Build-Depends:  debhelper,
                 libqt4-dev,
                 intltool,
