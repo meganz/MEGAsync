@@ -948,7 +948,7 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
     }
     else
     {
-        minHeightAnimation->setTargetObject(this);
+        /*minHeightAnimation->setTargetObject(this);
         maxHeightAnimation->setTargetObject(this);
         minHeightAnimation->setPropertyName("minimumHeight");
         maxHeightAnimation->setPropertyName("maximumHeight");
@@ -958,7 +958,13 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
         maxHeightAnimation->setEndValue(552);
         minHeightAnimation->setDuration(150);
         maxHeightAnimation->setDuration(150);
-        animationGroup->start();
+        animationGroup->start();*/
+
+        this->hide();
+        this->setMaximumHeight(552);
+        this->setMinimumHeight(552);
+        onAnimationFinished();
+        this->show();
     }
 }
 
