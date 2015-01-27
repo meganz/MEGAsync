@@ -1679,6 +1679,8 @@ void MegaApplication::importLinks()
 void MegaApplication::uploadActionClicked()
 {
     #ifdef __APPLE__
+         if(QSysInfo::MacintoshVersion >= QSysInfo::MV_10_7)
+         {
                 infoDialog->hide();
                 QApplication::processEvents();
                 QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
@@ -1693,6 +1695,7 @@ void MegaApplication::uploadActionClicked()
                     shellUpload(qFiles);
                 }
          return;
+         }
     #endif
 
     if(multiUploadFileDialog)
