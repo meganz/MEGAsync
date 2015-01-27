@@ -22,7 +22,7 @@ class UpdateTask : public QObject
     Q_OBJECT
 
 public:
-    explicit UpdateTask(QObject *parent = 0);
+    explicit UpdateTask(mega::MegaApi *megaApi, QObject *parent = 0);
     ~UpdateTask();
 
 protected:
@@ -61,6 +61,7 @@ protected:
    bool forceInstall;
    bool running;
    bool forceCheck;
+   mega::MegaApi *megaApi;
 
 signals:
    void updateCompleted();

@@ -1468,7 +1468,7 @@ void MegaApplication::startUpdateTask()
     if(!updateThread && preferences->canUpdate())
     {
         updateThread = new QThread();
-        updateTask = new UpdateTask();
+        updateTask = new UpdateTask(megaApi);
         updateTask->moveToThread(updateThread);
 
         connect(this, SIGNAL(startUpdaterThread()), updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);
