@@ -7,7 +7,7 @@
 using namespace mega;
 using namespace std;
 
-UpdateTask::UpdateTask(QObject *parent) :
+UpdateTask::UpdateTask(MegaApi *megaApi, QObject *parent) :
     QObject(parent)
 {
     m_WebCtrl = NULL;
@@ -17,6 +17,7 @@ UpdateTask::UpdateTask(QObject *parent) :
     forceCheck = false;
     updateTimer = NULL;
     timeoutTimer = NULL;
+    this->megaApi = megaApi;
 }
 
 UpdateTask::~UpdateTask()
@@ -173,6 +174,8 @@ void UpdateTask::downloadFile(QString url)
     QNetworkRequest request(url);
     request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
                          QVariant( int(QNetworkRequest::AlwaysNetwork)));
+    request.setRawHeader( "User-Agent" , megaApi->getUserAgent());
+
     m_WebCtrl->get(request);
     timeoutTimer->start(Preferences::UPDATE_TIMEOUT_SECS*1000);
 }
