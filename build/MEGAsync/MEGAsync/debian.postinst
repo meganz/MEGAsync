@@ -23,6 +23,9 @@ elif [[ $ver == 8.* ]]; then
     str="Debian_7.0"
 elif [[ $ver = "testing" ]]; then
     str="Debian_7.0"
+# Elementary OS uses 12.04
+elif [[ $ver = "elementary OS Luna" ]]; then
+    str="xUbuntu_12.04"
 # fallback to LTS version, unsupported
 else
     str="xUbuntu_14.04"
