@@ -167,7 +167,17 @@ unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsi
         return 0;
     }
 
-    return signatureGenerator.get(key, signature, signbuflen);
+    unsigned signatureSize = signatureGenerator.get(key, signature, signbuflen);
+    if(signatureSize < signbuflen)
+    {
+        int padding = signbuflen - signatureSize;
+        for(int i = signatureSize - 1; i >= padding; i--)
+            signature[i] = signature[i - padding];
+        for(int i = 0; i < padding; i++)
+            signature[i] = 0;
+        signatureSize = signbuflen;
+    }
+    return signatureSize;
 }
 
 int main(int argc, char *argv[])
@@ -287,6 +297,17 @@ int main(int argc, char *argv[])
             cerr << "Error signing the update file" << endl;
             return 6;
         }
+
+        if(signatureSize < sizeof(signature))
+        {
+            int padding = sizeof(signature) - signatureSize;
+            for(int i = signatureSize - 1; i >= padding; i--)
+                signature[i] = signature[i - padding];
+            for(int i = 0; i < padding; i++)
+                signature[i] = 0;
+            signatureSize = sizeof(signature);
+        }
+
         string updateFileSignature;
         updateFileSignature.resize((signatureSize*4)/3+4);
         updateFileSignature.resize(Base64::btoa((byte *)signature, signatureSize, (char *)updateFileSignature.data()));
