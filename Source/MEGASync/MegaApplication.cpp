@@ -1407,7 +1407,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
         #endif
         lastTrayMessage = message;
         notificator->notify(Notificator::Information, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_512.png")));
+                                    QIcon(QString::fromUtf8("://images/app_128.png")));
     }
     else QMessageBox::information(NULL, title, message);
 }
@@ -1421,7 +1421,7 @@ void MegaApplication::showWarningMessage(QString message, QString title)
     {
         lastTrayMessage = message;
         notificator->notify(Notificator::Warning, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_512.png")));
+                                    QIcon(QString::fromUtf8("://images/app_128.png")));
     }
     else QMessageBox::warning(NULL, title, message);
 }
@@ -1435,7 +1435,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
             if(infoDialog && infoDialog->isVisible()) infoDialog->hide();
         #endif
         notificator->notify(Notificator::Critical, title, message,
-        QIcon(QString::fromUtf8("://images/app_512.png")));
+        QIcon(QString::fromUtf8("://images/app_128.png")));
     }
     else QMessageBox::critical(NULL, title, message);
 }
@@ -1449,7 +1449,7 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
     {
         lastTrayMessage = message;
         notificator->notify(Notificator::Information, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_512.png")));
+                                    QIcon(QString::fromUtf8("://images/app_128.png")));
     }
 }
 
