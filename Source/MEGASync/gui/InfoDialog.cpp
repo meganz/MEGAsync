@@ -960,11 +960,11 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
         maxHeightAnimation->setDuration(150);
         animationGroup->start();*/
 
-        this->hide();
+        //this->hide();
         this->setMaximumHeight(552);
         this->setMinimumHeight(552);
         onAnimationFinished();
-        this->show();
+        //this->show();
     }
 }
 
