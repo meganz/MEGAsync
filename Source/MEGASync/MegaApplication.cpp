@@ -1317,7 +1317,17 @@ void MegaApplication::runConnectivityCheck()
     proxy.setType(QNetworkProxy::NoProxy);
     if(preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
     {
-        proxy.setType(QNetworkProxy::HttpProxy);
+        int proxyProtocol = preferences->proxyProtocol();
+        switch(proxyProtocol)
+        {
+        case Preferences::PROXY_PROTOCOL_SOCKS5H:
+            proxy.setType(QNetworkProxy::Socks5Proxy);
+            break;
+        default:
+            proxy.setType(QNetworkProxy::HttpProxy);
+            break;
+        }
+
         proxy.setHostName(preferences->proxyServer());
         proxy.setPort(preferences->proxyPort());
         if(preferences->proxyRequiresAuth())
@@ -1334,10 +1344,19 @@ void MegaApplication::runConnectivityCheck()
             string sProxyURL = autoProxy->getProxyURL();
             QString proxyURL = QString::fromUtf8(sProxyURL.data());
 
-            QStringList arguments = proxyURL.split(QString::fromAscii(":"));
-            if(arguments.size() == 2)
+            QStringList parts = proxyURL.split(QString::fromAscii("://"));
+            if(parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
+            {
+                proxy.setType(QNetworkProxy::Socks5Proxy);
+            }
+            else
             {
                 proxy.setType(QNetworkProxy::HttpProxy);
+            }
+
+            QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
+            if(arguments.size() == 2)
+            {
                 proxy.setHostName(arguments[0]);
                 proxy.setPort(arguments[1].toInt());
             }
@@ -1508,10 +1527,21 @@ void MegaApplication::applyProxySettings()
 
     if(preferences->proxyType() == MegaProxy::PROXY_CUSTOM)
     {
+        int proxyProtocol = preferences->proxyProtocol();
         QString proxyString = preferences->proxyHostAndPort();
+        switch(proxyProtocol)
+        {
+            case Preferences::PROXY_PROTOCOL_SOCKS5H:
+                proxy.setType(QNetworkProxy::Socks5Proxy);
+                proxyString.insert(0, QString::fromUtf8("socks5h://"));
+                break;
+            default:
+                proxy.setType(QNetworkProxy::HttpProxy);
+                break;
+        }
+
         proxySettings->setProxyURL(proxyString.toUtf8().constData());
 
-        proxy.setType(QNetworkProxy::HttpProxy);
         proxy.setHostName(preferences->proxyServer());
         proxy.setPort(preferences->proxyPort());
         if(preferences->proxyRequiresAuth())

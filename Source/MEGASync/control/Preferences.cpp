@@ -114,7 +114,7 @@ const int  Preferences::defaultProxyType            = PROXY_TYPE_AUTO;
 #else
 const int  Preferences::defaultProxyType            = PROXY_TYPE_NONE;
 #endif
-const QString  Preferences::defaultProxyProtocol    = QString::fromAscii("HTTP");
+const int  Preferences::defaultProxyProtocol        = Preferences::PROXY_PROTOCOL_HTTP;
 const QString  Preferences::defaultProxyServer      = QString::fromAscii("127.0.0.1");
 const int Preferences::defaultProxyPort             = 8080;
 const bool Preferences::defaultProxyRequiresAuth    = false;
