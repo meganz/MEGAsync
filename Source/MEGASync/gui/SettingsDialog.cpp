@@ -80,6 +80,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->cAutoUpdate->hide();
         ui->bUpdate->hide();
     #endif
+        ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 #endif
 
 #ifdef __APPLE__
@@ -1083,7 +1084,16 @@ bool SettingsDialog::saveSettings()
         proxy.setType(QNetworkProxy::NoProxy);
         if(ui->rProxyManual->isChecked())
         {
-            proxy.setType(QNetworkProxy::HttpProxy);
+            switch(ui->cProxyType->currentIndex())
+            {
+            case Preferences::PROXY_PROTOCOL_SOCKS5H:
+                proxy.setType(QNetworkProxy::Socks5Proxy);
+                break;
+            default:
+                proxy.setType(QNetworkProxy::HttpProxy);
+                break;
+            }
+
             proxy.setHostName(ui->eProxyServer->text().trimmed());
             proxy.setPort(ui->eProxyPort->text().trimmed().toInt());
             if(ui->cProxyRequiresPassword->isChecked())
@@ -1100,10 +1110,19 @@ bool SettingsDialog::saveSettings()
                 string sProxyURL = proxySettings->getProxyURL();
                 QString proxyURL = QString::fromUtf8(sProxyURL.data());
 
-                QStringList arguments = proxyURL.split(QString::fromAscii(":"));
-                if(arguments.size() == 2)
+                QStringList parts = proxyURL.split(QString::fromAscii("://"));
+                if(parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
+                {
+                    proxy.setType(QNetworkProxy::Socks5Proxy);
+                }
+                else
                 {
                     proxy.setType(QNetworkProxy::HttpProxy);
+                }
+
+                QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
+                if(arguments.size() == 2)
+                {
                     proxy.setHostName(arguments[0]);
                     proxy.setPort(arguments[1].toInt());
                 }

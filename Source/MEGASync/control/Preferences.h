@@ -171,7 +171,8 @@ public:
     };
 
     enum {
-        PROXY_PROTOCOL_HTTP = 0
+        PROXY_PROTOCOL_HTTP = 0,
+        PROXY_PROTOCOL_SOCKS5H = 1
     };
 
     enum {
@@ -296,7 +297,7 @@ protected:
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
     static const int  defaultProxyType;
-    static const QString  defaultProxyProtocol;
+    static const int  defaultProxyProtocol;
     static const QString  defaultProxyServer;
     static const int defaultProxyPort;
     static const bool defaultProxyRequiresAuth;
