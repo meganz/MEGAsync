@@ -328,6 +328,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateTask = NULL;
     multiUploadFileDialog = NULL;
     exitDialog = NULL;
+    overquotaDialog = NULL;
     notificator = NULL;
 }
 
@@ -859,6 +860,26 @@ void MegaApplication::unityFix()
 
     emit unityFixSignal();
     dummyMenu->exec();
+}
+
+void MegaApplication::disableSyncs()
+{
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+    {
+       if(!preferences->isFolderActive(i))
+       {
+           continue;
+       }
+
+       Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+       Platform::notifyItemChange(preferences->getLocalFolder(i));
+       preferences->setSyncState(i, false);
+       MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+       megaApi->removeSync(node);
+       delete node;
+
+    }
+
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2289,6 +2310,30 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 //Called when a request has finished
 void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 {
+    if(e->getErrorCode() == MegaError::API_EOVERQUOTA)
+    {
+        //Cancel pending uploads and disable syncs
+        disableSyncs();
+        megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+        onGlobalSyncStateChanged(megaApi);
+
+        if(!overquotaDialog)
+        {
+            overquotaDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
+                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled"), QMessageBox::Ok);
+            overquotaDialog->exec();
+            overquotaDialog->deleteLater();
+            overquotaDialog = NULL;
+
+        }
+        else
+        {
+            overquotaDialog->raise();
+            overquotaDialog->activateWindow();
+        }
+
+    }
+
     switch (request->getType()) {
 	case MegaRequest::TYPE_EXPORT:
 	{
@@ -2336,7 +2381,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_LOGOUT:
     {
         if(e->getErrorCode())
+        {
+            QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out."));
             showErrorMessage(tr("Error") + QString::fromAscii(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        }
 
         if(preferences && preferences->logged())
         {
@@ -2564,6 +2612,30 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
 	if(appfinished) return;
+
+    if(e->getErrorCode() == MegaError::API_EOVERQUOTA)
+    {
+        //Cancel pending uploads and disable syncs
+        disableSyncs();
+        megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+        onGlobalSyncStateChanged(megaApi);
+
+        if(!overquotaDialog)
+        {
+            overquotaDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
+                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled"), QMessageBox::Ok);
+            overquotaDialog->exec();
+            overquotaDialog->deleteLater();
+            overquotaDialog = NULL;
+
+        }
+        else
+        {
+            overquotaDialog->raise();
+            overquotaDialog->activateWindow();
+        }
+
+    }
 
 	//Update statics
 	if(transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)

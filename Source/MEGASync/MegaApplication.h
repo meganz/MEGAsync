@@ -140,6 +140,7 @@ protected:
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
+    void disableSyncs();
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
@@ -196,6 +197,7 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
+    QMessageBox *overquotaDialog;
     QString lastTrayMessage;
 
     static QString appPath;
