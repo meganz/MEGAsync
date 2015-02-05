@@ -21,8 +21,8 @@ void UsageProgressBar::setProgress(int value)
 
     this->progress = value;
 	ui->wProgress->resize(value*3.6, ui->wProgress->height());
-    if(value<80)
+    if(value<97)
         ui->wProgress->setStyleSheet(QString::fromAscii("background-color: #78B241;"));
     else
-        ui->wProgress->setStyleSheet(QString::fromAscii("background-color: red;"));
+        ui->wProgress->setStyleSheet(QString::fromAscii("background-color: #d90007;"));
 }
