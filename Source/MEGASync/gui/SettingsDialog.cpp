@@ -966,6 +966,7 @@ bool SettingsDialog::saveSettings()
                         Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
                         megaApi->removeSync(node);
                     }
+                    Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
                     preferences->removeSyncedFolder(i);
                     delete node;
                     i--;

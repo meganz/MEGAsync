@@ -141,6 +141,7 @@ protected:
     void processDownloadQueue(QString path);
     void unityFix();
     void disableSyncs();
+    void closeDialogs();
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
@@ -198,6 +199,7 @@ protected:
     ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
     QMessageBox *overquotaDialog;
+    NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
 
     static QString appPath;
