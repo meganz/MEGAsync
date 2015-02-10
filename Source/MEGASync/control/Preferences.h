@@ -220,6 +220,7 @@ public:
     static const unsigned int MAX_IDLE_TIME_MS;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
+    static const long long MIN_EXTERNAL_NODES_WARNING_MS;
     static const char CLIENT_KEY[];
     static const char USER_AGENT[];
     static const int VERSION_CODE;

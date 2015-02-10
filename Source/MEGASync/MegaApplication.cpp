@@ -331,6 +331,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     overquotaDialog = NULL;
     downloadNodeSelector = NULL;
     notificator = NULL;
+    externalNodesTimestamp = 0;
 }
 
 MegaApplication::~MegaApplication()
@@ -698,7 +699,7 @@ void MegaApplication::start()
 
         if(preferences->lowerSizeLimit())
         {
-            megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue()*pow(1024,preferences->lowerSizeLimitUnit()));
+            megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
         }
         else
         {
@@ -707,7 +708,7 @@ void MegaApplication::start()
 
         if(preferences->upperSizeLimit())
         {
-            megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue()*pow(1024,preferences->upperSizeLimitUnit()));
+            megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
         }
         else
         {
@@ -1478,7 +1479,7 @@ void MegaApplication::setupWizardFinished()
 
     if(preferences->lowerSizeLimit())
     {
-        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue()*pow(1024,preferences->lowerSizeLimitUnit()));
+        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
     }
     else
     {
@@ -1487,7 +1488,7 @@ void MegaApplication::setupWizardFinished()
 
     if(preferences->upperSizeLimit())
     {
-        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue()*pow(1024,preferences->upperSizeLimitUnit()));
+        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
     }
     else
     {
@@ -2551,7 +2552,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 if(e->getErrorCode() == MegaError::API_ESID)
                 {
-                    QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out from another app."));
+                    QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
                 }
                 else
                 {
@@ -3050,7 +3051,12 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     if(externalNodes)
     {
         updateUserStats();
-        showNotificationMessage(tr("You have new or updated files in your account"));
+
+        if(QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
+        {
+            externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
+            showNotificationMessage(tr("You have new or updated files in your account"));
+        }
     }
 }
 

@@ -24,6 +24,7 @@ const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
+const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
 
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
@@ -121,8 +122,8 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
-const int Preferences::defaultLowerSizeLimitUnit =  Preferences::BYTE_UNIT;
-const int Preferences::defaultUpperSizeLimitUnit =  Preferences::BYTE_UNIT;
+const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
+const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 #ifdef WIN32
 const int  Preferences::defaultProxyType            = PROXY_TYPE_AUTO;
 #else

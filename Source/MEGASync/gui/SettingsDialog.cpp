@@ -74,8 +74,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     hasLowerLimit = false;
     upperLimit = 0;
     lowerLimit = 0;
-    upperLimitUnit = Preferences::BYTE_UNIT;
-    lowerLimitUnit = Preferences::BYTE_UNIT;
+    upperLimitUnit = Preferences::MEGA_BYTE_UNIT;
+    lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -1071,7 +1071,6 @@ bool SettingsDialog::saveSettings()
 
         if(sizeLimitsChanged)
         {
-
             preferences->setUpperSizeLimit(hasUpperLimit);
             preferences->setLowerSizeLimit(hasLowerLimit);
             preferences->setUpperSizeLimitValue(upperLimit);
@@ -1081,7 +1080,7 @@ bool SettingsDialog::saveSettings()
 
             if(hasLowerLimit)
             {
-                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue()*pow(1024,preferences->lowerSizeLimitUnit()));
+                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
             }
             else
             {
@@ -1090,14 +1089,12 @@ bool SettingsDialog::saveSettings()
 
             if(hasUpperLimit)
             {
-                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue()*pow(1024,preferences->upperSizeLimitUnit()));
+                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
             }
             else
             {
                 megaApi->setExclusionUpperSizeLimit(0);
             }
-
-
 
             sizeLimitsChanged = false;
         }
@@ -1246,28 +1243,9 @@ void SettingsDialog::loadSizeLimits()
     lowerLimit = preferences->lowerSizeLimitValue();
     upperLimitUnit = preferences->upperSizeLimitUnit();
     lowerLimitUnit = preferences->lowerSizeLimitUnit();
-
-    QString format = QString::fromUtf8("");
-
-    if(hasLowerLimit)
-    {
-        format  += QString::fromUtf8(" <") + Utilities::getSizeString(lowerLimit*pow(1024,lowerLimitUnit));
-    }
-
-    if(hasLowerLimit && hasUpperLimit)
-    {
-        format  += QString::fromUtf8(",");
-    }
-
-    if(hasUpperLimit)
-    {
-        format  += QString::fromUtf8(" >") + Utilities::getSizeString(upperLimit*pow(1024,upperLimitUnit));
-    }
-
-    ui->lLimitsInfo->setText(format);
-    //ui->cExcludeSize->setChecked(hasLowerLimit || hasUpperLimit);
-
+    ui->lLimitsInfo->setText(getFormatString());
 }
+
 void SettingsDialog::on_bAdd_clicked()
 {
     QStringList currentLocalFolders;
@@ -1279,54 +1257,65 @@ void SettingsDialog::on_bAdd_clicked()
 
         QString newMegaPath = ui->tSyncs->item(i, 1)->text().trimmed();
         MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-        if(!n) continue;
+        if(!n)
+        {
+            continue;
+        }
+
         currentMegaFolders.append(n->getHandle());
         delete n;
     }
 
-    BindFolderDialog *dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFolders, this);
+    QPointer<BindFolderDialog> dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFolders, this);
     int result = dialog->exec();
-    if(result != QDialog::Accepted)
+    if(!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
         return;
+    }
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if(!localFolderPath.length() || !node)
     {
+        delete dialog;
         delete node;
         return;
     }
-   QTableWidgetItem *localFolder = new QTableWidgetItem();
-   localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
-   QTableWidgetItem *megaFolder = new QTableWidgetItem();
-   const char *nPath = megaApi->getNodePath(node);
-   if(!nPath)
-   {
-       delete node;
-       return;
-   }
 
-   megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(nPath) + QString::fromAscii("  "));
-   int pos = ui->tSyncs->rowCount();
-   ui->tSyncs->setRowCount(pos+1);
-   localFolder->setToolTip(localFolderPath);
-   ui->tSyncs->setItem(pos, 0, localFolder);
-   megaFolder->setToolTip(QString::fromUtf8(nPath));
-   ui->tSyncs->setItem(pos, 1, megaFolder);
+    QTableWidgetItem *localFolder = new QTableWidgetItem();
+    localFolder->setText(QString::fromAscii("  ") + localFolderPath + QString::fromAscii("  "));
+    QTableWidgetItem *megaFolder = new QTableWidgetItem();
+    const char *nPath = megaApi->getNodePath(node);
+    if(!nPath)
+    {
+        delete dialog;
+        delete node;
+        return;
+    }
 
-   QCheckBox *c = new QCheckBox();
-   c->setChecked(true);
-   c->setToolTip(tr("Enable / disable"));
-   connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
-   ui->tSyncs->setCellWidget(pos, 2, c);
+    megaFolder->setText(QString::fromAscii("  ") +  QString::fromUtf8(nPath) + QString::fromAscii("  "));
+    int pos = ui->tSyncs->rowCount();
+    ui->tSyncs->setRowCount(pos+1);
+    localFolder->setToolTip(localFolderPath);
+    ui->tSyncs->setItem(pos, 0, localFolder);
+    megaFolder->setToolTip(QString::fromUtf8(nPath));
+    ui->tSyncs->setItem(pos, 1, megaFolder);
 
-   syncNames.append(dialog->getSyncName());
-   delete node;
-   delete [] nPath;
+    QCheckBox *c = new QCheckBox();
+    c->setChecked(true);
+    c->setToolTip(tr("Enable / disable"));
+    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+    ui->tSyncs->setCellWidget(pos, 2, c);
 
-   syncsChanged = true;
-   stateChanged();
+    syncNames.append(dialog->getSyncName());
+    delete [] nPath;
+    delete dialog;
+    delete node;
+
+    syncsChanged = true;
+    stateChanged();
 }
 
 void SettingsDialog::on_bApply_clicked()
@@ -1413,7 +1402,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, false, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, false, this);
     MegaNode *defaultNode = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
     if(defaultNode)
     {
@@ -1424,7 +1413,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
     nodeSelector->setDefaultUploadOption(hasDefaultUploadOption);
     nodeSelector->showDefaultUploadOption();
     int result = nodeSelector->exec();
-    if(result != QDialog::Accepted)
+    if(!nodeSelector || result != QDialog::Accepted)
     {
         delete nodeSelector;
         return;
@@ -1453,6 +1442,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
         ui->eUploadFolder->setText(newPath);
         stateChanged();
     }
+
     delete nodeSelector;
     delete [] nPath;
     delete node;
@@ -1528,18 +1518,7 @@ void SettingsDialog::on_bDeleteName_clicked()
 
 void SettingsDialog::on_bExcludeSize_clicked()
 {
-    /*if(!ui->cExcludeSize->isChecked())
-    {
-        hasUpperLimit = false;
-        hasLowerLimit = false;
-
-        ui->lLimitsInfo->setText(QString::fromUtf8(""));
-        sizeLimitsChanged = true;
-        stateChanged();
-        return;
-    }*/
-    SizeLimitDialog *dialog = new SizeLimitDialog(this);
-
+    QPointer<SizeLimitDialog> dialog = new SizeLimitDialog(this);
     dialog->setUpperSizeLimit(hasUpperLimit);
     dialog->setLowerSizeLimit(hasLowerLimit);
     dialog->setUpperSizeLimitValue(upperLimit);
@@ -1548,9 +1527,8 @@ void SettingsDialog::on_bExcludeSize_clicked()
     dialog->setLowerSizeLimitUnit(lowerLimitUnit);
 
     int result = dialog->exec();
-    if(result != QDialog::Accepted)
+    if(!dialog || result != QDialog::Accepted)
     {
-        //ui->cExcludeSize->setChecked(false);
         delete dialog;
         return;
     }
@@ -1561,31 +1539,19 @@ void SettingsDialog::on_bExcludeSize_clicked()
     lowerLimit = dialog->lowerSizeLimitValue();
     upperLimitUnit = dialog->upperSizeLimitUnit();
     lowerLimitUnit = dialog->lowerSizeLimitUnit();
-
-    QString format = QString::fromUtf8("");
-
-    if(hasLowerLimit)
-    {
-        format  += QString::fromUtf8("(<") + Utilities::getSizeString(lowerLimit*pow(1024,lowerLimitUnit));
-    }
-
-    if(hasLowerLimit && hasUpperLimit)
-    {
-        format  += QString::fromUtf8(",");
-    }
-
-    if(hasUpperLimit)
-    {
-        format  += QString::fromUtf8(" >") + Utilities::getSizeString(upperLimit*pow(1024,upperLimitUnit)) + QString::fromUtf8(")");
-    }
-
-    ui->lLimitsInfo->setText(format);
-
     delete dialog;
 
-    sizeLimitsChanged = true;
-    stateChanged();
-
+    ui->lLimitsInfo->setText(getFormatString());
+    if(hasUpperLimit != preferences->upperSizeLimit() ||
+       hasLowerLimit != preferences->lowerSizeLimit() ||
+       upperLimit != preferences->upperSizeLimitValue() ||
+       lowerLimit != preferences->lowerSizeLimitValue() ||
+       upperLimitUnit != preferences->upperSizeLimitUnit() ||
+       lowerLimitUnit != preferences->lowerSizeLimitUnit())
+    {
+        sizeLimitsChanged = true;
+        stateChanged();
+    }
 }
 
 void SettingsDialog::changeEvent(QEvent *event)
@@ -1598,6 +1564,37 @@ void SettingsDialog::changeEvent(QEvent *event)
     }
     QDialog::changeEvent(event);
     modifyingSettings--;
+}
+
+QString SettingsDialog::getFormatString()
+{
+    QString format;
+    if(hasLowerLimit || hasUpperLimit)
+    {
+        format += QString::fromUtf8("(");
+
+        if(hasLowerLimit)
+        {
+            format  += QString::fromUtf8("<") + Utilities::getSizeString(lowerLimit * pow((float)1024, lowerLimitUnit));
+        }
+
+        if(hasLowerLimit && hasUpperLimit)
+        {
+            format  += QString::fromUtf8(", ");
+        }
+
+        if(hasUpperLimit)
+        {
+            format  += QString::fromUtf8(">") + Utilities::getSizeString(upperLimit * pow((float)1024, upperLimitUnit));
+        }
+
+        format += QString::fromUtf8(")");
+    }
+    else
+    {
+        format = tr("Disabled");
+    }
+    return format;
 }
 
 void SettingsDialog::on_bClearCache_clicked()
