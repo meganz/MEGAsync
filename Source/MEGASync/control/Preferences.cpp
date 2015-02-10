@@ -68,6 +68,14 @@ const QString Preferences::startOnStartupKey        = QString::fromAscii("startO
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
 const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
+const QString Preferences::upperSizeLimitKey         = QString::fromAscii("upperSizeLimit");
+const QString Preferences::lowerSizeLimitKey         = QString::fromAscii("lowerSizeLimit");
+
+const QString Preferences::upperSizeLimitValueKey         = QString::fromAscii("upperSizeLimitValue");
+const QString Preferences::lowerSizeLimitValueKey         = QString::fromAscii("lowerSizeLimitValue");
+const QString Preferences::upperSizeLimitUnitKey         = QString::fromAscii("upperSizeLimitUnit");
+const QString Preferences::lowerSizeLimitUnitKey         = QString::fromAscii("lowerSizeLimitUnit");
+
 const QString Preferences::proxyTypeKey             = QString::fromAscii("proxyType");
 const QString Preferences::proxyProtocolKey         = QString::fromAscii("proxyProtocol");
 const QString Preferences::proxyServerKey           = QString::fromAscii("proxyServer");
@@ -108,7 +116,13 @@ const QString Preferences::sessionKey               = QString::fromAscii("sessio
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
+const bool Preferences::defaultUpperSizeLimit       = false;
+const bool Preferences::defaultLowerSizeLimit       = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
+const long long  Preferences::defaultUpperSizeLimitValue              = 0;
+const long long  Preferences::defaultLowerSizeLimitValue              = 0;
+const int Preferences::defaultLowerSizeLimitUnit =  Preferences::BYTE_UNIT;
+const int Preferences::defaultUpperSizeLimitUnit =  Preferences::BYTE_UNIT;
 #ifdef WIN32
 const int  Preferences::defaultProxyType            = PROXY_TYPE_AUTO;
 #else
@@ -647,6 +661,106 @@ void Preferences::setUploadLimitKB(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(uploadLimitKBKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::upperSizeLimit()
+{
+    mutex.lock();
+    bool value = settings->value(upperSizeLimitKey, defaultUpperSizeLimit).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setUpperSizeLimit(bool value)
+{
+    mutex.lock();
+    settings->setValue(upperSizeLimitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::upperSizeLimitValue()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(upperSizeLimitValueKey, defaultUpperSizeLimitValue).toLongLong();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setUpperSizeLimitValue(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(upperSizeLimitValueKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::upperSizeLimitUnit()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit).toInt();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setUpperSizeLimitUnit(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(upperSizeLimitUnitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::lowerSizeLimit()
+{
+    mutex.lock();
+    bool value = settings->value(lowerSizeLimitKey, defaultLowerSizeLimit).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLowerSizeLimit(bool value)
+{
+    mutex.lock();
+    settings->setValue(lowerSizeLimitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::lowerSizeLimitValue()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(lowerSizeLimitValueKey, defaultLowerSizeLimitValue).toLongLong();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setLowerSizeLimitValue(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(lowerSizeLimitValueKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::lowerSizeLimitUnit()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit).toInt();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setLowerSizeLimitUnit(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(lowerSizeLimitUnitKey, value);
     settings->sync();
     mutex.unlock();
 }
