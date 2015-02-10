@@ -83,6 +83,18 @@ public:
     bool canUpdate();
     int uploadLimitKB();
     void setUploadLimitKB(int value);
+    long long upperSizeLimitValue();
+    void setUpperSizeLimitValue(long long value);
+    long long lowerSizeLimitValue();
+    void setLowerSizeLimitValue(long long value);
+    bool upperSizeLimit();
+    void setUpperSizeLimit(bool value);
+    bool lowerSizeLimit();
+    void setLowerSizeLimit(bool value);
+    int upperSizeLimitUnit();
+    void setUpperSizeLimitUnit(int value);
+    int lowerSizeLimitUnit();
+    void setLowerSizeLimitUnit(int value);
     int proxyType();
     void setProxyType(int value);
     int proxyProtocol();
@@ -176,6 +188,13 @@ public:
     };
 
     enum {
+        BYTE_UNIT = 0,
+        KILO_BYTE_UNIT = 1,
+        MEGA_BYTE_UNIT = 2,
+        GIGA_BYTE_UNIT = 3
+    };
+
+    enum {
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
@@ -255,6 +274,12 @@ protected:
     static const QString languageKey;
     static const QString updateAutomaticallyKey;
     static const QString uploadLimitKBKey;
+    static const QString upperSizeLimitKey;
+    static const QString lowerSizeLimitKey;
+    static const QString upperSizeLimitValueKey;
+    static const QString lowerSizeLimitValueKey;
+    static const QString upperSizeLimitUnitKey;
+    static const QString lowerSizeLimitUnitKey;
     static const QString proxyTypeKey;
     static const QString proxyProtocolKey;
     static const QString proxyServerKey;
@@ -303,6 +328,12 @@ protected:
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
     static const QString defaultProxyPassword;	
+    static const bool defaultUpperSizeLimit;
+    static const bool defaultLowerSizeLimit;
+    static const long long defaultUpperSizeLimitValue;
+    static const long long defaultLowerSizeLimitValue;
+    static const int defaultUpperSizeLimitUnit;
+    static const int defaultLowerSizeLimitUnit;
 };
 
 #endif // PREFERENCES_H
