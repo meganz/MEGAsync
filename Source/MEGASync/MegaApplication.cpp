@@ -2478,8 +2478,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if(!overquotaDialog)
         {
-            overquotaDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled"), QMessageBox::Ok);
+            overquotaDialog = new QMessageBox(QMessageBox::Warning, tr("MEGAsync"),
+                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or <a href=\"https://mega.nz/#pro\">upgrade your account</a>"), QMessageBox::Ok);
+            overquotaDialog->setTextFormat(Qt::RichText);
             overquotaDialog->exec();
             if(!overquotaDialog)
             {
@@ -2791,8 +2792,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         if(!overquotaDialog)
         {
-            overquotaDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled"), QMessageBox::Ok);
+            overquotaDialog = new QMessageBox(QMessageBox::Warning, tr("MEGAsync"),
+                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or <a href=\"https://mega.nz/#pro\">upgrade your account</a>"), QMessageBox::Ok);
+            overquotaDialog->setTextFormat(Qt::RichText);
             overquotaDialog->exec();
             if(!overquotaDialog)
             {
