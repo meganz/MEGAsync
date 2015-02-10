@@ -12,6 +12,7 @@
 
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
+#include "SizeLimitDialog.h"
 #include "Preferences.h"
 #include "megaapi.h"
 
@@ -82,6 +83,7 @@ private slots:
     void on_bAdd_clicked();
     void on_bApply_clicked();
     void on_bDelete_clicked();
+    void on_bExcludeSize_clicked();
 
     void on_bUnlink_clicked();
     void on_bExportMasterKey_clicked();
@@ -121,6 +123,13 @@ private:
     int modifyingSettings;
     long long cacheSize;
     bool hasDefaultUploadOption;
+    bool hasUpperLimit;
+    bool hasLowerLimit;
+    long long upperLimit;
+    long long lowerLimit;
+    int upperLimitUnit;
+    int lowerLimitUnit;
+    bool sizeLimitsChanged;
 
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
@@ -129,6 +138,7 @@ private:
 #endif
 
     void loadSyncSettings();
+    void loadSizeLimits();
     bool saveSettings();
 };
 
