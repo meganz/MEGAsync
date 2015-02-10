@@ -105,6 +105,7 @@ private slots:
 
 protected:
     void changeEvent(QEvent * event);
+    QString getFormatString();
 
 private:
     Ui::SettingsDialog *ui;

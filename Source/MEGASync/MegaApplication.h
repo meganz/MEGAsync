@@ -224,6 +224,7 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
+    long long externalNodesTimestamp;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
