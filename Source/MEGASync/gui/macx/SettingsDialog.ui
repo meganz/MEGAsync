@@ -370,7 +370,7 @@ padding-bottom: 6px;
          <string>Proxy</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -410,7 +410,7 @@ padding-bottom: 6px;
          <string>Advanced</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -642,7 +642,7 @@ padding-bottom: 6px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
             </property>
             <property name="iconSize">
@@ -890,7 +890,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1131,7 +1131,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1413,7 +1413,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2524,7 +2524,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2554,7 +2554,7 @@ background:transparent;</string>
            <number>5</number>
           </property>
           <property name="leftMargin">
-           <number>30</number>
+           <number>24</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -2580,7 +2580,7 @@ background:transparent;</string>
              <string>Excluded file names</string>
             </property>
             <property name="indent">
-             <number>0</number>
+             <number>6</number>
             </property>
            </widget>
           </item>
@@ -2606,7 +2606,7 @@ background:transparent;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <property name="leftMargin">
-              <number>0</number>
+              <number>6</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -2789,7 +2789,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2909,7 +2909,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3432,7 +3432,7 @@ background:transparent;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_linux.qrc">
+      <iconset resource="../Resources_macx.qrc">
        <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
      </property>
      <property name="iconSize">
@@ -3480,7 +3480,7 @@ background:transparent;</string>
   <tabstop>bApply</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
