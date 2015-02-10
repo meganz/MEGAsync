@@ -62,12 +62,20 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->preferences = Preferences::instance();
 	syncsChanged = false;
     excludedNamesChanged = false;
+    sizeLimitsChanged = false;
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
     shouldClose = false;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
     cacheSize = 0;
+
+    hasUpperLimit = false;
+    hasLowerLimit = false;
+    upperLimit = 0;
+    lowerLimit = 0;
+    upperLimitUnit = Preferences::BYTE_UNIT;
+    lowerLimitUnit = Preferences::BYTE_UNIT;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -787,6 +795,7 @@ void SettingsDialog::loadSettings()
         for(int i=0; i<excludedNames.size(); i++)
             ui->lExcludedNames->addItem(excludedNames[i]);
 
+        loadSizeLimits();
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
@@ -1060,6 +1069,39 @@ bool SettingsDialog::saveSettings()
             preferences->setCrashed(true);
         }
 
+        if(sizeLimitsChanged)
+        {
+
+            preferences->setUpperSizeLimit(hasUpperLimit);
+            preferences->setLowerSizeLimit(hasLowerLimit);
+            preferences->setUpperSizeLimitValue(upperLimit);
+            preferences->setLowerSizeLimitValue(lowerLimit);
+            preferences->setUpperSizeLimitUnit(upperLimitUnit);
+            preferences->setLowerSizeLimitUnit(lowerLimitUnit);
+
+            if(hasLowerLimit)
+            {
+                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue()*pow(1024,preferences->lowerSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionLowerSizeLimit(0);
+            }
+
+            if(hasUpperLimit)
+            {
+                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue()*pow(1024,preferences->upperSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionUpperSizeLimit(0);
+            }
+
+
+
+            sizeLimitsChanged = false;
+        }
+
         if(ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
         {
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
@@ -1196,6 +1238,36 @@ void SettingsDialog::loadSyncSettings()
     }
 }
 
+void SettingsDialog::loadSizeLimits()
+{
+    hasUpperLimit = preferences->upperSizeLimit();
+    hasLowerLimit = preferences->lowerSizeLimit();
+    upperLimit = preferences->upperSizeLimitValue();
+    lowerLimit = preferences->lowerSizeLimitValue();
+    upperLimitUnit = preferences->upperSizeLimitUnit();
+    lowerLimitUnit = preferences->lowerSizeLimitUnit();
+
+    QString format = QString::fromUtf8("");
+
+    if(hasLowerLimit)
+    {
+        format  += QString::fromUtf8(" <") + Utilities::getSizeString(lowerLimit*pow(1024,lowerLimitUnit));
+    }
+
+    if(hasLowerLimit && hasUpperLimit)
+    {
+        format  += QString::fromUtf8(",");
+    }
+
+    if(hasUpperLimit)
+    {
+        format  += QString::fromUtf8(" >") + Utilities::getSizeString(upperLimit*pow(1024,upperLimitUnit));
+    }
+
+    ui->lLimitsInfo->setText(format);
+    //ui->cExcludeSize->setChecked(hasLowerLimit || hasUpperLimit);
+
+}
 void SettingsDialog::on_bAdd_clicked()
 {
     QStringList currentLocalFolders;
@@ -1452,6 +1524,68 @@ void SettingsDialog::on_bDeleteName_clicked()
 
     excludedNamesChanged = true;
     stateChanged();
+}
+
+void SettingsDialog::on_bExcludeSize_clicked()
+{
+    /*if(!ui->cExcludeSize->isChecked())
+    {
+        hasUpperLimit = false;
+        hasLowerLimit = false;
+
+        ui->lLimitsInfo->setText(QString::fromUtf8(""));
+        sizeLimitsChanged = true;
+        stateChanged();
+        return;
+    }*/
+    SizeLimitDialog *dialog = new SizeLimitDialog(this);
+
+    dialog->setUpperSizeLimit(hasUpperLimit);
+    dialog->setLowerSizeLimit(hasLowerLimit);
+    dialog->setUpperSizeLimitValue(upperLimit);
+    dialog->setLowerSizeLimitValue(lowerLimit);
+    dialog->setUpperSizeLimitUnit(upperLimitUnit);
+    dialog->setLowerSizeLimitUnit(lowerLimitUnit);
+
+    int result = dialog->exec();
+    if(result != QDialog::Accepted)
+    {
+        //ui->cExcludeSize->setChecked(false);
+        delete dialog;
+        return;
+    }
+
+    hasUpperLimit = dialog->upperSizeLimit();
+    hasLowerLimit = dialog->lowerSizeLimit();
+    upperLimit = dialog->upperSizeLimitValue();
+    lowerLimit = dialog->lowerSizeLimitValue();
+    upperLimitUnit = dialog->upperSizeLimitUnit();
+    lowerLimitUnit = dialog->lowerSizeLimitUnit();
+
+    QString format = QString::fromUtf8("");
+
+    if(hasLowerLimit)
+    {
+        format  += QString::fromUtf8("(<") + Utilities::getSizeString(lowerLimit*pow(1024,lowerLimitUnit));
+    }
+
+    if(hasLowerLimit && hasUpperLimit)
+    {
+        format  += QString::fromUtf8(",");
+    }
+
+    if(hasUpperLimit)
+    {
+        format  += QString::fromUtf8(" >") + Utilities::getSizeString(upperLimit*pow(1024,upperLimitUnit)) + QString::fromUtf8(")");
+    }
+
+    ui->lLimitsInfo->setText(format);
+
+    delete dialog;
+
+    sizeLimitsChanged = true;
+    stateChanged();
+
 }
 
 void SettingsDialog::changeEvent(QEvent *event)
