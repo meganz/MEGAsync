@@ -696,6 +696,24 @@ void MegaApplication::start()
             vExclusions.push_back(exclusions[i].toUtf8().constData());
         megaApi->setExcludedNames(&vExclusions);
 
+        if(preferences->lowerSizeLimit())
+        {
+            megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue()*pow(1024,preferences->lowerSizeLimitUnit()));
+        }
+        else
+        {
+            megaApi->setExclusionLowerSizeLimit(0);
+        }
+
+        if(preferences->upperSizeLimit())
+        {
+            megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue()*pow(1024,preferences->upperSizeLimitUnit()));
+        }
+        else
+        {
+            megaApi->setExclusionUpperSizeLimit(0);
+        }
+
         //Otherwise, login in the account
         if(preferences->getSession().size())
         {
@@ -1457,6 +1475,24 @@ void MegaApplication::setupWizardFinished()
     for(int i=0; i<exclusions.size(); i++)
         vExclusions.push_back(exclusions[i].toUtf8().constData());
     megaApi->setExcludedNames(&vExclusions);
+
+    if(preferences->lowerSizeLimit())
+    {
+        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue()*pow(1024,preferences->lowerSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionLowerSizeLimit(0);
+    }
+
+    if(preferences->upperSizeLimit())
+    {
+        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue()*pow(1024,preferences->upperSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionUpperSizeLimit(0);
+    }
 
     loggedIn();
     startSyncs();
