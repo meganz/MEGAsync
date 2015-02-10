@@ -101,6 +101,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 				ui->sPages->setCurrentWidget(ui->pLogin);
                 QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromAscii(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
 			}
+            else if(error->getErrorCode() == MegaError::API_EBLOCKED)
+            {
+                QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+            }
 			else
 			{
 				ui->bBack->setEnabled(true);
