@@ -1096,6 +1096,8 @@ bool SettingsDialog::saveSettings()
                 megaApi->setExclusionUpperSizeLimit(0);
             }
 
+            QMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account\n"
+                                                                            "when the application starts again."), QMessageBox::Ok);
             sizeLimitsChanged = false;
         }
 
