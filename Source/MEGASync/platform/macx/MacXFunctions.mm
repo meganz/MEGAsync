@@ -304,13 +304,12 @@ bool startAtLogin(bool opt)
                     if ([urlPath compare:appPath] == NSOrderedSame)
                     {
                         LSSharedFileListItemRemove(loginItems,item);
-
                         CFRelease(loginItems);
-                        return true;
+
                     }
                 }
             }
-
+            return true;
         }
 
     }
