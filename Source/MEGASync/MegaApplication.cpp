@@ -900,75 +900,35 @@ void MegaApplication::disableSyncs()
 
 void MegaApplication::closeDialogs()
 {
-    if(infoDialog)
-    {
-        infoDialog->hide();
-        infoDialog->deleteLater();
-        infoDialog = NULL;
-    }
+    delete infoDialog;
+    infoDialog = NULL;
 
-    if(setupWizard)
-    {
-        setupWizard->hide();
-        setupWizard->deleteLater();
-        setupWizard = NULL;
-    }
+    delete setupWizard;
+    setupWizard = NULL;
 
-    if(settingsDialog)
-    {
-        settingsDialog->hide();
-        settingsDialog->deleteLater();
-        settingsDialog = NULL;
-    }
+    delete settingsDialog;
+    settingsDialog = NULL;
 
-    if(uploadFolderSelector)
-    {
-        uploadFolderSelector->hide();
-        uploadFolderSelector->deleteLater();
-        uploadFolderSelector = NULL;
-    }
+    delete uploadFolderSelector;
+    uploadFolderSelector = NULL;
 
-    if(downloadFolderSelector)
-    {
-        downloadFolderSelector->hide();
-        downloadFolderSelector->deleteLater();
-        downloadFolderSelector = NULL;
-    }
+    delete downloadFolderSelector;
+    downloadFolderSelector = NULL;
 
-    if(multiUploadFileDialog)
-    {
-        multiUploadFileDialog->hide();
-        multiUploadFileDialog->deleteLater();
-        multiUploadFileDialog = NULL;
-    }
+    delete multiUploadFileDialog;
+    multiUploadFileDialog = NULL;
 
-    if(pasteMegaLinksDialog)
-    {
-        pasteMegaLinksDialog->hide();
-        pasteMegaLinksDialog->deleteLater();
-        pasteMegaLinksDialog = NULL;
-    }
+    delete pasteMegaLinksDialog;
+    pasteMegaLinksDialog = NULL;
 
-    if(importDialog)
-    {
-        importDialog->hide();
-        importDialog->deleteLater();
-        importDialog = NULL;
-    }
+    delete importDialog;
+    importDialog = NULL;
 
-    if(overquotaDialog)
-    {
-        overquotaDialog->hide();
-        overquotaDialog->deleteLater();
-        overquotaDialog = NULL;
-    }
+    delete overquotaDialog;
+    overquotaDialog = NULL;
 
-    if(downloadNodeSelector)
-    {
-        downloadNodeSelector->hide();
-        downloadNodeSelector->deleteLater();
-        downloadNodeSelector = NULL;
-    }
+    delete downloadNodeSelector;
+    downloadNodeSelector = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -1463,7 +1423,15 @@ void MegaApplication::onConnectivityCheckError()
 void MegaApplication::setupWizardFinished()
 {
     if(!preferences->logged())
-        ::exit(0);
+    {
+        #ifdef __APPLE__
+            cleanAll();
+            ::exit(0);
+        #endif
+
+        QApplication::exit();
+        return;
+    }
 
     if(setupWizard)
     {
