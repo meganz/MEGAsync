@@ -482,12 +482,9 @@ void SetupWizard::on_bCancel_clicked()
         preferences->setProxyRequiresAuth(proxyAuth);
         preferences->setProxyUsername(proxyUsername);
         preferences->setProxyPassword(proxyPassword);
-
-        this->close();
-        return;
     }
 
-    ::exit(0);
+    close();
 }
 
 void SetupWizard::on_bLocalFolder_clicked()

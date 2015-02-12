@@ -1007,7 +1007,6 @@ void Preferences::setImportFolder(long long value)
 int Preferences::getNumSyncedFolders()
 {
     mutex.lock();
-    assert(logged());
     int value = localFolders.length();
     mutex.unlock();
     return value;
