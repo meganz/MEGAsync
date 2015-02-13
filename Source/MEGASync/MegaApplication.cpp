@@ -1423,6 +1423,12 @@ void MegaApplication::onConnectivityCheckError()
 
 void MegaApplication::setupWizardFinished()
 {
+    if(setupWizard)
+    {
+        setupWizard->deleteLater();
+        setupWizard = NULL;
+    }
+
     if(!preferences->logged())
     {
         #ifdef __APPLE__
@@ -1432,12 +1438,6 @@ void MegaApplication::setupWizardFinished()
 
         QApplication::exit();
         return;
-    }
-
-    if(setupWizard)
-    {
-        delete setupWizard;
-        setupWizard = NULL;
     }
 
     QStringList exclusions = preferences->getExcludedSyncNames();
@@ -2048,7 +2048,7 @@ void MegaApplication::onLinkImportFinished()
 {
 	LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
 	preferences->setImportFolder(linkProcessor->getImportParentFolder());
-    delete linkProcessor;
+    linkProcessor->deleteLater();
 }
 
 void MegaApplication::onRequestLinksFinished()
@@ -2064,7 +2064,7 @@ void MegaApplication::onRequestLinksFinished()
     QApplication::clipboard()->setText(linkForClipboard);
     if(links.size()==1) showInfoMessage(tr("The link has been copied to the clipboard"));
     else showInfoMessage(tr("The links have been copied to the clipboard"));
-    delete exportProcessor;
+    exportProcessor->deleteLater();
     exportOps--;
 }
 
