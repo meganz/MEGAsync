@@ -154,7 +154,8 @@ int main(int argc, char *argv[])
         while (di.hasNext()) {
             di.next();
             const QFileInfo& fi = di.fileInfo();
-            if(fi.fileName().endsWith(QString::fromAscii(".db")) || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg")))
+            if(fi.fileName().endsWith(QString::fromAscii(".db")) || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg")) ||
+                    !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg.bak")))
                 QFile::remove(di.filePath());
         }
 
