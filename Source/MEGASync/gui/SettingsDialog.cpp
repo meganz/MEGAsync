@@ -1706,7 +1706,13 @@ void SettingsDialog::onAnimationFinished()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
-    accountDetailsDialog->exec();
+    QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
+    dialog->exec();
+    if(!dialog)
+    {
+        return;
+    }
+
     delete accountDetailsDialog;
     accountDetailsDialog = NULL;
 }

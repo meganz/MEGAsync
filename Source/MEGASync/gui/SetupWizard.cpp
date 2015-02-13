@@ -528,9 +528,9 @@ void SetupWizard::on_bLocalFolder_clicked()
 
 void SetupWizard::on_bMegaFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, true, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, true, this);
     int result = nodeSelector->exec();
-    if(result != QDialog::Accepted)
+    if(!nodeSelector || result != QDialog::Accepted)
     {
         delete nodeSelector;
         return;
