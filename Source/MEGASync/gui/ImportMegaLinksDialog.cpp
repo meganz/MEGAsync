@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTemporaryFile>
+#include <QPointer>
 
 using namespace mega;
 
@@ -241,9 +242,9 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, false, this, false, false);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, false, this, false, false);
 	int result = nodeSelector->exec();
-	if(result != QDialog::Accepted)
+    if(!nodeSelector || result != QDialog::Accepted)
     {
         delete nodeSelector;
         return;

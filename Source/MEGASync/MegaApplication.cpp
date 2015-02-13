@@ -1435,7 +1435,7 @@ void MegaApplication::setupWizardFinished()
 
     if(setupWizard)
     {
-        setupWizard->deleteLater();
+        delete setupWizard;
         setupWizard = NULL;
     }
 
@@ -1867,14 +1867,14 @@ void MegaApplication::downloadActionClicked()
 
     if(result != QDialog::Accepted)
     {
-        downloadNodeSelector->deleteLater();
+        delete downloadNodeSelector;
         downloadNodeSelector = NULL;
         return;
     }
 
     long long selectedMegaFolderHandle = downloadNodeSelector->getSelectedFolderHandle();
     MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
-    downloadNodeSelector->deleteLater();
+    delete downloadNodeSelector;
     downloadNodeSelector = NULL;
     if(!selectedFolder)
     {
@@ -1930,7 +1930,7 @@ void MegaApplication::downloadActionClicked()
     //If the dialog is rejected, cancel uploads
     else downloadQueue.clear();
 
-    downloadFolderSelector->deleteLater();
+    delete downloadFolderSelector;
     downloadFolderSelector = NULL;
     return;
 }
@@ -2047,7 +2047,7 @@ void MegaApplication::onLinkImportFinished()
 {
 	LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
 	preferences->setImportFolder(linkProcessor->getImportParentFolder());
-    linkProcessor->deleteLater();
+    delete linkProcessor;
 }
 
 void MegaApplication::onRequestLinksFinished()
@@ -2063,7 +2063,7 @@ void MegaApplication::onRequestLinksFinished()
     QApplication::clipboard()->setText(linkForClipboard);
     if(links.size()==1) showInfoMessage(tr("The link has been copied to the clipboard"));
     else showInfoMessage(tr("The links have been copied to the clipboard"));
-    exportProcessor->deleteLater();
+    delete exportProcessor;
     exportOps--;
 }
 
@@ -2230,7 +2230,7 @@ void MegaApplication::openSettings()
 		}
 
         //Otherwise, delete it
-        settingsDialog->deleteLater();
+        delete settingsDialog;
         settingsDialog = NULL;
 	}
 
@@ -2258,7 +2258,7 @@ void MegaApplication::changeProxy()
         }
 
         //Otherwise, delete it
-        settingsDialog->deleteLater();
+        delete settingsDialog;
         settingsDialog = NULL;
     }
 

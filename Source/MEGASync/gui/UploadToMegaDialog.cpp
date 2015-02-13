@@ -2,6 +2,7 @@
 #include "ui_UploadToMegaDialog.h"
 #include "gui/NodeSelector.h"
 #include "control/Utilities.h"
+#include <QPointer>
 
 using namespace mega;
 
@@ -79,7 +80,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
 
 void UploadToMegaDialog::on_bChange_clicked()
 {
-    NodeSelector *nodeSelector = new NodeSelector(megaApi, true, false, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, false, this);
     MegaNode *defaultNode = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
     if(defaultNode)
     {
@@ -88,7 +89,7 @@ void UploadToMegaDialog::on_bChange_clicked()
     }
 
 	int result = nodeSelector->exec();
-	if(result != QDialog::Accepted)
+    if(!nodeSelector || result != QDialog::Accepted)
     {
         delete nodeSelector;
         return;
