@@ -1423,12 +1423,6 @@ void MegaApplication::onConnectivityCheckError()
 
 void MegaApplication::setupWizardFinished()
 {
-    if(setupWizard)
-    {
-        setupWizard->deleteLater();
-        setupWizard = NULL;
-    }
-
     if(!preferences->logged())
     {
         #ifdef __APPLE__
@@ -1438,6 +1432,12 @@ void MegaApplication::setupWizardFinished()
 
         QApplication::exit();
         return;
+    }
+
+    if(setupWizard)
+    {
+        setupWizard->deleteLater();
+        setupWizard = NULL;
     }
 
     QStringList exclusions = preferences->getExcludedSyncNames();
@@ -2560,6 +2560,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if(preferences->logged() && preferences->wasPaused())
                         pauseTransfers(true);
 
+                    //megaApi->logout();
                     loggedIn();
                 }
                 else
