@@ -2508,7 +2508,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 QMessageBox::critical(NULL, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
             }
-            else
+            else if(e->getErrorCode() != MegaError::API_EACCESS) //Invalid session, already managed in TYPE_LOGOUT
             {
                 QMessageBox::warning(NULL, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
