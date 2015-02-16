@@ -65,11 +65,14 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
     QStringList tempLinks2 = text.split(QString::fromAscii("mega://#!"), QString::KeepEmptyParts, Qt::CaseInsensitive);
 	tempLinks2.removeAt(0);
 	tempLinks.append(tempLinks2);
+    QStringList tempLinksNewSite = text.split(QString::fromAscii("https://mega.nz/#!"), QString::KeepEmptyParts, Qt::CaseInsensitive);
+    tempLinksNewSite.removeAt(0);
+    tempLinks.append(tempLinksNewSite);
 
     QStringList finalLinks;
 	for(int i=0; i<tempLinks.size(); i++)
 	{
-        QString link = checkLink(tempLinks[i].insert(0, QString::fromAscii("https://mega.co.nz/#!")));
+        QString link = checkLink(tempLinks[i].insert(0, QString::fromAscii("https://mega.nz/#!")));
 		if(!link.isNull()) finalLinks.append(link);
 	}
 
@@ -81,14 +84,14 @@ QString PasteMegaLinksDialog::checkLink(QString link)
 	link = QUrl::fromPercentEncoding(link.toUtf8());
     link.replace(QChar::fromAscii(' '), QChar::fromAscii('+'));
 
-	if(link.length()<73)
+    if(link.length()<70)
 	{
 		return QString();
 	}
 
 	link.truncate(73);
     QByteArray data = link.toUtf8();
-    if(data.constData()[29]=='!')
+    if(data.constData()[26]=='!')
 		return link;
 
 	return QString();
