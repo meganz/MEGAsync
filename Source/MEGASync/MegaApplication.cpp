@@ -784,9 +784,6 @@ void MegaApplication::loggedIn()
 
 void MegaApplication::startSyncs()
 {
-    //Ensure that there is no active syncs
-    if(megaApi->getNumActiveSyncs() != 0) stopSyncs();
-
     //Start syncs
     MegaNode *rubbishNode =  megaApi->getRubbishNode();
 	for(int i=0; i<preferences->getNumSyncedFolders(); i++)
@@ -819,12 +816,6 @@ void MegaApplication::startSyncs()
         delete node;
 	}
     delete rubbishNode;
-}
-
-void MegaApplication::stopSyncs()
-{
-    //Stop syncs
-    megaApi->removeSyncs();
 }
 
 //This function is called to upload all files in the uploadQueue field
@@ -894,7 +885,7 @@ void MegaApplication::disableSyncs()
        Platform::notifyItemChange(preferences->getLocalFolder(i));
        preferences->setSyncState(i, false);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
-       megaApi->removeSync(node);
+       megaApi->disableSync(node);
        delete node;
     }
 }
@@ -1181,7 +1172,6 @@ void MegaApplication::cleanAll()
 #endif
 
     refreshTimer->stop();
-    stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
     for(int i=0; i<preferences->getNumSyncedFolders(); i++)
@@ -1473,7 +1463,6 @@ void MegaApplication::unlink()
     //Reset fields that will be initialized again upon login
     //delete httpServer;
     //httpServer = NULL;
-    stopSyncs();
     stopUpdateTask();
     Platform::stopShellDispatcher();
     megaApi->logout();
@@ -2560,7 +2549,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if(preferences->logged() && preferences->wasPaused())
                         pauseTransfers(true);
 
-                    //megaApi->logout();
                     loggedIn();
                 }
                 else

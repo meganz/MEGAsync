@@ -254,7 +254,6 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-		megaApi->logout();
 		megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
         ui->lProgress->setText(tr("Logging in..."));
 
@@ -313,7 +312,6 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        megaApi->logout();
         megaApi->createAccount(email.toUtf8().constData(),
                                          password.toUtf8().constData(),
 										 name.toUtf8().constData(), delegateListener);

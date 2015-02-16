@@ -136,7 +136,6 @@ protected:
     bool showTrayIconAlwaysNEW();
     void loggedIn();
     void startSyncs();
-	void stopSyncs();
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
