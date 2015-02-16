@@ -2611,7 +2611,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->sync();
 
         if(infoDialog) infoDialog->setUsage(details->getStorageMax(), details->getStorageUsed());
-        if(settingsDialog) settingsDialog->refreshAccountDetails();
+        if(settingsDialog) settingsDialog->refreshAccountDetails(details);
         delete details;
         break;
     }

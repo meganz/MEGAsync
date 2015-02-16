@@ -39,7 +39,7 @@ public:
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
     void loadSettings();
-    void refreshAccountDetails();
+    void refreshAccountDetails(mega::MegaAccountDetails *details = NULL);
     void setUpdateAvailable(bool updateAvailable);
 
 public slots:

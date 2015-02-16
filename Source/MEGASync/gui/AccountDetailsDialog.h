@@ -16,7 +16,7 @@ class AccountDetailsDialog : public QDialog
 public:
     explicit AccountDetailsDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~AccountDetailsDialog();
-    void refresh();
+    void refresh(mega::MegaAccountDetails *details);
 
 private slots:
     void on_bRefresh_clicked();
