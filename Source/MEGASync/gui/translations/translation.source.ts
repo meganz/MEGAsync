@@ -215,7 +215,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="unfinished">[$1883]</translation>
+        <translation>[$1883]</translation>
     </message>
 </context>
 <context>
@@ -853,7 +853,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Always upload to this destination</source>
-        <translation type="unfinished">[$1812]</translation>
+        <translation>[$1812]</translation>
     </message>
 </context>
 <context>
