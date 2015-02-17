@@ -1093,7 +1093,7 @@ bool SettingsDialog::saveSettings()
             megaApi->setExcludedNames(&vExclusions);
 
             QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
-                                                                            "when the application starts again."), QMessageBox::Ok);
+                                                                            "when the application starts again"), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
         }
@@ -1125,8 +1125,7 @@ bool SettingsDialog::saveSettings()
                 megaApi->setExclusionUpperSizeLimit(0);
             }
 
-            QMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account\n"
-                                                                            "when the application starts again."), QMessageBox::Ok);
+            QMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account when the application starts again."), QMessageBox::Ok);
             sizeLimitsChanged = false;
         }
 

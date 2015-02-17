@@ -794,8 +794,7 @@ void MegaApplication::startSyncs()
         MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
         if(!node)
         {
-            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                "because the remote folder doesn't exist")
+            showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
             continue;
@@ -804,8 +803,7 @@ void MegaApplication::startSyncs()
         QString localFolder = preferences->getLocalFolder(i);
         if(!QFileInfo(localFolder).isDir())
         {
-            showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                "because the local folder doesn't exist")
+            showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
             continue;
@@ -2436,8 +2434,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if(!overquotaDialog)
         {
+            QString message = tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or [A]upgrade your account[/A]");
+            message.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/#pro\">"));
+            message.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
             overquotaDialog = new QMessageBox(QMessageBox::Warning, tr("MEGAsync"),
-                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or <a href=\"https://mega.nz/#pro\">upgrade your account</a>"), QMessageBox::Ok);
+                                        message, QMessageBox::Ok);
             overquotaDialog->setTextFormat(Qt::RichText);
             overquotaDialog->exec();
             if(!overquotaDialog)
@@ -2637,33 +2638,27 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     if(!QFileInfo(localFolder).isDir())
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                            "because the local folder doesn't exist")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                                "because the remote folder is in the rubbish bin")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                                "because the remote folder doesn't exist")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(e->getErrorCode() == MegaError::API_EFAILED)
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                            "because the local folder has changed")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(e->getErrorCode() == MegaError::API_EACCESS)
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                            "because the remote folder (or part of it)\n"
-                                            "doesn't have full permissions")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else if(e->getErrorCode() != MegaError::API_ENOENT) // Managed in onNodesUpdate
@@ -2768,8 +2763,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         if(!overquotaDialog)
         {
+            QString message = tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or [A]upgrade your account[/A]");
+            message.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/#pro\">"));
+            message.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
             overquotaDialog = new QMessageBox(QMessageBox::Warning, tr("MEGAsync"),
-                                        tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or <a href=\"https://mega.nz/#pro\">upgrade your account</a>"), QMessageBox::Ok);
+                                        message, QMessageBox::Ok);
             overquotaDialog->setTextFormat(Qt::RichText);
             overquotaDialog->exec();
             if(!overquotaDialog)
@@ -2968,14 +2966,12 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 {
                     if(nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                            "because the remote folder is in the rubbish bin")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
                                          .arg(preferences->getSyncName(i)));
                     }
                     else
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
-                                            "because the remote folder doesn't exist")
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));

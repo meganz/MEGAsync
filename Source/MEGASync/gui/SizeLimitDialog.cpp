@@ -118,7 +118,7 @@ void SizeLimitDialog::on_bOK_clicked()
     if((upperSizeLimit() && !upperSizeLimitValue()) ||
             (lowerSizeLimit() && !lowerSizeLimitValue()))
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Limits can not be zero."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Warning"), tr("Size limits cannot be zero"), QMessageBox::Ok);
         return;
     }
     accept();

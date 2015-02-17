@@ -2690,7 +2690,7 @@ background:transparent;</string>
                 </size>
                </property>
                <property name="text">
-                <string>Exclude by Size</string>
+                <string>Exclude by size</string>
                </property>
               </widget>
              </item>
@@ -2706,7 +2706,7 @@ background:transparent;</string>
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>test</string>
+                <string/>
                </property>
               </widget>
              </item>
