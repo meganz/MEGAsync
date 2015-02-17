@@ -39,6 +39,10 @@
         <source>OK</source>
         <translation>[$81]</translation>
     </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
@@ -440,17 +444,17 @@ Are you sure?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>[$1630]</translation>
+        <translation type="obsolete">[$1630]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>[$1631]</translation>
+        <translation type="obsolete">[$1631]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>[$1632]</translation>
+        <translation type="obsolete">[$1632]</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -670,8 +674,43 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled
-because the local folder has changed</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or [A]upgrade your account[/A]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1212,7 +1251,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>[$1875]</translation>
+        <translation type="obsolete">[$1875]</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1382,6 +1421,27 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude by size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRO lite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The new excluded file names will be taken into account
+when the application starts again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The new excluded file sizes will be taken into account when the application starts again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1638,6 +1698,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Do you want to continue?</source>
         <translation>[$2044]</translation>
     </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -1680,6 +1744,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 (%2)</source>
         <translation>%1 (%2)</translation>
+    </message>
+</context>
+<context>
+    <name>SizeLimitDialog</name>
+    <message>
+        <source>Exclude by size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size limits cannot be zero</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
