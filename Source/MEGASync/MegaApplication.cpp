@@ -2659,7 +2659,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                             "because the local folder has changed")
                                          .arg(preferences->getSyncName(i)));
                     }
-                    else showErrorMessage(QCoreApplication::translate("MegaError", e->getErrorString()));
+                    else if(e->getErrorCode() == MegaError::API_EACCESS)
+                    {
+                        showErrorMessage(tr("Your sync \"%1\" has been disabled\n"
+                                            "because the remote folder (or part of it)\n"
+                                            "doesn't have full permissions")
+                                         .arg(preferences->getSyncName(i)));
+                    }
+                    else if(e->getErrorCode() != MegaError::API_ENOENT) // Managed in onNodesUpdate
+                    {
+                        showErrorMessage(QCoreApplication::translate("MegaError", e->getErrorString()));
+                    }
 
                     delete[] nodePath;
 
