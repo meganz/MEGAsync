@@ -13,6 +13,7 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     ui->setupUi(this);
 
     this->megaApi = megaApi;
+    ui->tValues->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
     on_bRefresh_clicked();
 }
 
@@ -117,15 +118,12 @@ void AccountDetailsDialog::refresh(MegaAccountDetails *details)
         delete nodeList;
     }
 
-    ui->tValues->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
-    ui->tValues->verticalHeader()->setFixedWidth(140);
-
-
     delete root;
     delete rubbish;
     delete inbox;
     ui->bRefresh->setText(tr("Refresh"));
     ui->bRefresh->setEnabled(true);
+    ui->tValues->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 }
 
 void AccountDetailsDialog::on_bRefresh_clicked()
