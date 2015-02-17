@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>170</height>
+    <width>633</width>
+    <height>172</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,9 +41,24 @@
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::NoSelection</enum>
         </property>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>140</number>
+        </attribute>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>140</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>30</number>
+        </attribute>
         <row>
          <property name="text">
           <string>Cloud Drive</string>
