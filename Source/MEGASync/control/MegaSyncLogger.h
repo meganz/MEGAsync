@@ -14,6 +14,8 @@ class MegaSyncLogger : public QObject, public mega::MegaLogger
 public:
     MegaSyncLogger();
     virtual void log(const char *time, int loglevel, const char *source, const char *message);
+    void sendLogsToStdout(bool enable);
+    void sendLogsToFile(bool enable);
 
 signals:
     void sendLog(QString time, int loglevel, QString message);
@@ -28,6 +30,8 @@ protected:
     QLocalServer* megaServer;
     QXmlStreamWriter *xmlWriter;
     bool connected;
+    bool logToStdout;
+    bool logToFile;
 };
 
 #endif // MEGASYNCLOGGER_H

@@ -90,9 +90,19 @@ void msgHandler(QtMsgType type, const char *msg)
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
+    MegaSyncLogger *logger = NULL;
 
 #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
-    MegaSyncLogger *logger = new MegaSyncLogger();
+    logger = new MegaSyncLogger();
+
+    #if defined(LOG_TO_STDOUT)
+        logger->sendLogsToStdout(true);
+    #endif
+
+    #if defined(LOG_TO_FILE)
+        logger->sendLogsToFile(true);
+    #endif
+
     MegaApi::setLoggerObject(logger);
 
     #ifdef DEBUG
