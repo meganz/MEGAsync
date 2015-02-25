@@ -174,6 +174,22 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+#ifdef Q_OS_LINUX
+    if(argc == 2)
+    {
+         if(!strcmp("--debug", argv[1]))
+         {
+             if(!logger)
+             {
+                logger = new MegaSyncLogger();
+                MegaApi::setLoggerObject(logger);
+             }
+             logger->sendLogsToStdout(true);
+             MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+         }
+    }
+#endif
+
     SharedTools::QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
     for(int i=0; i<10; i++)
