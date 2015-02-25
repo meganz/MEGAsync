@@ -18,6 +18,8 @@ MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
 {
     xmlWriter = NULL;
     connected = true;
+    logToStdout = false;
+    logToFile = false;
 
 #ifdef LOG_TO_LOGGER
     QLocalServer::removeServer(ENABLE_MEGASYNC_LOGS);
@@ -58,57 +60,72 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
     }
 #endif
 
-#if defined(LOG_TO_FILE) || defined(LOG_TO_STDOUT)
-    QString fileName;
-    QFileInfo info(QString::fromUtf8(source));
-    fileName = info.fileName();
-
-    ostringstream oss;
-    oss << time;
-    switch(loglevel)
+    if(logToFile || logToStdout)
     {
-        case MegaApi::LOG_LEVEL_DEBUG:
-            oss << " (debug): ";
-            break;
-        case MegaApi::LOG_LEVEL_ERROR:
-            oss << " (error): ";
-            break;
-        case MegaApi::LOG_LEVEL_FATAL:
-            oss << " (fatal): ";
-            break;
-        case MegaApi::LOG_LEVEL_INFO:
-            oss << " (info):  ";
-            break;
-        case MegaApi::LOG_LEVEL_MAX:
-            oss << " (verb):  ";
-            break;
-        case MegaApi::LOG_LEVEL_WARNING:
-            oss << " (warn):  ";
-            break;
-    }
+        QString fileName;
+        QFileInfo info(QString::fromUtf8(source));
+        fileName = info.fileName();
 
-    oss << message;
-    if(fileName.size())
-        oss << " ("<< fileName.toStdString() << ")";
-
-    #ifdef LOG_TO_STDOUT
-        cout << oss.str() << endl;
-    #endif
-
-    #ifdef LOG_TO_FILE
-        static QString filePath;
-        if(filePath.isEmpty())
+        ostringstream oss;
+        oss << time;
+        switch(loglevel)
         {
-            QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-            filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
+            case MegaApi::LOG_LEVEL_DEBUG:
+                oss << " (debug): ";
+                break;
+            case MegaApi::LOG_LEVEL_ERROR:
+                oss << " (error): ";
+                break;
+            case MegaApi::LOG_LEVEL_FATAL:
+                oss << " (fatal): ";
+                break;
+            case MegaApi::LOG_LEVEL_INFO:
+                oss << " (info):  ";
+                break;
+            case MegaApi::LOG_LEVEL_MAX:
+                oss << " (verb):  ";
+                break;
+            case MegaApi::LOG_LEVEL_WARNING:
+                oss << " (warn):  ";
+                break;
         }
 
-        QFile file(filePath);
-        file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-        QTextStream out(&file);
-        out << oss.str().c_str() << endl;
-    #endif
-#endif
+        oss << message;
+        if(fileName.size())
+        {
+            oss << " ("<< fileName.toStdString() << ")";
+        }
+
+        if(logToStdout)
+        {
+            cout << oss.str() << endl;
+        }
+
+        if(logToFile)
+        {
+            static QString filePath;
+            if(filePath.isEmpty())
+            {
+                QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+                filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
+            }
+
+            QFile file(filePath);
+            file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+            QTextStream out(&file);
+            out << oss.str().c_str() << endl;
+        }
+    }
+}
+
+void MegaSyncLogger::sendLogsToStdout(bool enable)
+{
+    this->logToStdout = enable;
+}
+
+void MegaSyncLogger::sendLogsToFile(bool enable)
+{
+    this->logToFile = enable;
 }
 
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
