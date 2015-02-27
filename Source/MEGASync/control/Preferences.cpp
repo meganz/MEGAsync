@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 2000;
 const int Preferences::BUILD_ID = 1;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.0.0");
-const QString Preferences::SDK_ID = QString::fromAscii("549fa");
+const QString Preferences::SDK_ID = QString::fromAscii("01c5e");
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
