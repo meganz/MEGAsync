@@ -102,14 +102,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
 #endif
 
-#ifndef _WIN32
     if(!proxyOnly && preferences->logged())
     {
         connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
         QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
         cacheSizeWatcher.setFuture(futureCacheSize);
     }
-#endif
 
 #ifdef __APPLE__
     ui->bOk->hide();
