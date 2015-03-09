@@ -150,6 +150,8 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
     QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #else
     QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.lock"));
+    QFile::remove(lockSettingsFile);
 #endif
 
     QDir dir(dataPath);
