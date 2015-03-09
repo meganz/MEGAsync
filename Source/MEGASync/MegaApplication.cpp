@@ -190,7 +190,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#ifndef __APPLE__
     SharedTools::QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
     for(int i=0; i<10; i++)
@@ -214,7 +213,6 @@ int main(int argc, char *argv[])
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
         return 0;
     }
-#endif
     Platform::initialize(argc, argv);
 
 #ifndef WIN32
