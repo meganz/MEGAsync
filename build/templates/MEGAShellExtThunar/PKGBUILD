@@ -1,0 +1,13 @@
+pkgname=thunar-megasync
+pkgver=EXT_VERSION
+pkgrel=1
+arch=('any')
+url="https://mega.nz/#sync"
+license=('Freeware')
+pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
+depends=(
+'qt4'
+'thunar'
+'hicolor-icon-theme'
+'ca-certificates'
+)
