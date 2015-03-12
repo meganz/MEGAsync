@@ -50,6 +50,8 @@ unix:!macx {
 
         # icons
         ICONS_LOC = $$PWD/linux/data/icons/hicolor
+        icons16.path = $${HICOLOR}/16x16/apps
+        icons16.files = $${ICONS_LOC}/16x16/apps/mega.png
         icons32.path = $${HICOLOR}/32x32/apps
         icons32.files = $${ICONS_LOC}/32x32/apps/mega.png
         icons48.path = $${HICOLOR}/48x48/apps
@@ -58,7 +60,7 @@ unix:!macx {
         icons128.files = $${ICONS_LOC}/128x128/apps/mega.png
         icons256.path = $${HICOLOR}/256x256/apps
         icons256.files = $${ICONS_LOC}/256x256/apps/mega.png
-        INSTALLS += icons32 icons48 icons128 icons256
+        INSTALLS += icons16 icons32 icons48 icons128 icons256
     } else {
         message("Skipping desktop files installation.")
     }
