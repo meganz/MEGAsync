@@ -78,6 +78,10 @@ rm -fr MEGAsync/MEGAsync.debug/megasync-debug_*.tar.gz
 mv $MEGASYNC_NAMED.tar.gz MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.tar.gz
 
 
+#
+# Nautilus
+#
+
 # make sure the source tree is in "clean" state
 cd ../Source/MEGAShellExtNautilus/
 make distclean 2> /dev/null || true
@@ -100,6 +104,7 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/PKGBUILD > 
 # create archive
 mkdir $EXT_NAME
 ln -s ../MEGAsync/MEGAShellExtNautilus/nautilus-megasync.spec $EXT_NAME/nautilus-megasync.spec
+ln -s ../MEGAsync/MEGAShellExtNautilus/debian.postinst $EXT_NAME/debian.postinst
 ln -s ../../Source/MEGAShellExtNautilus/mega_ext_client.c $EXT_NAME/mega_ext_client.c
 ln -s ../../Source/MEGAShellExtNautilus/mega_ext_client.h $EXT_NAME/mega_ext_client.h
 ln -s ../../Source/MEGAShellExtNautilus/mega_ext_module.c $EXT_NAME/mega_ext_module.c
@@ -109,7 +114,6 @@ ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
-ln -s ../MEGAsync/MEGAShellExtNautilus/debian.postinst $EXT_NAME/debian.postinst
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
@@ -118,5 +122,47 @@ rm -rf $EXT_NAME
 rm -fr MEGAsync/MEGAShellExtNautilus/nautilus-megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.tar.gz
+
+
+#
+# Thunar
+#
+
+# make sure the source tree is in "clean" state
+cd ../Source/MEGAShellExtThunar/
+make distclean 2> /dev/null || true
+cd ../../build
+
+# extension uses the same version number as MEGASync app
+export EXT_VERSION=$MEGASYNC_VERSION
+export EXT_NAME=thunar-megasync-$EXT_VERSION
+rm -rf $EXT_NAME.tar.gz
+rm -rf $EXT_NAME
+
+# delete previously generated files
+rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.dsc
+
+# fix version number in template files and copy to appropriate directories
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.spec > MEGAsync/MEGAShellExtThunar/thunar-megasync.spec
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/thunar-megasync.dsc > MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.dsc
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/PKGBUILD > MEGAsync/MEGAShellExtThunar/PKGBUILD
+
+# create archive
+mkdir $EXT_NAME
+ln -s ../MEGAsync/MEGAShellExtThunar/thunar-megasync.spec $EXT_NAME/thunar-megasync.spec
+ln -s ../../Source/MEGAShellExtThunar/mega_ext_client.c $EXT_NAME/mega_ext_client.c
+ln -s ../../Source/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
+ln -s ../../Source/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
+ln -s ../../Source/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
+ln -s ../../Source/MEGAShellExtThunar/MEGAShellExtThunar.pro $EXT_NAME/MEGAShellExtThunar.pro
+export GZIP=-9
+tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
+rm -rf $EXT_NAME
+
+# delete any previous archive
+rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.tar.gz
+# transform arch name, to satisfy Debian requirements
+mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.tar.gz
+
 
 rm -fr $archives
