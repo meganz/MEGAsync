@@ -19,7 +19,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProxyStyle.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
-    $$PWD/SizeLimitDialog.cpp
+    $$PWD/SizeLimitDialog.cpp \
+    $$PWD/UsageWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -40,7 +41,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProxyStyle.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
-    $$PWD/SizeLimitDialog.h
+    $$PWD/SizeLimitDialog.h \
+    $$PWD/UsageWidget.h
 
 INCLUDEPATH += $$PWD
 

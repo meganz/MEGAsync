@@ -32,20 +32,42 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wProgress
+   <string notr="true">#wCloud
 {
-        background-color: red;
-        border-radius: 6px;
-        margin-left: 5px;
+	background-color: #2BA6DE;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	margin-left: 5px;
+}
+#wProgress 
+{
+	background-color: #F07800;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	margin-left: 5px;
+}
+#wRubbish
+{
+	background-color: #13E03C;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	margin-left: 5px;
+}
+#wShares
+{
+	background-color: #FFD300;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	margin-left: 5px;
 }
 </string>
   </property>
-  <widget class="QWidget" name="wProgress" native="true">
+  <widget class="QWidget" name="wInbox" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>6</y>
-     <width>50</width>
+     <width>16</width>
      <height>12</height>
     </rect>
    </property>
@@ -118,8 +140,95 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QWidget" name="wShares" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>6</y>
+     <width>16</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>12</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wRubbish" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>6</y>
+     <width>16</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>12</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="wCloud" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>6</y>
+     <width>16</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>12</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>12</height>
+    </size>
+   </property>
+  </widget>
   <zorder>lProgress</zorder>
-  <zorder>wProgress</zorder>
+  <zorder>wInbox</zorder>
+  <zorder>wShares</zorder>
+  <zorder>wRubbish</zorder>
+  <zorder>wCloud</zorder>
  </widget>
  <resources>
   <include location="../Resources_win.qrc"/>
