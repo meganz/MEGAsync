@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "megaapi.h"
+#include "Preferences.h"
 
 namespace Ui {
 class AccountDetailsDialog;
@@ -16,7 +17,7 @@ class AccountDetailsDialog : public QDialog
 public:
     explicit AccountDetailsDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~AccountDetailsDialog();
-    void refresh(mega::MegaAccountDetails *details);
+    void refresh(Preferences *details);
 
 private slots:
     void on_bRefresh_clicked();

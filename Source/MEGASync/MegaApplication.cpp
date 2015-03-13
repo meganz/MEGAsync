@@ -2634,9 +2634,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
         delete rubbish;
 
+        long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
+        MegaNodeList *inShares = megaApi->getInShares();
+        for(int i=0;i<inShares->size();i++)
+        {
+            MegaNode *node = inShares->get(i);
+
+            inShareSize    += details->getStorageUsed(node->getHandle());
+            inShareFiles   += details->getNumFiles(node->getHandle());
+            inShareFolders += details->getNumFolders(node->getHandle());
+        }
+        preferences->setInShareStorage(inShareSize);
+        preferences->setInShareFiles(inShareFiles);
+        preferences->setInShareFolders(inShareFolders);
+        delete inShares;
+
         preferences->sync();
 
-        if(infoDialog) infoDialog->setUsage(details->getStorageMax(), details->getStorageUsed());
+        if(infoDialog) infoDialog->setUsage();
         if(settingsDialog) settingsDialog->refreshAccountDetails(details);
         delete details;
         break;
@@ -2890,7 +2905,24 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
             if(settingsDialog) settingsDialog->refreshAccountDetails();
 
-            if(infoDialog) infoDialog->increaseUsedStorage(transfer->getTotalBytes());
+            if(infoDialog)
+            {
+                bool isShare = false;
+
+                MegaHandle handle = transfer->getParentHandle();
+                MegaNode *node = megaApi->getNodeByHandle(handle);
+
+                const char *path = megaApi->getNodePath(node);
+                if(path && path[0]!='/')
+                {
+                    isShare = true;
+                }
+
+                infoDialog->increaseUsedStorage(transfer->getTotalBytes(),isShare);
+
+                delete node;
+                delete [] path;
+            }
         }
     }
 

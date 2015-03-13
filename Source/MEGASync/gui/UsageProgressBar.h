@@ -15,7 +15,7 @@ public:
     explicit UsageProgressBar(QWidget *parent = 0);
     ~UsageProgressBar();
 
-    void setProgress(int value);
+    void setProgress(long long valueCloud,long long valueRubbish, long long valueShares, long long valueInbox, long long totalBytes, long long totalUsed);
 
 private:
     Ui::UsageProgressBar *ui;

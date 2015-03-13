@@ -22,7 +22,7 @@ public:
     void init();
     ~InfoDialog();
 
-    void setUsage(int64_t totalBytes, int64_t usedBytes);
+    void setUsage();
     void setTransfer(mega::MegaTransfer *transfer);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
@@ -34,7 +34,7 @@ public:
     void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
-    void increaseUsedStorage(long long bytes);
+    void increaseUsedStorage(long long bytes, bool isInShare);
     void updateState();
     void showRecentlyUpdated(bool show);
     void closeSyncsMenu();
@@ -123,8 +123,6 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaTransfer *transfer1;
     mega::MegaTransfer *transfer2;
-    int64_t totalBytes;
-    int64_t usedBytes;
 };
 
 #endif // INFODIALOG_H
