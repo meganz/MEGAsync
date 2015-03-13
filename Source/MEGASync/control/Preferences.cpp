@@ -55,12 +55,15 @@ const QString Preferences::usedStorageKey           = QString::fromAscii("usedSt
 const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudDriveStorage");
 const QString Preferences::inboxStorageKey          = QString::fromAscii("inboxStorage");
 const QString Preferences::rubbishStorageKey        = QString::fromAscii("rubbishStorage");
+const QString Preferences::inShareStorageKey        = QString::fromAscii("inShareStorage");
 const QString Preferences::cloudDriveFilesKey       = QString::fromAscii("cloudDriveFiles");
 const QString Preferences::inboxFilesKey            = QString::fromAscii("inboxFiles");
 const QString Preferences::rubbishFilesKey          = QString::fromAscii("rubbishFiles");
+const QString Preferences::inShareFilesKey          = QString::fromAscii("inShareFiles");
 const QString Preferences::cloudDriveFoldersKey     = QString::fromAscii("cloudDriveFolders");
 const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxFolders");
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
+const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey		= QString::fromAscii("totalBandwidth");
 const QString Preferences::usedBandwidthKey			= QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
@@ -351,6 +354,23 @@ void Preferences::setRubbishStorage(long long value)
     mutex.unlock();
 }
 
+long long Preferences::inShareStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(inShareStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setInShareStorage(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(inShareStorageKey, value);
+    mutex.unlock();
+}
+
 long long Preferences::cloudDriveFiles()
 {
     mutex.lock();
@@ -402,6 +422,23 @@ void Preferences::setRubbishFiles(long long value)
     mutex.unlock();
 }
 
+long long Preferences::inShareFiles()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(inShareFilesKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setInShareFiles(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(inShareFilesKey, value);
+    mutex.unlock();
+}
+
 long long Preferences::cloudDriveFolders()
 {
     mutex.lock();
@@ -450,6 +487,23 @@ void Preferences::setRubbishFolders(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(rubbishFoldersKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::inShareFolders()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(inShareFoldersKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setInShareFolders(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(inShareFoldersKey, value);
     mutex.unlock();
 }
 

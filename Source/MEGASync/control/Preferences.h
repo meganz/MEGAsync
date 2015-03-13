@@ -45,6 +45,8 @@ public:
     void setInboxStorage(long long value);
     long long rubbishStorage();
     void setRubbishStorage(long long value);
+    long long inShareStorage();
+    void setInShareStorage(long long value);
 
     long long cloudDriveFiles();
     void setCloudDriveFiles(long long value);
@@ -52,6 +54,8 @@ public:
     void setInboxFiles(long long value);
     long long rubbishFiles();
     void setRubbishFiles(long long value);
+    long long inShareFiles();
+    void setInShareFiles(long long value);
 
     long long cloudDriveFolders();
     void setCloudDriveFolders(long long value);
@@ -59,6 +63,8 @@ public:
     void setInboxFolders(long long value);
     long long rubbishFolders();
     void setRubbishFolders(long long value);
+    long long inShareFolders();
+    void setInShareFolders(long long value);
 
 	long long totalBandwidth();
 	void setTotalBandwidth(long long value);
@@ -260,12 +266,15 @@ protected:
     static const QString cloudDriveStorageKey;
     static const QString inboxStorageKey;
     static const QString rubbishStorageKey;
+    static const QString inShareStorageKey;
     static const QString cloudDriveFilesKey;
     static const QString inboxFilesKey;
     static const QString rubbishFilesKey;
+    static const QString inShareFilesKey;
     static const QString cloudDriveFoldersKey;
     static const QString inboxFoldersKey;
     static const QString rubbishFoldersKey;
+    static const QString inShareFoldersKey;
 	static const QString totalBandwidthKey;
 	static const QString usedBandwidthKey;
     static const QString accountTypeKey;
