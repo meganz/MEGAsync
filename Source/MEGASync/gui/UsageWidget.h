@@ -31,10 +31,10 @@ public:
 
     void clearAll();
 
-    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
-    QSize sizeHint() const Q_DECL_OVERRIDE;
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
 protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event);
 private:
 
     bool overquotaReached;
