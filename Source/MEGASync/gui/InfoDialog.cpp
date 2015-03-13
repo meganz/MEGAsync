@@ -37,7 +37,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 	currentDownload = 0;
 	totalUploads = 0;
 	totalDownloads = 0;
-    totalBytes = usedBytes = 0;
 	totalDownloadedSize = totalUploadedSize = 0;
 	totalDownloadSize = totalUploadSize = 0;
 	remainingUploads = remainingDownloads = 0;
@@ -81,7 +80,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
-    setUsage(preferences->totalStorage(), preferences->usedStorage());
+    setUsage();
     updateSyncsButton();
 
     ui->wDownloadDesc->hide();
@@ -159,18 +158,17 @@ InfoDialog::~InfoDialog()
     delete ui;
 }
 
-void InfoDialog::setUsage(int64_t totalBytes, int64_t usedBytes)
+void InfoDialog::setUsage()
 {
-    if(!totalBytes) return;
+    if(!preferences->totalStorage()) return;
 
-    this->totalBytes = totalBytes;
-    this->usedBytes = usedBytes;
-    int percentage = ceil((100 * usedBytes) / (double)totalBytes);
-	ui->pUsage->setProgress(percentage);
+    int percentage = ceil((100 * preferences->usedStorage()) / (double)preferences->totalStorage());
+    ui->pUsage->setProgress(preferences->cloudDriveStorage(),preferences->rubbishStorage(),
+                            preferences->inShareStorage(),preferences->inboxStorage(),preferences->totalStorage(),preferences->usedStorage());
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
-            .arg(Utilities::getSizeString(totalBytes));
+            .arg(Utilities::getSizeString(preferences->totalStorage()));
 	ui->lPercentageUsed->setText(used);
-    ui->lTotalUsed->setText(tr("Usage: %1").arg(Utilities::getSizeString(usedBytes)));
+    ui->lTotalUsed->setText(tr("Usage: %1").arg(Utilities::getSizeString(preferences->usedStorage())));
 }
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
@@ -438,10 +436,19 @@ void InfoDialog::setWaiting(bool waiting)
     this->waiting = waiting;
 }
 
-void InfoDialog::increaseUsedStorage(long long bytes)
+void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
 {
-    this->usedBytes+=bytes;
-    this->setUsage(totalBytes, usedBytes);
+
+    if(isInShare)
+    {
+        preferences->setInShareStorage(preferences->inShareStorage()+bytes);
+    }else
+    {
+        preferences->setCloudDriveStorage(preferences->cloudDriveStorage()+bytes);
+    }
+
+    preferences->setUsedStorage(preferences->usedStorage()+bytes);
+    this->setUsage();
 }
 
 void InfoDialog::updateState()
@@ -901,7 +908,7 @@ void InfoDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        if(totalBytes) setUsage(totalBytes, usedBytes);
+        if(preferences->totalStorage()) setUsage();
         updateSyncsButton();
         updateTransfers();
     }

@@ -871,7 +871,7 @@ void SettingsDialog::refreshAccountDetails(MegaAccountDetails *details)
         }
 
         if(accountDetailsDialog)
-            accountDetailsDialog->refresh(details);
+            accountDetailsDialog->refresh(preferences);
 
         return;
     }
