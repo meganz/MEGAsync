@@ -126,8 +126,9 @@
    <property name="text">
     <string/>
    </property>
-   <property name="pixmap">
-     <pixmap>://images/usageProgress.png</pixmap>
+   <property name="icon">
+    <iconset resource="../Resources_win.qrc">
+     <normaloff>:/images/usageProgress.png</normaloff>:/images/usageProgress.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -229,6 +230,8 @@
   <zorder>wRubbish</zorder>
   <zorder>wCloud</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_win.qrc"/>
+ </resources>
  <connections/>
 </ui>
