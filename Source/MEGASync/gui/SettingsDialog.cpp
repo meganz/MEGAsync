@@ -1382,7 +1382,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(this,
              tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-MASTERKEY")),
-             tr("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
+             QString::fromUtf8("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
 
     if (fileName.isEmpty())
