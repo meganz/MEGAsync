@@ -8,6 +8,7 @@
 #include "Preferences.h"
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
+#include "MessageBox.h"
 
 class MegaUploader : public QObject, public mega::MegaRequestListener
 {
@@ -28,6 +29,8 @@ protected:
     mega::MegaApi *megaApi;
     mega::QTMegaRequestListener *delegateListener;
     QQueue<QFileInfo> folders;
+    MessageBox *mbox;
+    bool dontAskAgain;
 };
 
 #endif // MEGAUPLOADER_H
