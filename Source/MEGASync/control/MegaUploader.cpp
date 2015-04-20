@@ -15,6 +15,8 @@ MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
     delegateListener = new QTMegaRequestListener(megaApi, this);
+    mbox = NULL;
+    dontAskAgain = false;
 }
 
 MegaUploader::~MegaUploader()
@@ -78,12 +80,32 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
         QFileInfo dstInfo(destPath);
         if(dstInfo.exists() && (destPath != currentPath))
         {
-            int res = QMessageBox::warning(NULL, tr("Warning"), tr("The destination folder is synced and you already have a file \n"
-                                                         "inside it with the same name (%1).\n"
-                                                         "If you continue the upload, the previous file will be overwritten.\n"
-                                                         "Are you sure?").arg(info.fileName()), QMessageBox::Yes, QMessageBox::Cancel);
-            if(res != QMessageBox::Yes) return;
-            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
+            if(!dontAskAgain)
+            {
+                mbox = new MessageBox();
+                mbox->raise();
+                mbox->activateWindow();
+                mbox->setFocus();
+                mbox->exec();
+                if(!mbox)
+                {
+                    delete mbox;
+                    mbox = NULL;
+                    return;
+                }
+                if(mbox->result()==QDialog::Accepted)
+                {
+                    dontAskAgain = mbox->dontAskAgain();
+                    megaApi->moveToLocalDebris(destPath.toUtf8().constData());
+                }
+                delete mbox;
+                mbox = NULL;
+
+            }else
+            {
+                megaApi->moveToLocalDebris(destPath.toUtf8().constData());
+            }
+
         }
 
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);

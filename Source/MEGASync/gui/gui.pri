@@ -20,7 +20,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
     $$PWD/SizeLimitDialog.cpp \
-    $$PWD/UsageWidget.cpp
+    $$PWD/UsageWidget.cpp \
+    $$PWD/MessageBox.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -42,7 +43,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
     $$PWD/SizeLimitDialog.h \
-    $$PWD/UsageWidget.h
+    $$PWD/UsageWidget.h \
+    $$PWD/MessageBox.h
 
 INCLUDEPATH += $$PWD
 
@@ -70,7 +72,8 @@ win32 {
                 $$PWD/win/SettingsDialog.ui \
                 $$PWD/win/AccountDetailsDialog.ui \
                 $$PWD/win/DownloadFromMegaDialog.ui \
-                $$PWD/win/SizeLimitDialog.ui
+                $$PWD/win/SizeLimitDialog.ui \
+                $$PWD/win/MessageBox.ui
 }
 
 macx {
@@ -93,7 +96,8 @@ macx {
                 $$PWD/macx/SettingsDialog.ui \
                 $$PWD/macx/AccountDetailsDialog.ui \
                 $$PWD/macx/DownloadFromMegaDialog.ui \
-                $$PWD/macx/SizeLimitDialog.ui
+                $$PWD/macx/SizeLimitDialog.ui \
+                $$PWD/macx/MessageBox.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -120,5 +124,6 @@ unix:!macx {
                 $$PWD/linux/SettingsDialog.ui \
                 $$PWD/linux/AccountDetailsDialog.ui \
                 $$PWD/linux/DownloadFromMegaDialog.ui \
-                $$PWD/linux/SizeLimitDialog.ui
+                $$PWD/linux/SizeLimitDialog.ui \
+                $$PWD/linux/MessageBox.ui
 }
