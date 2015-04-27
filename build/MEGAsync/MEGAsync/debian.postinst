@@ -3,7 +3,9 @@
 distro=$(lsb_release -ds)
 ver=$(lsb_release -rs)
 
-if [[ $ver = "14.10" ]]; then
+if [[ $ver = "15.04" ]]; then
+    str="xUbuntu_15.04"
+elif [[ $ver = "14.10" ]]; then
     str="xUbuntu_14.10"
 elif [[ $ver = "14.04" ]]; then
     str="xUbuntu_14.04"
@@ -20,12 +22,15 @@ elif [[ $ver == 7.* ]]; then
     str="Debian_7.0"
 # fallback Debian
 elif [[ $ver == 8.* ]]; then
-    str="Debian_7.0"
+    str="Debian_8.0"
 elif [[ $ver = "testing" ]]; then
     str="Debian_7.0"
-# Elementary OS uses 12.04
-elif [[ $ver = "elementary OS Luna" ]]; then
+# Elementary OS Luna uses 12.04
+elif [[ $distro = "elementary OS Luna" ]]; then
     str="xUbuntu_12.04"
+# Elementary OS Freya Ubuntu 14.04 LTS
+elif [[ $distro = "elementary OS Freya" ]]; then
+    str="xUbuntu_14.04"
 # fallback to LTS version, unsupported
 else
     str="xUbuntu_14.04"
