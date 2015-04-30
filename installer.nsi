@@ -38,16 +38,21 @@ VIAddVersionKey "ProductVersion" "2.0.0.1"
 !define CSIDL_LOCALAPPDATA '0x1C' ;Local Application Data path
 !define CSIDL_COMMON_APPDATA '0x23'
 
+; To be defined depending on your working environment
+!define QT_PATH "C:\Qt\4.8.6\"
+!define BUILDPATH_X86 "Release_x32"
+!define BUILDPATH_X64 "Release_x64"
+
 !ifdef BUILD_X64_VERSION
-!define SRCDIR_MEGASYNC "Release_x64\MEGAsync\release"
-!define SRCDIR_LOGGER "Release_x64\MEGALogger\release"
+!define SRCDIR_MEGASYNC "${BUILDPATH_X64}\MEGAsync\release"
+!define SRCDIR_LOGGER "${BUILDPATH_X64}\MEGALogger\release"
 !else
-!define SRCDIR_MEGASYNC "Release_x32\MEGAsync\release"
-!define SRCDIR_LOGGER "Release_x32\MEGALogger\release"
+!define SRCDIR_MEGASYNC "${BUILDPATH_X86}\MEGAsync\release"
+!define SRCDIR_LOGGER "${BUILDPATH_X86}\MEGALogger\release"
 !endif
 
-!define SRCDIR_MEGASHELLEXT_X32 "Release_x32\MEGAShellExt\release"
-!define SRCDIR_MEGASHELLEXT_X64 "Release_x64\MEGAShellExt\release"
+!define SRCDIR_MEGASHELLEXT_X32 "${BUILDPATH_X86}\MEGAShellExt\release"
+!define SRCDIR_MEGASHELLEXT_X64 "${BUILDPATH_X64}\MEGAShellExt\release"
 !define MULTIUSER_MUI
 !define MULTIUSER_EXECUTIONLEVEL Standard
 !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
@@ -104,81 +109,85 @@ var ALL_USERS_INSTDIR
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
-; Language files
-!insertmacro MUI_LANGUAGE "Afrikaans"
+; Language files (the ones available in MEGASync, with locale code)
+!insertmacro MUI_LANGUAGE "Afrikaans"       ;af
 !insertmacro MUI_LANGUAGE "Albanian"
-!insertmacro MUI_LANGUAGE "Arabic"
+!insertmacro MUI_LANGUAGE "Arabic"          ;ar
 !insertmacro MUI_LANGUAGE "Armenian"
-!insertmacro MUI_LANGUAGE "Basque"
+!insertmacro MUI_LANGUAGE "Basque"          ;eu
 !insertmacro MUI_LANGUAGE "Belarusian"
-!insertmacro MUI_LANGUAGE "Bosnian"
+!insertmacro MUI_LANGUAGE "Bosnian"         ;bs
 !insertmacro MUI_LANGUAGE "Breton"
-!insertmacro MUI_LANGUAGE "Bulgarian"
-!insertmacro MUI_LANGUAGE "Catalan"
+!insertmacro MUI_LANGUAGE "Bulgarian"       ;bg
+!insertmacro MUI_LANGUAGE "Catalan"         ;ca
 !insertmacro MUI_LANGUAGE "Cibemba"
-!insertmacro MUI_LANGUAGE "Croatian"
-!insertmacro MUI_LANGUAGE "Czech"
-!insertmacro MUI_LANGUAGE "Danish"
-!insertmacro MUI_LANGUAGE "Dutch"
-!insertmacro MUI_LANGUAGE "Efik"
+!insertmacro MUI_LANGUAGE "Croatian"        ;hr
+!insertmacro MUI_LANGUAGE "Czech"           ;cs
+!insertmacro MUI_LANGUAGE "Danish"          ;da
+!insertmacro MUI_LANGUAGE "Dutch"           ;nl
+!insertmacro MUI_LANGUAGE "Efik" 			;locale code not found
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Esperanto"
 !insertmacro MUI_LANGUAGE "Estonian"
-!insertmacro MUI_LANGUAGE "Farsi"
-!insertmacro MUI_LANGUAGE "Finnish"
-!insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "Farsi" 			;locale code not found
+!insertmacro MUI_LANGUAGE "Finnish"         ;fi
+!insertmacro MUI_LANGUAGE "French"          ;fr
 !insertmacro MUI_LANGUAGE "Galician"
 !insertmacro MUI_LANGUAGE "Georgian"
-!insertmacro MUI_LANGUAGE "German"
-!insertmacro MUI_LANGUAGE "Greek"
-!insertmacro MUI_LANGUAGE "Hebrew"
-!insertmacro MUI_LANGUAGE "Hindi"
-!insertmacro MUI_LANGUAGE "Hungarian"
+!insertmacro MUI_LANGUAGE "German"            ;de
+!insertmacro MUI_LANGUAGE "Greek"             ;el
+!insertmacro MUI_LANGUAGE "Hebrew"            ;he
+!insertmacro MUI_LANGUAGE "Hindi"             ;hi
+!insertmacro MUI_LANGUAGE "Hungarian"         ;hu
 !insertmacro MUI_LANGUAGE "Icelandic"
 !insertmacro MUI_LANGUAGE "Igbo"
-!insertmacro MUI_LANGUAGE "Indonesian"
+!insertmacro MUI_LANGUAGE "Indonesian"        ;in
 !insertmacro MUI_LANGUAGE "Irish"
-!insertmacro MUI_LANGUAGE "Italian"
-!insertmacro MUI_LANGUAGE "Japanese"
+!insertmacro MUI_LANGUAGE "Italian"           ;it
+!insertmacro MUI_LANGUAGE "Japanese"          ;ja
 !insertmacro MUI_LANGUAGE "Khmer"
-!insertmacro MUI_LANGUAGE "Korean"
+!insertmacro MUI_LANGUAGE "Korean"            ;ko
 !insertmacro MUI_LANGUAGE "Kurdish"
-!insertmacro MUI_LANGUAGE "Latvian"
-!insertmacro MUI_LANGUAGE "Lithuanian"
+!insertmacro MUI_LANGUAGE "Latvian"           ;lv
+!insertmacro MUI_LANGUAGE "Lithuanian"        ;lt
 !insertmacro MUI_LANGUAGE "Luxembourgish"
-!insertmacro MUI_LANGUAGE "Macedonian"
+!insertmacro MUI_LANGUAGE "Macedonian"        ;mk
 !insertmacro MUI_LANGUAGE "Malagasy"
-!insertmacro MUI_LANGUAGE "Malay"
+!insertmacro MUI_LANGUAGE "Malay"             ;ms
 !insertmacro MUI_LANGUAGE "Mongolian"
-!insertmacro MUI_LANGUAGE "Norwegian"
+!insertmacro MUI_LANGUAGE "Norwegian"         ;no
 !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
-!insertmacro MUI_LANGUAGE "Polish"
-!insertmacro MUI_LANGUAGE "Portuguese"
-!insertmacro MUI_LANGUAGE "PortugueseBR"
-!insertmacro MUI_LANGUAGE "Romanian"
-!insertmacro MUI_LANGUAGE "Russian"
+!insertmacro MUI_LANGUAGE "Polish"            ;pl
+!insertmacro MUI_LANGUAGE "Portuguese"        ;pt
+!insertmacro MUI_LANGUAGE "PortugueseBR"      ;pt_BR
+!insertmacro MUI_LANGUAGE "Romanian"          ;ro
+!insertmacro MUI_LANGUAGE "Russian"           ;ru
 !insertmacro MUI_LANGUAGE "Serbian"
 !insertmacro MUI_LANGUAGE "SerbianLatin"
 !insertmacro MUI_LANGUAGE "Sesotho"
-!insertmacro MUI_LANGUAGE "SimpChinese"
-!insertmacro MUI_LANGUAGE "Slovak"
-!insertmacro MUI_LANGUAGE "Slovenian"
-!insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "SimpChinese"       ;zh_CN
+!insertmacro MUI_LANGUAGE "Slovak"            ;sk
+!insertmacro MUI_LANGUAGE "Slovenian"         ;sl
+!insertmacro MUI_LANGUAGE "Spanish"           ;es
 !insertmacro MUI_LANGUAGE "SpanishInternational"
 !insertmacro MUI_LANGUAGE "Swahili"
-!insertmacro MUI_LANGUAGE "Swedish"
+!insertmacro MUI_LANGUAGE "Swedish"          ;sv
 !insertmacro MUI_LANGUAGE "Tamil"
-!insertmacro MUI_LANGUAGE "Thai"
-!insertmacro MUI_LANGUAGE "TradChinese"
-!insertmacro MUI_LANGUAGE "Turkish"
+!insertmacro MUI_LANGUAGE "Thai"             ;th
+!insertmacro MUI_LANGUAGE "TradChinese"      ;zh_TW
+!insertmacro MUI_LANGUAGE "Turkish"          ;tr
 !insertmacro MUI_LANGUAGE "Twi"
-!insertmacro MUI_LANGUAGE "Ukrainian"
+!insertmacro MUI_LANGUAGE "Ukrainian"        ;uk
 !insertmacro MUI_LANGUAGE "Uyghur"
 !insertmacro MUI_LANGUAGE "Uzbek"
-!insertmacro MUI_LANGUAGE "Vietnamese"
-!insertmacro MUI_LANGUAGE "Welsh"
+!insertmacro MUI_LANGUAGE "Vietnamese"       ;vn
+!insertmacro MUI_LANGUAGE "Welsh"            ;cy
 !insertmacro MUI_LANGUAGE "Yoruba"
 !insertmacro MUI_LANGUAGE "Zulu"
+
+; mi Maori is included in MegaSync, but not here
+; ee Ewe is included in MegaSync, but not here
+; tl Tagalog is included in MegaSync, but not here
 
 ; MUI end ------
 
@@ -214,7 +223,7 @@ Function .onInit
          WriteUninstaller "$EXEDIR\${UNINSTALLER_NAME}"
          Quit
   !endif
-
+  
   ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   ;strCpy $INSTALLDAY "$2$1$0"
   ;strCpy $EXPIRATIONDAY "20140121"
@@ -244,6 +253,7 @@ Function .onInit
   ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
   ;!insertmacro MUI_UNGETLANGUAGE
   !insertmacro MUI_LANGDLL_DISPLAY
+  
 FunctionEnd
 
 Function GetPaths
@@ -396,55 +406,57 @@ modeselected:
   
   !insertmacro DEBUG_MSG "Installing files"
   
+
+!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
   ;x86_32 files
-  File "${SRCDIR_MEGASYNC}\QtCore4.dll"
+  File "${QT_PATH}\bin\QtCore4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtCore4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtCore4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\QtGui4.dll"
+  File "${QT_PATH}\bin\QtGui4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtGui4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtGui4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\QtNetwork4.dll"
+  File "${QT_PATH}\bin\QtNetwork4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtNetwork4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtNetwork4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\QtXml4.dll"
+  File "${QT_PATH}\bin\QtXml4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtXml4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtXml4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\QtSvg4.dll"
+  File "${QT_PATH}\bin\QtSvg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtSvg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\QtSvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   SetOutPath "$INSTDIR\imageformats"
-  File "${SRCDIR_MEGASYNC}\imageformats\qgif4.dll"
+  File "${QT_PATH}\plugins\imageformats\qgif4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\imageformats\qico4.dll"
+  File "${QT_PATH}\plugins\imageformats\qico4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qico4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qico4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\imageformats\qjpeg4.dll"
+  File "${QT_PATH}\plugins\imageformats\qjpeg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\imageformats\qmng4.dll"
+  File "${QT_PATH}\plugins\imageformats\qmng4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\imageformats\qsvg4.dll"
+  File "${QT_PATH}\plugins\imageformats\qsvg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\imageformats\qtga4.dll"
+  File "${QT_PATH}\plugins\imageformats\qtga4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtga4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtga4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\imageformats\qtiff4.dll"
+  File "${QT_PATH}\plugins\imageformats\qtiff4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
           
@@ -460,11 +472,12 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAlogger.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAlogger.exe" "$USERNAME" "GenericRead + GenericWrite"
 !endif
-    
+
+;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
-
+!endif
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
 
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
