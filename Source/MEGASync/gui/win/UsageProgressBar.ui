@@ -89,6 +89,9 @@
      <height>12</height>
     </size>
    </property>
+   <property name="toolTip">
+    <string>Inbox</string>
+   </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>
@@ -167,6 +170,9 @@
      <height>12</height>
     </size>
    </property>
+   <property name="toolTip">
+    <string>Incoming Shares</string>
+   </property>
   </widget>
   <widget class="QWidget" name="wRubbish" native="true">
    <property name="geometry">
@@ -195,6 +201,9 @@
      <height>12</height>
     </size>
    </property>
+   <property name="toolTip">
+    <string> Rubbish Bin</string>
+   </property>
   </widget>
   <widget class="QWidget" name="wCloud" native="true">
    <property name="geometry">
@@ -222,6 +231,9 @@
      <width>16777215</width>
      <height>12</height>
     </size>
+   </property>
+   <property name="toolTip">
+    <string>Cloud Drive</string>
    </property>
   </widget>
   <zorder>lProgress</zorder>
