@@ -10,7 +10,7 @@ Download and install the tool to create installers.
 [Binary](https://unsis.googlecode.com/files/nsis-2.46.5-Unicode-setup.exe)
 [Website](http://www.scratchpaper.com/)
 
-*Note*: some plugins and extra translations for NSIS are required. You can directly overwrite the content of your NSIS folder in "Program files x86" with the following files [Download here](https://mega.nz/#!rp0Q0ChY!1FQmzwt5Og3C1iz2NzgAy6ydyD6fGuC45e98-EUJ0Lk)
+*Note*: some plugins and extra translations for NSIS are required. You can directly overwrite the content of your NSIS folder in "Program files x86" with the following files [Download here](https://mega.nz/#!uwNGEZwa!sQLO33UVNWuM8evVr7yyUKM99WvdpihahbfycdmcCp0)
 
 **HM NIS EDIT**
 Download and install this graphical user interface to edit and configure NSIS.
