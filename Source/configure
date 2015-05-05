@@ -44,12 +44,12 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_static.sh -n -f -w -s -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh -u -n -f -w -s -o $archives
     rm_archives=1
 fi
 
 cd MEGASync/mega
-./contrib/build_static.sh \
+./contrib/build_sdk.sh \
     -o $archives \
     -f \
     -l \
@@ -57,6 +57,7 @@ cd MEGASync/mega
     -c \
     -t \
     -s \
+    -u \
     -p $root_dir/MEGASync/mega/bindings/qt/3rdparty
 
 # For compatibility with other platforms
