@@ -35,12 +35,15 @@ class SettingsDialog : public QDialog
     Q_OBJECT
     
 public:
+    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4};
+
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly=false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
     void loadSettings();
     void refreshAccountDetails(mega::MegaAccountDetails *details = NULL);
     void setUpdateAvailable(bool updateAvailable);
+    void openSettingsTab(int tab);
 
 public slots:
     void stateChanged();
