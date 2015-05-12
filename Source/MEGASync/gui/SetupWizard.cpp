@@ -482,7 +482,22 @@ void SetupWizard::on_bCancel_clicked()
         preferences->setProxyPassword(proxyPassword);
     }
 
-    close();
+    QPointer<QMessageBox> msg = new QMessageBox(this);
+    msg->setIcon(QMessageBox::Question);
+    msg->setWindowTitle(tr("MEGAsync"));
+    msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
+    msg->addButton(QMessageBox::Yes);
+    msg->addButton(QMessageBox::No);
+    msg->setDefaultButton(QMessageBox::No);
+    int button = msg->exec();
+    if(msg)
+    {
+        delete msg;
+    }
+    if(button == QMessageBox::Yes)
+    {
+        close();
+    }
 }
 
 void SetupWizard::on_bLocalFolder_clicked()
