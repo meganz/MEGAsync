@@ -96,7 +96,7 @@ public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
-    void openSettings();
+    void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
     void changeProxy();
     void pauseSync();
     void resumeSync();

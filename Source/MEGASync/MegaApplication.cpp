@@ -822,6 +822,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
+            openSettings(SettingsDialog::SYNCS_TAB);
             continue;
         }
 
@@ -831,6 +832,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
+            openSettings(SettingsDialog::SYNCS_TAB);
             continue;
         }
 
@@ -907,6 +909,7 @@ void MegaApplication::disableSyncs()
        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
        Platform::notifyItemChange(preferences->getLocalFolder(i));
        preferences->setSyncState(i, false);
+       openSettings(SettingsDialog::SYNCS_TAB);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
        megaApi->disableSync(node);
        delete node;
@@ -2228,7 +2231,7 @@ void MegaApplication::onMessageClicked()
 }
 
 //Called when the user wants to open the settings dialog
-void MegaApplication::openSettings()
+void MegaApplication::openSettings(int tab)
 {
     if(settingsDialog)
     {
@@ -2237,6 +2240,7 @@ void MegaApplication::openSettings()
 		{
             //and visible -> show it
             settingsDialog->loadSettings();
+            settingsDialog->openSettingsTab(tab);
             settingsDialog->raise();
 			settingsDialog->activateWindow();
 			return;
@@ -2251,7 +2255,10 @@ void MegaApplication::openSettings()
     settingsDialog = new SettingsDialog(this);
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
+    settingsDialog->openSettingsTab(tab);
     settingsDialog->show();
+    settingsDialog->raise();
+    settingsDialog->activateWindow();
 }
 
 void MegaApplication::changeProxy()
@@ -2711,6 +2718,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error adding sync");
                     Platform::syncFolderRemoved(localFolder, preferences->getSyncName(i));
                     preferences->setSyncState(i, false);
+                    openSettings(SettingsDialog::SYNCS_TAB);
                     if(settingsDialog)
                         settingsDialog->loadSettings();
                 }
@@ -3037,6 +3045,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     megaApi->removeSync(node);
                     delete node;
                     preferences->setSyncState(i, false);
+                    openSettings(SettingsDialog::SYNCS_TAB);
                 }
 
                 delete nodeByHandle;

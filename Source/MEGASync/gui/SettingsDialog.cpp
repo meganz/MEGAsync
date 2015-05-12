@@ -1751,6 +1751,20 @@ void SettingsDialog::setUpdateAvailable(bool updateAvailable)
         ui->bUpdate->setText(tr("Check for updates"));
 }
 
+void SettingsDialog::openSettingsTab(int tab)
+{
+    switch(tab)
+    {
+        case ACCOUNT_TAB: on_bAccount_clicked(); break;
+        case SYNCS_TAB: on_bSyncs_clicked(); break;
+        case BANDWIDTH_TAB: on_bBandwidth_clicked(); break;
+        case PROXY_TAB: on_bProxies_clicked(); break;
+        case ADVANCED_TAB: on_bAdvanced_clicked(); break;
+    default:
+        break;
+    }
+}
+
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText, int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :
     QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, f) {}
 
