@@ -1430,7 +1430,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 
 void SettingsDialog::on_bUploadFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, false, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, false, NodeSelector::UPLOAD_SELECT, this);
     MegaNode *defaultNode = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
     if(defaultNode)
     {

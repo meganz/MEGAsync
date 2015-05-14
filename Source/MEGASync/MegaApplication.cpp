@@ -1874,7 +1874,7 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    downloadNodeSelector = new NodeSelector(megaApi, true, true, 0,true);
+    downloadNodeSelector = new NodeSelector(megaApi, true, true, NodeSelector::DOWNLOAD_SELECT, 0);
     int result = downloadNodeSelector->exec();
     if(!downloadNodeSelector)
     {

@@ -7,7 +7,7 @@
 
 using namespace mega;
 
-NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, QWidget *parent, bool showFiles,  bool showInshares) :
+NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning, int selectMode, QWidget *parent, bool showInshares) :
     QDialog(parent),
     ui(new Ui::NodeSelector)
 {
@@ -18,7 +18,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, bool rootAllowed, bool sizeWarning,
     selectedItem = NULL;
     this->rootAllowed = rootAllowed;
     this->sizeWarning = sizeWarning;
-    this->showFiles = showFiles;
+    this->selectMode = selectMode;
     this->showInshares = showInshares;
     delegateListener = new QTMegaRequestListener(megaApi, this);
     ui->cbAlwaysUploadToLocation->hide();
@@ -62,15 +62,24 @@ void NodeSelector::nodesReady()
             for(int j=0; j < folders->size(); j++)
             {
                 MegaNode *folder = folders->get(j);
-                if(megaApi->getAccess(folder) == MegaShare::ACCESS_FULL)
+                if(megaApi->getAccess(folder) == MegaShare::ACCESS_UNKNOWN)
                 {
-                    QTreeWidgetItem *item = new QTreeWidgetItem();
-                    item->setText(0, QString::fromUtf8("%1 (%2)").arg(QString::fromUtf8(folder->getName())).arg(QString::fromUtf8(contact->getEmail())));
-                    item->setIcon(0, folderIcon);
-                    item->setData(0, Qt::UserRole, (qulonglong)folder->getHandle());
-                    addChildren(item, folder);
-                    ui->tMegaFolders->addTopLevelItem(item);
+                    continue;
                 }
+                QTreeWidgetItem *item = new QTreeWidgetItem();
+                item->setText(0, QString::fromUtf8("%1 (%2)").arg(QString::fromUtf8(folder->getName())).arg(QString::fromUtf8(contact->getEmail())));
+                item->setIcon(0, folderIcon);
+                item->setData(0, Qt::UserRole, (qulonglong)folder->getHandle());
+
+                int access = megaApi->getAccess(folder);
+                if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access != MegaShare::ACCESS_FULL) && (access != MegaShare::ACCESS_READWRITE))
+                        || ((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL)))
+                {
+                    QBrush b (QColor(170,170,170, 127));
+                    item->setForeground(0,b);
+                }
+                addChildren(item, folder);
+                ui->tMegaFolders->addTopLevelItem(item);
             }
             delete folders;
         }
@@ -212,7 +221,7 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode
             parentItem->addChild(item);
             addChildren(item, node);
 
-        }else if(showFiles)
+        }else if(selectMode == NodeSelector::DOWNLOAD_SELECT)
         {
             QIcon icon;
             icon.addFile(Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName())), QSize(), QIcon::Normal, QIcon::Off);
@@ -288,6 +297,20 @@ void NodeSelector::on_bOk_clicked()
     delete rootNode;
 
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    int access = megaApi->getAccess(node);
+    if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access != MegaShare::ACCESS_FULL) && (access != MegaShare::ACCESS_READWRITE)))
+    {
+            QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
+            delete node;
+            return;
+
+    }else if((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL))
+    {
+        QMessageBox::warning(this, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
+        delete node;
+        return;
+    }
+
     const char* path = megaApi->getNodePath(node);
     MegaNode *check = megaApi->getNodeByPath(path);
     delete [] path;
