@@ -89,7 +89,7 @@ void FolderBinder::on_bLocalFolder_clicked()
 
 void FolderBinder::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, true, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, true, NodeSelector::SYNC_SELECT, this);
     int result = nodeSelector->exec();
     if(!nodeSelector || result != QDialog::Accepted)
     {
@@ -105,7 +105,12 @@ void FolderBinder::on_bMegaFolder_clicked()
         delete nodeSelector;
         return;
     }
-
+    if(megaApi->getAccess(selectedFolder) != MegaShare::ACCESS_FULL)
+    {
+        QMessageBox::warning(this, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
+        delete nodeSelector;
+        return;
+    }
     const char *fPath = megaApi->getNodePath(selectedFolder);
     if(!fPath)
     {
