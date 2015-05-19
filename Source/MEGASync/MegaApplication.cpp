@@ -2700,8 +2700,30 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
                     else if(e->getErrorCode() == MegaError::API_EFAILED)
                     {
-                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
+#ifdef WIN32
+                        WCHAR VBoxSharedFolderFS[] = L"VBoxSharedFolderFS";
+                        string path, fsname;
+                        path.resize(MAX_PATH * sizeof(WCHAR));
+                        fsname.resize(MAX_PATH * sizeof(WCHAR));
+                        if(GetVolumePathNameW((LPCWSTR)localFolder.utf16(), (LPWSTR)path.data(), MAX_PATH)
+                            && GetVolumeInformationW((LPCWSTR)path.data(), NULL, 0, NULL, NULL, NULL, (LPWSTR)fsname.data(), MAX_PATH)
+                            && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
+                        {
+                                    QMessageBox::critical(NULL, tr("MEGAsync"),
+                                        tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
+                                        .arg(preferences->getSyncName(i)));
+
+
+                        }
+                        else
+                        {
+#endif
+                            showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
                                          .arg(preferences->getSyncName(i)));
+#ifdef WIN32
+                        }
+#endif
+
                     }
                     else if(e->getErrorCode() == MegaError::API_EACCESS)
                     {
