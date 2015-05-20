@@ -49,7 +49,8 @@ public slots:
     void stateChanged();
     void syncStateChanged(int state);
     void proxyStateChanged();
-    void onCacheSizeAvailable();
+    void onLocalCacheSizeAvailable();
+    void onRemoteCacheSizeAvailable();
     
 private slots:
     void on_bAccount_clicked();
@@ -98,6 +99,7 @@ private slots:
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
+    void on_bClearRemoteCache_clicked();
     void onProxyTestError();
     void onProxyTestSuccess();
     void on_bUpdate_clicked();
@@ -121,11 +123,13 @@ private:
     QStringList languageCodes;
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
+    QFutureWatcher<long long> remoteCacheSizeWatcher;
     MegaProgressDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
     int modifyingSettings;
     long long cacheSize;
+    long long remoteCacheSize;
     bool hasDefaultUploadOption;
     bool hasUpperLimit;
     bool hasLowerLimit;
@@ -144,6 +148,8 @@ private:
     void loadSyncSettings();
     void loadSizeLimits();
     bool saveSettings();
+    void onCacheSizeAvailable();
+    void onClearCache();
 };
 
 #endif // SETTINGSDIALOG_H
