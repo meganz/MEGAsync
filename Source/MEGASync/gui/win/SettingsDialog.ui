@@ -2865,7 +2865,13 @@ background:transparent;</string>
              <property name="leftMargin">
               <number>0</number>
              </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -2914,6 +2920,12 @@ background:transparent;</string>
                  <height>0</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Clear</string>
                </property>
@@ -2937,13 +2949,22 @@ background:transparent;</string>
              <property name="leftMargin">
               <number>0</number>
              </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="lRemoteCacheSize">
                <property name="text">
                 <string>Remote cache: %1</string>
+               </property>
+               <property name="margin">
+                <number>10</number>
                </property>
               </widget>
              </item>
@@ -2962,6 +2983,12 @@ background:transparent;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
+               <property name="maximumSize">
+                <size>
+                 <width>70</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Clear</string>
                </property>
@@ -3037,7 +3064,7 @@ background:transparent;</string>
            <number>27</number>
           </property>
           <property name="topMargin">
-           <number>8</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>23</number>
