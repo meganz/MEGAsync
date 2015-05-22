@@ -219,9 +219,18 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode
             item->setIcon(0, folderIcon);
             item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
             parentItem->addChild(item);
+
+            int access = megaApi->getAccess(node);
+            if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access != MegaShare::ACCESS_FULL) && (access != MegaShare::ACCESS_READWRITE))
+                    || ((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL)))
+            {
+                QBrush b (QColor(170,170,170, 127));
+                item->setForeground(0,b);
+            }
             addChildren(item, node);
 
-        }else if(selectMode == NodeSelector::DOWNLOAD_SELECT)
+        }
+        else if(selectMode == NodeSelector::DOWNLOAD_SELECT)
         {
             QIcon icon;
             icon.addFile(Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName())), QSize(), QIcon::Normal, QIcon::Off);

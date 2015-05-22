@@ -49,6 +49,15 @@ void deleteCache()
     }
 }
 
+long long calculateRemoteCacheSize(MegaApi *megaApi)
+{
+    return megaApi->getSize(megaApi->getNodeByPath("//bin/SyncDebris"));
+}
+void deleteRemoteCache(MegaApi *megaApi)
+{
+    megaApi->remove(megaApi->getNodeByPath("//bin/SyncDebris"));
+}
+
 SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
@@ -68,7 +77,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     shouldClose = false;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
-    cacheSize = 0;
+    cacheSize = -1;
+    remoteCacheSize = -1;
 
     hasUpperLimit = false;
     hasLowerLimit = false;
@@ -104,9 +114,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     if(!proxyOnly && preferences->logged())
     {
-        connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onCacheSizeAvailable()));
+        connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onLocalCacheSizeAvailable()));
         QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
         cacheSizeWatcher.setFuture(futureCacheSize);
+
+        connect(&remoteCacheSizeWatcher, SIGNAL(finished()), this, SLOT(onRemoteCacheSizeAvailable()));
+        QFuture<long long> futureRemoteCacheSize = QtConcurrent::run(calculateRemoteCacheSize,megaApi);
+        remoteCacheSizeWatcher.setFuture(futureRemoteCacheSize);
     }
 
 #ifdef __APPLE__
@@ -272,34 +286,68 @@ void SettingsDialog::proxyStateChanged()
     ui->bApply->setEnabled(true);
 }
 
-void SettingsDialog::onCacheSizeAvailable()
+void SettingsDialog::onLocalCacheSizeAvailable()
 {
     cacheSize = cacheSizeWatcher.result();
-    if(!cacheSize)
-        return;
-
-    ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
-    ui->gCache->setVisible(true);
-    ui->lCacheSeparator->show();
-
-#ifdef __APPLE__
-    if(ui->wStack->currentWidget() == ui->pAdvanced)
-    {
-        minHeightAnimation->setTargetObject(this);
-        maxHeightAnimation->setTargetObject(this);
-        minHeightAnimation->setPropertyName("minimumHeight");
-        maxHeightAnimation->setPropertyName("maximumHeight");
-        minHeightAnimation->setStartValue(minimumHeight());
-        maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(540);
-        maxHeightAnimation->setEndValue(540);
-        minHeightAnimation->setDuration(150);
-        maxHeightAnimation->setDuration(150);
-        animationGroup->start();
-    }
-#endif
+    onCacheSizeAvailable();
 }
 
+void SettingsDialog::onRemoteCacheSizeAvailable()
+{
+    remoteCacheSize = remoteCacheSizeWatcher.result();
+    onCacheSizeAvailable();
+}
+
+
+void SettingsDialog::onCacheSizeAvailable()
+{
+    if(cacheSize != -1 && remoteCacheSize != -1)
+    {
+        if(!cacheSize && !remoteCacheSize)
+            return;
+
+        if(cacheSize)
+        {
+            ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
+
+        }else
+        {
+            ui->lCacheSize->hide();
+            ui->bClearCache->hide();
+        }
+
+        if(remoteCacheSize)
+        {
+            ui->lRemoteCacheSize->setText(ui->lRemoteCacheSize->text().arg(Utilities::getSizeString(remoteCacheSize)));
+
+        }else
+        {
+            ui->lRemoteCacheSize->hide();
+            ui->bClearRemoteCache->hide();
+        }
+
+        ui->gCache->setVisible(true);
+        ui->lCacheSeparator->show();
+
+    #ifdef __APPLE__
+        if(ui->wStack->currentWidget() == ui->pAdvanced)
+        {
+            minHeightAnimation->setTargetObject(this);
+            maxHeightAnimation->setTargetObject(this);
+            minHeightAnimation->setPropertyName("minimumHeight");
+            maxHeightAnimation->setPropertyName("maximumHeight");
+            minHeightAnimation->setStartValue(minimumHeight());
+            maxHeightAnimation->setStartValue(maximumHeight());
+            minHeightAnimation->setEndValue(540);
+            maxHeightAnimation->setEndValue(540);
+            minHeightAnimation->setDuration(150);
+            maxHeightAnimation->setDuration(150);
+            animationGroup->start();
+        }
+    #endif
+
+    }
+}
 void SettingsDialog::on_bAccount_clicked()
 {
     if(ui->wStack->currentWidget() == ui->pAccount)
@@ -458,7 +506,7 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    if(!cacheSize)
+    if(!cacheSize && !remoteCacheSize)
     {
         minHeightAnimation->setEndValue(488);
         maxHeightAnimation->setEndValue(488);
@@ -1628,25 +1676,49 @@ QString SettingsDialog::getFormatString()
 void SettingsDialog::on_bClearCache_clicked()
 {
     QtConcurrent::run(deleteCache);
-    ui->gCache->setVisible(false);
-    ui->lCacheSeparator->hide();
-    cacheSize = 0;
 
-#ifdef __APPLE__
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(488);
-    maxHeightAnimation->setEndValue(488);
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
-#endif
+    cacheSize = 0;
+    ui->bClearCache->hide();
+    ui->lCacheSize->hide();
+    onClearCache();
 }
 
+void SettingsDialog::on_bClearRemoteCache_clicked()
+{
+    QtConcurrent::run(deleteRemoteCache, megaApi);
+
+    remoteCacheSize = 0;
+    ui->bClearRemoteCache->hide();
+    ui->lRemoteCacheSize->hide();
+    onClearCache();
+}
+
+void SettingsDialog::onClearCache()
+{
+    if(!cacheSize && !remoteCacheSize)
+    {
+        ui->gCache->setVisible(false);
+        ui->lCacheSeparator->hide();
+
+    #ifdef __APPLE__
+        if(!cacheSize && !remoteCacheSize)
+        {
+            minHeightAnimation->setTargetObject(this);
+            maxHeightAnimation->setTargetObject(this);
+            minHeightAnimation->setPropertyName("minimumHeight");
+            maxHeightAnimation->setPropertyName("maximumHeight");
+            minHeightAnimation->setStartValue(minimumHeight());
+            maxHeightAnimation->setStartValue(maximumHeight());
+            minHeightAnimation->setEndValue(488);
+            maxHeightAnimation->setEndValue(488);
+            minHeightAnimation->setDuration(150);
+            maxHeightAnimation->setDuration(150);
+            animationGroup->start();
+        }
+    #endif
+    }
+
+}
 void SettingsDialog::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
