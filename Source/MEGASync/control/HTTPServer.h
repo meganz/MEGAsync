@@ -22,6 +22,7 @@ class HTTPServer: public QTcpServer
 
     private:
         bool disabled;
+        QString request;
 };
 
 #endif // HTTPSERVER_H
