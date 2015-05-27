@@ -215,5 +215,7 @@
         <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
+        <file>images/22_warning.png</file>
+        <file>images/tray_warning_ico.png</file>
     </qresource>
 </RCC>

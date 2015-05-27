@@ -365,5 +365,11 @@
         <file>images/icon_syncing_mac_white4@2x.png</file>
         <file>images/drag_dmg.png</file>
         <file>images/drag_dmg@2x.png</file>
+        <file>images/icon_overquota_mac_white.png</file>
+        <file>images/icon_overquota_mac_white@2x.png</file>
+        <file>images/icon_overquota_mac.png</file>
+        <file>images/icon_overquota_mac@2x.png</file>
+        <file>images/tray_warning_ico.png</file>
+        <file>images/tray_warning_ico@2x.png</file>
     </qresource>
 </RCC>
