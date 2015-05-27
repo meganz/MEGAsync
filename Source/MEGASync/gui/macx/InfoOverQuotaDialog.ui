@@ -822,7 +822,7 @@ color: #333333;
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>MEGA</string>
+         <string notr="true">MEGA</string>
         </property>
         <property name="icon">
          <iconset>

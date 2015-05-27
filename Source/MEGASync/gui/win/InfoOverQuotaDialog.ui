@@ -158,7 +158,16 @@ background-color:white;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -218,7 +227,7 @@ background-color:white;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
         </property>
         <property name="iconSize">
@@ -330,7 +339,7 @@ margin-top:-1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -417,7 +426,16 @@ margin-top:-1px;
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -440,8 +458,6 @@ margin-top:-1px;
                <property name="font">
                 <font>
                  <pointsize>-1</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
                 </font>
                </property>
                <property name="text">
@@ -755,7 +771,7 @@ color: #666666;
 }</string>
         </property>
         <property name="text">
-         <string>MEGA</string>
+         <string notr="true">MEGA</string>
         </property>
         <property name="icon">
          <iconset>
@@ -812,7 +828,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -873,7 +889,7 @@ color: #666666;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
