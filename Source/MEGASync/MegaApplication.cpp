@@ -560,6 +560,22 @@ void MegaApplication::updateTrayIcon()
         #endif
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     }
+    else if(overQuotaReached)
+    {
+        #ifndef __APPLE__
+            #ifdef _WIN32
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/warning_ico.ico")));
+            #else
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_warning.png")));
+            #endif
+        #else
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_overquota_mac.png")),QIcon(QString::fromAscii("://images/icon_overquota_mac_white.png")));
+            if(scanningTimer->isActive())
+                scanningTimer->stop();
+        #endif
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Over quota"));
+
+    }
     else if(paused)
     {
         QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
@@ -641,22 +657,6 @@ void MegaApplication::updateTrayIcon()
             tooltip += QString::fromAscii("\n") + tr("Update available!");
             trayIcon->setToolTip(tooltip);
         }
-    }
-    else if(overQuotaReached)
-    {
-        #ifndef __APPLE__
-            #ifdef _WIN32
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/warning_ico.ico")));
-            #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_warning.png")));
-            #endif
-        #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_overquota_mac.png")),QIcon(QString::fromAscii("://images/icon_overquota_mac_white.png")));
-            if(scanningTimer->isActive())
-                scanningTimer->stop();
-        #endif
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Over quota"));
-        
     }
     else
     {
