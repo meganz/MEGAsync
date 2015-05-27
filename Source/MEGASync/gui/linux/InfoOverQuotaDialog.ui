@@ -119,7 +119,7 @@ padding-left: 1px;
   font-size: 18px;
   color: #D90007;
   border-radius: 5px;
-  border: 3px solid #D90007;
+  border: 2px solid #D90007;
   padding: 4px 24px 4px 24px;
 }
 
@@ -132,14 +132,14 @@ padding-left: 1px;
 #lDisabled
 {
   font-family: &quot;HelveticaNeue-Light&quot;;
-  font_size: 18px;
+  font-size: 18px;
   color: #333333;
 }
 
 #lDescDisabled
 {
   font-family: &quot;HelveticaNeue&quot;;
-  font_size: 14px;
+  font-size: 14px;
   color: #666666;
 }
 
@@ -230,7 +230,7 @@ background-color:white;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
         </property>
         <property name="iconSize">
@@ -342,7 +342,7 @@ margin-top:-1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -408,7 +408,13 @@ margin-top:-1px;
        <item>
         <widget class="QLabel" name="lDisabled">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:17pt;&quot;&gt;MEGAsync is currently disabled&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>MEGAsync is currently disabled</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -448,7 +454,13 @@ margin-top:-1px;
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot; style=&quot;line-height: 145%;&quot;&gt;&lt;span style=&quot; font-size:13pt;&quot;&gt;Your account has exceeded its allowed space quota. &lt;/span&gt;&lt;span style=&quot; font-size:14px; color:#D90007;&quot;&gt;&lt;br/&gt;Upgrade&lt;/span&gt;&lt;span style=&quot; font-size:13pt;&quot;&gt; and keep enjoying secure, ent-to-end &lt;br/&gt;encrypted storage.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -480,7 +492,7 @@ margin-top:-1px;
              <item>
               <widget class="QPushButton" name="bUpgrade">
                <property name="text">
-                <string>PushButton</string>
+                <string>Upgrade your account</string>
                </property>
               </widget>
              </item>
@@ -797,7 +809,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -858,7 +870,7 @@ color: #666666;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
