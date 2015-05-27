@@ -11,32 +11,32 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>[$1687]</translation>
+        <translation type="obsolete">[$1687]</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>[$166]</translation>
+        <translation type="obsolete">[$166]</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>[$167]</translation>
+        <translation type="obsolete">[$167]</translation>
     </message>
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation>[$495]</translation>
+        <translation type="obsolete">[$495]</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation>[$2034]</translation>
+        <translation type="obsolete">[$2034]</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation>[$2035]</translation>
+        <translation type="obsolete">[$2035]</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -265,6 +265,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
         <translation>[$1883]</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">[$1578]</translation>
+    </message>
+    <message>
+        <source>You can not sync a shared folder without Full Access permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
@@ -473,6 +481,37 @@ Are you sure?</source>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
         <translation>[$1931]</translation>
+    </message>
+</context>
+<context>
+    <name>InfoOverQuotaDialog</name>
+    <message>
+        <source>MEGAsync is currently disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upgrade your account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage: Data temporarily unavailable</source>
+        <translation type="unfinished">[$1604]</translation>
+    </message>
+    <message>
+        <source>MEGA website</source>
+        <translation type="unfinished">[$1606]</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">[$1607]</translation>
+    </message>
+    <message>
+        <source>Usage: %1</source>
+        <translation type="unfinished">[$1608]</translation>
     </message>
 </context>
 <context>
@@ -848,6 +887,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Over quota</source>
+        <translation type="unfinished">[$1673]</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -981,7 +1028,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>[$1680]</translation>
+        <translation type="obsolete">[$1680]</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file 
@@ -989,7 +1036,30 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation>[$1880] [$1881]</translation>
+        <translation type="obsolete">[$1880] [$1881]</translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The destination folder is synced and you already have a file inside it with the same names.If you continue the upload, the previous file will be overwritten.Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not ask me again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1067,6 +1137,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
         <translation>[$1812]</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1514,7 +1592,7 @@ when the application starts again.</source>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation>[$1876]</translation>
+        <translation type="obsolete">[$1876]</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1687,10 +1765,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Txt file (*.txt)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to write file</source>
         <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -1729,6 +1803,14 @@ when the application starts again</source>
     <message>
         <source>Disabled</source>
         <translatorcomment>Label to indicate the user if the feature of exclusion based by size is enabled/disabled.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local cache: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote cache: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2044,6 +2126,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MEGAsync</source>
+        <translation type="unfinished">[$1626]</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2181,6 +2271,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>[$2023]</translation>
+    </message>
+</context>
+<context>
+    <name>UsageProgressBar</name>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished">[$166]</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Rubbish Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">[$1687]</translation>
+    </message>
+</context>
+<context>
+    <name>UsageWidget</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">[$1687]</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation type="unfinished">[$167]</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished">[$166]</translation>
+    </message>
+    <message>
+        <source>Used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
