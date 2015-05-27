@@ -47,7 +47,6 @@ font-size: 11px;
 
 #wHeader
 {
-
 background-color: white;
 border-top: 2px solid rgb(100, 100, 100);
 border-left: 2px solid rgb(100, 100, 100);
@@ -115,11 +114,11 @@ padding-left: 1px;
 
 #bUpgrade
 {
-  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-family: &quot;Helvetica&quot;;
   font-size: 18px;
   color: #D90007;
   border-radius: 5px;
-  border: 3px solid #D90007;
+  border: 2px solid #D90007;
   padding: 4px 24px 4px 24px;
 }
 
@@ -131,14 +130,12 @@ padding-left: 1px;
 
 #lDisabled
 {
-  font-family: &quot;HelveticaNeue-Light&quot;;
-  font_size: 18px;
+  font-size: 18px;
   color: #333333;
 }
 
 #lDescDisabled
 {
-  font-family: &quot;HelveticaNeue&quot;;
   font_size: 14px;
   color: #666666;
 }
@@ -161,16 +158,7 @@ background-color:white;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -407,8 +395,19 @@ margin-top:-1px;
        </property>
        <item>
         <widget class="QLabel" name="lDisabled">
+         <property name="font">
+          <font>
+           <pointsize>-1</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:17pt;&quot;&gt;MEGAsync is currently disabled&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>MEGAsync is currently disabled</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -418,16 +417,7 @@ margin-top:-1px;
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -447,8 +437,21 @@ margin-top:-1px;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot; style=&quot;line-height: 145%;&quot;&gt;&lt;span style=&quot; font-size:13pt;&quot;&gt;Your account has exceeded its allowed space quota. &lt;/span&gt;&lt;span style=&quot; font-size:14px; color:#D90007;&quot;&gt;&lt;br/&gt;Upgrade&lt;/span&gt;&lt;span style=&quot; font-size:13pt;&quot;&gt; and keep enjoying secure, ent-to-end &lt;br/&gt;encrypted storage.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -479,8 +482,20 @@ margin-top:-1px;
              </item>
              <item>
               <widget class="QPushButton" name="bUpgrade">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>36</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>36</height>
+                </size>
+               </property>
                <property name="text">
-                <string>PushButton</string>
+                <string>Upgrade your account</string>
                </property>
               </widget>
              </item>
