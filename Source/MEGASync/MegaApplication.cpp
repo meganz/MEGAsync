@@ -371,6 +371,7 @@ void MegaApplication::initialize()
 
     paused = false;
     indexing = false;
+    overQuotaReached = false;
     setQuitOnLastWindowClosed(false);
 
 #ifdef Q_OS_LINUX
@@ -641,6 +642,22 @@ void MegaApplication::updateTrayIcon()
             trayIcon->setToolTip(tooltip);
         }
     }
+    else if(overQuotaReached)
+    {
+        #ifndef __APPLE__
+            #ifdef _WIN32
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/warning_ico.ico")));
+            #else
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_warning.png")));
+            #endif
+        #else
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_overquota_mac.png")),QIcon(QString::fromAscii("://images/icon_overquota_mac_white.png")));
+            if(scanningTimer->isActive())
+                scanningTimer->stop();
+        #endif
+        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Over quota"));
+        
+    }
     else
     {
         if(!updateAvailable)
@@ -684,6 +701,7 @@ void MegaApplication::start()
 {
     paused = false;
     indexing = false;
+    overQuotaReached = false;
 
 #ifndef __APPLE__
     #ifdef _WIN32
@@ -2461,6 +2479,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
+        overQuotaReached = true;
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
 
@@ -2658,6 +2677,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         preferences->sync();
 
+        if(preferences->usedStorage() < preferences->totalStorage())
+        {
+            overQuotaReached = false;
+        }
         if(infoDialog) infoDialog->setUsage();
         if(settingsDialog) settingsDialog->refreshAccountDetails(details);
         delete details;
@@ -2828,6 +2851,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
+        overQuotaReached = true;
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
 

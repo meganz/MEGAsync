@@ -217,6 +217,7 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
+    bool overQuotaReached;
     bool updated;
     bool updateBlocked;
     long long lastExit;
