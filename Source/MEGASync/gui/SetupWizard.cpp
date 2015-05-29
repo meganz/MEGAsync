@@ -482,7 +482,8 @@ void SetupWizard::on_bCancel_clicked()
         preferences->setProxyPassword(proxyPassword);
 
         close();
-    }else
+    }
+    else
     {
         QPointer<QMessageBox> msg = new QMessageBox(this);
         msg->setIcon(QMessageBox::Question);

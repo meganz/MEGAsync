@@ -574,7 +574,6 @@ void MegaApplication::updateTrayIcon()
                 scanningTimer->stop();
         #endif
         trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Over quota"));
-
     }
     else if(paused)
     {
@@ -2662,7 +2661,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
         MegaNodeList *inShares = megaApi->getInShares();
-        for(int i=0;i<inShares->size();i++)
+        for(int i=0; i<inShares->size(); i++)
         {
             MegaNode *node = inShares->get(i);
 
@@ -2967,12 +2966,12 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 MegaNode *node = megaApi->getNodeByHandle(handle);
 
                 const char *path = megaApi->getNodePath(node);
-                if(path && path[0]!='/')
+                if(path && path[0] != '/')
                 {
                     isShare = true;
                 }
 
-                infoDialog->increaseUsedStorage(transfer->getTotalBytes(),isShare);
+                infoDialog->increaseUsedStorage(transfer->getTotalBytes(), isShare);
 
                 delete node;
                 delete [] path;

@@ -1046,10 +1046,6 @@ Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The destination folder is synced and you already have a file inside it with the same names.If you continue the upload, the previous file will be overwritten.Are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do not ask me again</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1059,6 +1055,10 @@ Are you sure?</source>
     </message>
     <message>
         <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

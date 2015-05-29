@@ -309,8 +309,8 @@ void SettingsDialog::onCacheSizeAvailable()
         if(cacheSize)
         {
             ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
-
-        }else
+        }
+        else
         {
             ui->lCacheSize->hide();
             ui->bClearCache->hide();
@@ -319,8 +319,8 @@ void SettingsDialog::onCacheSizeAvailable()
         if(remoteCacheSize)
         {
             ui->lRemoteCacheSize->setText(ui->lRemoteCacheSize->text().arg(Utilities::getSizeString(remoteCacheSize)));
-
-        }else
+        }
+        else
         {
             ui->lRemoteCacheSize->hide();
             ui->bClearRemoteCache->hide();
@@ -345,7 +345,6 @@ void SettingsDialog::onCacheSizeAvailable()
             animationGroup->start();
         }
     #endif
-
     }
 }
 void SettingsDialog::on_bAccount_clicked()

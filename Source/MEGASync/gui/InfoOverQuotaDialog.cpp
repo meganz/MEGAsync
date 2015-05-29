@@ -62,7 +62,7 @@ void InfoOverQuotaDialog::setUsage()
     if(!preferences->totalStorage()) return;
 
     int percentage = ceil((100 * preferences->usedStorage()) / (double)preferences->totalStorage());
-    ui->pUsage->setProgress(preferences->cloudDriveStorage(),preferences->rubbishStorage(),
+    ui->pUsage->setProgress(preferences->cloudDriveStorage(), preferences->rubbishStorage(),
                             preferences->inShareStorage(),preferences->inboxStorage(),preferences->totalStorage(),preferences->usedStorage());
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(preferences->totalStorage()));

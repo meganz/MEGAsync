@@ -160,11 +160,15 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::setUsage()
 {
-    if(!preferences->totalStorage()) return;
+    if(!preferences->totalStorage())
+    {
+        return;
+    }
 
     int percentage = ceil((100 * preferences->usedStorage()) / (double)preferences->totalStorage());
-    ui->pUsage->setProgress(preferences->cloudDriveStorage(),preferences->rubbishStorage(),
-                            preferences->inShareStorage(),preferences->inboxStorage(),preferences->totalStorage(),preferences->usedStorage());
+    ui->pUsage->setProgress(preferences->cloudDriveStorage(), preferences->rubbishStorage(),
+                            preferences->inShareStorage(), preferences->inboxStorage(),
+                            preferences->totalStorage(), preferences->usedStorage());
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(preferences->totalStorage()));
 	ui->lPercentageUsed->setText(used);
@@ -438,16 +442,16 @@ void InfoDialog::setWaiting(bool waiting)
 
 void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
 {
-
     if(isInShare)
     {
-        preferences->setInShareStorage(preferences->inShareStorage()+bytes);
-    }else
+        preferences->setInShareStorage(preferences->inShareStorage() + bytes);
+    }
+    else
     {
-        preferences->setCloudDriveStorage(preferences->cloudDriveStorage()+bytes);
+        preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
     }
 
-    preferences->setUsedStorage(preferences->usedStorage()+bytes);
+    preferences->setUsedStorage(preferences->usedStorage() + bytes);
     this->setUsage();
 }
 
@@ -908,7 +912,10 @@ void InfoDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        if(preferences->totalStorage()) setUsage();
+        if(preferences->totalStorage())
+        {
+            setUsage();
+        }
         updateSyncsButton();
         updateTransfers();
     }
