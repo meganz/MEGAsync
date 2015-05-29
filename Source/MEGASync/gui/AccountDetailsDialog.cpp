@@ -24,25 +24,26 @@ AccountDetailsDialog::~AccountDetailsDialog()
 
 void AccountDetailsDialog::refresh(Preferences *preferences)
 {
-
     ui->bRefresh->setText(tr("Refresh"));
     ui->bRefresh->setEnabled(true);
 
     if(preferences->usedStorage() > preferences->totalStorage())
     {
         ui->wUsage->setOverQuotaReached(true);
-    }else
+    }
+    else
     {
         ui->wUsage->setOverQuotaReached(false);
     }
+
     ui->wUsage->setMaxStorage(Utilities::getSizeString(preferences->totalStorage()));
-    int pCloud = ceil(360*preferences->cloudDriveStorage()/(double)preferences->totalStorage());
+    int pCloud = ceil(360 * preferences->cloudDriveStorage() / (double)preferences->totalStorage());
     ui->wUsage->setCloudStorage((pCloud < 360) ? pCloud : 360);
-    int pRubbish = ceil(360*preferences->rubbishStorage()/(double)preferences->totalStorage());
+    int pRubbish = ceil(360 * preferences->rubbishStorage() / (double)preferences->totalStorage());
     ui->wUsage->setRubbishStorage((pRubbish < 360) ? pRubbish : 360);
-    int pInShares = ceil(360*preferences->inShareStorage()/(double)preferences->totalStorage());
+    int pInShares = ceil(360 * preferences->inShareStorage() / (double)preferences->totalStorage());
     ui->wUsage->setInShareStorage((pInShares < 360) ? pInShares : 360);
-    int pInbox = ceil(360*preferences->inboxStorage()/(double)preferences->totalStorage());
+    int pInbox = ceil(360 * preferences->inboxStorage() / (double)preferences->totalStorage());
     ui->wUsage->setInboxStorage((pInbox < 360) ? pInbox : 360);
 
     ui->wUsage->setCloudStorageLabel(Utilities::getSizeString(preferences->cloudDriveStorage()));

@@ -91,7 +91,7 @@ QPushButton
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>The destination folder is synced and you already have a file inside it with the same names.If you continue the upload, the previous file will be overwritten.Are you sure?</string>
+      <string>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>

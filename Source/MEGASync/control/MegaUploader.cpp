@@ -15,8 +15,8 @@ MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
     delegateListener = new QTMegaRequestListener(megaApi, this);
-    mbox = NULL;
     dontAskAgain = false;
+    overwriteFiles = false;
 }
 
 MegaUploader::~MegaUploader()
@@ -82,30 +82,27 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
         {
             if(!dontAskAgain)
             {
-                mbox = new MessageBox();
+                QPointer<MessageBox> mbox = new MessageBox();
                 mbox->raise();
                 mbox->activateWindow();
                 mbox->setFocus();
                 mbox->exec();
                 if(!mbox)
                 {
-                    delete mbox;
-                    mbox = NULL;
                     return;
                 }
-                if(mbox->result()==QDialog::Accepted)
-                {
-                    dontAskAgain = mbox->dontAskAgain();
-                    megaApi->moveToLocalDebris(destPath.toUtf8().constData());
-                }
-                delete mbox;
-                mbox = NULL;
 
-            }else
-            {
-                megaApi->moveToLocalDebris(destPath.toUtf8().constData());
+                dontAskAgain = mbox->dontAskAgain();
+                overwriteFiles = (mbox->result() == QDialog::Accepted);
+                delete mbox;
             }
 
+            if(!overwriteFiles)
+            {
+                return;
+            }
+
+            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         }
 
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);

@@ -313,7 +313,8 @@ void NodeSelector::on_bOk_clicked()
             delete node;
             return;
 
-    }else if((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL))
+    }
+    else if((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL))
     {
         QMessageBox::warning(this, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
         delete node;

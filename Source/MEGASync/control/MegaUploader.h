@@ -29,8 +29,8 @@ protected:
     mega::MegaApi *megaApi;
     mega::QTMegaRequestListener *delegateListener;
     QQueue<QFileInfo> folders;
-    MessageBox *mbox;
     bool dontAskAgain;
+    bool overwriteFiles;
 };
 
 #endif // MEGAUPLOADER_H
