@@ -790,7 +790,7 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bOfficialWeb_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.co.nz/");
+    QString helpUrl = QString::fromAscii("https://mega.nz/");
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
 

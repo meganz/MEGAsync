@@ -1976,7 +1976,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
         //Public node
         const char* base64Handle = MegaApi::handleToBase64(fileHandle);
         QString handle = QString::fromUtf8(base64Handle);
-        QString linkForClipboard = QString::fromUtf8("https://mega.co.nz/#!%1!%2").arg(handle).arg(nodeKey);
+        QString linkForClipboard = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(nodeKey);
         delete [] base64Handle;
         QApplication::clipboard()->setText(linkForClipboard);
         showInfoMessage(tr("The link has been copied to the clipboard"));
@@ -2147,13 +2147,15 @@ void MegaApplication::onUpdateNotFound(bool requested)
         if(!updateAvailable)
             showInfoMessage(tr("No update available at this time"));
         else
-            showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync"));
+            showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
+                            .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
     }
 }
 
 void MegaApplication::onUpdateError()
 {
-    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync"));
+    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
+                    .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 }
 
 //Called when users click in the tray icon
