@@ -583,7 +583,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.co.nz/#help/sync");
+    QString helpUrl = QString::fromAscii("https://mega.nz/#help/sync");
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
 
@@ -627,13 +627,13 @@ void SettingsDialog::on_rNoProxy_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString upgradeUrl = QString::fromAscii("https://mega.co.nz/#pro");
+    QString upgradeUrl = QString::fromAscii("https://mega.nz/#pro");
 	QDesktopServices::openUrl(QUrl(upgradeUrl));
 }
 
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
-    QString upgradeUrl = QString::fromAscii("https://mega.co.nz/#pro");
+    QString upgradeUrl = QString::fromAscii("https://mega.nz/#pro");
 	QDesktopServices::openUrl(QUrl(upgradeUrl));
 }
 
@@ -1467,7 +1467,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if(node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.co.nz/#fm/") + QString::fromAscii(handle);
+            QString url = QString::fromAscii("https://mega.nz/#fm/") + QString::fromAscii(handle);
             QDesktopServices::openUrl(QUrl(url));
             delete [] handle;
             delete node;

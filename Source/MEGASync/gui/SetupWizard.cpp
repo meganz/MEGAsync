@@ -33,7 +33,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     ui->bNext->setDefault(true);
     ui->lTermsLink->setText(ui->lTermsLink->text().replace(
         QString::fromUtf8("\">"),
-        QString::fromUtf8("\" style=\"color:#DC0000\">")));
+        QString::fromUtf8("\" style=\"color:#DC0000\">"))
+        .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 
     wTypicalSetup_clicked();
 }
