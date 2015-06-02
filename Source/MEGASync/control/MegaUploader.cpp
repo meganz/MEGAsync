@@ -15,8 +15,6 @@ MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
     delegateListener = new QTMegaRequestListener(megaApi, this);
-    dontAskAgain = false;
-    overwriteFiles = false;
 }
 
 MegaUploader::~MegaUploader()
@@ -76,35 +74,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     #else
         QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + info.fileName());
     #endif
-
-        QFileInfo dstInfo(destPath);
-        if(dstInfo.exists() && (destPath != currentPath))
-        {
-            if(!dontAskAgain)
-            {
-                QPointer<MessageBox> mbox = new MessageBox();
-                mbox->raise();
-                mbox->activateWindow();
-                mbox->setFocus();
-                mbox->exec();
-                if(!mbox)
-                {
-                    return;
-                }
-
-                dontAskAgain = mbox->dontAskAgain();
-                overwriteFiles = (mbox->result() == QDialog::Accepted);
-                delete mbox;
-            }
-
-            if(!overwriteFiles)
-            {
-                return;
-            }
-
-            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
-        }
-
+        megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
     }
     else if(info.isFile())
