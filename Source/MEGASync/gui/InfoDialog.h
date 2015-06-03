@@ -72,9 +72,11 @@ private slots:
     void on_cRecentlyUpdated_stateChanged(int arg1);
     void showRecentList();
     void onAnimationFinished();
-    void on_bOfficialWebIcon_clicked();
 #endif
 
+#ifndef __linux__
+    void on_bOfficialWebIcon_clicked();
+#endif
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
