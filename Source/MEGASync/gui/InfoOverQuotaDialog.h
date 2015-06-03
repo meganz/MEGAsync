@@ -22,8 +22,8 @@ public:
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
-
-#ifdef __APPLE__
+    void on_bOfficialWeb_clicked();
+#ifndef __linux__
     void on_bOfficialWebIcon_clicked();
 #endif
 
@@ -36,6 +36,7 @@ protected:
 protected:
     MegaApplication *app;
     Preferences *preferences;
+    mega::MegaApi *megaApi;
 };
 
 #endif // INFOOVERQUOTADIALOG_H

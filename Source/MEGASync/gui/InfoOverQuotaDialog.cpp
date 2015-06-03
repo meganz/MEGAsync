@@ -19,7 +19,8 @@ InfoOverQuotaDialog::InfoOverQuotaDialog(MegaApplication *app, QWidget *parent) 
 
     preferences = Preferences::instance();
 
-
+    this->app = app;
+    megaApi = app->getMegaApi();
 
     QPixmap megaLogo(QString::fromUtf8(":/images/mega_logo.png"));
     QPixmap megaDisabledLogo(megaLogo.size());
@@ -49,6 +50,12 @@ InfoOverQuotaDialog::InfoOverQuotaDialog(MegaApplication *app, QWidget *parent) 
     QIcon iconSyncFolder;
     iconSyncFolder.addPixmap(syncDisabledFolder, QIcon::Disabled, QIcon::On);
     ui->bSyncFolder->setIcon(iconSyncFolder);
+
+
+    ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
+                               + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                   + QString::fromUtf8("</span></p>"));
     setUsage();
 }
 
@@ -77,13 +84,12 @@ void InfoOverQuotaDialog::on_bSettings_clicked()
     #ifdef __APPLE__
         if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
             this->hide();
-#endif
+    #endif
 }
 
 void InfoOverQuotaDialog::on_bUpgrade_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/#pro");
-    QDesktopServices::openUrl(QUrl(helpUrl));
+    megaApi->getSessionTransferURL("pro");
 }
 
 void InfoOverQuotaDialog::changeEvent(QEvent *event)
@@ -96,10 +102,15 @@ void InfoOverQuotaDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-#ifdef __APPLE__
-void InfoOverQuotaDialog::on_bOfficialWebIcon_clicked()
+void InfoOverQuotaDialog::on_bOfficialWeb_clicked()
 {
     QString helpUrl = QString::fromAscii("https://mega.nz/");
     QDesktopServices::openUrl(QUrl(helpUrl));
+}
+
+#ifndef __linux__
+void InfoOverQuotaDialog::on_bOfficialWebIcon_clicked()
+{
+    on_bOfficialWeb_clicked();
 }
 #endif

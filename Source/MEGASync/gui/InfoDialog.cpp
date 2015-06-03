@@ -1002,8 +1002,9 @@ void InfoDialog::showRecentList()
 {
     on_cRecentlyUpdated_stateChanged(0);
 }
+#endif
 
-
+#ifndef __linux__
 void InfoDialog::on_bOfficialWebIcon_clicked()
 {
     on_bOfficialWeb_clicked();
