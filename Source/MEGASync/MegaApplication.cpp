@@ -3037,6 +3037,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
         onGlobalSyncStateChanged(megaApi);
 }
 
+void MegaApplication::onAccountUpdate(MegaApi *api)
+{
+    megaApi->getAccountDetails();
+}
+
 //Called when contacts have been updated in MEGA
 void MegaApplication::onUsersUpdate(MegaApi* , MegaUserList *)
 {
