@@ -15,6 +15,7 @@
 
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
+#include "gui/InfoOverQuotaDialog.h"
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
@@ -44,6 +45,7 @@ class MegaApplication : public QApplication, public mega::MegaListener
     Q_OBJECT
 
 public:
+
     explicit MegaApplication(int &argc, char **argv);
     ~MegaApplication();
 
@@ -105,6 +107,7 @@ public slots:
     void uploadActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
+    void logoutActionClicked();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
 	void onLinkImportFinished();
@@ -134,6 +137,7 @@ public slots:
 
 protected:
     void createTrayIcon();
+    void createOverQuotaMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
     void startSyncs();
@@ -142,6 +146,7 @@ protected:
     void unityFix();
     void disableSyncs();
     void closeDialogs();
+    void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
@@ -156,10 +161,11 @@ protected:
 
     QMenu *initialMenu;
     QMenu *trayMenu;
+    QMenu *trayOverQuotaMenu;
     QMenu emptyMenu;
     QAction *exitAction;
     QAction *settingsAction;
-	QAction *importLinksAction;
+    QAction *importLinksAction;
     QAction *uploadAction;
     QAction *downloadAction;
     QAction *aboutAction;
@@ -167,12 +173,14 @@ protected:
     QAction *initialExitAction;
     QAction *updateAction;
     QAction *showStatusAction;
+    QAction *logoutAction;
     QTimer *scanningTimer;
     QTimer *connectivityTimer;
     int scanningAnimationIndex;
 	SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
+    InfoOverQuotaDialog *infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
     HTTPServer *httpServer;
@@ -198,7 +206,6 @@ protected:
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
-    QMessageBox *overquotaDialog;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
 
