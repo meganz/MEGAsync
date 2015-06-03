@@ -323,6 +323,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastStartedUpload = 0;
     trayIcon = NULL;
     trayMenu = NULL;
+    trayOverQuotaMenu = NULL;
     megaApi = NULL;
     httpServer = NULL;
     totalDownloadSize = totalUploadSize = 0;
@@ -330,6 +331,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadSpeed = downloadSpeed = 0;
     exportOps = 0;
     infoDialog = NULL;
+    infoOverQuota = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
     reboot = false;
@@ -340,10 +342,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksAction = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
-    trayMenu = NULL;
     waiting = false;
     updated = false;
     updateAction = NULL;
+    logoutAction = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
     importDialog = NULL;
@@ -354,7 +356,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateTask = NULL;
     multiUploadFileDialog = NULL;
     exitDialog = NULL;
-    overquotaDialog = NULL;
     downloadNodeSelector = NULL;
     notificator = NULL;
     externalNodesTimestamp = 0;
@@ -538,7 +539,10 @@ void MegaApplication::changeLanguage(QString languageCode)
     else delete newTranslator;
 
     if(notificator)
+    {
         createTrayIcon();
+        createOverQuotaMenu();
+    }
 }
 
 void MegaApplication::updateTrayIcon()
@@ -959,11 +963,14 @@ void MegaApplication::closeDialogs()
     delete importDialog;
     importDialog = NULL;
 
-    delete overquotaDialog;
-    overquotaDialog = NULL;
-
     delete downloadNodeSelector;
     downloadNodeSelector = NULL;
+
+    if(infoOverQuota)
+    {
+        delete infoOverQuota;
+        infoOverQuota = NULL;
+    }
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -1275,66 +1282,12 @@ void MegaApplication::onInstallUpdateClicked()
 
 void MegaApplication::showInfoDialog()
 {
-    if(infoDialog)
+    if(infoDialog && !overQuotaReached)
     {
         if(!infoDialog->isVisible())
         {
             int posx, posy;
-            QPoint position, positionTrayIcon;
-            QRect screenGeometry;
-
-            #ifdef __APPLE__
-                positionTrayIcon = trayIcon->getPosition();
-            #endif
-
-            position = QCursor::pos();
-            QDesktopWidget *desktop = QApplication::desktop();
-            int screenIndex = desktop->screenNumber(position);
-            screenGeometry = desktop->availableGeometry(screenIndex);
-
-
-            #ifdef __APPLE__
-                posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - infoDialog->width()/2 - 1;
-                posy = screenIndex ? screenGeometry.top()+22: screenGeometry.top();
-            #else
-                #ifdef WIN32
-                    QRect totalGeometry = QApplication::desktop()->screenGeometry();
-                    if(totalGeometry == screenGeometry)
-                    {
-                        APPBARDATA pabd;
-                        pabd.cbSize = sizeof(APPBARDATA);
-                        pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-                        if(pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd))
-                        {
-                            switch (pabd.uEdge)
-                            {
-                                case ABE_LEFT:
-                                    screenGeometry.setLeft(pabd.rc.right+1);
-                                    break;
-                                case ABE_RIGHT:
-                                    screenGeometry.setRight(pabd.rc.left-1);
-                                    break;
-                                case ABE_TOP:
-                                    screenGeometry.setTop(pabd.rc.bottom+1);
-                                    break;
-                                case ABE_BOTTOM:
-                                    screenGeometry.setBottom(pabd.rc.top-1);
-                                    break;
-                            }
-                        }
-                    }
-                #endif
-
-                if(position.x() > (screenGeometry.right()/2))
-                    posx = screenGeometry.right() - infoDialog->width() - 2;
-                else
-                    posx = screenGeometry.left() + 2;
-
-                if(position.y() > (screenGeometry.bottom()/2))
-                    posy = screenGeometry.bottom() - infoDialog->height() - 2;
-                else
-                    posy = screenGeometry.top() + 2;
-            #endif
+            calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
             if(isLinux) unityFix();
 
@@ -1353,6 +1306,90 @@ void MegaApplication::showInfoDialog()
             infoDialog->hide();
         }
     }
+    else if(infoOverQuota && overQuotaReached)
+    {
+        if(!infoOverQuota->isVisible())
+        {
+            int posx, posy;
+            calculateInfoDialogCoordinates(infoOverQuota, &posx, &posy);
+
+            if(isLinux) unityFix();
+
+            infoOverQuota->move(posx, posy);
+            infoOverQuota->show();
+            infoOverQuota->setFocus();
+            infoOverQuota->raise();
+            infoOverQuota->activateWindow();
+        }
+        else
+        {
+            if(trayOverQuotaMenu->isVisible())
+                trayOverQuotaMenu->close();
+            infoOverQuota->hide();
+        }
+
+    }
+
+}
+
+void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy)
+{
+    QPoint position, positionTrayIcon;
+    QRect screenGeometry;
+
+    #ifdef __APPLE__
+        positionTrayIcon = trayIcon->getPosition();
+    #endif
+
+    position = QCursor::pos();
+    QDesktopWidget *desktop = QApplication::desktop();
+    int screenIndex = desktop->screenNumber(position);
+    screenGeometry = desktop->availableGeometry(screenIndex);
+
+
+    #ifdef __APPLE__
+        *posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - dialog->width()/2 - 1;
+        *posy = screenIndex ? screenGeometry.top()+22: screenGeometry.top();
+    #else
+        #ifdef WIN32
+            QRect totalGeometry = QApplication::desktop()->screenGeometry();
+            if(totalGeometry == screenGeometry)
+            {
+                APPBARDATA pabd;
+                pabd.cbSize = sizeof(APPBARDATA);
+                pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+                if(pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd))
+                {
+                    switch (pabd.uEdge)
+                    {
+                        case ABE_LEFT:
+                            screenGeometry.setLeft(pabd.rc.right+1);
+                            break;
+                        case ABE_RIGHT:
+                            screenGeometry.setRight(pabd.rc.left-1);
+                            break;
+                        case ABE_TOP:
+                            screenGeometry.setTop(pabd.rc.bottom+1);
+                            break;
+                        case ABE_BOTTOM:
+                            screenGeometry.setBottom(pabd.rc.top-1);
+                            break;
+                    }
+                }
+            }
+        #endif
+
+        if(position.x() > (screenGeometry.right()/2))
+            *posx = screenGeometry.right() - dialog->width() - 2;
+        else
+            *posx = screenGeometry.left() + 2;
+
+        if(position.y() > (screenGeometry.bottom()/2))
+            *posy = screenGeometry.bottom() - dialog->height() - 2;
+        else
+            *posy = screenGeometry.top() + 2;
+    #endif
+
 }
 
 bool MegaApplication::anUpdateIsAvailable()
@@ -1705,7 +1742,7 @@ void MegaApplication::checkForUpdates()
 
 void MegaApplication::showTrayMenu(QPoint *point)
 {
-    if(trayMenu)
+    if(trayMenu && !overQuotaReached)
     {
         if(trayMenu->isVisible())
             trayMenu->close();
@@ -1714,6 +1751,17 @@ void MegaApplication::showTrayMenu(QPoint *point)
             trayMenu->exec(p);
         #else
             trayMenu->popup(p);
+        #endif
+    }
+    else if(trayOverQuotaMenu && overQuotaReached)
+    {
+        if(trayOverQuotaMenu->isVisible())
+            trayOverQuotaMenu->close();
+        QPoint p = point ? (*point)-QPoint(trayOverQuotaMenu->sizeHint().width(), 0) : QCursor::pos();
+        #ifdef __APPLE__
+            trayOverQuotaMenu->exec(p);
+        #else
+            trayOverQuotaMenu->popup(p);
         #endif
     }
 }
@@ -1966,6 +2014,11 @@ void MegaApplication::downloadActionClicked()
     delete downloadFolderSelector;
     downloadFolderSelector = NULL;
     return;
+}
+
+void MegaApplication::logoutActionClicked()
+{
+    unlink();
 }
 
 //Called when the user wants to generate the public link for a node
@@ -2463,6 +2516,52 @@ void MegaApplication::createTrayIcon()
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
 }
 
+void MegaApplication::createOverQuotaMenu()
+{
+    if(!trayOverQuotaMenu)
+    {
+        trayOverQuotaMenu = new QMenu();
+        #ifndef __APPLE__
+            trayMenu->setStyleSheet(QString::fromAscii(
+                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+                    "QMenu::item {background-color: white; color: black;} "
+                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+        #endif
+    }
+    else
+    {
+        QList<QAction *> actions = trayOverQuotaMenu->actions();
+        for(int i=0; i<actions.size(); i++)
+        {
+            trayOverQuotaMenu->removeAction(actions[i]);
+        }
+    }
+
+    if(!exitAction)
+    {
+    #ifndef __APPLE__
+        exitAction = new QAction(tr("Exit"), this);
+    #else
+        exitAction = new QAction(tr("Quit"), this);
+    #endif
+    }
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
+    if(logoutAction)
+    {
+        logoutAction->deleteLater();
+        logoutAction = NULL;
+    }
+
+    logoutAction = new QAction(tr("Logout"), this);
+    connect(logoutAction, SIGNAL(triggered()), this, SLOT(logoutActionClicked()));
+
+    trayOverQuotaMenu->addAction(logoutAction);
+    trayOverQuotaMenu->addSeparator();
+    trayOverQuotaMenu->addAction(exitAction);
+
+}
+
 //Called when a request is about to start
 void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
@@ -2480,32 +2579,13 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
+        if(!infoOverQuota)
+        {
+            infoOverQuota = new InfoOverQuotaDialog(this);
+        }
         overQuotaReached = true;
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
-
-        if(!overquotaDialog)
-        {
-            QString message = tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or [A]upgrade your account[/A]");
-            message.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/#pro\">"));
-            message.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-            overquotaDialog = new QMessageBox(QMessageBox::Warning, tr("MEGAsync"),
-                                        message, QMessageBox::Ok);
-            overquotaDialog->setTextFormat(Qt::RichText);
-            overquotaDialog->exec();
-            if(!overquotaDialog)
-            {
-                return;
-            }
-
-            overquotaDialog->deleteLater();
-            overquotaDialog = NULL;
-        }
-        else
-        {
-            overquotaDialog->raise();
-            overquotaDialog->activateWindow();
-        }
     }
 
     switch (request->getType()) {
@@ -2681,6 +2761,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if(preferences->usedStorage() < preferences->totalStorage())
         {
             overQuotaReached = false;
+
+            if(infoOverQuota)
+            {
+                delete infoOverQuota;
+                infoOverQuota = NULL;
+            }
         }
         if(infoDialog) infoDialog->setUsage();
         if(settingsDialog) settingsDialog->refreshAccountDetails(details);
@@ -2801,6 +2887,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         onGlobalSyncStateChanged(megaApi);
         break;
     }
+    case MegaRequest::TYPE_GET_SESSION_TRANSFER_URL:
+    {
+        QDesktopServices::openUrl(QUrl(QString::fromUtf8(request->getLink())));
+    }
     default:
         break;
     }
@@ -2852,32 +2942,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
+        if(!infoOverQuota)
+        {
+            infoOverQuota = new InfoOverQuotaDialog(this);
+        }
         overQuotaReached = true;
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
-
-        if(!overquotaDialog)
-        {
-            QString message = tr("You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or [A]upgrade your account[/A]");
-            message.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/#pro\">"));
-            message.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-            overquotaDialog = new QMessageBox(QMessageBox::Warning, tr("MEGAsync"),
-                                        message, QMessageBox::Ok);
-            overquotaDialog->setTextFormat(Qt::RichText);
-            overquotaDialog->exec();
-            if(!overquotaDialog)
-            {
-                return;
-            }
-
-            overquotaDialog->deleteLater();
-            overquotaDialog = NULL;
-        }
-        else
-        {
-            overquotaDialog->raise();
-            overquotaDialog->activateWindow();
-        }
     }
 
 	//Update statics
