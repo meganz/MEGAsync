@@ -627,8 +627,7 @@ void SettingsDialog::on_rNoProxy_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString upgradeUrl = QString::fromAscii("https://mega.nz/#pro");
-	QDesktopServices::openUrl(QUrl(upgradeUrl));
+    megaApi->getSessionTransferURL("pro");
 }
 
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
