@@ -848,11 +848,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You have exceeded your space quota. Your syncs and uploads have been disabled. Please ensure that you are using the correct account type for your data usage or [A]upgrade your account[/A]</source>
-        <translatorcomment>Message displayed to the user when an overquota error occurs. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -893,6 +888,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">[$1726]</translation>
+    </message>
+    <message>
+        <source>Transfer failed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
