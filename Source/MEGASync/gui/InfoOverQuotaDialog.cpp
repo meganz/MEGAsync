@@ -108,7 +108,7 @@ void InfoOverQuotaDialog::on_bOfficialWeb_clicked()
     QDesktopServices::openUrl(QUrl(helpUrl));
 }
 
-#ifndef __linux__
+#ifndef Q_OS_LINUX
 void InfoOverQuotaDialog::on_bOfficialWebIcon_clicked()
 {
     on_bOfficialWeb_clicked();

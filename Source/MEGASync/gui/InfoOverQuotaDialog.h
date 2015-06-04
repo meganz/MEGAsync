@@ -23,7 +23,7 @@ private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
     void on_bOfficialWeb_clicked();
-#ifndef __linux__
+#ifndef Q_OS_LINUX
     void on_bOfficialWebIcon_clicked();
 #endif
 
