@@ -2583,6 +2583,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             infoOverQuota = new InfoOverQuotaDialog(this);
         }
+        if(settingsDialog)
+        {
+            delete settingsDialog;
+            settingsDialog = NULL;
+        }
+
         overQuotaReached = true;
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
@@ -2945,6 +2951,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if(!infoOverQuota)
         {
             infoOverQuota = new InfoOverQuotaDialog(this);
+        }
+        if(settingsDialog)
+        {
+            delete settingsDialog;
+            settingsDialog = NULL;
         }
         overQuotaReached = true;
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
