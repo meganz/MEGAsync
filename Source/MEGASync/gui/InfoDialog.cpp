@@ -485,7 +485,7 @@ void InfoDialog::updateState()
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        if(indexing || remainingUploads || remainingDownloads)
+        if(indexing)
         {
             if(!scanningTimer.isActive())
             {
