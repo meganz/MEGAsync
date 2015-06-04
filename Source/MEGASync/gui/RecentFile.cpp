@@ -57,7 +57,7 @@ void RecentFile::updateWidget()
         QIcon icon;
         icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
 
-#ifndef __linux__
+#ifndef Q_OS_LINUX
         ui->lFileType->setIcon(icon);
         ui->lFileType->setIconSize(QSize(48, 48));
 #else

@@ -63,7 +63,7 @@ void ActiveTransfer::setType(int type)
         icon.addFile(QString::fromUtf8(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
     }
-#ifndef __linux__
+#ifndef Q_OS_LINUX
         ui->lType->setIcon(icon);
         ui->lType->setIconSize(QSize(24, 24));
 #else

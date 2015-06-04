@@ -467,7 +467,7 @@ void InfoDialog::updateState()
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 
-        #ifndef __linux__
+        #ifndef Q_OS_LINUX
             ui->label->setIcon(icon);
             ui->label->setIconSize(QSize(64, 64));
         #else
@@ -497,7 +497,7 @@ void InfoDialog::updateState()
 
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            #ifndef __linux__
+            #ifndef Q_OS_LINUX
                 ui->label->setIcon(icon);
                 ui->label->setIconSize(QSize(64, 64));
             #else
@@ -512,7 +512,7 @@ void InfoDialog::updateState()
             ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            #ifndef __linux__
+            #ifndef Q_OS_LINUX
                 ui->label->setIcon(icon);
                 ui->label->setIconSize(QSize(64, 64));
             #else
@@ -527,7 +527,7 @@ void InfoDialog::updateState()
             ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            #ifndef __linux__
+            #ifndef Q_OS_LINUX
                 ui->label->setIcon(icon);
                 ui->label->setIconSize(QSize(64, 64));
             #else
@@ -930,7 +930,7 @@ void InfoDialog::scanningAnimationStep()
     icon.addFile(QString::fromUtf8(":/images/scanning_anime")+
                  QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
 
-#ifndef __linux__
+#ifndef Q_OS_LINUX
     ui->label->setIcon(icon);
     ui->label->setIconSize(QSize(64, 64));
 #else
@@ -1004,7 +1004,7 @@ void InfoDialog::showRecentList()
 }
 #endif
 
-#ifndef __linux__
+#ifndef Q_OS_LINUX
 void InfoDialog::on_bOfficialWebIcon_clicked()
 {
     on_bOfficialWeb_clicked();

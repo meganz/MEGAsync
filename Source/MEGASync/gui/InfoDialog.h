@@ -74,7 +74,7 @@ private slots:
     void onAnimationFinished();
 #endif
 
-#ifndef __linux__
+#ifndef Q_OS_LINUX
     void on_bOfficialWebIcon_clicked();
 #endif
 private:
