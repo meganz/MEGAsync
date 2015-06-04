@@ -427,6 +427,7 @@ void MegaApplication::initialize()
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
     connect(uploader, SIGNAL(dupplicateUpload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
+    connect(downloader, SIGNAL(dupplicateDownload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
 
     if(preferences->isCrashed())
     {

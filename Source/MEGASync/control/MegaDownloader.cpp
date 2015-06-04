@@ -37,6 +37,9 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             {
                 delete [] fpLocal;
                 delete [] fpRemote;
+                emit dupplicateDownload(QDir::toNativeSeparators(fullPath),
+                                        QString::fromUtf8(parent->getName()),
+                                        parent->getHandle());
                 return;
             }
             delete [] fpLocal;
