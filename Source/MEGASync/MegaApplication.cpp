@@ -3064,6 +3064,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
+    if(e->getErrorCode() != MegaError::API_OK)
+    {
+        showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+    }
+
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if(!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
     {
