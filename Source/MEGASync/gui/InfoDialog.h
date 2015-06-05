@@ -74,9 +74,10 @@ private slots:
     void onAnimationFinished();
 #endif
 
-#ifndef Q_OS_LINUX
+#if defined(_WIN32) || defined(__APPLE__)
     void on_bOfficialWebIcon_clicked();
 #endif
+
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
