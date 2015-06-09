@@ -2312,8 +2312,16 @@ void MegaApplication::openSettings(int tab)
 		if(settingsDialog->isVisible())
 		{
             //and visible -> show it
+            if(overQuotaReached)
+            {
+                settingsDialog->setAccountOnly(true);
+            }
+            else
+            {
+                settingsDialog->setAccountOnly(false);
+                settingsDialog->openSettingsTab(tab);
+            }
             settingsDialog->loadSettings();
-            settingsDialog->openSettingsTab(tab);
             settingsDialog->raise();
 			settingsDialog->activateWindow();
 			return;
@@ -2326,9 +2334,17 @@ void MegaApplication::openSettings(int tab)
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
+    if(overQuotaReached)
+    {
+        settingsDialog->setAccountOnly(true);
+    }
+    else
+    {
+        settingsDialog->setAccountOnly(false);
+        settingsDialog->openSettingsTab(tab);
+    }
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
-    settingsDialog->openSettingsTab(tab);
     settingsDialog->show();
     settingsDialog->raise();
     settingsDialog->activateWindow();
@@ -2523,7 +2539,7 @@ void MegaApplication::createOverQuotaMenu()
     {
         trayOverQuotaMenu = new QMenu();
         #ifndef __APPLE__
-            trayMenu->setStyleSheet(QString::fromAscii(
+            trayOverQuotaMenu->setStyleSheet(QString::fromAscii(
                     "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
                     "QMenu::item {background-color: white; color: black;} "
                     "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
@@ -2557,6 +2573,39 @@ void MegaApplication::createOverQuotaMenu()
     logoutAction = new QAction(tr("Logout"), this);
     connect(logoutAction, SIGNAL(triggered()), this, SLOT(logoutActionClicked()));
 
+    if(!settingsAction)
+    {
+    #ifndef __APPLE__
+        settingsAction = new QAction(tr("Settings"), this);
+    #else
+        settingsAction = new QAction(tr("Preferences"), this);
+    #endif
+    }
+    connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+    if(!updateAction)
+    {
+        if(updateAvailable)
+        {
+            updateAction = new QAction(tr("Install update"), this);
+            updateAction->setEnabled(true);
+        }
+        else
+        {
+            updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
+                                      QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
+    #ifndef __APPLE__
+            updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+            updateAction->setIconVisibleInMenu(true);
+    #endif
+            updateAction->setEnabled(false);
+        }
+    }
+    connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
+    trayOverQuotaMenu->addAction(updateAction);
+    trayOverQuotaMenu->addSeparator();
+    trayOverQuotaMenu->addAction(settingsAction);
     trayOverQuotaMenu->addAction(logoutAction);
     trayOverQuotaMenu->addSeparator();
     trayOverQuotaMenu->addAction(exitAction);
@@ -2591,6 +2640,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         overQuotaReached = true;
+        megaApi->getAccountDetails();
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
     }
@@ -2776,6 +2826,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
         if(infoDialog) infoDialog->setUsage();
+        if(infoOverQuota) infoOverQuota->setUsage();
         if(settingsDialog) settingsDialog->refreshAccountDetails(details);
         delete details;
         break;
@@ -2959,6 +3010,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             settingsDialog = NULL;
         }
         overQuotaReached = true;
+        megaApi->getAccountDetails();
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
     }
@@ -3196,6 +3248,14 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         if(!node->getTag() && !node->isRemoved() && !node->isSyncDeleted() && ((lastExit/1000)<node->getCreationTime()))
             externalNodes++;
 
+        if(node->isRemoved() && (node->getType()==MegaNode::TYPE_FILE))
+        {
+            preferences->setUsedStorage(preferences->usedStorage() - node->getSize());
+            if(preferences->usedStorage() < preferences->totalStorage())
+            {
+                megaApi->getAccountDetails();
+            }
+        }
         if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==MegaNode::TYPE_FILE))
         {
             //Get the associated local node

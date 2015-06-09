@@ -230,6 +230,37 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     }
 }
 
+void SettingsDialog::setAccountOnly(bool accountOnly)
+{
+    if(accountOnly)
+    {
+
+        ui->bAdvanced->setEnabled(false);
+        ui->bAdvanced->setChecked(false);
+        ui->bSyncs->setEnabled(false);
+        ui->bSyncs->setChecked(false);
+        ui->bBandwidth->setEnabled(false);
+        ui->bBandwidth->setChecked(false);
+        ui->bProxies->setEnabled(false);
+        ui->bProxies->setChecked(false);
+        ui->bAccount->setChecked(true);
+        ui->wStack->setCurrentWidget(ui->pAccount);
+        ui->pAccount->show();
+
+        #ifdef __APPLE__
+            setMinimumHeight(480);
+            setMaximumHeight(480);
+        #endif
+    }
+    else
+    {
+        ui->bAdvanced->setEnabled(true);
+        ui->bSyncs->setEnabled(true);
+        ui->bBandwidth->setEnabled(true);
+        ui->bProxies->setEnabled(true);
+    }
+}
+
 void SettingsDialog::stateChanged()
 {
     if(modifyingSettings) return;

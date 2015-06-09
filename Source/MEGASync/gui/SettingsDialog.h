@@ -40,6 +40,7 @@ public:
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly=false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
+    void setAccountOnly(bool accountOnly);
     void loadSettings();
     void refreshAccountDetails(mega::MegaAccountDetails *details = NULL);
     void setUpdateAvailable(bool updateAvailable);
