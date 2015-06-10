@@ -898,6 +898,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transfer failed:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error getting link information</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
