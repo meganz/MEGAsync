@@ -5,7 +5,7 @@
 HTTPServer::HTTPServer(quint16 port, bool sslEnabled)
     : QTcpServer(), disabled(false)
 {
-    this->sslEnabled == sslEnabled;
+    this->sslEnabled = sslEnabled;
     listen(QHostAddress::LocalHost, port);
 }
 
