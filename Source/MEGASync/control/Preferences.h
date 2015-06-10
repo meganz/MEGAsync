@@ -235,6 +235,9 @@ public:
     static const QString SDK_ID;
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
+    static const QString HTTPS_KEY;
+    static const QString HTTPS_CERT;
+    static const QString HTTPS_ALLOWED_ORIGIN;
 
 protected:
 

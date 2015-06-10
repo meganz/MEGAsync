@@ -33,6 +33,69 @@ const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 30000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 5000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 
+const QString Preferences::HTTPS_KEY = QString::fromUtf8(
+            "-----BEGIN PRIVATE KEY-----\n"
+            "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk9BUskgy2dHN\n"
+            "udvrzqsj3614UniXjAw3skMP+xUULBgaTcGgQkYRMM6I7ro/9Ropq5ypK5p8cmUq\n"
+            "TYhu/9Z4RP/asHDIMC7lIqIvgoZXQWdJHAhJ9KBgnYi+jQN0Q6IQBad9WR/dKMcu\n"
+            "lnN0oMyn82rO9owV47dYVzdQnPE1k1z1HqzKyqrBjHvGfSQyMA2YCuSl1K3EzQY8\n"
+            "NFYXeu3ZjwFCPvuDmRpLqkgKBrvwHPu0zaQN7WliNBz+8JnBt6PUNNvTZ0y/iYUR\n"
+            "T3k4SHlhi/xXdV9jqjAN433RMIrGIWpFnBoJpaTFbTsU3z6Nj5BU/TYQpaBOieiT\n"
+            "fO21acl7AgMBAAECggEAePMy7N1Zq7kM29EB6AUmMBMD9nZFyQMMt0rlvpbH7qtx\n"
+            "50ia32sEimTx5/aiSTnKjiNjWx5l5OmN2lhg2ynKjLSCiBOxXcjjyBHk4fNHSVs0\n"
+            "3GkJhEXojqX+I7usZJ5EXiFbyVbRCzPhJuw2y3NSsfpr/3eSRr6JfNQ6yt96s3/+\n"
+            "jCI05FP+3lR4BMiBIqHwEUXJeEU1tpR33qgg10ii18NgqQcLir2I/xaT7nzCvkBl\n"
+            "bxZYLEtM5dWL1J79qCOS/WlDvFSjlzh0BkkAhNYy7SChjPGOu0r/k07A2ec9KxO0\n"
+            "971B0tip4O+w8OjHDZvV80QpCXGKcQfEtd+/mBScgQKBgQDlmQ9PYOb8GSC2Yttg\n"
+            "XyIkisCqbUamIsojFL70U0wnkygykQXTkxiHYPtMVg4WyyLfF7oPqn0D0YOYEd+e\n"
+            "RFYiHdr+CA4IopsWZ5I4HqYtrbwtapMRQPFRzNIMNdMpFlfBGRV9ZKQQtXHV445w\n"
+            "n32KCUZVO26A6YYvmzmo7QR5WwKBgQDF/13BvTPlm+k0m2hheUWpiQqHrYW/oAai\n"
+            "rK7iVmT4Qln1YOCUvt17mDRxXj17NEKR4uVcDix5yrbFuClpeDZZkq1/2HIB5bD9\n"
+            "1uQWVzlYnCytaYusfq3XKfcwG/GIt6mi3lstZV4XdEFxjczdWt7EeWwAAr+DfYw6\n"
+            "pAYruMLKYQKBgDYs75fjXZ2OsFFY8jrDN+M3ek68ijcZbmjotEYigY21A38rCRzr\n"
+            "UJZhI+rXQ2vNcuUBTD32FJmaDlsLnKBTr59NPCdE70rKU53twmrLkJqmrAhrZVhk\n"
+            "4oxSsB2Bddn0E7DUomV8IdpvdfTqROn+ODkiBx6Fb4WrlKYXEnvxsWSRAoGAV1av\n"
+            "F+AK/XTJ6R/Ian7hQMinsXPUtNO1OZrsxgCQJ4a1Qe1LA7Ix5uwb7gpBGpDR8KJi\n"
+            "xDmoWs0V1J/I/LI/X0G5cNScbcPRUBezozs0m6bAeno9V4jFzEzBsiIRaFqD5Mkq\n"
+            "9Rpq5/OrTpjbTqVf8NES1+peanU+HzvtUOn+WuECgYEAxj++fk8A+dimgwM1qzh0\n"
+            "chTWqZygTQNvMAId11nRVJqC2nVOt1vSnM4HBBd+6qxG6eKOxzG4VyYJuHd18AT8\n"
+            "RplMrMlFmIJpvXRoFIgoPPS7qUnZcjEidPndXG42+xbD8eDsHnG4LMHB9+J9xLwA\n"
+            "xs+OLGD+kjzh+HkpkzYSDp4=\n"
+            "-----END PRIVATE KEY-----\n");
+
+const QString Preferences::HTTPS_CERT = QString::fromUtf8(
+            "-----BEGIN CERTIFICATE-----\n"
+            "MIIExzCCA6+gAwIBAgIDBNq6MA0GCSqGSIb3DQEBCwUAMEcxCzAJBgNVBAYTAlVT\n"
+            "MRYwFAYDVQQKEw1HZW9UcnVzdCBJbmMuMSAwHgYDVQQDExdSYXBpZFNTTCBTSEEy\n"
+            "NTYgQ0EgLSBHMzAeFw0xNTA2MDQwMTI0MDhaFw0xNzA2MDYwNTA5MjNaMIGmMRMw\n"
+            "EQYDVQQLEwpHVDgxODYxMTEyMTEwLwYDVQQLEyhTZWUgd3d3LnJhcGlkc3NsLmNv\n"
+            "bS9yZXNvdXJjZXMvY3BzIChjKTE1MS8wLQYDVQQLEyZEb21haW4gQ29udHJvbCBW\n"
+            "YWxpZGF0ZWQgLSBSYXBpZFNTTChSKTErMCkGA1UEAxMibG9jYWxob3N0Lm1lZ2Fz\n"
+            "eW5jbG9vcGJhY2subWVnYS5uejCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\n"
+            "ggEBALGT0FSySDLZ0c252+vOqyPfrXhSeJeMDDeyQw/7FRQsGBpNwaBCRhEwzoju\n"
+            "uj/1GimrnKkrmnxyZSpNiG7/1nhE/9qwcMgwLuUioi+ChldBZ0kcCEn0oGCdiL6N\n"
+            "A3RDohAFp31ZH90oxy6Wc3SgzKfzas72jBXjt1hXN1Cc8TWTXPUerMrKqsGMe8Z9\n"
+            "JDIwDZgK5KXUrcTNBjw0Vhd67dmPAUI++4OZGkuqSAoGu/Ac+7TNpA3taWI0HP7w\n"
+            "mcG3o9Q029NnTL+JhRFPeThIeWGL/Fd1X2OqMA3jfdEwisYhakWcGgmlpMVtOxTf\n"
+            "Po2PkFT9NhCloE6J6JN87bVpyXsCAwEAAaOCAVowggFWMB8GA1UdIwQYMBaAFMOc\n"
+            "8/zTRgg0u85Gf6B8W/PiCMtZMFcGCCsGAQUFBwEBBEswSTAfBggrBgEFBQcwAYYT\n"
+            "aHR0cDovL2d2LnN5bWNkLmNvbTAmBggrBgEFBQcwAoYaaHR0cDovL2d2LnN5bWNi\n"
+            "LmNvbS9ndi5jcnQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMB\n"
+            "BggrBgEFBQcDAjAtBgNVHREEJjAkgiJsb2NhbGhvc3QubWVnYXN5bmNsb29wYmFj\n"
+            "ay5tZWdhLm56MCsGA1UdHwQkMCIwIKAeoByGGmh0dHA6Ly9ndi5zeW1jYi5jb20v\n"
+            "Z3YuY3JsMAwGA1UdEwEB/wQCMAAwQQYDVR0gBDowODA2BgZngQwBAgEwLDAqBggr\n"
+            "BgEFBQcCARYeaHR0cHM6Ly93d3cucmFwaWRzc2wuY29tL2xlZ2FsMA0GCSqGSIb3\n"
+            "DQEBCwUAA4IBAQCvAb4RMjcYdP3BxZ5i4jH5+PSkI1Z8mYvvhA14ovUhQ6UWWNa3\n"
+            "sYF4zm4rdUjMq/e50J9JM756Y4Zx72AA1RKPf0Drin/d7RrXeXMDBoFYZvxIYvVL\n"
+            "7kB0CA1QQ2aDRUrafxmyMwhYzUN2E8yP7CbzEA7RcWvsbso8A+a6N7SvqvZftPp8\n"
+            "45pgKmyUqQ04helAJicvg0ZYdB2h/Hhq19+wuxTcNG2X310uuZDFixdRQbAYiu8f\n"
+            "p8OT4JuRITJYjdanbssvCFIsTIGjaXsUzq1yN/lvKmNx3DqBPij8i6mnPK6Gey+f\n"
+            "G9o0Zsj+Lm4txzqbB0/o6hnZEgkrsMrTcZYy\n"
+            "-----END CERTIFICATE-----\n"
+            );
+
+const QString Preferences::HTTPS_ALLOWED_ORIGIN = QString::fromUtf8("https://mega.nz");
+
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
 #else
