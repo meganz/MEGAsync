@@ -59,6 +59,5 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             MegaNode *child = nList->get(i);
             download(child,destPath+QDir::separator());
         }
-
     }
 }
