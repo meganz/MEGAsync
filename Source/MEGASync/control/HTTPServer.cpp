@@ -185,7 +185,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
         "\r\n"
         "%3").arg(Preferences::HTTPS_ALLOWED_ORIGIN).arg(response.size()).arg(response).toUtf8());
 
-
     socket->flush();
     socket->disconnectFromHost();
     socket->deleteLater();

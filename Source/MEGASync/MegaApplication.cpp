@@ -825,7 +825,7 @@ void MegaApplication::loggedIn()
     Platform::startShellDispatcher(this);
 
     //Start the HTTP server
-    httpServer = new HTTPServer(2973, true);
+    httpServer = new HTTPServer(Preferences::HTTPS_PORT, true);
     connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)));
 
     updateUserStats();

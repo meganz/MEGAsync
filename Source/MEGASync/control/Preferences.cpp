@@ -33,6 +33,7 @@ const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 30000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 5000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 
+const qint16 Preferences::HTTPS_PORT = 6342;
 const QString Preferences::HTTPS_KEY = QString::fromUtf8(
             "-----BEGIN PRIVATE KEY-----\n"
             "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk9BUskgy2dHN\n"
