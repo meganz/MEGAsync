@@ -39,7 +39,7 @@
 	border-bottom-left-radius: 6px;
 	margin-left: 5px;
 }
-#wProgress 
+#wInbox 
 {
 	background-color: #F07800;
 	border-top-left-radius: 6px;

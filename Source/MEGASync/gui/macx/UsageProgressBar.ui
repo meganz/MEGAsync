@@ -39,7 +39,7 @@
 	border-bottom-left-radius: 6px;
 	margin-left: 5px;
 }
-#wProgress 
+#wInbox 
 {
 	background-color: #F07800;
 	border-top-left-radius: 6px;
@@ -130,7 +130,7 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset resource="../Resources_win.qrc">
+    <iconset resource="../Resources_macx.qrc">
      <normaloff>:/images/usageProgress.png</normaloff>:/images/usageProgress.png</iconset>
    </property>
    <property name="iconSize">
@@ -243,7 +243,7 @@
   <zorder>wCloud</zorder>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -40,10 +40,24 @@ void UsageProgressBar::setProgress(long long valueCloud, long long valueRubbish,
         ui->wShares->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
         ui->wInbox->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
     }
-
+    if(percentageShares > 1000)
+    {
+        percentageShares = 993;
+        ui->wShares->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
+    }
+    if(percentageRubbish > 1000)
+    {
+        percentageRubbish = 993;
+        ui->wRubbish->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
+    }
     if(percentageinbox < 35)
     {
         percentageCloud = percentageRubbish = percentageShares = percentageinbox = 35;
+    }
+    else if(percentageinbox > 1000)
+    {
+        percentageinbox = 993;
+        ui->wInbox->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
     }
 
     ui->wCloud->resize(percentageCloud * 0.36, ui->wInbox->height());
