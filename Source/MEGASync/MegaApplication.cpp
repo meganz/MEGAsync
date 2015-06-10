@@ -2142,6 +2142,7 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::externalDownload(QString megaLink)
 {
+    pendingLinks.append(megaLink);
     megaApi->getPublicNode(megaLink.toUtf8().constData());
 }
 
@@ -2968,13 +2969,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
     {
-        if(e->getErrorCode() == MegaError::API_OK)
+        QString link = QString::fromUtf8(request->getLink());
+        if(pendingLinks.contains(link))
         {
-            processDownload(request->getPublicMegaNode());
-        }
-        else
-        {
-            showErrorMessage(tr("Error getting link information"));
+            pendingLinks.removeOne(link);
+            if(e->getErrorCode() == MegaError::API_OK)
+            {
+                processDownload(request->getPublicMegaNode());
+            }
+            else
+            {
+                showErrorMessage(tr("Error getting link information"));
+            }
         }
         break;
     }
