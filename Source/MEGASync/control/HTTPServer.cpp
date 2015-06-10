@@ -84,11 +84,14 @@ void HTTPServer::readClient()
             return;
         }
 
-        QStringList result = headers.filter(QRegExp(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGIN), Qt::CaseInsensitive));
-        if(!result.size())
+        if(Preferences::HTTPS_ALLOWED_ORIGIN != QString::fromUtf8("*"))
         {
-            rejectRequest(socket);
-            return;
+            QStringList result = headers.filter(QRegExp(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGIN), Qt::CaseInsensitive));
+            if(!result.size())
+            {
+                rejectRequest(socket);
+                return;
+            }
         }
 
         QString contentLengthId = QString::fromUtf8("Content-length: ");
