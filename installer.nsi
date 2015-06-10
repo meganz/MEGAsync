@@ -26,7 +26,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 VIProductVersion "2.0.0.1"
 VIAddVersionKey "FileVersion" "2.0.0.1"
 VIAddVersionKey "ProductVersion" "2.0.0.1"
-!define PRODUCT_VERSION "2.0.0"
+!define PRODUCT_VERSION "2.0.1"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.co.nz"
@@ -472,6 +472,14 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAlogger.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAlogger.exe" "$USERNAME" "GenericRead + GenericWrite"
 !endif
+
+  File "${SRCDIR_MEGASYNC}\libeay32.dll"
+  AccessControl::SetFileOwner "$INSTDIR\libeay32.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\libeay32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\ssleay32.dll"
+  AccessControl::SetFileOwner "$INSTDIR\ssleay32.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\ssleay32.dll" "$USERNAME" "GenericRead + GenericWrite"
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
