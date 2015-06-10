@@ -1842,7 +1842,6 @@ void MegaApplication::importLinks()
     //If the user wants to download some links, do it
     if(importDialog->shouldDownload())
 	{
-        preferences->setDownloadFolder(importDialog->getDownloadPath());
         linkProcessor->downloadLinks(importDialog->getDownloadPath());
 	}
 
