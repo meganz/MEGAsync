@@ -221,6 +221,7 @@ protected:
     long long lastActiveTime;
     QNetworkConfigurationManager networkManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
+    QList<QString> pendingLinks;
 
     bool reboot;
     bool syncActive;
