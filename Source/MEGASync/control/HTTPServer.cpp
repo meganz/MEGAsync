@@ -9,7 +9,11 @@ HTTPServer::HTTPServer(quint16 port, bool sslEnabled)
     listen(QHostAddress::LocalHost, port);
 }
 
+#if QT_VERSION >= 0x050000
+void HTTPServer::incomingConnection(qintptr socket)
+#else
 void HTTPServer::incomingConnection(int socket)
+#endif
 {
     if (disabled)
     {
