@@ -825,7 +825,9 @@ void MegaApplication::loggedIn()
     Platform::startShellDispatcher(this);
 
     //Start the HTTP server
-    //httpServer = new HTTPServer(2973, NULL);
+    httpServer = new HTTPServer(Preferences::HTTPS_PORT, true);
+    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)));
+
     updateUserStats();
 }
 
@@ -900,9 +902,9 @@ void MegaApplication::processDownloadQueue(QString path)
 
     while(!downloadQueue.isEmpty())
     {
-        mega::MegaHandle nodeHandle = downloadQueue.dequeue();
-        MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
+        MegaNode *node = downloadQueue.dequeue();
         downloader->download(node, path + QDir::separator());
+        delete node;
     }
 }
 
@@ -1542,8 +1544,8 @@ void MegaApplication::setupWizardFinished()
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
-    //delete httpServer;
-    //httpServer = NULL;
+    delete httpServer;
+    httpServer = NULL;
     stopUpdateTask();
     Platform::stopShellDispatcher();
     megaApi->logout();
@@ -1955,16 +1957,26 @@ void MegaApplication::downloadActionClicked()
     }
 
     long long selectedMegaFolderHandle = downloadNodeSelector->getSelectedFolderHandle();
-    MegaNode *selectedFolder = megaApi->getNodeByHandle(selectedMegaFolderHandle);
+    MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
     delete downloadNodeSelector;
     downloadNodeSelector = NULL;
-    if(!selectedFolder)
+    if(!selectedNode)
     {
         selectedMegaFolderHandle = mega::INVALID_HANDLE;
         return;
     }
 
-    downloadQueue.append(selectedMegaFolderHandle);
+    processDownload(selectedNode);
+}
+
+void MegaApplication::processDownload(MegaNode *node)
+{
+    if(!node)
+    {
+        return;
+    }
+
+    downloadQueue.append(node);
     if(downloadFolderSelector)
     {
         downloadFolderSelector->setVisible(true);
@@ -2127,6 +2139,11 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
     processor->requestLinks();
     exportOps++;
+}
+
+void MegaApplication::externalDownload(QString megaLink)
+{
+    megaApi->getPublicNode(megaLink.toUtf8().constData());
 }
 
 //Called when the link import finishes
@@ -2948,6 +2965,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_SESSION_TRANSFER_URL:
     {
         QDesktopServices::openUrl(QUrl(QString::fromUtf8(request->getLink())));
+        break;
+    }
+    case MegaRequest::TYPE_GET_PUBLIC_NODE:
+    {
+        if(e->getErrorCode() == MegaError::API_OK)
+        {
+            processDownload(request->getPublicMegaNode());
+        }
+        else
+        {
+            showErrorMessage(tr("Error getting link information"));
+        }
+        break;
     }
     default:
         break;

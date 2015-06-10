@@ -108,8 +108,10 @@ public slots:
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void logoutActionClicked();
+    void processDownload(mega::MegaNode *node);
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
+    void externalDownload(QString megaLink);
 	void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
@@ -188,7 +190,7 @@ protected:
     DownloadFromMegaDialog *downloadFolderSelector;
     MultiQFileDialog *multiUploadFileDialog;
 	QQueue<QString> uploadQueue;
-    QQueue<long long> downloadQueue;
+    QQueue<mega::MegaNode *> downloadQueue;
 	long long totalDownloadSize, totalUploadSize;
 	long long totalDownloadedSize, totalUploadedSize;
 	long long uploadSpeed, downloadSpeed;
