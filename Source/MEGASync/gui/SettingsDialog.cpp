@@ -1034,7 +1034,7 @@ bool SettingsDialog::saveSettings()
         defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
     #endif
 #endif
-        if(ui->eDownloadFolder->text().compare(defaultDownloadPath) || preferences->downloadFolder().size())
+        if(ui->eDownloadFolder->text().compare(QDir::toNativeSeparators(defaultDownloadPath)) || preferences->downloadFolder().size())
             preferences->setDownloadFolder(ui->eDownloadFolder->text());
 
         //Syncs
