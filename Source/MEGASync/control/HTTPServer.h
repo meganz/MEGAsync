@@ -22,7 +22,11 @@ class HTTPServer: public QTcpServer
 
     public:
         HTTPServer(quint16 port, bool sslEnabled);
+#if QT_VERSION >= 0x050000
+        void incomingConnection(qintptr socket);
+#else
         void incomingConnection(int socket);
+#endif
         void pause();
         void resume();
 
