@@ -363,6 +363,10 @@ void Preferences::setUsedStorage(long long value)
 {
     mutex.lock();
     assert(logged());
+    if(value < 0)
+    {
+        value = 0;
+    }
     settings->setValue(usedStorageKey, value);
     mutex.unlock();
 }

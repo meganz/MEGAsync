@@ -552,6 +552,10 @@ void MegaApplication::updateTrayIcon()
     }
     else if(overQuotaReached)
     {
+        if(preferences->usedStorage() < preferences->totalStorage())
+        {
+            updateUserStats();
+        }
         #ifndef __APPLE__
             #ifdef _WIN32
                 trayIcon->setIcon(QIcon(QString::fromAscii("://images/warning_ico.ico")));
@@ -2002,13 +2006,13 @@ void MegaApplication::processDownload(MegaNode *node)
     }
 
     QString defaultPath = preferences->downloadFolder();
-    if(QFile(defaultPath).exists())
+    if(preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
     {
         processDownloadQueue(defaultPath);
         return;
     }
 
-    downloadFolderSelector = new DownloadFromMegaDialog();
+    downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
     #ifdef WIN32
         downloadFolderSelector->showMinimized();
         downloadFolderSelector->setWindowState(Qt::WindowActive);
@@ -2027,8 +2031,12 @@ void MegaApplication::processDownload(MegaNode *node)
     {
         //If the dialog is accepted, get the destination node
         QString path = downloadFolderSelector->getPath();
-        if(downloadFolderSelector->isDefaultFolder())
-            preferences->setDownloadFolder(path);
+        preferences->setHasDefaultDownloadFolder(downloadFolderSelector->isDefaultDownloadOption());
+        preferences->setDownloadFolder(path);
+        if(settingsDialog)
+        {
+            settingsDialog->loadSettings();
+        }
         processDownloadQueue(path);
     }
     //If the dialog is rejected, cancel uploads
@@ -2668,7 +2676,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         overQuotaReached = true;
-        megaApi->getAccountDetails();
+        updateUserStats();
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
     }
@@ -3056,7 +3064,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             settingsDialog = NULL;
         }
         overQuotaReached = true;
-        megaApi->getAccountDetails();
+        updateUserStats();
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
     }
@@ -3240,6 +3248,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     if(!infoDialog) return;
 
     bool externalNodes = 0;
+    bool nodesRemoved = false;
+    long long usedStorage = preferences->usedStorage();
 
     //If this is a full reload, return
 	if(!nodes) return;
@@ -3296,12 +3306,10 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
         if(node->isRemoved() && (node->getType()==MegaNode::TYPE_FILE))
         {
-            preferences->setUsedStorage(preferences->usedStorage() - node->getSize());
-            if(preferences->usedStorage() < preferences->totalStorage())
-            {
-                megaApi->getAccountDetails();
-            }
+            usedStorage -= node->getSize();
+            nodesRemoved = true;
         }
+
         if(!node->isRemoved() && node->getTag() && !node->isSyncDeleted() && (node->getType()==MegaNode::TYPE_FILE))
         {
             //Get the associated local node
@@ -3333,6 +3341,15 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
         }
 	}
+
+    if(nodesRemoved)
+    {
+        preferences->setUsedStorage(usedStorage);
+        if(overQuotaReached && (preferences->usedStorage() < preferences->totalStorage()))
+        {
+            updateUserStats();
+        }
+    }
 
     if(externalNodes)
     {
