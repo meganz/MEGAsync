@@ -13,6 +13,7 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "SizeLimitDialog.h"
+#include "DownloadFromMegaDialog.h"
 #include "Preferences.h"
 #include "megaapi.h"
 
@@ -133,6 +134,7 @@ private:
     long long cacheSize;
     long long remoteCacheSize;
     bool hasDefaultUploadOption;
+    bool hasDefaultDownloadOption;
     bool hasUpperLimit;
     bool hasLowerLimit;
     long long upperLimit;
