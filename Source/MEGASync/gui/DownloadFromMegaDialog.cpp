@@ -16,7 +16,7 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
 
     QString defaultDownloadPath;
 
-    if(!QFile(defaultPath).exists())
+    if(!defaultPath.size() || !QFile(defaultPath).exists())
     {
     #ifdef WIN32
         #if QT_VERSION < 0x050000

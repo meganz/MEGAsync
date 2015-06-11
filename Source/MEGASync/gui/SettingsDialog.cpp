@@ -1570,8 +1570,8 @@ void SettingsDialog::on_bDownloadFolder_clicked()
     }
 
     QString fPath = dialog->getPath();
-    if((fPath.size() && fPath.compare(ui->eDownloadFolder->text()))
-            || hasDefaultDownloadOption != dialog->isDefaultDownloadOption())
+    if(fPath.size() && (fPath.compare(ui->eDownloadFolder->text())
+            || (hasDefaultDownloadOption != dialog->isDefaultDownloadOption())))
     {
         QTemporaryFile test(fPath + QDir::separator());
         if(!test.open())
