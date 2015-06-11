@@ -842,6 +842,7 @@ void SettingsDialog::loadSettings()
         }
         downloadPath = QDir::toNativeSeparators(downloadPath);
         ui->eDownloadFolder->setText(downloadPath);
+        hasDefaultDownloadOption = preferences->hasDefaultDownloadFolder();
 
         //Syncs
         loadSyncSettings();
@@ -1037,6 +1038,8 @@ bool SettingsDialog::saveSettings()
 #endif
         if(ui->eDownloadFolder->text().compare(QDir::toNativeSeparators(defaultDownloadPath)) || preferences->downloadFolder().size())
             preferences->setDownloadFolder(ui->eDownloadFolder->text());
+
+        preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 
         //Syncs
         if(syncsChanged)
@@ -1556,12 +1559,19 @@ void SettingsDialog::on_bUploadFolder_clicked()
 
 void SettingsDialog::on_bDownloadFolder_clicked()
 {
-    QString fPath =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
-                                                  ui->eDownloadFolder->text(),
-                                                  QFileDialog::ShowDirsOnly
-                                                  | QFileDialog::DontResolveSymlinks);
+    QPointer<DownloadFromMegaDialog> dialog = new DownloadFromMegaDialog(preferences->downloadFolder(), this);
+    dialog->setDefaultDownloadOption(hasDefaultDownloadOption);
 
-    if(fPath.size() && fPath.compare(ui->eDownloadFolder->text()))
+    int result = dialog->exec();
+    if(!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    QString fPath = dialog->getPath();
+    if((fPath.size() && fPath.compare(ui->eDownloadFolder->text()))
+            || hasDefaultDownloadOption != dialog->isDefaultDownloadOption())
     {
         QTemporaryFile test(fPath + QDir::separator());
         if(!test.open())
@@ -1570,9 +1580,12 @@ void SettingsDialog::on_bDownloadFolder_clicked()
             return;
         }
 
+        hasDefaultDownloadOption = dialog->isDefaultDownloadOption();
         ui->eDownloadFolder->setText(fPath);
         stateChanged();
     }
+
+    delete dialog;
 }
 
 void SettingsDialog::on_bAddName_clicked()

@@ -12,9 +12,10 @@ class DownloadFromMegaDialog : public QDialog
 	Q_OBJECT
 
 public:
-    explicit DownloadFromMegaDialog(QWidget *parent = 0);
+    explicit DownloadFromMegaDialog(QString defaultPath = QString::fromUtf8(""), QWidget *parent = 0);
     ~DownloadFromMegaDialog();
-	bool isDefaultFolder();
+    bool isDefaultDownloadOption();
+    void setDefaultDownloadOption(bool);
     QString getPath();
 
 private slots:

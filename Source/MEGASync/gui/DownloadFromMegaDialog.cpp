@@ -7,7 +7,7 @@
 #include <QTemporaryFile>
 #include <QMessageBox>
 
-DownloadFromMegaDialog::DownloadFromMegaDialog(QWidget *parent) :
+DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *parent) :
 	QDialog(parent),
     ui(new Ui::DownloadFromMegaDialog)
 {
@@ -16,19 +16,26 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QWidget *parent) :
 
     QString defaultDownloadPath;
 
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
+    if(!QFile(defaultPath).exists())
+    {
+    #ifdef WIN32
+        #if QT_VERSION < 0x050000
+            defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
+        #else
+            defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
+        #endif
     #else
-        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
+        #if QT_VERSION < 0x050000
+            defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
+        #else
+            defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
+        #endif
     #endif
-#else
-    #if QT_VERSION < 0x050000
-        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
-    #else
-        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-    #endif
-#endif
+    }
+    else
+    {
+        defaultDownloadPath = defaultPath;
+    }
 
     ui->eFolderPath->setText(QDir::toNativeSeparators(defaultDownloadPath));
     ui->cDefaultPath->setChecked(false);
@@ -42,9 +49,14 @@ DownloadFromMegaDialog::~DownloadFromMegaDialog()
     delete ui;
 }
 
-bool DownloadFromMegaDialog::isDefaultFolder()
+bool DownloadFromMegaDialog::isDefaultDownloadOption()
 {
     return ui->cDefaultPath->isChecked();
+}
+
+void DownloadFromMegaDialog::setDefaultDownloadOption(bool value)
+{
+    ui->cDefaultPath->setChecked(value);
 }
 
 QString DownloadFromMegaDialog::getPath()
