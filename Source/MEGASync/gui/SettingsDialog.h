@@ -106,6 +106,7 @@ private slots:
     void on_bUpdate_clicked();
     void on_bFullCheck_clicked();
     void on_bStorageDetails_clicked();
+    void on_lAccountImage_clicked();
 
     void onAnimationFinished();
 
@@ -139,6 +140,7 @@ private:
     int upperLimitUnit;
     int lowerLimitUnit;
     bool sizeLimitsChanged;
+    int debugCounter;
 
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;

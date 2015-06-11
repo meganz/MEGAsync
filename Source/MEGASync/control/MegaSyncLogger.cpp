@@ -128,6 +128,16 @@ void MegaSyncLogger::sendLogsToFile(bool enable)
     this->logToFile = enable;
 }
 
+bool MegaSyncLogger::isLogToStdoutEnabled()
+{
+    return logToStdout;
+}
+
+bool MegaSyncLogger::isLogToFileEnabled()
+{
+    return logToFile;
+}
+
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
 {
     if(!connected)

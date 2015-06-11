@@ -16,6 +16,8 @@ public:
     virtual void log(const char *time, int loglevel, const char *source, const char *message);
     void sendLogsToStdout(bool enable);
     void sendLogsToFile(bool enable);
+    bool isLogToStdoutEnabled();
+    bool isLogToFileEnabled();
 
 signals:
     void sendLog(QString time, int loglevel, QString message);
