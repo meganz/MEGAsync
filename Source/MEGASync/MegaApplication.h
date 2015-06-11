@@ -28,6 +28,7 @@
 #include "control/MegaUploader.h"
 #include "control/MegaDownloader.h"
 #include "control/UpdateTask.h"
+#include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 
@@ -88,6 +89,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
+    void toggleLogging();
 
 signals:
     void startUpdaterThread();
@@ -222,6 +224,7 @@ protected:
     QNetworkConfigurationManager networkManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QList<QString> pendingLinks;
+    MegaSyncLogger *logger;
 
     bool reboot;
     bool syncActive;
@@ -236,6 +239,7 @@ protected:
     bool updateAvailable;
     bool isLinux;
     long long externalNodesTimestamp;
+    bool enableDebug;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

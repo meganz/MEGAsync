@@ -86,6 +86,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     lowerLimit = 0;
     upperLimitUnit = Preferences::MEGA_BYTE_UNIT;
     lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
+    debugCounter = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eLimit->setValidator(new QDoubleValidator(this));
@@ -1863,6 +1864,16 @@ void SettingsDialog::openSettingsTab(int tab)
         case ADVANCED_TAB: on_bAdvanced_clicked(); break;
     default:
         break;
+    }
+}
+
+void SettingsDialog::on_lAccountImage_clicked()
+{
+    debugCounter++;
+    if(debugCounter == 5)
+    {
+        app->toggleLogging();
+        debugCounter = 0;
     }
 }
 

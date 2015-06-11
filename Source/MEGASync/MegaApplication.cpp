@@ -4,7 +4,6 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
-#include "control/MegaSyncLogger.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 
@@ -90,29 +89,6 @@ void msgHandler(QtMsgType type, const char *msg)
 int main(int argc, char *argv[])
 {
     MegaApplication app(argc, argv);
-    MegaSyncLogger *logger = NULL;
-
-#if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
-    logger = new MegaSyncLogger();
-
-    #if defined(LOG_TO_STDOUT)
-        logger->sendLogsToStdout(true);
-    #endif
-
-    #if defined(LOG_TO_FILE)
-        logger->sendLogsToFile(true);
-    #endif
-
-    MegaApi::setLoggerObject(logger);
-
-    #ifdef DEBUG
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-    #else
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
-    #endif
-#else
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
-#endif
 
     qInstallMsgHandler(msgHandler);
 
@@ -173,22 +149,6 @@ int main(int argc, char *argv[])
         //Utilities::removeRecursively(dataDir);
         return 0;
     }
-
-#ifdef Q_OS_LINUX
-    if(argc == 2)
-    {
-         if(!strcmp("--debug", argv[1]))
-         {
-             if(!logger)
-             {
-                logger = new MegaSyncLogger();
-                MegaApi::setLoggerObject(logger);
-             }
-             logger->sendLogsToStdout(true);
-             MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-         }
-    }
-#endif
 
     SharedTools::QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
@@ -283,20 +243,38 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
-    // set log level
+    logger = new MegaSyncLogger();
 
-/*TODO: Enable logs
+    #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
+    #if defined(LOG_TO_STDOUT)
+        logger->sendLogsToStdout(true);
+    #endif
 
-#if DEBUG
-    mega::SimpleLogger::setLogLevel(mega::logDebug);
-    mega::SimpleLogger::setOutputSettings(mega::logDebug, true, true, true);
+    #if defined(LOG_TO_FILE)
+        logger->sendLogsToFile(true);
+    #endif
+
+    #ifdef DEBUG
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+    #else
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
+    #endif
 #else
-    mega::SimpleLogger::setLogLevel(mega::logInfo);
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
 #endif
 
-    // set output to stdout
-    mega::SimpleLogger::setAllOutputs(&std::cout);
-*/
+#ifdef Q_OS_LINUX
+    if(argc == 2)
+    {
+         if(!strcmp("--debug", argv[1]))
+         {
+             logger->sendLogsToStdout(true);
+             MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+         }
+    }
+#endif
+
+    MegaApi::setLoggerObject(logger);
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -359,6 +337,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     downloadNodeSelector = NULL;
     notificator = NULL;
     externalNodesTimestamp = 0;
+    enableDebug = false;
 }
 
 MegaApplication::~MegaApplication()
@@ -505,6 +484,12 @@ void MegaApplication::initialize()
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
 
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
+
+    Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
+    if(modifiers.testFlag(Qt::ControlModifier) && modifiers.testFlag(Qt::ShiftModifier))
+    {
+        enableDebug = true;
+    }
 }
 
 QString MegaApplication::applicationFilePath()
@@ -723,7 +708,15 @@ void MegaApplication::start()
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
 
     if(updated)
+    {
         showInfoMessage(tr("MEGAsync has been updated"));
+    }
+
+    if(enableDebug)
+    {
+        toggleLogging();
+        enableDebug = false;
+    }
 
     applyProxySettings();
 
@@ -1766,6 +1759,24 @@ void MegaApplication::showTrayMenu(QPoint *point)
         #else
             trayOverQuotaMenu->popup(p);
         #endif
+    }
+}
+
+void MegaApplication::toggleLogging()
+{
+    if(logger->isLogToFileEnabled())
+    {
+        logger->sendLogsToFile(false);
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
+        showInfoMessage(tr("DEBUG mode disabled"));
+    }
+    else
+    {
+        logger->sendLogsToFile(true);
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+        showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
+        megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
+                     .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
     }
 }
 
