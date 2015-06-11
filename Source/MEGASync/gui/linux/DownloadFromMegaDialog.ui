@@ -53,14 +53,8 @@ QPushButton
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
-   <property name="margin">
-    <number>9</number>
-   </property>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="infoLabel">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -122,7 +116,7 @@ QPushButton
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -212,7 +206,7 @@ QPushButton
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections>
   <connection>
