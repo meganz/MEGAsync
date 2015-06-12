@@ -202,7 +202,7 @@
     </size>
    </property>
    <property name="toolTip">
-    <string> Rubbish Bin</string>
+    <string>Rubbish Bin</string>
    </property>
   </widget>
   <widget class="QWidget" name="wCloud" native="true">

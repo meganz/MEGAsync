@@ -902,6 +902,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DEBUG mode disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1367,7 +1375,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation>English</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1499,7 +1507,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>:</source>
         <translatorcomment>Label to indicate colon to separate IP and Port to be used.</translatorcomment>
-        <translation>:</translation>
+        <translation type="obsolete">:</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -1754,7 +1762,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
-        <translation>[$2053]</translation>
+        <translation type="obsolete">[$2053]</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -2291,12 +2299,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> Rubbish Bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cloud Drive</source>
         <translation type="unfinished">[$1687]</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation type="unfinished">[$167]</translation>
     </message>
 </context>
 <context>
