@@ -1596,7 +1596,7 @@ border: none;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>English</string>
+                 <string notr="true">English</string>
                 </property>
                </item>
               </widget>
@@ -3340,7 +3340,7 @@ background:transparent;</string>
              <item>
               <widget class="QLabel" name="lProxyPortSeparator">
                <property name="text">
-                <string>:</string>
+                <string notr="true">:</string>
                </property>
               </widget>
              </item>
