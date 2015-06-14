@@ -930,7 +930,6 @@ void MegaApplication::disableSyncs()
        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
        Platform::notifyItemChange(preferences->getLocalFolder(i));
        preferences->setSyncState(i, false);
-       openSettings(SettingsDialog::SYNCS_TAB);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
        megaApi->disableSync(node);
        delete node;
