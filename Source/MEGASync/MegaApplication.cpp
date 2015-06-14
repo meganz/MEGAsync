@@ -2863,7 +2863,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         if(infoDialog) infoDialog->setUsage();
         if(infoOverQuota) infoOverQuota->setUsage();
-        if(settingsDialog) settingsDialog->refreshAccountDetails(details);
+        if(settingsDialog) settingsDialog->refreshAccountDetails();
         delete details;
         break;
     }
