@@ -72,8 +72,8 @@ void NodeSelector::nodesReady()
                 item->setData(0, Qt::UserRole, (qulonglong)folder->getHandle());
 
                 int access = megaApi->getAccess(folder);
-                if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access != MegaShare::ACCESS_FULL) && (access != MegaShare::ACCESS_READWRITE))
-                        || ((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL)))
+                if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE))
+                        || ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL)))
                 {
                     QBrush b (QColor(170,170,170, 127));
                     item->setForeground(0,b);
@@ -221,8 +221,8 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode
             parentItem->addChild(item);
 
             int access = megaApi->getAccess(node);
-            if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access != MegaShare::ACCESS_FULL) && (access != MegaShare::ACCESS_READWRITE))
-                    || ((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL)))
+            if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE))
+                    || ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL)))
             {
                 QBrush b (QColor(170,170,170, 127));
                 item->setForeground(0,b);
@@ -307,14 +307,14 @@ void NodeSelector::on_bOk_clicked()
 
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     int access = megaApi->getAccess(node);
-    if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access != MegaShare::ACCESS_FULL) && (access != MegaShare::ACCESS_READWRITE)))
+    if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
             QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
             delete node;
             return;
 
     }
-    else if((selectMode == NodeSelector::SYNC_SELECT) && (access != MegaShare::ACCESS_FULL))
+    else if((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
     {
         QMessageBox::warning(this, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
         delete node;

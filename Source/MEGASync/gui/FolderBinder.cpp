@@ -105,7 +105,7 @@ void FolderBinder::on_bMegaFolder_clicked()
         delete nodeSelector;
         return;
     }
-    if(megaApi->getAccess(selectedFolder) != MegaShare::ACCESS_FULL)
+    if(megaApi->getAccess(selectedFolder) < MegaShare::ACCESS_FULL)
     {
         QMessageBox::warning(this, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
         delete nodeSelector;
