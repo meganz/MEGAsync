@@ -98,6 +98,11 @@ void InfoOverQuotaDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         if(preferences->totalStorage()) setUsage();
+
+        ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
+                                   + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                              .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                       + QString::fromUtf8("</span></p>"));
     }
     QDialog::changeEvent(event);
 }
