@@ -43,7 +43,7 @@ public:
     void setProxyOnly(bool proxyOnly);
     void setAccountOnly(bool accountOnly);
     void loadSettings();
-    void refreshAccountDetails(mega::MegaAccountDetails *details = NULL);
+    void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
 

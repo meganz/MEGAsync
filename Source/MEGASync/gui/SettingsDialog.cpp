@@ -926,45 +926,16 @@ void SettingsDialog::loadSettings()
     modifyingSettings--;
 }
 
-void SettingsDialog::refreshAccountDetails(MegaAccountDetails *details)
+void SettingsDialog::refreshAccountDetails()
 {
-    if(details)
-    {
-        if(details->getStorageMax()==0)
-        {
-            ui->pStorage->setValue(0);
-            ui->lStorage->setText(tr("Data temporarily unavailable"));
-            ui->bStorageDetails->setEnabled(false);
-
-        }
-        else
-        {
-
-            ui->bStorageDetails->setEnabled(true);
-            int percentage = ceil(100*((double)details->getStorageUsed()/details->getStorageMax()));
-            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
-            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
-                  .arg(Utilities::getSizeString(details->getStorageUsed()))
-                  .arg(QString::number(percentage))
-                  .arg(Utilities::getSizeString(details->getStorageMax())));
-        }
-
-        if(accountDetailsDialog)
-            accountDetailsDialog->refresh(preferences);
-
-        return;
-    }
-
-    if(preferences->totalStorage()==0)
+    if(preferences->totalStorage() == 0)
     {
         ui->pStorage->setValue(0);
         ui->lStorage->setText(tr("Data temporarily unavailable"));
         ui->bStorageDetails->setEnabled(false);
-
     }
     else
     {
-
         ui->bStorageDetails->setEnabled(true);
         int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
         ui->pStorage->setValue((percentage < 100) ? percentage : 100);
@@ -972,6 +943,11 @@ void SettingsDialog::refreshAccountDetails(MegaAccountDetails *details)
               .arg(Utilities::getSizeString(preferences->usedStorage()))
               .arg(QString::number(percentage))
               .arg(Utilities::getSizeString(preferences->totalStorage())));
+    }
+
+    if(accountDetailsDialog)
+    {
+        accountDetailsDialog->refresh(preferences);
     }
 }
 
