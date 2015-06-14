@@ -20,7 +20,7 @@ class NodeSelector : public QDialog, public mega::MegaRequestListener
 public:
     enum { UPLOAD_SELECT = 0, DOWNLOAD_SELECT, SYNC_SELECT};
 
-    explicit NodeSelector(mega::MegaApi *megaApi, bool rootAllowed, bool sizeWarning,  int selectMode, QWidget *parent = 0, bool showInshares = true);
+    explicit NodeSelector(mega::MegaApi *megaApi,  int selectMode, QWidget *parent = 0);
 
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
@@ -35,10 +35,7 @@ private:
     QIcon folderIcon;
     unsigned long long selectedFolder;
     QTreeWidgetItem *selectedItem;
-    bool rootAllowed;
-    bool sizeWarning;
     int selectMode;
-    bool showInshares;
 
 protected:
     void nodesReady();
