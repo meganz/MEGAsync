@@ -89,7 +89,7 @@ void FolderBinder::on_bLocalFolder_clicked()
 
 void FolderBinder::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, true, NodeSelector::SYNC_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::SYNC_SELECT, this);
     int result = nodeSelector->exec();
     if(!nodeSelector || result != QDialog::Accepted)
     {

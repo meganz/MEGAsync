@@ -242,7 +242,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 
 void ImportMegaLinksDialog::on_bMegaFolder_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, true, false, NodeSelector::UPLOAD_SELECT, this, true);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::UPLOAD_SELECT, this);
 	int result = nodeSelector->exec();
     if(!nodeSelector || result != QDialog::Accepted)
     {
