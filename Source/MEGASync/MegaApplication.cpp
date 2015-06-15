@@ -343,6 +343,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     externalNodesTimestamp = 0;
     enableDebug = false;
     overquotaCheck = false;
+    noKeyDetected = 0;
 }
 
 MegaApplication::~MegaApplication()
@@ -3446,6 +3447,22 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
 
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
+            if(node->getAttrString()->size())
+            {
+                //NO_KEY node created by this client detected
+                if(!noKeyDetected)
+                {
+                    megaApi->fetchNodes();
+                }
+                else if(noKeyDetected > 20)
+                {
+                    QMessageBox::critical(NULL, "MEGAsync",
+                        "Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz");
+                    preferences->setCrashed(true);
+                    rebootApplication(false);
+                }
+                noKeyDetected++;
+            }
         }
 	}
 
