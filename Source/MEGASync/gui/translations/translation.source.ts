@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">[$1687]</translation>
+        <translation type="obsolete">[$164]</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -21,7 +21,7 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">[$167]</translation>
+        <translation type="obsolete">[$168]</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -31,27 +31,27 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">[$2034]</translation>
+        <translation type="obsolete">[$5558]</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">[$2035]</translation>
+        <translation type="obsolete">[$5562]</translation>
     </message>
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation>[$2036]</translation>
+        <translation>[$5547]</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$81]</translation>
+        <translation>[$1596]</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7006]</translation>
     </message>
 </context>
 <context>
@@ -62,8 +62,8 @@
         <translation>[$1577]</translation>
     </message>
     <message>
-        <source></source>
-        <translation>[$1578]</translation>
+        <source/>
+        <translation></translation>
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
@@ -91,7 +91,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">[$1585]</translation>
+        <translation type="obsolete">[$882]</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -102,17 +102,17 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>[$1588] [$1589]</translation>
+        <translation>[$2426]</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$81]</translation>
+        <translation>[$1596]</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$82]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -122,13 +122,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">[$1586]</translation>
+        <translation type="obsolete">[$7007]</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">[$1883]</translation>
+        <translation type="obsolete">[$7008]</translation>
     </message>
 </context>
 <context>
@@ -151,7 +151,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$82]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -174,7 +174,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>[$1732]:</translation>
+        <translation>[$1590]</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
@@ -184,22 +184,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$81]</translation>
+        <translation>[$1596]</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$82]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
-        <translation>[$2023]</translation>
+        <translation>[$5722]</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
-        <translation>[$1592]</translation>
+        <translation>[$1599]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -227,12 +227,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>[$1592]</translation>
+        <translation>[$1599]</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
-        <translation>[$2023]</translation>
+        <translation>[$5722]</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -263,7 +263,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>[$1883]</translation>
+        <translation>[$7008]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7009]</translation>
     </message>
 </context>
 <context>
@@ -299,16 +299,16 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$1597]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation type="obsolete">/MEGAsync Downloads</translation>
+        <translation type="obsolete">[$7010]</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Imports</translation>
+        <translation>[$7011]</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -323,28 +323,28 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>[$1601]</translation>
+        <translation>[$1665]</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation>[$1680]</translation>
+        <translation>[$882]</translation>
     </message>
     <message>
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>[$1814] [$1815]</translation>
+        <translation>[$7012]</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>[$1816] [$1815]</translation>
+        <translation>[$7013]</translation>
     </message>
     <message>
         <source>Choose</source>
-        <translation>[$2023]</translation>
+        <translation>[$5722]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -375,7 +375,7 @@ Are you sure?</source>
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>[$1605]</translation>
+        <translation>[$1714]</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -460,17 +460,17 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">[$1623] </translation>
+        <translation type="obsolete">[$1623]</translation>
     </message>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>[$1624] </translation>
+        <translation>[$1156]</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>[$1625] </translation>
+        <translation>[$1625]</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -487,15 +487,15 @@ Are you sure?</source>
     <name>InfoOverQuotaDialog</name>
     <message>
         <source>MEGAsync is currently disabled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$6990]</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7014]</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$920]</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
@@ -524,12 +524,12 @@ Are you sure?</source>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
-        <translation>[$1870]</translation>
+        <translation>[$7015]</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>[$1871]</translation>
+        <translation>[$7016]</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -550,27 +550,27 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
+        <translation type="obsolete">[$7017]</translation>
     </message>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>[$1627]</translation>
+        <translation>[$1470]</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>[$1628] [$1629]</translation>
+        <translation>[$7018]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">[$1630]</translation>
+        <translation type="obsolete">[$2435]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">[$1631]</translation>
+        <translation type="obsolete">[$2436]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -584,21 +584,18 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">[$1635]</translation>
+        <translation type="obsolete">[$2438]</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">[$1636]</translation>
+        <translation type="obsolete">[$2439]</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">[$1637]
-[$1638]
-
-[$1639]</translation>
+        <translation type="obsolete">[$2440]</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -623,7 +620,7 @@ Exit anyway?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>[$1627]...</translation>
+        <translation>[$6066]</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -676,7 +673,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>[$1654] </translation>
+        <translation>[$1654]</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -735,7 +732,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>[$1907]</translation>
+        <translation>[$7019]</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -750,7 +747,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No update available at this time</source>
         <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
-        <translation>[$1906]</translation>
+        <translation>[$7020]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -762,21 +759,18 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation>[$1637]
-
-[$1639]</translation>
+        <translation>[$7021]</translation>
     </message>
     <message>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
-        <translation>[$819]</translation>
+        <translation>[$7022]</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>[$1919]
-[$1920]</translation>
+        <translation>[$7023]</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -795,17 +789,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>[$2015]</translation>
+        <translation>[$7024]</translation>
     </message>
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>[$1644]</translation>
+        <translation>[$7025]</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>[$1646]</translation>
+        <translation>[$7026]</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -835,52 +829,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7027]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$1630]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7028]</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7029]</translation>
     </message>
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7030]</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7031]</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7032]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$1631]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7033]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7034]</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -888,7 +882,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7035]</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -896,19 +890,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer failed:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7036]</translation>
     </message>
     <message>
         <source>Error getting link information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DEBUG mode disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7037]</translation>
     </message>
 </context>
 <context>
@@ -921,7 +907,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>[$1657]</translation>
+        <translation>[$46]</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -966,7 +952,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Circular linkage detected</source>
         <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
-        <translation>[$139]</translation>
+        <translation>[$7038]</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -1043,7 +1029,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">[$1680]</translation>
+        <translation type="obsolete">[$882]</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file 
@@ -1051,30 +1037,30 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">[$1880] [$1881]</translation>
+        <translation type="obsolete">[$2443]</translation>
     </message>
 </context>
 <context>
     <name>MessageBox</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$882]</translation>
     </message>
     <message>
         <source>Do not ask me again</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7039]</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$156]</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$1596]</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7040]</translation>
     </message>
 </context>
 <context>
@@ -1092,7 +1078,7 @@ Are you sure?</source>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation>[$1683]...</translation>
+        <translation>[$7041]</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -1102,17 +1088,17 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$1685]</translation>
+        <translation>[$1596]</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$1686]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation>[$1687]</translation>
+        <translation>[$164]</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1128,25 +1114,23 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>[$1678] [$1679]</translation>
+        <translation>[$2445]</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>[$1680]</translation>
+        <translation>[$882]</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">[$1691]
-[$1692]</translation>
+        <translation type="obsolete">[$7042]</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>[$1921]
-[$1922]</translation>
+        <translation>[$7043]</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1155,11 +1139,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7044]</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7045]</translation>
     </message>
 </context>
 <context>
@@ -1182,12 +1166,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>[$1686]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>[$1680]</translation>
+        <translation>[$882]</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -1197,7 +1181,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>[$1696]</translation>
+        <translation>[$2447]</translation>
     </message>
 </context>
 <context>
@@ -1205,22 +1189,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&amp;[$78]</translation>
+        <translation>[$6979]</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&amp;[$79]</translation>
+        <translation>[$7046]</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>&amp;[$81]</translation>
+        <translation>[$7047]</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&amp;[$82]</translation>
+        <translation>[$7048]</translation>
     </message>
 </context>
 <context>
@@ -1238,7 +1222,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>[$1699]</translation>
+        <translation>[$880]</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1306,7 +1290,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Settings - MEGAsync</source>
         <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
-        <translation>[$1646] - [$1626]</translation>
+        <translation>[$6980]</translation>
     </message>
     <message>
         <source>General</source>
@@ -1335,17 +1319,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>[$1717]</translation>
+        <translation>[$5548]</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$1685]</translation>
+        <translation>[$1596]</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$1718]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1375,7 +1359,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation type="obsolete">English</translation>
+        <translation>[$1437]</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1385,7 +1369,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>[$1725]</translation>
+        <translation>[$1150]</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1395,7 +1379,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>[$1727]</translation>
+        <translation>[$798]</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1409,7 +1393,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Delete</source>
         <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>[$1730]</translation>
+        <translation>[$5638]</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1444,7 +1428,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation>[$7049]</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -1454,7 +1438,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>(about 90% of the available bandwidth)</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>[$1738]</translation>
+        <translation>[$7050]</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
@@ -1507,7 +1491,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>:</source>
         <translatorcomment>Label to indicate colon to separate IP and Port to be used.</translatorcomment>
-        <translation type="obsolete">:</translation>
+        <translation>[$7051]</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -1522,7 +1506,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
-        <translation>[$1751]</translation>
+        <translation>[$1766]</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -1537,31 +1521,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>[$5819]</translation>
     </message>
     <message>
         <source>PRO II</source>
         <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>[$6125]</translation>
     </message>
     <message>
         <source>PRO III</source>
         <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>[$6126]</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation>[$7052]</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
-        <translation>[$1680]</translation>
+        <translation>[$882]</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">[$1754]</translation>
+        <translation type="obsolete">[$7053]</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1571,7 +1555,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>[$1756]</translation>
+        <translation>[$1815]</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -1582,8 +1566,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>[$1758]
-[$1759]</translation>
+        <translation>[$7054]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1593,16 +1576,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>[$1346]</translation>
+        <translation>[$6111]</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">[$1875]</translation>
+        <translation type="obsolete">[$7055]</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">[$1877]</translation>
+        <translation type="obsolete">[$5807]</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -1617,7 +1600,7 @@ when the application starts again.</source>
     <message>
         <source>HTTP</source>
         <translatorcomment>Label to indicate a HTTP proxy.</translatorcomment>
-        <translation>HTTP</translation>
+        <translation>[$7056]</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -1670,7 +1653,7 @@ when the application starts again.</source>
     <message>
         <source>Force a full scan</source>
         <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>[$2009]</translation>
+        <translation>[$7057]</translation>
     </message>
     <message>
         <source>Full scan</source>
@@ -1682,10 +1665,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">[$2011]
-
-[$2012]
-</translation>
+        <translation type="obsolete">[$7058]</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -1699,31 +1679,29 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Preferences - MEGAsync</source>
         <translatorcomment>Title label of the settings dialog.</translatorcomment>
-        <translation>[$1646] - [$1626]</translation>
+        <translation>[$7059]</translation>
     </message>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>[$1721]</translation>
+        <translation>[$7060]</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation>[$1720]</translation>
+        <translation>[$7061]</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>[$2011]
-
-[$2012]</translation>
+        <translation>[$7062]</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>[$2023]</translation>
+        <translation>[$5722]</translation>
     </message>
     <message>
         <source>Default folders</source>
@@ -1748,7 +1726,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>[$2049]</translation>
+        <translation>[$7063]</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1762,7 +1740,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
-        <translation type="obsolete">[$2053]</translation>
+        <translation>[$1599]</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -1772,61 +1750,61 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7064]</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7065]</translation>
     </message>
     <message>
         <source>Unable to write file</source>
         <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7066]</translation>
     </message>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$5794]</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$1991]</translation>
     </message>
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$6982]</translation>
     </message>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7067]</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7068]</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
         <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7069]</translation>
     </message>
     <message>
         <source>Disabled</source>
         <translatorcomment>Label to indicate the user if the feature of exclusion based by size is enabled/disabled.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7070]</translation>
     </message>
     <message>
         <source>Local cache: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7071]</translation>
     </message>
     <message>
         <source>Remote cache: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7072]</translation>
     </message>
 </context>
 <context>
@@ -1834,7 +1812,7 @@ when the application starts again</source>
     <message>
         <source>Setup Wizard - MEGAsync</source>
         <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
-        <translation>[$1760] - [$1626]</translation>
+        <translation>[$6981]</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
@@ -1874,7 +1852,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>[$208]</translation>
+        <translation>[$2461]</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -1889,7 +1867,7 @@ when the application starts again</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>[$1627]...</translation>
+        <translation>[$7073]</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -1923,12 +1901,12 @@ when the application starts again</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>[$1732]:</translation>
+        <translation>[$1590]</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>[$1733]:</translation>
+        <translation>[$1591]</translation>
     </message>
     <message>
         <source>Change</source>
@@ -1965,7 +1943,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>[$1718]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1980,7 +1958,7 @@ when the application starts again</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>[$1784]...</translation>
+        <translation>[$7074]</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -2005,27 +1983,27 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>[$1789]</translation>
+        <translation>[$2464]</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>[$1790]</translation>
+        <translation>[$2465]</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>[$1791]</translation>
+        <translation>[$2466]</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>[$1792]</translation>
+        <translation>[$2467]</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>[$1793]</translation>
+        <translation>[$2468]</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -2040,18 +2018,17 @@ when the application starts again</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>[$1796]...</translation>
+        <translation>[$6055]</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation>[$1680]</translation>
+        <translation>[$882]</translation>
     </message>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">[$1797]
-[$1798]</translation>
+        <translation type="obsolete">[$7075]</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -2060,46 +2037,45 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>[$1800]</translation>
+        <translation>[$2471]</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>[$1801]</translation>
+        <translation>[$2472]</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">[$1586]</translation>
+        <translation type="obsolete">[$7007]</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>[$1802]</translation>
+        <translation>[$1599]</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>[$1627]...</translation>
+        <translation>[$6066]</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>[$1883]</translation>
+        <translation>[$7008]</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>[$1919]
-[$1920]</translation>
+        <translation>[$7023]</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>[$1760] - [$1626]</translation>
+        <translation>[$7076]</translation>
     </message>
     <message>
         <source>Error getting session key</source>
@@ -2139,7 +2115,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7029]</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2147,7 +2123,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7077]</translation>
     </message>
 </context>
 <context>
@@ -2175,7 +2151,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 file</source>
         <translatorcomment>Label to indicate one file.</translatorcomment>
-        <translation>[$1806]</translation>
+        <translation>[$835]</translation>
     </message>
     <message>
         <source>%1 files</source>
@@ -2184,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 folder</source>
-        <translation>[$1808]</translation>
+        <translation>[$834]</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -2194,12 +2170,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 (%2, %3)</source>
         <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>%1 (%2, %3)</translation>
+        <translation>[$7078]</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>%1 (%2)</translation>
+        <translation>[$7079]</translation>
     </message>
 </context>
 <context>
@@ -2207,37 +2183,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$6982]</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
         <translatorcomment>Label to indicate the upper limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7080]</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
         <translatorcomment>Label to indicate the lower limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7081]</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$156]</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$1596]</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$882]</translation>
     </message>
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$7082]</translation>
     </message>
 </context>
 <context>
@@ -2250,7 +2226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>[$1811]</translation>
+        <translation>[$2475]</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -2265,27 +2241,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation>[$7052]</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGAsync Uploads</translation>
+        <translation>[$7083]</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$81]</translation>
+        <translation>[$1596]</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>[$82]</translation>
+        <translation>[$156]</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>[$2023]</translation>
+        <translation>[$5722]</translation>
     </message>
 </context>
 <context>
@@ -2296,30 +2272,30 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$5542]</translation>
+    </message>
+    <message>
+        <source> Rubbish Bin</source>
+        <translation type="unfinished">[$168]</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">[$1687]</translation>
-    </message>
-    <message>
-        <source>Rubbish Bin</source>
-        <translation type="unfinished">[$167]</translation>
+        <translation type="unfinished">[$164]</translation>
     </message>
 </context>
 <context>
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">[$1687]</translation>
+        <translation type="unfinished">[$164]</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">[$167]</translation>
+        <translation type="unfinished">[$168]</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$5542]</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -2327,11 +2303,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$5801]</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[$5800]</translation>
     </message>
 </context>
 <context>
