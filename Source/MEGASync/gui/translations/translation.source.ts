@@ -1128,7 +1128,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>[$1678] [$1679]</translation>
+        <translation type="obsolete">[$1678] [$1679]</translation>
     </message>
     <message>
         <source>Warning</source>
