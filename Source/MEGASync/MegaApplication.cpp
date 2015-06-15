@@ -2746,7 +2746,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 infoDialog->hide();
             }
 
-            infoOverQuota->show();
+            showInfoDialog();
         }
 
         if(settingsDialog)
@@ -2941,7 +2941,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 settingsDialog->setOverQuotaMode(false);
             }
 
-            delete infoOverQuota;
+            infoOverQuota->deleteLater();
             infoOverQuota = NULL;
 
             if(trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
@@ -3164,7 +3164,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 infoDialog->hide();
             }
 
-            infoOverQuota->show();
+            showInfoDialog();
         }
 
         if(settingsDialog)
