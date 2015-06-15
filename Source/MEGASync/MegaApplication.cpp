@@ -2734,6 +2734,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 trayIcon->setContextMenu(trayOverQuotaMenu);
             }
             megaApi->getAccountDetails();
+
+            if(trayMenu && trayMenu->isVisible())
+            {
+                trayMenu->close();
+            }
+
+            if(infoDialog && infoDialog->isVisible())
+            {
+                infoDialog->hide();
+            }
+
+            infoOverQuota->show();
         }
 
         if(settingsDialog)
@@ -2930,6 +2942,13 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             delete infoOverQuota;
             infoOverQuota = NULL;
+
+            if(trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+            {
+                trayOverQuotaMenu->close();
+            }
+
+            onGlobalSyncStateChanged(megaApi);
         }
 
         if(infoDialog) infoDialog->setUsage();
@@ -3133,6 +3152,18 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 trayIcon->setContextMenu(trayOverQuotaMenu);
             }
             megaApi->getAccountDetails();
+
+            if(trayMenu && trayMenu->isVisible())
+            {
+                trayMenu->close();
+            }
+
+            if(infoDialog && infoDialog->isVisible())
+            {
+                infoDialog->hide();
+            }
+
+            infoOverQuota->show();
         }
 
         if(settingsDialog)
