@@ -491,7 +491,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete"></translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -512,6 +512,10 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translation type="unfinished">[$1608]</translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota. [A]Upgrade[/A] and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1709,7 +1713,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation>[$1720]</translation>
+        <translation type="obsolete">[$1720]</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -2193,12 +2197,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>%1 (%2, %3)</source>
-        <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime.</translatorcomment>
+        <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
         <translation>%1 (%2, %3)</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
-        <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime.</translatorcomment>
+        <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
 </context>

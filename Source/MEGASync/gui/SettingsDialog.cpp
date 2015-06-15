@@ -105,7 +105,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->cStartOnStartup->setText(tr("Open at login"));
-    ui->cShowNotifications->setText(tr("Show Mac OS notifications"));
     ui->cOverlayIcons->hide();
 
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
