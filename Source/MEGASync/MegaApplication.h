@@ -177,7 +177,13 @@ protected:
     QAction *initialExitAction;
     QAction *updateAction;
     QAction *showStatusAction;
-    QAction *logoutAction;
+
+    QAction *showStatusActionOverquota;
+    QAction *logoutActionOverquota;
+    QAction *settingsActionOverquota;
+    QAction *exitActionOverquota;
+    QAction *updateActionOverquota;
+
     QTimer *scanningTimer;
     QTimer *connectivityTimer;
     int scanningAnimationIndex;
@@ -231,7 +237,6 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
-    bool overQuotaReached;
     bool updated;
     bool updateBlocked;
     long long lastExit;
@@ -240,6 +245,7 @@ protected:
     bool isLinux;
     long long externalNodesTimestamp;
     bool enableDebug;
+    bool overquotaCheck;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
