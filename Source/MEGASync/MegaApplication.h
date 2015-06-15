@@ -246,6 +246,7 @@ protected:
     long long externalNodesTimestamp;
     bool enableDebug;
     bool overquotaCheck;
+    int noKeyDetected;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
