@@ -5,128 +5,157 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
+        <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
         <translation>Podrobnosti o používání účtu</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation>Cloudová jednotka</translation>
+        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
+        <translation type="obsolete">Cloudová jednotka</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation>Doručené</translation>
+        <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
+        <translation type="obsolete">Doručené</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation>Koš</translation>
+        <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
+        <translation type="obsolete">Koš</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation>Úložiště</translation>
+        <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
+        <translation type="obsolete">Úložiště</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation>Soubory</translation>
+        <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
+        <translation type="obsolete">souborů</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Složky</translation>
+        <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
+        <translation type="obsolete">složek</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Aktualizovat</translation>
+        <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
+        <translation>Obnovit</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
+        <translation type="unfinished">Načítání...</translation>
     </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
+        <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
         <translation>Přidat synchronizovanou složku</translation>
     </message>
     <message>
-        <source></source>
-        <translation>Chyba</translation>
+        <source/>
+        <translation></translation>
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
+        <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>Vyberte místní složku a složku MEGA</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
+        <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
         <translation>Vybraná místní složka je již synchronizována</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
+        <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
         <translation>Synchronizovaná složka nemůže být uvnitř jiné synchronizované složky</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
+        <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
         <translation>Vybraná složka MEGA je již synchronizována</translation>
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>Synchronizace celého účtu je možná pouze bez jakékoliv výběrové synchronizace</translation>
+        <translation type="obsolete">Synchronizace celého účtu je možná pouze bez jakékoliv výběrové synchronizace</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Upozornění</translation>
+        <translation type="obsolete">Upozornění</translation>
     </message>
     <message>
         <source>Sync name</source>
+        <translatorcomment>Title of the dialog displayed when a user is using a name for a local folder that is already used.</translatorcomment>
         <translation>Název synchronizace</translation>
     </message>
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>Název „%1“ je již použit pro jinou synchronizaci Zadejte rozdílný název pro identifikaci této synchronizované složky:</translation>
+        <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
+        <translation>Název &quot;%1&quot; se již používá pro jinou synchronizaciZadejte jiný název pro identifikaci této synchronizované složky:</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
         <translation>Chyba</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Místní složka je příliš velká (tato verze je omezená pouze na %1 složky nebo %2 souborů). Vyberte jinou složku.</translation>
+        <translation type="obsolete">Místní složka je příliš velká (tato verze je omezena na %1 složek nebo %2 souborů.Vyberte jinou složku.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Pokoušíte se synchronizovat mimořádně velkou složku. Aby se zabránilo synchronizaci celých spouštěcích svazků, což je neužitečné a nebezpečné, žádáme vás, abyste začali s menší složkou a další data přidávali, když je spuštěný MEGAsync.</translation>
+        <translation type="obsolete">Pokoušíte se synchronizovat mimořádně velkou složku.Aby se zabránilo synchronizování celých spouštěcích svazků, což je neefektivní a nebezpečné,žádáme vás, abyste začali s menší složkou a přidávali další data, když je MEGAsync spuštěn.</translation>
     </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
+        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
         <translation>Zpráva o chybách</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
+        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
         <translation>MEGAsync zjistil problém. Zde jsou podrobnosti:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
-        <translation>Můžete nám pomoci zlepšit MEGAsync zasláním této chybové zprávy. Neobsahuje žádné osobní informace. Pokud nám chcete poskytnout více podrobností, napište je níže:</translation>
+        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
+        <translation>Můžete nám pomoci zlepšit MEGAsync zasláním této chybové zprávy. Neobsahuje žádné osobní údaje. Pokud nám chcete poskytnout více podrobností, napište je níže:</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Send report</source>
+        <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Odeslat zprávu</translation>
     </message>
 </context>
@@ -134,42 +163,52 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
         <translation>Stáhnout z MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
+        <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
         <translation>Vyberte složku stahování pro vaše soubory:</translation>
     </message>
     <message>
         <source>Local folder:</source>
+        <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
         <translation>Místní složka:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
+        <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
         <translation>Vždy stahovat do tohoto cíle</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
         <translation>Zvolte</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
         <translation>Vyberte místní složku</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
         <translation>Chyba</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Nemáte oprávnění k zápisu do této místní složky.</translation>
     </message>
 </context>
@@ -177,22 +216,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
+        <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
         <translation>Místní složka:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
+        <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
         <translation>Složka MEGA:</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
         <translation>Vyberte místní složku</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
         <translation>Zvolte</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
         <translation>Upozornění</translation>
     </message>
     <message>
@@ -201,74 +245,102 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync nebude schopné sem nic stáhnout.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
+        <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
         <translation>Chcete pokračovat?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Nemáte oprávnění k zápisu do této místní složky.</translation>
+    </message>
+    <message>
+        <source>You are trying to sync an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
+        <translation>Pokoušíte se synchronizovat mimořádně velkou složku.Aby se zabránilo synchronizování celých spouštěcích svazků, což je neefektivní a nebezpečné,žádáme vás, abyste začali s menší složkou a přidávali další data, když je MEGAsync spuštěn.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Chyba</translation>
+    </message>
+    <message>
+        <source>You can not sync a shared folder without Full Access permissions</source>
+        <translation type="unfinished">Nemůžete synchronizovat sdílenou složku bez oprávnění pro plný přístup</translation>
     </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
         <translation>Importovat odkazy</translation>
     </message>
     <message>
         <source>Download to my computer</source>
+        <translatorcomment>Label to indicate if the user wants to download the imported MEGA link(s) to his computer.</translatorcomment>
         <translation>Stáhnout do počítače</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
-        <translation>Importovat do cloudové jednotky</translation>
+        <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
+        <translation>Importovat do mé cloudové jednotky</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation type="obsolete">/MEGAsync Downloads</translation>
+        <translation type="obsolete">/Stahování MEGAsync</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
-        <translation>/MEGAsync Imports</translation>
+        <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
+        <translation>/Importování MEGAsync</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>Vyberte místní složku</translation>
     </message>
     <message>
         <source>Decryption error</source>
+        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
         <translation>Chyba dešifrování</translation>
     </message>
     <message>
         <source>Not found</source>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Nenalezeno</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
         <translation>Upozornění</translation>
     </message>
     <message>
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>Chystáte se importovat tento soubor do synchronizované složky. Pokud povolíte stahování, soubor bude ve vašem počítači zduplikován. Opravdu?</translation>
+        <translation>Chystáte se importovat tento soubor do synchronizované složky.Pokud povolíte stahování, soubor bude na vašem počítači duplikován.Opravdu to chcete?</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>Chystáte se importovat tyto soubory do synchronizované složky. Pokud povolíte stahování, soubory budou ve vašem počítači zduplikovány. Opravdu?</translation>
+        <translation>Chystáte se importovat tyto soubory do synchronizované složky.Pokud povolíte stahování, soubory budou na vašem počítači duplikovány.Opravdu to chcete?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -287,70 +359,87 @@ Are you sure?</source>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
+        <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
         <translation>MEGAsync je aktuální</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
+        <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
         <translation>NEDÁVNO AKTUALIZOVÁNO</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
         <translation>Využití: Data jsou dočasně nedostupná</translation>
     </message>
     <message>
         <source>Syncs</source>
+        <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
         <translation>Synchronizace</translation>
     </message>
     <message>
         <source>MEGA website</source>
-        <translation>Stránka MEGA</translation>
+        <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
+        <translation>Web MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
         <translation>%1 z %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
+        <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
         <translation>Využití: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
+        <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
         <translation>%1 z %2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
+        <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
         <translation>%1 z %2 (pozastaveno)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
+        <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
         <translation>Přenosy souborů pozastaveny</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
-        <translation>MEGAsync skenuje</translation>
+        <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
+        <translation>MEGAsync prohledává</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
+        <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
         <translation>Všechny přenosy byly dokončeny</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
+        <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
         <translation>Zrušit všechna stahování</translation>
     </message>
     <message>
         <source>Cancel download</source>
+        <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
         <translation>Zrušit stahování</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
+        <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
         <translation>Zrušit všechna nahrávání</translation>
     </message>
     <message>
         <source>Cancel upload</source>
+        <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
         <translation>Zrušit nahrávání</translation>
     </message>
     <message>
         <source>Add Sync</source>
+        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
         <translation>Přidat synchronizaci</translation>
     </message>
     <message>
@@ -371,45 +460,85 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Celkem zbývá: </translation>
+        <translation type="obsolete">Celkem zbývá:</translation>
     </message>
     <message>
         <source>Downloading </source>
-        <translation>Stahování </translation>
+        <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
+        <translation>Stahování</translation>
     </message>
     <message>
         <source>Uploading </source>
-        <translation>Nahrávání </translation>
+        <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
+        <translation>Nahrávání</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
         <translation>MEGAsync čeká</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
         <translation>Spouští se MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>InfoOverQuotaDialog</name>
+    <message>
+        <source>MEGAsync is currently disabled</source>
+        <translation type="unfinished">MEGAsync je aktuálně zakázán</translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translation type="unfinished">Váš účet překročil svou povolenou kvótu místa. [A]Upgradujte[/A] a nadále si užívejte bezpečné, koncově šifrované úložiště.</translation>
+    </message>
+    <message>
+        <source>Upgrade your account</source>
+        <translation type="unfinished">Upgradovat účet</translation>
+    </message>
+    <message>
+        <source>Usage: Data temporarily unavailable</source>
+        <translation type="unfinished">Využití: Data jsou dočasně nedostupná</translation>
+    </message>
+    <message>
+        <source>MEGA website</source>
+        <translation type="unfinished">Web MEGA</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">%1 z %2</translation>
+    </message>
+    <message>
+        <source>Usage: %1</source>
+        <translation type="unfinished">Využití: %1</translation>
     </message>
 </context>
 <context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
+        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
         <translation>Vyberte uživatele</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translation>Vyberte, pro které uživatele chcete nainstalovat $(^NameDA).</translation>
+        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translation>Zvolte, pro které uživatele chcete nainstalovat $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>Vyberte, jestli chcete nainstalovat $(^NameDA) jen pro vás nebo pro všechny uživatele na tomto počítači. $(^ClickNext)</translation>
+        <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
+        <translation>Vyberte, zda chcete nainstalovat $(^NameDA) pouze pro sebe nebo pro všechny uživatele tohoto počítače. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
+        <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
         <translation>Nainstalovat pro kohokoliv, kdo používá tento počítač</translation>
     </message>
     <message>
         <source>Install just for me</source>
+        <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Nainstalovat jenom pro mě</translation>
     </message>
 </context>
@@ -421,83 +550,91 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
+        <translation type="obsolete">Děkujeme vám za testování MEGAsync.<br>Tato beta verze již není aktuální a vypršela.<br>Sledujte <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> na Twitteru kvůli aktualizacím.</translation>
     </message>
     <message>
         <source>Logging in</source>
+        <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Přihlašování</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
+        <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
         <translation>MEGAsync je nyní spuštěno. Klikněte sem pro otevření stavového okna.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>Vaše synchronizace „%1“ byla zakázána, protože vzdálená složka neexistuje</translation>
+        <translation type="obsolete">Vaše synchronizace &quot;%1&quot; byla zakázána,protože vzdálená složka neexistuje</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>Vaše synchronizace „%1“ byla zakázána, protože vzdálená složka je v koši</translation>
+        <translation type="obsolete">Vaše synchronizace &quot;%1&quot; byla zakázána,protože vzdálená složka je v koši</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>Vaše synchronizace „%1“ byla zakázána, protože místní složka neexistuje</translation>
+        <translation type="obsolete">Vaše synchronizace &quot;%1&quot; byla zakázána, protože místní složka neexistuje</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
+        <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
         <translation>Chyba: Neplatná cílová složka. Nahrávání bylo zrušeno</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">Složka (%1) nebyla nahrána, protože je příliš velká (tato verze je omezena na %2 složek nebo %3 souborů).</translation>
+        <translation type="obsolete">Složka (%1) nebyla nahrána, protože je příliš velká (tato beta je omezena na %2 složek nebo %3 souborů.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 složek nebylo nahráno, protože jsou příliš velké (tato beta je omezena na %2 složek nebo %3 souborů).</translation>
+        <translation type="obsolete">%1 složek nebylo nahráno, protože jsou příliš velké (tato beta je omezena na %2 složek nebo %3 souborů.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronizace bude zastavena.
-Odstranění budou zpracována, pouze pokud běží synchronizační klient.
-
-Přesto ukončit?</translation>
+        <translation type="obsolete">Synchronizace bude zastavena.Odstranění, ke kterým dojde, když není spuštěna, nebudou zpracována.</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
+        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
         <translation>O aplikaci MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
+        <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
         <translation>Verze kódu MEGAsync %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>Odkaz byl zkopírován do schránky</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
+        <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>Odkazy byly zkopírovány do schránky</translation>
     </message>
     <message>
         <source>Logging in...</source>
+        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>Přihlašování...</translation>
     </message>
     <message>
         <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
         <translation>Ukončit</translation>
     </message>
     <message>
         <source>About</source>
+        <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
         <translation>O aplikaci</translation>
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
         <translation>Nastavení</translation>
     </message>
     <message>
@@ -510,110 +647,130 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
         <translation>Importovat odkazy</translation>
     </message>
     <message>
         <source>Up to date</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Aktuální</translation>
     </message>
     <message>
         <source>Paused</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
         <translation>Pozastaveno</translation>
     </message>
     <message>
         <source>Scanning</source>
-        <translation>Skenování</translation>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
+        <translation>Prohledávání</translation>
     </message>
     <message>
         <source>Syncing</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
         <translation>Synchronizace</translation>
     </message>
     <message>
         <source>Temporary transmission error: </source>
-        <translation>Dočasná chyba přenosu: </translation>
+        <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
+        <translation>Dočasná chyba přenosu:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
-        <translation>Na účtu máte nové nebo aktualizované soubory</translation>
+        <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
+        <translation>Ve svém účtu máte nové nebo aktualizované soubory</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
+        <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
         <translation>MEGAsync byl aktualizován</translation>
     </message>
     <message>
         <source>Waiting</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
         <translation>Čekání</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>Složka (%1) nebyla nahrána, protože je mimořádně velká. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
+        <translation type="obsolete">Složka (%1) nebyla nahrána, protože je mimořádně velká. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 složek nebylo nahráno, protože jsou mimořádně velké. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
+        <translation type="obsolete">%1 složek nebylo nahráno, protože jsou mimořádně velké. Děláme tuto kontrolu, aby se zabránilo nahrávání celých spouštěcích svazků, což je neefektivní a nebezpečné.</translation>
     </message>
     <message>
         <source>Update available!</source>
+        <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
         <translation>Je dostupná aktualizace!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
+        <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>Aktualizace budou použity při příštím restartu aplikace</translation>
     </message>
     <message>
         <source>Installing update...</source>
+        <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
         <translation>Instalace aktualizace...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
+        <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>Kontrola aktualizací...</translation>
     </message>
     <message>
         <source>Install update</source>
+        <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
         <translation>Nainstalovat aktualizaci</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
         <translation>Je dostupná nová verze MEGAsyncu! Klikněte na tuto zprávu pro její instalaci</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
+        <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
         <translation>Došlo k problému s instalací aktualizace. Zkuste to znovu později nebo si stáhněte poslední verzi z: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
+        <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
         <translation>Děkujeme za vaši spolupráci!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
+        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
         <translation>Je dostupná aktualizace. Stahování...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
-        <translation>Nejsou dostupné žádné aktualizace</translation>
+        <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
+        <translation>V tuto chvíli není dostupná žádná aktualizace</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
         <translation>Chyba</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
-        <translation>Synchronizace bude zastavena.
-
-Přesto ukončit?</translation>
+        <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
+        <translation>Synchronizace bude zastavena.</translation>
     </message>
     <message>
         <source>Starting</source>
-        <translation>spouštění</translation>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translation>Spouštění</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nelze získat souborový systém.
-Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</translation>
+        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
+        <translation>Nelze získat systém souborů.Zkuste to znovu. Pokud problém přetrvává, obraťte se na bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -621,141 +778,245 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
-        <translation>MEGAsync je nyní spuštěn. Klikněte na  ikonu na hlavním panel pro otevření stavového okna.</translation>
+        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
+        <translation>MEGAsync je nyní spuštěn. Klikněte na ikonu na hlavním panel pro otevření stavového okna.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
+        <translatorcomment>Notification message launched when an update is available.</translatorcomment>
         <translation>Je dostupná nová verze MEGAsync!</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
-        <translation>MEGAsync je nyní spuštěn. Klikněte na  ikonu na hlavním panel pro otevření stavového okna.</translation>
+        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
+        <translation>MEGAsync je nyní spuštěno. Klikněte na ikonu v panelu nabídek pro otevření stavového okna.</translation>
     </message>
     <message>
         <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
         <translation>Ukončit</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation>Nastavení</translation>
+        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation>Předvolby</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
         <translation>Nahrát na MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>Zobrazit stav</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
+        <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>Vaše konfigurace je poškozená, začněte znovu, prosím</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
         <translation>Stáhnout z MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
+        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
         <translation>Chyba při získávání odkazu:</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
+        <translation type="unfinished">MEGAsync se nemůže připojit. Zkontrolujte své připojení k internetu a místní konfiguraci brány firewall. Mějte na paměti, že většina antivirových softwarů obsahuje firewall.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
+        <translation type="unfinished">Vaše synchronizace &quot;%1&quot; byla zakázána, protože vzdálená složka neexistuje</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
+        <translation type="unfinished">Vaše synchronizace &quot;%1&quot; byla zakázána,protože místní složka neexistuje</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
+        <translation type="unfinished">Váš účet byl zablokován. Obraťte se na support@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
+        <translation type="unfinished">Chyba přihlášení: %1</translation>
+    </message>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
+        <translation type="unfinished">Byli jste odhlášeni na tomto počítači z jiného umístění</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
+        <translation type="unfinished">Byli jste odhlášeni kvůli této chybě: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
+        <translation type="unfinished">Vaše synchronizace &quot;%1&quot; byla zakázána, protože vzdálená složka je v koši</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
+        <translation type="unfinished">Vaše synchronizace &quot;%1&quot; byla zakázána,protože místní složka se změnila</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
+        <translation type="unfinished">Vaše synchronizace &quot;%1&quot; byla zakázána. Vzdálená složka (nebo její část) nemá plný přístup</translation>
+    </message>
+    <message>
+        <source>Over quota</source>
+        <translation type="unfinished">Překročena kvóta</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished">Váš synchronizace &quot;%1&quot; byla zakázána, protože synchronizace sdílených složek VirtualBoxu není podporována kvůli nedostatkům v tomto systému souborů.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">Odhlásit se</translation>
+    </message>
+    <message>
+        <source>Transfer failed:</source>
+        <translation type="unfinished">Přenos selhal:</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translation type="unfinished">Chyba při získávání informací o odkazu</translation>
     </message>
 </context>
 <context>
     <name>MegaError</name>
     <message>
         <source>No error</source>
+        <translatorcomment>Label to show that an SDK operation has been complete successfully.</translatorcomment>
         <translation>Žádná chyba</translation>
     </message>
     <message>
         <source>Internal error</source>
+        <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
         <translation>Vnitřní chyba</translation>
     </message>
     <message>
         <source>Invalid argument</source>
+        <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
         <translation>Neplatný argument</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
-        <translation>Požadavek se nezdařil, opakování</translation>
+        <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
+        <translation>Požadavek selhal, opakování</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
+        <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
         <translation>Překročeno omezení přenosové rychlosti</translation>
     </message>
     <message>
         <source>Failed permanently</source>
-        <translation>Trvalo se nezdařilo</translation>
+        <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
+        <translation>Trvale selhalo</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
+        <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
         <translation>Příliš mnoho souběžných připojení nebo přenosů</translation>
     </message>
     <message>
         <source>Out of range</source>
+        <translatorcomment>Label to show that an error of Out of range occurs during a SDK operation.</translatorcomment>
         <translation>Mimo rozsah</translation>
     </message>
     <message>
         <source>Expired</source>
+        <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
         <translation>Vypršelo</translation>
     </message>
     <message>
         <source>Not found</source>
+        <translatorcomment>Label to show that an error related with a resource Not found occurs during a SDK operation.</translatorcomment>
         <translation>Nenalezeno</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
-        <translation>Cyklická chyba</translation>
+        <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
+        <translation>Bylo zjištěno cyklické propojení</translation>
     </message>
     <message>
         <source>Access denied</source>
+        <translatorcomment>Label to show that an error related with an denied access occurs during a SDK operation.</translatorcomment>
         <translation>Přístup odepřen</translation>
     </message>
     <message>
         <source>Already exists</source>
+        <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
         <translation>Již existuje</translation>
     </message>
     <message>
         <source>Incomplete</source>
+        <translatorcomment>Label to show that an error related with an Incomplete SDK operation.</translatorcomment>
         <translation>Nedokončeno</translation>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
+        <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
         <translation>Neplatný klíč nebo chyba dešifrování</translation>
     </message>
     <message>
         <source>Bad session ID</source>
+        <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
         <translation>Špatné ID relace</translation>
     </message>
     <message>
         <source>Blocked</source>
+        <translatorcomment>Label to show that an error related with a blocked account occurs during a SDK operation.</translatorcomment>
         <translation>Blokováno</translation>
     </message>
     <message>
         <source>Over quota</source>
+        <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
         <translation>Překročena kvóta</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
+        <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
         <translation>Dočasně nedostupné</translation>
     </message>
     <message>
         <source>Connection overflow</source>
+        <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
         <translation>Přetečení připojení</translation>
     </message>
     <message>
         <source>Write error</source>
+        <translatorcomment>Label to show that an error related with an write error occurs during a SDK operation.</translatorcomment>
         <translation>Chyba zápisu</translation>
     </message>
     <message>
         <source>Read error</source>
+        <translatorcomment>Label to show that an error related with an read error occurs during a SDK operation.</translatorcomment>
         <translation>Chyba čtení</translation>
     </message>
     <message>
         <source>Invalid application key</source>
+        <translatorcomment>Label to show that an error related with an invalid or missing application key occurs during a SDK operation.</translatorcomment>
         <translation>Neplatný klíč aplikace</translation>
     </message>
     <message>
         <source>Unknown error</source>
+        <translatorcomment>Label to show that an error related with an unknown error occurs during a SDK operation.</translatorcomment>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
@@ -767,186 +1028,260 @@ Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</transl
     <name>MegaUploader</name>
     <message>
         <source>Warning</source>
-        <translation>Upozornění</translation>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="obsolete">Upozornění</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file 
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>Cílová složka je synchronizovaná a již v ní máte soubor se stejným názvem (%1). Pokud budete pokračovat v nahrávání, předchozí soubor bude přepsán.</translation>
+        <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
+        <translation type="obsolete">Cílová složka je synchronizována a již v ní máte souborse stejným názvem (%1).Pokud budete pokračovat v nahrávání, bude předchozí soubor přepsán.Opravdu to chcete?</translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Upozornění</translation>
+    </message>
+    <message>
+        <source>Do not ask me again</source>
+        <translation type="unfinished">Neptat se mě znovu</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
+        <translation type="unfinished">Cílová složka je synchronizována a již v ní máte soubor se stejným názvem. Pokud budete pokračovat v nahrávání, bude předchozí soubor přepsán. Opravdu to chcete?</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
+        <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
         <translation>Výběr složky</translation>
     </message>
     <message>
         <source>Select a MEGA folder:</source>
+        <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>Vyberte složku MEGA:</translation>
     </message>
     <message>
         <source>Retrieving folders...</source>
-        <translation>Načítání složek...</translation>
+        <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
+        <translation>Získávání složek...</translation>
     </message>
     <message>
         <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
         <translation>Nová složka</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
+        <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
         <translation>Cloudová jednotka</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
+        <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
         <translation>Zadejte název nové složky:</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>Chyba</translation>
     </message>
     <message>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>Neplatný klíč aplikace Neznámá chyba</translation>
+        <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
+        <translation>Kořenová složka nemůže být synchronizována.Vyberte podsložku.</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a Warning message.</translatorcomment>
         <translation>Upozornění</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>Máte %1 v této složce.
-Opravdu ji chcete synchronizovat?</translation>
+        <translation type="obsolete">V této složce máte %1.Opravdu ji chcete synchronizovat?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>Neplatná složka pro synchronizaci.
-Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</translation>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Neplatná složka pro synchronizaci.Ujistěte se, že nepoužíváte v názvech složek znaky jako &apos;&apos; &apos;/&apos; nebo &apos;:&apos;.</translation>
+    </message>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>Vždy nahrávat do tohoto umístění</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translation type="unfinished">Potřebujete mít Oprávnění pro čtení a zápis nebo Plná přístupová práva, abyste mohli nahrávat do vybrané složky.</translation>
+    </message>
+    <message>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translation type="unfinished">Potřebujete mít Plné přístupové právo, abyste mohli synchronizovat vybranou složku.</translation>
     </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
         <translation>Importovat odkazy</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
-        <translation>Zadejte jeden nebo více odkazů MEGA na soubory</translation>
+        <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
+        <translation>Zadejte jeden nebo více odkazů na soubory MEGA</translation>
     </message>
     <message>
         <source>Submit</source>
+        <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
         <translation>Odeslat</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
         <translation>Upozornění</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
-        <translation>Zadejte jeden nebo více odkazů MEGA na soubory</translation>
+        <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
+        <translation>Zadejte jeden nebo více odkazů na soubory MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>Nenalezeny žádné platné odkazy MEGA (odkazy na složky nejsou zatím podporovány).</translation>
+        <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
+        <translation>Nenalezeny žádné platné odkazy MEGA. (Odkazy na složky nejsou zatím podporovány)</translation>
     </message>
 </context>
 <context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Ano</translation>
+        <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
+        <translation>&Ano</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;Ne</translation>
+        <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
+        <translation>&Ne</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
+        <translation>&OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Zrušit</translation>
+        <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
+        <translation>&Zrušit</translation>
     </message>
 </context>
 <context>
     <name>RecentFile</name>
     <message>
         <source>%1 hours ago</source>
+        <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>před %1 hodinami</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
+        <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
         <translation>Získat odkaz MEGA</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation>zrovna teď</translation>
+        <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
+        <translation>Právě teď</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
+        <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>před %1 sekundami</translation>
     </message>
     <message>
         <source>1 minute ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
         <translation>před 1 minutou</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
+        <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>před %1 minutami</translation>
     </message>
     <message>
         <source>1 hour ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
         <translation>před 1 hodinou</translation>
     </message>
     <message>
         <source>1 day ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
         <translation>před 1 dnem</translation>
     </message>
     <message>
         <source>%1 days ago</source>
+        <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>před %1 dny</translation>
     </message>
     <message>
         <source>1 month ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
         <translation>před 1 měsícem</translation>
     </message>
     <message>
         <source>%1 months ago</source>
+        <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>před %1 měsíci</translation>
     </message>
     <message>
         <source>1 year ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
         <translation>před 1 rokem</translation>
     </message>
     <message>
         <source>%1 years ago</source>
+        <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>před %1 roky</translation>
     </message>
     <message>
         <source>Open</source>
+        <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
         <translation>Otevřít</translation>
     </message>
     <message>
         <source>Show in folder</source>
+        <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
         <translation>Zobrazit ve složce</translation>
     </message>
 </context>
@@ -954,6 +1289,7 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
+        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
         <translation>Nastavení - MEGAsync</translation>
     </message>
     <message>
@@ -962,74 +1298,92 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     </message>
     <message>
         <source>Account</source>
+        <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
         <translation>Účet</translation>
     </message>
     <message>
         <source>Syncs</source>
+        <translatorcomment>Tab label of Syncs dialog. Max 15 characters.</translatorcomment>
         <translation>Synchronizace</translation>
     </message>
     <message>
         <source>Bandwidth</source>
+        <translatorcomment>Tab label of Bandwidth dialog. Max 15 characters.</translatorcomment>
         <translation>Šířka pásma</translation>
     </message>
     <message>
         <source>Advanced</source>
+        <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
         <translation>Rozšířené</translation>
     </message>
     <message>
         <source>Help</source>
+        <translatorcomment>Button label for Help.</translatorcomment>
         <translation>Nápověda</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Apply</source>
+        <translatorcomment>Label for apply settings button.</translatorcomment>
         <translation>Použít</translation>
     </message>
     <message>
         <source>Show notifications</source>
+        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
         <translation>Zobrazovat oznámení</translation>
     </message>
     <message>
         <source>Start on startup</source>
+        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>Spouštět při spuštění</translation>
     </message>
     <message>
         <source>Update automatically</source>
+        <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>Automaticky aktualizovat</translation>
     </message>
     <message>
         <source>Language</source>
+        <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
         <translation>Jazyk</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>English</translation>
+        <translatorcomment>Label for English language.</translatorcomment>
+        <translation>Angličtina</translation>
     </message>
     <message>
         <source>Details</source>
+        <translatorcomment>Button label to show the account usage details for the current user of the application. Strins as short as possible.</translatorcomment>
         <translation>Podrobnosti</translation>
     </message>
     <message>
         <source>FREE</source>
-        <translation>ZDARMA</translation>
+        <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
+        <translation>Zdarma</translation>
     </message>
     <message>
         <source>Logout</source>
+        <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
         <translation>Odhlásit se</translation>
     </message>
     <message>
         <source>Storage space</source>
+        <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
         <translation>Prostor úložiště</translation>
     </message>
     <message>
         <source>Upgrade</source>
+        <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
         <translation>Upgradovat</translation>
     </message>
     <message>
@@ -1038,46 +1392,57 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     </message>
     <message>
         <source>Delete</source>
+        <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
         <translation>Odstranit</translation>
     </message>
     <message>
         <source>Add</source>
+        <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
         <translation>Přidat</translation>
     </message>
     <message>
         <source>Local Folder</source>
+        <translatorcomment>Label to indicate the local folder for a synchronization. String as short as possible.</translatorcomment>
         <translation>Místní složka</translation>
     </message>
     <message>
         <source>MEGA folder</source>
+        <translatorcomment>Label to indicate the MEGA folder for a synchronization. String as short as possible.</translatorcomment>
         <translation>Složka MEGA</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
+        <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
         <translation>Omezení rychlosti nahrávání</translation>
     </message>
     <message>
         <source>Don&apos;t limit</source>
+        <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Neomezovat</translation>
     </message>
     <message>
         <source>Limit to:</source>
+        <translatorcomment>Label to indicate that there is rate upload limit. Keep colon.</translatorcomment>
         <translation>Omezit na:</translation>
     </message>
     <message>
         <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
         <translation>KB</translation>
     </message>
     <message>
         <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
         <translation>Automaticky</translation>
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>asi 90 % dostupné šířky pásma</translation>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
+        <translation>(asi 90 % dostupné šířky pásma)</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
+        <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
         <translation>Kvóta šířky pásma</translation>
     </message>
     <message>
@@ -1090,110 +1455,133 @@ Ujistěte se, že nepoužíváte znaky jako \ / nebo : v názvech složek.</tran
     </message>
     <message>
         <source>Excluded file names</source>
+        <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
         <translation>Vyloučené názvy souborů</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
+        <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
         <translation>Nastavení serveru proxy</translation>
     </message>
     <message>
         <source>No proxy</source>
+        <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
         <translation>Žádný server proxy</translation>
     </message>
     <message>
         <source>Auto-detect</source>
+        <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
         <translation>Automatické rozpoznávání</translation>
     </message>
     <message>
         <source>Proxy</source>
+        <translatorcomment>Tab label of Proxy dialog settings. Max 15 characters.</translatorcomment>
         <translation>Server proxy</translation>
     </message>
     <message>
         <source>Proxy type:</source>
+        <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
         <translation>Typ serveru proxy:</translation>
     </message>
     <message>
         <source>Server:</source>
+        <translatorcomment>Label to indicate the server IP to be used. String as short as possible.</translatorcomment>
         <translation>Server:</translation>
     </message>
     <message>
         <source>:</source>
+        <translatorcomment>Label to indicate colon to separate IP and Port to be used.</translatorcomment>
         <translation>:</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
+        <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
         <translation>Server proxy vyžaduje heslo</translation>
     </message>
     <message>
         <source>Username:</source>
+        <translatorcomment>Label to indicate the username of the proxy. String as short as possible.</translatorcomment>
         <translation>Uživatelské jméno:</translation>
     </message>
     <message>
         <source>Password:</source>
+        <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
         <translation>Heslo:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>Data jsou dočasně nedostupná</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
         <translation>Použito %1 (%2 %) z %3</translation>
     </message>
     <message>
         <source>PRO I</source>
+        <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
         <translation>PRO I</translation>
     </message>
     <message>
         <source>PRO II</source>
+        <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
         <translation>PRO II</translation>
     </message>
     <message>
         <source>PRO III</source>
+        <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
         <translation>PRO III</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
-        <translation>/MEGAsync Uploads</translation>
+        <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
+        <translation>/Nahrávání MEGAsync</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
         <translation>Upozornění</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">Již synchronizujete celý svůj účet.</translation>
+        <translation type="obsolete">Již synchronizujete celou svou Cloudovou jednotku.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
+        <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
         <translation>Synchronizace přestane fungovat.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
+        <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
         <translation>Opravdu?</translation>
     </message>
     <message>
         <source>Excluded name</source>
+        <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
         <translation>Vyloučený název</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>Zadejte název, který vyloučit ze synchronizace.
-(jsou povoleny zástupné znaky * a ?):</translation>
+        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
+        <translation>Zadejte název pro vyloučení ze synchronizace.(jsou povoleny zástupné znaky * a ?):</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
         <translation>Chyba</translation>
     </message>
     <message>
         <source>Transfers</source>
-        <translation>Přenosy</translation>
+        <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
+        <translation>přenosy</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>Nové vyloučené názvy souborů budou vzaty v úvahu po opětovném spuštění aplikace.</translation>
+        <translation type="obsolete">Nově vyloučené názvy souborů budou vzaty v úvahu po opětovném spuštění aplikace.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1201,26 +1589,32 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>Aktuální velikost mezipaměti: %1</translation>
+        <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
+        <translation type="obsolete">Aktuální velikost mezipaměti: %1</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Vyčistit</translation>
+        <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
+        <translation>Vymazat</translation>
     </message>
     <message>
         <source>HTTP</source>
+        <translatorcomment>Label to indicate a HTTP proxy.</translatorcomment>
         <translation>HTTP</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Nastavení serveru proxy jsou neplatná nebo server proxy neodpovídá</translation>
     </message>
     <message>
         <source>Please wait...</source>
+        <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
         <translation>Čekejte...</translation>
     </message>
     <message>
         <source>Check for updates</source>
+        <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
         <translation>Zkontrolovat aktualizace</translation>
     </message>
     <message>
@@ -1253,14 +1647,17 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disable overlay icons</source>
+        <translatorcomment>Label to let the user disable overlay icon for the specific File browser.</translatorcomment>
         <translation>Zakázat překryvné ikony</translation>
     </message>
     <message>
         <source>Force a full scan</source>
-        <translation>Vynutit úplné prohledání znovu</translation>
+        <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
+        <translation>Vynutit úplné prohledání</translation>
     </message>
     <message>
         <source>Full scan</source>
+        <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
         <translation>Úplné prohledání</translation>
     </message>
     <message>
@@ -1268,13 +1665,11 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync provede úplné prohledání vašich synchronizovaných složek
-
-Chcete restartovat MEGAsync nyní?
-</translation>
+        <translation type="obsolete">MEGAsync provede úplnou kontrolu vašich synchronizovanýchsložek při spuštění.Chcete nyní restartovat MEGAsync?</translation>
     </message>
     <message>
         <source>Install update</source>
+        <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
         <translation>Nainstalovat aktualizaci</translation>
     </message>
     <message>
@@ -1283,121 +1678,205 @@ Chcete restartovat MEGAsync nyní?
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translation>Nastavení - MEGAsync</translation>
+        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translation>Předvolby - MEGAsync</translation>
     </message>
     <message>
         <source>Open at login</source>
-        <translation>Spouštět při spuštění</translation>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Otevřít při přihlášení</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
-        <translation>Zobrazovat oznámení</translation>
+        <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
+        <translation>Zobrazovat oznámení Mac OS</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync provede úplné prohledání vašich synchronizovaných složek
-
-Chcete restartovat MEGAsync nyní?</translation>
+        <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
+        <translation>MEGAsync provede při spuštění úplnou kontrolu vašich synchronizovaných složek.</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
         <translation>Zvolte</translation>
     </message>
     <message>
         <source>Default folders</source>
+        <translatorcomment>Label to indicate the default path for Uploads and Downloads.</translatorcomment>
         <translation>Výchozí složky</translation>
     </message>
     <message>
         <source>Uploads:</source>
+        <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
         <translation>Nahrávání:</translation>
     </message>
     <message>
         <source>Downloads:</source>
+        <translatorcomment>Label to indicate the default folder for downloads. String as short as possible</translatorcomment>
         <translation>Stahování:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Tato synchronizace nemůže být povolena, protože místní složka neexistuje</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>Tato synchronizace nemůže být povolena, protože místní složka neexistuje</translation>
+        <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
+        <translation>Tato synchronizace nemůže být povolena, protože vzdálená složka neexistuje</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>Již synchronizujete celou svou cloudovou jednotku</translation>
+        <translation type="obsolete">Již synchronizujete celou svou cloudovou jednotku</translation>
     </message>
     <message>
         <source>Enable / disable</source>
+        <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
         <translation>Povolit nebo zakázat</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
         <translation>Vyberte místní složku</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Nemáte oprávnění k zápisu do této místní složky.</translation>
+    </message>
+    <message>
+        <source>Export Key</source>
+        <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
+        <translation type="unfinished">Exportovat Klíč</translation>
+    </message>
+    <message>
+        <source>Export Master key</source>
+        <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
+        <translation type="unfinished">Exportovat Hlavní klíč</translation>
+    </message>
+    <message>
+        <source>Unable to write file</source>
+        <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
+        <translation type="unfinished">Nelze zapsat soubor</translation>
+    </message>
+    <message>
+        <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
+        <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
+        <translation type="unfinished">Exportování Hlavního klíče a jeho ponechání na bezpečném místě vám umožňuje nastavit nové heslo bez ztráty dat.</translation>
+    </message>
+    <message>
+        <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
+        <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
+        <translation type="unfinished">Vždy mějte fyzickou podobu svého hlavního klíče (např. na klientském zařízení, na externím úložišti nebo vytištěnou).</translation>
+    </message>
+    <message>
+        <source>Exclude by size</source>
+        <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
+        <translation type="unfinished">Vyloučit podle velikosti</translation>
+    </message>
+    <message>
+        <source>PRO lite</source>
+        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
+        <translation type="unfinished">PRO lite</translation>
+    </message>
+    <message>
+        <source>The new excluded file names will be taken into account
+when the application starts again</source>
+        <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
+        <translation type="unfinished">Nově vyloučené názvy souborů budou vzaty v úvahu po opětovném spuštění aplikace</translation>
+    </message>
+    <message>
+        <source>The new excluded file sizes will be taken into account when the application starts again.</source>
+        <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
+        <translation type="unfinished">Nově vyloučené velikosti souborů budou vzaty v úvahu po opětovném spuštění aplikace.</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translatorcomment>Label to indicate the user if the feature of exclusion based by size is enabled/disabled.</translatorcomment>
+        <translation type="unfinished">Zakázáno</translation>
+    </message>
+    <message>
+        <source>Local cache: %1</source>
+        <translation type="unfinished">Místní mezipaměť: %1</translation>
+    </message>
+    <message>
+        <source>Remote cache: %1</source>
+        <translation type="unfinished">Vzdálená mezipaměť: %1</translation>
     </message>
 </context>
 <context>
     <name>SetupWizard</name>
     <message>
         <source>Setup Wizard - MEGAsync</source>
+        <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
         <translation>Průvodce nastavením - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
+        <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
         <translation>Mám účet MEGA</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Nemám účet MEGA</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
+        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
         <translation>Vytvořit nový účet MEGA</translation>
     </message>
     <message>
         <source>Name:</source>
+        <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
         <translation>Jméno:</translation>
     </message>
     <message>
         <source>Email:</source>
+        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
         <translation>E-mail:</translation>
     </message>
     <message>
         <source>Password:</source>
+        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
         <translation>Heslo:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
+        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
         <translation>Opakovat heslo:</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>Souhlasím s &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Podmínkami užívání&lt;/a&gt; MEGA</translation>
+        <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
+        <translation>Souhlasím s <a href=&quot;https://mega.co.nz/#terms&quot;>Podmínkami užívání</a> MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
+        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>Přihlásit se k účtu MEGA</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
+        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
         <translation>Ověřte svůj účet pomocí potvrzovacího odkazu, který jsme vám poslali na e-mailový účet</translation>
     </message>
     <message>
         <source>Logging in ...</source>
-        <translation>Přihlašování...</translation>
+        <translatorcomment>Label displayed while logging process.</translatorcomment>
+        <translation>Protokolování...</translation>
     </message>
     <message>
         <source>Choose install type</source>
+        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
         <translation>Vyberte typ instalace</translation>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
+        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
         <translation>Synchronizovat celou vaši cloudovou jednotku</translation>
     </message>
     <message>
@@ -1406,30 +1885,37 @@ Chcete restartovat MEGAsync nyní?</translation>
     </message>
     <message>
         <source>Selective sync</source>
+        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
         <translation>Výběrová synchronizace</translation>
     </message>
     <message>
         <source> Sync specific folders in your cloud drive</source>
+        <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
         <translation>Synchronizovat určité složky ve vaší cloudové jednotce</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
+        <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
         <translation>Následující složky budou automaticky synchronizovány:</translation>
     </message>
     <message>
         <source>Local folder:</source>
+        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
         <translation>Místní složka:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
+        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
         <translation>Složka MEGA:</translation>
     </message>
     <message>
         <source>Change</source>
+        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
         <translation>Změnit</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
+        <translatorcomment>Label displayed to welcome the user.</translatorcomment>
         <translation>Vítejte v MEGA</translation>
     </message>
     <message>
@@ -1446,85 +1932,103 @@ Chcete restartovat MEGAsync nyní?</translation>
     </message>
     <message>
         <source>Back</source>
+        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
         <translation>Zpět</translation>
     </message>
     <message>
         <source>Next</source>
+        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
         <translation>Další</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label of error.</translatorcomment>
         <translation>Chyba</translation>
     </message>
     <message>
         <source>User already exists</source>
+        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>Uživatel již existuje</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
+        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
         <translation>Načítání seznamu souborů...</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
+        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
         <translation>Nesprávný e-mail a/nebo heslo.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
+        <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
         <translation>Ověřili jste svůj účet?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
+        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>Složka MEGA neexistuje</translation>
     </message>
     <message>
         <source>Finish</source>
+        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
         <translation>Dokončit</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
+        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
         <translation>Zadejte svou e-mailovou adresu</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
+        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
         <translation>Zadejte platnou e-mailovou adresu</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
+        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
         <translation>Zadejte své heslo</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
+        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
         <translation>Zadejte své jméno</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
+        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
         <translation>Zadejte silnější heslo</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
+        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Zadaná hesla se neshodují</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
+        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
         <translation>Musíte přijmout podmínky služby</translation>
     </message>
     <message>
         <source>Creating account...</source>
+        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
         <translation>Vytváření účtu...</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label warning.</translatorcomment>
         <translation>Upozornění</translation>
     </message>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>Ve své cloudové jednotce máte %1.
-Opravdu chcete synchronizovat celou cloudovou jednotku?</translation>
+        <translation type="obsolete">Ve své Cloudové jednotce máte %1.Opravdu chcete synchronizovat celou svou Cloudovou jednotku?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -1532,156 +2036,285 @@ Opravdu chcete synchronizovat celou cloudovou jednotku?</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
+        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
         <translation>Vyberte místní složku</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
+        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
         <translation>Vyberte složku MEGA</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Místní složka je příliš velká (tato verze je omezená pouze na %1 složky nebo %2 souborů). Vyberte jinou složku.</translation>
+        <translation type="obsolete">Místní složka je příliš velká (tato verze je omezena na %1 složek nebo %2 souborů.Vyberte jinou složku.</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Vybrat místní složku</translation>
+        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
+        <translation>Vyberte místní složku</translation>
     </message>
     <message>
         <source>Logging in...</source>
+        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
         <translation>Přihlašování...</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>Pokoušíte se synchronizovat mimořádně velkou složku. Aby se zabránilo synchronizaci celých spouštěcích svazků, což je neužitečné a nebezpečné, žádáme vás, abyste začali s menší složkou a další data přidávali, když je spuštěný MEGAsync.</translation>
+        <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
+        <translation>Pokoušíte se synchronizovat mimořádně velkou složku.Aby se zabránilo synchronizování celých spouštěcích svazků, což je neefektivní a nebezpečné,žádáme vás, abyste začali s menší složkou a přidávali další data, když je MEGAsync spuštěn.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>Nelze získat souborový systém.
-Zkuste to znovu. Pokud problém přetrvává, kontaktujte bug@mega.co.nz</translation>
+        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
+        <translation>Nelze získat systém souborů.Zkuste to znovu. Pokud problém přetrvává, obraťte se na bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
-        <translation>Průvodce nastavením - MEGAsync</translation>
+        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
+        <translation>Pomocník s nastavením - MEGAsync</translation>
     </message>
     <message>
         <source>Error getting session key</source>
+        <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
         <translation>Chyba při získávání klíče relace</translation>
     </message>
     <message>
         <source>Full sync</source>
+        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
         <translation>Úplná synchronizace</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
         <translation>Vaše místní složka a Cloudová jednotka MEGA budou automaticky synchronizovány.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
+        <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
         <translation>Vaše cloudová jednotka bude synchronizována s touto složkou:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Nemáte oprávnění k zápisu do této místní složky.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync nebude schopné sem nic stáhnout.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
+        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
         <translation>Chcete pokračovat?</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
+        <translation type="unfinished">Váš účet byl zablokován. Obraťte se na support@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>MEGAsync</source>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
+        <translation type="unfinished">Opravdu chcete zrušit tohoto průvodce a vrátit všechny změny?</translation>
     </message>
 </context>
 <context>
     <name>ShellExtension</name>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Nahrát na MEGA</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
+        <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>Získat odkaz MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
+        <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>Sdílet s uživatelem MEGA</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>
+        <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
         <translation>Poslat uživateli MEGA</translation>
     </message>
     <message>
         <source>1 file</source>
+        <translatorcomment>Label to indicate one file.</translatorcomment>
         <translation>1 soubor</translation>
     </message>
     <message>
         <source>%1 files</source>
+        <translatorcomment>Label to indicate several file. Keep %1 code because it will be filled with the number of files at runtime.</translatorcomment>
         <translation>%1 souborů</translation>
     </message>
     <message>
         <source>1 folder</source>
-        <translation>1 složka</translation>
+        <translation>1 složku</translation>
     </message>
     <message>
         <source>%1 folders</source>
+        <translatorcomment>Label to indicate several folders. Keep %1 code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>%1 složek</translation>
     </message>
     <message>
         <source>%1 (%2, %3)</source>
+        <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>%1 (%2, %3)</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
+        <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>%1 (%2)</translation>
+    </message>
+</context>
+<context>
+    <name>SizeLimitDialog</name>
+    <message>
+        <source>Exclude by size</source>
+        <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
+        <translation type="unfinished">Vyloučit podle velikosti</translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translatorcomment>Label to indicate the upper limit for file exclusions. Max 28 characters.</translatorcomment>
+        <translation type="unfinished">Vyloučit soubory větší než</translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translatorcomment>Label to indicate the lower limit for file exclusions. Max 28 characters.</translatorcomment>
+        <translation type="unfinished">Vyloučit soubory menší než</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label warning.</translatorcomment>
+        <translation type="unfinished">Upozornění</translation>
+    </message>
+    <message>
+        <source>Size limits cannot be zero</source>
+        <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
+        <translation type="unfinished">Omezení velikosti nemohou být nula</translation>
     </message>
 </context>
 <context>
     <name>UploadToMegaDialog</name>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>Nahrát na MEGA</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
+        <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
         <translation>Vyberte složku nahrávání pro vaše soubory:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
+        <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
         <translation>Složka MEGA:</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
+        <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
         <translation>Vždy nahrávat do tohoto umístění</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
-        <translation>/MEGAsync Uploads</translation>
+        <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
+        <translation>/Nahrávání MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
-        <translation>MEGAsync Uploads</translation>
+        <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
+        <translation>Nahrávání MEGAsync</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>Zvolte</translation>
+    </message>
+</context>
+<context>
+    <name>UsageProgressBar</name>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished">Doručené</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished">Příchozí sdílení</translation>
+    </message>
+    <message>
+        <source> Rubbish Bin</source>
+        <translation type="unfinished">Koš</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">Cloudová jednotka</translation>
+    </message>
+</context>
+<context>
+    <name>UsageWidget</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">Cloudová jednotka</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation type="unfinished">Koš</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished">Příchozí sdílení</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished">Doručené</translation>
+    </message>
+    <message>
+        <source>Used</source>
+        <translation type="unfinished">využito</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">dostupné</translation>
     </message>
 </context>
 <context>
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
+        <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
         <translation>Synchronizovaná složka MEGA</translation>
     </message>
 </context>
