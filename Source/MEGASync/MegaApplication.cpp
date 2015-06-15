@@ -3456,8 +3456,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 }
                 else if(noKeyDetected > 20)
                 {
-                    QMessageBox::critical(NULL, "MEGAsync",
-                        "Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz");
+                    QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                        QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"));
                     preferences->setCrashed(true);
                     rebootApplication(false);
                 }
