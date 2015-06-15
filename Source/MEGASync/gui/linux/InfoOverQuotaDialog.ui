@@ -460,7 +460,7 @@ margin-top:-1px;
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
+                <string>Your account has exceeded its allowed space quota. [A]Upgrade[/A] and keep enjoying secure, end-to-end encrypted storage.</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
