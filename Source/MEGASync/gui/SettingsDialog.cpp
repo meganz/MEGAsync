@@ -235,7 +235,6 @@ void SettingsDialog::setAccountOnly(bool accountOnly)
 {
     if(accountOnly)
     {
-
         ui->bAdvanced->setEnabled(false);
         ui->bAdvanced->setChecked(false);
         ui->bSyncs->setEnabled(false);

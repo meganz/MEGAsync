@@ -1856,6 +1856,10 @@ void MegaApplication::importLinks()
     //If the user wants to download some links, do it
     if(importDialog->shouldDownload())
 	{
+        if(!preferences->hasDefaultDownloadFolder())
+        {
+            preferences->setDownloadFolder(importDialog->getDownloadPath());
+        }
         linkProcessor->downloadLinks(importDialog->getDownloadPath());
 	}
 
@@ -2838,10 +2842,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         for(int i=0; i<inShares->size(); i++)
         {
             MegaNode *node = inShares->get(i);
+            if(!node)
+            {
+                continue;
+            }
 
-            inShareSize    += details->getStorageUsed(node->getHandle());
-            inShareFiles   += details->getNumFiles(node->getHandle());
-            inShareFolders += details->getNumFolders(node->getHandle());
+            MegaHandle handle = node->getHandle();
+            inShareSize    += details->getStorageUsed(handle);
+            inShareFiles   += details->getNumFiles(handle);
+            inShareFolders += details->getNumFolders(handle);
         }
         preferences->setInShareStorage(inShareSize);
         preferences->setInShareFiles(inShareFiles);
