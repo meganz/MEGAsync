@@ -2862,7 +2862,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if(preferences->usedStorage() < preferences->totalStorage())
         {
             overQuotaReached = false;
-            settingsDialog->setOverQuotaMode(false);
+            if(settingsDialog)
+            {
+                settingsDialog->setOverQuotaMode(false);
+            }
 
             if(infoOverQuota)
             {
