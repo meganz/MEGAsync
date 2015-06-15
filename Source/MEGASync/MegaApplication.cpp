@@ -2353,11 +2353,11 @@ void MegaApplication::openSettings(int tab)
             //and visible -> show it
             if(overQuotaReached)
             {
-                settingsDialog->setAccountOnly(true);
+                settingsDialog->setOverQuotaMode(true);
             }
             else
             {
-                settingsDialog->setAccountOnly(false);
+                settingsDialog->setOverQuotaMode(false);
                 settingsDialog->openSettingsTab(tab);
             }
             settingsDialog->loadSettings();
@@ -2375,11 +2375,11 @@ void MegaApplication::openSettings(int tab)
     settingsDialog = new SettingsDialog(this);
     if(overQuotaReached)
     {
-        settingsDialog->setAccountOnly(true);
+        settingsDialog->setOverQuotaMode(true);
     }
     else
     {
-        settingsDialog->setAccountOnly(false);
+        settingsDialog->setOverQuotaMode(false);
         settingsDialog->openSettingsTab(tab);
     }
     settingsDialog->setUpdateAvailable(updateAvailable);
@@ -2862,6 +2862,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if(preferences->usedStorage() < preferences->totalStorage())
         {
             overQuotaReached = false;
+            settingsDialog->setOverQuotaMode(false);
 
             if(infoOverQuota)
             {
