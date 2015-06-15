@@ -135,7 +135,6 @@ void UsageWidget::paintEvent(QPaintEvent *)
     {
         painter.setPen(QPen(QColor(Qt::red),10,Qt::SolidLine,Qt::FlatCap));
         painter.drawArc(QRectF(-72 / 2.0, -72 / 2.0, 72, 72), 90 * 16, -16 * 360);
-
     }
     else
     {
