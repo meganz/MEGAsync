@@ -41,7 +41,7 @@ public:
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly=false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
-    void setAccountOnly(bool accountOnly);
+    void setOverQuotaMode(bool mode);
     void loadSettings();
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
