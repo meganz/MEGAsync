@@ -371,5 +371,51 @@
         <file>images/icon_overquota_mac@2x.png</file>
         <file>images/tray_warning_ico.png</file>
         <file>images/tray_warning_ico@2x.png</file>
+        <file>images/small_3D@2x.png</file>
+        <file>images/small_aftereffects@2x.png</file>
+        <file>images/small_audio@2x.png</file>
+        <file>images/small_cad@2x.png</file>
+        <file>images/small_compressed@2x.png</file>
+        <file>images/small_database@2x.png</file>
+        <file>images/small_dmg.png</file>
+        <file>images/small_dmg@2x.png</file>
+        <file>images/small_dreamweaver@2x.png</file>
+        <file>images/small_excel@2x.png</file>
+        <file>images/small_executable@2x.png</file>
+        <file>images/small_fla_lang@2x.png</file>
+        <file>images/small_flash@2x.png</file>
+        <file>images/small_folder_shared@2x.png</file>
+        <file>images/small_font@2x.png</file>
+        <file>images/small_generic@2x.png</file>
+        <file>images/small_gis@2x.png</file>
+        <file>images/small_graphic@2x.png</file>
+        <file>images/small_html@2x.png</file>
+        <file>images/small_illustrator@2x.png</file>
+        <file>images/small_image@2x.png</file>
+        <file>images/small_indesign@2x.png</file>
+        <file>images/small_java@2x.png</file>
+        <file>images/small_midi@2x.png</file>
+        <file>images/small_pdf@2x.png</file>
+        <file>images/small_photoshop@2x.png</file>
+        <file>images/small_playlist@2x.png</file>
+        <file>images/small_podcast@2x.png</file>
+        <file>images/small_powerpoint@2x.png</file>
+        <file>images/small_premiere@2x.png</file>
+        <file>images/small_raw@2x.png</file>
+        <file>images/small_real_audio@2x.png</file>
+        <file>images/small_source_code@2x.png</file>
+        <file>images/small_spreadsheet@2x.png</file>
+        <file>images/small_swf@2x.png</file>
+        <file>images/small_text@2x.png</file>
+        <file>images/small_torrent@2x.png</file>
+        <file>images/small_vcard@2x.png</file>
+        <file>images/small_vector@2x.png</file>
+        <file>images/small_video_fla@2x.png</file>
+        <file>images/small_video_subtitles@2x.png</file>
+        <file>images/small_video_vob@2x.png</file>
+        <file>images/small_video@2x.png</file>
+        <file>images/small_web_data@2x.png</file>
+        <file>images/small_web_lang@2x.png</file>
+        <file>images/small_word@2x.png</file>
     </qresource>
 </RCC>
