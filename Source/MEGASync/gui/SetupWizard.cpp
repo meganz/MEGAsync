@@ -524,7 +524,7 @@ void SetupWizard::on_bLocalFolder_clicked()
             #endif
         #endif
     }
-	QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
+    QString path =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
                                                       defaultPath,
                                                       QFileDialog::ShowDirsOnly
 													  | QFileDialog::DontResolveSymlinks);
