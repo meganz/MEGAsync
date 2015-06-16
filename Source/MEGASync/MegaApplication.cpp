@@ -2736,6 +2736,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 trayIcon->setContextMenu(trayOverQuotaMenu);
             }
+            preferences->setUsedStorage(preferences->totalStorage());
             megaApi->getAccountDetails();
 
             if(trayMenu && trayMenu->isVisible())
@@ -3154,6 +3155,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             {
                 trayIcon->setContextMenu(trayOverQuotaMenu);
             }
+            preferences->setUsedStorage(preferences->totalStorage());
             megaApi->getAccountDetails();
 
             if(trayMenu && trayMenu->isVisible())
