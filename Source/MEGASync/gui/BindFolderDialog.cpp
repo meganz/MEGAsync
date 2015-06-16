@@ -167,6 +167,8 @@ void BindFolderDialog::on_bOK_clicked()
 
                 QString text = id->textValue();
                 text = text.trimmed();
+                delete id;
+
                 if (text.isEmpty())
                 {
                     return;
