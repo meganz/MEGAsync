@@ -2,6 +2,7 @@
 #include "ui_NodeSelector.h"
 
 #include <QMessageBox>
+#include <QPointer>
 #include "control/Utilities.h"
 
 
@@ -260,13 +261,20 @@ void NodeSelector::on_tMegaFolders_itemSelectionChanged()
 
 void NodeSelector::on_bNewFolder_clicked()
 {
-    bool ok;
-    QString text = QInputDialog::getText(this, tr("New folder"),
-                                         tr("Enter the new folder name:"), QLineEdit::Normal,
-                                         QString::fromAscii(""), &ok);
+    QPointer<QInputDialog> id = new QInputDialog(this);
+    id->setWindowTitle(tr("New folder"));
+    id->setLabelText(tr("Enter the new folder name:"));
+    int result = id->exec();
 
+    if(!id || !result)
+    {
+        delete id;
+        return;
+    }
+
+    QString text = id->textValue();
     text = text.trimmed();
-    if (ok && !text.isEmpty())
+    if (!text.isEmpty())
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
@@ -292,6 +300,7 @@ void NodeSelector::on_bNewFolder_clicked()
         delete parent;
         delete node;
     }
+    delete id;
 }
 
 void NodeSelector::on_bOk_clicked()

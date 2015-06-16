@@ -1426,7 +1426,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 #endif
 
     QDir dir(defaultPath);
-    QString fileName = QFileDialog::getSaveFileName(this,
+    QString fileName = QFileDialog::getSaveFileName(0,
              tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-MASTERKEY")),
              QString::fromUtf8("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
@@ -1555,13 +1555,24 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 
 void SettingsDialog::on_bAddName_clicked()
 {
-    bool ok;
-    QString text = QInputDialog::getText(this, tr("Excluded name"),
-                                         tr("Enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"), QLineEdit::Normal,
-                                         QString::fromAscii(""), &ok);
+    QPointer<QInputDialog> id = new QInputDialog(this);
+    id->setWindowTitle(tr("Excluded name"));
+    id->setLabelText(tr("Enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"));
+    int result = id->exec();
 
+    if(!id || !result)
+    {
+      delete id;
+      return;
+    }
+
+    QString text = id->textValue();
+    delete id;
     text = text.trimmed();
-    if (!ok || text.isEmpty()) return;
+    if (text.isEmpty())
+    {
+        return;
+    }
 
     QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
     if(!regExp.isValid())

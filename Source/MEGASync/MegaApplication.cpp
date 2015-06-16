@@ -114,7 +114,9 @@ int main(int argc, char *argv[])
     QDir crashDir(crashPath);
     if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
 
+#ifndef DEBUG
     CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
+#endif
     if((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();

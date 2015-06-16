@@ -57,7 +57,7 @@ void FolderBinder::on_bLocalFolder_clicked()
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
-    QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
+    QString path =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
                                                       defaultPath,
                                                       QFileDialog::ShowDirsOnly
                                                       | QFileDialog::DontResolveSymlinks);

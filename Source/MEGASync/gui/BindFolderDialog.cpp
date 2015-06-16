@@ -153,14 +153,24 @@ void BindFolderDialog::on_bOK_clicked()
            {
                 repeated = true;
 
-                bool ok;
-                QString text = QInputDialog::getText(this, tr("Sync name"),
-                     tr("The name \"%1\" is already in use for another sync\n"
-                     "Please enter a different name to identify this synced folder:").arg(syncName),
-                     QLineEdit::Normal, syncName, &ok).trimmed();
-                if (!ok && text.isEmpty())
-                    return;
+                QPointer<QInputDialog> id = new QInputDialog(this);
+                id->setWindowTitle(tr("Sync name"));
+                id->setLabelText(tr("The name \"%1\" is already in use for another sync\n"
+                                    "Please enter a different name to identify this synced folder:").arg(syncName));
+                int result = id->exec();
 
+                if(!id || !result)
+                {
+                    delete id;
+                    return;
+                }
+
+                QString text = id->textValue();
+                text = text.trimmed();
+                if (text.isEmpty())
+                {
+                    return;
+                }
                 syncName = text;
            }
        }
