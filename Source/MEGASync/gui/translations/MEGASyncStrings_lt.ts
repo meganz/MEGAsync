@@ -21,7 +21,7 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Šiukšliadėžė</translation>
+        <translation type="obsolete">&Scaron;iuk&scaron;liadėžė</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -68,7 +68,7 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Prašome pasirinkti vietinį aplanką ir MEGA aplanką</translation>
+        <translation>Pra&scaron;ome pasirinkti vietinį aplanką ir MEGA aplanką</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
@@ -112,7 +112,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Error</source>
@@ -136,7 +136,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Pranešti apie klaidą</translation>
+        <translation>Prane&scaron;ti apie klaidą</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -144,19 +144,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync aptiko problemą. Daugiau detalių:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Jūs galite padėti mums tobulinti MEGAsync siųsdami šį klaidos pranešimą. </translation>
+        <translation>Jūs galite padėti mums tobulinti MEGAsync siųsdami &scaron;į klaidos prane&scaron;imą. </translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Siųsti pranešimą</translation>
+        <translation>Siųsti prane&scaron;imą</translation>
     </message>
 </context>
 <context>
@@ -164,12 +164,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Atsisiųsti iš MEGA</translation>
+        <translation>Atsisiųsti i&scaron; MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Prašome pasirinkti </translation>
+        <translation>Pra&scaron;ome pasirinkti </translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -179,7 +179,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Visada parsisiųsti į šią vietą</translation>
+        <translation>Visada parsisiųsti į &scaron;ią vietą</translation>
     </message>
     <message>
         <source>OK</source>
@@ -189,7 +189,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -207,9 +207,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Klaida</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>Jūs neturite įrašymo teisių šiame vietiniame aplanke.</translation>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translation>Jūs neturite įra&scaron;ymo teisių &scaron;iame vietiniame aplanke.</translation>
     </message>
 </context>
 <context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Įspėjimas</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">Jūs neturite įrašymo teisių šiame aplanke.</translation>
+        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">Jūs neturite įra&scaron;ymo teisių &scaron;iame aplanke.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync negalės nieko čia atsiųsti.</translation>
     </message>
     <message>
@@ -254,9 +254,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ar norite tęsti?</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>Jūs neturite įrašymo teisių šiame vietiniame aplanke.</translation>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <translation>Jūs neturite įra&scaron;ymo teisių &scaron;iame vietiniame aplanke.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -299,7 +299,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -318,11 +318,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Iššifravimo klaida</translation>
+        <translation>I&scaron;&scaron;ifravimo klaida</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
         <translation>Nerasta</translation>
     </message>
     <message>
@@ -351,8 +351,8 @@ Are you sure?</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>Jūs neturite įrašymo teisių šiame vietiniame aplanke.</translation>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translation>Jūs neturite įra&scaron;ymo teisių &scaron;iame vietiniame aplanke.</translation>
     </message>
 </context>
 <context>
@@ -385,7 +385,7 @@ Are you sure?</source>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 iš %2</translation>
+        <translation>%1 i&scaron; %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
@@ -395,12 +395,12 @@ Are you sure?</source>
     <message>
         <source>%1 of %2 (%3/s)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
-        <translation>%1 iš %2 (%3/s)</translation>
+        <translation>%1 i&scaron; %2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 iš %2 (pauzė)</translation>
+        <translation>%1 i&scaron; %2 (pauzė)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
@@ -420,22 +420,22 @@ Are you sure?</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation>Atšaukti visus atsiuntimus</translation>
+        <translation>At&scaron;aukti visus atsiuntimus</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>Atšaukti atsiuntimą</translation>
+        <translation>At&scaron;aukti atsiuntimą</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>Atšaukti visus įkėlimus</translation>
+        <translation>At&scaron;aukti visus įkėlimus</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Atšaukti įkėlimą</translation>
+        <translation>At&scaron;aukti įkėlimą</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -452,15 +452,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation type="obsolete">%1 iš %2 failų %3/s greičiu</translation>
+        <translation type="obsolete">%1 i&scaron; %2 failų %3/s greičiu</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation type="obsolete">%1 iš %2 failų (pauzė)</translation>
+        <translation type="obsolete">%1 i&scaron; %2 failų (pauzė)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Iš Viso Liko:</translation>
+        <translation type="obsolete">I&scaron; Viso Liko:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -507,7 +507,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">%1 iš %2</translation>
+        <translation type="unfinished">%1 i&scaron; %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
@@ -534,12 +534,12 @@ Are you sure?</source>
     <message>
         <source>Install for anyone using this computer</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
-        <translation>Įrašyti visiems, naudojantiems šį kompiuterį</translation>
+        <translation>Įra&scaron;yti visiems, naudojantiems &scaron;į kompiuterį</translation>
     </message>
     <message>
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
-        <translation>Įrašyti tik man</translation>
+        <translation>Įra&scaron;yti tik man</translation>
     </message>
 </context>
 <context>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
+because the remote folder doesn&amp;apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,21 +574,21 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">Jūsų sinchronizacija &quot;%1&quot; buvo išjungta, nes vietinis aplankas neegzistuoja</translation>
+because the local folder doesn&amp;apos;t exist</source>
+        <translation type="obsolete">Jūsų sinchronizacija &quot;%1&quot; buvo i&scaron;jungta, nes vietinis aplankas neegzistuoja</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Klaida: Neteisingas paskirties aplankas. Įkėlimas buvo atšauktas.</translation>
+        <translation>Klaida: Neteisingas paskirties aplankas. Įkėlimas buvo at&scaron;auktas.</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -625,7 +625,7 @@ Exit anyway?</source>
     <message>
         <source>Exit</source>
         <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Išeiti</translation>
+        <translation>I&scaron;eiti</translation>
     </message>
     <message>
         <source>About</source>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
         <translation>Atnaujinta</translation>
     </message>
     <message>
@@ -691,12 +691,12 @@ Exit anyway?</source>
         <translation>Laukiama</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Aplankas (%1) nebuvo įkeltas, nes jis yra labai didelis. Mes atliekame šį patikrinimą tam, kad išvengtume ištisų disko skirsnių įkėlimo, kas yra neefektyvu ir pavojinga.</translation>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Aplankas (%1) nebuvo įkeltas, nes jis yra labai didelis. Mes atliekame &scaron;į patikrinimą tam, kad i&scaron;vengtume i&scaron;tisų disko skirsnių įkėlimo, kas yra neefektyvu ir pavojinga.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 aplankai (-ų) nebuvo įkelti, nes jie yra labai dideli. Mes atliekame šį patikrinimą tam, kad išvengtume ištisų disko skirsnių įkėlimo, kas yra neefektyvu ir pavojinga.</translation>
+        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">%1 aplankai (-ų) nebuvo įkelti, nes jie yra labai dideli. Mes atliekame &scaron;į patikrinimą tam, kad i&scaron;vengtume i&scaron;tisų disko skirsnių įkėlimo, kas yra neefektyvu ir pavojinga.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -716,7 +716,7 @@ Exit anyway?</source>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Ieškoma atnaujinimų...</translation>
+        <translation>Ie&scaron;koma atnaujinimų...</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -726,7 +726,7 @@ Exit anyway?</source>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Nauja MEGAsync versija jau prieinama! Spauskite šį pranešimą jeigu norite jį įdiegti</translation>
+        <translation>Nauja MEGAsync versija jau prieinama! Spauskite &scaron;į prane&scaron;imą jeigu norite jį įdiegti</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -814,12 +814,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Jūsų nustatymų failas sugadintas, prašome pradėti iš naujo</translation>
+        <translation>Jūsų nustatymų failas sugadintas, pra&scaron;ome pradėti i&scaron; naujo</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Atsisiųsti iš MEGA</translation>
+        <translation>Atsisiųsti i&scaron; MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Jūsų sinchronizacija &quot;%1&quot; buvo išjungta, nes nuotolinis aplankas neegzistuoja</translation>
+        <translation type="unfinished">Jūsų sinchronizacija &quot;%1&quot; buvo i&scaron;jungta, nes nuotolinis aplankas neegzistuoja</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -864,7 +864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Jūsų sinchronizacija &quot;%1&quot; buvo išjungta, nes nuotolinis aplankas yra šiukšliadėžeje</translation>
+        <translation type="unfinished">Jūsų sinchronizacija &quot;%1&quot; buvo i&scaron;jungta, nes nuotolinis aplankas yra &scaron;iuk&scaron;liadėžeje</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -872,13 +872,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
-        <translation type="unfinished">Viršytas kiekis</translation>
+        <translation type="unfinished">Vir&scaron;ytas kiekis</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -922,7 +922,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Rate limit exceeded</source>
         <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
-        <translation>Viršytas normos riba</translation>
+        <translation>Vir&scaron;ytas normos riba</translation>
     </message>
     <message>
         <source>Failed permanently</source>
@@ -972,7 +972,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Neteisingas raktas/Iššifravimo klaida</translation>
+        <translation>Neteisingas raktas/I&scaron;&scaron;ifravimo klaida</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -987,7 +987,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
-        <translation>Viršytas kiekis</translation>
+        <translation>Vir&scaron;ytas kiekis</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -997,12 +997,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Connection overflow</source>
         <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
-        <translation>Ryšys perkrautas</translation>
+        <translation>Ry&scaron;ys perkrautas</translation>
     </message>
     <message>
         <source>Write error</source>
         <translatorcomment>Label to show that an error related with an write error occurs during a SDK operation.</translatorcomment>
-        <translation>Įrašymo klaida</translation>
+        <translation>Įra&scaron;ymo klaida</translation>
     </message>
     <message>
         <source>Read error</source>
@@ -1052,7 +1052,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Atšaukti</translation>
+        <translation type="unfinished">At&scaron;aukti</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1093,7 +1093,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Klaida</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&amp;apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,18 +1128,18 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Visada kelti į šią paskirties vietą</translation>
+        <translation>Visada kelti į &scaron;ią paskirties vietą</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translation type="unfinished">You need Read & Write or Full access rights to be able to upload to the selected folder.</translation>
+        <translation type="unfinished">You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -1166,7 +1166,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Įveskite vieną ar kelias MEGA failų nuorodas</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1189,22 +1189,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&Yes</translation>
+        <translation>&amp;Yes</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&No</translation>
+        <translation>&amp;No</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>&OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&Cancel</translation>
+        <translation>&amp;Cancel</translation>
     </message>
 </context>
 <context>
@@ -1212,7 +1212,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>Prieš %1 valandas(-ų)</translation>
+        <translation>Prie&scaron; %1 valandas(-ų)</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1227,52 +1227,52 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>prieš %1 sekundes(-žių)</translation>
+        <translation>prie&scaron; %1 sekundes(-žių)</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>prieš 1 minutę</translation>
+        <translation>prie&scaron; 1 minutę</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>prieš %1 minutes(-čių)</translation>
+        <translation>prie&scaron; %1 minutes(-čių)</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>prieš 1 valandą</translation>
+        <translation>prie&scaron; 1 valandą</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>prieš 1 dieną</translation>
+        <translation>prie&scaron; 1 dieną</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>prieš %1 dienas(-ų)</translation>
+        <translation>prie&scaron; %1 dienas(-ų)</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation>prieš 1 mėnesį</translation>
+        <translation>prie&scaron; 1 mėnesį</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>prieš %1 mėnesius(-ių)</translation>
+        <translation>prie&scaron; %1 mėnesius(-ių)</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation>prieš 1 metus</translation>
+        <translation>prie&scaron; 1 metus</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>prieš %1 metus(-ų)</translation>
+        <translation>prie&scaron; %1 metus(-ų)</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1329,7 +1329,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1339,7 +1339,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show notifications</source>
         <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Rodyti pranešimus</translation>
+        <translation>Rodyti prane&scaron;imus</translation>
     </message>
     <message>
         <source>Start on startup</source>
@@ -1349,7 +1349,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
-        <translation>Atnaujinti automatiškai</translation>
+        <translation>Atnaujinti automati&scaron;kai</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1364,7 +1364,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Details</source>
         <translatorcomment>Button label to show the account usage details for the current user of the application. Strins as short as possible.</translatorcomment>
-        <translation>Išsami informacija</translation>
+        <translation>I&scaron;sami informacija</translation>
     </message>
     <message>
         <source>FREE</source>
@@ -1393,7 +1393,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Delete</source>
         <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Ištrinti</translation>
+        <translation>I&scaron;trinti</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1413,10 +1413,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Išsiuntimo riba</translation>
+        <translation>I&scaron;siuntimo riba</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&amp;apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Neribojama</translation>
     </message>
@@ -1433,7 +1433,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Automatiškai</translation>
+        <translation>Automati&scaron;kai</translation>
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
@@ -1451,7 +1451,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Aplankas įkėlimams iš Windows Explorer</translation>
+        <translation type="obsolete">Aplankas įkėlimams i&scaron; Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1471,7 +1471,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
-        <translation>Automatiškai aptikti</translation>
+        <translation>Automati&scaron;kai aptikti</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -1516,7 +1516,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
-        <translation>%1 (%2%) iš %3 naudojama</translation>
+        <translation>%1 (%2%) i&scaron; %3 naudojama</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -1595,7 +1595,7 @@ when the application starts again.</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>Išvalyti</translation>
+        <translation>I&scaron;valyti</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1603,19 +1603,19 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Jūsų proxy nustatymai yra neteisingi arba proxy neatsako</translation>
     </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Prašome palaukti...</translation>
+        <translation>Pra&scaron;ome palaukti...</translation>
     </message>
     <message>
         <source>Check for updates</source>
         <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
-        <translation>Ieškoti atnaujinimų</translation>
+        <translation>Ie&scaron;koti atnaujinimų</translation>
     </message>
     <message>
         <source>Selective sync active</source>
@@ -1627,7 +1627,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation type="obsolete">Įjungus pilną paskyros sinchronizaciją bus išjungtos visos esamos sinchronizacijos</translation>
+        <translation type="obsolete">Įjungus pilną paskyros sinchronizaciją bus i&scaron;jungtos visos esamos sinchronizacijos</translation>
     </message>
     <message>
         <source>Full account sync active</source>
@@ -1635,11 +1635,11 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Išjungus pilną paskyros sinchronizavimą jus galėsite rankiniu būdu pasirinkti aplankus, kuriuos norite sinchronizuoti</translation>
+        <translation type="obsolete">I&scaron;jungus pilną paskyros sinchronizavimą jus galėsite rankiniu būdu pasirinkti aplankus, kuriuos norite sinchronizuoti</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation type="obsolete">Išjungti pilną paskyros sinchronizavimą</translation>
+        <translation type="obsolete">I&scaron;jungti pilną paskyros sinchronizavimą</translation>
     </message>
     <message>
         <source>Other</source>
@@ -1648,7 +1648,7 @@ when the application starts again.</source>
     <message>
         <source>Disable overlay icons</source>
         <translatorcomment>Label to let the user disable overlay icon for the specific File browser.</translatorcomment>
-        <translation>Išjungti persidengiančias piktogramas</translation>
+        <translation>I&scaron;jungti persidengiančias piktogramas</translation>
     </message>
     <message>
         <source>Force a full scan</source>
@@ -1674,7 +1674,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Aplankas įkėlimams iš šio kompiuterio</translation>
+        <translation type="obsolete">Aplankas įkėlimams i&scaron; &scaron;io kompiuterio</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Parsiuntimai:</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>Ši sinchronizacija negali būti įjungta, nes vietinis aplankas neegzistuoja</translation>
+        <translation>&Scaron;i sinchronizacija negali būti įjungta, nes vietinis aplankas neegzistuoja</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
+        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1735,7 +1735,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Įjungti / išjungti</translation>
+        <translation>Įjungti / i&scaron;jungti</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1743,9 +1743,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Pasirinkite vietinį aplanką</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>Jūs neturite įrašymo teisių šiame vietiniame aplanke.</translation>
+        <translation>Jūs neturite įra&scaron;ymo teisių &scaron;iame vietiniame aplanke.</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -1770,7 +1770,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Visuomet laikykite pagrindinį raktą fiziškai pasiekiamu (pvz.: išorinėje duomenų laikmenoje ar atspausdintą ant popieriaus lapo).</translation>
+        <translation type="unfinished">Visuomet laikykite pagrindinį raktą fizi&scaron;kai pasiekiamu (pvz.: i&scaron;orinėje duomenų laikmenoje ar atspausdintą ant popieriaus lapo).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -1817,11 +1817,11 @@ when the application starts again</source>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation>Aš turiu MEGA paskyrą</translation>
+        <translation>A&scaron; turiu MEGA paskyrą</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&amp;apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Ar neturiu MEGA paskyros</translation>
     </message>
     <message>
@@ -1837,7 +1837,7 @@ when the application starts again</source>
     <message>
         <source>Email:</source>
         <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>El. paštas:</translation>
+        <translation>El. pa&scaron;tas:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1862,7 +1862,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Prašome patvirtinti savo paskyrą naudojantis patvirtinimo nuoroda, kurią mes išsiuntėme jums el. paštu.</translation>
+        <translation>Pra&scaron;ome patvirtinti savo paskyrą naudojantis patvirtinimo nuoroda, kurią mes i&scaron;siuntėme jums el. pa&scaron;tu.</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1896,7 +1896,7 @@ when the application starts again</source>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>Šie failai bus automatiškai sinchronizuojami:</translation>
+        <translation>&Scaron;ie failai bus automati&scaron;kai sinchronizuojami:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1928,7 +1928,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation type="obsolete">bus automatiškai sinchronizuoti.</translation>
+        <translation type="obsolete">bus automati&scaron;kai sinchronizuoti.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1943,7 +1943,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1963,7 +1963,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Neteisingas el. paštas ir/arba slaptažodis.</translation>
+        <translation>Neteisingas el. pa&scaron;tas ir/arba slaptažodis.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -1971,7 +1971,7 @@ when the application starts again</source>
         <translation>Ar jūs patvirtinote savo paskyrą?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&amp;apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA aplankas neegzistuoja</translation>
     </message>
@@ -2006,7 +2006,7 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&amp;apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Įvesti slaptažodžiai nesutampa</translation>
     </message>
@@ -2090,20 +2090,20 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Jūsų vietinis aplankas ir jūsų MEGA Cloud Diskas bus automatiškai sinchronizuojami.</translation>
+        <translation>Jūsų vietinis aplankas ir jūsų MEGA Cloud Diskas bus automati&scaron;kai sinchronizuojami.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Jūsų Cloud Diskas bus sinchronizuotas su šiuo aplanku:</translation>
+        <translation>Jūsų Cloud Diskas bus sinchronizuotas su &scaron;iuo aplanku:</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>Jūs neturite įrašymo teisių šiame vietiniame aplanke.</translation>
+        <translation>Jūs neturite įra&scaron;ymo teisių &scaron;iame vietiniame aplanke.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync negalės nieko čia atsiųsti.</translation>
     </message>
@@ -2198,7 +2198,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Atšaukti</translation>
+        <translation type="unfinished">At&scaron;aukti</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2236,7 +2236,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>Visada kelti į šią paskirties vietą</translation>
+        <translation>Visada kelti į &scaron;ią paskirties vietą</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
@@ -2256,7 +2256,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Atšaukti</translation>
+        <translation>At&scaron;aukti</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2276,7 +2276,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source> Rubbish Bin</source>
-        <translation type="unfinished">Šiukšliadėžė</translation>
+        <translation type="unfinished">&Scaron;iuk&scaron;liadėžė</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2291,7 +2291,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Šiukšliadėžė</translation>
+        <translation type="unfinished">&Scaron;iuk&scaron;liadėžė</translation>
     </message>
     <message>
         <source>Incoming Shares</source>

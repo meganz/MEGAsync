@@ -6,7 +6,7 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>Tilin käyttötiedot</translation>
+        <translation>Tilin k&auml;ytt&ouml;tiedot</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -41,7 +41,7 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation>Päivitä</translation>
+        <translation>P&auml;ivit&auml;</translation>
     </message>
     <message>
         <source>OK</source>
@@ -59,7 +59,7 @@
     <message>
         <source>Add synchronized folder</source>
         <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
-        <translation>Lisää synkronoitava kansio</translation>
+        <translation>Lis&auml;&auml; synkronoitava kansio</translation>
     </message>
     <message>
         <source/>
@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation type="obsolete">Tilin täysi synkronointi ei ole mahdollinen, koska on valittuja kansioita</translation>
+        <translation type="obsolete">Tilin t&auml;ysi synkronointi ei ole mahdollinen, koska on valittuja kansioita</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -102,7 +102,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Nimi &quot;%1&quot; on jo käytössä synkronoinnissa. Ole hyvä ja syötä toinen nimi tälle synkronoitavalle kansiolle:</translation>
+        <translation>Nimi &quot;%1&quot; on jo k&auml;yt&ouml;ss&auml; synkronoinnissa. Ole hyv&auml; ja sy&ouml;t&auml; toinen nimi t&auml;lle synkronoitavalle kansiolle:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -122,13 +122,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Paikallinen kansio on liian iso (tämä versio on rajoitettu %1 kansioihin tai %2 tiedostoihin). Ole hyvä, valitse toinen kansio.</translation>
+        <translation type="obsolete">Paikallinen kansio on liian iso (t&auml;m&auml; versio on rajoitettu %1 kansioihin tai %2 tiedostoihin). Ole hyv&auml;, valitse toinen kansio.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">Yrität synkronoida äärimmäisen isoa kansiota. Estääksesi tehottoman ja ei-toivottavan, täyden käynnistyslevyn synkronoinnin, pyydämme sinua aloittamaan pienemmästä kansiota ja lisäävän enemmän kun MEGAsync on käynnissä.</translation>
+        <translation type="obsolete">Yrit&auml;t synkronoida &auml;&auml;rimm&auml;isen isoa kansiota. Est&auml;&auml;ksesi tehottoman ja ei-toivottavan, t&auml;yden k&auml;ynnistyslevyn synkronoinnin, pyyd&auml;mme sinua aloittamaan pienemm&auml;st&auml; kansiota ja lis&auml;&auml;v&auml;n enemm&auml;n kun MEGAsync on k&auml;ynniss&auml;.</translation>
     </message>
 </context>
 <context>
@@ -141,12 +141,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync on havainnut ongelman. Lisätietoja:</translation>
+        <translation>MEGAsync on havainnut ongelman. Lis&auml;tietoja:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Voit auttaa parantamaan MEGAsynciä lähettämällä virheraportin. Siihen ei sisällytetä henkilökohtaisia tietoja. Jos haluat antaa meille lisätietoja, kirjoita ne alle:</translation>
+        <translation>Voit auttaa parantamaan MEGAsynci&auml; l&auml;hett&auml;m&auml;ll&auml; virheraportin. Siihen ei sis&auml;llytet&auml; henkil&ouml;kohtaisia tietoja. Jos haluat antaa meille lis&auml;tietoja, kirjoita ne alle:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -156,7 +156,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Lähetä raportti</translation>
+        <translation>L&auml;het&auml; raportti</translation>
     </message>
 </context>
 <context>
@@ -179,7 +179,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Lataa aina tähän sijaintiin</translation>
+        <translation>Lataa aina t&auml;h&auml;n sijaintiin</translation>
     </message>
     <message>
         <source>OK</source>
@@ -207,9 +207,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Virhe</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translation>Sinulla ei ole kirjoitusoikeuksia t&auml;ss&auml; paikalliskansiossa.</translation>
     </message>
 </context>
 <context>
@@ -240,13 +240,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Varoitus</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">Sinulla ei ole kirjoitusoikeuksia tässä kansiossa.</translation>
+        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">Sinulla ei ole kirjoitusoikeuksia t&auml;ss&auml; kansiossa.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync ei kykene lataamaan täältä mitään.</translation>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <translation>MEGAsync ei kykene lataamaan t&auml;&auml;lt&auml; mit&auml;&auml;n.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -254,16 +254,16 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Haluatko jatkaa?</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <translation>Sinulla ei ole kirjoitusoikeuksia t&auml;ss&auml; paikalliskansiossa.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>Yrität synkronoida äärimmäisen isoa kansiota. Estääksesi tehottoman ja ei-toivottavan, täyden käynnistyslevyn synkronoinnin, pyydämme sinua aloittamaan pienemmästä kansiota ja lisäävän enemmän kun MEGAsync on käynnissä.</translation>
+        <translation>Yrit&auml;t synkronoida &auml;&auml;rimm&auml;isen isoa kansiota. Est&auml;&auml;ksesi tehottoman ja ei-toivottavan, t&auml;yden k&auml;ynnistyslevyn synkronoinnin, pyyd&auml;mme sinua aloittamaan pienemm&auml;st&auml; kansiota ja lis&auml;&auml;v&auml;n enemm&auml;n kun MEGAsync on k&auml;ynniss&auml;.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
-        <translation type="unfinished">Et voi synkronoida jaettua kansiota ilman täysiä käyttöoikeuksia</translation>
+        <translation type="unfinished">Et voi synkronoida jaettua kansiota ilman t&auml;ysi&auml; k&auml;ytt&ouml;oikeuksia</translation>
     </message>
 </context>
 <context>
@@ -322,8 +322,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>Ei löytynyt</translation>
+        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translation>Ei l&ouml;ytynyt</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -334,13 +334,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>Olet tuomassa kyseistä tiedostoa synkronoitavaan kansioon. Jos kytket latauksen päälle, tiedosto kahdentuu tietokoneellesi. Haluatko varmasti jatkaa?</translation>
+        <translation>Olet tuomassa kyseist&auml; tiedostoa synkronoitavaan kansioon. Jos kytket latauksen p&auml;&auml;lle, tiedosto kahdentuu tietokoneellesi. Haluatko varmasti jatkaa?</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>Olet tuomassa tiedostoja synkronoitavaan kansioon. Jos kytket latauksen päälle, tiedostot kahdentuvat tietokoneellesi. Haluatko varmasti jatkaa?</translation>
+        <translation>Olet tuomassa tiedostoja synkronoitavaan kansioon. Jos kytket latauksen p&auml;&auml;lle, tiedostot kahdentuvat tietokoneellesi. Haluatko varmasti jatkaa?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -351,8 +351,8 @@ Are you sure?</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translation>Sinulla ei ole kirjoitusoikeuksia t&auml;ss&auml; paikalliskansiossa.</translation>
     </message>
 </context>
 <context>
@@ -365,12 +365,12 @@ Are you sure?</source>
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation>VIIMEKSI PÄIVITETYT</translation>
+        <translation>VIIMEKSI P&Auml;IVITETYT</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>Käyttö: Tieto ei saatavilla tilapäisesti</translation>
+        <translation>K&auml;ytt&ouml;: Tieto ei saatavilla tilap&auml;isesti</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -390,7 +390,7 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation>Käyttö: %1</translation>
+        <translation>K&auml;ytt&ouml;: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -420,27 +420,27 @@ Are you sure?</source>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation>Keskeytä kaikki lataukset</translation>
+        <translation>Keskeyt&auml; kaikki lataukset</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>Keskeytä lataus</translation>
+        <translation>Keskeyt&auml; lataus</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>Keskeytä kaikki lähetykset</translation>
+        <translation>Keskeyt&auml; kaikki l&auml;hetykset</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Keskeytä lähetys</translation>
+        <translation>Keskeyt&auml; l&auml;hetys</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Lisää synkronoitava</translation>
+        <translation>Lis&auml;&auml; synkronoitava</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -460,7 +460,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Yhteensä jäljellä:</translation>
+        <translation type="obsolete">Yhteens&auml; j&auml;ljell&auml;:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -470,7 +470,7 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Lähetetään</translation>
+        <translation>L&auml;hetet&auml;&auml;n</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -480,7 +480,7 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync käynnistyy</translation>
+        <translation>MEGAsync k&auml;ynnistyy</translation>
     </message>
 </context>
 <context>
@@ -491,15 +491,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="unfinished">Käyttäjätilisi tilakiintiö on ylittynyt. [A]Päivitä[/A]se jatkaaksesi turvallisen, päästä-päähän -salauksella olevan palvelun käyttöä.</translation>
+        <translation type="unfinished">K&auml;ytt&auml;j&auml;tilisi tilakiinti&ouml; on ylittynyt. [A]P&auml;ivit&auml;[/A]se jatkaaksesi turvallisen, p&auml;&auml;st&auml;-p&auml;&auml;h&auml;n -salauksella olevan palvelun k&auml;ytt&ouml;&auml;.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
-        <translation type="unfinished">Päivitä tilisi</translation>
+        <translation type="unfinished">P&auml;ivit&auml; tilisi</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
-        <translation type="unfinished">Käyttö: Tieto ei saatavilla tilapäisesti</translation>
+        <translation type="unfinished">K&auml;ytt&ouml;: Tieto ei saatavilla tilap&auml;isesti</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -511,7 +511,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation type="unfinished">Käyttö: %1</translation>
+        <translation type="unfinished">K&auml;ytt&ouml;: %1</translation>
     </message>
 </context>
 <context>
@@ -519,22 +519,22 @@ Are you sure?</source>
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
-        <translation>Valitse käyttäjät</translation>
+        <translation>Valitse k&auml;ytt&auml;j&auml;t</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
-        <translation>Valitse käyttäjät, joille haluat asentaa $(^NameDA).</translation>
+        <translation>Valitse k&auml;ytt&auml;j&auml;t, joille haluat asentaa $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Valitse haluatko asentaa joko $(^NameDA) vain itsellesi tai kaikille tämän tietokoneen käyttäjille. $(^ClickNext)</translation>
+        <translation>Valitse haluatko asentaa joko $(^NameDA) vain itsellesi tai kaikille t&auml;m&auml;n tietokoneen k&auml;ytt&auml;jille. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
-        <translation>Asenna kaikille tämän tietokoneen käyttäjille</translation>
+        <translation>Asenna kaikille t&auml;m&auml;n tietokoneen k&auml;ytt&auml;jille</translation>
     </message>
     <message>
         <source>Install just for me</source>
@@ -550,57 +550,57 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Kiitos kun kokeilit MEGAsynciä.<br>Tämä beta-versio on vanhentunut.<br>Seuraa <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> Twitterissä saadaksesi uutta tietoa.</translation>
+        <translation type="obsolete">Kiitos kun kokeilit MEGAsynci&auml;.<br>T&auml;m&auml; beta-versio on vanhentunut.<br>Seuraa <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> Twitteriss&auml; saadaksesi uutta tietoa.</translation>
     </message>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Sisäänkirjautuminen</translation>
+        <translation>Sis&auml;&auml;nkirjautuminen</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync on nyt käynnissä. Näpäytä tästä avataksesi tilaikkunan. </translation>
+        <translation>MEGAsync on nyt k&auml;ynniss&auml;. N&auml;p&auml;yt&auml; t&auml;st&auml; avataksesi tilaikkunan. </translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Synkronointisi &quot;%1&quot; on lopetettu, sillä etäkansiota ei ole olemassa</translation>
+because the remote folder doesn&amp;apos;t exist</source>
+        <translation type="obsolete">Synkronointisi &quot;%1&quot; on lopetettu, sill&auml; et&auml;kansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Synkronointisi &quot;%1&quot; on lopetettu, sillä etäkansio on roskakorissa</translation>
+        <translation type="obsolete">Synkronointisi &quot;%1&quot; on lopetettu, sill&auml; et&auml;kansio on roskakorissa</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">Synkronointisi &quot;%1&quot; on poiskytketty koska etäkansiota ei ole olemassa</translation>
+because the local folder doesn&amp;apos;t exist</source>
+        <translation type="obsolete">Synkronointisi &quot;%1&quot; on poiskytketty koska et&auml;kansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Virhe: Epäkelpo asennuskansio. Lähetys on keskeytetetty</translation>
+        <translation>Virhe: Ep&auml;kelpo asennuskansio. L&auml;hetys on keskeytetetty</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">Kansiota (%1) ei lähetetty, sillä se on liian suuri (tämä beta on rajattu %2 kansioihin tai %3 tiedostoihin).</translation>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">Kansiota (%1) ei l&auml;hetetty, sill&auml; se on liian suuri (t&auml;m&auml; beta on rajattu %2 kansioihin tai %3 tiedostoihin).</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 kansioita ei lähetetty, sillä ne ovat liian suuria (tämä beta on rajattu %2 kansioihin tai %3 tiedostoihin).</translation>
+        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 kansioita ei l&auml;hetetty, sill&auml; ne ovat liian suuria (t&auml;m&auml; beta on rajattu %2 kansioihin tai %3 tiedostoihin).</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synkronointi pysähtyy. Sen pysähdyksissä ollessa tapahtuvia tiedostopoistoja ei tehdä.</translation>
+        <translation type="obsolete">Synkronointi pys&auml;htyy. Sen pys&auml;hdyksiss&auml; ollessa tapahtuvia tiedostopoistoja ei tehd&auml;.</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>Tietoa MEGAsyncistä</translation>
+        <translation>Tietoa MEGAsyncist&auml;</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
@@ -610,12 +610,12 @@ Exit anyway?</source>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>Linkki kopioitu leikepöydälle</translation>
+        <translation>Linkki kopioitu leikep&ouml;yd&auml;lle</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
-        <translation>Linkit kopioitu leikepöydälle</translation>
+        <translation>Linkit kopioitu leikep&ouml;yd&auml;lle</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -639,7 +639,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="obsolete">Keskeytä</translation>
+        <translation type="obsolete">Keskeyt&auml;</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
         <translation>Ajan tasalla</translation>
     </message>
     <message>
@@ -673,17 +673,17 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Tilapäinen häiriö tiedonsiirrossa:</translation>
+        <translation>Tilap&auml;inen h&auml;iri&ouml; tiedonsiirrossa:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Sinulla on uusia tai päivitettyjä tiedostoja</translation>
+        <translation>Sinulla on uusia tai p&auml;ivitettyj&auml; tiedostoja</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsync on päivitetty</translation>
+        <translation>MEGAsync on p&auml;ivitetty</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -691,63 +691,63 @@ Exit anyway?</source>
         <translation>Odottaa</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Kansiota (%1) ei lähetetty, koska se on erittäin suuri. Sillä tavoin estämme tehottoman ja riskialttiin kokonaisten käynnistysosioiden lähettämisen.</translation>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Kansiota (%1) ei l&auml;hetetty, koska se on eritt&auml;in suuri. Sill&auml; tavoin est&auml;mme tehottoman ja riskialttiin kokonaisten k&auml;ynnistysosioiden l&auml;hett&auml;misen.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 kansioita ei lähetetty, sillä ne ovat erittäin suuria.  Sillä tavoin estämme tehottoman ja riskialttiin kokonaisten käynnistysosioiden lähettämisen.</translation>
+        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">%1 kansioita ei l&auml;hetetty, sill&auml; ne ovat eritt&auml;in suuria.  Sill&auml; tavoin est&auml;mme tehottoman ja riskialttiin kokonaisten k&auml;ynnistysosioiden l&auml;hett&auml;misen.</translation>
     </message>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Päivitys saatavilla!</translation>
+        <translation>P&auml;ivitys saatavilla!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Ohjelma päivitetään sen seuraavalla käynnistyskerralla</translation>
+        <translation>Ohjelma p&auml;ivitet&auml;&auml;n sen seuraavalla k&auml;ynnistyskerralla</translation>
     </message>
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Päivitetään...</translation>
+        <translation>P&auml;ivitet&auml;&auml;n...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Tarkistetaan päivityksiä...</translation>
+        <translation>Tarkistetaan p&auml;ivityksi&auml;...</translation>
     </message>
     <message>
         <source>Install update</source>
         <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
-        <translation>Päivitä</translation>
+        <translation>P&auml;ivit&auml;</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Uusi versio MEGAsyncistä on saatavilla! Klikkaa tätä viestiä asentaaksesi sen</translation>
+        <translation>Uusi versio MEGAsyncist&auml; on saatavilla! Klikkaa t&auml;t&auml; viesti&auml; asentaaksesi sen</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Päivityksen asennuksessa ilmeni ongelma. Ole hyvä ja yritä uudestaan tai lataa uusin ohjelmisto osoitteesta: https://mega.co.nz/#sync</translation>
+        <translation>P&auml;ivityksen asennuksessa ilmeni ongelma. Ole hyv&auml; ja yrit&auml; uudestaan tai lataa uusin ohjelmisto osoitteesta: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Kiios yhteistyöstä!</translation>
+        <translation>Kiios yhteisty&ouml;st&auml;!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Päivitys saatavilla. Ladataan...</translation>
+        <translation>P&auml;ivitys saatavilla. Ladataan...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
         <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
-        <translation>Päivityksiä ei saatavilla tällä hetkellä</translation>
+        <translation>P&auml;ivityksi&auml; ei saatavilla t&auml;ll&auml; hetkell&auml;</translation>
     </message>
     <message>
         <source>Error</source>
@@ -759,27 +759,27 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation>Synkronointi päättyy.</translation>
+        <translation>Synkronointi p&auml;&auml;ttyy.</translation>
     </message>
     <message>
         <source>Starting</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
-        <translation>Käynnistetään</translation>
+        <translation>K&auml;ynnistet&auml;&auml;n</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Tiedostojärjestelmä ei ole saatavilla. Ole hyvä, yritä uudestaan. Jos ongelma jatkuu, ota yhteyttä bug@mega.co.nz</translation>
+        <translation>Tiedostoj&auml;rjestelm&auml; ei ole saatavilla. Ole hyv&auml;, yrit&auml; uudestaan. Jos ongelma jatkuu, ota yhteytt&auml; bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation type="obsolete">Lähetä tiedotoja/kansioita</translation>
+        <translation type="obsolete">L&auml;het&auml; tiedotoja/kansioita</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync on nyt käynnissä. Klikkaa ilmoitusalueen kuvaketta avataksesi tilaikkunan.</translation>
+        <translation>MEGAsync on nyt k&auml;ynniss&auml;. Klikkaa ilmoitusalueen kuvaketta avataksesi tilaikkunan.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -789,7 +789,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync on nyt käynnissä. Näpäytä valikon kuvaketta avataksesi tilaikkunan. </translation>
+        <translation>MEGAsync on nyt k&auml;ynniss&auml;. N&auml;p&auml;yt&auml; valikon kuvaketta avataksesi tilaikkunan. </translation>
     </message>
     <message>
         <source>Quit</source>
@@ -804,17 +804,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Lähetä MEGAan</translation>
+        <translation>L&auml;het&auml; MEGAan</translation>
     </message>
     <message>
         <source>Show status</source>
         <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Näytä tila</translation>
+        <translation>N&auml;yt&auml; tila</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Asetustiedostosi on vioittunut, ole hyvä ja aloita alusta</translation>
+        <translation>Asetustiedostosi on vioittunut, ole hyv&auml; ja aloita alusta</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
@@ -824,27 +824,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link: </source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Virhe haettaessa linkkiä:</translation>
+        <translation>Virhe haettaessa linkki&auml;:</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished">MEGAsync ei saa yhteyttä. Ole hyvä ja tarkista internet-yhteys sekä palomuuriasetukset. Huomioi myös, että monet virustorjuntaohjelmat sisältävät palomuurin.</translation>
+        <translation type="unfinished">MEGAsync ei saa yhteytt&auml;. Ole hyv&auml; ja tarkista internet-yhteys sek&auml; palomuuriasetukset. Huomioi my&ouml;s, ett&auml; monet virustorjuntaohjelmat sis&auml;lt&auml;v&auml;t palomuurin.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Synkronointisi &quot;%1&quot; on poiskytketty koska etäkansiota ei ole olemassa </translation>
+        <translation type="unfinished">Synkronointisi &quot;%1&quot; on poiskytketty koska et&auml;kansiota ei ole olemassa </translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Synkronointisi &quot;%1&quot; on estetty, sillä paikallista kansiota ei ole olemassa</translation>
+        <translation type="unfinished">Synkronointisi &quot;%1&quot; on estetty, sill&auml; paikallista kansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Käyttäjätilisi on estetty. Ole hyvä, ota yhteyttä support@mega.co.nz</translation>
+        <translation type="unfinished">K&auml;ytt&auml;j&auml;tilisi on estetty. Ole hyv&auml;, ota yhteytt&auml; support@mega.co.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -854,7 +854,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation type="unfinished">Olet kirjautunut ulos tästä tietokoneesta toisaalta</translation>
+        <translation type="unfinished">Olet kirjautunut ulos t&auml;st&auml; tietokoneesta toisaalta</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -864,25 +864,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Synkronointisi &quot;%1&quot; on poissa käytöstä, koska etäkansio on roskakorissa</translation>
+        <translation type="unfinished">Synkronointisi &quot;%1&quot; on poissa k&auml;yt&ouml;st&auml;, koska et&auml;kansio on roskakorissa</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Synkronointisi &quot;%1&quot; on estetty, sillä paikallinen kansio on muuttunut</translation>
+        <translation type="unfinished">Synkronointisi &quot;%1&quot; on estetty, sill&auml; paikallinen kansio on muuttunut</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Synkronointisi &quot;%1&quot; on estetty. Etäkansiolle (tai osalle siitä) ei ole täysiä käyttöoikeuksia</translation>
+        <translation type="unfinished">Synkronointisi &quot;%1&quot; on estetty. Et&auml;kansiolle (tai osalle siit&auml;) ei ole t&auml;ysi&auml; k&auml;ytt&ouml;oikeuksia</translation>
     </message>
     <message>
         <source>Over quota</source>
-        <translation type="unfinished">Kiintiön ylitse</translation>
+        <translation type="unfinished">Kiinti&ouml;n ylitse</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translation type="unfinished">Synkronointisi &quot;%1&quot; on epäkelpo, sillä VirtualBoxin jaettujen kansioiden synkronointi ei ole tuettuna kyseisen palvelun tiedostojärjestelmän puutteiden takia.</translation>
+        <translation type="unfinished">Synkronointisi &quot;%1&quot; on ep&auml;kelpo, sill&auml; VirtualBoxin jaettujen kansioiden synkronointi ei ole tuettuna kyseisen palvelun tiedostoj&auml;rjestelm&auml;n puutteiden takia.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -890,7 +890,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer failed:</source>
-        <translation type="unfinished">Siirto epäonnistui:</translation>
+        <translation type="unfinished">Siirto ep&auml;onnistui:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -902,22 +902,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No error</source>
         <translatorcomment>Label to show that an SDK operation has been complete successfully.</translatorcomment>
-        <translation>Ei virheitä</translation>
+        <translation>Ei virheit&auml;</translation>
     </message>
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Sisäinen virhe</translation>
+        <translation>Sis&auml;inen virhe</translation>
     </message>
     <message>
         <source>Invalid argument</source>
         <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo muuttuja</translation>
+        <translation>Ep&auml;kelpo muuttuja</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Pyyntö epäonnistui, yritetään uudelleen</translation>
+        <translation>Pyynt&ouml; ep&auml;onnistui, yritet&auml;&auml;n uudelleen</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
@@ -927,12 +927,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed permanently</source>
         <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
-        <translation>Epäonnistui pysyvästi</translation>
+        <translation>Ep&auml;onnistui pysyv&auml;sti</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
         <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
-        <translation>Liian monta samanaikaista yhteyttä tai siirtoa</translation>
+        <translation>Liian monta samanaikaista yhteytt&auml; tai siirtoa</translation>
     </message>
     <message>
         <source>Out of range</source>
@@ -947,17 +947,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not found</source>
         <translatorcomment>Label to show that an error related with a resource Not found occurs during a SDK operation.</translatorcomment>
-        <translation>Ei löytynyt</translation>
+        <translation>Ei l&ouml;ytynyt</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
         <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
-        <translation>Kehälinkki havaittu</translation>
+        <translation>Keh&auml;linkki havaittu</translation>
     </message>
     <message>
         <source>Access denied</source>
         <translatorcomment>Label to show that an error related with an denied access occurs during a SDK operation.</translatorcomment>
-        <translation>Pääsy evätty</translation>
+        <translation>P&auml;&auml;sy ev&auml;tty</translation>
     </message>
     <message>
         <source>Already exists</source>
@@ -967,17 +967,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Incomplete</source>
         <translatorcomment>Label to show that an error related with an Incomplete SDK operation.</translatorcomment>
-        <translation>Keskeneräinen</translation>
+        <translation>Keskener&auml;inen</translation>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo avain/Virhe salauksen purussa</translation>
+        <translation>Ep&auml;kelpo avain/Virhe salauksen purussa</translation>
     </message>
     <message>
         <source>Bad session ID</source>
         <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo istunnon tunnus</translation>
+        <translation>Ep&auml;kelpo istunnon tunnus</translation>
     </message>
     <message>
         <source>Blocked</source>
@@ -987,17 +987,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
-        <translation>Kiintiön ylitse</translation>
+        <translation>Kiinti&ouml;n ylitse</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
         <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
-        <translation>Tilapäisesti ei saatavilla</translation>
+        <translation>Tilap&auml;isesti ei saatavilla</translation>
     </message>
     <message>
         <source>Connection overflow</source>
         <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
-        <translation>Liiallinen määrä yhteyksiä</translation>
+        <translation>Liiallinen m&auml;&auml;r&auml; yhteyksi&auml;</translation>
     </message>
     <message>
         <source>Write error</source>
@@ -1012,7 +1012,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid application key</source>
         <translatorcomment>Label to show that an error related with an invalid or missing application key occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo sovellusavain</translation>
+        <translation>Ep&auml;kelpo sovellusavain</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1037,7 +1037,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Kohdekansio on synkronoitu ja sinulla on siellä saman niminen tiedosto (%1). Jos jatkat lähetystä, aiempi tiedosto korvataan.</translation>
+        <translation type="obsolete">Kohdekansio on synkronoitu ja sinulla on siell&auml; saman niminen tiedosto (%1). Jos jatkat l&auml;hetyst&auml;, aiempi tiedosto korvataan.</translation>
     </message>
 </context>
 <context>
@@ -1048,7 +1048,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Do not ask me again</source>
-        <translation type="unfinished">Älä kysy uudestaan</translation>
+        <translation type="unfinished">&Auml;l&auml; kysy uudestaan</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1060,7 +1060,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
-        <translation type="unfinished">Kohdehakemisto on jo synkronoitu, ja siellä on saman niminen tiedosto. Jos jatkat lähetystä, aiempi tiedosto korvataan. Haluatko jatkaa?</translation>
+        <translation type="unfinished">Kohdehakemisto on jo synkronoitu, ja siell&auml; on saman niminen tiedosto. Jos jatkat l&auml;hetyst&auml;, aiempi tiedosto korvataan. Haluatko jatkaa?</translation>
     </message>
 </context>
 <context>
@@ -1103,7 +1103,7 @@ Are you sure?</source>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Syötä uusi nimi kansiolle:</translation>
+        <translation>Sy&ouml;t&auml; uusi nimi kansiolle:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&amp;apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>Juurikansiota ei voida synkronoida. Ole hyvä ja valitse alikansio.</translation>
+        <translation>Juurikansiota ei voida synkronoida. Ole hyv&auml; ja valitse alikansio.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1124,26 +1124,26 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">Sinulla on %1 tässä kansiossa. Haluatko varmasti synkronoida sen?</translation>
+        <translation type="obsolete">Sinulla on %1 t&auml;ss&auml; kansiossa. Haluatko varmasti synkronoida sen?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Epäkelpo synkronointikansio. Ole hyvä ja varmista, että et käytä merkkejä kuten &apos;&apos; &apos;/&apos; tai &apos;:&apos; kansioidesi nimissä. </translation>
+Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
+        <translation>Ep&auml;kelpo synkronointikansio. Ole hyv&auml; ja varmista, ett&auml; et k&auml;yt&auml; merkkej&auml; kuten &amp;apos;&amp;apos; &amp;apos;/&amp;apos; tai &amp;apos;:&amp;apos; kansioidesi nimiss&auml;. </translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Lähetä aina tänne</translation>
+        <translation>L&auml;het&auml; aina t&auml;nne</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translation type="unfinished">Tarvitset joko kirjoitus & luku tai täydet oikeudet voidaksesi lähettää valittuun kansioon.</translation>
+        <translation type="unfinished">Tarvitset joko kirjoitus &amp; luku tai t&auml;ydet oikeudet voidaksesi l&auml;hett&auml;&auml; valittuun kansioon.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
-        <translation type="unfinished">Tarvitset täydet pääsyoikeudet voidaksesi synkronoida valitun kansion.</translation>
+        <translation type="unfinished">Tarvitset t&auml;ydet p&auml;&auml;syoikeudet voidaksesi synkronoida valitun kansion.</translation>
     </message>
 </context>
 <context>
@@ -1156,12 +1156,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Syötä yksi tai useampi MEGA-tiedostolinkki</translation>
+        <translation>Sy&ouml;t&auml; yksi tai useampi MEGA-tiedostolinkki</translation>
     </message>
     <message>
         <source>Submit</source>
         <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
-        <translation>Lähetä</translation>
+        <translation>L&auml;het&auml;</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1176,12 +1176,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Syötä vähintään yksi MEGA-tiedostolinkki</translation>
+        <translation>Sy&ouml;t&auml; v&auml;hint&auml;&auml;n yksi MEGA-tiedostolinkki</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Kelpaavia MEGA-linkkejä ei löydetty. (Kansiolinkit eivät vielä ole tuettuina)</translation>
+        <translation>Kelpaavia MEGA-linkkej&auml; ei l&ouml;ydetty. (Kansiolinkit eiv&auml;t viel&auml; ole tuettuina)</translation>
     </message>
 </context>
 <context>
@@ -1189,22 +1189,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&Kyllä</translation>
+        <translation>&amp;Kyll&auml;</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&Ei</translation>
+        <translation>&amp;Ei</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>&OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&Keskeytä</translation>
+        <translation>&amp;Keskeyt&auml;</translation>
     </message>
 </context>
 <context>
@@ -1247,12 +1247,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 päivä sitten</translation>
+        <translation>1 p&auml;iv&auml; sitten</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 päivää sitten</translation>
+        <translation>%1 p&auml;iv&auml;&auml; sitten</translation>
     </message>
     <message>
         <source>1 month ago</source>
@@ -1299,7 +1299,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Käyttäjätili</translation>
+        <translation>K&auml;ytt&auml;j&auml;tili</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -1334,22 +1334,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply</source>
         <translatorcomment>Label for apply settings button.</translatorcomment>
-        <translation>Käytä</translation>
+        <translation>K&auml;yt&auml;</translation>
     </message>
     <message>
         <source>Show notifications</source>
         <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Näytä ilmoitukset</translation>
+        <translation>N&auml;yt&auml; ilmoitukset</translation>
     </message>
     <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Käynnistä automaattisesti</translation>
+        <translation>K&auml;ynnist&auml; automaattisesti</translation>
     </message>
     <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
-        <translation>Päivitä MEGAsync-sovellus automaattisesti</translation>
+        <translation>P&auml;ivit&auml; MEGAsync-sovellus automaattisesti</translation>
     </message>
     <message>
         <source>Language</source>
@@ -1384,7 +1384,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Päivitä käyttäjätili</translation>
+        <translation>P&auml;ivit&auml; k&auml;ytt&auml;j&auml;tili</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -1398,7 +1398,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Lisää</translation>
+        <translation>Lis&auml;&auml;</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -1413,12 +1413,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Lähetysnopeuden rajoitus</translation>
+        <translation>L&auml;hetysnopeuden rajoitus</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&amp;apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
-        <translation>Älä rajoita</translation>
+        <translation>&Auml;l&auml; rajoita</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -1443,45 +1443,45 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>Lähetyskiintiö</translation>
+        <translation>L&auml;hetyskiinti&ouml;</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Palvelinkohtaiset lähetysrajat ovat käytössä ja niitä sovelletaan kun uusia lähetyksiä aloitetaan</translation>
+        <translation type="obsolete">Palvelinkohtaiset l&auml;hetysrajat ovat k&auml;yt&ouml;ss&auml; ja niit&auml; sovelletaan kun uusia l&auml;hetyksi&auml; aloitetaan</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Kansio Windowsin resurssienhallinnasta lähteville lähetyksille</translation>
+        <translation type="obsolete">Kansio Windowsin resurssienhallinnasta l&auml;hteville l&auml;hetyksille</translation>
     </message>
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation>Sisällyttämättä jätettävät tiedostonimet</translation>
+        <translation>Sis&auml;llytt&auml;m&auml;tt&auml; j&auml;tett&auml;v&auml;t tiedostonimet</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
         <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Välityspalvelimen asetukset</translation>
+        <translation>V&auml;lityspalvelimen asetukset</translation>
     </message>
     <message>
         <source>No proxy</source>
         <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
-        <translation>Ei välityspalvelinta</translation>
+        <translation>Ei v&auml;lityspalvelinta</translation>
     </message>
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
-        <translation>Löydä automaattisesti</translation>
+        <translation>L&ouml;yd&auml; automaattisesti</translation>
     </message>
     <message>
         <source>Proxy</source>
         <translatorcomment>Tab label of Proxy dialog settings. Max 15 characters.</translatorcomment>
-        <translation>Välityspalvelin</translation>
+        <translation>V&auml;lityspalvelin</translation>
     </message>
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
-        <translation>Välityspalvelimen tyyppi:</translation>
+        <translation>V&auml;lityspalvelimen tyyppi:</translation>
     </message>
     <message>
         <source>Server:</source>
@@ -1496,12 +1496,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Välityspalvelin vaatii salasanan</translation>
+        <translation>V&auml;lityspalvelin vaatii salasanan</translation>
     </message>
     <message>
         <source>Username:</source>
         <translatorcomment>Label to indicate the username of the proxy. String as short as possible.</translatorcomment>
-        <translation>Käyttäjänimi:</translation>
+        <translation>K&auml;ytt&auml;j&auml;nimi:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1511,12 +1511,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
-        <translation>Tieto ei saatavana tällä hetkellä</translation>
+        <translation>Tieto ei saatavana t&auml;ll&auml; hetkell&auml;</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
-        <translation>%1 (%2%) %3:sta käytetty</translation>
+        <translation>%1 (%2%) %3:sta k&auml;ytetty</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -1536,7 +1536,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Lähetykset</translation>
+        <translation>/MEGAsync L&auml;hetykset</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1545,7 +1545,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">Olet jo synkronoimassa koko Pilvilevyäsi.</translation>
+        <translation type="obsolete">Olet jo synkronoimassa koko Pilvilevy&auml;si.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1560,13 +1560,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation>Sisällyttämättä jätetty nimi</translation>
+        <translation>Sis&auml;llytt&auml;m&auml;tt&auml; j&auml;tetty nimi</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Syötä synkronoinnista pois jätettävä nimi. (Jokerit * ja ? ovat sallittuja):</translation>
+        <translation>Sy&ouml;t&auml; synkronoinnista pois j&auml;tett&auml;v&auml; nimi. (Jokerit * ja ? ovat sallittuja):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1581,21 +1581,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Uudet ei-sisällytettävät tiedostonimet huomioidaan kun sovellus käynnistyy uudestaan.</translation>
+        <translation type="obsolete">Uudet ei-sis&auml;llytett&auml;v&auml;t tiedostonimet huomioidaan kun sovellus k&auml;ynnistyy uudestaan.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Välimuisti</translation>
+        <translation type="obsolete">V&auml;limuisti</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation type="obsolete">Välimuistin koko: %1</translation>
+        <translation type="obsolete">V&auml;limuistin koko: %1</translation>
     </message>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>Tyhjennä</translation>
+        <translation>Tyhjenn&auml;</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1603,9 +1603,9 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Välityspalvelimen asetus on epäkelpo tai palvelin ei vastaa</translation>
+        <translation>V&auml;lityspalvelimen asetus on ep&auml;kelpo tai palvelin ei vastaa</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1615,31 +1615,31 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
-        <translation>Tarkista päivitykset</translation>
+        <translation>Tarkista p&auml;ivitykset</translation>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation type="obsolete">Valikoiva synkronisointi päällä</translation>
+        <translation type="obsolete">Valikoiva synkronisointi p&auml;&auml;ll&auml;</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation type="obsolete">Ota täysi tilisynkronointi käyttöön</translation>
+        <translation type="obsolete">Ota t&auml;ysi tilisynkronointi k&auml;ytt&ouml;&ouml;n</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation type="obsolete">Täyden tilisynkronoinnin käyttöön ottaminen poistaa kaikki nykyiset synkronointisi käytöstä</translation>
+        <translation type="obsolete">T&auml;yden tilisynkronoinnin k&auml;ytt&ouml;&ouml;n ottaminen poistaa kaikki nykyiset synkronointisi k&auml;yt&ouml;st&auml;</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation type="obsolete">Täysi tilisynkronointi päällä</translation>
+        <translation type="obsolete">T&auml;ysi tilisynkronointi p&auml;&auml;ll&auml;</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Täyden tilisynkronoinnin käytöstä poistaminen sallii valikoivan kansiosynkronoinnin käyttöön ottamisen</translation>
+        <translation type="obsolete">T&auml;yden tilisynkronoinnin k&auml;yt&ouml;st&auml; poistaminen sallii valikoivan kansiosynkronoinnin k&auml;ytt&ouml;&ouml;n ottamisen</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation type="obsolete">Poista täysi tilisynkronointi päältä</translation>
+        <translation type="obsolete">Poista t&auml;ysi tilisynkronointi p&auml;&auml;lt&auml;</translation>
     </message>
     <message>
         <source>Other</source>
@@ -1648,33 +1648,33 @@ when the application starts again.</source>
     <message>
         <source>Disable overlay icons</source>
         <translatorcomment>Label to let the user disable overlay icon for the specific File browser.</translatorcomment>
-        <translation>Poista päällyskuvakkeet käytöstä</translation>
+        <translation>Poista p&auml;&auml;llyskuvakkeet k&auml;yt&ouml;st&auml;</translation>
     </message>
     <message>
         <source>Force a full scan</source>
         <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>Pakota täysi uudelleenskannaus</translation>
+        <translation>Pakota t&auml;ysi uudelleenskannaus</translation>
     </message>
     <message>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
-        <translation>Täysi skannaus</translation>
+        <translation>T&auml;ysi skannaus</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync suorittaa käynnistyessään täyden synkronoitavien kansioiden tarkastuksen.</translation>
+        <translation type="obsolete">MEGAsync suorittaa k&auml;ynnistyess&auml;&auml;n t&auml;yden synkronoitavien kansioiden tarkastuksen.</translation>
     </message>
     <message>
         <source>Install update</source>
         <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
-        <translation>Päivitä</translation>
+        <translation>P&auml;ivit&auml;</translation>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Kansio lähetyksille tältä tietokoneelta</translation>
+        <translation type="obsolete">Kansio l&auml;hetyksille t&auml;lt&auml; tietokoneelta</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1684,19 +1684,19 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Käynnistä kirjautumisen yhteydessä</translation>
+        <translation>K&auml;ynnist&auml; kirjautumisen yhteydess&auml;</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation>Näytä Mac OS ilmoitukset</translation>
+        <translation>N&auml;yt&auml; Mac OS ilmoitukset</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync suorittaa käynnistyessään synkronoitavien kansioiden täyden tarkastuksen.</translation>
+        <translation>MEGAsync suorittaa k&auml;ynnistyess&auml;&auml;n synkronoitavien kansioiden t&auml;yden tarkastuksen.</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1711,7 +1711,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
-        <translation>Lähetykset:</translation>
+        <translation>L&auml;hetykset:</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -1719,23 +1719,23 @@ Do you want to restart MEGAsync now?</source>
         <translation>Lataukset:</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>Tätä synkronisaatiota ei voida ottaa käyttöön, sillä paikalliskansiota ei ole olemassa</translation>
+        <translation>T&auml;t&auml; synkronisaatiota ei voida ottaa k&auml;ytt&ouml;&ouml;n, sill&auml; paikalliskansiota ei ole olemassa</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>Tätä synkroinointia ei voida sallia, sillä etäkansiota ei ole olemassa</translation>
+        <translation>T&auml;t&auml; synkroinointia ei voida sallia, sill&auml; et&auml;kansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation type="obsolete">Synkronoit jo koko pilvilevyäsi</translation>
+        <translation type="obsolete">Synkronoit jo koko pilvilevy&auml;si</translation>
     </message>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Ota käyttöön / poista käytöstä</translation>
+        <translation>Ota k&auml;ytt&ouml;&ouml;n / poista k&auml;yt&ouml;st&auml;</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1743,9 +1743,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Valitse paikallinen kansio</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia t&auml;ss&auml; paikalliskansiossa.</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -1755,7 +1755,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Vie Isäntäavain</translation>
+        <translation type="unfinished">Vie Is&auml;nt&auml;avain</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -1765,12 +1765,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Isäntäavaimen vienti ja sen säilyttäminen turvallisessa sijainnissa mahdollistaa salasanan vaihdon ilman datan menetystä.</translation>
+        <translation type="unfinished">Is&auml;nt&auml;avaimen vienti ja sen s&auml;ilytt&auml;minen turvallisessa sijainnissa mahdollistaa salasanan vaihdon ilman datan menetyst&auml;.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Pidä aina fyysinen kopio isäntäavaimestasi (kuten asiakaslaitteella, ulkopuolisella tallennustilalla tai paperilla).</translation>
+        <translation type="unfinished">Pid&auml; aina fyysinen kopio is&auml;nt&auml;avaimestasi (kuten asiakaslaitteella, ulkopuolisella tallennustilalla tai paperilla).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -1786,12 +1786,12 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Uudet pois jätettävät tiedostonimet huomioidaan kun sovellus käynnistyy jälleen.</translation>
+        <translation type="unfinished">Uudet pois j&auml;tett&auml;v&auml;t tiedostonimet huomioidaan kun sovellus k&auml;ynnistyy j&auml;lleen.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
         <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Uudet pois jätettävät tiedostokoot huomioidaan kun sovellus käynnistyy jälleen.</translation>
+        <translation type="unfinished">Uudet pois j&auml;tett&auml;v&auml;t tiedostokoot huomioidaan kun sovellus k&auml;ynnistyy j&auml;lleen.</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1800,11 +1800,11 @@ when the application starts again</source>
     </message>
     <message>
         <source>Local cache: %1</source>
-        <translation type="unfinished">Paikallinen välimuisti: %1</translation>
+        <translation type="unfinished">Paikallinen v&auml;limuisti: %1</translation>
     </message>
     <message>
         <source>Remote cache: %1</source>
-        <translation type="unfinished">Etävälimuisti: %1</translation>
+        <translation type="unfinished">Et&auml;v&auml;limuisti: %1</translation>
     </message>
 </context>
 <context>
@@ -1817,17 +1817,17 @@ when the application starts again</source>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation>Minulla on MEGA-käyttäjätili</translation>
+        <translation>Minulla on MEGA-k&auml;ytt&auml;j&auml;tili</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
-        <translation>Minulla ei ole MEGA-käyttäjätiliä</translation>
+        <source>I don&amp;apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <translation>Minulla ei ole MEGA-k&auml;ytt&auml;j&auml;tili&auml;</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
         <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
-        <translation>Luo uusi MEGA-käyttäjätili</translation>
+        <translation>Luo uusi MEGA-k&auml;ytt&auml;j&auml;tili</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -1837,7 +1837,7 @@ when the application starts again</source>
     <message>
         <source>Email:</source>
         <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>Sähköposti:</translation>
+        <translation>S&auml;hk&ouml;posti:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1852,7 +1852,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Hyväksyn MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Palveluehdot</a></translation>
+        <translation>Hyv&auml;ksyn MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Palveluehdot</a></translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -1862,7 +1862,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Ole hyvä ja vahvista käyttäjätilisi sähköpostiisi lähetetyllä vahvistuslinkillä.</translation>
+        <translation>Ole hyv&auml; ja vahvista k&auml;ytt&auml;j&auml;tilisi s&auml;hk&ouml;postiisi l&auml;hetetyll&auml; vahvistuslinkill&auml;.</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1881,7 +1881,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation type="obsolete">Täysi käyttäjätilin synkronointi</translation>
+        <translation type="obsolete">T&auml;ysi k&auml;ytt&auml;j&auml;tilin synkronointi</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1891,7 +1891,7 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Synkronoi tiettyjä kansioita pilvipalvelimeltasi</translation>
+        <translation>Synkronoi tiettyj&auml; kansioita pilvipalvelimeltasi</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -1953,7 +1953,7 @@ when the application starts again</source>
     <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>Käyttäjä on jo olemassa</translation>
+        <translation>K&auml;ytt&auml;j&auml; on jo olemassa</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -1963,15 +1963,15 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Virheellinen sähköposti ja/tai salsana.</translation>
+        <translation>Virheellinen s&auml;hk&ouml;posti ja/tai salsana.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Oletko vahvistanut käyttäjätilisi?</translation>
+        <translation>Oletko vahvistanut k&auml;ytt&auml;j&auml;tilisi?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&amp;apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA-kansiota ei ole</translation>
     </message>
@@ -1983,42 +1983,42 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Ole hyvä, syötä sähköpostiosoitteesi</translation>
+        <translation>Ole hyv&auml;, sy&ouml;t&auml; s&auml;hk&ouml;postiosoitteesi</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Ole hyvä, syötä kelpaava sähköpostiosoite</translation>
+        <translation>Ole hyv&auml;, sy&ouml;t&auml; kelpaava s&auml;hk&ouml;postiosoite</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Ole hyvä, syötä salasanasi</translation>
+        <translation>Ole hyv&auml;, sy&ouml;t&auml; salasanasi</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Ole hyvä, syötä nimesi</translation>
+        <translation>Ole hyv&auml;, sy&ouml;t&auml; nimesi</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Ole hyvä, syötä vahvempi salasana</translation>
+        <translation>Ole hyv&auml;, sy&ouml;t&auml; vahvempi salasana</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&amp;apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Annetut salasanat eivät täsmää</translation>
+        <translation>Annetut salasanat eiv&auml;t t&auml;sm&auml;&auml;</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Sinun on hyväksyttävä käyttöehdot</translation>
+        <translation>Sinun on hyv&auml;ksytt&auml;v&auml; k&auml;ytt&ouml;ehdot</translation>
     </message>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Luodaan käyttäjätiliä...</translation>
+        <translation>Luodaan k&auml;ytt&auml;j&auml;tili&auml;...</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2028,7 +2028,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">Sinulla on %1 Pilvilevylläsi. Haluatko varmasti synkronoida koko Pilvilevysi?</translation>
+        <translation type="obsolete">Sinulla on %1 Pilvilevyll&auml;si. Haluatko varmasti synkronoida koko Pilvilevysi?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -2037,17 +2037,17 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Ole hyvä, valitse paikallinen kansio</translation>
+        <translation>Ole hyv&auml;, valitse paikallinen kansio</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Ole hyvä, valitse MEGA-kansio</translation>
+        <translation>Ole hyv&auml;, valitse MEGA-kansio</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Paikallinen kansio on liian iso (tämä versio on rajoitettu %1 kansioihin tai %2 tiedostoihin). Ole hyvä, valitse toinen kansio.</translation>
+        <translation type="obsolete">Paikallinen kansio on liian iso (t&auml;m&auml; versio on rajoitettu %1 kansioihin tai %2 tiedostoihin). Ole hyv&auml;, valitse toinen kansio.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -2064,13 +2064,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>Yrität synkronoida äärimmäisen isoa kansiota. Estääksesi tehottoman ja ei-toivottavan, täyden käynnistyslevyn synkronoinnin, pyydämme sinua aloittamaan pienemmästä kansiota ja lisäävän enemmän kun MEGAsync on käynnissä.</translation>
+        <translation>Yrit&auml;t synkronoida &auml;&auml;rimm&auml;isen isoa kansiota. Est&auml;&auml;ksesi tehottoman ja ei-toivottavan, t&auml;yden k&auml;ynnistyslevyn synkronoinnin, pyyd&auml;mme sinua aloittamaan pienemm&auml;st&auml; kansiota ja lis&auml;&auml;v&auml;n enemm&auml;n kun MEGAsync on k&auml;ynniss&auml;.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Tiedostojärjestelmä ei ole saatavilla. Ole hyvä, yritä uudestaan. Jos ongelma jatkuu, ota yhteyttä bug@mega.co.nz</translation>
+        <translation>Tiedostoj&auml;rjestelm&auml; ei ole saatavilla. Ole hyv&auml;, yrit&auml; uudestaan. Jos ongelma jatkuu, ota yhteytt&auml; bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2085,7 +2085,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Full sync</source>
         <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Täysi synkronointi</translation>
+        <translation>T&auml;ysi synkronointi</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
@@ -2095,17 +2095,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Pilvilevysi tullaan synkronoimaan tämän kansion kanssa:</translation>
+        <translation>Pilvilevysi tullaan synkronoimaan t&auml;m&auml;n kansion kanssa:</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>Sinulla ei ole kirjoitusoikeuksia tässä paikalliskansiossa.</translation>
+        <translation>Sinulla ei ole kirjoitusoikeuksia t&auml;ss&auml; paikalliskansiossa.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync ei kykene lataamaan täältä mitään.</translation>
+        <translation>MEGAsync ei kykene lataamaan t&auml;&auml;lt&auml; mit&auml;&auml;n.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -2115,7 +2115,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Käyttäjätilisi on estetty. Ole hyvä, ota yhteyttä support@mega.co.nz</translation>
+        <translation type="unfinished">K&auml;ytt&auml;j&auml;tilisi on estetty. Ole hyv&auml;, ota yhteytt&auml; support@mega.co.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2123,7 +2123,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translation type="unfinished">Haluatko varmasti keskeyttää ohjatun asennuksen ja kumota kaikki muutokset?</translation>
+        <translation type="unfinished">Haluatko varmasti keskeytt&auml;&auml; ohjatun asennuksen ja kumota kaikki muutokset?</translation>
     </message>
 </context>
 <context>
@@ -2131,7 +2131,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Lähetä MEGAan</translation>
+        <translation>L&auml;het&auml; MEGAan</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2141,12 +2141,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
-        <translation>Jaa MEGAn käyttäjän kanssa</translation>
+        <translation>Jaa MEGAn k&auml;ytt&auml;j&auml;n kanssa</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
-        <translation>Lähetä MEGAn käyttäjälle.</translation>
+        <translation>L&auml;het&auml; MEGAn k&auml;ytt&auml;j&auml;lle.</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -2188,12 +2188,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Exclude files bigger than</source>
         <translatorcomment>Label to indicate the upper limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation type="unfinished">Jätä pois tiedostot suuremmat kuin</translation>
+        <translation type="unfinished">J&auml;t&auml; pois tiedostot suuremmat kuin</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
         <translatorcomment>Label to indicate the lower limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation type="unfinished">Jätä pois tiedostot pienemmät kuin</translation>
+        <translation type="unfinished">J&auml;t&auml; pois tiedostot pienemm&auml;t kuin</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2221,12 +2221,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Lähetä MEGAan</translation>
+        <translation>L&auml;het&auml; MEGAan</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Ole hyvä, valitse lähetyskansio tiedostoillesi:</translation>
+        <translation>Ole hyv&auml;, valitse l&auml;hetyskansio tiedostoillesi:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -2236,17 +2236,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>Lähetä aina tänne</translation>
+        <translation>L&auml;het&auml; aina t&auml;nne</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Lähetykset</translation>
+        <translation>/MEGAsync L&auml;hetykset</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGAsync Lähetykset</translation>
+        <translation>MEGAsync L&auml;hetykset</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2303,7 +2303,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">käytetty</translation>
+        <translation type="unfinished">k&auml;ytetty</translation>
     </message>
     <message>
         <source>Available</source>
