@@ -781,17 +781,24 @@ void InfoDialog::onAllTransfersFinished()
 void InfoDialog::on_bSettings_clicked()
 {   
     QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
-    QPointer<InfoOverQuotaDialog> iod = this;
+
+#ifdef __APPLE__
+    QPointer<InfoDialog> iod = this;
+#endif
+
     app->showTrayMenu(&p);
 
-    #ifdef __APPLE__
+#ifdef __APPLE__
     if(!iod)
     {
         return;
     }
+
     if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    {
         this->hide();
-    #endif
+    }
+#endif
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()

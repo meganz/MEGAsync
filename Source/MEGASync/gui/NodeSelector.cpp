@@ -71,7 +71,7 @@ void NodeSelector::nodesReady()
             item->setData(0, Qt::UserRole, (qulonglong)folder->getHandle());
 
             int access = megaApi->getAccess(folder);
-            if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE))
+            if(((selectMode == NodeSelector::UPLOAD_SELECT) && (access < MegaShare::ACCESS_READWRITE))
                     || ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL)))
             {
                 QBrush b (QColor(170,170,170, 127));
@@ -225,7 +225,7 @@ void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode
             parentItem->addChild(item);
 
             int access = megaApi->getAccess(node);
-            if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE))
+            if(((selectMode == NodeSelector::UPLOAD_SELECT) && (access < MegaShare::ACCESS_READWRITE))
                     || ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL)))
             {
                 QBrush b (QColor(170, 170, 170, 127));
