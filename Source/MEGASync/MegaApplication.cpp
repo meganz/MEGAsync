@@ -831,6 +831,7 @@ void MegaApplication::loggedIn()
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
+    updated = false;
     infoDialog = new InfoDialog(this);
 
     //Set the upload limit
