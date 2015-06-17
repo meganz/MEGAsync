@@ -122,13 +122,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files.Please, select another folder.</translation>
+        <translation type="obsolete">ローカルフォルダが大きすぎます（このバージョンでは%1フォルダか%2ファイルに制限されます）。他のフォルダを選択して下さい。</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">非常に大きなフォルダをシンクしようとしていますね。大容量のデータをシンクするのは、非効率的で危険を伴いますので、小さいフォルダから始めて、MEGAsync作動中にデータを追加して行くようにして下さいませんか。</translation>
     </message>
 </context>
 <context>
@@ -144,7 +144,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync に問題あり。詳細は以下の通り：</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>あなたのエラー・レポートがMEGAsync の向上に役立ちます。個人的情報は一切含まれません。詳細を教えていただけるのであれば、以下にご記入下さい。</translation>
     </message>
@@ -207,8 +207,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>エラー</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>このローカルフォルダに書き込む許可がありません。</translation>
     </message>
 </context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>警告</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
+        <source>You don&amp;apos;t have write permissions in this folder.</source>
         <translation type="obsolete">このフォルダに書き込む許可がありません。</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync ではここへダウンロードすることができません。</translation>
     </message>
     <message>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>このまま続けますか？</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>このローカルフォルダに書き込む許可がありません。</translation>
     </message>
     <message>
@@ -263,7 +263,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>非常に大きなフォルダをシンクしようとしていますね。大容量のデータをシンクするのは、非効率的で危険を伴いますので、小さいフォルダから始めて、MEGAsync作動中にデータを追加して行くようにして下さいませんか。</translation>
     </message>
     <message>
         <source>Error</source>
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
-        <translation type="unfinished">You can not sync a shared folder without Full Access permissions</translation>
+        <translation type="unfinished">完全アクセスの許可無しに、共有フォルダをシンクすることはできません。</translation>
     </message>
 </context>
 <context>
@@ -303,7 +303,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation type="obsolete">/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync ダウンロード</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
         <translation>見つかりません。</translation>
     </message>
     <message>
@@ -334,13 +334,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>You are about to import this file to a synced folder.If you enable downloading, the file will be duplicated on your computer.Are you sure?</translation>
+        <translation>このファイルをシンクされたファイルへインポートしようとしています。ダウンロードを開始すると、ファイルはあなたのコンピュータ上で複製されますが、よろしいですか？</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>You are about to import these files to a synced folder.If you enable downloading, the files will be duplicated on your computer.Are you sure?</translation>
+        <translation>これらのファイルをシンクされたフォルダにインポートしようとしていますね。このままダウンロードを開始すると、これらのファイルはあなたのコンピュータ上に複製されますが、よろしいですか？</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -351,7 +351,7 @@ Are you sure?</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translation>このローカルフォルダに書き込む許可がありません。</translation>
     </message>
 </context>
@@ -491,7 +491,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="unfinished">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
+        <translation type="unfinished">許容スペースのクオータを超えてしまいました。[A]アップグレード[/A]して、セキュリティー万全の末端間暗号化ストレージをご活用下さい。</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">MEGAsyncを試して下さってありがとう。<br>この&beta;版は失効しました。Twitterの <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> でアップデートをご覧下さい。</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,17 +564,17 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
+because the remote folder doesn&amp;apos;t exist</source>
+        <translation type="obsolete">リモートフォルダが存在しないため、シンク&quot;%1&quot; は無効となっています。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder is in the rubbish bin</translation>
+        <translation type="obsolete">リモートフォルダがゴミ箱に入っているため、シンク&quot;%1&quot; は無効となっています。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
+because the local folder doesn&amp;apos;t exist</source>
         <translation type="obsolete">ローカル・フォルダが存在しないため、あなたの sync &quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
@@ -583,19 +583,19 @@ because the local folder doesn&apos;t exist</source>
         <translation>エラー：宛先フォルダが無効。アップロードは中止されました。</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">フォルダは大きすぎるため、アップロードされませんでした（この&beta;版では%2フォルダか%3ファイルに制限されています）。</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 フォルダは、大きすぎるためアップロードされませんでした（このベータ版では%2フォルダか%3ファイルに制限されています）。</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop.Deletions that occur while it is not running will not be propagated.Exit anyway?</translation>
+        <translation type="obsolete">シンクは中断されます。その間に起こる削除は反映されません。終了、脱出しますね？</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
         <translation>最新版</translation>
     </message>
     <message>
@@ -691,11 +691,11 @@ Exit anyway?</source>
         <translation>お待ちください</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">フォルダ(%1)は大きすぎるので、アップロードされませんでした。過大データのアップロードは効率が悪く危険であるため、防止機能が設けられています。</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1フォルダは大きすぎるので、アップロードされませんでした。多大データのアップロードは効率が悪く危険であるため、防止機能が設けられています。</translation>
     </message>
     <message>
@@ -711,12 +711,12 @@ Exit anyway?</source>
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>最新版インストール中…</translation>
+        <translation>最新版インストール中&hellip;</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>最新版を確認中…</translation>
+        <translation>最新版を確認中&hellip;</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -742,7 +742,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>更新版、ダウンロード中…</translation>
+        <translation>更新版、ダウンロード中&hellip;</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">リモート・フォルダが存在しないため、あなたの sync &quot;%1&quot;は解除されました。</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -882,7 +882,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
+        <translation type="unfinished">あなたのシンク&quot;%1&quot; は無効となっていますが、それはVirtualBox 共有フォルダのシンクが、そのファイルシステムの不具合のためにサポートされていないからです。</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -890,11 +890,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer failed:</source>
-        <translation type="unfinished">Transfer failed:</translation>
+        <translation type="unfinished">転送できず:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
-        <translation type="unfinished">Error getting link information</translation>
+        <translation type="unfinished">リンク情報の取得中のエラー</translation>
     </message>
 </context>
 <context>
@@ -1048,7 +1048,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Do not ask me again</source>
-        <translation type="unfinished">Do not ask me again</translation>
+        <translation type="unfinished">再度聞かなくてもいい</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1060,7 +1060,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
-        <translation type="unfinished">The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
+        <translation type="unfinished">行き先フォルダはシンクされており、その中に同じ名前のファイルがあります。このままアップロードを続けると、既存のファイルは上書きされます。よろしいですか？</translation>
     </message>
 </context>
 <context>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&amp;apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1124,13 +1124,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder.Are you sure you want to sync it?</translation>
+        <translation type="obsolete">フォルダ内には%1 あります。シンクしていいですね？</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1139,11 +1139,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translation type="unfinished">You need Read & Write or Full access rights to be able to upload to the selected folder.</translation>
+        <translation type="unfinished">選択されたそのフォルダをアップロードするには、読み書きか、完全アクセスの許可が必要です。</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
-        <translation type="unfinished">You need Full access right to be able to sync the selected folder.</translation>
+        <translation type="unfinished">選択されたフォルダをシンクするには、完全アクセルが必要です。</translation>
     </message>
 </context>
 <context>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>MEGAファイルのリンクを入力する</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1189,22 +1189,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&Yes</translation>
+        <translation>&amp;はい</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&No</translation>
+        <translation>&amp;いいえ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>&OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&Cancel</translation>
+        <translation>&amp;キャンセル</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1416,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>アップロードのレートを制限する</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&amp;apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>制限しない</translation>
     </message>
@@ -1438,7 +1438,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>(about 90% of the available bandwidth)</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>(about 90% of the available bandwidth)</translation>
+        <translation>（利用可能バンド幅の約90%）</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
@@ -1545,7 +1545,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">You are already syncing your entire Cloud Drive.</translation>
+        <translation type="obsolete">あなたのクラウドドライブ全体はすでにシンクされています。</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1581,7 +1581,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">The new excluded file names will be taken into accountwhen the application starts again.</translation>
+        <translation type="obsolete">新規除外ファイル名は、アプリケーションが再度起動した時に有効となります。</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1603,14 +1603,14 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>プロキシ設定が無効又はプロキシが応答しません。</translation>
     </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>しばらくお待ちください…</translation>
+        <translation>しばらくお待ちください&hellip;</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -1665,7 +1665,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folderswhen it starts.Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">MEGAsyncは、作動開始と同時にシンクされているあなたのフォルダを完全スキャンします。</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>ダウンロード</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>ローカルフォルダがないので、シンクできません。</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
+        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>ローカルフォルダを選択</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>このローカルフォルダに書き込む許可がありません。</translation>
     </message>
@@ -1800,11 +1800,11 @@ when the application starts again</source>
     </message>
     <message>
         <source>Local cache: %1</source>
-        <translation type="unfinished">Local cache: %1</translation>
+        <translation type="unfinished">ローカルキャッシュ:%1</translation>
     </message>
     <message>
         <source>Remote cache: %1</source>
-        <translation type="unfinished">Remote cache: %1</translation>
+        <translation type="unfinished">リモートキャッシュ: %1</translation>
     </message>
 </context>
 <context>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>MEGAのアカウントを持っています</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&amp;apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>MEGAのアカウントはありません</translation>
     </message>
     <message>
@@ -1971,7 +1971,7 @@ when the application starts again</source>
         <translation>アカウントをご確認されましたか？</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&amp;apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGAフォルダがありません。</translation>
     </message>
@@ -2006,7 +2006,7 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&amp;apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>入力されたパスワードが合致しません。</translation>
     </message>
@@ -2028,7 +2028,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive.Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">クラウドドライブには%1あります。クラウドドライブ全体をシンクしてもいいですね？</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -2047,7 +2047,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files.Please, select another folder.</translation>
+        <translation type="obsolete">ローカルフォルダが大きすぎます（このバージョンでは%1フォルダか%2ファイルに制限されます）。他のフォルダを選択して下さい。</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -2064,7 +2064,7 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>非常に大きなフォルダをシンクしようとしていますね。大容量のデータをシンクするのは、非効率的で危険を伴いますので、小さいフォルダから始めて、MEGAsync作動中にデータを追加して行くようにして下さいませんか。</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -2098,12 +2098,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>あなたのクラウドドライブはこのフォルダとシンクされます。</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>このローカルフォルダに書き込む許可がありません。</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync ではここへダウンロードすることができません。</translation>
     </message>
@@ -2123,7 +2123,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translation type="unfinished">Are you sure you want to cancel this wizard and undo all changes?</translation>
+        <translation type="unfinished">このウィザードをキャンセルして、すべての変更を元に戻しますね？</translation>
     </message>
 </context>
 <context>

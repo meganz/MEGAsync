@@ -144,7 +144,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ang MEGAsync ay may nakitang problema. Ito ang mga detalye:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Pwede mo kaming tulungang mapabuti ang MEGAsync sa pamamagitan ng pagbibigay ng error report. Ito ay hindi maglalaman ng anumang personal na impormasyon. Kung gusto mong magbigay ng higit pang detalye, mangyaring sumulat sa ibaba:</translation>
     </message>
@@ -207,8 +207,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Mali</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
 </context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Babala</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
+        <source>You don&amp;apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Wala kang pahintulot para sa folder na ito</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>Walang maidownload ang MEGAsync dito.</translation>
     </message>
     <message>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Gusto mo pa bang magpatuloy?</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
     <message>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
         <translation>Hindi makita</translation>
     </message>
     <message>
@@ -351,7 +351,7 @@ Are you sure?</source>
         <translation>Mali</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
 </context>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
+because the remote folder doesn&amp;apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,7 +574,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
+because the local folder doesn&amp;apos;t exist</source>
         <translation type="obsolete">Ang sync na &quot;%1&quot; ay tinanggal dahil walang local folder na ganun</translation>
     </message>
     <message>
@@ -583,12 +583,12 @@ because the local folder doesn&apos;t exist</source>
         <translation>Mali: Maling pupuntahang folder. Ang upload ay kinansela na</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
         <translation>Up to date</translation>
     </message>
     <message>
@@ -691,11 +691,11 @@ Exit anyway?</source>
         <translation>Naghihintay</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Ang folder na (%1) ay hindi na-upload dahil masyado itong malaki. Ginagawa namin itong pagsisiyasat na ito para maiwasan ang pag-uupload ng buong boot volumes, na masyadong mabagal at delikado.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 folders ay hindi nailagay dahil masyadong malaki ang laman. Ginagawa namin ang sisiyasat na ito upang maiwasan ang paglalagay ng buong boot volumes, na masyadong mabagal at delikado.</translation>
     </message>
     <message>
@@ -832,12 +832,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Ang sync na &quot;%1&quot; ay tinanggal dahil walang remote folder na ganun</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Ang inyong &quot;%1&quot; na sync ay tinanggal dahil wala namang local folder na nandito</translation>
     </message>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ang inyong &quot;%1&quot; na sync ay tinanggal dahil may binago sa local folder</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Mali</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&amp;apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,9 +1128,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1139,7 +1139,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
-        <translation type="unfinished">You need Read & Write or Full access rights to be able to upload to the selected folder.</translation>
+        <translation type="unfinished">You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -1179,7 +1179,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Maglagay ng isa o maraming MEGA file links</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>Walang valid na MEGA links na nakita. (Hindi pa suportado ang folder links)</translation>
     </message>
@@ -1189,22 +1189,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&Oo</translation>
+        <translation>&amp;Oo</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&Hindi</translation>
+        <translation>&amp;Hindi</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>&OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&Itigil</translation>
+        <translation>&amp;Itigil</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1416,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Rate limit ng pag-uupload</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&amp;apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Huwag limitahan</translation>
     </message>
@@ -1603,7 +1603,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Ang inyong proxy settings ay mali o ang proxy ay hindi nagrerespond</translation>
     </message>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Downloads:</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Ang sync na ito ay hininto dahil walang nag-eexist na local folder</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
+        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Pumili ng local folder</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>Meron akong MEGA account</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&amp;apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Wala akong MEGA account</translation>
     </message>
     <message>
@@ -1971,7 +1971,7 @@ when the application starts again</source>
         <translation>Na-verify mo na ba iyong account?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&amp;apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>Walang ganyang MEGA folder</translation>
     </message>
@@ -2006,7 +2006,7 @@ when the application starts again</source>
         <translation>Maglagay ng mas malakas na password</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&amp;apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Ang mga password ay di tugma</translation>
     </message>
@@ -2098,12 +2098,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Ang inyong Cloud Drive ay isisyncronize sa folder na ito:</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&amp;apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Walang maidownload ang MEGAsync dito.</translation>
     </message>
