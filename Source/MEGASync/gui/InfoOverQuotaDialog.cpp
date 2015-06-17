@@ -80,16 +80,24 @@ void InfoOverQuotaDialog::setUsage()
 void InfoOverQuotaDialog::on_bSettings_clicked()
 {
     QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
+
+#ifdef __APPLE__
     QPointer<InfoOverQuotaDialog> iod = this;
+#endif
+
     app->showTrayMenu(&p);
-    #ifdef __APPLE__
+
+#ifdef __APPLE__
     if(!iod)
     {
         return;
     }
+
     if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    {
         this->hide();
-    #endif
+    }
+#endif
 }
 
 void InfoOverQuotaDialog::on_bUpgrade_clicked()
