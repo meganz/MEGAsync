@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>368</width>
+    <width>400</width>
     <height>145</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>368</width>
+    <width>400</width>
     <height>145</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>368</width>
+    <width>400</width>
     <height>145</height>
    </size>
   </property>
@@ -58,6 +58,12 @@ height: 24px;
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QFormLayout" name="formLayout">
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
@@ -87,13 +93,13 @@ height: 24px;
        <widget class="QCheckBox" name="cExcludeUpperThan">
         <property name="minimumSize">
          <size>
-          <width>181</width>
+          <width>219</width>
           <height>34</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>181</width>
+          <width>219</width>
           <height>34</height>
          </size>
         </property>
@@ -148,13 +154,13 @@ height: 24px;
        <widget class="QCheckBox" name="cExcludeLowerThan">
         <property name="minimumSize">
          <size>
-          <width>187</width>
+          <width>219</width>
           <height>34</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>187</width>
+          <width>219</width>
           <height>34</height>
          </size>
         </property>
