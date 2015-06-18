@@ -41,7 +41,7 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation>Re&icirc;mprospătează</translation>
+        <translation>Reîmprospătează</translation>
     </message>
     <message>
         <source>OK</source>
@@ -78,7 +78,7 @@
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>Un folder sincronizat nu poate fi &icirc;năuntrul altui folder sincronizat</translation>
+        <translation>Un folder sincronizat nu poate fi înăuntrul altui folder sincronizat</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
@@ -144,9 +144,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync a detectat o problemă. Acestea sunt detaliile:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Ne poţi ajuta să &icirc;mbunătăţim MEGAsync trimiţ&acirc;nd acest raport de eroare. Nu conţine nicio informaţie personală. Dacă doreşti să ne dai mai multe detalii, te rugăm să ne scrii mai jos:</translation>
+        <translation>Ne poţi ajuta să îmbunătăţim MEGAsync trimiţând acest raport de eroare. Nu conţine nicio informaţie personală. Dacă doreşti să ne dai mai multe detalii, te rugăm să ne scrii mai jos:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -179,7 +179,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Descarcă mereu &icirc;n această destinaţie</translation>
+        <translation>Descarcă mereu în această destinaţie</translation>
     </message>
     <message>
         <source>OK</source>
@@ -207,9 +207,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Eroare</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>Nu ai permisiuni de scriere &icirc;n acest folder local.</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
     </message>
 </context>
 <context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Avertisment</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">Nu ai permisiuni de scriere &icirc;n acest folder.</translation>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">Nu ai permisiuni de scriere în acest folder.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync nu va fi capabil să descarce ceva aici.</translation>
     </message>
     <message>
@@ -254,9 +254,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Doreşti să continui?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>Nu ai permisiuni de scriere &icirc;n acest folder local.</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -284,12 +284,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download to my computer</source>
         <translatorcomment>Label to indicate if the user wants to download the imported MEGA link(s) to his computer.</translatorcomment>
-        <translation>Descarcă &icirc;n calculator</translation>
+        <translation>Descarcă în calculator</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importă &icirc;n unitatea mea cloud</translation>
+        <translation>Importă în unitatea mea cloud</translation>
     </message>
     <message>
         <source>OK</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Negăsit</translation>
     </message>
     <message>
@@ -351,8 +351,8 @@ Are you sure?</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translation>Nu ai permisiuni de scriere &icirc;n acest folder local.</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
     </message>
 </context>
 <context>
@@ -400,7 +400,7 @@ Are you sure?</source>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 din %2 (&icirc;n pauză)</translation>
+        <translation>%1 din %2 (în pauză)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
@@ -415,7 +415,7 @@ Are you sure?</source>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Toate transferurile au fost &icirc;ncheiate</translation>
+        <translation>Toate transferurile au fost încheiate</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -435,7 +435,7 @@ Are you sure?</source>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Anulează &icirc;ncărcarea</translation>
+        <translation>Anulează încărcarea</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -460,7 +460,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Rămase &icirc;n total:</translation>
+        <translation type="obsolete">Rămase în total:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -470,7 +470,7 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Se &icirc;ncarcă</translation>
+        <translation>Se încarcă</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
+because the remote folder doesn&apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,21 +574,21 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Sincronizarea ta &bdquo;%1&rdquo; a fost dezactivată deoarece folderul local nu există</translation>
+because the local folder doesn&apos;t exist</source>
+        <translation type="obsolete">Sincronizarea ta „%1” a fost dezactivată deoarece folderul local nu există</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Eroare: Folderul de destinaţie invalid. &Icirc;ncărcarea a fost anulată</translation>
+        <translation>Eroare: Folderul de destinaţie invalid. Încărcarea a fost anulată</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -610,12 +610,12 @@ Exit anyway?</source>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>Linkul a fost copiat &icirc;n clipboard</translation>
+        <translation>Linkul a fost copiat în clipboard</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
-        <translation>Linkurile au fost copiate &icirc;n clipboard</translation>
+        <translation>Linkurile au fost copiate în clipboard</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Actualizat</translation>
     </message>
     <message>
@@ -678,7 +678,7 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Ai fişiere noi sau actualizate &icirc;n contul tău</translation>
+        <translation>Ai fişiere noi sau actualizate în contul tău</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -691,12 +691,12 @@ Exit anyway?</source>
         <translation>Se aşteaptă</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Folderul (%1) nu a fost &icirc;ncărcat deoarece este extrem de mare. Facem această verificare pentru a preveni &icirc;ncărcarea &icirc;ntregilor volume de bootare, care este ineficientă şi periculoasă.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Folderul (%1) nu a fost încărcat deoarece este extrem de mare. Facem această verificare pentru a preveni încărcarea întregilor volume de bootare, care este ineficientă şi periculoasă.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Folderele %1 nu au fost &icirc;ncărcate deoarece este extrem de mari. Facem această verificare pentru a preveni &icirc;ncărcarea &icirc;ntregilor volume de bootare, care este ineficientă şi periculoasă.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Folderele %1 nu au fost încărcate deoarece este extrem de mari. Facem această verificare pentru a preveni încărcarea întregilor volume de bootare, care este ineficientă şi periculoasă.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -706,7 +706,7 @@ Exit anyway?</source>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>O actualizare va fi aplicată următoarea dată c&acirc;nd aplicaţia va fi pornită</translation>
+        <translation>O actualizare va fi aplicată următoarea dată când aplicaţia va fi pornită</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -737,7 +737,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>&Icirc;ţi mulţumim pentru colaborare!</translation>
+        <translation>Îţi mulţumim pentru colaborare!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -774,12 +774,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation type="obsolete">&Icirc;ncarcă fişiere/foldere</translation>
+        <translation type="obsolete">Încarcă fişiere/foldere</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync rulează &icirc;n prezent. Clic pe iconiţa din bara de sistem pentru a deschide fereastra de stare.</translation>
+        <translation>MEGAsync rulează în prezent. Clic pe iconiţa din bara de sistem pentru a deschide fereastra de stare.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -804,7 +804,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>&Icirc;ncarcă pe MEGA</translation>
+        <translation>Încarcă pe MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -814,7 +814,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Fişierul config este corupt, te rugăm să o iei de la &icirc;nceput</translation>
+        <translation>Fişierul config este corupt, te rugăm să o iei de la început</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Sincronizarea ta &bdquo;%1&rdquo; a fost dezactivată deoarece folderul de la distanţă nu există</translation>
+        <translation type="unfinished">Sincronizarea ta „%1” a fost dezactivată deoarece folderul de la distanţă nu există</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -864,7 +864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Sincronizarea ta &bdquo;%1&rdquo; a fost dezactivată deoarece folderul de la distanţă este &icirc;n coşul de gunoi</translation>
+        <translation type="unfinished">Sincronizarea ta „%1” a fost dezactivată deoarece folderul de la distanţă este în coşul de gunoi</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -917,7 +917,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Cerere eşuată, se re&icirc;ncearcă</translation>
+        <translation>Cerere eşuată, se reîncearcă</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
@@ -937,7 +937,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of range</source>
         <translatorcomment>Label to show that an error of Out of range occurs during a SDK operation.</translatorcomment>
-        <translation>&Icirc;n afara limitelor</translation>
+        <translation>În afara limitelor</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Eroare</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,14 +1128,14 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>&Icirc;ncarcă mereu la această destinaţie</translation>
+        <translation>Încarcă mereu la această destinaţie</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Introdu unul sau mai multe linkuri pentru fişiere MEGA</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1282,7 +1282,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
-        <translation>Arată &icirc;n folder</translation>
+        <translation>Arată în folder</translation>
     </message>
 </context>
 <context>
@@ -1413,10 +1413,10 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Limită de &icirc;ncărcare</translation>
+        <translation>Limită de încărcare</translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Nu limita</translation>
     </message>
@@ -1447,11 +1447,11 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Limitele de &icirc;ncărcare sunt per serverul de &icirc;ncărcare şi sunt aplicate c&acirc;nd &icirc;ncep noi &icirc;ncărcări</translation>
+        <translation type="obsolete">Limitele de încărcare sunt per serverul de încărcare şi sunt aplicate când încep noi încărcări</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Folderul pentru &icirc;ncărcări din Windows Explorer</translation>
+        <translation type="obsolete">Folderul pentru încărcări din Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1603,7 +1603,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Setările de proxy sunt invalide sau proxy-ul nu răspunde</translation>
     </message>
@@ -1635,7 +1635,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Dezactivarea sincronizării complete a contului &icirc;ţi va permite să configurezi sincronizarea selectivă a folderelor</translation>
+        <translation type="obsolete">Dezactivarea sincronizării complete a contului îţi va permite să configurezi sincronizarea selectivă a folderelor</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
@@ -1674,7 +1674,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Folderul pentru &icirc;ncărcări din acest calculator</translation>
+        <translation type="obsolete">Folderul pentru încărcări din acest calculator</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1711,7 +1711,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
-        <translation>&Icirc;ncărcări:</translation>
+        <translation>Încărcări:</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -1719,18 +1719,18 @@ Do you want to restart MEGAsync now?</source>
         <translation>Descărcări:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Această sincronizare nu poate fi activată deoarece folderul local nu există</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation type="obsolete">Sincronizezi deja &icirc;ntreaga ta unitate cloud</translation>
+        <translation type="obsolete">Sincronizezi deja întreaga ta unitate cloud</translation>
     </message>
     <message>
         <source>Enable / disable</source>
@@ -1743,9 +1743,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Selectează folderul local</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>Nu ai permisiuni de scriere &icirc;n acest folder local.</translation>
+        <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -1765,7 +1765,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportarea cheii principale şi păstrarea ei &icirc;ntr-o locaţie sigură &icirc;ţi permite să setezi o parolă nouă fără pierderea datelor.</translation>
+        <translation type="unfinished">Exportarea cheii principale şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>Am un cont MEGA</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Nu am un cont MEGA</translation>
     </message>
     <message>
@@ -1852,17 +1852,17 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Terms of Service</a></translation>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Autentifică-te &icirc;n contul MEGA</translation>
+        <translation>Autentifică-te în contul MEGA</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Te rugăm să verifici contul folosind linkul de confirmare pe care ţi l-am trimis &icirc;n contul de e-mail</translation>
+        <translation>Te rugăm să verifici contul folosind linkul de confirmare pe care ţi l-am trimis în contul de e-mail</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1877,7 +1877,7 @@ when the application starts again</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincronizează &icirc;ntreaga unitate cloud</translation>
+        <translation>Sincronizează întreaga unitate cloud</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -1891,7 +1891,7 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Sincronizează foldere specifice &icirc;n unitatea ta cloud</translation>
+        <translation>Sincronizează foldere specifice în unitatea ta cloud</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -1933,12 +1933,12 @@ when the application starts again</source>
     <message>
         <source>Back</source>
         <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>&Icirc;napoi</translation>
+        <translation>Înapoi</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>&Icirc;nainte</translation>
+        <translation>Înainte</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1971,14 +1971,14 @@ when the application starts again</source>
         <translation>Ţi-ai verificat contul?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>Folderul MEGA nu există</translation>
     </message>
     <message>
         <source>Finish</source>
         <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>&Icirc;ncheiere</translation>
+        <translation>Încheiere</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -2006,7 +2006,7 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Parolele introduse nu se potrivesc</translation>
     </message>
@@ -2098,12 +2098,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Unitatea ta Cloud va fi sincronizată cu acest folder:</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>Nu ai permisiuni de scriere &icirc;n acest folder local.</translation>
+        <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync nu va fi capabil să descarce ceva aici.</translation>
     </message>
@@ -2131,7 +2131,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>&Icirc;ncarcă pe MEGA</translation>
+        <translation>Încarcă pe MEGA</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2221,7 +2221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>&Icirc;ncarcă pe MEGA</translation>
+        <translation>Încarcă pe MEGA</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
@@ -2236,7 +2236,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>&Icirc;ncarcă mereu la această destinaţie</translation>
+        <translation>Încarcă mereu la această destinaţie</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>

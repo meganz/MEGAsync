@@ -78,7 +78,7 @@
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>En synkronisert mappe kan ikke v&aelig;re inni en annen synkronisert mappe</translation>
+        <translation>En synkronisert mappe kan ikke være inni en annen synkronisert mappe</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation type="obsolete">Du kan kun velge &aring; synkronisere hele kontoen din dersom du ikke synkroniserer andre undermapper</translation>
+        <translation type="obsolete">Du kan kun velge å synkronisere hele kontoen din dersom du ikke synkroniserer andre undermapper</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -144,9 +144,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync har oppdaget en feil. Her er detaljene:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Du kan hjelpe oss med &aring; forbedre MEGAsync ved &aring; sende denne feilrapporten til oss. Den inneholder ingen personlig informasjon. Dersom du &oslash;nsker &aring; gi oss ytterligere detaljer, kan du fylle de inn i feltet under:</translation>
+        <translation>Du kan hjelpe oss med å forbedre MEGAsync ved å sende denne feilrapporten til oss. Den inneholder ingen personlig informasjon. Dersom du ønsker å gi oss ytterligere detaljer, kan du fylle de inn i feltet under:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Vennligst velg en mappe &aring; laste ned filer til:</translation>
+        <translation>Vennligst velg en mappe å laste ned filer til:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -207,8 +207,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Feil</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
 </context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Advarsel</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Du har ikke skriverettigheter til denne mappen.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync kan ikke laste ned til den mappen.</translation>
     </message>
     <message>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Vil du fortsette?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
     <message>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Ikke funnet</translation>
     </message>
     <message>
@@ -351,7 +351,7 @@ Are you sure?</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
 </context>
@@ -405,7 +405,7 @@ Are you sure?</source>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>Filoverf&oslash;ringer midlertidig stoppet</translation>
+        <translation>Filoverføringer midlertidig stoppet</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
@@ -415,7 +415,7 @@ Are you sure?</source>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Alle overf&oslash;ringer er fullf&oslash;rt</translation>
+        <translation>Alle overføringer er fullført</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -460,7 +460,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Gjenst&aring;r:</translation>
+        <translation type="obsolete">Gjenstår:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
+because the remote folder doesn&apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,21 +574,21 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Synkroniseringen &quot;%1&quot; har blitt deaktivert fordi den lokale mappen ikke eksisterer</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Feilmelding: Ugyldig m&aring;lmappe. Opplastingen har blitt avbrutt</translation>
+        <translation>Feilmelding: Ugyldig målmappe. Opplastingen har blitt avbrutt</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Oppdatert</translation>
     </message>
     <message>
@@ -673,7 +673,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Midlertidig overf&oslash;ringsfeil:</translation>
+        <translation>Midlertidig overføringsfeil:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -691,12 +691,12 @@ Exit anyway?</source>
         <translation>Venter</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Mappen (%1) ble ikke lastet opp fordi den er ekstremt stor. Vi gj&oslash;r denne kontrollen for &aring; hindre opplasting av hele oppstartsvolumer, noe som er ineffektivt og potensielt farlig.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Mappen (%1) ble ikke lastet opp fordi den er ekstremt stor. Vi gjør denne kontrollen for å hindre opplasting av hele oppstartsvolumer, noe som er ineffektivt og potensielt farlig.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 mapper ble ikke lastet opp fordi de er ekstremt store. Vi gj&oslash;r denne kontrollen for &aring; hindre opplasting av hele oppstartsvolumer, noe som er ineffektivt og potensielt farlig.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">%1 mapper ble ikke lastet opp fordi de er ekstremt store. Vi gjør denne kontrollen for å hindre opplasting av hele oppstartsvolumer, noe som er ineffektivt og potensielt farlig.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -706,7 +706,7 @@ Exit anyway?</source>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Start programmet p&aring; nytt for at oppdateringen skal tre i kraft</translation>
+        <translation>Start programmet på nytt for at oppdateringen skal tre i kraft</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -726,7 +726,7 @@ Exit anyway?</source>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>En ny versjon av MEGAsync er tilgjengelig! Trykk her for &aring; oppdatere</translation>
+        <translation>En ny versjon av MEGAsync er tilgjengelig! Trykk her for å oppdatere</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -779,7 +779,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync kj&oslash;rer i bakgrunnen. Trykk p&aring; ikonet i oppgavelinjen for &aring; &aring;pne statusvinduet.</translation>
+        <translation>MEGAsync kjører i bakgrunnen. Trykk på ikonet i oppgavelinjen for å åpne statusvinduet.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -814,7 +814,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Det er en feil i innstillingene dine, vennligst begynn p&aring; nytt</translation>
+        <translation>Det er en feil i innstillingene dine, vennligst begynn på nytt</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Synkroniseringen &quot;%1&quot; har blitt deaktivert p&aring; grunn av en manglende mappe</translation>
+        <translation type="unfinished">Synkroniseringen &quot;%1&quot; har blitt deaktivert på grunn av en manglende mappe</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -917,22 +917,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Foresp&oslash;rselen mislyktes, pr&oslash;ver p&aring; nytt</translation>
+        <translation>Forespørselen mislyktes, prøver på nytt</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
         <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
-        <translation>Frekvensgrensen din er n&aring;dd</translation>
+        <translation>Frekvensgrensen din er nådd</translation>
     </message>
     <message>
         <source>Failed permanently</source>
         <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
-        <translation>Overf&oslash;ring mislykkes</translation>
+        <translation>Overføring mislykkes</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
         <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
-        <translation>For mange forbindelser eller samtidige overf&oslash;ringer</translation>
+        <translation>For mange forbindelser eller samtidige overføringer</translation>
     </message>
     <message>
         <source>Out of range</source>
@@ -942,7 +942,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>Utg&aring;tt</translation>
+        <translation>Utgått</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -972,7 +972,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Ugyldig n&oslash;kkel/dekrypteringsfeil</translation>
+        <translation>Ugyldig nøkkel/dekrypteringsfeil</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -997,7 +997,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Connection overflow</source>
         <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
-        <translation>Maksimal overf&oslash;ringsrate oversteget</translation>
+        <translation>Maksimal overføringsrate oversteget</translation>
     </message>
     <message>
         <source>Write error</source>
@@ -1012,7 +1012,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid application key</source>
         <translatorcomment>Label to show that an error related with an invalid or missing application key occurs during a SDK operation.</translatorcomment>
-        <translation>Ugyldig programn&oslash;kkel</translation>
+        <translation>Ugyldig programnøkkel</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,9 +1128,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Skriv inn en eller flere MEGA-lenker</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1222,7 +1222,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Akkurat n&aring;</translation>
+        <translation>Akkurat nå</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1257,27 +1257,27 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation>en m&aring;ned siden</translation>
+        <translation>en måned siden</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 m&aring;neder siden</translation>
+        <translation>%1 måneder siden</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation>ett &aring;r siden</translation>
+        <translation>ett år siden</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 &aring;r siden</translation>
+        <translation>%1 år siden</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation>&Aring;pne</translation>
+        <translation>Åpne</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1309,7 +1309,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Tab label of Bandwidth dialog. Max 15 characters.</translatorcomment>
-        <translation>B&aring;ndbredde</translation>
+        <translation>Båndbredde</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1354,7 +1354,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
-        <translation>Spr&aring;k</translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <source>English</source>
@@ -1416,7 +1416,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Maks opplastingshastighet</translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Ikke begrens</translation>
     </message>
@@ -1443,11 +1443,11 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>B&aring;ndbreddekvote</translation>
+        <translation>Båndbreddekvote</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Opplastingsgrensene er per opplastingstjener og brukes n&aring;r du starter nye opplastninger</translation>
+        <translation type="obsolete">Opplastingsgrensene er per opplastingstjener og brukes når du starter nye opplastninger</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -1550,7 +1550,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Synchronization will stop working.</source>
         <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
-        <translation>Synkronisering vil slutte &aring; virke.</translation>
+        <translation>Synkronisering vil slutte å virke.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
@@ -1560,7 +1560,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation>Eksklud&egrave;r disse filnavnene</translation>
+        <translation>Ekskludèr disse filnavnene</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
@@ -1576,7 +1576,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>overf&oslash;ringer</translation>
+        <translation>overføringer</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1595,7 +1595,7 @@ when the application starts again.</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>T&oslash;m</translation>
+        <translation>Tøm</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1603,9 +1603,9 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Innstillingene for mellomtjeneren er enten feil, eller s&aring; svarer den ikke</translation>
+        <translation>Innstillingene for mellomtjeneren er enten feil, eller så svarer den ikke</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1635,11 +1635,11 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Deaktivering av fullstendig  synkronisering vil gj&oslash;re det mulig &aring; sette opp tilpasset synkronisering</translation>
+        <translation type="obsolete">Deaktivering av fullstendig  synkronisering vil gjøre det mulig å sette opp tilpasset synkronisering</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation type="obsolete">Sl&aring; av fullstendig kontosynkronisering</translation>
+        <translation type="obsolete">Slå av fullstendig kontosynkronisering</translation>
     </message>
     <message>
         <source>Other</source>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Nedlastinger:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Synkroniseringen kan ikke aktiveres fordi den lokale mappen finnes ikke</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Velg lokal mappe</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
@@ -1765,12 +1765,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Hvis du eksporterer hovedn&oslash;kkelen og lagrer den p&aring; et trygt sted, kan du nullstille passordet ditt uten at data g&aring;r tapt.</translation>
+        <translation type="unfinished">Hvis du eksporterer hovednøkkelen og lagrer den på et trygt sted, kan du nullstille passordet ditt uten at data går tapt.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">S&oslash;rg for at du bestandig har kontroll p&aring; din hovedn&oslash;kkel, lagre den et sted sikkert (f.eks. p&aring; ekstern lagring, en annen maskin eller skriv den ut).</translation>
+        <translation type="unfinished">Sørg for at du bestandig har kontroll på din hovednøkkel, lagre den et sted sikkert (f.eks. på ekstern lagring, en annen maskin eller skriv den ut).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>Jeg har en MEGA-konto</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Jeg har ikke en MEGA-konto</translation>
     </message>
     <message>
@@ -1852,17 +1852,17 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Terms of Service</a></translation>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Logg p&aring; din MEGA-konto</translation>
+        <translation>Logg på din MEGA-konto</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Vennligst verifiser din konto ved &aring; trykke p&aring; bekreftelseslenken vi har sendt til din e-postadresse</translation>
+        <translation>Vennligst verifiser din konto ved å trykke på bekreftelseslenken vi har sendt til din e-postadresse</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1896,7 +1896,7 @@ when the application starts again</source>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>De f&oslash;lgende mappene vil bli synkronisert automatisk:</translation>
+        <translation>De følgende mappene vil bli synkronisert automatisk:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1971,14 +1971,14 @@ when the application starts again</source>
         <translation>Har du verifisert kontoen din?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA-mappen finnes ikke</translation>
     </message>
     <message>
         <source>Finish</source>
         <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Fullf&oslash;r</translation>
+        <translation>Fullfør</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -2006,14 +2006,14 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>De to passordene er ikke like</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Du m&aring; godta bruksvilk&aring;rene</translation>
+        <translation>Du må godta bruksvilkårene</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2080,7 +2080,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting session key</source>
         <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
-        <translation>Feil ved henting av sesjonsn&oslash;kkel</translation>
+        <translation>Feil ved henting av sesjonsnøkkel</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -2090,7 +2090,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Din lokale mappe og din MEGA SkyDisk vil n&aring; bli automatisk synkronisert.</translation>
+        <translation>Din lokale mappe og din MEGA SkyDisk vil nå bli automatisk synkronisert.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
@@ -2098,12 +2098,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Din SkyDisk vil bli synkronisert med denne mappen:</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Du har ikke skrivetilgang til denne lokale mappen.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync kan ikke laste ned til den mappen.</translation>
     </message>

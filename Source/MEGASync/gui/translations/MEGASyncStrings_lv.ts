@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation type="obsolete">Pilna konta sinhronizē&scaron;ana ir iespējama tikai tad, ja nav līdzīgas sinhronizē&scaron;anas</translation>
+        <translation type="obsolete">Pilna konta sinhronizēšana ir iespējama tikai tad, ja nav līdzīgas sinhronizēšanas</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -141,12 +141,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync ir atklājis problēmu. &Scaron;īs ir detaļas:</translation>
+        <translation>MEGAsync ir atklājis problēmu. Šīs ir detaļas:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Jūs varat palīdzēt mums uzlabot MEGAsync nosūtot &scaron;o kļūdas ziņojumu. Nesatur nekādu personisku informāciju. Ja jūs vēlaties sniegt mums vairāk informācijas lūdzu uzrakstiet zemāk:</translation>
+        <translation>Jūs varat palīdzēt mums uzlabot MEGAsync nosūtot šo kļūdas ziņojumu. Nesatur nekādu personisku informāciju. Ja jūs vēlaties sniegt mums vairāk informācijas lūdzu uzrakstiet zemāk:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -179,7 +179,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Vienmēr lejupielādēt &scaron;ajā vietā</translation>
+        <translation>Vienmēr lejupielādēt šajā vietā</translation>
     </message>
     <message>
         <source>OK</source>
@@ -207,9 +207,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Kļūda</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>Tev nav rakstī&scaron;anas tiesības &scaron;ajā lokālajā mapē.</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translation>Tev nav rakstīšanas tiesības šajā lokālajā mapē.</translation>
     </message>
 </context>
 <context>
@@ -240,13 +240,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Brīdinājums</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">Tev nav rakstī&scaron;anas tiesības &scaron;ajā mapē.</translation>
+        <source>You don&apos;t have write permissions in this folder.</source>
+        <translation type="obsolete">Tev nav rakstīšanas tiesības šajā mapē.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync nebūs iespējams neko &scaron;eit lejupielādēt.</translation>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <translation>MEGAsync nebūs iespējams neko šeit lejupielādēt.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -254,9 +254,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Vai vēlies turpināt?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>Tev nav rakstī&scaron;anas tiesības &scaron;ajā lokālajā mapē.</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <translation>Tev nav rakstīšanas tiesības šajā lokālajā mapē.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -318,11 +318,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>At&scaron;ifrē&scaron;anas kļūda</translation>
+        <translation>Atšifrēšanas kļūda</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Netika atrasts</translation>
     </message>
     <message>
@@ -351,8 +351,8 @@ Are you sure?</source>
         <translation>Kļūda</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translation>Tev nav rakstī&scaron;anas tiesības &scaron;ajā lokālajā mapē.</translation>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translation>Tev nav rakstīšanas tiesības šajā lokālajā mapē.</translation>
     </message>
 </context>
 <context>
@@ -370,7 +370,7 @@ Are you sure?</source>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>Lietojums: Dati pa&scaron;reiz īslaicīgi nav pieejami</translation>
+        <translation>Lietojums: Dati pašreiz īslaicīgi nav pieejami</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -405,17 +405,17 @@ Are you sure?</source>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>Failu pārsūtī&scaron;ana apturēta</translation>
+        <translation>Failu pārsūtīšana apturēta</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation>MEGAsync notiek skenē&scaron;ana</translation>
+        <translation>MEGAsync notiek skenēšana</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Visas pārsūtī&scaron;anas tika pabeigtas</translation>
+        <translation>Visas pārsūtīšanas tika pabeigtas</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -430,12 +430,12 @@ Are you sure?</source>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>Atcelt visas aug&scaron;upielādes</translation>
+        <translation>Atcelt visas augšupielādes</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Atcelt aug&scaron;upielādi</translation>
+        <translation>Atcelt augšupielādi</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -460,7 +460,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Kopā Atliku&scaron;i:</translation>
+        <translation type="obsolete">Kopā Atlikuši:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -470,12 +470,12 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Aug&scaron;upielādē</translation>
+        <translation>Augšupielādē</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync pa&scaron;reiz gaida</translation>
+        <translation>MEGAsync pašreiz gaida</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
@@ -487,7 +487,7 @@ Are you sure?</source>
     <name>InfoOverQuotaDialog</name>
     <message>
         <source>MEGAsync is currently disabled</source>
-        <translation type="unfinished">MEGAsync pa&scaron;laik  ir atslēgts</translation>
+        <translation type="unfinished">MEGAsync pašlaik  ir atslēgts</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
@@ -499,7 +499,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
-        <translation type="unfinished">Lietojums: Dati pa&scaron;reiz īslaicīgi nav pieejami</translation>
+        <translation type="unfinished">Lietojums: Dati pašreiz īslaicīgi nav pieejami</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -534,7 +534,7 @@ Are you sure?</source>
     <message>
         <source>Install for anyone using this computer</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
-        <translation>Instalēt ikvienam kas lietos &scaron;o datoru</translation>
+        <translation>Instalēt ikvienam kas lietos šo datoru</translation>
     </message>
     <message>
         <source>Install just for me</source>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
+because the remote folder doesn&apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,21 +574,21 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Jūsu sinhronizācija &quot;%1&quot; ir atspējota, jo lokālā mape neeksistē</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Kļūda: Nederīga mērķa mape. Aug&scaron;upielāde ir atcelta</translation>
+        <translation>Kļūda: Nederīga mērķa mape. Augšupielāde ir atcelta</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Atjaunināts</translation>
     </message>
     <message>
@@ -663,7 +663,7 @@ Exit anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
-        <translation>Skenē&scaron;ana</translation>
+        <translation>Skenēšana</translation>
     </message>
     <message>
         <source>Syncing</source>
@@ -673,7 +673,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Pagaidu sūtī&scaron;anas kļūda:</translation>
+        <translation>Pagaidu sūtīšanas kļūda:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -691,12 +691,12 @@ Exit anyway?</source>
         <translation>Gaida</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">&Scaron;ī mape (%1) netika aug&scaron;upielādēta, jo tā ir pārāk liela. Mēs veicam &scaron;o pārbaudi, lai izslēgtu iespēju, ka tiek aug&scaron;upielādētas visas datu krātuves, kas ir neefektīvi un pat bīstami. </translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Šī mape (%1) netika augšupielādēta, jo tā ir pārāk liela. Mēs veicam šo pārbaudi, lai izslēgtu iespēju, ka tiek augšupielādētas visas datu krātuves, kas ir neefektīvi un pat bīstami. </translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 mapes netika aug&scaron;upielādētas, jo ir pārāk lielas. Mēs veicam &scaron;o pārbaudi, lai izslēgtu iespēju, ka tiek aug&scaron;upielādētas visas datu krātuves, kas ir neefektīvi un pat bīstami. </translation>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">%1 mapes netika augšupielādētas, jo ir pārāk lielas. Mēs veicam šo pārbaudi, lai izslēgtu iespēju, ka tiek augšupielādētas visas datu krātuves, kas ir neefektīvi un pat bīstami. </translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -726,7 +726,7 @@ Exit anyway?</source>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Pieejama jaunāka MEGAsync versija! Spied uz &scaron;ī paziņojuma, lai uzstādītu</translation>
+        <translation>Pieejama jaunāka MEGAsync versija! Spied uz šī paziņojuma, lai uzstādītu</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -774,7 +774,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation type="obsolete">Aug&scaron;uplādet failus/mapes</translation>
+        <translation type="obsolete">Augšuplādet failus/mapes</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -804,7 +804,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Aug&scaron;upielādēt uz MEGA</translation>
+        <translation>Augšupielādēt uz MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Jūsu sinhronizācija &quot;%1&quot; ir atslēgta, jo attālinātā mape neeksistē</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -907,7 +907,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Iek&scaron;ēja Kļūda</translation>
+        <translation>Iekšēja Kļūda</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -972,7 +972,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Nepareiza atslēga/At&scaron;ifē&scaron;anas kļūda</translation>
+        <translation>Nepareiza atslēga/Atšifēšanas kļūda</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -1002,12 +1002,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Write error</source>
         <translatorcomment>Label to show that an error related with an write error occurs during a SDK operation.</translatorcomment>
-        <translation>Rakstī&scaron;anas kļūda</translation>
+        <translation>Rakstīšanas kļūda</translation>
     </message>
     <message>
         <source>Read error</source>
         <translatorcomment>Label to show that an error related with an read error occurs during a SDK operation.</translatorcomment>
-        <translation>Lasī&scaron;anas kļūda</translation>
+        <translation>Lasīšanas kļūda</translation>
     </message>
     <message>
         <source>Invalid application key</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Kļūda</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,14 +1128,14 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Vienmēr aug&scaron;uplādēt uz &scaron;o vietu</translation>
+        <translation>Vienmēr augšuplādēt uz šo vietu</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Ievadiet vienu vai vairākas MEGA faila saites</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1262,7 +1262,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 mēne&scaron;us atpakaļ</translation>
+        <translation>%1 mēnešus atpakaļ</translation>
     </message>
     <message>
         <source>1 year ago</source>
@@ -1413,10 +1413,10 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Aug&scaron;upielādes ātruma ierobežojums</translation>
+        <translation>Augšupielādes ātruma ierobežojums</translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Neierobežot</translation>
     </message>
@@ -1447,11 +1447,11 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Aug&scaron;upielādes ierobežojumi tiek iegūti  no aug&scaron;upielādes servera un tiek piemēroti, sākoties jaunai aug&scaron;upielādei</translation>
+        <translation type="obsolete">Augšupielādes ierobežojumi tiek iegūti  no augšupielādes servera un tiek piemēroti, sākoties jaunai augšupielādei</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Mape aug&scaron;upielādēm no Windows Explorer</translation>
+        <translation type="obsolete">Mape augšupielādēm no Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -1585,12 +1585,12 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Ke&scaron;atmiņa</translation>
+        <translation type="obsolete">Kešatmiņa</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation type="obsolete">Pa&scaron;reizējais ke&scaron;atmiņas apjoms: %1</translation>
+        <translation type="obsolete">Pašreizējais kešatmiņas apjoms: %1</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1603,7 +1603,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Jūsu starpniekservera iestatījumi ir nepareizi, vai arī starpniekserveris nereaģē</translation>
     </message>
@@ -1627,7 +1627,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation type="obsolete">Aktivizējot pilnu konta sinhronizāciju tiks atslēgtas visas iepriek&scaron;ējās sinhronizācijas</translation>
+        <translation type="obsolete">Aktivizējot pilnu konta sinhronizāciju tiks atslēgtas visas iepriekšējās sinhronizācijas</translation>
     </message>
     <message>
         <source>Full account sync active</source>
@@ -1658,7 +1658,7 @@ when the application starts again.</source>
     <message>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
-        <translation>Pilna skenē&scaron;ana</translation>
+        <translation>Pilna skenēšana</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
@@ -1674,7 +1674,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Mapes attēli no &scaron;ī datora</translation>
+        <translation type="obsolete">Mapes attēli no šī datora</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1711,7 +1711,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
-        <translation>Aug&scaron;upielādes:</translation>
+        <translation>Augšupielādes:</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Lejupielādes:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>&Scaron;ī sinhronizācija nevar tikt veikta, jo lokālā mape neeksistē</translation>
+        <translation>Šī sinhronizācija nevar tikt veikta, jo lokālā mape neeksistē</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,9 +1743,9 @@ Do you want to restart MEGAsync now?</source>
         <translation>Izvēlēties lokālo mapi: </translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>Tev nav rakstī&scaron;anas tiesības &scaron;ajā lokālajā mapē.</translation>
+        <translation>Tev nav rakstīšanas tiesības šajā lokālajā mapē.</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -1765,12 +1765,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Eksportējot Galveno Atslēgu un turot to dro&scaron;ā vietā,  tas ļauj uzstādīt jaunu paroli bez datu zudumiem.</translation>
+        <translation type="unfinished">Eksportējot Galveno Atslēgu un turot to drošā vietā,  tas ļauj uzstādīt jaunu paroli bez datu zudumiem.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Vienmēr saglabā fizisko kontroli pār savu galveno atslēgu (piemēram, uz klienta ierīci, ārējās glabā&scaron;anas diskiem, vai izdrukā).</translation>
+        <translation type="unfinished">Vienmēr saglabā fizisko kontroli pār savu galveno atslēgu (piemēram, uz klienta ierīci, ārējās glabāšanas diskiem, vai izdrukā).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -1812,7 +1812,7 @@ when the application starts again</source>
     <message>
         <source>Setup Wizard - MEGAsync</source>
         <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
-        <translation>Uzstādī&scaron;anas Palīgs  - MEGAsync</translation>
+        <translation>Uzstādīšanas Palīgs  - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>Man jau ir MEGA konts</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Man nav MEGA konta</translation>
     </message>
     <message>
@@ -1852,7 +1852,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Terms of Service</a></translation>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -1862,7 +1862,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Lūdzu, apstipriniet savu kontu izmantojot saiti, ko mēs esam nosūtīju&scaron;i uz Jūsu e-pasta adresi</translation>
+        <translation>Lūdzu, apstipriniet savu kontu izmantojot saiti, ko mēs esam nosūtījuši uz Jūsu e-pasta adresi</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1872,7 +1872,7 @@ when the application starts again</source>
     <message>
         <source>Choose install type</source>
         <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Izvēlieties uzstādī&scaron;anas veidu</translation>
+        <translation>Izvēlieties uzstādīšanas veidu</translation>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
@@ -1896,7 +1896,7 @@ when the application starts again</source>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>Sekojo&scaron;ās mapes tiks automātiski sinhronizētas:</translation>
+        <translation>Sekojošās mapes tiks automātiski sinhronizētas:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1916,7 +1916,7 @@ when the application starts again</source>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label displayed to welcome the user.</translatorcomment>
-        <translation>Laipni lūdzam iek&scaron; MEGA</translation>
+        <translation>Laipni lūdzam iekš MEGA</translation>
     </message>
     <message>
         <source>Your local folder:</source>
@@ -1938,7 +1938,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Nāko&scaron;ais</translation>
+        <translation>Nākošais</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1971,7 +1971,7 @@ when the application starts again</source>
         <translation>Vai Jūs pārbaudījāt savu kontu?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA mape neeksistē</translation>
     </message>
@@ -2006,14 +2006,14 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Ievadītās paroles nesakrīt</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Jums ir jāapstriprina mūsu pakalpojuma lieto&scaron;anas noteikumi</translation>
+        <translation>Jums ir jāapstriprina mūsu pakalpojuma lietošanas noteikumi</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2095,17 +2095,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Tava Mākoņ Krātuve tiks sinhronizēta ar &scaron;o mapi:</translation>
+        <translation>Tava Mākoņ Krātuve tiks sinhronizēta ar šo mapi:</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>Tev nav rakstī&scaron;anas tiesības &scaron;ajā lokālajā mapē.</translation>
+        <translation>Tev nav rakstīšanas tiesības šajā lokālajā mapē.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync nebūs iespējams neko &scaron;eit lejupielādēt.</translation>
+        <translation>MEGAsync nebūs iespējams neko šeit lejupielādēt.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -2131,7 +2131,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Aug&scaron;upielādēt uz MEGA</translation>
+        <translation>Augšupielādēt uz MEGA</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2221,7 +2221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Aug&scaron;upielādēt uz MEGA</translation>
+        <translation>Augšupielādēt uz MEGA</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
@@ -2236,7 +2236,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>Vienmēr aug&scaron;uplādēt uz &scaron;o vietu</translation>
+        <translation>Vienmēr augšuplādēt uz šo vietu</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
@@ -2272,7 +2272,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Ienāko&scaron;ie Kopdalītie</translation>
+        <translation type="unfinished">Ienākošie Kopdalītie</translation>
     </message>
     <message>
         <source> Rubbish Bin</source>
@@ -2295,7 +2295,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Ienāko&scaron;ie Kopdalītie</translation>
+        <translation type="unfinished">Ienākošie Kopdalītie</translation>
     </message>
     <message>
         <source>Inbox</source>

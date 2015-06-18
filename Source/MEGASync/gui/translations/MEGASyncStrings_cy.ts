@@ -59,7 +59,7 @@
     <message>
         <source>Add synchronized folder</source>
         <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
-        <translation>Ychwanegu plygell wedi&amp;apos;i chydamseru</translation>
+        <translation>Ychwanegu plygell wedi&apos;i chydamseru</translation>
     </message>
     <message>
         <source/>
@@ -96,7 +96,7 @@
     <message>
         <source>Sync name</source>
         <translatorcomment>Title of the dialog displayed when a user is using a name for a local folder that is already used.</translatorcomment>
-        <translation>Enw&amp;apos;r cydamseriad</translation>
+        <translation>Enw&apos;r cydamseriad</translation>
     </message>
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
@@ -112,7 +112,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Error</source>
@@ -141,17 +141,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>Mae MEGAsync wedi canfod problem. Dyma&amp;apos;r manylion:</translation>
+        <translation>Mae MEGAsync wedi canfod problem. Dyma&apos;r manylion:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Gallwch helpu ni i wella MEGAsync drwy anfon yr adroddiad gwall hwn. Nid yw&amp;apos;n cynnwys unrhyw wybodaeth bersonol. Os ydych am roi mwy o fanylion i ni, ysgrifennwch nhw isod:</translation>
+        <translation>Gallwch helpu ni i wella MEGAsync drwy anfon yr adroddiad gwall hwn. Nid yw&apos;n cynnwys unrhyw wybodaeth bersonol. Os ydych am roi mwy o fanylion i ni, ysgrifennwch nhw isod:</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Dewiswch blygell i lawrlwytho&amp;apos;ch ffeiliau iddi:</translation>
+        <translation>Dewiswch blygell i lawrlwytho&apos;ch ffeiliau iddi:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -179,7 +179,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Lawrlwytho i&amp;apos;r lleoliad hwn bob tro</translation>
+        <translation>Lawrlwytho i&apos;r lleoliad hwn bob tro</translation>
     </message>
     <message>
         <source>OK</source>
@@ -189,7 +189,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -207,8 +207,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Gwall</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Does gennych chi ddim hawliau ysgrifennu yn y blygell leol hon.</translation>
     </message>
 </context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Rhybudd</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Does gennych chi ddim hawliau ysgrifennu yn y blygell hon.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>Ni fydd MEGAsync yn gallu lawrlwytho unrhyw beth yma.</translation>
     </message>
     <message>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Hoffech chi fwrw ymlaen?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Does gennych chi ddim hawliau ysgrifennu yn y blygell leol hon.</translation>
     </message>
     <message>
@@ -299,7 +299,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Heb ei ddarganfod</translation>
     </message>
     <message>
@@ -351,7 +351,7 @@ Are you sure?</source>
         <translation>Gwall</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>Does gennych chi ddim hawliau ysgrifennu yn y blygell leol hon.</translation>
     </message>
 </context>
@@ -370,7 +370,7 @@ Are you sure?</source>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>Defnydd: Nid yw&amp;apos;r data ar gael dros dro</translation>
+        <translation>Defnydd: Nid yw&apos;r data ar gael dros dro</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -405,7 +405,7 @@ Are you sure?</source>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>Trosglwyddiadau ffeiliau wedi&amp;apos;u hoedi</translation>
+        <translation>Trosglwyddiadau ffeiliau wedi&apos;u hoedi</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
@@ -415,7 +415,7 @@ Are you sure?</source>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Mae&amp;apos;r holl drosglwyddiadau wedi eu cwblhau</translation>
+        <translation>Mae&apos;r holl drosglwyddiadau wedi eu cwblhau</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -460,7 +460,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Cyfanswm sy&amp;apos;n weddill:</translation>
+        <translation type="obsolete">Cyfanswm sy&apos;n weddill:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -499,7 +499,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
-        <translation type="unfinished">Defnydd: Nid yw&amp;apos;r data ar gael dros dro</translation>
+        <translation type="unfinished">Defnydd: Nid yw&apos;r data ar gael dros dro</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -534,12 +534,12 @@ Are you sure?</source>
     <message>
         <source>Install for anyone using this computer</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
-        <translation>Gosod i unrhyw un sy&amp;apos;n defnyddio cyfrifiadur hwn</translation>
+        <translation>Gosod i unrhyw un sy&apos;n defnyddio cyfrifiadur hwn</translation>
     </message>
     <message>
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
-        <translation>Gosod i fi&amp;apos;n unig</translation>
+        <translation>Gosod i fi&apos;n unig</translation>
     </message>
 </context>
 <context>
@@ -550,12 +550,12 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Wrthi&amp;apos;n mewngofnodi</translation>
+        <translation>Wrthi&apos;n mewngofnodi</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
+because the remote folder doesn&apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,8 +574,8 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Analluogwyd y cydamseriad &quot;%1&quot; gan nad yw&amp;apos;r blygell leol yn bodoli.</translation>
+because the local folder doesn&apos;t exist</source>
+        <translation type="obsolete">Analluogwyd y cydamseriad &quot;%1&quot; gan nad yw&apos;r blygell leol yn bodoli.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -583,12 +583,12 @@ because the local folder doesn&amp;apos;t exist</source>
         <translation>Gwall: Plygell annilys. Diddymwyd yr uwchlwytho</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -605,22 +605,22 @@ Exit anyway?</source>
     <message>
         <source>MEGAsync version code %1</source>
         <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
-        <translation>MEGAsync fersiwn c&ocirc;d %1</translation>
+        <translation>MEGAsync fersiwn côd %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>Cop&iuml;wyd y ddolen i&amp;apos;r clipfwrdd</translation>
+        <translation>Copïwyd y ddolen i&apos;r clipfwrdd</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
-        <translation>Cop&iuml;wyd y dolenni i&amp;apos;r clipfwrdd</translation>
+        <translation>Copïwyd y dolenni i&apos;r clipfwrdd</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Wrthi&amp;apos;n mewngofnodi...</translation>
+        <translation>Wrthi&apos;n mewngofnodi...</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>I ddydiad</translation>
     </message>
     <message>
@@ -678,7 +678,7 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Mae gennych ffeiliau newydd neu wedi&amp;apos;u diweddaru yn eich cyfrif</translation>
+        <translation>Mae gennych ffeiliau newydd neu wedi&apos;u diweddaru yn eich cyfrif</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -691,12 +691,12 @@ Exit anyway?</source>
         <translation>Aros</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Ni chafodd y blygell (%1) ei huwchlwytho gan ei bod yn enfawr. Rydym ni&amp;apos;n gwirio ffeiliau fel yr un hon i rwystro uwchlwytho disgiau cyfan, sy&amp;apos;n aneffeithlon ac yn beryglus.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Ni chafodd y blygell (%1) ei huwchlwytho gan ei bod yn enfawr. Rydym ni&apos;n gwirio ffeiliau fel yr un hon i rwystro uwchlwytho disgiau cyfan, sy&apos;n aneffeithlon ac yn beryglus.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Ni chafodd %1 o blygellau eu huwchlwytho gan eu bod yn enfawr. Rydym ni&amp;apos;n gwirio ffeiliau fel y rhai hyn i rwystro uwchlwytho disgiau cyfan, sy&amp;apos;n aneffeithlon ac yn beryglus.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Ni chafodd %1 o blygellau eu huwchlwytho gan eu bod yn enfawr. Rydym ni&apos;n gwirio ffeiliau fel y rhai hyn i rwystro uwchlwytho disgiau cyfan, sy&apos;n aneffeithlon ac yn beryglus.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -706,7 +706,7 @@ Exit anyway?</source>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Gosodir diweddariad tra&amp;apos;n ailgychwyn y rhaglen y tro nesaf</translation>
+        <translation>Gosodir diweddariad tra&apos;n ailgychwyn y rhaglen y tro nesaf</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -726,7 +726,7 @@ Exit anyway?</source>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>Mae fersiwn newydd o MEGAsync ar gael! Cliciwch ar y neges hon i&amp;apos;w osod</translation>
+        <translation>Mae fersiwn newydd o MEGAsync ar gael! Cliciwch ar y neges hon i&apos;w osod</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Analluogwyd y cydamseriad &quot;%1&quot; gan nad yw&amp;apos;r blygell bell yn bodoli</translation>
+        <translation type="unfinished">Analluogwyd y cydamseriad &quot;%1&quot; gan nad yw&apos;r blygell bell yn bodoli</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -917,7 +917,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Methodd y cais, wrthi&amp;apos;n ceisio eto</translation>
+        <translation>Methodd y cais, wrthi&apos;n ceisio eto</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
@@ -937,7 +937,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of range</source>
         <translatorcomment>Label to show that an error of Out of range occurs during a SDK operation.</translatorcomment>
-        <translation>Tu allan i&amp;apos;r ystod</translation>
+        <translation>Tu allan i&apos;r ystod</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -1052,7 +1052,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Yn &ocirc;l</translation>
+        <translation type="unfinished">Yn ôl</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1093,7 +1093,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -1103,7 +1103,7 @@ Are you sure?</source>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Rhowch enw&amp;apos;r blygell newydd:</translation>
+        <translation>Rhowch enw&apos;r blygell newydd:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>Gwall</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,9 +1128,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1166,7 +1166,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Rhowch un neu fwy o ddolenni ffeiliau MEGA</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1212,7 +1212,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 awr yn &ocirc;l</translation>
+        <translation>%1 awr yn ôl</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1222,57 +1222,57 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Ychydig yn &ocirc;l</translation>
+        <translation>Ychydig yn ôl</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 eiliad yn &ocirc;l</translation>
+        <translation>%1 eiliad yn ôl</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>1 munud yn &ocirc;l</translation>
+        <translation>1 munud yn ôl</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 o fynudau yn &ocirc;l</translation>
+        <translation>%1 o fynudau yn ôl</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>1 awr yn &ocirc;l</translation>
+        <translation>1 awr yn ôl</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 diwrnod yn &ocirc;l</translation>
+        <translation>1 diwrnod yn ôl</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 diwrnod yn &ocirc;l</translation>
+        <translation>%1 diwrnod yn ôl</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation>1 mis yn &ocirc;l</translation>
+        <translation>1 mis yn ôl</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 mis yn &ocirc;l</translation>
+        <translation>%1 mis yn ôl</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation>1 flwyddyn yn &ocirc;l</translation>
+        <translation>1 flwyddyn yn ôl</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 o flynyddoedd yn &ocirc;l</translation>
+        <translation>%1 o flynyddoedd yn ôl</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1329,7 +1329,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1388,7 +1388,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     </message>
     <message>
         <source>Synced folders</source>
-        <translation type="obsolete">Plygellau wedi&amp;apos;u cydamseru</translation>
+        <translation type="obsolete">Plygellau wedi&apos;u cydamseru</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1416,9 +1416,9 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Llwytho therfyn y gyfradd</translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
-        <translation>Peidio &acirc; chyfyngu</translation>
+        <translation>Peidio â chyfyngu</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -1496,7 +1496,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Mae&amp;apos;r gweinydd dirprwyol yn gofyn am gyfrinair</translation>
+        <translation>Mae&apos;r gweinydd dirprwyol yn gofyn am gyfrinair</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1550,12 +1550,12 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Synchronization will stop working.</source>
         <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
-        <translation>Ni fydd cydamseru&amp;apos;n gweithio.</translation>
+        <translation>Ni fydd cydamseru&apos;n gweithio.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Ydych chi&amp;apos;n siŵr?</translation>
+        <translation>Ydych chi&apos;n siŵr?</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -1585,12 +1585,12 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">&amp;apos;Cache&amp;apos;</translation>
+        <translation type="obsolete">&apos;Cache&apos;</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation type="obsolete">Maint cyfredol y &amp;apos;cache&amp;apos;: %1</translation>
+        <translation type="obsolete">Maint cyfredol y &apos;cache&apos;: %1</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1603,9 +1603,9 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Mae eich gosodiadau dirprwy yn annilys neu nid yw&amp;apos;r dirprwy yn ymateb</translation>
+        <translation>Mae eich gosodiadau dirprwy yn annilys neu nid yw&apos;r dirprwy yn ymateb</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1674,7 +1674,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Y blygell i uwchlwythiadau o&amp;apos;r cyfrifiadur hwn</translation>
+        <translation type="obsolete">Y blygell i uwchlwythiadau o&apos;r cyfrifiadur hwn</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Lawrlwythiadau:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>Ni ellir galluogi&amp;apos;r cydamseru hwn gan nad yw&amp;apos;r blygell leol yn bodoli</translation>
+        <translation>Ni ellir galluogi&apos;r cydamseru hwn gan nad yw&apos;r blygell leol yn bodoli</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Dewiswch blygell leol</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Does gennych chi ddim hawliau ysgrifennu yn y blygell leol hon.</translation>
     </message>
@@ -1765,12 +1765,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Mae allforio&amp;apos;r brifallwedd a&amp;apos;i chadw mewn lleoliad diogel yn eich galluogi i osod cyfrinair newydd heb golli data.</translation>
+        <translation type="unfinished">Mae allforio&apos;r brifallwedd a&apos;i chadw mewn lleoliad diogel yn eich galluogi i osod cyfrinair newydd heb golli data.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Cadwch gopi o&amp;apos;ch prifallwedd (e.e. ar ddyfais gleient, storfa allanol, neu gopi wedi&amp;apos;i argraffu).</translation>
+        <translation type="unfinished">Cadwch gopi o&apos;ch prifallwedd (e.e. ar ddyfais gleient, storfa allanol, neu gopi wedi&apos;i argraffu).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>Mae gen i gyfrif MEGA</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Nid oes gennyf gyfrif MEGA</translation>
     </message>
     <message>
@@ -1852,17 +1852,17 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Terms of Service</a></translation>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Mewngofnodi i&amp;apos;ch cyfrif MEGA</translation>
+        <translation>Mewngofnodi i&apos;ch cyfrif MEGA</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Dilyswch eich cyfrif drwy ddefnyddio&amp;apos;r ddolen gadarnhau anfonon ni at eich cyfrif e-bost</translation>
+        <translation>Dilyswch eich cyfrif drwy ddefnyddio&apos;r ddolen gadarnhau anfonon ni at eich cyfrif e-bost</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1877,11 +1877,11 @@ when the application starts again</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Cydamseru&amp;apos;ch holl storfa cwmwl</translation>
+        <translation>Cydamseru&apos;ch holl storfa cwmwl</translation>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation type="obsolete">Cydamseru&amp;apos;r holl gyfrif</translation>
+        <translation type="obsolete">Cydamseru&apos;r holl gyfrif</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -1896,7 +1896,7 @@ when the application starts again</source>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>Caiff y plygellau canlynol eu cydamseru&amp;apos;n awtomatig:</translation>
+        <translation>Caiff y plygellau canlynol eu cydamseru&apos;n awtomatig:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1924,16 +1924,16 @@ when the application starts again</source>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation type="obsolete">a&amp;apos;ch plygell MEGA:</translation>
+        <translation type="obsolete">a&apos;ch plygell MEGA:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation type="obsolete">caiff ei gydamseru&amp;apos;n awtomatig.</translation>
+        <translation type="obsolete">caiff ei gydamseru&apos;n awtomatig.</translation>
     </message>
     <message>
         <source>Back</source>
         <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Next</source>
@@ -1943,7 +1943,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1953,7 +1953,7 @@ when the application starts again</source>
     <message>
         <source>User already exists</source>
         <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
-        <translation>Mae&amp;apos;r defnyddiwr yn bodoli eisoes</translation>
+        <translation>Mae&apos;r defnyddiwr yn bodoli eisoes</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -1971,9 +1971,9 @@ when the application starts again</source>
         <translation>Ydych chi wedi dilysu eich cyfrif?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Nid yw&amp;apos;r blygell MEGA yn bodoli</translation>
+        <translation>Nid yw&apos;r blygell MEGA yn bodoli</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -2006,19 +2006,19 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Nid yw&amp;apos;r cyfrineiriau gofnodi yn cyd-fynd</translation>
+        <translation>Nid yw&apos;r cyfrineiriau gofnodi yn cyd-fynd</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Mae&amp;apos;n rhaid i chi dderbyn ein telerau gwasanaeth</translation>
+        <translation>Mae&apos;n rhaid i chi dderbyn ein telerau gwasanaeth</translation>
     </message>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Wrthi&amp;apos;n creu&amp;apos;r cyfrif...</translation>
+        <translation>Wrthi&apos;n creu&apos;r cyfrif...</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2032,7 +2032,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation type="obsolete">a&amp;apos;ch storfa gwmwl MEGA</translation>
+        <translation type="obsolete">a&apos;ch storfa gwmwl MEGA</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -2057,7 +2057,7 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Wrthi&amp;apos;n mewngofnodi...</translation>
+        <translation>Wrthi&apos;n mewngofnodi...</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -2090,20 +2090,20 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Cydamserir eich plygell leol a&amp;apos;ch storfa gwmwl MEGA yn awtomatig.</translation>
+        <translation>Cydamserir eich plygell leol a&apos;ch storfa gwmwl MEGA yn awtomatig.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Caiff eich storfa gwmwl ei chydamseru gyda&amp;apos;r blygell hon:</translation>
+        <translation>Caiff eich storfa gwmwl ei chydamseru gyda&apos;r blygell hon:</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Does gennych chi ddim hawliau ysgrifennu yn y blygell leol hon.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Ni fydd MEGAsync yn gallu lawrlwytho unrhyw beth yma.</translation>
     </message>
@@ -2198,7 +2198,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Yn &ocirc;l</translation>
+        <translation type="unfinished">Yn ôl</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2256,7 +2256,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Yn &ocirc;l</translation>
+        <translation>Yn ôl</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2315,7 +2315,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA synced folder</source>
         <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
-        <translation>Plygell MEGA wedi&amp;apos;i chydamseru</translation>
+        <translation>Plygell MEGA wedi&apos;i chydamseru</translation>
     </message>
 </context>
 </TS>
