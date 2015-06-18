@@ -487,7 +487,7 @@ Are you sure?</source>
     <name>InfoOverQuotaDialog</name>
     <message>
         <source>MEGAsync is currently disabled</source>
-        <translation type="unfinished">MEGAsync está desactivado</translation>
+        <translation type="unfinished">MEGAsync está desativado</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
@@ -2303,11 +2303,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">utilizados</translation>
+        <translation type="unfinished">Utilizados</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">disponível</translation>
+        <translation type="unfinished">Disponível</translation>
     </message>
 </context>
 <context>

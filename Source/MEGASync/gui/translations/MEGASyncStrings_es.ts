@@ -2303,11 +2303,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">usado</translation>
+        <translation type="unfinished">Usado</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">libre</translation>
+        <translation type="unfinished">Libre</translation>
     </message>
 </context>
 <context>
