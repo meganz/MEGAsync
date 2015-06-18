@@ -1060,7 +1060,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
-        <translation type="unfinished">La carpeta de destino está sincronizada y tiene un archivo en su interior con el mismo nombre (%1). Si continúas la subida, el archivo previo se sobreescribirá. ¿Estás seguro?</translation>
+        <translation type="unfinished">La carpeta de destino está sincronizada y tiene un archivo en su interior con el mismo nombre. Si continúas la subida, el archivo previo se sobreescribirá. ¿Estás seguro?</translation>
     </message>
 </context>
 <context>

@@ -102,7 +102,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>O nome &quot;% 1&quot; já está em uso por outra sincronização.Por favor, indique um nome diferente para identificar esta pasta sincronizada:</translation>
+        <translation type="unfinished">O nome &quot;%1&quot; já está em uso por outra sincronização.Por favor, indique um nome diferente para identificar esta pasta sincronizada:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -839,7 +839,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">A sua sincronização &quot;% 1&quot; foi desativada porque a pasta local não existe</translation>
+        <translation type="unfinished">A sua sincronização &quot;%1&quot; foi desativada porque a pasta local não existe</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -869,12 +869,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A sua sincronização &quot;% 1&quot; foi desativada porque a pasta local mudou</translation>
+        <translation type="unfinished">A sua sincronização &quot;%1&quot; foi desativada porque a pasta local mudou</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A sua sincronização &quot;% 1&quot; foi desativada. A pasta remota (ou parte dela) não tem acesso total</translation>
+        <translation type="unfinished">A sua sincronização &quot;%1&quot; foi desativada. A pasta remota (ou parte dela) não tem acesso total</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -882,7 +882,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
-        <translation type="unfinished">O seu sync &quot;% 1&quot; foi desativado porque a sincronização de pastas partilhadas da VirtualBox não é permitida, devido a deficiências no sistema de arquivos.</translation>
+        <translation type="unfinished">O seu sync &quot;%1&quot; foi desativado porque a sincronização de pastas partilhadas da VirtualBox não é permitida, devido a deficiências no sistema de arquivos.</translation>
     </message>
     <message>
         <source>Logout</source>
