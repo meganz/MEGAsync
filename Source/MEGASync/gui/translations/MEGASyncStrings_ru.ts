@@ -144,7 +144,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync обнаружил проблему. Подробности:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Вы можете помочь нам улучшить MEGAsync, отослав этот отчёт об ошибке. Отчёт не содержит каких-либо личных данных. Если вы хотите сообщить нам больше подробностей, то, пожалуйста, напишите ниже:</translation>
     </message>
@@ -207,8 +207,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>У вас нет прав записи в эту локальную папку.</translation>
     </message>
 </context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">У вас нет прав записи в эту папку.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync не сможет что-либо скачать сюда.</translation>
     </message>
     <message>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Продолжить?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>У вас нет прав записи в эту локальную папку.</translation>
     </message>
     <message>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Не найдено</translation>
     </message>
     <message>
@@ -351,7 +351,7 @@ Are you sure?</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>У вас нет прав записи в эту локальную папку.</translation>
     </message>
 </context>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Спасибо за тестирование MEGAsync. <br>Это бета-версия перестала быть актуальной. <br> Пожалуйста следите за обновлениями <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> в Твитере.</translation>
+        <translation type="obsolete">Спасибо за тестирование MEGAsync. &lt;br&gt;Это бета-версия перестала быть актуальной. &lt;br&gt; Пожалуйста следите за обновлениями &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; в Твитере.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,7 +564,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
+because the remote folder doesn&apos;t exist</source>
         <translation type="obsolete">Ваша синхронизация &quot;%1&quot; была отключена, так как удалённая папка не существует</translation>
     </message>
     <message>
@@ -574,7 +574,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Ваша синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует</translation>
     </message>
     <message>
@@ -583,11 +583,11 @@ because the local folder doesn&amp;apos;t exist</source>
         <translation>Ошибка: Неверная папка назначения. Загрузка была остановлена</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">Папка (%1) не была загружена,  поскольку имеет очень большой размер (эта версия имеет ограничение %2 папок или %3 файлов)</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 папки не были загружены,  поскольку имеют очень большой размер (эта версия имеет ограничение %2 папок или %3 файлов)</translation>
     </message>
     <message>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Синхронизировано</translation>
     </message>
     <message>
@@ -691,11 +691,11 @@ Exit anyway?</source>
         <translation>Ожидание</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Папка (%1) не была загружена, поскольку имеет очень большой размер. Мы производим данную проверку, чтобы предотвратить закачку загрузочных разделов, так как это неэффективно и опасно.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 папок не были загружены, поскольку имеют очень большой размер. Мы производим данную проверку, чтобы предотвратить закачку загрузочных разделов, так как это неэффективно и опасно.</translation>
     </message>
     <message>
@@ -742,7 +742,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Доступно обновление. Загрузка&hellip;</translation>
+        <translation>Доступно обновление. Загрузка…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -832,12 +832,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync не может подключиться. Пожалуйста, проверьте подключение к Интернету и локальную конфигурацию брандмауэра. Обратите внимание, что большинство антивирусного программного обеспечения включает в себя межсетевой экран (файервол).</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Ваша синхронизация &quot;%1&quot; была отключена, так как удалённая папка не существует</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Ваша синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует.</translation>
     </message>
@@ -872,7 +872,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ваша синхронизация &quot;%1&quot; была отключена, так как локальная папка была изменена.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">Ваша синхронизация &quot;%1&quot; была отключена. Удалённая папка (или её часть) не имеет полного доступа.</translation>
     </message>
@@ -1111,7 +1111,7 @@ Are you sure?</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
         <translation>Корневая папка не может быть синхронизирована. Пожалуйста, выберите подпапку.</translation>
@@ -1128,9 +1128,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Недопустимая папка для синхронизации. Пожалуйста, убедитесь, что Вы не используете символы, такие как &amp;apos;&amp;apos; &amp;apos;/&amp;apos; или &amp;apos;:&amp;apos; в именах папок.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Недопустимая папка для синхронизации. Пожалуйста, убедитесь, что Вы не используете символы, такие как &apos;&apos; &apos;/&apos; или &apos;:&apos; в именах папок.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1179,7 +1179,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Введите одну или несколько MEGA-ссылок на файлы</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>MEGA-ссылка не найдена (ссылки на папки ещё не поддерживаются).</translation>
     </message>
@@ -1416,7 +1416,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Ограничить скорость загрузки</translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Не огрничивать</translation>
     </message>
@@ -1603,7 +1603,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Неверные настройки прокси-сервера или прокси-сервер не отвечает</translation>
     </message>
@@ -1719,12 +1719,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>Скачивания:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Синхронизация не может быть запущена, так как локальная папка не существует</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>Синхронизация не может быть запущена, так как удалённая папка не существует</translation>
     </message>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Выбрать локальную папку</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>У вас нет прав записи в эту локальную папку.</translation>
     </message>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>У меня есть учётная запись MEGA</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>У меня нет учётной записи MEGA</translation>
     </message>
     <message>
@@ -1852,7 +1852,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Я согласен с <a href=&quot;https://mega.co.nz/#terms&quot;>Условия использования</a> MEGA</translation>
+        <translation>Я согласен с &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Условия использования&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -1971,7 +1971,7 @@ when the application starts again</source>
         <translation>Вы подтвердили свою учётную запись?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>Папка MEGA не существует</translation>
     </message>
@@ -2006,7 +2006,7 @@ when the application starts again</source>
         <translation>Пожалуйста, введите более сильный пароль</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Введённые пароли не соответствуют</translation>
     </message>
@@ -2098,12 +2098,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Ваш облачный диск будет синхронизирован в данную папку:</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>У вас нет прав записи в эту локальную папку.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync не сможет что-либо скачать сюда.</translation>
     </message>

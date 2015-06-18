@@ -117,7 +117,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -136,7 +136,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -144,9 +144,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync je otkrila problem. Ovo su detalji:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Možete nam pomoći da pobolj&scaron;ate MEGAsync ako po&scaron;aljate ovaj izvje&scaron;taj o pogre&scaron;ki. On ne sadrži nikakvu informaciju koja se tiče Vas privatno. Ukoliko želite da nam date vi&scaron;e detalja, molimo Vas da napi&scaron;ete ispod:</translation>
+        <translation>Možete nam pomoći da poboljšate MEGAsync ako pošaljate ovaj izvještaj o pogreški. On ne sadrži nikakvu informaciju koja se tiče Vas privatno. Ukoliko želite da nam date više detalja, molimo Vas da napišete ispod:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -156,7 +156,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Po&scaron;aljite izvje&scaron;taj</translation>
+        <translation>Pošaljite izvještaj</translation>
     </message>
 </context>
 <context>
@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Molimo Vas da izaberete folder za preuzimanje za Va&scaron;e fajlove:</translation>
+        <translation>Molimo Vas da izaberete folder za preuzimanje za Vaše fajlove:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -204,11 +204,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error</source>
         <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Nemate odobrenje za pisanje na ovom lokalnom folderu.</translation>
     </message>
 </context>
@@ -240,13 +240,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Nemate odobrenje za pisanje na ovom folderu.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync ovdje nije u mogućnosti da preuzme ni&scaron;ta.</translation>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <translation>MEGAsync ovdje nije u mogućnosti da preuzme ništa.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Da li želite da nastavite?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Nemate odobrenje za pisanje na ovom lokalnom folderu.</translation>
     </message>
     <message>
@@ -267,7 +267,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Gre&scaron;ka</translation>
+        <translation type="unfinished">Greška</translation>
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
@@ -318,11 +318,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Gre&scaron;ka u opisu</translation>
+        <translation>Greška u opisu</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Nije pronađeno</translation>
     </message>
     <message>
@@ -348,10 +348,10 @@ Are you sure?</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>Nemate odobrenje za pisanje na ovom lokalnom folderu.</translation>
     </message>
 </context>
@@ -415,7 +415,7 @@ Are you sure?</source>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Svi prenosi dokumenata su uspje&scaron;no zavr&scaron;eni</translation>
+        <translation>Svi prenosi dokumenata su uspješno završeni</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
+because the remote folder doesn&apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,21 +574,21 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Va&scaron;a sinhronizacija %1 je onemogućena jer lokalni folder ne postoji</translation>
+because the local folder doesn&apos;t exist</source>
+        <translation type="obsolete">Vaša sinhronizacija %1 je onemogućena jer lokalni folder ne postoji</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Gre&scaron;ka: pogre&scaron;an destinacijski folder. Kačenje je otkazano.</translation>
+        <translation>Greška: pogrešan destinacijski folder. Kačenje je otkazano.</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -635,7 +635,7 @@ Exit anyway?</source>
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Pode&scaron;avanja</translation>
+        <translation>Podešavanja</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Proces je aktuelizovan</translation>
     </message>
     <message>
@@ -673,12 +673,12 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Trenutna pogre&scaron;ka u transimisiji</translation>
+        <translation>Trenutna pogreška u transimisiji</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Imate novi ili aktuelizovan fijl na Va&scaron;em nalogu</translation>
+        <translation>Imate novi ili aktuelizovan fijl na Vašem nalogu</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -691,12 +691,12 @@ Exit anyway?</source>
         <translation>Čekanje</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Folder (%1) nije ažuriran zbog toga jer je ekstremno veliki. Mi obavljamo ovu provjeru da bismo spriječili da se izv&scaron;i kompletan boot volume, &scaron;to bi bilo veoma neefikasno i opasno.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">Folder (%1) nije ažuriran zbog toga jer je ekstremno veliki. Mi obavljamo ovu provjeru da bismo spriječili da se izvši kompletan boot volume, što bi bilo veoma neefikasno i opasno.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 foldera nije uploadovano jer su ekstremno veliki. Mi obavljamo ovu provjeru da bismo spriječili da se izv&scaron;i kompletan boot volume, &scaron;to bi bilo veoma neefikasno i opasno.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <translation type="obsolete">%1 foldera nije uploadovano jer su ekstremno veliki. Mi obavljamo ovu provjeru da bismo spriječili da se izvši kompletan boot volume, što bi bilo veoma neefikasno i opasno.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -752,7 +752,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -814,7 +814,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Va&scaron;a konfiguracija je korumpirana, molimo Vas startujte preko</translation>
+        <translation>Vaša konfiguracija je korumpirana, molimo Vas startujte preko</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
@@ -824,7 +824,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link: </source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Gre&scaron;ka prilikom prihvatanja linka:</translation>
+        <translation>Greška prilikom prihvatanja linka:</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Va&scaron;a sinhronizacija %1 je onemogućena jer niste izabrali folder</translation>
+        <translation type="unfinished">Vaša sinhronizacija %1 je onemogućena jer niste izabrali folder</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -864,7 +864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Va&scaron;a sinhronizacija %1 je onemogućena jer Va&scaron; folder se nalazi u korpi za brisanje</translation>
+        <translation type="unfinished">Vaša sinhronizacija %1 je onemogućena jer Vaš folder se nalazi u korpi za brisanje</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -902,17 +902,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No error</source>
         <translatorcomment>Label to show that an SDK operation has been complete successfully.</translatorcomment>
-        <translation>Nema gre&scaron;ke</translation>
+        <translation>Nema greške</translation>
     </message>
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Interna gre&scaron;ka</translation>
+        <translation>Interna greška</translation>
     </message>
     <message>
         <source>Invalid argument</source>
         <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
-        <translation>Pogre&scaron;an argument</translation>
+        <translation>Pogrešan argument</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
@@ -932,7 +932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many concurrent connections or transfers</source>
         <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
-        <translation>Previ&scaron;e paralelnih konekcija ili tranfera</translation>
+        <translation>Previše paralelnih konekcija ili tranfera</translation>
     </message>
     <message>
         <source>Out of range</source>
@@ -972,12 +972,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Nevažeći ključ/gra&scaron;ka u dekripciji</translation>
+        <translation>Nevažeći ključ/graška u dekripciji</translation>
     </message>
     <message>
         <source>Bad session ID</source>
         <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
-        <translation>Lo&scaron;a sesija ID</translation>
+        <translation>Loša sesija ID</translation>
     </message>
     <message>
         <source>Blocked</source>
@@ -1002,12 +1002,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Write error</source>
         <translatorcomment>Label to show that an error related with an write error occurs during a SDK operation.</translatorcomment>
-        <translation>Gre&scaron;ka u pisanju</translation>
+        <translation>Greška u pisanju</translation>
     </message>
     <message>
         <source>Read error</source>
         <translatorcomment>Label to show that an error related with an read error occurs during a SDK operation.</translatorcomment>
-        <translation>Gre&scaron;ka u čitanju</translation>
+        <translation>Greška u čitanju</translation>
     </message>
     <message>
         <source>Invalid application key</source>
@@ -1017,11 +1017,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Unknown error</source>
         <translatorcomment>Label to show that an error related with an unknown error occurs during a SDK operation.</translatorcomment>
-        <translation>Nepoznata gre&scaron;ka</translation>
+        <translation>Nepoznata greška</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Gre&scaron;ka</translation>
+        <translation type="obsolete">Greška</translation>
     </message>
 </context>
 <context>
@@ -1108,13 +1108,13 @@ Are you sure?</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,9 +1128,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1156,7 +1156,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Ukucajte jedan ili vi&scaron;e MEGA linkova za fajlove</translation>
+        <translation>Ukucajte jedan ili više MEGA linkova za fajlove</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -1176,12 +1176,12 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Ukucajte jedan ili vi&scaron;e MEGA linkova za fajlove</translation>
+        <translation>Ukucajte jedan ili više MEGA linkova za fajlove</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1339,7 +1339,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Show notifications</source>
         <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Prikažite obavje&scaron;tenja</translation>
+        <translation>Prikažite obavještenja</translation>
     </message>
     <message>
         <source>Start on startup</source>
@@ -1416,7 +1416,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>Gornja granica brzine prenosa </translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Nema ograničenja</translation>
     </message>
@@ -1456,12 +1456,12 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation>Izop&scaron;tena imena fajlova</translation>
+        <translation>Izopštena imena fajlova</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
         <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Namje&scaron;tanje Proxy servera</translation>
+        <translation>Namještanje Proxy servera</translation>
     </message>
     <message>
         <source>No proxy</source>
@@ -1571,7 +1571,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -1585,17 +1585,17 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Ke&scaron;</translation>
+        <translation type="obsolete">Keš</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation type="obsolete">Trenutni ke&scaron; iznosi: %1</translation>
+        <translation type="obsolete">Trenutni keš iznosi: %1</translation>
     </message>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>Obri&scaron;i</translation>
+        <translation>Obriši</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -1603,9 +1603,9 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Pode&scaron;avanja za proxy nisu važeća ili proxy nije u mogućnosti da odgovori</translation>
+        <translation>Podešavanja za proxy nisu važeća ili proxy nije u mogućnosti da odgovori</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1627,7 +1627,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation type="obsolete">Ukoliko uključite punu sinhronizaciju naloga time će biti ukinute sve Va&scaron;e trenutne sinhronizacije</translation>
+        <translation type="obsolete">Ukoliko uključite punu sinhronizaciju naloga time će biti ukinute sve Vaše trenutne sinhronizacije</translation>
     </message>
     <message>
         <source>Full account sync active</source>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Preuzimanje:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>Ova sinhronizacija će biti odobrena zbog toga &scaron;to lokalni folder ne postoji.</translation>
+        <translation>Ova sinhronizacija će biti odobrena zbog toga što lokalni folder ne postoji.</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>Izaberite lokalni folder</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Nemate odobrenje za pisanje na ovom lokalnom folderu.</translation>
     </message>
@@ -1770,7 +1770,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Uvijek čuvajte fizičku kontrolu Va&scaron;eg master ključa (npr. na klijent uređaju, eksternom skladi&scaron;tu, ili isprintajte).</translation>
+        <translation type="unfinished">Uvijek čuvajte fizičku kontrolu Vašeg master ključa (npr. na klijent uređaju, eksternom skladištu, ili isprintajte).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>Imam već MEGA nalog</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Nemam MEGA nalog</translation>
     </message>
     <message>
@@ -1852,17 +1852,17 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Terms of Service</a></translation>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Ulogujte se na Va&scaron; MEGA nalog</translation>
+        <translation>Ulogujte se na Vaš MEGA nalog</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Molimo Vas da verifikujete Va&scaron; nalog tako &scaron;to ćete kliknuti na verifikacijski link koji je poslat na Va&scaron; email</translation>
+        <translation>Molimo Vas da verifikujete Vaš nalog tako što ćete kliknuti na verifikacijski link koji je poslat na Vaš email</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -1891,7 +1891,7 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Sinhronizujte određene foldere na Va&scaron; oblačiću</translation>
+        <translation>Sinhronizujte određene foldere na Vaš oblačiću</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -1916,15 +1916,15 @@ when the application starts again</source>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label displayed to welcome the user.</translatorcomment>
-        <translation>Dobrodo&scaron;li na MEGA</translation>
+        <translation>Dobrodošli na MEGA</translation>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation type="obsolete">Va&scaron; lokalni folder</translation>
+        <translation type="obsolete">Vaš lokalni folder</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation type="obsolete">i Va&scaron; MEGA folder</translation>
+        <translation type="obsolete">i Vaš MEGA folder</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
@@ -1948,7 +1948,7 @@ when the application starts again</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label of error.</translatorcomment>
-        <translation>Gre&scaron;ka</translation>
+        <translation>Greška</translation>
     </message>
     <message>
         <source>User already exists</source>
@@ -1968,17 +1968,17 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Da li ste verifikovali Va&scaron; nalog</translation>
+        <translation>Da li ste verifikovali Vaš nalog</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA folder ne postoji</translation>
     </message>
     <message>
         <source>Finish</source>
         <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
-        <translation>Zavr&scaron;eno</translation>
+        <translation>Završeno</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -2006,14 +2006,14 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Ukucane lozinke ne odgovaraju</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Prihvatate sve uslove kori&scaron;tenja usluga</translation>
+        <translation>Prihvatate sve uslove korištenja usluga</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2032,7 +2032,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation type="obsolete">i Va&scaron; MEGA oblačić</translation>
+        <translation type="obsolete">i Vaš MEGA oblačić</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -2080,7 +2080,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting session key</source>
         <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
-        <translation>Gre&scaron;ka prilikom dobijanja ključa za sesiju</translation>
+        <translation>Greška prilikom dobijanja ključa za sesiju</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -2090,22 +2090,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Va&scaron; lokalni folder i Va&scaron; MEGA Cloud Drive biće automatski sinhronizovan.</translation>
+        <translation>Vaš lokalni folder i Vaš MEGA Cloud Drive biće automatski sinhronizovan.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Va&scaron; Cloud Drive će biti sinhronizovan sa ovim folderom:</translation>
+        <translation>Vaš Cloud Drive će biti sinhronizovan sa ovim folderom:</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Nemate odobrenje za pisanje na ovom lokalnom folderu.</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync ovdje nije u mogućnosti da preuzme ni&scaron;ta.</translation>
+        <translation>MEGAsync ovdje nije u mogućnosti da preuzme ništa.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -2146,7 +2146,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Send to a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
-        <translation>Po&scaron;aljite MEGA korisniku</translation>
+        <translation>Pošaljite MEGA korisniku</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -2272,7 +2272,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Nadolazeće &scaron;erovanje</translation>
+        <translation type="unfinished">Nadolazeće šerovanje</translation>
     </message>
     <message>
         <source> Rubbish Bin</source>
@@ -2295,7 +2295,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Nadolazeće &scaron;erovanje</translation>
+        <translation type="unfinished">Nadolazeće šerovanje</translation>
     </message>
     <message>
         <source>Inbox</source>

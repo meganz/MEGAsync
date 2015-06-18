@@ -144,7 +144,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Kua kitea e MEGA-whiritahi he raruraru. Ko ia nei nga mokamoka.</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&amp;apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Ka taea e koe te awhina i a MEGA-whiritahi ma te tono i tenei ripoata hapa. Kaore he parongo mou. Mena e hiahia ana koe ki te tuku mokamoka tua atu, tena tuhia ki raro nei:</translation>
     </message>
@@ -207,8 +207,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>hapa</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>kaore au tukutuhi i tenei kopaki tata</translation>
     </message>
 </context>
@@ -240,12 +240,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>tupatotanga</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">kaore au tukutuhi ki tenei kopaki</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&amp;apos;t be able to download anything due to the user doesn&amp;apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>E kore e taea e MEGAwhiri nga ihotanga i konei</translation>
     </message>
     <message>
@@ -254,8 +254,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Me haere tonu pea koe?</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&amp;apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>kaore au tukutuhi i tenei kopaki tata</translation>
     </message>
     <message>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&amp;apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>kua ngaro</translation>
     </message>
     <message>
@@ -351,7 +351,7 @@ Are you sure?</source>
         <translation>hapa</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translation>kaore au tukutuhi i tenei kopaki tata</translation>
     </message>
 </context>
@@ -550,7 +550,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.<br>This beta version is no longer current and has expired.<br>Please follow <a href=&quot;https://twitter.com/MEGAprivacy&quot;>@MEGAprivacy</a> on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -564,8 +564,8 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&amp;apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&amp;apos;t exist</translation>
+because the remote folder doesn&apos;t exist</source>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -574,7 +574,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&amp;apos;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Ko to whakaritenga &quot;%1&quot; kua katia  na te mea ko te kopaki o konei kaore i te ora</translation>
     </message>
     <message>
@@ -583,12 +583,12 @@ because the local folder doesn&amp;apos;t exist</source>
         <translation>Hapa: kei te he te kopaki otinga. Kua whakakorea te utaake</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&amp;apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -652,7 +652,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&amp;apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>whakahoua</translation>
     </message>
     <message>
@@ -691,11 +691,11 @@ Exit anyway?</source>
         <translation>tatari</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&amp;apos;t uploaded because it&amp;apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Ko te kopaki kaore i utaihotia na te mea he tino rahi rawa. Ka mahia e matau tenei tirohanga kia kore ai e utaihotia te katoa o te nuinga putu, he mea uaua he mea tino kino</translation>
     </message>
     <message>
-        <source>%1 folders weren&amp;apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 kopaki kaore i utaihotia na te mea he tino rahi rawa.   Mahia ai e matau tenei tirohanga kia kore ai e utaihotia te nuinga putu katoa, he mea uaua he mea tino kino.</translation>
     </message>
     <message>
@@ -832,14 +832,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">kua katia to whakaritenga %1 na te mea kaore te kopaki pamamao i te ora</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&amp;apos;t exist</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -872,9 +872,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&amp;apos;t have full access</translation>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -1111,10 +1111,10 @@ Are you sure?</source>
         <translation>hapa</translation>
     </message>
     <message>
-        <source>The root folder can&amp;apos;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&amp;apos;t be synced.Please, select a subfolder.</translation>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,9 +1128,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &amp;apos;\\&amp;apos; &amp;apos;/&amp;apos; and &amp;apos;:&amp;apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&amp;apos;t use characters like &amp;apos;&amp;apos; &amp;apos;/&amp;apos; or &amp;apos;:&amp;apos; in your folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1179,9 +1179,9 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>whakaurua etahi, ranei, tetahi o nga konae hono a MEGA</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No valid MEGA links found. (Folder links aren&amp;apos;t yet supported)</translation>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1416,7 @@ Please, ensure that you don&amp;apos;t use characters like &amp;apos;\&amp;apos;
         <translation>nui auau utaake </translation>
     </message>
     <message>
-        <source>Don&amp;apos;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>kaua e tepehia</translation>
     </message>
@@ -1603,7 +1603,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&amp;apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Kei te hapa au ruapu, kaore te ruapu i te mahi ranei.</translation>
     </message>
@@ -1719,14 +1719,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>ihotanga:</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the local folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>E kore tenei whiritahi e aheitia na te ngaro noa o te kopaki tata</translation>
     </message>
     <message>
-        <source>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&amp;apos;t be enabled because the remote folder doesn&amp;apos;t exist</translation>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1743,7 +1743,7 @@ Do you want to restart MEGAsync now?</source>
         <translation>whiria te kopaki o konei</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>kaore au tukutuhi i tenei kopaki tata</translation>
     </message>
@@ -1800,11 +1800,11 @@ when the application starts again</source>
     </message>
     <message>
         <source>Local cache: %1</source>
-        <translation type="unfinished">Local cache: %1</translation>
+        <translation type="unfinished">Kono tata: %1</translation>
     </message>
     <message>
         <source>Remote cache: %1</source>
-        <translation type="unfinished">Remote cache: %1</translation>
+        <translation type="unfinished">Kona whanga: %1</translation>
     </message>
 </context>
 <context>
@@ -1820,8 +1820,8 @@ when the application starts again</source>
         <translation>he nama MEGA taku</translation>
     </message>
     <message>
-        <source>I don&amp;apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&amp;apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>kaore aku nama MEGA</translation>
     </message>
     <message>
@@ -1852,7 +1852,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA <a href=&quot;https://mega.co.nz/#terms&quot;>Terms of Service</a></translation>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -1971,7 +1971,7 @@ when the application starts again</source>
         <translation>kua tautokona e koe to nama</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&amp;apos;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>kaore he kopaki MEGA</translation>
     </message>
@@ -2006,7 +2006,7 @@ when the application starts again</source>
         <translation>Please, enter a stronger password</translation>
     </message>
     <message>
-        <source>The entered passwords don&amp;apos;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>ko te kupuuru he rite kore</translation>
     </message>
@@ -2028,7 +2028,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive.Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">Kei to Mihini Ao ko te %1</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -2098,12 +2098,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Ka whiritahitia to kopae Ao ki tenei kopaki</translation>
     </message>
     <message>
-        <source>You don&amp;apos;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>kaore au tukutuhi i tenei kopaki tata</translation>
     </message>
     <message>
-        <source>MEGAsync won&amp;apos;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>E kore e taea e MEGAwhiri nga ihotanga i konei</translation>
     </message>
@@ -2123,7 +2123,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
-        <translation type="unfinished">Are you sure you want to cancel this wizard and undo all changes?</translation>
+        <translation type="unfinished">Kei te tino whakaae koe kia whakakorea tenei Niwhame te wewete i nga whiringa katoa?</translation>
     </message>
 </context>
 <context>
