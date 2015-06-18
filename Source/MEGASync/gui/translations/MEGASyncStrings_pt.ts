@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt" sourcelanguage="en">
+<TS version="2.1" language="pt" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -62,7 +62,7 @@
         <translation>Adicionar pasta sincronizada</translation>
     </message>
     <message>
-        <source/>
+        <source></source>
         <translation></translation>
     </message>
     <message>
@@ -491,7 +491,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="unfinished">A sua conta excedeu a cota de espaço permitido. [A] Atualize [/ A] e continue a desfrutar de forma segura, do armazenamento criptografado ponto a ponto.</translation>
+        <translation type="unfinished">A sua conta excedeu a cota de espaço permitido. [A] Atualize [/A] e continue a desfrutar de forma segura, do armazenamento criptografado ponto a ponto.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
