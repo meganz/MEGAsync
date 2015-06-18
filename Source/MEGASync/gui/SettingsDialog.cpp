@@ -1656,6 +1656,7 @@ void SettingsDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         loadSettings();
+        onCacheSizeAvailable();
     }
     QDialog::changeEvent(event);
     modifyingSettings--;

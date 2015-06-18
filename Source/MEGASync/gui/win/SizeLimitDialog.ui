@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
+    <width>369</width>
     <height>111</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>369</width>
     <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>232323</width>
+    <width>369</width>
     <height>232323</height>
    </size>
   </property>
@@ -54,13 +54,13 @@
        <widget class="QCheckBox" name="cExcludeUpperThan">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>219</width>
           <height>20</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>219</width>
           <height>20</height>
          </size>
         </property>
@@ -257,9 +257,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>horizontalSpacer</zorder>
-  <zorder>widget</zorder>
-  <zorder>bLayout</zorder>
  </widget>
  <resources/>
  <connections/>
