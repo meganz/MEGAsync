@@ -5,128 +5,157 @@
     <name>AccountDetailsDialog</name>
     <message>
         <source>Account usage details</source>
-        <translation>Account usage details</translation>
+        <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
+        <translation>รายละเอียดการใช้งานบัญชี</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation>คลาวด์ไดรฟ์</translation>
+        <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
+        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation>กล่องขาเข้า</translation>
+        <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
+        <translation type="obsolete">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation>ถังขยะ</translation>
+        <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
+        <translation type="obsolete">ถังขยะ</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation>พื้นที่จัดเก็บ</translation>
+        <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
+        <translation type="obsolete">พื้นที่จัดเก็บ</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation>Files</translation>
+        <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
+        <translation type="obsolete">ไฟล์</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Folders</translation>
+        <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
+        <translation type="obsolete">โฟลเดอร์</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
+        <translation>รีเฟรช</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
+        <translation type="unfinished">Loading...</translation>
     </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
+        <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
         <translation>เพิ่มโฟลเดอร์ซิงโครไนซ์</translation>
     </message>
     <message>
-        <source></source>
-        <translation>ผิดพลาด</translation>
+        <source/>
+        <translation></translation>
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
+        <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>กรุณาเลือกโฟลเดอร์ในเครื่องพีซีและโฟลเดอร์ของ MEGA</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
+        <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
         <translation>โฟลเดอร์ในเครื่องพีซีที่เลือกมีการซิงค์แล้ว</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
+        <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
         <translation>โฟลเดอร์ที่ซิงค์แล้ว จะไม่อยู่ในโฟลเดอร์ที่ซิงค์ได้อีก</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
+        <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
         <translation>โฟลเดอร์ MEGA ที่เลือกถูกซิงค์แล้ว</translation>
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation>การซิงค์บัญชีเต็มรูปแบบ จะทำได้ทันที โดยไม่ต้องมีการเลือกการซิงค์ใดๆ</translation>
+        <translation type="obsolete">การซิงค์บัญชีเต็มรูปแบบ จะทำได้ทันที โดยไม่ต้องมีการเลือกการซิงค์ใดๆ</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>คำเตือน</translation>
+        <translation type="obsolete">คำเตือน</translation>
     </message>
     <message>
         <source>Sync name</source>
+        <translatorcomment>Title of the dialog displayed when a user is using a name for a local folder that is already used.</translatorcomment>
         <translation>ชื่อซิงค์</translation>
     </message>
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
-        <translation>ชื่อ &quot;%1&quot; มีอยู่แล้วในการใช้งาน จากการซิงค์ที่อื่น กรุณากรอกชื่อให้แตกต่างกัน สำหรับการระบุโฟลเดอร์ที่จะซิงค์นี้</translation>
+        <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
+        <translation>The name &quot;%1&quot; is already in use for another syncPlease enter a different name to identify this synced folder:</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files.Please, select another folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>คุณพยายามที่จะซิงค์โฟลเดอร์ขนาดใหญ่เกินไป เพื่อป้องกันการซิงค์ของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้ เราขอให้คุณเริ่มต้น ด้วยโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลขณะเรียกใช้ MEGAsync</translation>
+        <translation type="obsolete">You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
+        <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
         <translation>รายงานข้อผิดพลาด</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
+        <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
         <translation>MEGAsync ตรวจเจอปัญหา รายละเอียดดังนี้:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>คุณสามารถช่วยปรับปรุง MEGAsync โดยการส่งรายข้อผิดพลาดนี้ ข้อมูลส่วนตัวของคุณจะไม่ถูกส่งไปด้วยแต่อย่างใด หากต้องการข้อมูลเพิ่มเติม สามารถเขียนลงด้านล่างนี้ได้:</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Send report</source>
+        <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>ส่งรายงาน</translation>
     </message>
 </context>
@@ -134,104 +163,142 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
+        <translation>ดาวน์โหลดจาก MEGA</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
-        <translation>Please select the download folder for your files:</translation>
+        <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
+        <translation>กรุณาเลือกโฟลเดอร์ดาวน์โหลดไฟล์ของคุณๅซ</translation>
     </message>
     <message>
         <source>Local folder:</source>
+        <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
         <translation>โฟลเดอร์ในเครื่องพีซี:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
-        <translation>Always download to this destination</translation>
+        <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
+        <translation>ดาวน์โหลดไปยังปลายทางนี้เสมอ</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
         <translation>เลือก</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
         <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translation>คุณไม่ได้รับอนุญาตการเขียนในโฟลเดอร์ของเครื่องพีซีนี้</translation>
     </message>
 </context>
 <context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
+        <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
         <translation>โฟลเดอร์ในเครื่องพีซี:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
+        <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
         <translation>โฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
         <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
         <translation>เลือก</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
         <translation>คำเตือน</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">คุณไม่ได้รับอนุญาตการเขียนในโฟลเดอร์นี้</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <translation>MEGAsync จะไม่ดาวน์โหลดใดๆ ทั้งสิ้น</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
+        <translation>คุณต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <translation>คุณไม่ได้รับอนุญาตการเขียนในโฟลเดอร์ของเครื่องพีซีนี้</translation>
+    </message>
+    <message>
+        <source>You are trying to sync an extremely large folder.
+To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
+we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
+        <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
+        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>You can not sync a shared folder without Full Access permissions</source>
+        <translation type="unfinished">You can not sync a shared folder without Full Access permissions</translation>
     </message>
 </context>
 <context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
         <translation>นำเข้าลิงก์</translation>
     </message>
     <message>
         <source>Download to my computer</source>
+        <translatorcomment>Label to indicate if the user wants to download the imported MEGA link(s) to his computer.</translatorcomment>
         <translation>ดาวน์โหลดลงในคอมพิวเตอร์ของฉัน</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
+        <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
         <translation>นำเข้าสู่คลาวด์ไดรฟ์ของฉัน</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
@@ -240,35 +307,40 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>/MEGAsync Imports</source>
+        <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
         <translation>/MEGAsync Imports</translation>
     </message>
     <message>
         <source>Select local folder</source>
+        <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <source>Decryption error</source>
+        <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
         <translation>ข้อผิดพลาดในการถอดรหัส</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translation>ไม่พบข้อมูล</translation>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translation>ไม่พบข้อมูลใดๆ</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
         <translation>คำเตือน</translation>
     </message>
     <message>
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>คุณกำลังนำเข้าไฟล์นี้ไปยังโฟลเดอร์ที่ซิงค์แล้ว ถ้าคุณเปิดใช้งานการดาวน์โหลด ไฟล์อาจจะซ้ำกันในคอมพิวเตอร์ของคุณ คุณแน่ใจหรือไม่</translation>
+        <translation>You are about to import this file to a synced folder.If you enable downloading, the file will be duplicated on your computer.Are you sure?</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>คุณกำลังนำเข้าไฟล์เหล่านี้ไปยังโฟลเดอร์ที่ซิงค์แล้ว ถ้าคุณเปิดใช้งานการดาวน์โหลด ไฟล์อาจจะซ้ำกันในคอมพิวเตอร์ของคุณ คุณแน่ใจหรือไม่</translation>
+        <translation>You are about to import these files to a synced folder.If you enable downloading, the files will be duplicated on your computer.Are you sure?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -280,77 +352,94 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>คุณไม่ได้รับอนุญาตการเขียนในโฟลเดอร์ของเครื่องพีซีนี้</translation>
     </message>
 </context>
 <context>
     <name>InfoDialog</name>
     <message>
         <source>MEGAsync is up to date</source>
+        <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
         <translation>MEGAsync ล่าสุดแล้วในขณะนี้</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
+        <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
         <translation>อัปเดตเมื่อเร็วๆ นี้</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
         <translation>การใช้งาน: ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
     </message>
     <message>
         <source>Syncs</source>
+        <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
         <translation>ซิงค์</translation>
     </message>
     <message>
         <source>MEGA website</source>
+        <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
         <translation>เว็บไซต์ MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
         <translation>%1 จาก %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
+        <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
         <translation>การใช้งาน: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
+        <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
         <translation>%1 จาก %2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
+        <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
         <translation>%1 จาก%2 (พักชั่วคราว)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
+        <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
         <translation>การถ่ายโอนไฟล์ถูกพักชั่วคราว</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
+        <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
         <translation>MEGAsync กำลังสแกน</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
+        <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
         <translation>การถ่ายโอนทั้งหมดเสร็จเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
+        <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
         <translation>ยกเลิกดาวน์โหลดทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel download</source>
+        <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
         <translation>ยกเลิกดาวน์โหลด</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
+        <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
         <translation>ยกเลิกอัปโหลดทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel upload</source>
+        <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
         <translation>ยกเลิกอัปโหลด</translation>
     </message>
     <message>
         <source>Add Sync</source>
+        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
         <translation>เพิ่มซิงค์</translation>
     </message>
     <message>
@@ -371,45 +460,85 @@ Are you sure?</source>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">รวมที่เหลืออยู่: </translation>
+        <translation type="obsolete">รวมที่เหลืออยู่:</translation>
     </message>
     <message>
         <source>Downloading </source>
-        <translation>กำลังดาวน์โหลด </translation>
+        <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
+        <translation>กำลังดาวน์โหลด</translation>
     </message>
     <message>
         <source>Uploading </source>
-        <translation>กำลังอัปโหลด </translation>
+        <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
+        <translation>กำลังอัปโหลด</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
         <translation>MEGAsync กำลังรอ</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
         <translation>กำลังเริ่มต้น MEGAsync </translation>
+    </message>
+</context>
+<context>
+    <name>InfoOverQuotaDialog</name>
+    <message>
+        <source>MEGAsync is currently disabled</source>
+        <translation type="unfinished">MEGAsync is currently disabled</translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translation type="unfinished">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
+    </message>
+    <message>
+        <source>Upgrade your account</source>
+        <translation type="unfinished">อัปเกรดบัญชีของคุณ</translation>
+    </message>
+    <message>
+        <source>Usage: Data temporarily unavailable</source>
+        <translation type="unfinished">การใช้งาน: ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
+    </message>
+    <message>
+        <source>MEGA website</source>
+        <translation type="unfinished">เว็บไซต์ MEGA</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">%1 จาก %2</translation>
+    </message>
+    <message>
+        <source>Usage: %1</source>
+        <translation type="unfinished">การใช้งาน: %1</translation>
     </message>
 </context>
 <context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
+        <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
         <translation>เลือกผู้ใช้งาน</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
-        <translation>เลือกที่ผู้ใช้ที่คุณต้องการติดตั้ง $(^NameDA)</translation>
+        <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
+        <translation>Choose for which users you want to install $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
-        <translation>เลือกว่าคุณต้องการที่จะติดตั้ง $(^NameDA) ด้วยตัวคุณเองเท่านั้น หรือสำหรับผู้ใช้ทั้งหมดของคอมพิวเตอร์เครื่องนี้ $(^ClickNext)</translation>
+        <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
+        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
+        <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
         <translation>ติดตั้งสำหรับทุกคนที่ใช้คอมพิวเตอร์เครื่องนี้</translation>
     </message>
     <message>
         <source>Install just for me</source>
+        <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>ติดตั้งเพียงแค่สำหรับฉัน</translation>
     </message>
 </context>
@@ -425,79 +554,87 @@ Are you sure?</source>
     </message>
     <message>
         <source>Logging in</source>
+        <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
         <translation>กำลังเข้าสู่ระบบ</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
-        <translation>MEGAsync กำลังทำงาน คลิกที่นี่ เพื่อเปิดหน้าต่างแสดงสถานะ</translation>
+        <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
+        <translation>MEGAsync is now running. Click here to open the status window.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation>การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation>การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder is in the rubbish bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation>การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ในเครื่องพีซีไม่มีอยู่</translation>
+        <translation type="obsolete">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ในเครื่องพีซีไม่มีอยู่</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
+        <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
         <translation>ผิดพลาด: โฟลเดอร์ปลายทางไม่ถูกต้อง การอัปโหลดถูกยกเลิกแล้ว</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">โฟลเดอร์ (%1) ไม่ได้ถูกอัปโหลด เนื่องจากมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %2 โฟลเดอร์หรือ %3 ไฟล์)</translation>
+        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 โฟลเดอร์ไม่ได้ถูกอัปโหลด เนื่องจากมีขนาดใหญ่เกินไป (เวอร์ชันเบต้านี้ ถูกจำกัดไว้ที่ %2 โฟลเดอร์หรือ %3 ไฟล์)</translation>
+        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">การซิงโครไนซ์จะถูกหยุดไว้
-การลบไฟล์ขณะที่โปรแกรมยังไม่ได้ทำงาน จะไม่ถูกเผยแพร่
-
-จบการทำงานหรือไม่</translation>
+        <translation type="obsolete">Synchronization will stop.Deletions that occur while it is not running will not be propagated.Exit anyway?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
+        <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
         <translation>เกี่ยวกับ MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
+        <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
         <translation>MEGAsync รหัสเวอร์ชัน %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
         <translation>ลิงก์ได้ถูกคัดลอกไปยังคลิปบอร์ดแล้ว</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
+        <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
         <translation>ลิงก์ทั้งหมดได้ถูกคัดลอกไปยังคลิปบอร์ดแล้ว</translation>
     </message>
     <message>
         <source>Logging in...</source>
-        <translation>กำลังเข้าสู่ระบบ...</translation>
+        <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
+        <translation>Logging in...</translation>
     </message>
     <message>
         <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
         <translation>จบการทำงาน</translation>
     </message>
     <message>
         <source>About</source>
+        <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
         <translation>เกี่ยวกับ</translation>
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
         <translation>ตั้งค่า</translation>
     </message>
     <message>
@@ -510,110 +647,130 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
         <translation>นำเข้าลิงก์</translation>
     </message>
     <message>
         <source>Up to date</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>ล่าสุดแล้ว</translation>
     </message>
     <message>
         <source>Paused</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
         <translation>พักแล้ว</translation>
     </message>
     <message>
         <source>Scanning</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
         <translation>กำลังสแกน</translation>
     </message>
     <message>
         <source>Syncing</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a syncing state.</translatorcomment>
         <translation>กำลังซิงค์</translation>
     </message>
     <message>
         <source>Temporary transmission error: </source>
-        <translation>ผิดพลาดในการส่งชั่วคราว: </translation>
+        <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
+        <translation>ผิดพลาดในการส่งชั่วคราว:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
+        <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
         <translation>คุณมีไฟล์ใหม่หรือมีการอัปเดตในบัญชีของคุณ</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
+        <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
         <translation>MEGAsync อัปเดตแล้ว</translation>
     </message>
     <message>
         <source>Waiting</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a waiting state.</translatorcomment>
         <translation>กำลังรอ</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>โฟลเดอร์ (%1) ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
+        <translation type="obsolete">โฟลเดอร์ (%1) ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation>%1 โฟลเดอร์ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
+        <translation type="obsolete">%1 โฟลเดอร์ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
     </message>
     <message>
         <source>Update available!</source>
+        <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
         <translation>พร้อมแล้วสำหรับการอัปเดต!</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
+        <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
         <translation>การอัปเดตจะถูกนำไปใช้ได้ ก็ต่อเมื่อคุณทำการรีสตาร์ทแอปพลิเคชันใหม่</translation>
     </message>
     <message>
         <source>Installing update...</source>
+        <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
         <translation>กำลังติดตั้งการอัปเดต...</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
+        <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
         <translation>กำลังตรวจสอบการอัปเดต...</translation>
     </message>
     <message>
         <source>Install update</source>
+        <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
         <translation>ติดตั้ง</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
+        <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
         <translation>MEGAsync มีเวอร์ชันใหม่พร้อมใช้งานแล้ว! คลิกที่ข้อความนี้เพื่อติดตั้ง</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
-        <translation>มีปัญหาในการติดตั้งการอัปเดต กรุณาลองอีกครั้งในภายหลัง หรือดาวน์โหลดเวอร์ชันล่าสุดได้จาก: https://mega.co.nz/#sync</translation>
+        <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
+        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
+        <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
         <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
+        <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
         <translation>การอัปเดตพร้อมใช้งานแล้ว กำลังดาวน์โหลด...</translation>
     </message>
     <message>
         <source>No update available at this time</source>
-        <translation>ยังไม่มีการอัปเดตขณะนี้</translation>
+        <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
+        <translation>No update available at this time</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
-        <translation>การซิงโครไนซ์จะถูกหยุดไว้
-
-จบการทำงานหรือไม่</translation>
+        <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
+        <translation>Synchronization will stop.Exit anyway?</translation>
     </message>
     <message>
         <source>Starting</source>
-        <translation>กำลังเริ่ม</translation>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is starting.</translatorcomment>
+        <translation>Starting</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้
-กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
+        <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
+        <translation>Unable to get the filesystem.Please, try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -621,141 +778,245 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
+        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
         <translation>MEGAsync กำลังทำงาน คุณสามารถคลิกที่ไอคอนถาดระบบเพื่อเปิดดูได้</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
+        <translatorcomment>Notification message launched when an update is available.</translatorcomment>
         <translation>MEGAsync  มีเวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
-        <translation>MEGAsync กำลังทำงาน คุณสามารถคลิกที่ไอคอนถาดระบบเพื่อเปิดดูได้</translation>
+        <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
+        <translation>MEGAsync is now running. Click the menu bar icon to open the status window.</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>จบการทำงาน</translation>
+        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation>Quit</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation>ตั้งค่า</translation>
+        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation>Preferences</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
         <translation>อัปโหลดไปยัง MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
+        <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation>แสดงสถานะ</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
+        <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>การปรับแต่งของคุณเสียหาย กรุณาเริ่มใหม่</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
-        <translation>Download from MEGA</translation>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
+        <translation>ดาวน์โหลดจาก MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
-        <translation>Error getting link:</translation>
+        <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
+        <translation>ผิดพลาดการรับลิงก์:</translation>
+    </message>
+    <message>
+        <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
+        <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
+        <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
+        <translation type="unfinished">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
+        <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>Login error: %1</source>
+        <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
+        <translation type="unfinished">Login error: %1</translation>
+    </message>
+    <message>
+        <source>You have been logged out on this computer from another location</source>
+        <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
+        <translation type="unfinished">You have been logged out on this computer from another location</translation>
+    </message>
+    <message>
+        <source>You have been logged out because of this error: %1</source>
+        <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
+        <translation type="unfinished">You have been logged out because of this error: %1</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
+        <translation type="unfinished">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
+    </message>
+    <message>
+        <source>Over quota</source>
+        <translation type="unfinished">เกินโควต้า</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">ออกจากระบบ</translation>
+    </message>
+    <message>
+        <source>Transfer failed:</source>
+        <translation type="unfinished">Transfer failed:</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translation type="unfinished">Error getting link information</translation>
     </message>
 </context>
 <context>
     <name>MegaError</name>
     <message>
         <source>No error</source>
+        <translatorcomment>Label to show that an SDK operation has been complete successfully.</translatorcomment>
         <translation>ไม่มีข้อผิดพลาด</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation>ผิดพลาดภายใน</translation>
+        <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
+        <translation>ข้อผิดพลาดภายใน</translation>
     </message>
     <message>
         <source>Invalid argument</source>
+        <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
         <translation>อาร์กิวเมนต์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
+        <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
         <translation>การร้องขอล้มเหลว กำลังลองใหม่</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
+        <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
         <translation>เกินจำกัดการให้คะแนนแล้ว</translation>
     </message>
     <message>
         <source>Failed permanently</source>
+        <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
         <translation>ล้มเหลวอย่างถาวร</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
+        <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
         <translation>มีการเชื่อมต่อหรือถ่ายโอนพร้อมกันมากเกินไป</translation>
     </message>
     <message>
         <source>Out of range</source>
+        <translatorcomment>Label to show that an error of Out of range occurs during a SDK operation.</translatorcomment>
         <translation>เกินขอบเขตที่กำหนด</translation>
     </message>
     <message>
         <source>Expired</source>
+        <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
         <translation>หมดอายุแล้ว</translation>
     </message>
     <message>
         <source>Not found</source>
+        <translatorcomment>Label to show that an error related with a resource Not found occurs during a SDK operation.</translatorcomment>
         <translation>ไม่พบข้อมูลใดๆ</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
-        <translation>รอบของข้อผิดพลาด (Circular error)</translation>
+        <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
+        <translation>Circular linkage detected</translation>
     </message>
     <message>
         <source>Access denied</source>
+        <translatorcomment>Label to show that an error related with an denied access occurs during a SDK operation.</translatorcomment>
         <translation>การเข้าถึงถูกปฏิเสธ</translation>
     </message>
     <message>
         <source>Already exists</source>
+        <translatorcomment>Label to show that an error related with an existent resource occurs during a SDK operation.</translatorcomment>
         <translation>มีอยู่แล้ว</translation>
     </message>
     <message>
         <source>Incomplete</source>
+        <translatorcomment>Label to show that an error related with an Incomplete SDK operation.</translatorcomment>
         <translation>ไม่สมบูรณ์</translation>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
+        <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
         <translation>คีย์ไม่ถูกต้อง/การถอดรหัสผิดพลาด</translation>
     </message>
     <message>
         <source>Bad session ID</source>
+        <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
         <translation>ID เซสชั่นไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Blocked</source>
+        <translatorcomment>Label to show that an error related with a blocked account occurs during a SDK operation.</translatorcomment>
         <translation>บล็อกแล้ว</translation>
     </message>
     <message>
         <source>Over quota</source>
+        <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
         <translation>เกินโควต้า</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
+        <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
         <translation>ใช้ไม่ได้ชั่วคราว</translation>
     </message>
     <message>
         <source>Connection overflow</source>
+        <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
         <translation>เชื่อมต่อมากไป</translation>
     </message>
     <message>
         <source>Write error</source>
+        <translatorcomment>Label to show that an error related with an write error occurs during a SDK operation.</translatorcomment>
         <translation>เขียนผิดพลาด</translation>
     </message>
     <message>
         <source>Read error</source>
+        <translatorcomment>Label to show that an error related with an read error occurs during a SDK operation.</translatorcomment>
         <translation>อ่านผิดพลาด</translation>
     </message>
     <message>
         <source>Invalid application key</source>
+        <translatorcomment>Label to show that an error related with an invalid or missing application key occurs during a SDK operation.</translatorcomment>
         <translation>คีย์แอปพลิเคชันไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Unknown error</source>
+        <translatorcomment>Label to show that an error related with an unknown error occurs during a SDK operation.</translatorcomment>
         <translation>ข้อผิดพลาดที่ไม่รู้จัก</translation>
     </message>
     <message>
@@ -767,186 +1028,260 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>MegaUploader</name>
     <message>
         <source>Warning</source>
-        <translation>คำเตือน</translation>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="obsolete">คำเตือน</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file 
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
-        <translation>โฟลเดอร์ปลายทางมีการซิงค์แล้ว และคุณยังมีไฟล์ที่เป็นชื่อเดียวกันในโฟลเดอร์ดังกล่าว (%1) หากคุณยังคงอัปโหลด ไฟล์ก่อนหน้าจะถูกเขียนทับ คุณแน่ใจหรือไม่</translation>
+        <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
+        <translation type="obsolete">The destination folder is synced and you already have a file inside it with the same name (%1).If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">คำเตือน</translation>
+    </message>
+    <message>
+        <source>Do not ask me again</source>
+        <translation type="unfinished">Do not ask me again</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">ยกเลิก</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">ตกลง</translation>
+    </message>
+    <message>
+        <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
+        <translation type="unfinished">The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
     </message>
 </context>
 <context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
+        <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
         <translation>เลือกโฟลเดอร์</translation>
     </message>
     <message>
         <source>Select a MEGA folder:</source>
+        <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
         <translation>เลือกโฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <source>Retrieving folders...</source>
-        <translation>กำลังรับรายการโฟลเดอร์...</translation>
+        <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
+        <translation>Retrieving folders...</translation>
     </message>
     <message>
         <source>New folder</source>
+        <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
         <translation>โฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
+        <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
         <translation>คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
+        <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
         <translation>กรอกชื่อโฟลเดอร์ใหม่</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
-        <translation>คีย์แอปพลิเคชันไม่ถูกต้อง ข้อผิดพลาดที่ไม่รู้จัก</translation>
+        <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
+        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a Warning message.</translatorcomment>
         <translation>คำเตือน</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation>คุณมี %1 ในโฟลเดอร์นี้
-คุณแน่ใจว่าต้องการซิงค์หรือไม่</translation>
+        <translation type="obsolete">You have %1 in this folder.Are you sure you want to sync it?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translation>โฟลเดอร์สำหรับการซิงค์โครไนส์ไม่ถูกต้อง
-กรุณาตรวจสอบว่าคุณไม่ได้ใช้ตัวอักษร เช่น \ / หรือ : ในชื่อโฟลเดอร์ของคุณ</translation>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+    </message>
+    <message>
+        <source>Always upload to this destination</source>
+        <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
+        <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
+    </message>
+    <message>
+        <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translation type="unfinished">You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</translation>
+    </message>
+    <message>
+        <source>You need Full access right to be able to sync the selected folder.</source>
+        <translation type="unfinished">You need Full access right to be able to sync the selected folder.</translation>
     </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
         <translation>นำเข้าลิงก์</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
+        <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
         <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือหลายรายการ</translation>
     </message>
     <message>
         <source>Submit</source>
+        <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
         <translation>ส่ง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
         <translation>คำเตือน</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
+        <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
         <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือมากกว่า</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
-        <translation>ไม่พบลิงก์ MEGA ที่ถูกต้อง (ลิงก์โฟลเดอร์ยังไม่สนับสนุน)</translation>
+        <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
+        <translation>No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
     </message>
 </context>
 <context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;ใช่</translation>
+        <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
+        <translation>&amp;Yes</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;ไม่</translation>
+        <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
+        <translation>&amp;No</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;ตกลง</translation>
+        <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;ยกเลิก</translation>
+        <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
+        <translation>&amp;Cancel</translation>
     </message>
 </context>
 <context>
     <name>RecentFile</name>
     <message>
         <source>%1 hours ago</source>
+        <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>%1 ชั่วโมงที่ผ่านมา</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
+        <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
         <translation>รับลิงก์ MEGA</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation>เมื่อสักครู่นี้</translation>
+        <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
+        <translation>ตอนนี้</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
+        <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>%1 วินาทีที่ผ่านมา</translation>
     </message>
     <message>
         <source>1 minute ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
         <translation>1 นาทีที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
+        <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>%1 นาทีที่ผ่านมา</translation>
     </message>
     <message>
         <source>1 hour ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
         <translation>1 ชั่วโมงที่ผ่านมา</translation>
     </message>
     <message>
         <source>1 day ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
         <translation>1 วันที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 days ago</source>
+        <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>%1 วันที่ผ่านมา</translation>
     </message>
     <message>
         <source>1 month ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
         <translation>1 เดือนที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 months ago</source>
+        <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>%1 เดือนที่ผ่านมา</translation>
     </message>
     <message>
         <source>1 year ago</source>
+        <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
         <translation>1 ปีที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 years ago</source>
+        <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
         <translation>%1 ปีที่ผ่านมา</translation>
     </message>
     <message>
         <source>Open</source>
+        <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
         <translation>เปิด</translation>
     </message>
     <message>
         <source>Show in folder</source>
+        <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
         <translation>แสดงในโฟลเดอร์</translation>
     </message>
 </context>
@@ -954,7 +1289,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translation>ตั้งค่า - MEGAsync</translation>
+        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translation>Settings - MEGAsync</translation>
     </message>
     <message>
         <source>General</source>
@@ -962,74 +1298,92 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Account</source>
+        <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
         <translation>บัญชี</translation>
     </message>
     <message>
         <source>Syncs</source>
+        <translatorcomment>Tab label of Syncs dialog. Max 15 characters.</translatorcomment>
         <translation>ซิงค์</translation>
     </message>
     <message>
         <source>Bandwidth</source>
+        <translatorcomment>Tab label of Bandwidth dialog. Max 15 characters.</translatorcomment>
         <translation>แบนด์วิดธ์</translation>
     </message>
     <message>
         <source>Advanced</source>
+        <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
         <translation>ขั้นสูง</translation>
     </message>
     <message>
         <source>Help</source>
+        <translatorcomment>Button label for Help.</translatorcomment>
         <translation>ช่วยเหลือ</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Apply</source>
+        <translatorcomment>Label for apply settings button.</translatorcomment>
         <translation>นำไปใช้</translation>
     </message>
     <message>
         <source>Show notifications</source>
+        <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
         <translation>แสดงการแจ้งเตือน</translation>
     </message>
     <message>
         <source>Start on startup</source>
+        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
         <translation>ทำงานทันทีเมื่อเริ่มต้นระบบ</translation>
     </message>
     <message>
         <source>Update automatically</source>
+        <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>อัปเดตอัตโนมัติ</translation>
     </message>
     <message>
         <source>Language</source>
+        <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
         <translation>ภาษา</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>English</translation>
+        <translatorcomment>Label for English language.</translatorcomment>
+        <translation>อังกฤษ</translation>
     </message>
     <message>
         <source>Details</source>
+        <translatorcomment>Button label to show the account usage details for the current user of the application. Strins as short as possible.</translatorcomment>
         <translation>รายละเอียด</translation>
     </message>
     <message>
         <source>FREE</source>
+        <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
         <translation>ฟรี</translation>
     </message>
     <message>
         <source>Logout</source>
+        <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
         <translation>ออกจากระบบ</translation>
     </message>
     <message>
         <source>Storage space</source>
-        <translation>พื้นที่เก็บข้อมูล</translation>
+        <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
+        <translation>พื้นที่จัดเก็บ</translation>
     </message>
     <message>
         <source>Upgrade</source>
+        <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
         <translation>อัปเกรด</translation>
     </message>
     <message>
@@ -1038,46 +1392,57 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Delete</source>
+        <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
         <translation>ลบ</translation>
     </message>
     <message>
         <source>Add</source>
+        <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
         <translation>เพิ่ม</translation>
     </message>
     <message>
         <source>Local Folder</source>
+        <translatorcomment>Label to indicate the local folder for a synchronization. String as short as possible.</translatorcomment>
         <translation>โฟลเดอร์ในเครื่องพีซี</translation>
     </message>
     <message>
         <source>MEGA folder</source>
+        <translatorcomment>Label to indicate the MEGA folder for a synchronization. String as short as possible.</translatorcomment>
         <translation>โฟลเดอร์ MEGA</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
+        <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
         <translation>การจำกัดอัปโหลด</translation>
     </message>
     <message>
         <source>Don&apos;t limit</source>
+        <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>ไม่ต้องจำกัด</translation>
     </message>
     <message>
         <source>Limit to:</source>
+        <translatorcomment>Label to indicate that there is rate upload limit. Keep colon.</translatorcomment>
         <translation>จำกัดที่:</translation>
     </message>
     <message>
         <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
         <translation>KB</translation>
     </message>
     <message>
         <source>Auto</source>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
         <translation>อัตโนมัติ</translation>
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
-        <translation>ประมาณ 90% ของแบนด์วิดธ์ที่มีอยู่</translation>
+        <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
+        <translation>(about 90% of the available bandwidth)</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
+        <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
         <translation>โควต้าแบนด์วิดธ์</translation>
     </message>
     <message>
@@ -1090,110 +1455,133 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Excluded file names</source>
+        <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
         <translation>การยกเว้นชื่อไฟล์</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
+        <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
         <translation>การตั้งค่าพร็อกซี่</translation>
     </message>
     <message>
         <source>No proxy</source>
+        <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
         <translation>ไม่มีพร็อกซี่</translation>
     </message>
     <message>
         <source>Auto-detect</source>
+        <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
         <translation>ตรวจหาอัตโนมัติ</translation>
     </message>
     <message>
         <source>Proxy</source>
+        <translatorcomment>Tab label of Proxy dialog settings. Max 15 characters.</translatorcomment>
         <translation>พร็อกซี่</translation>
     </message>
     <message>
         <source>Proxy type:</source>
+        <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
         <translation>ประเภทพร็อกซี่:</translation>
     </message>
     <message>
         <source>Server:</source>
+        <translatorcomment>Label to indicate the server IP to be used. String as short as possible.</translatorcomment>
         <translation>เซิร์ฟเวอร์:</translation>
     </message>
     <message>
         <source>:</source>
+        <translatorcomment>Label to indicate colon to separate IP and Port to be used.</translatorcomment>
         <translation>:</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
+        <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
         <translation>พร็อกซี่เซิร์ฟเวอร์ต้องใช้รหัสผ่าน</translation>
     </message>
     <message>
         <source>Username:</source>
+        <translatorcomment>Label to indicate the username of the proxy. String as short as possible.</translatorcomment>
         <translation>ชื่อผู้ใช้:</translation>
     </message>
     <message>
         <source>Password:</source>
+        <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
         <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
         <translation>ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
+        <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
         <translation>ใช้ไปแล้ว %1 (%2%) จาก %3</translation>
     </message>
     <message>
         <source>PRO I</source>
-        <translation>PRO I</translation>
+        <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
+        <translation>โปร I</translation>
     </message>
     <message>
         <source>PRO II</source>
-        <translation>PRO II</translation>
+        <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
+        <translation>โปร II</translation>
     </message>
     <message>
         <source>PRO III</source>
-        <translation>PRO III</translation>
+        <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
+        <translation>โปร III</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
+        <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
         <translation>/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
         <translation>คำเตือน</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">คุณมีการซิงค์ทั้งบัญชีของคุณอยู่แล้ว</translation>
+        <translation type="obsolete">You are already syncing your entire Cloud Drive.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
+        <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
         <translation>การซิงโครไนซ์จะหยุดทำงาน</translation>
     </message>
     <message>
         <source>Are you sure?</source>
+        <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
         <translation>คุณแน่ใจหรือไม่</translation>
     </message>
     <message>
         <source>Excluded name</source>
+        <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
         <translation>ชื่อยกเว้น</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
-        <translation>กรอกชื่อที่จะยกเว้นการซิงโคร์ไนซ์
-(อนุญาตให้ใช้สัญลักษณ์ * และ ? ได้):</translation>
+        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
+        <translation>Enter a name to exclude from synchronization.(wildcards * and ? are allowed):</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>Transfers</source>
+        <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
         <translation>โอนถ่าย</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation>การยกเว้นชื่อไฟล์ใหม่จะมีผลในบัญชีได้ก็ต่อเมื่อแอปพลิเคชันเริ่มทำงานใหม่แล้ว</translation>
+        <translation type="obsolete">The new excluded file names will be taken into accountwhen the application starts again.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1201,26 +1589,32 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Current cache size: %1</source>
-        <translation>ขนาดแคชปัจจุบัน: %1</translation>
+        <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
+        <translation type="obsolete">ขนาดแคชปัจจุบัน: %1</translation>
     </message>
     <message>
         <source>Clear</source>
+        <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
         <translation>เคลียร์</translation>
     </message>
     <message>
         <source>HTTP</source>
+        <translatorcomment>Label to indicate a HTTP proxy.</translatorcomment>
         <translation>HTTP</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>การตั้งค่าพร็อกซี่ของคุณไม่ถูกต้องหรือพร็อกซี่ไม่ตอบสนอง</translation>
     </message>
     <message>
         <source>Please wait...</source>
+        <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
         <translation>กรุณารอสักครู่...</translation>
     </message>
     <message>
         <source>Check for updates</source>
+        <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
         <translation>ตรวจสอบการอัปเดต</translation>
     </message>
     <message>
@@ -1253,14 +1647,17 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disable overlay icons</source>
+        <translatorcomment>Label to let the user disable overlay icon for the specific File browser.</translatorcomment>
         <translation>ปิดใช้งานแสดงไอคอน</translation>
     </message>
     <message>
         <source>Force a full scan</source>
-        <translation>บังคับให้สแกนใหม่แบบเต็ม</translation>
+        <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
+        <translation>Force a full scan</translation>
     </message>
     <message>
         <source>Full scan</source>
+        <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
         <translation>สแกนแบบเต็ม</translation>
     </message>
     <message>
@@ -1268,13 +1665,11 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync จะดำเนินการสแกนโฟลเดอร์ซิงค์ของคุณ เมื่อเริ่มต้น
-
-คุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่
-</translation>
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folderswhen it starts.Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Install update</source>
+        <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
         <translation>ติดตั้ง</translation>
     </message>
     <message>
@@ -1283,121 +1678,205 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translation>ตั้งค่า - MEGAsync</translation>
+        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translation>Preferences - MEGAsync</translation>
     </message>
     <message>
         <source>Open at login</source>
-        <translation>ทำงานทันทีเมื่อเริ่มต้นระบบ</translation>
+        <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
+        <translation>Open at login</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
-        <translation>แสดงการแจ้งเตือน</translation>
+        <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
+        <translation>Show Mac OS notifications</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation>MEGAsync จะดำเนินการสแกนโฟลเดอร์ซิงค์ของคุณ เมื่อเริ่มต้น
-
-คุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่</translation>
+        <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
+        <translation>MEGAsync will perform a full scan of your synced folders when it starts.Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
         <translation>เลือก</translation>
     </message>
     <message>
         <source>Default folders</source>
-        <translation>Default folders</translation>
+        <translatorcomment>Label to indicate the default path for Uploads and Downloads.</translatorcomment>
+        <translation>โฟลเดอร์เริ่มต้น</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation>Uploads:</translation>
+        <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
+        <translation>อัปโหลด:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation>Downloads:</translation>
+        <translatorcomment>Label to indicate the default folder for downloads. String as short as possible</translatorcomment>
+        <translation>ดาวน์โหลด:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
+        <translation>การซิงค์นี้จะไม่ถูกเปิดใช้งาน เนื่องจากไม่มีโฟลเดอร์ในเครื่องพีซี</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
+        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation>You are already syncing your entire Cloud Drive</translation>
+        <translation type="obsolete">คุณได้ทำการซิงค์กับคลาวด์ไดร์ฟของคุณอยู่แล้ว</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translation>Enable / disable</translation>
+        <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
+        <translation>เปิด/ ปิดใช้งาน</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>Select local folder</translation>
+        <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
+        <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
+        <translation>คุณไม่ได้รับอนุญาตการเขียนในโฟลเดอร์ของเครื่องพีซีนี้</translation>
+    </message>
+    <message>
+        <source>Export Key</source>
+        <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
+        <translation type="unfinished">Export Key</translation>
+    </message>
+    <message>
+        <source>Export Master key</source>
+        <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
+        <translation type="unfinished">Export Master key</translation>
+    </message>
+    <message>
+        <source>Unable to write file</source>
+        <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
+        <translation type="unfinished">Unable to write file</translation>
+    </message>
+    <message>
+        <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
+        <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
+        <translation type="unfinished">การส่งออกคีย์หลักและการเก็บรักษาไว้ในที่ๆ ปลอดภัย จะช่วยให้คุณสามารถตั้งค่ารหัสผ่านใหม่โดยไม่ต้องสูญเสียข้อมูลใดๆ</translation>
+    </message>
+    <message>
+        <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
+        <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
+        <translation type="unfinished">ควบคุมทางกายภาพคีย์หลักของคุณเสมอ (เช่น บนอุปกรณ์, ที่เก็บข้อมูลภายนอกหรือพิมพ์ออกมา)</translation>
+    </message>
+    <message>
+        <source>Exclude by size</source>
+        <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
+        <translation type="unfinished">Exclude by size</translation>
+    </message>
+    <message>
+        <source>PRO lite</source>
+        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
+        <translation type="unfinished">PRO lite</translation>
+    </message>
+    <message>
+        <source>The new excluded file names will be taken into account
+when the application starts again</source>
+        <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
+        <translation type="unfinished">The new excluded file names will be taken into accountwhen the application starts again</translation>
+    </message>
+    <message>
+        <source>The new excluded file sizes will be taken into account when the application starts again.</source>
+        <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
+        <translation type="unfinished">The new excluded file sizes will be taken into account when the application starts again.</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translatorcomment>Label to indicate the user if the feature of exclusion based by size is enabled/disabled.</translatorcomment>
+        <translation type="unfinished">Disabled</translation>
+    </message>
+    <message>
+        <source>Local cache: %1</source>
+        <translation type="unfinished">Local cache: %1</translation>
+    </message>
+    <message>
+        <source>Remote cache: %1</source>
+        <translation type="unfinished">Remote cache: %1</translation>
     </message>
 </context>
 <context>
     <name>SetupWizard</name>
     <message>
         <source>Setup Wizard - MEGAsync</source>
-        <translation>ตัวช่วยสร้างการติดตั้ง - MEGAsync</translation>
+        <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
+        <translation>Setup Wizard - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
+        <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
         <translation>ฉันมีบัญชี MEGA แล้ว</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>ฉันยังไม่มีบัญชี MEGA</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
+        <translatorcomment>Label displayed when a user is creating a new MEGA account.</translatorcomment>
         <translation>สร้างบัญชี MEGA ใหม่</translation>
     </message>
     <message>
         <source>Name:</source>
+        <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
         <translation>ชื่อ:</translation>
     </message>
     <message>
         <source>Email:</source>
+        <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
         <translation>อีเมล:</translation>
     </message>
     <message>
         <source>Password:</source>
+        <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
         <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
+        <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
         <translation>รหัสผ่านอีกครั้ง:</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
-        <translation>ฉันเห็นด้วยกับ &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;ข้อกำหนดในการบริการ&lt;/a&gt; ของ MEGA </translation>
+        <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
+        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
+        <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
         <translation>เข้าสู่ระบบด้วยบัญชี MEGA ของคุณ</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
+        <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
         <translation>กรุณาตรวจสอบบัญชีของคุณ โดยใช้ลิงก์ในการยืนยันว่า เราได้ส่งไปยังบัญชีอีเมลของคุณแล้ว</translation>
     </message>
     <message>
         <source>Logging in ...</source>
-        <translation>กำลังเข้าสู่ระบบ...</translation>
+        <translatorcomment>Label displayed while logging process.</translatorcomment>
+        <translation>Logging in ...</translation>
     </message>
     <message>
         <source>Choose install type</source>
+        <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
         <translation>เลือกประเภทการติดตั้ง</translation>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
+        <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
         <translation>ซิงค์ในคลาวด์ไดรฟ์ของคุณ</translation>
     </message>
     <message>
@@ -1406,30 +1885,37 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Selective sync</source>
+        <translatorcomment>Label displayed to show Selective sync mode. Max 18 characters.</translatorcomment>
         <translation>เลือกรายการที่จะซิงค์</translation>
     </message>
     <message>
         <source> Sync specific folders in your cloud drive</source>
+        <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
         <translation>ซิงค์โฟลเดอร์ที่ระบุไว้ในคลาวด์ไดรฟ์ของคุณ</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
+        <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
         <translation>โฟลเดอร์เหล่านี้ จะถูกซิงโครไนซ์โดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Local folder:</source>
+        <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
         <translation>โฟลเดอร์ในเครื่องพีซี:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
+        <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
         <translation>โฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <source>Change</source>
+        <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
         <translation>เปลี่ยน</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
+        <translatorcomment>Label displayed to welcome the user.</translatorcomment>
         <translation>ยินดีต้อนรับสู่ MEGA จ้า</translation>
     </message>
     <message>
@@ -1446,85 +1932,103 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Back</source>
+        <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
         <translation>กลับ</translation>
     </message>
     <message>
         <source>Next</source>
+        <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
         <translation>ต่อไป</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Error</source>
+        <translatorcomment>Label of error.</translatorcomment>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
         <source>User already exists</source>
+        <translatorcomment>Message displayed when a user is trying to create an account with the name of an existing user.</translatorcomment>
         <translation>มีผู้ใช้งานอยู่แล้ว</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>กำลังดึงรายชื่อไฟล์...</translation>
+        <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
+        <translation>Fetching file list...</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
+        <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
         <translation>อีเมลและ/หรือรหัสผ่านไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
+        <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
         <translation>คุณได้ผ่านการยืนยันบัญชีของคุณหรือยัง</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
+        <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>โฟลเดอร์ MEGA ไม่มีอยู่</translation>
     </message>
     <message>
         <source>Finish</source>
+        <translatorcomment>Button label to let the user that the wizard assistant has finished.</translatorcomment>
         <translation>เสร็จสิ้น</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
-        <translation>กรุณากรอกที่อยู่อีเมลของคุณ</translation>
+        <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
+        <translation>Please, enter your e-mail address</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
-        <translation>กรุณากรอกที่อยู่อีเมลให้ถูกต้อง</translation>
+        <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
+        <translation>Please, enter a valid e-mail address</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
-        <translation>กรุณากรอกรหัสผ่านของคุณ</translation>
+        <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
+        <translation>Please, enter your password</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
-        <translation>กรุณากรอกชื่อของคุณ</translation>
+        <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
+        <translation>Please, enter your name</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation>กรุณากรอกรหัสผ่านที่คาดเดาได้ยากกว่านี้</translation>
+        <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
+        <translation>Please, enter a stronger password</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
+        <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>รหัสผ่านที่กรอกไม่ตรงกัน</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
+        <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
         <translation>คุณต้องยอมรับข้อกำหนดในการบริการของเราก่อน</translation>
     </message>
     <message>
         <source>Creating account...</source>
+        <translatorcomment>Label displayed when the account is being created.</translatorcomment>
         <translation>กำลังสร้างบัญชี...</translation>
     </message>
     <message>
         <source>Warning</source>
+        <translatorcomment>Label warning.</translatorcomment>
         <translation>คำเตือน</translation>
     </message>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation>คุณมี %1 ในคลาวด์ไดรฟ์ของคุณ
-คุณแน่ใจว่าต้องการซิงค์ในคลาวด์ไดรฟ์ทั้งหมดของคุณหรือไม่</translation>
+        <translation type="obsolete">You have %1 in your Cloud Drive.Are you sure you want to sync your entire Cloud Drive?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -1532,94 +2036,126 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>Please, select a local folder</source>
-        <translation>กรุณาเลือกโฟลเดอร์ในเครื่องพีซี</translation>
+        <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
+        <translation>Please, select a local folder</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
-        <translation>กรุณาเลือกโฟลเดอร์ของ MEGA</translation>
+        <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
+        <translation>Please, select a MEGA folder</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">โฟลเดอร์ในเครื่องพีซีมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %1  โฟลเดอร์หรือ %2 ไฟล์ กรุณาเลือกโฟลเดอร์อื่น</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files.Please, select another folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
-        <translation>เลือกโฟลเดอร์ในเครื่องพีซี</translation>
+        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
+        <translation>เลือกโฟลเดอร์ภายใน</translation>
     </message>
     <message>
         <source>Logging in...</source>
-        <translation>กำลังเข้าสู่ระบบ...</translation>
+        <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
+        <translation>Logging in...</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation>คุณพยายามที่จะซิงค์โฟลเดอร์ขนาดใหญ่เกินไป เพื่อป้องกันการซิงค์ของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้ เราขอให้คุณเริ่มต้น ด้วยโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลขณะเรียกใช้ MEGAsync</translation>
+        <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
+        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translation>ไม่สามารถดำเนินการรับไฟล์ระบบได้
-กรุณาลองอีกครั้ง หากยังพบปัญหาให้ติดต่อ bug@mega.co.nz</translation>
+        <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
+        <translation>Unable to get the filesystem.Please, try again. If the problem persists please contact bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
-        <translation>ตัวช่วยสร้างการติดตั้ง - MEGAsync</translation>
+        <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
+        <translation>Setup Assistant - MEGAsync</translation>
     </message>
     <message>
         <source>Error getting session key</source>
+        <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
         <translation>การรับเซสชั่นคีย์มีข้อผิดพลาด</translation>
     </message>
     <message>
         <source>Full sync</source>
+        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
         <translation>ซิงค์เต็มรูปแบบ</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
+        <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
         <translation>โฟลเดอร์ในเครื่องพีซีและคลาวด์ไดรฟ์บน MEGA ของคุณจะได้รับการซิงค์โดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
+        <translation>คลาวด์ไดร์ฟของคุณจะถูกซิงค์ให้ตรงกันกับโฟลเดอร์นี้:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
+        <translation>คุณไม่ได้รับอนุญาตการเขียนในโฟลเดอร์ของเครื่องพีซีนี้</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
+        <translation>MEGAsync จะไม่ดาวน์โหลดใดๆ ทั้งสิ้น</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translation>Do you want to continue?</translation>
+        <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
+        <translation>คุณต้องการดำเนินการต่อหรือไม่</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
+        <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
+    </message>
+    <message>
+        <source>MEGAsync</source>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this wizard and undo all changes?</source>
+        <translation type="unfinished">Are you sure you want to cancel this wizard and undo all changes?</translation>
     </message>
 </context>
 <context>
     <name>ShellExtension</name>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>อัปโหลดไปยัง MEGA</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
+        <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
         <translation>รับลิงก์ MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
+        <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
         <translation>แชร์ไปยังผู้ใช้ MEGA</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>
+        <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
         <translation>ส่งไปยังผู้ใช้ MEGA</translation>
     </message>
     <message>
         <source>1 file</source>
+        <translatorcomment>Label to indicate one file.</translatorcomment>
         <translation>1 ไฟล์</translation>
     </message>
     <message>
         <source>%1 files</source>
+        <translatorcomment>Label to indicate several file. Keep %1 code because it will be filled with the number of files at runtime.</translatorcomment>
         <translation>%1 ไฟล์</translation>
     </message>
     <message>
@@ -1628,60 +2164,157 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>%1 folders</source>
+        <translatorcomment>Label to indicate several folders. Keep %1 code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>%1 โฟลเดอร์</translation>
     </message>
     <message>
         <source>%1 (%2, %3)</source>
+        <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>%1 (%2, %3)</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
+        <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime.</translatorcomment>
         <translation>%1 (%2)</translation>
+    </message>
+</context>
+<context>
+    <name>SizeLimitDialog</name>
+    <message>
+        <source>Exclude by size</source>
+        <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
+        <translation type="unfinished">Exclude by size</translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translatorcomment>Label to indicate the upper limit for file exclusions. Max 28 characters.</translatorcomment>
+        <translation type="unfinished">Exclude files bigger than</translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translatorcomment>Label to indicate the lower limit for file exclusions. Max 28 characters.</translatorcomment>
+        <translation type="unfinished">Exclude files smaller than</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation type="unfinished">ยกเลิก</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
+        <translation type="unfinished">ตกลง</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label warning.</translatorcomment>
+        <translation type="unfinished">คำเตือน</translation>
+    </message>
+    <message>
+        <source>Size limits cannot be zero</source>
+        <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
+        <translation type="unfinished">Size limits cannot be zero</translation>
     </message>
 </context>
 <context>
     <name>UploadToMegaDialog</name>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>อัปโหลดไปยัง MEGA</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
-        <translation>กรุณาเลือกโฟลเดอร์สำหรับการอัปโหลดไฟล์ของคุณ</translation>
+        <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
+        <translation>Please, select the upload folder for your files:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
+        <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
         <translation>โฟลเดอร์ MEGA:</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
+        <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
         <translation>อัปโหลดไปยังปลายทางนี้เสมอ</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
+        <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
         <translation>/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
+        <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
         <translation>MEGAsync Uploads</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for accept button.</translatorcomment>
         <translation>ตกลง</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
         <translation>เลือก</translation>
+    </message>
+</context>
+<context>
+    <name>UsageProgressBar</name>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished">กล่องขาเข้า</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished">แชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source> Rubbish Bin</source>
+        <translation type="unfinished">ถังขยะ</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+    </message>
+</context>
+<context>
+    <name>UsageWidget</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation type="unfinished">ถังขยะ</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished">แชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translation type="unfinished">กล่องขาเข้า</translation>
+    </message>
+    <message>
+        <source>Used</source>
+        <translation type="unfinished">ใช้แล้ว</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">ที่ใช้งานได้</translation>
     </message>
 </context>
 <context>
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
+        <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
         <translation>ซิงค์โฟลเดอร์ MEGA แล้ว</translation>
     </message>
 </context>
