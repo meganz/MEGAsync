@@ -279,6 +279,11 @@ void InfoDialog::updateTransfers()
             ui->wDownloadDesc->show();
             QString fullPattern = QString::fromAscii("<span style=\"color: rgb(120, 178, 66); \">%1</span>%2");
             QString operation = tr("Downloading ");
+            if(operation.size() && operation[operation.size() - 1] != QChar::fromAscii(' '))
+            {
+                operation.append(QChar::fromAscii(' '));
+            }
+
             QString pattern(tr("%1 of %2 (%3/s)"));
             QString pausedPattern(tr("%1 of %2 (paused)"));
             QString invalidSpeedPattern(tr("%1 of %2"));
@@ -337,6 +342,11 @@ void InfoDialog::updateTransfers()
             ui->wUploadDesc->show();
             QString fullPattern = QString::fromAscii("<span style=\"color: rgb(119, 185, 217); \">%1</span>%2");
             QString operation = tr("Uploading ");
+            if(operation.size() && operation[operation.size() - 1] != QChar::fromAscii(' '))
+            {
+                operation.append(QChar::fromAscii(' '));
+            }
+
             QString pattern(tr("%1 of %2 (%3/s)"));
             QString pausedPattern(tr("%1 of %2 (paused)"));
             QString invalidSpeedPattern(tr("%1 of %2"));
