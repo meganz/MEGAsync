@@ -653,6 +653,8 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qtiff4.dll"
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAlogger.exe"
+  Delete "$INSTDIR\libeay32.dll"
+  Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
