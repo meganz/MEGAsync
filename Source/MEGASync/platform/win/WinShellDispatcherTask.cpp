@@ -451,7 +451,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             {
                 MegaApplication *app = (MegaApplication *)qApp;
                 MegaApi *megaApi = app->getMegaApi();
-                string tmpPath((const char*)content, temp.size()*sizeof(wchar_t));
+                string tmpPath((const char*)temp.utf16(), temp.size()*sizeof(wchar_t));
                 state = megaApi->syncPathState(&tmpPath);
                 lastState = state;
                 lastPath = temp;
