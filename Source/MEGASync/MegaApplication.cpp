@@ -1392,7 +1392,14 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
 
 
     #ifdef __APPLE__
-        *posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - dialog->width()/2 - 1;
+        if(positionTrayIcon.x() || positionTrayIcon.y())
+        {
+            *posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - dialog->width()/2 - 1;
+        }
+        else
+        {
+            *posx = screenGeometry.right() - dialog->width() - 1;
+        }
         *posy = screenIndex ? screenGeometry.top()+22: screenGeometry.top();
     #else
         #ifdef WIN32
