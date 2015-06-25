@@ -156,6 +156,7 @@ const QString Preferences::localFolderKey           = QString::fromAscii("localF
 const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
 const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
 const QString Preferences::folderActiveKey          = QString::fromAscii("folderActive");
+const QString Preferences::temporaryInactiveKey     = QString::fromAscii("temporaryInactive");
 const QString Preferences::downloadFolderKey		= QString::fromAscii("downloadFolder");
 const QString Preferences::uploadFolderKey			= QString::fromAscii("uploadFolder");
 const QString Preferences::importFolderKey			= QString::fromAscii("importFolder");
@@ -1235,15 +1236,29 @@ bool Preferences::isFolderActive(int num)
     return value;
 }
 
-void Preferences::setSyncState(int num, bool enabled)
+bool Preferences::isTemporaryInactiveFolder(int num)
 {
     mutex.lock();
-    if(num >= activeFolders.size())
+    if(num >= temporaryInactiveFolders.size())
+    {
+        mutex.unlock();
+        return false;
+    }
+    bool value = temporaryInactiveFolders.at(num);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
+{
+    mutex.lock();
+    if(num >= activeFolders.size() || num >= temporaryInactiveFolders.size())
     {
         mutex.unlock();
         return;
     }
     activeFolders[num] = enabled;
+    temporaryInactiveFolders[num] = temporaryDisabled;
     writeFolders();
     mutex.unlock();
 
@@ -1299,6 +1314,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
     activeFolders.append(active);
+    temporaryInactiveFolders.append(false);
     localFingerprints.append(0);
     writeFolders();
     mutex.unlock();
@@ -1327,6 +1343,7 @@ void Preferences::removeSyncedFolder(int num)
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
     activeFolders.removeAt(num);
+    temporaryInactiveFolders.removeAt(num);
     localFingerprints.removeAt(num);
     writeFolders();
     mutex.unlock();
@@ -1344,6 +1361,7 @@ void Preferences::removeAllFolders()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    temporaryInactiveFolders.clear();
     localFingerprints.clear();
     writeFolders();
     mutex.unlock();
@@ -1511,6 +1529,7 @@ void Preferences::leaveUser()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    temporaryInactiveFolders.clear();
     localFingerprints.clear();
     mutex.unlock();
 }
@@ -1530,6 +1549,7 @@ void Preferences::unlink()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    temporaryInactiveFolders.clear();
     localFingerprints.clear();
     settings->sync();
     mutex.unlock();
@@ -1673,6 +1693,7 @@ void Preferences::logout()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    temporaryInactiveFolders.clear();
     localFingerprints.clear();
     mutex.unlock();
 }
@@ -1718,6 +1739,7 @@ void Preferences::readFolders()
     megaFolders.clear();
     megaFolderHandles.clear();
     activeFolders.clear();
+    temporaryInactiveFolders.clear();
     localFingerprints.clear();
 
     settings->beginGroup(syncsGroupKey);
@@ -1730,6 +1752,7 @@ void Preferences::readFolders()
             megaFolders.append(settings->value(megaFolderKey).toString());
             megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
             activeFolders.append(settings->value(folderActiveKey, true).toBool());
+            temporaryInactiveFolders.append(settings->value(temporaryInactiveKey, false).toBool());
             localFingerprints.append(settings->value(localFingerprintKey, 0).toLongLong());
         settings->endGroup();
     }
@@ -1752,6 +1775,7 @@ void Preferences::writeFolders()
                 settings->setValue(megaFolderKey, megaFolders[i]);
                 settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
                 settings->setValue(folderActiveKey, activeFolders[i]);
+                settings->setValue(temporaryInactiveKey,temporaryInactiveFolders[i]);
                 settings->setValue(localFingerprintKey, localFingerprints[i]);
             settings->endGroup();
         }

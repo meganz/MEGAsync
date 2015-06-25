@@ -1108,7 +1108,9 @@ bool SettingsDialog::saveSettings()
                                                  syncName, enabled);
 
                     if(enabled)
+                    {
                         megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                    }
                 }
                 delete node;
             }

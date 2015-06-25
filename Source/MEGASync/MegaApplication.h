@@ -149,6 +149,7 @@ protected:
     void processDownloadQueue(QString path);
     void unityFix();
     void disableSyncs();
+    void restoreSyncs();
     void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
 

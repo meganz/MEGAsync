@@ -946,10 +946,43 @@ void MegaApplication::disableSyncs()
 
        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
        Platform::notifyItemChange(preferences->getLocalFolder(i));
-       preferences->setSyncState(i, false);
+       preferences->setSyncState(i, false, true);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
        megaApi->disableSync(node);
        delete node;
+    }
+}
+
+void MegaApplication::restoreSyncs()
+{
+    for(int i=0; i<preferences->getNumSyncedFolders(); i++)
+    {
+       if(!preferences->isTemporaryInactiveFolder(i) || !preferences->isFolderActive(i))
+       {
+           continue;
+       }
+
+       MegaNode *node = megaApi->getNodeByPath(preferences->getMegaFolder(i).toUtf8().constData());
+       if(!node)
+       {
+           preferences->setSyncState(i, false, false);
+           continue;
+       }
+
+       QFileInfo localFolderInfo(preferences->getLocalFolder(i));
+       QString localFolderPath = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
+       if(!localFolderPath.size() || !localFolderInfo.isDir())
+       {
+           delete node;
+           preferences->setSyncState(i, false, false);
+           continue;
+       }
+
+       preferences->setMegaFolderHandle(i, node->getHandle());
+       preferences->setSyncState(i, true, false);
+       megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+       delete node;
+       //Platform::notifyItemChange(preferences->getLocalFolder(i));
     }
 }
 
@@ -2953,6 +2986,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 trayOverQuotaMenu->close();
             }
 
+            restoreSyncs();
             onGlobalSyncStateChanged(megaApi);
         }
 
