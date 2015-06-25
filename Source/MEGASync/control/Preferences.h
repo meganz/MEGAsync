@@ -140,7 +140,8 @@ public:
     void setLocalFingerprint(int num, long long fingerprint);
     mega::MegaHandle getMegaFolderHandle(int num);
     bool isFolderActive(int num);
-    void setSyncState(int num, bool enabled);
+    bool isTemporaryInactiveFolder(int num);
+    void setSyncState(int num, bool enabled, bool temporaryDisabled = false);
 
     QStringList getSyncNames();
     QStringList getMegaFolders();
@@ -257,6 +258,7 @@ protected:
     QList<long long> megaFolderHandles;
     QList<long long> localFingerprints;
     QList<bool> activeFolders;
+    QList<bool> temporaryInactiveFolders;
     QStringList excludedSyncNames;
     bool errorFlag;
 
@@ -306,6 +308,7 @@ protected:
     static const QString megaFolderKey;
     static const QString megaFolderHandleKey;
     static const QString folderActiveKey;
+    static const QString temporaryInactiveKey;
 	static const QString downloadFolderKey;
 	static const QString uploadFolderKey;
     static const QString hasDefaultUploadFolderKey;
