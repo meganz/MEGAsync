@@ -957,7 +957,7 @@ void MegaApplication::restoreSyncs()
 {
     for(int i=0; i<preferences->getNumSyncedFolders(); i++)
     {
-       if(!preferences->isTemporaryInactiveFolder(i) || !preferences->isFolderActive(i))
+       if(!preferences->isTemporaryInactiveFolder(i) || preferences->isFolderActive(i))
        {
            continue;
        }
@@ -2891,6 +2891,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         pauseTransfers(true);
 
                     loggedIn();
+                    restoreSyncs();
                 }
                 else
                 {
