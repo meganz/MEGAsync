@@ -1035,12 +1035,8 @@ void MegaApplication::rebootApplication(bool update)
     trayIcon->hide();
     closeDialogs();
 
-#ifdef __APPLE__
     cleanAll();
     ::exit(0);
-#endif
-
-    QApplication::exit();
 }
 
 void MegaApplication::exitApplication()
@@ -1053,12 +1049,9 @@ void MegaApplication::exitApplication()
         trayIcon->hide();
         closeDialogs();
 
-        #ifdef __APPLE__
-            cleanAll();
-            ::exit(0);
-        #endif
+        cleanAll();
+        ::exit(0);
 
-        QApplication::exit();
         return;
 #ifndef __APPLE__
     }
@@ -1082,12 +1075,8 @@ void MegaApplication::exitApplication()
             trayIcon->hide();
             closeDialogs();
 
-            #ifdef __APPLE__
-                cleanAll();
-                ::exit(0);
-            #endif
-
-            QApplication::exit();
+            cleanAll();
+            ::exit(0);
         }
     }
     else
@@ -1546,12 +1535,8 @@ void MegaApplication::setupWizardFinished()
 {
     if(!preferences->logged())
     {
-        #ifdef __APPLE__
-            cleanAll();
-            ::exit(0);
-        #endif
-
-        QApplication::exit();
+        cleanAll();
+        ::exit(0);
         return;
     }
 
