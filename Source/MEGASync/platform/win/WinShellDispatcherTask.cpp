@@ -399,7 +399,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             else if(numFiles && !numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFiles);
             else if(!numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFolders);
 
-            wcscpy_s( pipe->chReply, BUFSIZE, fullString.utf16());
+            wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)fullString.utf16());
             break;
         }
         case L'F':

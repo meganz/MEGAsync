@@ -182,7 +182,7 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     fcs.pszIconFile = (LPWSTR)MegaApplication::applicationFilePath().utf16();
     fcs.iIconIndex = iconIndex;
     fcs.pszInfoTip = (LPWSTR)infoTip.utf16();
-    SHGetSetFolderCustomSettings(&fcs, syncPath.utf16(), FCS_FORCEWRITE);
+    SHGetSetFolderCustomSettings(&fcs, (LPCWSTR)syncPath.utf16(), FCS_FORCEWRITE);
 
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
@@ -225,7 +225,7 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName)
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
     fcs.dwMask = FCSM_ICONFILE | FCSM_INFOTIP;
-    SHGetSetFolderCustomSettings(&fcs, syncPath.utf16(), FCS_FORCEWRITE);
+    SHGetSetFolderCustomSettings(&fcs, (LPCWSTR)syncPath.utf16(), FCS_FORCEWRITE);
 
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
