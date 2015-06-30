@@ -179,7 +179,6 @@ protected:
     QAction *updateAction;
     QAction *showStatusAction;
 
-    QAction *showStatusActionOverquota;
     QAction *logoutActionOverquota;
     QAction *settingsActionOverquota;
     QAction *exitActionOverquota;
