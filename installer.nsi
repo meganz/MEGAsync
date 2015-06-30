@@ -496,7 +496,7 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\Qt5Concurrent.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${SRCDIR_MEGASYNC}\icudt53.dll"
+  File "${QT_PATH}\bin\icudt53.dll"
   AccessControl::SetFileOwner "$INSTDIR\icudt53.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\icudt53.dll" "$USERNAME" "GenericRead + GenericWrite"
   
@@ -764,6 +764,8 @@ Section Uninstall
   !insertmacro MUI_STARTMENU_GETFOLDER "Application" $ICONS_GROUP
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\${UNINSTALLER_NAME}"
+
+  ;QT4 files
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtGui4.dll"
   Delete "$INSTDIR\QtCore4.dll"
@@ -776,6 +778,36 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qsvg4.dll"
   Delete "$INSTDIR\imageformats\qtga4.dll"
   Delete "$INSTDIR\imageformats\qtiff4.dll"
+  
+  ;QT5 files
+  Delete "$INSTDIR\Qt5Core.dll"
+  Delete "$INSTDIR\Qt5Gui.dll"
+  Delete "$INSTDIR\Qt5Widgets.dll"
+  Delete "$INSTDIR\Qt5Network.dll"
+  Delete "$INSTDIR\Qt5Xml.dll"
+  Delete "$INSTDIR\Qt5Svg.dll"
+  Delete "$INSTDIR\Qt5Concurrent.dll"
+  Delete "$INSTDIR\icudt53.dll"
+  Delete "$INSTDIR\icuin53.dll"
+  Delete "$INSTDIR\icuuc53.dll"
+  Delete "$INSTDIR\imageformats\qdds.dll"
+  Delete "$INSTDIR\imageformats\qgif.dll"
+  Delete "$INSTDIR\imageformats\qicns.dll"
+  Delete "$INSTDIR\imageformats\qico.dll"
+  Delete "$INSTDIR\imageformats\qjp2.dll"
+  Delete "$INSTDIR\imageformats\qjpeg.dll"
+  Delete "$INSTDIR\imageformats\qmng.dll"
+  Delete "$INSTDIR\imageformats\qsvg.dll"
+  Delete "$INSTDIR\imageformats\qtga.dll"
+  Delete "$INSTDIR\imageformats\qtiff.dll"
+  Delete "$INSTDIR\imageformats\qwbmp.dll"
+  Delete "$INSTDIR\imageformats\qwebp.dll"
+  Delete "$INSTDIR\iconengines\qsvgicon.dll"
+  Delete "$INSTDIR\platforms\qwindows.dll"
+  Delete "$INSTDIR\bearer\qgenericbearer.dll"
+  Delete "$INSTDIR\bearer\qnativewifibearer.dll"
+  
+  ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAlogger.exe"
   Delete "$INSTDIR\libeay32.dll"
@@ -821,6 +853,9 @@ Section Uninstall
   Delete "$1\MEGAlogger.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
+  RMDir "$INSTDIR\iconengines"
+  RMDir "$INSTDIR\platforms"
+  RMDir "$INSTDIR\bearer"
   RMDir "$INSTDIR"
   
   SetShellVarContext all
@@ -836,6 +871,9 @@ Section Uninstall
   Delete "$1\MEGAlogger.lnk"
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
+  RMDir "$INSTDIR\iconengines"
+  RMDir "$INSTDIR\platforms"
+  RMDir "$INSTDIR\bearer"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
