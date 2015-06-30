@@ -330,7 +330,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateActionOverquota = NULL;
     logoutActionOverquota = NULL;
     showStatusAction = NULL;
-    showStatusActionOverquota = NULL;
     pasteMegaLinksDialog = NULL;
     importDialog = NULL;
     uploadFolderSelector = NULL;
@@ -721,7 +720,22 @@ void MegaApplication::start()
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
 #endif
-    trayIcon->setContextMenu(initialMenu);
+
+    if(isLinux && trayIcon->contextMenu())
+    {
+        if(showStatusAction)
+        {
+            initialMenu->removeAction(showStatusAction);
+
+            delete showStatusAction;
+            showStatusAction = NULL;
+        }
+    }
+    else
+    {
+        trayIcon->setContextMenu(initialMenu);
+    }
+
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
     if(!preferences->lastExecutionTime())
@@ -2336,19 +2350,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         {
             if(showStatusAction)
             {
+                initialMenu->removeAction(showStatusAction);
+
                 delete showStatusAction;
                 showStatusAction = NULL;
             }
 
             if(trayMenu && trayMenu->isVisible())
                 trayMenu->close();
-
-
-            if(showStatusActionOverquota)
-            {
-                delete showStatusActionOverquota;
-                showStatusActionOverquota = NULL;
-            }
 
             if(trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
                 trayOverQuotaMenu->close();
@@ -2453,13 +2462,26 @@ void MegaApplication::openSettings(int tab)
 
 void MegaApplication::changeProxy()
 {
+    bool proxyOnly = !megaApi->isLoggedIn();
     if(settingsDialog)
-    {
-        settingsDialog->setProxyOnly(true);
+    {            
+        settingsDialog->setProxyOnly(proxyOnly);
 
         //If the dialog is active
         if(settingsDialog->isVisible())
         {
+            if(isLinux && !proxyOnly)
+            {
+                if(infoOverQuota)
+                {
+                    settingsDialog->setOverQuotaMode(true);
+                }
+                else
+                {
+                    settingsDialog->setOverQuotaMode(false);
+                }
+            }
+
             //and visible -> show it
             settingsDialog->loadSettings();
             settingsDialog->raise();
@@ -2473,7 +2495,18 @@ void MegaApplication::changeProxy()
     }
 
     //Show a new settings dialog
-    settingsDialog = new SettingsDialog(this, true);
+    settingsDialog = new SettingsDialog(this, proxyOnly);
+    if(isLinux && !proxyOnly)
+    {
+        if(infoOverQuota)
+        {
+            settingsDialog->setOverQuotaMode(true);
+        }
+        else
+        {
+            settingsDialog->setOverQuotaMode(false);
+        }
+    }
     settingsDialog->setModal(false);
     settingsDialog->show();
 }
@@ -2605,8 +2638,7 @@ void MegaApplication::createTrayIcon()
         showStatusAction = new QAction(tr("Show status"), this);
         connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
 
-        trayMenu->insertAction(importLinksAction, showStatusAction);
-        trayIcon->setContextMenu(trayMenu);
+        initialMenu->insertAction(changeProxyAction, showStatusAction);
     }
     else
     {
@@ -2722,20 +2754,6 @@ void MegaApplication::createOverQuotaMenu()
     trayOverQuotaMenu->addAction(logoutActionOverquota);
     trayOverQuotaMenu->addSeparator();
     trayOverQuotaMenu->addAction(exitActionOverquota);
-
-    if (isLinux)
-    {
-        if(showStatusActionOverquota)
-        {
-            showStatusActionOverquota->deleteLater();
-            showStatusActionOverquota = NULL;
-        }
-
-        showStatusActionOverquota = new QAction(tr("Show status"), this);
-        connect(showStatusActionOverquota, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
-
-        trayMenu->insertAction(settingsActionOverquota, showStatusActionOverquota);
-    }
 }
 
 //Called when a request is about to start
@@ -2758,10 +2776,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if(!infoOverQuota)
         {
             infoOverQuota = new InfoOverQuotaDialog(this);
-            if(isLinux)
-            {
-                trayIcon->setContextMenu(trayOverQuotaMenu);
-            }
+
             preferences->setUsedStorage(preferences->totalStorage());
             megaApi->getAccountDetails();
 
@@ -3179,10 +3194,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if(!infoOverQuota)
         {
             infoOverQuota = new InfoOverQuotaDialog(this);
-            if(isLinux)
-            {
-                trayIcon->setContextMenu(trayOverQuotaMenu);
-            }
+
             preferences->setUsedStorage(preferences->totalStorage());
             megaApi->getAccountDetails();
 
