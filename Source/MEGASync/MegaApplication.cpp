@@ -3322,7 +3322,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    if(e->getErrorCode() != MegaError::API_OK)
+    if(e->getErrorCode() != MegaError::API_OK && transfer->getTag() > 0)
     {
         showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     }
