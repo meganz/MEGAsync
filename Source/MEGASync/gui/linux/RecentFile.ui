@@ -34,14 +34,13 @@ margin-right: 1px;
 
 #wText
 {
-border-bottom: 2px solid rgb(241, 240, 240);
+
 }
 
 #pArrow
 {
 margin-right: 1px;
 border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #lFileType
@@ -49,7 +48,6 @@ border-bottom: 2px solid rgb(241, 240, 240);
 margin-left: 1px;
 padding-left: 10px;
 border: 0px;
-border-bottom: 2px solid rgb(241, 240, 240);
 }
 
 #lTime
@@ -188,7 +186,7 @@ font-size: 11px;
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="Resources.qrc">
+      <iconset resource="../Resources_linux.qrc">
        <normaloff>:/images/tray_share_ico.png</normaloff>:/images/tray_share_ico.png</iconset>
      </property>
      <property name="iconSize">
@@ -205,7 +203,7 @@ font-size: 11px;
   </layout>
  </widget>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
