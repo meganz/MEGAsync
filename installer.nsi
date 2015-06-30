@@ -6,6 +6,7 @@ RequestExecutionLevel user
 #!define BUILD_X64_VERSION
 #!define BUILD_WITH_LOGGER
 #!define ENABLE_DEBUG_MESSAGES
+!define ENABLE_QT5
 
 !macro DEBUG_MSG message
 !ifdef ENABLE_DEBUG_MESSAGES
@@ -39,7 +40,12 @@ VIAddVersionKey "ProductVersion" "2.1.0.0"
 !define CSIDL_COMMON_APPDATA '0x23'
 
 ; To be defined depending on your working environment
+!ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6\"
+!else
+!define QT_PATH "C:\Qt\Qt5.4.2\5.4\msvc2010_opengl"
+!endif
+
 !define BUILDPATH_X86 "Release_x32"
 !define BUILDPATH_X64 "Release_x64"
 
@@ -408,6 +414,7 @@ modeselected:
   
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
+!ifndef ENABLE_QT5
   ;x86_32 files
   File "${QT_PATH}\bin\QtCore4.dll"
   AccessControl::SetFileOwner "$INSTDIR\QtCore4.dll" "$USERNAME"
@@ -435,19 +442,19 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qico4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qico4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qico4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qjpeg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qmng4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qsvg4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -459,6 +466,124 @@ modeselected:
   File "${QT_PATH}\plugins\imageformats\qtiff4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
+!else
+  ;x86_32 files
+  File "${QT_PATH}\bin\Qt5Core.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Core.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Core.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\bin\Qt5Gui.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Gui.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Gui.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\bin\Qt5Widgets.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Widgets.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Widgets.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\bin\Qt5Network.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Network.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Network.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\bin\Qt5Xml.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Xml.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Xml.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\bin\Qt5Svg.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Svg.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Svg.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\bin\Qt5Concurrent.dll"
+  AccessControl::SetFileOwner "$INSTDIR\Qt5Concurrent.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\icudt53.dll"
+  AccessControl::SetFileOwner "$INSTDIR\icudt53.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\icudt53.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\bin\icuin53.dll"
+  AccessControl::SetFileOwner "$INSTDIR\icuin53.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\icuin53.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\bin\icuuc53.dll"
+  AccessControl::SetFileOwner "$INSTDIR\icuuc53.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\icuuc53.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  SetOutPath "$INSTDIR\imageformats"
+  File "${QT_PATH}\plugins\imageformats\qdds.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qdds.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qdds.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qgif.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qicns.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qicns.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qicns.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\plugins\imageformats\qico.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qico.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qico.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qjp2.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qjp2.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qjp2.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\plugins\imageformats\qjpeg.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qmng.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qsvg.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qtga.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtga.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtga.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qtiff.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\imageformats\qwbmp.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qwbmp.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qwbmp.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\plugins\imageformats\qwebp.dll"
+  AccessControl::SetFileOwner "$INSTDIR\imageformats\qwebp.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\imageformats\qwebp.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  SetOutPath "$INSTDIR\iconengines"
+  File "${QT_PATH}\plugins\iconengines\qsvgicon.dll"
+  AccessControl::SetFileOwner "$INSTDIR\iconengines" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\iconengines" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\iconengines\qsvgicon.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\iconengines\qsvgicon.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  SetOutPath "$INSTDIR\platforms"
+  File "${QT_PATH}\plugins\platforms\qwindows.dll"
+  AccessControl::SetFileOwner "$INSTDIR\platforms" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  SetOutPath "$INSTDIR\bearer"
+  File "${QT_PATH}\plugins\bearer\qgenericbearer.dll"
+  AccessControl::SetFileOwner "$INSTDIR\bearer" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\bearer" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\bearer\qgenericbearer.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\bearer\qgenericbearer.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${QT_PATH}\plugins\bearer\qnativewifibearer.dll"
+  AccessControl::SetFileOwner "$INSTDIR\bearer\qnativewifibearer.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\bearer\qnativewifibearer.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
           
   SetOutPath "$INSTDIR"
   SetOverwrite on
