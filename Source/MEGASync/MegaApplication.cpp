@@ -1330,7 +1330,12 @@ void MegaApplication::onInstallUpdateClicked()
 }
 
 void MegaApplication::showInfoDialog()
-{
+{    
+    if(isLinux && showStatusAction && megaApi)
+    {
+        megaApi->retryPendingConnections();
+    }
+
     if(infoOverQuota)
     {
         if(!infoOverQuota->isVisible())
@@ -2462,7 +2467,14 @@ void MegaApplication::openSettings(int tab)
 
 void MegaApplication::changeProxy()
 {
-    bool proxyOnly = !megaApi->isLoggedIn();
+    bool proxyOnly = true;
+
+    if(megaApi)
+    {
+        proxyOnly = !megaApi->isLoggedIn();
+        megaApi->retryPendingConnections();
+    }
+
     if(settingsDialog)
     {            
         settingsDialog->setProxyOnly(proxyOnly);
