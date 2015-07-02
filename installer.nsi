@@ -43,7 +43,7 @@ VIAddVersionKey "ProductVersion" "2.1.0.1"
 !ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6\"
 !else
-!define QT_PATH "C:\Qt\Qt5.4.2\5.4\msvc2010_opengl"
+!define QT_PATH "C:\Qt\Qt5.5.0\5.5\msvc2010"
 !endif
 
 !define BUILDPATH_X86 "Release_x32"
@@ -496,17 +496,17 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\Qt5Concurrent.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${QT_PATH}\bin\icudt53.dll"
-  AccessControl::SetFileOwner "$INSTDIR\icudt53.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\icudt53.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${QT_PATH}\bin\icudt54.dll"
+  AccessControl::SetFileOwner "$INSTDIR\icudt54.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\icudt54.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${QT_PATH}\bin\icuin53.dll"
-  AccessControl::SetFileOwner "$INSTDIR\icuin53.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\icuin53.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${QT_PATH}\bin\icuin54.dll"
+  AccessControl::SetFileOwner "$INSTDIR\icuin54.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\icuin54.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${QT_PATH}\bin\icuuc53.dll"
-  AccessControl::SetFileOwner "$INSTDIR\icuuc53.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\icuuc53.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${QT_PATH}\bin\icuuc54.dll"
+  AccessControl::SetFileOwner "$INSTDIR\icuuc54.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\icuuc54.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   SetOutPath "$INSTDIR\imageformats"
   File "${QT_PATH}\plugins\imageformats\qdds.dll"
@@ -790,6 +790,9 @@ Section Uninstall
   Delete "$INSTDIR\icudt53.dll"
   Delete "$INSTDIR\icuin53.dll"
   Delete "$INSTDIR\icuuc53.dll"
+  Delete "$INSTDIR\icudt54.dll"
+  Delete "$INSTDIR\icuin54.dll"
+  Delete "$INSTDIR\icuuc54.dll"
   Delete "$INSTDIR\imageformats\qdds.dll"
   Delete "$INSTDIR\imageformats\qgif.dll"
   Delete "$INSTDIR\imageformats\qicns.dll"
