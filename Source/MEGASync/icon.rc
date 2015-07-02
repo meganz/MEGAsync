@@ -1,8 +1,8 @@
 #include <windows.h>
  
 VS_VERSION_INFO     VERSIONINFO
-FILEVERSION         2, 1, 0, 1
-PRODUCTVERSION      2, 1, 0, 1
+FILEVERSION         2, 1, 0, 2
+PRODUCTVERSION      2, 1, 0, 2
 FILEFLAGSMASK       0x3fL
 FILEFLAGS           0
 FILEOS              VOS_NT_WINDOWS32
@@ -23,7 +23,7 @@ BEGIN
             VALUE   "LegalCopyright",   "Mega Limited 2015\0"
             VALUE   "OriginalFilename", "MEGAsync.exe\0"
             VALUE   "ProductName",      "MEGAsync\0"
-            VALUE   "ProductVersion",   "2.1.0.1\0"
+            VALUE   "ProductVersion",   "2.1.0.2\0"
         END
     END
 END
