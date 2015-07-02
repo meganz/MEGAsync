@@ -1852,13 +1852,13 @@ void MegaApplication::toggleLogging()
 bool MegaApplication::eventFilter(QObject *o, QEvent *ev)
 {
     QMenu *menu = dynamic_cast<QMenu *>(o);
-    if(menu && menu->isVisible() && ev->type() == QEvent::MouseButtonRelease)
+    if(menu && menu->isVisible() && menu->isEnabled() && ev->type() == QEvent::MouseButtonRelease)
     {
         QMouseEvent * mouseEvent = dynamic_cast<QMouseEvent *>(ev);
         if(mouseEvent)
         {
             QAction *action = menu->actionAt(mouseEvent->pos());
-            if(action)
+            if(action && action->isEnabled())
             {
                 action->trigger();
                 menu->close();
