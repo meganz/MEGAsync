@@ -193,7 +193,7 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 #endif
     menu->addAction(tr("Open"), this, SLOT(openFile()));
     menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-#ifdef WIN32
+#if defined _WIN32 && (QT_VERSION < 0x050000)
     menu->exec(this->mapToGlobal(pos));
 #else
     menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
@@ -227,7 +227,7 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 #endif
     menu->addAction(tr("Open"), this, SLOT(openFile()));
     menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-#ifdef WIN32
+#if defined _WIN32 && (QT_VERSION < 0x050000)
     menu->exec(this->mapToGlobal(pos));
 #else
     menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));

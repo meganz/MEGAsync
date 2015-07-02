@@ -78,6 +78,9 @@
        <height>48</height>
       </size>
      </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">#lFileType
 {
