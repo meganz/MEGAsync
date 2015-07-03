@@ -118,7 +118,9 @@ public slots:
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
     void externalDownload(QString megaLink);
-	void onLinkImportFinished();
+    void internalDownload(long long handle);
+    void syncFolder(long long handle);
+    void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
     void onUpdateAvailable(bool requested);
