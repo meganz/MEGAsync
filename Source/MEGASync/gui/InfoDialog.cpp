@@ -607,46 +607,7 @@ void InfoDialog::setPaused(bool paused)
 
 void InfoDialog::addSync()
 {
-    static BindFolderDialog *dialog = NULL;
-    if(dialog)
-    {
-        dialog->activateWindow();
-        return;
-    }
-
-    dialog = new BindFolderDialog(app);
-    int result = dialog->exec();
-    if(result != QDialog::Accepted)
-    {
-        delete dialog;
-        dialog = NULL;
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
-    MegaNode *node = megaApi->getNodeByHandle(handle);
-    QString syncName = dialog->getSyncName();
-    delete dialog;
-    dialog = NULL;
-    if(!localFolderPath.length() || !node)
-    {
-        delete node;
-        return;
-    }
-
-   const char *nPath = megaApi->getNodePath(node);
-   if(!nPath)
-   {
-       delete node;
-       return;
-   }
-
-   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
-   delete [] nPath;
-   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
-   delete node;
-   updateSyncsButton();
+    addSync(INVALID_HANDLE);
 }
 
 void InfoDialog::onTransfer1Cancel(int x, int y)
@@ -932,6 +893,61 @@ void InfoDialog::disableGetLink(bool disable)
     ui->wRecent1->disableGetLink(disable);
     ui->wRecent2->disableGetLink(disable);
     ui->wRecent3->disableGetLink(disable);
+}
+
+void InfoDialog::addSync(MegaHandle h)
+{
+    static BindFolderDialog *dialog = NULL;
+    if(dialog)
+    {
+        if(h != mega::INVALID_HANDLE)
+        {
+            dialog->setMegaFolder(h);
+        }
+
+        dialog->activateWindow();
+        dialog->raise();
+        dialog->setFocus();
+        return;
+    }
+
+    dialog = new BindFolderDialog(app);
+    if(h != mega::INVALID_HANDLE)
+    {
+        dialog->setMegaFolder(h);
+    }
+    int result = dialog->exec();
+    if(result != QDialog::Accepted)
+    {
+        delete dialog;
+        dialog = NULL;
+        return;
+    }
+
+    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
+    MegaHandle handle = dialog->getMegaFolder();
+    MegaNode *node = megaApi->getNodeByHandle(handle);
+    QString syncName = dialog->getSyncName();
+    delete dialog;
+    dialog = NULL;
+    if(!localFolderPath.length() || !node)
+    {
+        delete node;
+        return;
+    }
+
+   const char *nPath = megaApi->getNodePath(node);
+   if(!nPath)
+   {
+       delete node;
+       return;
+   }
+
+   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
+   delete [] nPath;
+   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+   delete node;
+   updateSyncsButton();
 }
 
 void InfoDialog::on_bPause_clicked()

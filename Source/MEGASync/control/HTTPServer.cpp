@@ -2,9 +2,12 @@
 #include "Preferences.h"
 #include <iostream>
 
-HTTPServer::HTTPServer(quint16 port, bool sslEnabled)
+using namespace mega;
+
+HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
     : QTcpServer(), disabled(false)
 {
+    this->megaApi = megaApi;
     this->sslEnabled = sslEnabled;
     listen(QHostAddress::LocalHost, port);
 }
@@ -156,10 +159,23 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 {
     QString response;
     QRegExp openLinkRequest(QString::fromUtf8("\\{\"a\":\"l\",\"h\":\"(.*)\",\"k\":\"(.*)\"\\}"));
+    QRegExp downloadRequest(QString::fromUtf8("\\{\"a\":\"d\",\"h\":\"(.*)\"\\}"));
+    QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
 
     if(request->data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
-        response = QString::fromUtf8("{\"v\":\"%1\"}").arg(Preferences::VERSION_STRING);
+        char *myHandle = megaApi->getMyUserHandle();
+        if(!myHandle)
+        {
+            response = QString::fromUtf8("{\"v\":\"%1\"}").arg(Preferences::VERSION_STRING);
+        }
+        else
+        {
+            response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
+                    .arg(Preferences::VERSION_STRING)
+                    .arg(QString::fromUtf8(myHandle));
+            delete myHandle;
+        }
     }
     else if(openLinkRequest.exactMatch(request->data))
     {
@@ -175,6 +191,62 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                 response = QString::fromUtf8("0");
             }
         }
+    }
+    else if (downloadRequest.exactMatch(request->data))
+    {
+         QStringList parameters = downloadRequest.capturedTexts();
+         if(parameters.size() == 2)
+         {
+             QString handle = parameters[1];
+             MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
+             MegaNode *node = megaApi->getNodeByHandle(h);
+             if(!node)
+             {
+                 if(!megaApi->isLoggedIn())
+                 {
+                     response = QString::fromUtf8("-11");
+                 }
+                 else
+                 {
+                    response = QString::fromUtf8("-9");
+                 }
+             }
+             else
+             {
+                 emit onDownloadRequested(h);
+                 response = QString::fromUtf8("0");
+                 delete node;
+             }
+         }
+    }
+    else if (syncRequest.exactMatch(request->data))
+    {
+         QStringList parameters = syncRequest.capturedTexts();
+         if(parameters.size() == 2)
+         {
+             QString handle = parameters[1];
+             MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
+             MegaNode *node = megaApi->getNodeByHandle(h);
+             if(!node)
+             {
+                 if(!megaApi->isLoggedIn())
+                 {
+                     response = QString::fromUtf8("-11");
+                 }
+                 else
+                 {
+                    response = QString::fromUtf8("-9");
+                 }
+             }
+             else if(node->getType() == MegaNode::TYPE_FOLDER
+                     || node->getType() == MegaNode::TYPE_ROOT
+                     || node->getType() == MegaNode::TYPE_INCOMING)
+             {
+                 emit onSyncRequested(h);
+                 response = QString::fromUtf8("0");
+                 delete node;
+             }
+         }
     }
 
     if(!response.size())

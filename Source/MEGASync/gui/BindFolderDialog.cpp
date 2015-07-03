@@ -46,6 +46,11 @@ long long BindFolderDialog::getMegaFolder()
     return ui->wBinder->selectedMegaFolder();
 }
 
+void BindFolderDialog::setMegaFolder(MegaHandle handle)
+{
+    ui->wBinder->setSelectedMegaFolder(handle);
+}
+
 QString BindFolderDialog::getLocalFolder()
 {
     return ui->wBinder->selectedLocalFolder();

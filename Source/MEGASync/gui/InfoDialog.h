@@ -40,6 +40,7 @@ public:
     void closeSyncsMenu();
     void updateRecentFiles();
     void disableGetLink(bool disable);
+    void addSync(mega::MegaHandle h);
 
 public slots:
    void addSync();

@@ -24,6 +24,7 @@ public:
     ~FolderBinder();
 
     long long selectedMegaFolder();
+    bool setSelectedMegaFolder(mega::MegaHandle handle);
     QString selectedLocalFolder();
 
 private slots:

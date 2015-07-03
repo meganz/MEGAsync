@@ -862,8 +862,10 @@ void MegaApplication::loggedIn()
     Platform::startShellDispatcher(this);
 
     //Start the HTTP server
-    httpServer = new HTTPServer(Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)));
+    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onDownloadRequested(long long)), this, SLOT(internalDownload(long long)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
 
     updateUserStats();
 }
@@ -2253,6 +2255,25 @@ void MegaApplication::externalDownload(QString megaLink)
 {
     pendingLinks.append(megaLink);
     megaApi->getPublicNode(megaLink.toUtf8().constData());
+}
+
+void MegaApplication::internalDownload(long long handle)
+{
+    MegaNode *node = megaApi->getNodeByHandle(handle);
+    if(!node)
+    {
+        return;
+    }
+
+    processDownload(node);
+}
+
+void MegaApplication::syncFolder(long long handle)
+{
+    if(infoDialog)
+    {
+        infoDialog->addSync(handle);
+    }
 }
 
 //Called when the link import finishes

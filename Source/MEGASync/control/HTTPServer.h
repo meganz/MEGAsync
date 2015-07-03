@@ -8,6 +8,8 @@
 #include <QStringList>
 #include <QDateTime>
 
+#include <megaapi.h>
+
 class HTTPRequest
 {
 public:
@@ -21,7 +23,7 @@ class HTTPServer: public QTcpServer
     Q_OBJECT
 
     public:
-        HTTPServer(quint16 port, bool sslEnabled);
+        HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
 #if QT_VERSION >= 0x050000
         void incomingConnection(qintptr socket);
 #else
@@ -32,6 +34,8 @@ class HTTPServer: public QTcpServer
 
     signals:
         void onLinkReceived(QString link);
+        void onDownloadRequested(long long handle);
+        void onSyncRequested(long long handle);
 
     private slots:
         void readClient();
@@ -43,6 +47,7 @@ class HTTPServer: public QTcpServer
     private:
         bool disabled;
         bool sslEnabled;
+        mega::MegaApi *megaApi;
         QMap<QAbstractSocket*, HTTPRequest*> requests;
 };
 
