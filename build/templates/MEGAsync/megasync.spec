@@ -118,6 +118,19 @@ enabled=1
 DATA
 %endif
 
+# Fedora 22
+%if 0%{?fedora_version} == 22
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_22/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_22/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
 # Fedora 21
 %if 0%{?fedora_version} == 21
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
@@ -155,6 +168,23 @@ gpgkey=https://mega.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
+%endif
+
+# openSUSE 13.2
+%if 0%{?suse_version} == 1320
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_13.2/
+gpgcheck=1
+autorefresh=1
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_13.2/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
 %endif
 
 # openSUSE 13.1
@@ -208,7 +238,6 @@ DATA
 fi
 %endif
 
-
 %postun
 %if 0%{?suse_version} >= 1140
 %desktop_database_postun
@@ -219,11 +248,6 @@ if [ $1 -eq 0 ] ; then
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
 %endif
-# remove repo files
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-rm -f $YUM_FILE 2> /dev/null || true
-ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
-rm -f $ZYPP_FILE 2> /dev/null || true
 # kill running MEGAsync instance
 killall megasync 2> /dev/null || true
 
