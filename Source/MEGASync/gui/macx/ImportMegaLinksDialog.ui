@@ -212,7 +212,7 @@ padding-left: 10px;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_3" native="true">
+       <widget class="QWidget" name="wImport" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
