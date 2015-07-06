@@ -168,7 +168,7 @@ margin-bottom: 9px;
       <string notr="true">background-image: url(&quot;:/images/background.png&quot;);</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <property name="styleSheet">
@@ -1542,6 +1542,13 @@ font-weight: normal;
       <property name="bottomMargin">
        <number>13</number>
       </property>
+      <item>
+       <widget class="QPushButton" name="bSkip">
+        <property name="text">
+         <string>Skip</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <spacer name="hsButtons">
         <property name="orientation">
