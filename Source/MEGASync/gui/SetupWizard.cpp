@@ -53,6 +53,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 		{
 			ui->bBack->setEnabled(true);
 			ui->bNext->setEnabled(true);
+            ui->bSkip->setEnabled(true);
 			if(error->getErrorCode() == MegaError::API_OK)
 			{
 				ui->sPages->setCurrentWidget(ui->pLogin);
@@ -101,6 +102,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 {
                     ui->bBack->setEnabled(true);
                     ui->bNext->setEnabled(true);
+                    ui->bSkip->setEnabled(true);
                     ui->sPages->setCurrentWidget(ui->pLogin);
                     QMessageBox::warning(this, tr("Error"), tr("Error getting session key"), QMessageBox::Ok);
                 }
@@ -140,6 +142,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                    selectedMegaFolderHandle = node->getHandle();
 				   ui->bBack->setVisible(false);
 				   ui->bNext->setVisible(false);
+                   ui->bSkip->setVisible(false);
 				   ui->bCancel->setText(tr("Finish"));
 				   ui->sPages->setCurrentWidget(ui->pWelcome);
                    delete node;
@@ -185,6 +188,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     bool proxyAuth = preferences->proxyRequiresAuth();
                     QString proxyUsername = preferences->getProxyUsername();
                     QString proxyPassword = preferences->getProxyPassword();
+                    QString downloadFolder = preferences->downloadFolder();
 
                     preferences->setEmail(email);
                     preferences->setSession(sessionKey);
@@ -195,13 +199,16 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     preferences->setProxyRequiresAuth(proxyAuth);
                     preferences->setProxyUsername(proxyUsername);
                     preferences->setProxyPassword(proxyPassword);
+                    preferences->setDownloadFolder(downloadFolder);
 
+                    finished(0);
                     close();
                     return;
                 }
 
                 ui->bBack->setEnabled(true);
                 ui->bNext->setEnabled(true);
+                ui->bSkip->setEnabled(true);
                 ui->sPages->setCurrentWidget(ui->pSetupType);
             }
 
@@ -272,6 +279,7 @@ void SetupWizard::on_bNext_clicked()
         ui->sPages->setCurrentWidget(ui->pProgress);
         ui->bBack->setEnabled(false);
         ui->bNext->setEnabled(false);
+        ui->bSkip->setEnabled(false);
     }
     if(w == ui->pNewAccount)
     {
@@ -329,6 +337,7 @@ void SetupWizard::on_bNext_clicked()
         ui->sPages->setCurrentWidget(ui->pProgress);
         ui->bBack->setEnabled(false);
         ui->bNext->setEnabled(false);
+        ui->bSkip->setEnabled(false);
     }
     else if(w == ui->pSetupType)
     {
@@ -420,6 +429,7 @@ void SetupWizard::on_bNext_clicked()
             selectedMegaFolderHandle = node->getHandle();
             ui->bBack->setVisible(false);
             ui->bNext->setVisible(false);
+            ui->bSkip->setVisible(false);
             ui->bCancel->setText(tr("Finish"));
             ui->bCancel->setFocus();
             ui->sPages->setCurrentWidget(ui->pWelcome);
@@ -465,32 +475,13 @@ void SetupWizard::on_bCancel_clicked()
 {
     if(ui->sPages->currentWidget() == ui->pWelcome)
     {
-        QString email = ui->eLoginEmail->text().toLower().trimmed();
-
-        int proxyType = preferences->proxyType();
-        QString proxyServer = preferences->proxyServer();
-        int proxyPort = preferences->proxyPort();
-        int proxyProtocol = preferences->proxyProtocol();
-        bool proxyAuth = preferences->proxyRequiresAuth();
-        QString proxyUsername = preferences->getProxyUsername();
-        QString proxyPassword = preferences->getProxyPassword();
-        preferences->setEmail(email);
-        preferences->setSession(sessionKey);
-
+        setupPreferences();
         QString syncName;
         MegaNode *rootNode = megaApi->getRootNode();
         if(rootNode && selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         delete rootNode;
-
-        preferences->setProxyType(proxyType);
-        preferences->setProxyServer(proxyServer);
-        preferences->setProxyPort(proxyPort);
-        preferences->setProxyProtocol(proxyProtocol);
-        preferences->setProxyRequiresAuth(proxyAuth);
-        preferences->setProxyUsername(proxyUsername);
-        preferences->setProxyPassword(proxyPassword);
-
+        finished(0);
         close();
     }
     else
@@ -509,11 +500,22 @@ void SetupWizard::on_bCancel_clicked()
         }
         if(button == QMessageBox::Yes)
         {
+            finished(0);
             close();
         }
     }
 }
 
+void SetupWizard::on_bSkip_clicked()
+{
+    QWidget *w = ui->sPages->currentWidget();
+    if(w == ui->pSetupType || w == ui->pAdvanced)
+    {
+        setupPreferences();
+    }
+    finished(SKIP_WIZARD_CODE);
+    close();
+}
 void SetupWizard::on_bLocalFolder_clicked()
 {	
     QString defaultPath = ui->eLocalFolder->text().trimmed();
@@ -629,6 +631,31 @@ void SetupWizard::wAdvancedSetup_clicked()
     repaint();
 }
 
+void SetupWizard::setupPreferences()
+{
+
+    QString email = ui->eLoginEmail->text().toLower().trimmed();
+
+    int proxyType = preferences->proxyType();
+    QString proxyServer = preferences->proxyServer();
+    int proxyPort = preferences->proxyPort();
+    int proxyProtocol = preferences->proxyProtocol();
+    bool proxyAuth = preferences->proxyRequiresAuth();
+    QString proxyUsername = preferences->getProxyUsername();
+    QString proxyPassword = preferences->getProxyPassword();
+    preferences->setEmail(email);
+    preferences->setSession(sessionKey);
+
+    preferences->setProxyType(proxyType);
+    preferences->setProxyServer(proxyServer);
+    preferences->setProxyPort(proxyPort);
+    preferences->setProxyProtocol(proxyProtocol);
+    preferences->setProxyRequiresAuth(proxyAuth);
+    preferences->setProxyUsername(proxyUsername);
+    preferences->setProxyPassword(proxyPassword);
+
+}
+
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 {
     if(event->type() == QEvent::MouseButtonPress)
@@ -638,6 +665,11 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
         else if(obj == ui->lTermsLink) lTermsLink_clicked();
     }
     return QObject::eventFilter(obj, event);
+}
+
+void SetupWizard::closeEvent(QCloseEvent *event)
+{
+    event->accept();
 }
 
 void SetupWizard::lTermsLink_clicked()
