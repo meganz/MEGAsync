@@ -730,6 +730,7 @@ void MegaApplication::start()
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
 #endif
 
+#ifdef Q_OS_LINUX
     if(isLinux && trayIcon->contextMenu())
     {
         if(showStatusAction)
@@ -744,6 +745,9 @@ void MegaApplication::start()
     {
         trayIcon->setContextMenu(initialMenu);
     }
+#else
+        trayIcon->setContextMenu(initialMenu);
+#endif
 
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
