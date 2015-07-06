@@ -363,6 +363,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exitActionOverquota = NULL;
     settingsAction = NULL;
     settingsActionOverquota = NULL;
+    settingsActionGuest = NULL;
     importLinksAction = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
@@ -387,6 +388,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     externalNodesTimestamp = 0;
     enableDebug = false;
     overquotaCheck = false;
+    guestModeEnabled = false;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -588,6 +590,7 @@ void MegaApplication::changeLanguage(QString languageCode)
     {
         createTrayIcon();
         createOverQuotaMenu();
+        createGuestMenu();
     }
 }
 
@@ -824,7 +827,7 @@ void MegaApplication::start()
     applyProxySettings();
 
     //Start the initial setup wizard if needed
-    if(!preferences->logged())
+    if(!preferences->logged() && !preferences->guestModeEnabled())
     {
         if(!preferences->installationTime())
         {
@@ -839,7 +842,7 @@ void MegaApplication::start()
         updated = false;
         setupWizard = new SetupWizard(this);
         setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished()));
+        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
         setupWizard->show();
         return;
     }
@@ -876,13 +879,43 @@ void MegaApplication::start()
         }
         else
         {
-            megaApi->fastLogin(preferences->email().toUtf8().constData(),
+            if(preferences->guestModeEnabled())
+            {
+                guestModeEnabled = true;
+                guestMode();
+            }
+            else
+            {
+                megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
                        preferences->privatePw().toUtf8().constData());
+            }
         }
     }
 }
 
+void MegaApplication::guestMode()
+{
+    if(infoDialog)
+    {
+        infoDialog->setGuestMode(true);
+        infoDialog->init();
+        return;
+    }
+
+    startUpdateTask();
+
+    QString language = preferences->language();
+    changeLanguage(language);
+
+    updated = false;
+    infoDialog = new InfoDialog(this, true);
+
+    //Start the HTTP server
+    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)));
+
+}
 void MegaApplication::loggedIn()
 {
     if(infoDialog)
@@ -938,7 +971,10 @@ void MegaApplication::loggedIn()
     connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
 
-    updateUserStats();
+    if(!guestModeEnabled)
+    {
+        updateUserStats();
+    }
 }
 
 void MegaApplication::startSyncs()
@@ -1148,7 +1184,6 @@ void MegaApplication::exitApplication()
         reboot = false;
         trayIcon->hide();
         closeDialogs();
-
         #ifdef __APPLE__
             cleanAll();
             ::exit(0);
@@ -1490,7 +1525,14 @@ void MegaApplication::showInfoDialog()
         {
             infoDialog->closeSyncsMenu();
             if(trayMenu->isVisible())
+            {
                 trayMenu->close();
+            }
+            if(trayGuestMenu->isVisible())
+            {
+                trayGuestMenu->close();
+            }
+
             infoDialog->hide();
         }
     }
@@ -1670,17 +1712,23 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
-void MegaApplication::setupWizardFinished()
+void MegaApplication::setupWizardFinished(int result)
 {
     if(!preferences->logged())
     {
+        if(result == SetupWizard::SKIP_WIZARD_CODE)
+        {
+            preferences->setGuestModeEnabled(true);
+            guestModeEnabled = true;
+            guestMode();
+            return;
+        }
+
         #ifdef __APPLE__
             cleanAll();
             ::exit(0);
         #endif
-
         QApplication::exit();
-        return;
     }
 
     if(setupWizard)
@@ -1921,7 +1969,18 @@ void MegaApplication::checkForUpdates()
 
 void MegaApplication::showTrayMenu(QPoint *point)
 {
-    if(trayMenu && !infoOverQuota)
+    if(trayGuestMenu && guestModeEnabled)
+    {
+        if(trayGuestMenu->isVisible())
+            trayGuestMenu->close();
+        QPoint p = point ? (*point)-QPoint(trayGuestMenu->sizeHint().width(), 0) : QCursor::pos();
+        #ifdef __APPLE__
+            trayGuestMenu->exec(p);
+        #else
+            trayGuestMenu->popup(p);
+        #endif
+    }
+    else if(trayMenu && !infoOverQuota)
     {
         if(trayMenu->isVisible())
             trayMenu->close();
@@ -2041,7 +2100,7 @@ void MegaApplication::importLinks()
 	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
+    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor, guestModeEnabled);
     importDialog->exec();
     if(!importDialog)
     {
@@ -2057,28 +2116,29 @@ void MegaApplication::importLinks()
 
     //If the user wants to download some links, do it
     if(importDialog->shouldDownload())
-	{
+    {
         if(!preferences->hasDefaultDownloadFolder())
         {
             preferences->setDownloadFolder(importDialog->getDownloadPath());
         }
         linkProcessor->downloadLinks(importDialog->getDownloadPath());
-	}
+    }
 
     //If the user wants to import some links, do it
-    if(importDialog->shouldImport())
-	{
-		connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
+    if(!guestModeEnabled && importDialog->shouldImport())
+    {
+        connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
         connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, long long)),
                 this, SLOT(onDupplicateLink(QString, QString, long long)));
         linkProcessor->importLinks(importDialog->getImportPath());
-	}
+    }
     //If importing links isn't needed, we can delete the link processor
     //It doesn't track transfers, only the importation of links
     else delete linkProcessor;
 
     delete importDialog;
     importDialog = NULL;
+
 }
 
 void MegaApplication::showChangeLog()
@@ -2206,6 +2266,20 @@ void MegaApplication::downloadActionClicked()
     {
         downloadQueue.append(selectedNode);
         processDownloads();
+    }
+}
+
+void MegaApplication::loginActionClicked()
+{
+    if(preferences && preferences->guestModeEnabled())
+    {
+        delete httpServer;
+        httpServer = NULL;
+        guestModeEnabled = false;
+        preferences->setGuestModeEnabled(false);
+        closeDialogs();
+        refreshTrayIcon();
+        start();
     }
 }
 
@@ -2643,6 +2717,11 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
+        if(guestModeEnabled)
+        {
+            changeProxy();
+            return;
+        }
         settingsDialog->setOverQuotaMode(false);
         settingsDialog->openSettingsTab(tab);
     }
@@ -2952,6 +3031,106 @@ void MegaApplication::createOverQuotaMenu()
     trayOverQuotaMenu->addAction(exitActionOverquota);
 }
 
+void MegaApplication::createGuestMenu()
+{
+    if(!trayGuestMenu)
+    {
+        trayGuestMenu = new QMenu();
+        #ifndef __APPLE__
+            trayGuestMenu->setStyleSheet(QString::fromAscii(
+                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+                    "QMenu::item {background-color: white; color: black;} "
+                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+        #endif
+    }
+    else
+    {
+        QList<QAction *> actions = trayGuestMenu->actions();
+        for(int i=0; i<actions.size(); i++)
+        {
+            trayGuestMenu->removeAction(actions[i]);
+        }
+    }
+
+    if(exitGuestAction)
+    {
+        exitGuestAction->deleteLater();
+        exitGuestAction = NULL;
+    }
+
+#ifndef __APPLE__
+    exitGuestAction = new QAction(tr("Exit"), this);
+#else
+    exitGuestAction = new QAction(tr("Quit"), this);
+#endif
+    connect(exitGuestAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
+    if(updateGuestAction)
+    {
+        updateGuestAction->deleteLater();
+        updateGuestAction = NULL;
+    }
+
+    if(updateAvailable)
+    {
+        updateGuestAction = new QAction(tr("Install update"), this);
+        updateGuestAction->setEnabled(true);
+    }
+    else
+    {
+        updateGuestAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
+                                  QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
+#ifndef __APPLE__
+        updateGuestAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+        updateGuestAction->setIconVisibleInMenu(true);
+#endif
+        updateGuestAction->setEnabled(false);
+    }
+    connect(updateGuestAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
+
+    if(importLinksGuestAction)
+    {
+        importLinksGuestAction->deleteLater();
+        importLinksGuestAction = NULL;
+    }
+
+    importLinksGuestAction = new QAction(tr("Import links"), this);
+    connect(importLinksGuestAction, SIGNAL(triggered()), this, SLOT(importLinks()));
+
+    if(settingsActionGuest)
+    {
+        settingsActionGuest->deleteLater();
+        settingsActionGuest = NULL;
+    }
+
+    #ifndef __APPLE__
+        settingsActionGuest = new QAction(tr("Settings"), this);
+    #else
+        settingsActionGuest = new QAction(tr("Preferences"), this);
+    #endif
+    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+
+    if(loginAction)
+    {
+        loginAction->deleteLater();
+        loginAction = NULL;
+    }
+
+    loginAction = new QAction(tr("Login"), this);
+    connect(loginAction, SIGNAL(triggered()), this, SLOT(loginActionClicked()));
+
+    trayGuestMenu->addAction(updateActionOverquota);
+    trayGuestMenu->addSeparator();
+    trayGuestMenu->addAction(importLinksGuestAction);
+    trayGuestMenu->addAction(settingsActionGuest);
+    trayGuestMenu->addAction(loginAction);
+    trayGuestMenu->addSeparator();
+    trayGuestMenu->addAction(exitGuestAction);
+
+}
+
 //Called when a request is about to start
 void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
@@ -3127,7 +3306,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 	}
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        if(!preferences->logged()) break;
+        if(!preferences->logged() || preferences->guestModeEnabled()) break;
 
 		if(e->getErrorCode() != MegaError::API_OK)
 			break;

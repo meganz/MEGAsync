@@ -113,6 +113,7 @@ public slots:
     void importLinks();
     void showChangeLog();
     void uploadActionClicked();
+    void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void logoutActionClicked();
@@ -142,7 +143,7 @@ public slots:
     bool anUpdateIsAvailable();
     void triggerInstallUpdate();
     void scanningAnimationStep();
-    void setupWizardFinished();
+    void setupWizardFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
@@ -150,8 +151,10 @@ public slots:
 protected:
     void createTrayIcon();
     void createOverQuotaMenu();
+    void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
+    void guestMode();
     void startSyncs();
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
@@ -175,6 +178,7 @@ protected:
     QMenu *initialMenu;
     QMenu *trayMenu;
     QMenu *trayOverQuotaMenu;
+    QMenu *trayGuestMenu;
     QMenu emptyMenu;
     QAction *exitAction;
     QAction *settingsAction;
@@ -190,6 +194,12 @@ protected:
     QAction *settingsActionOverquota;
     QAction *exitActionOverquota;
     QAction *updateActionOverquota;
+
+    QAction *importLinksGuestAction;
+    QAction *exitGuestAction;
+    QAction *settingsActionGuest;
+    QAction *updateGuestAction;
+    QAction *loginAction;
 
     QTimer *scanningTimer;
     QTimer *connectivityTimer;
@@ -254,6 +264,7 @@ protected:
     long long externalNodesTimestamp;
     bool enableDebug;
     bool overquotaCheck;
+    bool guestModeEnabled;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
