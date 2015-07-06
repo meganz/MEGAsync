@@ -869,6 +869,8 @@ void MegaApplication::loggedIn()
     httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
     connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onDownloadRequested(long long)), this, SLOT(internalDownload(long long)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
 
     updateUserStats();
@@ -939,16 +941,13 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if(!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
+        qDeleteAll(downloadQueue);
         downloadQueue.clear();
+        showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
         return;
     }
 
-    while(!downloadQueue.isEmpty())
-    {
-        MegaNode *node = downloadQueue.dequeue();
-        downloader->download(node, path + QDir::separator());
-        delete node;
-    }
+    downloader->processDownloadQueue(&downloadQueue, path);
 }
 
 void MegaApplication::unityFix()
@@ -2076,17 +2075,20 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    processDownload(selectedNode);
+    if(selectedNode)
+    {
+        downloadQueue.append(selectedNode);
+        processDownloads();
+    }
 }
 
-void MegaApplication::processDownload(MegaNode *node)
+void MegaApplication::processDownloads()
 {
-    if(!node)
+    if(!downloadQueue.size())
     {
         return;
     }
 
-    downloadQueue.append(node);
     if(downloadFolderSelector)
     {
         downloadFolderSelector->setVisible(true);
@@ -2135,8 +2137,11 @@ void MegaApplication::processDownload(MegaNode *node)
         }
         processDownloadQueue(path);
     }
-    //If the dialog is rejected, cancel uploads
-    else downloadQueue.clear();
+    else
+    {
+        //If the dialog is rejected, cancel uploads
+        downloadQueue.clear();
+    }
 
     delete downloadFolderSelector;
     downloadFolderSelector = NULL;
@@ -2255,6 +2260,11 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
+void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
+{
+    downloadQueue.append(newDownloadQueue);
+}
+
 void MegaApplication::externalDownload(QString megaLink)
 {
     pendingLinks.append(megaLink);
@@ -2269,7 +2279,8 @@ void MegaApplication::internalDownload(long long handle)
         return;
     }
 
-    processDownload(node);
+    downloadQueue.append(node);
+    processDownloads();
 }
 
 void MegaApplication::syncFolder(long long handle)
@@ -3209,7 +3220,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             pendingLinks.removeOne(link);
             if(e->getErrorCode() == MegaError::API_OK)
             {
-                processDownload(request->getPublicMegaNode());
+                downloadQueue.append(request->getPublicMegaNode());
+                processDownloads();
             }
             else
             {

@@ -1,6 +1,9 @@
 #include "HTTPServer.h"
 #include "Preferences.h"
+#include "Utilities.h"
+
 #include <iostream>
+
 
 using namespace mega;
 
@@ -161,6 +164,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
     QRegExp openLinkRequest(QString::fromUtf8("\\{\"a\":\"l\",\"h\":\"(.*)\",\"k\":\"(.*)\"\\}"));
     QRegExp downloadRequest(QString::fromUtf8("\\{\"a\":\"d\",\"h\":\"(.*)\"\\}"));
     QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
+    QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
 
     if(request->data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
@@ -247,6 +251,133 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                  delete node;
              }
          }
+    }
+    else if(request->data.startsWith(externalDownloadRequestStart))
+    {
+        int start = request->data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
+        if(start > 0)
+        {
+            QString auth = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("esid"));
+            if(auth.length() != 58)
+            {
+                auth.clear();
+            }
+
+            if(auth.isEmpty())
+            {
+                auth = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("en"));
+                if(auth.length() != 8)
+                {
+                    auth.clear();
+                }
+            }
+
+            if(auth.isEmpty())
+            {
+                auth  = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("auth"));
+                if(auth.length() != 8)
+                {
+                    auth.clear();
+                }
+            }
+
+            if(!auth.isEmpty())
+            {
+                QQueue<mega::MegaNode *> downloadQueue;
+                int end;
+                bool firstnode = true;
+
+                while(request->data[start] == QChar::fromAscii('{'))
+                {
+                    end = request->data.indexOf(QChar::fromAscii('}'), start);
+                    if(end < 0)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");
+                        qDeleteAll(downloadQueue);
+                        downloadQueue.clear();
+                        break;
+                    }
+
+                    end++;
+                    QString file = request->data.mid(start, end - start);
+                    start = end + 1;
+
+
+                    int type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
+                    if(type < 0)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without type in webclient request");
+                        qDeleteAll(downloadQueue);
+                        downloadQueue.clear();
+                        break;
+                    }
+
+                    QString handle = Utilities::extractJSONString(file, QString::fromUtf8("h"));
+                    if(handle.isEmpty())
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without handle in webclient request");
+                        qDeleteAll(downloadQueue);
+                        downloadQueue.clear();
+                        break;
+                    }
+
+                    QString name = Utilities::extractJSONString(file, QString::fromUtf8("n"));
+                    name = QString::fromUtf8(QByteArray::fromBase64(name.toUtf8().constData()).constData());
+                    if(name.isEmpty())
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without name in webclient request");
+                        qDeleteAll(downloadQueue);
+                        downloadQueue.clear();
+                        break;
+                    }
+
+                    MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
+                    MegaHandle p = INVALID_HANDLE;
+
+                    if(!firstnode)
+                    {
+                        QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
+                        p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
+                    }
+                    else
+                    {
+                        firstnode = false;
+                    }
+
+                    if(type != MegaNode::TYPE_FILE)
+                    {
+                        MegaNode *node = megaApi->createPublicFolderNode(h, name.toUtf8().constData(), p, auth.toUtf8().constData());
+                        downloadQueue.append(node);
+                    }
+                    else
+                    {
+                        QString key = Utilities::extractJSONString(file, QString::fromUtf8("k"));
+                        if(key.isEmpty())
+                        {
+                            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without key in webclient request");
+                            qDeleteAll(downloadQueue);
+                            downloadQueue.clear();
+                            break;
+                        }
+
+                        long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
+                        long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
+
+                        MegaNode *node = megaApi->createPublicFileNode(h, key.toUtf8().constData(),
+                                                         name.toUtf8().constData(), size, mtime,
+                                                         p, auth.toUtf8().constData());
+                        downloadQueue.append(node);
+                    }
+                }
+
+                if(downloadQueue.size())
+                {
+                    emit onExternalDownloadRequested(downloadQueue);
+                    emit onExternalDownloadRequestFinished();
+                    response = QString::fromUtf8("0");
+                }
+            }
+        }
     }
 
     if(!response.size())
