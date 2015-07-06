@@ -16,7 +16,7 @@
 
 using namespace mega;
 
-InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
+InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
 {
@@ -53,6 +53,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     syncsMenu = NULL;
     transferMenu = NULL;
     menuSignalMapper = NULL;
+    guestMode = mode;
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -80,8 +81,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
-    setUsage();
-    updateSyncsButton();
+    if(!guestMode)
+    {
+        setUsage();
+        updateSyncsButton();
+    }
 
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
@@ -451,6 +455,11 @@ void InfoDialog::updateSyncsButton()
 void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
+}
+
+void InfoDialog::setGuestMode(bool mode)
+{
+    this->guestMode = mode;
 }
 
 void InfoDialog::setWaiting(bool waiting)

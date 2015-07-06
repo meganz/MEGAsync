@@ -19,7 +19,7 @@ class InfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
+    explicit InfoDialog(MegaApplication *app, bool guestMode = false, QWidget *parent = 0);
     void init();
     ~InfoDialog();
 
@@ -42,9 +42,13 @@ public:
     void updateRecentFiles();
     void disableGetLink(bool disable);
     void addSync(mega::MegaHandle h);
+
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
+
+    void setGuestMode(bool mode);
+
 
 public slots:
    void addSync();
@@ -118,6 +122,7 @@ private:
 	int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;
+    bool guestMode;
 
 protected:
     void changeEvent(QEvent * event);

@@ -22,6 +22,10 @@ class SetupWizard : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
+    enum {
+        SKIP_WIZARD_CODE = 100
+    };
+
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
     ~SetupWizard();
 
@@ -36,6 +40,8 @@ private slots:
 
     void on_bCancel_clicked();
 
+    void on_bSkip_clicked();
+
     void on_bLocalFolder_clicked();
 
     void on_bMegaFolder_clicked();
@@ -48,6 +54,7 @@ private slots:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+    void closeEvent(QCloseEvent * event);
 
 private:
     Ui::SetupWizard *ui;
@@ -57,6 +64,8 @@ private:
     uint64_t selectedMegaFolderHandle;
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
+
+    void setupPreferences();
 };
 
 #endif // SETUPWIZARD_H

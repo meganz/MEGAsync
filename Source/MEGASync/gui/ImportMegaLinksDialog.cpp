@@ -12,7 +12,7 @@
 
 using namespace mega;
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, QWidget *parent) :
+ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, bool guestMode, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::ImportMegaLinksDialog)
 {
@@ -21,6 +21,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
 	this->megaApi = megaApi;
 	this->linkProcessor = processor;
+    this->guestMode = guestMode;
 
 	for(int i=0; i<linkProcessor->size(); i++)
 	{
@@ -71,40 +72,49 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 	else defaultFolderPath = preferences->downloadFolder();
 	ui->eLocalFolder->setText(defaultFolderPath);
 
-    MegaNode *testNode = megaApi->getNodeByHandle(preferences->importFolder());
-    if(testNode)
+    if(!guestMode)
     {
-        const char *tPath = megaApi->getNodePath(testNode);
-        if(tPath)
+        MegaNode *testNode = megaApi->getNodeByHandle(preferences->importFolder());
+        if(testNode)
         {
-            ui->eMegaFolder->setText(QString::fromUtf8(tPath));
-            delete [] tPath;
+            const char *tPath = megaApi->getNodePath(testNode);
+            if(tPath)
+            {
+                ui->eMegaFolder->setText(QString::fromUtf8(tPath));
+                delete [] tPath;
+            }
+            else
+            {
+                delete testNode;
+                testNode = NULL;
+                ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
+            }
         }
         else
         {
-            delete testNode;
-            testNode = NULL;
             ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
+        }
+
+        MegaNode *p = testNode;
+        while(p)
+        {
+            if(megaApi->isSynced(p))
+            {
+                ui->cDownload->setChecked(false);
+                this->on_cDownload_clicked();
+                delete p;
+                break;
+            }
+            testNode = p;
+            p = megaApi->getParentNode(testNode);
+            delete testNode;
         }
     }
     else
     {
-        ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-    }
-
-    MegaNode *p = testNode;
-    while(p)
-    {
-        if(megaApi->isSynced(p))
-        {
-            ui->cDownload->setChecked(false);
-            this->on_cDownload_clicked();
-            delete p;
-            break;
-        }
-        testNode = p;
-        p = megaApi->getParentNode(testNode);
-        delete testNode;
+        ui->cImport->setVisible(false);
+        ui->wImport->setVisible(false);
+        ui->cDownload->setVisible(false);
     }
 
 	connect(linkProcessor, SIGNAL(onLinkInfoAvailable(int)), this, SLOT(onLinkInfoAvailable(int)));
