@@ -83,7 +83,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 
         megaApi->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
     }
-    else if(parent->getType() == MegaNode::TYPE_FOLDER)
+    else
     {
         QString nodeName = QString::fromUtf8(megaApi->escapeFsIncompatible(parent->getName()));
         QString destPath = currentPath + QDir::separator() + nodeName;
