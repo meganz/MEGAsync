@@ -275,7 +275,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
             if(auth.isEmpty())
             {
                 auth  = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("auth"));
-                if(auth.length() != 8)
+                if(auth.length() != 8 && auth.length() != 58)
                 {
                     auth.clear();
                 }
@@ -322,6 +322,8 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                     }
 
                     QString name = Utilities::extractJSONString(file, QString::fromUtf8("n"));
+                    name.replace(QString::fromUtf8("-"), QString::fromUtf8("+"));
+                    name.replace(QString::fromUtf8("_"), QString::fromUtf8("/"));
                     name = QString::fromUtf8(QByteArray::fromBase64(name.toUtf8().constData()).constData());
                     if(name.isEmpty())
                     {
