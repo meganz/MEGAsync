@@ -380,3 +380,41 @@ QString Utilities::getSizeString(unsigned long long bytes)
 
     return QString::number(bytes) + QString::fromAscii(" bytes");
 }
+
+QString Utilities::extractJSONString(QString json, QString name)
+{
+    QString pattern = name + QString::fromUtf8("\":\"");
+    int pos = json.indexOf(pattern);
+    if (pos < 0)
+    {
+        return QString();
+    }
+
+    int end = json.indexOf(QString::fromUtf8("\""), pos + pattern.size());
+    if (end < 0)
+    {
+        return QString();
+    }
+
+    return json.mid(pos + pattern.size(), end - pos - pattern.size());
+}
+
+long long Utilities::extractJSONNumber(QString json, QString name)
+{
+    QString pattern = name + QString::fromUtf8("\":");
+    int pos = json.indexOf(pattern);
+    if (pos < 0)
+    {
+        return 0;
+    }
+
+    int end = pos + pattern.size();
+    int count = 0;
+    while(json[end].isDigit())
+    {
+        end++;
+        count++;
+    }
+
+    return json.mid(pos + pattern.size(), count).toLongLong();
+}
