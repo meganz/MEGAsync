@@ -6,7 +6,7 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QPainter>
-
+#include "GuestWidget.h"
 #include "SettingsDialog.h"
 
 namespace Ui {
@@ -77,6 +77,8 @@ private slots:
 
     void scanningAnimationStep();
 
+    void regenerateLayout();
+
 #ifdef __APPLE__
     void on_cRecentlyUpdated_stateChanged(int arg1);
     void showRecentList();
@@ -123,6 +125,9 @@ private:
     bool indexing;
     bool waiting;
     bool guestMode;
+    GuestWidget *gWidget;
+
+    int getWidgetIndexByName(QString wName);
 
 protected:
     void changeEvent(QEvent * event);
