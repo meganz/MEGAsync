@@ -53,7 +53,12 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     syncsMenu = NULL;
     transferMenu = NULL;
     menuSignalMapper = NULL;
+    gWidget = NULL;
     guestMode = mode;
+    if(guestMode)
+    {
+        regenerateLayout();
+    }
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -460,6 +465,7 @@ void InfoDialog::setIndexing(bool indexing)
 void InfoDialog::setGuestMode(bool mode)
 {
     this->guestMode = mode;
+    regenerateLayout();
 }
 
 void InfoDialog::setWaiting(bool waiting)
@@ -1001,6 +1007,43 @@ void InfoDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
+void InfoDialog::regenerateLayout()
+{
+    QLayout *dialogLayout = layout();
+
+    if(guestMode)
+    {
+        if(!gWidget)
+        {
+            gWidget = new GuestWidget();
+        }
+        dialogLayout->removeWidget(ui->sActiveTransfers);
+        ui->sActiveTransfers->setVisible(false);
+        dialogLayout->removeWidget(ui->wUsage);
+        ui->wUsage->setVisible(false);
+        dialogLayout->addWidget(gWidget);
+
+        QLayoutItem *li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wRecent")));
+        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
+        li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wBottom")));
+        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
+
+    }
+    else
+    {
+        dialogLayout->removeWidget(gWidget);
+        gWidget->setVisible(false);
+        dialogLayout->addWidget(ui->sActiveTransfers);
+        ui->sActiveTransfers->setVisible(true);
+        dialogLayout->addWidget(ui->wUsage);
+        ui->wUsage->setVisible(true);
+        QLayoutItem *li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wRecent")));
+        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
+        li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wBottom")));
+        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
+    }
+
+}
 void InfoDialog::scanningAnimationStep()
 {
     scanningAnimationIndex = scanningAnimationIndex%18;
@@ -1103,3 +1146,21 @@ void InfoDialog::on_bOfficialWebIcon_clicked()
     on_bOfficialWeb_clicked();
 }
 #endif
+
+int InfoDialog::getWidgetIndexByName(QString wName)
+{
+    QVBoxLayout * dialogLayout = (QVBoxLayout *)layout();
+    if (dialogLayout != 0)
+    {
+        QWidget * w = findChild<QWidget*>(wName);
+        if (w != 0)
+        {
+            int index = dialogLayout->indexOf(w);
+            if (index >=0)
+            {
+                return index;
+            }
+        }
+    }
+    return -1;
+}
