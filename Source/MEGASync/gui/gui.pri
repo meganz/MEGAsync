@@ -25,7 +25,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoOverQuotaDialog.cpp \
     $$PWD/QMegaModel.cpp \
     $$PWD/MegaItem.cpp \
-    $$PWD/ChangeLogDialog.cpp
+    $$PWD/ChangeLogDialog.cpp \
+    $$PWD/GuestWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -52,7 +53,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoOverQuotaDialog.h \
     $$PWD/QMegaModel.h \
     $$PWD/MegaItem.h \
-    $$PWD/ChangeLogDialog.h
+    $$PWD/ChangeLogDialog.h \
+    $$PWD/GuestWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -82,8 +84,9 @@ win32 {
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/SizeLimitDialog.ui \
                 $$PWD/win/MessageBox.ui \
-                $$PWD/win/InfoOverQuotaDialog.ui\
-                $$PWD/win/ChangeLogDialog.ui
+                $$PWD/win/InfoOverQuotaDialog.ui \
+                $$PWD/win/ChangeLogDialog.ui \
+                $$PWD/win/GuestWidget.ui
 }
 
 macx {
@@ -109,7 +112,8 @@ macx {
                 $$PWD/macx/SizeLimitDialog.ui \
                 $$PWD/macx/MessageBox.ui \
                 $$PWD/macx/InfoOverQuotaDialog.ui \
-                $$PWD/macx/ChangeLogDialog.ui
+                $$PWD/macx/ChangeLogDialog.ui \
+                $$PWD/macx/GuestWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -139,5 +143,13 @@ unix:!macx {
                 $$PWD/linux/SizeLimitDialog.ui \
                 $$PWD/linux/MessageBox.ui\
                 $$PWD/linux/InfoOverQuotaDialog.ui \
+<<<<<<< HEAD
                 $$PWD/linux/ChangeLogDialog.ui
+=======
+                $$PWD/linux/GuestWidget.ui
+>>>>>>> New UI widget to manage guest mode
 }
+
+FORMS += \
+    $$PWD/linux/GuestWidget.ui \
+    $$PWD/win/GuestWidget.ui
