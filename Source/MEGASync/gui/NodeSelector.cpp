@@ -60,6 +60,7 @@ void NodeSelector::nodesReady()
     connect(ui->tMegaFolders->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this, SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
 
     ui->tMegaFolders->collapseAll();
+    ui->tMegaFolders->header()->close();
 
     QModelIndex defaultSelection = model->index(0, 0);
     ui->tMegaFolders->selectionModel()->select(defaultSelection, QItemSelectionModel::ClearAndSelect);
