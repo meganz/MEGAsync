@@ -179,6 +179,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
         if(node)
         {
             QModelIndex row = model->insertNode(node, selectedItem);
+            setSelectedFolderHandle(node->getHandle());
             ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
             ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
         }
@@ -236,6 +237,7 @@ void NodeSelector::on_bNewFolder_clicked()
 
                 if(text.compare(QString::fromUtf8(node->getName())) == 0)
                 {
+                    setSelectedFolderHandle(node->getHandle());
                     ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
                     ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
                     break;
