@@ -73,26 +73,16 @@ QPushButton
     </widget>
    </item>
    <item>
-    <widget class="QTreeWidget" name="tMegaFolders">
+    <widget class="QTreeView" name="tMegaFolders">
      <property name="autoExpandDelay">
       <number>-1</number>
      </property>
      <property name="animated">
       <bool>true</bool>
      </property>
-     <attribute name="headerVisible">
-      <bool>false</bool>
+     <attribute name="headerDefaultSectionSize">
+      <number>0</number>
      </attribute>
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>Retrieving folders...</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item>
@@ -111,16 +101,7 @@ QPushButton
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
+      <property name="margin">
        <number>0</number>
       </property>
       <item>

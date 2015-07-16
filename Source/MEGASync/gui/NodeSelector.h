@@ -8,6 +8,7 @@
 
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
+#include "QMegaModel.h"
 
 namespace Ui {
 class NodeSelector;
@@ -34,12 +35,12 @@ private:
     mega::MegaApi *megaApi;
     QIcon folderIcon;
     unsigned long long selectedFolder;
-    QTreeWidgetItem *selectedItem;
+    QModelIndex selectedItem;
     int selectMode;
+    QMegaModel *model;
 
 protected:
     void nodesReady();
-    void addChildren(QTreeWidgetItem *parentItem, mega::MegaNode *parentNode);
     mega::QTMegaRequestListener *delegateListener;
 
 public slots:
@@ -49,7 +50,7 @@ protected:
     void changeEvent(QEvent * event);
 
 private slots:
-    void on_tMegaFolders_itemSelectionChanged();
+    void onSelectionChanged(QItemSelection,QItemSelection);
     void on_bNewFolder_clicked();
     void on_bOk_clicked();
 };

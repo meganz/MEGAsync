@@ -16,7 +16,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
     this->megaApi = megaApi;
     folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
     selectedFolder = mega::INVALID_HANDLE;
-    selectedItem = NULL;
+    selectedItem = QModelIndex();
     this->selectMode = selectMode;
     delegateListener = new QTMegaRequestListener(megaApi, this);
     ui->cbAlwaysUploadToLocation->hide();
@@ -39,50 +39,32 @@ void NodeSelector::nodesReady()
         return;
     }
 
-    ui->tMegaFolders->clear();
-    QTreeWidgetItem *root = new QTreeWidgetItem();
-    root->setText(0, tr("Cloud Drive"));
-    root->setIcon(0, folderIcon);
-    root->setData(0, Qt::UserRole, (qulonglong)rootNode->getHandle());
-    addChildren(root, rootNode);
-    ui->tMegaFolders->setIconSize(QSize(24, 24));
-    ui->tMegaFolders->addTopLevelItem(root);
-    ui->tMegaFolders->setCurrentItem(root);
-    ui->tMegaFolders->expandToDepth(0);
-    selectedItem = root;
-    selectedFolder = selectedItem->data(0, Qt::UserRole).toULongLong();
-    delete rootNode;
-
-    MegaUserList *contacts = megaApi->getContacts();
-    for(int i=0; i < contacts->size(); i++)
+    model = new QMegaModel(megaApi);
+    switch(selectMode)
     {
-        MegaUser *contact = contacts->get(i);
-        MegaNodeList *folders = megaApi->getInShares(contact);
-        for(int j=0; j < folders->size(); j++)
-        {
-            MegaNode *folder = folders->get(j);
-            if(megaApi->getAccess(folder) == MegaShare::ACCESS_UNKNOWN)
-            {
-                continue;
-            }
-            QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, QString::fromUtf8("%1 (%2)").arg(QString::fromUtf8(folder->getName())).arg(QString::fromUtf8(contact->getEmail())));
-            item->setIcon(0, folderIcon);
-            item->setData(0, Qt::UserRole, (qulonglong)folder->getHandle());
-
-            int access = megaApi->getAccess(folder);
-            if(((selectMode == NodeSelector::UPLOAD_SELECT) && (access < MegaShare::ACCESS_READWRITE))
-                    || ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL)))
-            {
-                QBrush b (QColor(170,170,170, 127));
-                item->setForeground(0,b);
-            }
-            addChildren(item, folder);
-            ui->tMegaFolders->addTopLevelItem(item);
-        }
-        delete folders;
+    case NodeSelector::UPLOAD_SELECT:
+        model->setRequiredRights(MegaShare::ACCESS_READWRITE);
+        model->showFiles(false);
+        break;
+    case NodeSelector::SYNC_SELECT:
+        model->setRequiredRights(MegaShare::ACCESS_FULL);
+        model->showFiles(false);
+        break;
+    case NodeSelector::DOWNLOAD_SELECT:
+        model->setRequiredRights(MegaShare::ACCESS_READ);
+        model->showFiles(true);
+        break;
     }
-    delete contacts;
+
+    ui->tMegaFolders->setModel(model);
+    connect(ui->tMegaFolders->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),this, SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
+
+    ui->tMegaFolders->collapseAll();
+    ui->tMegaFolders->header()->close();
+
+    QModelIndex defaultSelection = model->index(0, 0);
+    ui->tMegaFolders->selectionModel()->select(defaultSelection, QItemSelectionModel::ClearAndSelect);
+    ui->tMegaFolders->selectionModel()->setCurrentIndex(defaultSelection, QItemSelectionModel::ClearAndSelect);
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -120,18 +102,22 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         return;
     }
 
-    QTreeWidgetItem *item = NULL;
     int index = list.size() - 1;
+    QModelIndex modelIndex;
+    QModelIndex parentModelIndex;
     node = list.at(index);
 
-    for(int i = 0; i < ui->tMegaFolders->topLevelItemCount(); i++)
+    for(int i = 0; i < model->rowCount(); i++)
     {
-        QTreeWidgetItem *tmp = ui->tMegaFolders->topLevelItem(i);
-        if(tmp->data(0, Qt::UserRole).toLongLong() == node->getHandle())
+        QModelIndex tmp = model->index(i, 0);
+        MegaNode *n = model->getNode(tmp);
+        if(n->getHandle() == node->getHandle())
         {
             node = NULL;
-            item = tmp;
+            parentModelIndex = modelIndex;
+            modelIndex = tmp;
             index--;
+            ui->tMegaFolders->expand(parentModelIndex);
             break;
         }
     }
@@ -142,20 +128,24 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         {
             delete list.at(k);
         }
+        ui->tMegaFolders->collapseAll();
         return;
     }
 
     while(index >= 0)
     {
         node = list.at(index);
-        for(int j = 0; j < item->childCount(); j++)
+        for(int j = 0; j < model->rowCount(modelIndex); j++)
         {
-            QTreeWidgetItem *tmp = item->child(j);
-            if(tmp->data(0, Qt::UserRole).toLongLong() == node->getHandle())
+            QModelIndex tmp = model->index(j, 0, modelIndex);
+            MegaNode *n = model->getNode(tmp);
+            if(n->getHandle() == node->getHandle())
             {
                 node = NULL;
-                item = tmp;
+                parentModelIndex = modelIndex;
+                modelIndex = tmp;
                 index--;
+                ui->tMegaFolders->expand(parentModelIndex);
                 break;
             }
         }
@@ -166,6 +156,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
             {
                 delete list.at(k);
             }
+            ui->tMegaFolders->collapseAll();
             return;
         }
     }
@@ -175,7 +166,8 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         delete list.at(k);
     }
 
-    ui->tMegaFolders->setCurrentItem(item);
+    ui->tMegaFolders->selectionModel()->setCurrentIndex(modelIndex, QItemSelectionModel::ClearAndSelect);
+    ui->tMegaFolders->selectionModel()->select(modelIndex, QItemSelectionModel::ClearAndSelect);
 }
 
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
@@ -186,17 +178,16 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
         MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
         if(node)
         {
-            QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, QString::fromUtf8(node->getName()));
-            item->setIcon(0, folderIcon);
-            item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
-            selectedItem->addChild(item);
-            selectedItem->sortChildren(0,  Qt::AscendingOrder);
-            ui->tMegaFolders->setCurrentItem(item);
-            ui->tMegaFolders->update();
-            delete node;
+            QModelIndex row = model->insertNode(node, selectedItem);
+            setSelectedFolderHandle(node->getHandle());
+            ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
+            ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
         }
 	}
+    else
+    {
+        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+    }
     ui->tMegaFolders->setEnabled(true);
 }
 
@@ -210,53 +201,10 @@ void NodeSelector::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void NodeSelector::addChildren(QTreeWidgetItem *parentItem, MegaNode *parentNode)
+void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 {
-    MegaNodeList *children = megaApi->getChildren(parentNode);
-    for(int i=0; i<children->size(); i++)
-    {
-        MegaNode *node = children->get(i);
-        if(node->getType() == MegaNode::TYPE_FOLDER)
-        {
-            QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, QString::fromUtf8(node->getName()));
-            item->setIcon(0, folderIcon);
-            item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
-            parentItem->addChild(item);
-
-            int access = megaApi->getAccess(node);
-            if(((selectMode == NodeSelector::UPLOAD_SELECT) && (access < MegaShare::ACCESS_READWRITE))
-                    || ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL)))
-            {
-                QBrush b (QColor(170, 170, 170, 127));
-                item->setForeground(0, b);
-            }
-            addChildren(item, node);
-        }
-        else if(selectMode == NodeSelector::DOWNLOAD_SELECT)
-        {
-            QIcon icon;
-            icon.addFile(Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName())), QSize(), QIcon::Normal, QIcon::Off);
-            QTreeWidgetItem *item = new QTreeWidgetItem();
-            item->setText(0, QString::fromUtf8(node->getName()));
-            item->setIcon(0, icon);
-            item->setData(0, Qt::UserRole, (qulonglong)node->getHandle());
-            parentItem->addChild(item);
-            addChildren(item, node);
-        }
-    }
-    delete children;
-}
-
-void NodeSelector::on_tMegaFolders_itemSelectionChanged()
-{
-    if(!ui->tMegaFolders->selectedItems().size())
-    {
-        return;
-    }
-
-    selectedItem =  ui->tMegaFolders->selectedItems().at(0);
-    selectedFolder = selectedItem->data(0, Qt::UserRole).toULongLong();
+    selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
+    selectedFolder =  model->getNode(selectedItem)->getHandle();
 }
 
 void NodeSelector::on_bNewFolder_clicked()
@@ -278,27 +226,34 @@ void NodeSelector::on_bNewFolder_clicked()
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
-        if(!node || (node->isFile()))
+        if(!node || node->isFile())
         {
+            ui->bNewFolder->setEnabled(false);
             ui->tMegaFolders->setEnabled(false);
 			megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
-            ui->bNewFolder->setEnabled(false);
         }
         else
         {
-            for(int i=0; i<selectedItem->childCount(); i++)
+            for(int i = 0; i < model->rowCount(selectedItem); i++)
             {
-                QTreeWidgetItem *item = selectedItem->child(i);
-                if(item->text(0).compare(text) == 0)
+                QModelIndex row = model->index(i, 0, selectedItem);
+                MegaNode *node = model->getNode(row);
+
+                if(text.compare(QString::fromUtf8(node->getName())) == 0)
                 {
-                    ui->tMegaFolders->setCurrentItem(item);
-                    ui->tMegaFolders->update();
+                    setSelectedFolderHandle(node->getHandle());
+                    ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
+                    ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
                     break;
                 }
             }
         }
         delete parent;
         delete node;
+    }
+    else
+    {
+        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Please enter a valid folder name"));
     }
     delete id;
 }
