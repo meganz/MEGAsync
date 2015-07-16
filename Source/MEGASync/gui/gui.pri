@@ -22,7 +22,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SizeLimitDialog.cpp \
     $$PWD/UsageWidget.cpp \
     $$PWD/MessageBox.cpp \
-    $$PWD/InfoOverQuotaDialog.cpp
+    $$PWD/InfoOverQuotaDialog.cpp \
+    $$PWD/QMegaModel.cpp \
+    $$PWD/MegaItem.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -46,7 +48,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SizeLimitDialog.h \
     $$PWD/UsageWidget.h \
     $$PWD/MessageBox.h \
-    $$PWD/InfoOverQuotaDialog.h
+    $$PWD/InfoOverQuotaDialog.h \
+    $$PWD/QMegaModel.h \
+    $$PWD/MegaItem.h
 
 INCLUDEPATH += $$PWD
 

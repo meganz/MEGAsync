@@ -78,7 +78,7 @@ height: 16px;
     </widget>
    </item>
    <item>
-    <widget class="QTreeWidget" name="tMegaFolders">
+    <widget class="QTreeView" name="tMegaFolders">
      <property name="focusPolicy">
       <enum>Qt::NoFocus</enum>
      </property>
@@ -88,19 +88,9 @@ height: 16px;
      <property name="animated">
       <bool>true</bool>
      </property>
-     <attribute name="headerVisible">
-      <bool>false</bool>
+     <attribute name="headerDefaultSectionSize">
+      <number>0</number>
      </attribute>
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>Retrieving folders...</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item>
