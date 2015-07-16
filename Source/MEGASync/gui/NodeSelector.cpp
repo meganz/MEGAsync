@@ -184,6 +184,10 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
             ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
         }
 	}
+    else
+    {
+        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+    }
     ui->tMegaFolders->setEnabled(true);
 }
 
@@ -246,6 +250,10 @@ void NodeSelector::on_bNewFolder_clicked()
         }
         delete parent;
         delete node;
+    }
+    else
+    {
+        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Please enter a valid folder name"));
     }
     delete id;
 }
