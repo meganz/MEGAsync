@@ -143,11 +143,8 @@ unix:!macx {
                 $$PWD/linux/SizeLimitDialog.ui \
                 $$PWD/linux/MessageBox.ui\
                 $$PWD/linux/InfoOverQuotaDialog.ui \
-<<<<<<< HEAD
-                $$PWD/linux/ChangeLogDialog.ui
-=======
+                $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui
->>>>>>> New UI widget to manage guest mode
 }
 
 FORMS += \

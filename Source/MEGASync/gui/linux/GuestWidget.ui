@@ -10,15 +10,21 @@
     <height>260</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>400</width>
     <height>260</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777215</width>
+    <width>400</width>
     <height>260</height>
    </size>
   </property>
@@ -26,11 +32,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#GuestWidget
-{
-	background-color: white;
-}
-QWidget
+   <string notr="true">QWidget
 {
 	background-color: white;
 }
@@ -41,7 +43,7 @@ QWidget
   color: #D90007;
   border-radius: 5px;
   border: 2px solid #D90007;
-  padding: 4px 24px 4px 24px;
+  padding: 4px 14px 4px 14px;
 }
 
 #bLogin:hover, #bCreateAccount:hover
@@ -59,7 +61,7 @@ QWidget
 
 </string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -76,8 +78,26 @@ QWidget
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <widget class="QWidget" name="wContainer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>114</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -100,111 +120,114 @@ QWidget
         </property>
         <property name="maximumSize">
          <size>
-          <width>200</width>
+          <width>400</width>
           <height>60</height>
          </size>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wDownloadDesc" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>54</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>54</height>
-      </size>
-     </property>
-     <property name="baseSize">
-      <size>
-       <width>0</width>
-       <height>54</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>20</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>15</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="lDownloads">
         <property name="styleSheet">
-         <string notr="true">color: rgb(102, 102, 102);</string>
-        </property>
-        <property name="text">
-         <string/>
+         <string notr="true">background-color: none;</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="lRemainingTimeD">
+       <widget class="QWidget" name="wDownloadDesc" native="true">
         <property name="minimumSize">
          <size>
-          <width>60</width>
-          <height>0</height>
+          <width>0</width>
+          <height>54</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>60</width>
-          <height>16777215</height>
+          <width>16777215</width>
+          <height>54</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">margin-right: 8px;
-color: rgb(102, 102, 102);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
-        </property>
-        <property name="iconSize">
+        <property name="baseSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>0</width>
+          <height>54</height>
          </size>
         </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>15</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lDownloads">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(102, 102, 102);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lRemainingTimeD">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">margin-right: 8px;
+color: rgb(102, 102, 102);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -212,9 +235,12 @@ color: rgb(102, 102, 102);</string>
    </item>
    <item>
     <widget class="QWidget" name="widget_2" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="topMargin">
-       <number>0</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -231,15 +257,18 @@ color: rgb(102, 102, 102);</string>
    </item>
    <item>
     <widget class="QWidget" name="wButtons" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>20</number>
+       <number>13</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>13</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -293,8 +322,7 @@ color: rgb(102, 102, 102);</string>
   </layout>
   <zorder>widget_2</zorder>
   <zorder>wButtons</zorder>
-  <zorder>wDownloadDesc</zorder>
-  <zorder>widget</zorder>
+  <zorder>wContainer</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -305,7 +333,7 @@ color: rgb(102, 102, 102);</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
