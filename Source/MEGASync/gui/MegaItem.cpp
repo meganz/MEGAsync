@@ -1,5 +1,7 @@
 #include "MegaItem.h"
 
+#include <QByteArray>
+
 using namespace mega;
 
 MegaItem::MegaItem(MegaNode *node, MegaItem *parentItem, bool showFiles)
@@ -68,7 +70,7 @@ int MegaItem::insertPosition(MegaNode *node)
             continue;
         }
 
-        if(strcasecmp(node->getName(), n->getName()) <= 0)
+        if(qstricmp(node->getName(), n->getName()) <= 0)
         {
             break;
         }
