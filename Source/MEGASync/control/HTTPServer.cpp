@@ -162,7 +162,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 {
     QString response;
     QRegExp openLinkRequest(QString::fromUtf8("\\{\"a\":\"l\",\"h\":\"(.*)\",\"k\":\"(.*)\"\\}"));
-    QRegExp downloadRequest(QString::fromUtf8("\\{\"a\":\"d\",\"h\":\"(.*)\"\\}"));
     QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
 
@@ -195,34 +194,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                 QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
                 emit onLinkReceived(link);
                 response = QString::fromUtf8("0");
-            }
-        }
-    }
-    else if (downloadRequest.exactMatch(request->data))
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "DownloadNode command received from the webclient");
-        QStringList parameters = downloadRequest.capturedTexts();
-        if(parameters.size() == 2)
-        {
-            QString handle = parameters[1];
-            MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
-            MegaNode *node = megaApi->getNodeByHandle(h);
-            if(!node)
-            {
-                if(!megaApi->isLoggedIn())
-                {
-                    response = QString::fromUtf8("-11");
-                }
-                else
-                {
-                    response = QString::fromUtf8("-9");
-                }
-            }
-            else
-            {
-                emit onDownloadRequested(h);
-                response = QString::fromUtf8("0");
-                delete node;
             }
         }
     }
