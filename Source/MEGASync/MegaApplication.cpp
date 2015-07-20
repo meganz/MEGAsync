@@ -868,7 +868,6 @@ void MegaApplication::loggedIn()
     //Start the HTTP server
     httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
     connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onDownloadRequested(long long)), this, SLOT(internalDownload(long long)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
     connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
