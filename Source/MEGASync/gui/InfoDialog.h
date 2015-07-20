@@ -79,6 +79,8 @@ private slots:
 
     void regenerateLayout();
 
+    void loginAction();
+
 #ifdef __APPLE__
     void on_cRecentlyUpdated_stateChanged(int arg1);
     void showRecentList();

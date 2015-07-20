@@ -146,7 +146,3 @@ unix:!macx {
                 $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui
 }
-
-FORMS += \
-    $$PWD/linux/GuestWidget.ui \
-    $$PWD/win/GuestWidget.ui
