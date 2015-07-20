@@ -168,6 +168,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 
     if(request->data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
         char *myHandle = megaApi->getMyUserHandle();
         if(!myHandle)
         {
@@ -183,6 +184,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
     }
     else if(openLinkRequest.exactMatch(request->data))
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "OpenLink command received from the webclient");
         QStringList parameters = openLinkRequest.capturedTexts();
         if(parameters.size() == 3)
         {
@@ -198,62 +200,65 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
     }
     else if (downloadRequest.exactMatch(request->data))
     {
-         QStringList parameters = downloadRequest.capturedTexts();
-         if(parameters.size() == 2)
-         {
-             QString handle = parameters[1];
-             MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
-             MegaNode *node = megaApi->getNodeByHandle(h);
-             if(!node)
-             {
-                 if(!megaApi->isLoggedIn())
-                 {
-                     response = QString::fromUtf8("-11");
-                 }
-                 else
-                 {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "DownloadNode command received from the webclient");
+        QStringList parameters = downloadRequest.capturedTexts();
+        if(parameters.size() == 2)
+        {
+            QString handle = parameters[1];
+            MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
+            MegaNode *node = megaApi->getNodeByHandle(h);
+            if(!node)
+            {
+                if(!megaApi->isLoggedIn())
+                {
+                    response = QString::fromUtf8("-11");
+                }
+                else
+                {
                     response = QString::fromUtf8("-9");
-                 }
-             }
-             else
-             {
-                 emit onDownloadRequested(h);
-                 response = QString::fromUtf8("0");
-                 delete node;
-             }
-         }
+                }
+            }
+            else
+            {
+                emit onDownloadRequested(h);
+                response = QString::fromUtf8("0");
+                delete node;
+            }
+        }
     }
     else if (syncRequest.exactMatch(request->data))
     {
-         QStringList parameters = syncRequest.capturedTexts();
-         if(parameters.size() == 2)
-         {
-             QString handle = parameters[1];
-             MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
-             MegaNode *node = megaApi->getNodeByHandle(h);
-             if(!node)
-             {
-                 if(!megaApi->isLoggedIn())
-                 {
-                     response = QString::fromUtf8("-11");
-                 }
-                 else
-                 {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "SyncFolder command received from the webclient");
+        QStringList parameters = syncRequest.capturedTexts();
+        if(parameters.size() == 2)
+        {
+            QString handle = parameters[1];
+            MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
+            MegaNode *node = megaApi->getNodeByHandle(h);
+            if(!node)
+            {
+                if(!megaApi->isLoggedIn())
+                {
+                    response = QString::fromUtf8("-11");
+                }
+                else
+                {
                     response = QString::fromUtf8("-9");
-                 }
-             }
-             else if(node->getType() == MegaNode::TYPE_FOLDER
-                     || node->getType() == MegaNode::TYPE_ROOT
-                     || node->getType() == MegaNode::TYPE_INCOMING)
-             {
-                 emit onSyncRequested(h);
-                 response = QString::fromUtf8("0");
-                 delete node;
-             }
-         }
+                }
+            }
+            else if(node->getType() == MegaNode::TYPE_FOLDER
+                 || node->getType() == MegaNode::TYPE_ROOT
+                 || node->getType() == MegaNode::TYPE_INCOMING)
+            {
+                emit onSyncRequested(h);
+                response = QString::fromUtf8("0");
+                delete node;
+            }
+        }
     }
     else if(request->data.startsWith(externalDownloadRequestStart))
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownload command received from the webclient");
         int start = request->data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
         if(start > 0)
         {
@@ -384,6 +389,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 
     if(!response.size())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request->data).toUtf8().constData());
         response = QString::fromUtf8("-2");
     }
 
