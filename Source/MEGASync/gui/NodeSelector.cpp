@@ -61,6 +61,10 @@ void NodeSelector::nodesReady()
 
     ui->tMegaFolders->collapseAll();
     ui->tMegaFolders->header()->close();
+//Disable animation for OS X due to problems showing the tree icons
+#ifdef __APPLE__
+    ui->tMegaFolders->setAnimated(false);
+#endif
 
     QModelIndex defaultSelection = model->index(0, 0);
     ui->tMegaFolders->selectionModel()->select(defaultSelection, QItemSelectionModel::ClearAndSelect);
