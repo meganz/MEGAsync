@@ -24,9 +24,9 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2015"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "2.1.1.0"
-VIAddVersionKey "FileVersion" "2.1.1.0"
-VIAddVersionKey "ProductVersion" "2.1.1.0"
+VIProductVersion "2.1.1.1"
+VIAddVersionKey "FileVersion" "2.1.1.1"
+VIAddVersionKey "ProductVersion" "2.1.1.1"
 !define PRODUCT_VERSION "2.1.1"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
