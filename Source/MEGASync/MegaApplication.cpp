@@ -1392,6 +1392,19 @@ void MegaApplication::showInfoDialog()
             if(isLinux) unityFix();
 
             infoDialog->move(posx, posy);
+
+            #ifdef __APPLE__
+                QPoint positionTrayIcon = trayIcon->getPosition();
+                QPoint globalCoordinates(positionTrayIcon.x() + trayIcon->geometry().width()/2, posy);
+
+                //Work-Around to paint the arrow correctly
+                infoDialog->show();
+                QPixmap px = QPixmap::grabWidget(infoDialog);
+                infoDialog->hide();
+                QPoint localCoordinates = infoDialog->mapFromGlobal(globalCoordinates);
+                infoDialog->moveArrow(localCoordinates);
+            #endif
+
             infoDialog->show();
             infoDialog->setFocus();
             infoDialog->raise();
@@ -1426,7 +1439,15 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     #ifdef __APPLE__
         if(positionTrayIcon.x() || positionTrayIcon.y())
         {
-            *posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - dialog->width()/2 - 1;
+            if((positionTrayIcon.x()+dialog->width()/2) > screenGeometry.right())
+            {
+                *posx = screenGeometry.right() - dialog->width() - 1;
+            }
+            else
+            {
+                *posx = positionTrayIcon.x() + trayIcon->geometry().width()/2 - dialog->width()/2 - 1;
+            }
+
         }
         else
         {

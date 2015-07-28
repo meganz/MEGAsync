@@ -86,6 +86,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
 
+#ifdef __APPLE__
+    arrow = new QPushButton(this);
+    arrow->setIcon(QIcon(QString::fromAscii("://images/top_arrow.png")));
+    arrow->setIconSize(QSize(22,11));
+    arrow->setStyleSheet(QString::fromAscii("border: none; padding-bottom: -1px; "));
+    arrow->resize(22,11);
+    arrow->hide();
+#endif
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
@@ -950,6 +958,14 @@ void InfoDialog::addSync(MegaHandle h)
    updateSyncsButton();
 }
 
+#ifdef __APPLE__
+void InfoDialog::moveArrow(QPoint p)
+{
+    arrow->move(p.x()-(arrow->width()/2+1), 2);
+    arrow->show();
+}
+#endif
+
 void InfoDialog::on_bPause_clicked()
 {
     app->pauseTransfers(ui->bPause->isChecked());
@@ -993,6 +1009,20 @@ void InfoDialog::scanningAnimationStep()
 }
 
 #ifdef __APPLE__
+void InfoDialog::paintEvent( QPaintEvent * e)
+{
+    QPainter p( this );
+    p.setCompositionMode( QPainter::CompositionMode_Clear);
+    p.fillRect( ui->wArrow->rect(), Qt::transparent );
+    ui->wArrow->update();
+}
+
+void InfoDialog::hideEvent(QHideEvent *event)
+{
+    event->accept();
+    arrow->hide();
+}
+
 void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
 {
     ui->wRecent1->hide();
