@@ -26,12 +26,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#InfoDialog
-{
-background: transparent;
-}
-
-QPushButton
+   <string notr="true">QPushButton
 {
     border: none;
 }
@@ -201,29 +196,21 @@ padding-left: 1px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QToolButton" name="toolButton">
+    <widget class="QWidget" name="wArrow" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="styleSheet">
-      <string notr="true">border: none;
-padding-bottom: -1px;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../Resources_macx.qrc">
-       <normaloff>:/images/top_arrow.png</normaloff>:/images/top_arrow.png</iconset>
-     </property>
-     <property name="iconSize">
+     <property name="minimumSize">
       <size>
-       <width>22</width>
-       <height>11</height>
+       <width>400</width>
+       <height>13</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
     </widget>
    </item>
@@ -1089,7 +1076,7 @@ background-color: #F7F7F7;
      </layout>
     </widget>
    </item>
-   <item alignment="Qt::AlignVCenter">
+   <item>
     <widget class="QWidget" name="wUsage" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
