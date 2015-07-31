@@ -15,12 +15,12 @@ MegaDownloader::~MegaDownloader()
 
 }
 
-void MegaDownloader::download(MegaNode *parent, QString path)
+void MegaDownloader::download(MegaNode *parent, QString path, MegaApi *apiLinks)
 {
-    return download(parent, QFileInfo(path));
+    return download(parent, QFileInfo(path), apiLinks);
 }
 
-void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path)
+void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, MegaApi *megaApiLinks)
 {
     QDir dir(path);
     if(!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
@@ -44,13 +44,13 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
             currentPath = path;
         }
 
-        download(node, currentPath);
+        download(node, currentPath, node->isPublic() ? megaApiLinks : NULL);
         delete node;
     }
     pathMap.clear();
 }
 
-void MegaDownloader::download(MegaNode *parent, QFileInfo info)
+void MegaDownloader::download(MegaNode *parent, QFileInfo info, MegaApi *apiLinks)
 {
     QApplication::processEvents();
 
@@ -81,7 +81,14 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             delete [] fpRemote;
         }
 
-        megaApi->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
+        if(apiLinks)
+        {
+            apiLinks->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
+        }
+        else
+        {
+            megaApi->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
+        }
     }
     else
     {

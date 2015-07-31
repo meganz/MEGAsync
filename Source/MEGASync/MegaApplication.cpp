@@ -348,6 +348,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
     megaApi = NULL;
+    megaApiLinks = NULL;
+    delegateListener = NULL;
+    delegateLinksListener = NULL;
     httpServer = NULL;
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
@@ -401,7 +404,7 @@ MegaApplication::~MegaApplication()
 
 void MegaApplication::initialize()
 {
-    if(megaApi != NULL) return;
+    if(megaApi != NULL || megaApiLinks != NULL) return;
 
     paused = false;
     indexing = false;
@@ -439,12 +442,16 @@ void MegaApplication::initialize()
 
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApiLinks = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
+    megaApiLinks = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
+    delegateLinksListener = new MEGASyncDelegateListener(megaApiLinks, this);
+    megaApiLinks->addListener(delegateLinksListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
     scanningTimer = new QTimer();
@@ -677,7 +684,8 @@ void MegaApplication::updateTrayIcon()
             trayIcon->setToolTip(tooltip);
         }
     }
-    else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads())
+    else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads()
+            || megaApiLinks->getNumPendingUploads() || megaApiLinks->getNumPendingDownloads())
     {
         QString tooltip;
         if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
@@ -1406,7 +1414,9 @@ void MegaApplication::cleanAll()
     closeDialogs();
     delete uploader;
     delete delegateListener;
+    delete delegateLinksListener;
     delete megaApi;
+    delete megaApiLinks;
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
@@ -1936,6 +1946,7 @@ void MegaApplication::applyProxySettings()
     }
 
     megaApi->setProxySettings(proxySettings);
+    megaApiLinks->setProxySettings(proxySettings);
     delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
 }
@@ -2097,10 +2108,10 @@ void MegaApplication::importLinks()
     pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
-	LinkProcessor *linkProcessor = new LinkProcessor(megaApi, linkList);
+    LinkProcessor *linkProcessor = new LinkProcessor(megaApiLinks, linkList);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor, guestModeEnabled);
+    importDialog = new ImportMegaLinksDialog(megaApiLinks, preferences, linkProcessor, guestModeEnabled);
     importDialog->exec();
     if(!importDialog)
     {
@@ -2469,7 +2480,7 @@ void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
 void MegaApplication::externalDownload(QString megaLink)
 {
     pendingLinks.append(megaLink);
-    megaApi->getPublicNode(megaLink.toUtf8().constData());
+    megaApiLinks->getPublicNode(megaLink.toUtf8().constData());
 }
 
 void MegaApplication::internalDownload(long long handle)
@@ -3798,11 +3809,13 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     {
         if(((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
             ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
+        {
             infoDialog->setTransfer(transfer);
+            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
+            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
+            infoDialog->updateTransfers();
+        }
 
-        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-        infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-        infoDialog->updateTransfers();
     }
 }
 
@@ -3975,10 +3988,10 @@ void MegaApplication::onReloadNeeded(MegaApi*)
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 {
-    if(megaApi)
+    if(megaApi && megaApiLinks)
     {
-        indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting();
+        indexing = megaApi->isScanning() || megaApiLinks->isScanning();
+        waiting = megaApi->isWaiting() || megaApiLinks->isWaiting();
     }
 
     if(infoDialog)
@@ -3995,7 +4008,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
                  .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
 
     int pendingUploads = megaApi->getNumPendingUploads();
-    int pendingDownloads = megaApi->getNumPendingDownloads();
+    int pendingDownloads = megaApi->getNumPendingDownloads() + megaApiLinks->getNumPendingDownloads();
     if(pendingUploads)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
