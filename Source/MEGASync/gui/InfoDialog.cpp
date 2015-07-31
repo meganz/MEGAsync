@@ -68,6 +68,7 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     ui->wTransfer2->hideTransfer();
 
     megaApi = app->getMegaApi();
+    megaApiLinks = app->getMegaApiLinks();
     preferences = Preferences::instance();
     scanningTimer.setSingleShot(false);
     scanningTimer.setInterval(60);
@@ -174,6 +175,8 @@ void InfoDialog::init()
     waiting = false;
     megaApi->resetTotalDownloads();
     megaApi->resetTotalUploads();
+    megaApiLinks->resetTotalDownloads();
+    megaApiLinks->resetTotalUploads();
 }
 
 InfoDialog::~InfoDialog()
@@ -258,10 +261,10 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
 
 void InfoDialog::updateTransfers()
 {
-    remainingUploads = megaApi->getNumPendingUploads();
-    remainingDownloads = megaApi->getNumPendingDownloads();
-    totalUploads = megaApi->getTotalUploads();
-    totalDownloads = megaApi->getTotalDownloads();
+    remainingUploads = megaApi->getNumPendingUploads() + megaApiLinks->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads() + megaApiLinks->getNumPendingDownloads();
+    totalUploads = megaApi->getTotalUploads() + megaApiLinks->getTotalUploads();
+    totalDownloads = megaApi->getTotalDownloads() + megaApiLinks->getTotalDownloads();
 
     if(totalUploads < remainingUploads) totalUploads = remainingUploads;
     if(totalDownloads < remainingDownloads) totalDownloads = remainingDownloads;
@@ -773,26 +776,30 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 void InfoDialog::cancelAllUploads()
 {
     megaApi->cancelTransfers(1);
+    megaApiLinks->cancelTransfers(1);
 }
 
 void InfoDialog::cancelAllDownloads()
 {
     megaApi->cancelTransfers(0);
+    megaApiLinks->cancelTransfers(0);
 }
 
 void InfoDialog::cancelCurrentUpload()
 {
     megaApi->cancelTransfer(transfer2);
+    megaApiLinks->cancelTransfer(transfer2);
 }
 
 void InfoDialog::cancelCurrentDownload()
 {
     megaApi->cancelTransfer(transfer1);
+    megaApiLinks->cancelTransfer(transfer1);
 }
 
 void InfoDialog::onAllUploadsFinished()
 {
-    remainingUploads = megaApi->getNumPendingUploads();
+    remainingUploads = megaApi->getNumPendingUploads() + megaApiLinks->getNumPendingUploads();
     if(!remainingUploads)
     {
         ui->wTransfer2->hideTransfer();
@@ -805,12 +812,13 @@ void InfoDialog::onAllUploadsFinished()
         totalUploadedSize = 0;
         totalUploadSize = 0;
         megaApi->resetTotalUploads();
+        megaApiLinks->resetTotalUploads();
     }
 }
 
 void InfoDialog::onAllDownloadsFinished()
 {
-    remainingDownloads = megaApi->getNumPendingDownloads();
+    remainingDownloads = megaApi->getNumPendingDownloads() + megaApiLinks->getNumPendingDownloads();
     if(!remainingDownloads)
     {
         if(guestMode)
@@ -832,6 +840,7 @@ void InfoDialog::onAllDownloadsFinished()
         totalDownloadedSize = 0;
         totalDownloadSize = 0;
         megaApi->resetTotalDownloads();
+        megaApiLinks->resetTotalDownloads();
     }
 }
 

@@ -75,6 +75,7 @@ public:
 
 
     mega::MegaApi *getMegaApi() { return megaApi; }
+    mega::MegaApi *getMegaApiLinks() { return megaApiLinks; }
 
     void unlink();
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
@@ -210,6 +211,7 @@ protected:
     InfoOverQuotaDialog *infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiLinks;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
@@ -224,6 +226,7 @@ protected:
     int exportOps;
     int syncState;
     mega::QTMegaListener *delegateListener;
+    mega::QTMegaListener *delegateLinksListener;
 	QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     MegaDownloader *downloader;
