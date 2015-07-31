@@ -74,12 +74,14 @@ void GuestWidget::setIdleState(bool state)
         ui->wActiveDownload->hide();
         ui->wDownloadDesc->hide();
         overlayIdle->setVisible(true);
+        ui->wDownload->setVisible(false);
     }
     else
     {
         ui->wActiveDownload->show();
         ui->wDownloadDesc->show();
         overlayIdle->setVisible(false);
+        ui->wDownload->setVisible(true);
     }
 }
 

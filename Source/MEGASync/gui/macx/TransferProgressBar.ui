@@ -97,7 +97,8 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border: none;
-border-left: 1px solid #F7F7F7;</string>
+border-left: 1px solid #F7F7F7;
+background-color: none;</string>
    </property>
    <property name="text">
     <string/>
