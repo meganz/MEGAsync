@@ -491,7 +491,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="obsolete"></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -512,10 +512,6 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translation type="unfinished">[$1608]</translation>
-    </message>
-    <message>
-        <source>Your account has exceeded its allowed space quota. [A]Upgrade[/A] and keep enjoying secure, end-to-end encrypted storage.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -914,6 +910,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error: Invalid destination folder. The download has been cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1096,7 +1096,7 @@ Are you sure?</source>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation>[$1683]...</translation>
+        <translation type="obsolete">[$1683]...</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -1116,7 +1116,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation>[$1687]</translation>
+        <translation type="obsolete">[$1687]</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1163,6 +1163,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter a valid folder name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1476,7 +1480,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation>[$1742]</translation>
+        <translation type="obsolete">[$1742]</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
@@ -1830,6 +1834,10 @@ when the application starts again</source>
     </message>
     <message>
         <source>Remote cache: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excluded file and folder names</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
