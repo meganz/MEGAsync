@@ -787,14 +787,26 @@ void InfoDialog::cancelAllDownloads()
 
 void InfoDialog::cancelCurrentUpload()
 {
-    megaApi->cancelTransfer(transfer2);
-    megaApiLinks->cancelTransfer(transfer2);
+    if(transfer2->getPublicMegaNode())
+    {
+        megaApiLinks->cancelTransfer(transfer2);
+    }
+    else
+    {
+        megaApi->cancelTransfer(transfer2);
+    }
 }
 
 void InfoDialog::cancelCurrentDownload()
 {
-    megaApi->cancelTransfer(transfer1);
-    megaApiLinks->cancelTransfer(transfer1);
+    if(transfer1->getPublicMegaNode())
+    {
+        megaApiLinks->cancelTransfer(transfer1);
+    }
+    else
+    {
+        megaApi->cancelTransfer(transfer1);
+    }
 }
 
 void InfoDialog::onAllUploadsFinished()
