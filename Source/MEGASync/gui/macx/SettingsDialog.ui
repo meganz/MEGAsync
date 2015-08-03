@@ -2577,7 +2577,7 @@ background:transparent;</string>
              <string notr="true">padding-left: -1px;</string>
             </property>
             <property name="text">
-             <string>Excluded file names</string>
+             <string>Excluded file and folder names</string>
             </property>
             <property name="indent">
              <number>6</number>

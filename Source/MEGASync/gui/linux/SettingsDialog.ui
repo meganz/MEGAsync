@@ -2606,7 +2606,7 @@ background:transparent;</string>
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Excluded file names</string>
+             <string>Excluded file and folder names</string>
             </property>
             <property name="indent">
              <number>0</number>
