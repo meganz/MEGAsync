@@ -239,7 +239,7 @@ public:
     static const qint16 HTTPS_PORT;
     static const QString HTTPS_KEY;
     static const QString HTTPS_CERT;
-    static const QString HTTPS_ALLOWED_ORIGIN;
+    static QStringList HTTPS_ALLOWED_ORIGINS;
 
 protected:
 

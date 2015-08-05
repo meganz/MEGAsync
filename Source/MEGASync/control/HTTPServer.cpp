@@ -94,10 +94,20 @@ void HTTPServer::readClient()
             return;
         }
 
-        if(Preferences::HTTPS_ALLOWED_ORIGIN != QString::fromUtf8("*"))
+        if(!Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
         {
-            QStringList result = headers.filter(QRegExp(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGIN), Qt::CaseInsensitive));
-            if(!result.size())
+            bool found = false;
+            for (int i = 0; i< Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
+            {
+                QStringList result = headers.filter(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i)), Qt::CaseInsensitive);
+                if(result.size())
+                {
+                   found = true;
+                   request->origin = i;
+                }
+            }
+
+            if(!found)
             {
                 rejectRequest(socket);
                 return;
@@ -369,7 +379,10 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
         "Content-Type: text/html; charset=\"utf-8\"\r\n"
         "Content-Length: %2\r\n"
         "\r\n"
-        "%3").arg(Preferences::HTTPS_ALLOWED_ORIGIN).arg(response.size()).arg(response).toUtf8());
+        "%3").arg(Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty() ?
+                      QString::fromUtf8("*") :
+                      Preferences::HTTPS_ALLOWED_ORIGINS.at(request->origin))
+                  .arg(response.size()).arg(response).toUtf8());
 
     socket->flush();
     socket->disconnectFromHost();

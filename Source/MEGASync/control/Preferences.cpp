@@ -95,7 +95,7 @@ const QString Preferences::HTTPS_CERT = QString::fromUtf8(
             "-----END CERTIFICATE-----\n"
             );
 
-const QString Preferences::HTTPS_ALLOWED_ORIGIN = QString::fromUtf8("https://mega.nz");
+QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
@@ -208,7 +208,15 @@ Preferences *Preferences::preferences = NULL;
 
 Preferences *Preferences::instance()
 {
-    if(!preferences) preferences = new Preferences();
+    if(!preferences)
+    {
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.nz"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.co.nz"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://kpgogfgfingilcbkpahnggpfdabapnol"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://bigefpfhnfcobdlfbedofhhaibnlghod"));
+
+        preferences = new Preferences();
+    }
     return Preferences::preferences;
 }
 
