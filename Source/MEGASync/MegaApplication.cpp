@@ -1289,6 +1289,10 @@ void MegaApplication::cleanAll()
 {
     appfinished = true;
 
+#ifndef DEBUG
+    CrashHandler::instance()->Disable();
+#endif
+
     qInstallMsgHandler(0);
 #if QT_VERSION >= 0x050000
     qInstallMessageHandler(0);

@@ -459,3 +459,8 @@ void CrashHandler::Init( const QString& reportPath )
     d->InitCrashHandler(reportPath);
 }
 
+void CrashHandler::Disable()
+{
+    delete d;
+    d = NULL;
+}

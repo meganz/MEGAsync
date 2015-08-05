@@ -19,6 +19,7 @@ public:
     static CrashHandler* instance();
     static void tryReboot();
     void Init(const QString&  reportPath);
+    void Disable();
     void setReportCrashesToSystem(bool report);
     bool writeMinidump();
 
