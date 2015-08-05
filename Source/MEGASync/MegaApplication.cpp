@@ -149,6 +149,12 @@ int main(int argc, char *argv[])
 
         //QDir dataDir(dataPath);
         //Utilities::removeRecursively(dataDir);
+
+#ifdef WIN32
+        MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
+        megaApi->sendEvent(99504, "MEGAsync uninstall");
+        Sleep(5000);
+#endif
         return 0;
     }
 
@@ -757,6 +763,9 @@ void MegaApplication::start()
     if(updated)
     {
         showInfoMessage(tr("MEGAsync has been updated"));
+        preferences->setFirstSyncDone();
+        preferences->setFirstFileSynced();
+        preferences->setFirstWebDownloadDone();
     }
 
     if(enableDebug)
@@ -770,6 +779,11 @@ void MegaApplication::start()
     //Start the initial setup wizard if needed
     if(!preferences->logged())
     {
+        if(!preferences->isFirstStartDone())
+        {
+            megaApi->sendEvent(99500, "MEGAsync first start");
+        }
+
         updated = false;
         setupWizard = new SetupWizard(this);
         setupWizard->setModal(false);
@@ -2983,6 +2997,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
             }
 
+            preferences->setFirstStartDone();
             start();
         }
         break;
@@ -3195,6 +3210,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 else
                 {
                     preferences->setLocalFingerprint(i, request->getNumber());
+                    if(!preferences->isFirstSyncDone())
+                    {
+                        megaApi->sendEvent(99501, "MEGAsync first sync");
+                    }
                 }
                 break;
             }
@@ -3247,6 +3266,26 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
         break;
+    }
+    case MegaRequest::TYPE_SEND_EVENT:
+    {
+        switch (request->getNumber())
+        {
+            case 99500:
+                preferences->setFirstStartDone();
+                break;
+            case 99501:
+                preferences->setFirstSyncDone();
+                break;
+            case 99502:
+                preferences->setFirstFileSynced();
+                break;
+            case 99503:
+                preferences->setFirstWebDownloadDone();
+                break;
+            default:
+                break;
+        }
     }
     default:
         break;
@@ -3327,6 +3366,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
+    }
+
+    if(e->getErrorCode() == MegaError::API_OK
+            && transfer->isSyncTransfer()
+            && !preferences->isFirstFileSynced())
+    {
+        megaApi->sendEvent(99502, "MEGAsync first synced file");
     }
 
 	//Update statics

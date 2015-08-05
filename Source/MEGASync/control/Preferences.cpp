@@ -181,6 +181,10 @@ const QString Preferences::lastRebootKey            = QString::fromAscii("lastRe
 const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
 const QString Preferences::sessionKey               = QString::fromAscii("session");
+const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
+const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
+const QString Preferences::firstFileSyncedKey       = QString::fromAscii("firstFileSynced");
+const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstWebclientDownload");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1037,6 +1041,70 @@ long long Preferences::lastExecutionTime()
     long long value = settings->value(lastExecutionTimeKey, 0).toLongLong();
     mutex.unlock();
     return value;
+}
+
+bool Preferences::isFirstStartDone()
+{
+    mutex.lock();
+    bool value = settings->value(firstStartDoneKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFirstStartDone(bool value)
+{
+    mutex.lock();
+    settings->setValue(firstStartDoneKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::isFirstSyncDone()
+{
+    mutex.lock();
+    bool value = settings->value(firstSyncDoneKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFirstSyncDone(bool value)
+{
+    mutex.lock();
+    settings->setValue(firstSyncDoneKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::isFirstFileSynced()
+{
+    mutex.lock();
+    bool value = settings->value(firstFileSyncedKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFirstFileSynced(bool value)
+{
+    mutex.lock();
+    settings->setValue(firstFileSyncedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::isFirstWebDownloadDone()
+{
+    mutex.lock();
+    bool value = settings->value(firstWebDownloadKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFirstWebDownloadDone(bool value)
+{
+    mutex.lock();
+    settings->setValue(firstWebDownloadKey, value);
+    settings->sync();
+    mutex.unlock();
 }
 
 void Preferences::setLastExecutionTime(qint64 time)
