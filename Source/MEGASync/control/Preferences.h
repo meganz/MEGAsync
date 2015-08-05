@@ -118,6 +118,14 @@ public:
     QString proxyHostAndPort();
     long long lastExecutionTime();
     void setLastExecutionTime(long long time);
+    bool isFirstStartDone();
+    void setFirstStartDone(bool value = true);
+    bool isFirstSyncDone();
+    void setFirstSyncDone(bool value = true);
+    bool isFirstFileSynced();
+    void setFirstFileSynced(bool value = true);
+    bool isFirstWebDownloadDone();
+    void setFirstWebDownloadDone(bool value = true);
 
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
@@ -333,6 +341,10 @@ protected:
     static const QString lastExitKey;
     static const QString disableOverlayIconsKey;
     static const QString sessionKey;
+    static const QString firstStartDoneKey;
+    static const QString firstSyncDoneKey;
+    static const QString firstFileSyncedKey;
+    static const QString firstWebDownloadKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

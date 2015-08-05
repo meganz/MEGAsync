@@ -204,6 +204,11 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                 QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
                 emit onLinkReceived(link);
                 response = QString::fromUtf8("0");
+
+                if(!Preferences::instance()->isFirstWebDownloadDone())
+                {
+                    megaApi->sendEvent(99503, "MEGAsync first webclient download");
+                }
             }
         }
     }
