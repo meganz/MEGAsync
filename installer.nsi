@@ -24,9 +24,9 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2015"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "2.1.1.1"
-VIAddVersionKey "FileVersion" "2.1.1.1"
-VIAddVersionKey "ProductVersion" "2.1.1.1"
+VIProductVersion "2.1.1.3"
+VIAddVersionKey "FileVersion" "2.1.1.3"
+VIAddVersionKey "ProductVersion" "2.1.1.3"
 !define PRODUCT_VERSION "2.1.1"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
@@ -41,7 +41,7 @@ VIAddVersionKey "ProductVersion" "2.1.1.1"
 
 ; To be defined depending on your working environment
 !ifndef ENABLE_QT5
-!define QT_PATH "C:\Qt\4.8.6\"
+!define QT_PATH "C:\Qt\4.8.6.0\"
 !else
 !define QT_PATH "C:\Qt\Qt5.5.0\5.5\msvc2010"
 !endif
