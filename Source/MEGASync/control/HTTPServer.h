@@ -17,6 +17,7 @@ public:
     HTTPRequest() : contentLength(0) {}
     QString data;
     int contentLength;
+    int origin;
 };
 
 class HTTPServer: public QTcpServer
