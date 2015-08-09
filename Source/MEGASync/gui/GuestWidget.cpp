@@ -15,8 +15,6 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->wActiveDownload->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wActiveDownload->hideTransfer();
     connect(ui->wActiveDownload, SIGNAL(cancel(int, int)), this, SLOT(onTransferCancel(int, int)));
-    connect(ui->bLogin, SIGNAL(clicked()), this, SIGNAL(loginButtonClicked()));
-    connect(ui->bCreateAccount, SIGNAL(clicked()), this, SIGNAL(loginButtonClicked()));
 
     overlayIdle = new QPushButton(this);
     overlayIdle->setIcon(QIcon(QString::fromAscii("://images/non_logged_graphic.png")));
@@ -134,4 +132,14 @@ void GuestWidget::onTransferCancel(int x, int y)
     transferMenu->popup(ui->wActiveDownload->mapToGlobal(QPoint(x, y)));
 #endif
 
+}
+
+void GuestWidget::on_bLogin_clicked()
+{
+    emit actionButtonClicked(LOGIN_CLICKED);
+}
+
+void GuestWidget::on_bCreateAccount_clicked()
+{
+    emit actionButtonClicked(CREATE_ACCOUNT_CLICKED);
 }

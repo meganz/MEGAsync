@@ -23,6 +23,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 
     ui->sPages->setCurrentWidget(ui->pSetup);
     ui->bBack->setVisible(false);
+    ui->bSkip->setVisible(false);
     this->app = app;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
@@ -53,8 +54,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 		{
 			ui->bBack->setEnabled(true);
 			ui->bNext->setEnabled(true);
-            ui->bSkip->setEnabled(true);
-			if(error->getErrorCode() == MegaError::API_OK)
+            if(error->getErrorCode() == MegaError::API_OK)
 			{
 				ui->sPages->setCurrentWidget(ui->pLogin);
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
@@ -102,6 +102,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 {
                     ui->bBack->setEnabled(true);
                     ui->bNext->setEnabled(true);
+                    ui->bSkip->setVisible(true);
                     ui->bSkip->setEnabled(true);
                     ui->sPages->setCurrentWidget(ui->pLogin);
                     QMessageBox::warning(this, tr("Error"), tr("Error getting session key"), QMessageBox::Ok);
@@ -208,6 +209,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
                 ui->bBack->setEnabled(true);
                 ui->bNext->setEnabled(true);
+                ui->bSkip->setVisible(true);
                 ui->bSkip->setEnabled(true);
                 ui->sPages->setCurrentWidget(ui->pSetupType);
             }
@@ -227,6 +229,24 @@ void SetupWizard::onRequestUpdate(MegaApi *api, MegaRequest *request)
             ui->progressBar->setValue(request->getTransferredBytes());
         }
     }
+}
+
+void SetupWizard::goToStep(int page)
+{
+    switch(page)
+    {
+        case PAGE_LOGIN:
+            ui->sPages->setCurrentWidget(ui->pLogin);
+            break;
+
+        case PAGE_NEW_ACCOUNT:
+            ui->sPages->setCurrentWidget(ui->pNewAccount);
+            break;
+
+        default:
+            return;
+    }
+    ui->bBack->setVisible(true);
 }
 
 
@@ -500,7 +520,6 @@ void SetupWizard::on_bCancel_clicked()
         }
         if(button == QMessageBox::Yes)
         {
-            finished(0);
             close();
         }
     }
