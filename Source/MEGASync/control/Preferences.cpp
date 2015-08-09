@@ -17,6 +17,24 @@ const int Preferences::BUILD_ID = 3;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.1.1");
 const QString Preferences::SDK_ID = QString::fromAscii("79a7e");
+const QString Preferences::CHANGELOG = QString::fromUtf8(
+            "New in this version:\n\n"
+            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries\n"
+            "- List of allowed origins for webclient communications\n"
+            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)\n"
+            "- Report events for new installations\n"
+            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries\n"
+            "- List of allowed origins for webclient communications\n"
+            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)\n"
+            "- Report events for new installations\n"
+            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries\n"
+            "- List of allowed origins for webclient communications\n"
+            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)\n"
+            "- Report events for new installations\n"
+            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries\n"
+            "- List of allowed origins for webclient communications\n"
+            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)\n"
+            "- Report events for new installations\n");
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
