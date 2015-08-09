@@ -835,7 +835,7 @@ void MegaApplication::start()
     applyProxySettings();
 
     //Start the initial setup wizard if needed
-    if(!preferences->logged() && !preferences->guestModeEnabled())
+    if(!preferences->logged())
     {
         if(!preferences->installationTime())
         {
@@ -848,10 +848,9 @@ void MegaApplication::start()
         }
 
         updated = false;
-        setupWizard = new SetupWizard(this);
-        setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-        setupWizard->show();
+        //preferences->setGuestModeEnabled(true);
+        guestModeEnabled = true;
+        guestMode();
         return;
     }
 	else
@@ -887,17 +886,9 @@ void MegaApplication::start()
         }
         else
         {
-            if(preferences->guestModeEnabled())
-            {
-                guestModeEnabled = true;
-                guestMode();
-            }
-            else
-            {
                 megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
                        preferences->privatePw().toUtf8().constData());
-            }
         }
     }
 }
@@ -1728,9 +1719,9 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if(result == SetupWizard::SKIP_WIZARD_CODE)
         {
-            preferences->setGuestModeEnabled(true);
-            guestModeEnabled = true;
-            guestMode();
+            //preferences->setGuestModeEnabled(true);
+            //guestModeEnabled = true;
+            //guestMode();
             return;
         }
 
@@ -1746,6 +1737,10 @@ void MegaApplication::setupWizardFinished(int result)
         setupWizard->deleteLater();
         setupWizard = NULL;
     }
+
+    //preferences->setGuestModeEnabled(false);
+    guestModeEnabled = false;
+    infoDialog->setGuestMode(false);
 
     QStringList exclusions = preferences->getExcludedSyncNames();
     vector<string> vExclusions;
@@ -2282,16 +2277,37 @@ void MegaApplication::downloadActionClicked()
 
 void MegaApplication::loginActionClicked()
 {
-    if(preferences && preferences->guestModeEnabled())
+    onUserAction(GuestWidget::LOGIN_CLICKED);
+}
+
+void MegaApplication::onUserAction(int action)
+{
+    if(preferences && guestModeEnabled)
     {
         delete httpServer;
         httpServer = NULL;
         guestModeEnabled = false;
-        preferences->setGuestModeEnabled(false);
+        //preferences->setGuestModeEnabled(false);
         closeDialogs();
         refreshTrayIcon();
         start();
+
+        if(setupWizard)
+        {
+            setupWizard->setVisible(true);
+            setupWizard->raise();
+            setupWizard->activateWindow();
+            setupWizard->setFocus();
+            setupWizard->goToStep(action);
+            return;
+        }
+        setupWizard = new SetupWizard(this);
+        setupWizard->setModal(false);
+        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+        setupWizard->goToStep(action);
+        setupWizard->show();
     }
+
 }
 
 void MegaApplication::processDownloads()
@@ -3317,7 +3333,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 	}
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        if(!preferences->logged() || preferences->guestModeEnabled()) break;
+        if(!preferences->logged()) break;
 
 		if(e->getErrorCode() != MegaError::API_OK)
 			break;

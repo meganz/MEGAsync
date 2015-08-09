@@ -25,12 +25,18 @@ public:
     enum {
         SKIP_WIZARD_CODE = 100
     };
+    enum {
+        PAGE_LOGIN = 0,
+        PAGE_NEW_ACCOUNT = 1
+    };
 
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
     ~SetupWizard();
 
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
+
+    void goToStep(int page);
 
 private slots:
 

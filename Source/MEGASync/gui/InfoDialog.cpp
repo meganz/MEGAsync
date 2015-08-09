@@ -1109,7 +1109,7 @@ void InfoDialog::regenerateLayout()
         {
             gWidget = new GuestWidget();
 
-            connect(gWidget, SIGNAL(loginButtonClicked()), this, SLOT(loginAction()));
+            connect(gWidget, SIGNAL(actionButtonClicked(int)), this, SLOT(loginAction(int)));
             connect(gWidget, SIGNAL(cancelCurrentDownload()), this, SLOT(cancelCurrentDownload()));
             connect(gWidget, SIGNAL(cancelAllDownloads()), this, SLOT(cancelAllDownloads()));
             connect(gWidget, SIGNAL(pauseClicked()), this, SLOT(onOverlayClicked()));
@@ -1142,9 +1142,9 @@ void InfoDialog::regenerateLayout()
 
 }
 
-void InfoDialog::loginAction()
+void InfoDialog::loginAction(int action)
 {
-    app->loginActionClicked();
+    app->onUserAction(action);
 }
 void InfoDialog::scanningAnimationStep()
 {

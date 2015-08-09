@@ -15,6 +15,11 @@ class GuestWidget : public QWidget
     Q_OBJECT
 
 public:
+    enum {
+        LOGIN_CLICKED = 0,
+        CREATE_ACCOUNT_CLICKED = 1
+    };
+
     explicit GuestWidget(QWidget *parent = 0);
     ActiveTransfer* getTransfer();
     void setDownloadLabel(QString dString);
@@ -29,13 +34,17 @@ public:
     ~GuestWidget();
 
 signals:
-    void loginButtonClicked();
+    void actionButtonClicked(int button);
     void cancelCurrentDownload();
     void cancelAllDownloads();
     void pauseClicked();
 
 public slots:
     void onTransferCancel(int x, int y);
+
+private slots:
+    void on_bLogin_clicked();
+    void on_bCreateAccount_clicked();
 
 private:
     Ui::GuestWidget *ui;
