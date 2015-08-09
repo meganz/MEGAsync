@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChangeLogDialog</class>
+ <widget class="QDialog" name="ChangeLogDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>476</width>
+    <height>451</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#lPolicy, #lTerms
+{
+	color: red;
+}
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="topMargin">
+       <number>22</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lMEGAsync">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wVersionSDK" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>176</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="lVersion">
+        <property name="text">
+         <string>2.0.1</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lSDKVersion">
+        <property name="text">
+         <string>(SDK)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>176</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="ptChangelog">
+     <property name="styleSheet">
+      <string notr="true">background: white;
+padding-left: 10px;
+
+</string>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="plainText">
+      <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis diam sit amet arcu scelerisque, sit amet aliquet lacus finibus. Cras aliquet vel est et tincidunt. Pellentesque rhoncus ipsum in volutpat porttitor. Morbi ac congue elit, quis porttitor est. Maecenas quis ullamcorper dolor. Morbi eu molestie tellus. Fusce iaculis diam non velit sollicitudin, vitae scelerisque turpis ullamcorper. Vivamus molestie rhoncus felis, consequat vulputate est viverra ac. Etiam eget semper leo. Aenean quis neque sapien.
+
+Donec ultrices convallis risus ac pellentesque. Cras egestas tellus elementum auctor ullamcorper. Donec rutrum pharetra accumsan. Aliquam a lorem quis tortor elementum volutpat vitae quis arcu. Nam metus magna, mollis ut quam scelerisque, convallis pulvinar tortor. Phasellus imperdiet vitae elit ut accumsan. Mauris sagittis molestie suscipit. Morbi vitae erat fringilla, fringilla quam et, accumsan tortor. Nullam id erat ultricies magna accumsan pharetra. Curabitur quis volutpat eros, et maximus ante. Vestibulum ornare, ante congue tempor scelerisque, magna nibh dapibus augue, id luctus urna turpis nec neque. Cras auctor pretium urna. Quisque at magna nulla.
+
+Integer vel ante blandit, vehicula justo quis, tristique diam. Pellentesque nec purus sit amet tortor consequat consequat vel in ante. Morbi et mollis est, a varius arcu. Morbi eget facilisis metus. In varius, massa ac finibus pharetra, velit purus scelerisque velit, nec faucibus dolor enim id orci. Mauris nec commodo velit. Proin condimentum metus ultrices est congue lacinia. Sed sit amet ornare quam, sed elementum sem. Sed vestibulum ligula lorem, a ornare risus efficitur non.
+
+</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wTermsPolicy" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>52</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>82</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bTerms">
+        <property name="styleSheet">
+         <string notr="true">#bTerms
+{
+border: none;
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: red;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Terms of Service</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bPolicy">
+        <property name="styleSheet">
+         <string notr="true">#bPolicy
+{
+border: none;
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: red;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Privacy Policy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>83</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lCopyright">
+     <property name="text">
+      <string>&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../Resources_linux.qrc"/>
+ </resources>
+ <connections/>
+</ui>
