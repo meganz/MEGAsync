@@ -6,21 +6,62 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>476</width>
-    <height>451</height>
+    <width>360</width>
+    <height>366</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>360</width>
+    <height>366</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>360</width>
+    <height>366</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lPolicy, #lTerms
+   <string notr="true">#ChangeLogDialog
 {
-	color: red;
+border-radius: 5px;
 }
+#lVersion, #lSDKVersion
+{
+  font-family: &quot;Helvetica&quot;;
+  font-size: 11px;
+  color: #333333;
+}
+#lMEGAsync
+{
+  font-family: &quot;Helvetica-Bold&quot;;
+  font-size: 14px;
+  color: #333333;
+}
+#bPolicy, #bTerms
+{
+  font-family: &quot;Helvetica&quot;;
+  font-size: 11px;
+  color: #D90007;
+  border: none;
+}
+#lCopyright
+{
+  font-family: &quot;Helvetica&quot;;
+  font-size: 11px;
+  color: #666666;
+}
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -31,13 +72,28 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>12</number>
+    <number>8</number>
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>85</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>85</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="topMargin">
-       <number>22</number>
+       <number>27</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="pushButton">
@@ -64,6 +120,18 @@
    </item>
    <item>
     <widget class="QLabel" name="lMEGAsync">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -74,12 +142,21 @@
    </item>
    <item>
     <widget class="QWidget" name="wVersionSDK" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
        <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>8</number>
       </property>
       <item>
        <spacer name="horizontalSpacer_3">
@@ -125,10 +202,24 @@
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="ptChangelog">
+    <widget class="QTextEdit" name="tChangelog">
+     <property name="minimumSize">
+      <size>
+       <width>360</width>
+       <height>140</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>360</width>
+       <height>140</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background: white;
-padding-left: 10px;
+
+
+
 
 </string>
      </property>
@@ -141,31 +232,31 @@ padding-left: 10px;
      <property name="readOnly">
       <bool>true</bool>
      </property>
-     <property name="plainText">
-      <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin venenatis diam sit amet arcu scelerisque, sit amet aliquet lacus finibus. Cras aliquet vel est et tincidunt. Pellentesque rhoncus ipsum in volutpat porttitor. Morbi ac congue elit, quis porttitor est. Maecenas quis ullamcorper dolor. Morbi eu molestie tellus. Fusce iaculis diam non velit sollicitudin, vitae scelerisque turpis ullamcorper. Vivamus molestie rhoncus felis, consequat vulputate est viverra ac. Etiam eget semper leo. Aenean quis neque sapien.
-
-Donec ultrices convallis risus ac pellentesque. Cras egestas tellus elementum auctor ullamcorper. Donec rutrum pharetra accumsan. Aliquam a lorem quis tortor elementum volutpat vitae quis arcu. Nam metus magna, mollis ut quam scelerisque, convallis pulvinar tortor. Phasellus imperdiet vitae elit ut accumsan. Mauris sagittis molestie suscipit. Morbi vitae erat fringilla, fringilla quam et, accumsan tortor. Nullam id erat ultricies magna accumsan pharetra. Curabitur quis volutpat eros, et maximus ante. Vestibulum ornare, ante congue tempor scelerisque, magna nibh dapibus augue, id luctus urna turpis nec neque. Cras auctor pretium urna. Quisque at magna nulla.
-
-Integer vel ante blandit, vehicula justo quis, tristique diam. Pellentesque nec purus sit amet tortor consequat consequat vel in ante. Morbi et mollis est, a varius arcu. Morbi eget facilisis metus. In varius, massa ac finibus pharetra, velit purus scelerisque velit, nec faucibus dolor enim id orci. Mauris nec commodo velit. Proin condimentum metus ultrices est congue lacinia. Sed sit amet ornare quam, sed elementum sem. Sed vestibulum ligula lorem, a ornare risus efficitur non.
-
-</string>
-     </property>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="wTermsPolicy" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="spacing">
-       <number>52</number>
+       <number>34</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
       </property>
       <item>
        <spacer name="horizontalSpacer">
@@ -183,15 +274,7 @@ Integer vel ante blandit, vehicula justo quis, tristique diam. Pellentesque nec 
       <item>
        <widget class="QPushButton" name="bTerms">
         <property name="styleSheet">
-         <string notr="true">#bTerms
-{
-border: none;
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: red;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Terms of Service</string>
@@ -201,15 +284,7 @@ color: red;
       <item>
        <widget class="QPushButton" name="bPolicy">
         <property name="styleSheet">
-         <string notr="true">#bPolicy
-{
-border: none;
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: red;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Privacy Policy</string>
@@ -234,6 +309,12 @@ color: red;
    </item>
    <item>
     <widget class="QLabel" name="lCopyright">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
