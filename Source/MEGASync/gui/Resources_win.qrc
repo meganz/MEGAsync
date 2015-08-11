@@ -216,5 +216,6 @@
         <file>images/tray_warning_ico.png</file>
         <file>images/warning_ico.ico</file>
         <file>images/small_dmg.png</file>
+        <file>images/app_64.png</file>
     </qresource>
 </RCC>
