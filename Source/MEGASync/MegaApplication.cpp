@@ -2027,12 +2027,9 @@ void MegaApplication::showChangeLog()
     }
 
     changeLogDialog = new ChangeLogDialog(Preferences::VERSION_STRING, Preferences::SDK_ID, Preferences::CHANGELOG);
-    changeLogDialog->exec();
-    if(!pasteMegaLinksDialog)
-    {
-        return;
-    }
-
+    changeLogDialog->activateWindow();
+    changeLogDialog->raise();
+    changeLogDialog->show();
 }
 
 void MegaApplication::uploadActionClicked()
