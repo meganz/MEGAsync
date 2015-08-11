@@ -18,6 +18,8 @@ public:
 private:
     Ui::ChangeLogDialog *ui;
 
+    void setChangeLogNotes(QString notes);
+
 private slots:
     void on_bTerms_clicked();
     void on_bPolicy_clicked();
