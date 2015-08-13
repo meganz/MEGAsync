@@ -131,8 +131,29 @@ int main(int argc, char *argv[])
                 for(int j=0; j<preferences->getNumSyncedFolders(); j++)
                 {
                     Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
-                    Utilities::removeRecursively(preferences->getLocalFolder(j) +
-                                                 QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+
+                    #ifdef WIN32
+                        QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
+                                QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+
+                        WIN32_FILE_ATTRIBUTE_DATA fad;
+                        if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+                        {
+                            SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+                        }
+
+                        QDir dir(debrisPath);
+                        QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
+                        for (int j = 0; j < fList.size(); j++)
+                        {
+                            QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
+                            WIN32_FILE_ATTRIBUTE_DATA fa;
+                            if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
+                            {
+                                SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+                            }
+                        }
+                    #endif
                 }
                 preferences->leaveUser();
             }
@@ -3217,6 +3238,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         megaApi->sendEvent(99501, "MEGAsync first sync");
                         isFirstSyncDone = true;
                     }
+
+#ifdef _WIN32
+                    QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(i) +
+                            QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+
+                    WIN32_FILE_ATTRIBUTE_DATA fad;
+                    if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+                        SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
+#endif
+
                 }
                 break;
             }
