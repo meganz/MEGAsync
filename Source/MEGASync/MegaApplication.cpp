@@ -351,6 +351,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     enableDebug = false;
     overquotaCheck = false;
     noKeyDetected = 0;
+    isFirstSyncDone = false;
+    isFirstFileSynced = false;
 }
 
 MegaApplication::~MegaApplication()
@@ -3210,9 +3212,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 else
                 {
                     preferences->setLocalFingerprint(i, request->getNumber());
-                    if(!preferences->isFirstSyncDone())
+                    if(!isFirstSyncDone && !preferences->isFirstSyncDone())
                     {
                         megaApi->sendEvent(99501, "MEGAsync first sync");
+                        isFirstSyncDone = true;
                     }
                 }
                 break;
@@ -3370,9 +3373,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if(e->getErrorCode() == MegaError::API_OK
             && transfer->isSyncTransfer()
+            && !isFirstFileSynced
             && !preferences->isFirstFileSynced())
     {
         megaApi->sendEvent(99502, "MEGAsync first synced file");
+        isFirstFileSynced = true;
     }
 
 	//Update statics

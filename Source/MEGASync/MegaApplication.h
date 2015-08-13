@@ -254,6 +254,8 @@ protected:
     bool enableDebug;
     bool overquotaCheck;
     int noKeyDetected;
+    bool isFirstSyncDone;
+    bool isFirstFileSynced;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

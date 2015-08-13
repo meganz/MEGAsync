@@ -50,6 +50,7 @@ class HTTPServer: public QTcpServer
     private:
         bool disabled;
         bool sslEnabled;
+        bool isFirstWebDownloadDone;
         mega::MegaApi *megaApi;
         QMap<QAbstractSocket*, HTTPRequest*> requests;
 };
