@@ -12,6 +12,7 @@ HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
 {
     this->megaApi = megaApi;
     this->sslEnabled = sslEnabled;
+    this->isFirstWebDownloadDone = false;
     listen(QHostAddress::LocalHost, port);
 }
 
@@ -205,9 +206,10 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                 emit onLinkReceived(link);
                 response = QString::fromUtf8("0");
 
-                if(!Preferences::instance()->isFirstWebDownloadDone())
+                if(!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
                 {
                     megaApi->sendEvent(99503, "MEGAsync first webclient download");
+                    isFirstWebDownloadDone = true;
                 }
             }
         }
