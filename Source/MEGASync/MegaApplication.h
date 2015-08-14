@@ -110,7 +110,7 @@ public slots:
     void changeProxy();
     void pauseSync();
     void resumeSync();
-	void importLinks();
+    void importLinks();
     void showChangeLog();
     void uploadActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
