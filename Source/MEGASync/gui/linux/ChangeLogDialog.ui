@@ -226,9 +226,6 @@ border-radius: 5px;
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
-     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>

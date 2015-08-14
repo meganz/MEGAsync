@@ -79,18 +79,18 @@ border-radius: 5px;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>85</height>
+       <height>78</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>85</height>
+       <height>78</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="topMargin">
-       <number>27</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -206,13 +206,13 @@ border-radius: 5px;
      <property name="minimumSize">
       <size>
        <width>360</width>
-       <height>140</height>
+       <height>144</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>360</width>
-       <height>140</height>
+       <height>144</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -225,9 +225,6 @@ border-radius: 5px;
      </property>
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
      <property name="readOnly">
       <bool>true</bool>
