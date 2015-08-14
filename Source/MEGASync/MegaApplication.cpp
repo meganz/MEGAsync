@@ -324,7 +324,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     translator = NULL;
     exitAction = NULL;
     exitActionOverquota = NULL;
-    aboutAction = NULL;
     settingsAction = NULL;
     settingsActionOverquota = NULL;
     importLinksAction = NULL;
@@ -1147,11 +1146,6 @@ void MegaApplication::pauseTransfers(bool pause)
     megaApi->pauseTransfers(pause);
 }
 
-void MegaApplication::aboutDialog()
-{
-    QMessageBox::about(NULL, tr("About MEGAsync"), tr("MEGAsync version code %1").arg(this->applicationVersion()));
-}
-
 void MegaApplication::refreshTrayIcon()
 {
     QList<QNetworkInterface> newNetworkInterfaces;
@@ -1380,7 +1374,6 @@ void MegaApplication::onInstallUpdateClicked()
     {
         showChangeLog();
     }
-
 }
 
 void MegaApplication::showInfoDialog()
@@ -2402,13 +2395,11 @@ void MegaApplication::onUpdateAvailable(bool requested)
     if(trayMenu)
     {
         updateAction->setText(tr("Install update"));
-        //updateAction->setEnabled(true);
     }
 
     if(trayOverQuotaMenu)
     {
         updateActionOverquota->setText(tr("Install update"));
-        updateActionOverquota->setEnabled(true);
     }
 
     if(settingsDialog)
@@ -2689,15 +2680,6 @@ void MegaApplication::createTrayIcon()
 #endif
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-    if(aboutAction)
-    {
-        aboutAction->deleteLater();
-        aboutAction = NULL;
-    }
-
-    aboutAction = new QAction(tr("About"), this);
-    connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
-
     if(settingsAction)
     {
         settingsAction->deleteLater();
@@ -2747,7 +2729,6 @@ void MegaApplication::createTrayIcon()
     if(updateAvailable)
     {
         updateAction = new QAction(tr("Install update"), this);
-        //updateAction->setEnabled(true);
     }
     else
     {
@@ -2756,7 +2737,6 @@ void MegaApplication::createTrayIcon()
         updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
 #endif
-        //updateAction->setEnabled(false);
     }
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
@@ -2881,7 +2861,6 @@ void MegaApplication::createOverQuotaMenu()
     if(updateAvailable)
     {
         updateActionOverquota = new QAction(tr("Install update"), this);
-        updateActionOverquota->setEnabled(true);
     }
     else
     {
@@ -2891,7 +2870,6 @@ void MegaApplication::createOverQuotaMenu()
         updateActionOverquota->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateActionOverquota->setIconVisibleInMenu(true);
 #endif
-        updateActionOverquota->setEnabled(false);
     }
     connect(updateActionOverquota, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 

@@ -133,7 +133,6 @@ public slots:
     void rebootApplication(bool update = true);
     void exitApplication();
     void pauseTransfers(bool pause);
-    void aboutDialog();
     void refreshTrayIcon();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -182,7 +181,6 @@ protected:
     QAction *importLinksAction;
     QAction *uploadAction;
     QAction *downloadAction;
-    QAction *aboutAction;
     QAction *changeProxyAction;
     QAction *initialExitAction;
     QAction *updateAction;
