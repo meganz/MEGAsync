@@ -18,22 +18,11 @@ const int Preferences::BUILD_ID = 3;
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.1.1");
 const QString Preferences::SDK_ID = QString::fromAscii("79a7e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries.\n"
-            "- List of allowed origins for webclient communications.\n"
-            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits).\n"
-            "- Report events for new installations.\n"
-            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries.\n"
-            "- List of allowed origins for webclient communications.\n"
-            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits).\n"
-            "- Report events for new installations.\n"
-            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries.\n"
-            "- List of allowed origins for webclient communications.\n"
-            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits).\n"
-            "- Report events for new installations.\n"
-            "- Built with a custom version of QT that will allow us to debug crashes in QT libraries.\n"
-            "- List of allowed origins for webclient communications.\n"
-            "- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits).\n"
-            "- Report events for new installations.\n");
+            "- Dowloads from the web client\n"
+            "- Allow to use MEGAsync without an account (Guest mode)\n"
+            "- Bug fixes\n"
+            "- This dialog :-)");
+
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
