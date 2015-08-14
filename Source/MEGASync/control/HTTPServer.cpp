@@ -1,6 +1,7 @@
 #include "HTTPServer.h"
 #include "Preferences.h"
 #include "Utilities.h"
+#include "MegaApplication.h"
 
 #include <iostream>
 
@@ -205,6 +206,14 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                 QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
                 emit onLinkReceived(link);
                 response = QString::fromUtf8("0");
+
+                Preferences *preferences = Preferences::instance();
+                QString defaultPath = preferences->downloadFolder();
+
+                if(preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
+                {
+                    ((MegaApplication *)qApp)->showInfoMessage(tr("Your download has started"));
+                }
 
                 if(!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
                 {
