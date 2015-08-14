@@ -23,6 +23,7 @@
 #include "gui/ImportMegaLinksDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
+#include "gui/ChangeLogDialog.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
@@ -109,7 +110,8 @@ public slots:
     void changeProxy();
     void pauseSync();
     void resumeSync();
-	void importLinks();
+    void importLinks();
+    void showChangeLog();
     void uploadActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -131,7 +133,6 @@ public slots:
     void rebootApplication(bool update = true);
     void exitApplication();
     void pauseTransfers(bool pause);
-    void aboutDialog();
     void refreshTrayIcon();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -180,7 +181,6 @@ protected:
     QAction *importLinksAction;
     QAction *uploadAction;
     QAction *downloadAction;
-    QAction *aboutAction;
     QAction *changeProxyAction;
     QAction *initialExitAction;
     QAction *updateAction;
@@ -221,6 +221,7 @@ protected:
     QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
+    ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
     NodeSelector *downloadNodeSelector;

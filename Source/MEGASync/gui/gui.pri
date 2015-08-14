@@ -24,7 +24,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MessageBox.cpp \
     $$PWD/InfoOverQuotaDialog.cpp \
     $$PWD/QMegaModel.cpp \
-    $$PWD/MegaItem.cpp
+    $$PWD/MegaItem.cpp \
+    $$PWD/ChangeLogDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -50,7 +51,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MessageBox.h \
     $$PWD/InfoOverQuotaDialog.h \
     $$PWD/QMegaModel.h \
-    $$PWD/MegaItem.h
+    $$PWD/MegaItem.h \
+    $$PWD/ChangeLogDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -80,7 +82,8 @@ win32 {
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/SizeLimitDialog.ui \
                 $$PWD/win/MessageBox.ui \
-                $$PWD/win/InfoOverQuotaDialog.ui
+                $$PWD/win/InfoOverQuotaDialog.ui\
+                $$PWD/win/ChangeLogDialog.ui
 }
 
 macx {
@@ -105,7 +108,8 @@ macx {
                 $$PWD/macx/DownloadFromMegaDialog.ui \
                 $$PWD/macx/SizeLimitDialog.ui \
                 $$PWD/macx/MessageBox.ui \
-                $$PWD/macx/InfoOverQuotaDialog.ui
+                $$PWD/macx/InfoOverQuotaDialog.ui \
+                $$PWD/macx/ChangeLogDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -134,5 +138,6 @@ unix:!macx {
                 $$PWD/linux/DownloadFromMegaDialog.ui \
                 $$PWD/linux/SizeLimitDialog.ui \
                 $$PWD/linux/MessageBox.ui\
-                $$PWD/linux/InfoOverQuotaDialog.ui
+                $$PWD/linux/InfoOverQuotaDialog.ui \
+                $$PWD/linux/ChangeLogDialog.ui
 }

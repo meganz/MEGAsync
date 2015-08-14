@@ -417,5 +417,7 @@
         <file>images/small_web_data@2x.png</file>
         <file>images/small_web_lang@2x.png</file>
         <file>images/small_word@2x.png</file>
+        <file>images/app_64.png</file>
+        <file>images/app_64@2x.png</file>
     </qresource>
 </RCC>
