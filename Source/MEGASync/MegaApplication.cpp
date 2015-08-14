@@ -345,7 +345,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     translator = NULL;
     exitAction = NULL;
     exitActionOverquota = NULL;
-    aboutAction = NULL;
     settingsAction = NULL;
     settingsActionOverquota = NULL;
     importLinksAction = NULL;
@@ -358,6 +357,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     logoutActionOverquota = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
+    changeLogDialog = NULL;
     importDialog = NULL;
     uploadFolderSelector = NULL;
     downloadFolderSelector = NULL;
@@ -1073,6 +1073,9 @@ void MegaApplication::closeDialogs()
     delete pasteMegaLinksDialog;
     pasteMegaLinksDialog = NULL;
 
+    delete changeLogDialog;
+    changeLogDialog = NULL;
+
     delete importDialog;
     importDialog = NULL;
 
@@ -1164,11 +1167,6 @@ void MegaApplication::exitApplication()
 void MegaApplication::pauseTransfers(bool pause)
 {
     megaApi->pauseTransfers(pause);
-}
-
-void MegaApplication::aboutDialog()
-{
-    QMessageBox::about(NULL, tr("About MEGAsync"), tr("MEGAsync version code %1").arg(this->applicationVersion()));
 }
 
 void MegaApplication::refreshTrayIcon()
@@ -1390,8 +1388,15 @@ void MegaApplication::onDupplicateUpload(QString localPath, QString name, MegaHa
 
 void MegaApplication::onInstallUpdateClicked()
 {
-    showInfoMessage(tr("Installing update..."));
-    emit installUpdate();
+    if(updateAvailable)
+    {
+        showInfoMessage(tr("Installing update..."));
+        emit installUpdate();
+    }
+    else
+    {
+        showChangeLog();
+    }
 }
 
 void MegaApplication::showInfoDialog()
@@ -2026,6 +2031,23 @@ void MegaApplication::importLinks()
     importDialog = NULL;
 }
 
+void MegaApplication::showChangeLog()
+{
+    if(changeLogDialog)
+    {
+        changeLogDialog->setVisible(true);
+        changeLogDialog->activateWindow();
+        changeLogDialog->raise();
+        changeLogDialog->setFocus();
+        return;
+    }
+
+    changeLogDialog = new ChangeLogDialog(Preferences::VERSION_STRING, Preferences::SDK_ID, Preferences::CHANGELOG);
+    changeLogDialog->activateWindow();
+    changeLogDialog->raise();
+    changeLogDialog->show();
+}
+
 void MegaApplication::uploadActionClicked()
 {
     #ifdef __APPLE__
@@ -2375,16 +2397,12 @@ void MegaApplication::onUpdateCompleted()
 {
     if(trayMenu)
     {
-        updateAction->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
-                              QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"));
-        updateAction->setEnabled(false);
+        updateAction->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
     }
 
     if(trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
-                              QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"));
-        updateActionOverquota->setEnabled(false);
+        updateActionOverquota->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
     }
 
     updateAvailable = false;
@@ -2398,13 +2416,11 @@ void MegaApplication::onUpdateAvailable(bool requested)
     if(trayMenu)
     {
         updateAction->setText(tr("Install update"));
-        updateAction->setEnabled(true);
     }
 
     if(trayOverQuotaMenu)
     {
         updateActionOverquota->setText(tr("Install update"));
-        updateActionOverquota->setEnabled(true);
     }
 
     if(settingsDialog)
@@ -2685,15 +2701,6 @@ void MegaApplication::createTrayIcon()
 #endif
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-    if(aboutAction)
-    {
-        aboutAction->deleteLater();
-        aboutAction = NULL;
-    }
-
-    aboutAction = new QAction(tr("About"), this);
-    connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutDialog()));
-
     if(settingsAction)
     {
         settingsAction->deleteLater();
@@ -2743,17 +2750,14 @@ void MegaApplication::createTrayIcon()
     if(updateAvailable)
     {
         updateAction = new QAction(tr("Install update"), this);
-        updateAction->setEnabled(true);
     }
     else
     {
-        updateAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
-                                  QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
+        updateAction = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
 #ifndef __APPLE__
-        updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+        updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
 #endif
-        updateAction->setEnabled(false);
     }
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
@@ -2878,17 +2882,15 @@ void MegaApplication::createOverQuotaMenu()
     if(updateAvailable)
     {
         updateActionOverquota = new QAction(tr("Install update"), this);
-        updateActionOverquota->setEnabled(true);
     }
     else
     {
-        updateActionOverquota = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
-                                  QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
+        updateActionOverquota = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
+
 #ifndef __APPLE__
         updateActionOverquota->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateActionOverquota->setIconVisibleInMenu(true);
 #endif
-        updateActionOverquota->setEnabled(false);
     }
     connect(updateActionOverquota, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 

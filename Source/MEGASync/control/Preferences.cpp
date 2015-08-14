@@ -17,6 +17,12 @@ const int Preferences::BUILD_ID = 3;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.1.1");
 const QString Preferences::SDK_ID = QString::fromAscii("79a7e");
+const QString Preferences::CHANGELOG = QString::fromUtf8(
+            "- Dowloads from the web client\n"
+            "- Allow to use MEGAsync without an account (Guest mode)\n"
+            "- Bug fixes\n"
+            "- This dialog :-)");
+
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
