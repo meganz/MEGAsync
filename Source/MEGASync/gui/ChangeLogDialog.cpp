@@ -12,6 +12,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setChangeLogNotes(changeLog);
 }
 
