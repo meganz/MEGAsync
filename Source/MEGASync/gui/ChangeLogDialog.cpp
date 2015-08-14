@@ -1,6 +1,8 @@
 #include "ChangeLogDialog.h"
 #include "ui_ChangeLogDialog.h"
 #include <QDesktopServices>
+#include <QString>
+#include <QUrl>
 
 ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString changeLog, QWidget *parent) :
     QDialog(parent),
@@ -12,8 +14,6 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
     setChangeLogNotes(changeLog);
 }
-
-
 
 ChangeLogDialog::~ChangeLogDialog()
 {
