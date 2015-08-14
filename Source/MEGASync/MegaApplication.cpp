@@ -2374,14 +2374,12 @@ void MegaApplication::onUpdateCompleted()
 {
     if(trayMenu)
     {
-        updateAction->setText(QString::fromAscii("About ")+QCoreApplication::applicationName());
-        //updateAction->setEnabled(false);
+        updateAction->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
     }
 
     if(trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(QString::fromAscii("About ")+QCoreApplication::applicationName());
-        updateActionOverquota->setEnabled(false);
+        updateActionOverquota->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
     }
 
     updateAvailable = false;
@@ -2732,9 +2730,9 @@ void MegaApplication::createTrayIcon()
     }
     else
     {
-        updateAction = new QAction(QString::fromAscii("About ")+QCoreApplication::applicationName(), this);
+        updateAction = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
 #ifndef __APPLE__
-        updateAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+        updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
 #endif
     }
@@ -2864,8 +2862,8 @@ void MegaApplication::createOverQuotaMenu()
     }
     else
     {
-        updateActionOverquota = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
-                                  QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
+        updateActionOverquota = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
+
 #ifndef __APPLE__
         updateActionOverquota->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateActionOverquota->setIconVisibleInMenu(true);

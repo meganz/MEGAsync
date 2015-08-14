@@ -133,7 +133,7 @@ border-radius: 5px;
       </size>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -174,14 +174,14 @@ border-radius: 5px;
       <item>
        <widget class="QLabel" name="lVersion">
         <property name="text">
-         <string>2.0.1</string>
+         <string notr="true">2.0.1</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="lSDKVersion">
         <property name="text">
-         <string>(SDK)</string>
+         <string notr="true">(SDK)</string>
         </property>
        </widget>
       </item>
@@ -313,7 +313,7 @@ border-radius: 5px;
       </sizepolicy>
      </property>
      <property name="text">
-      <string>&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
+      <string notr="true">&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
