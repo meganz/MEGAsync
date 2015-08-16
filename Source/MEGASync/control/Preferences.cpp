@@ -18,7 +18,7 @@ const int Preferences::BUILD_ID = 6;
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.1.2");
 const QString Preferences::SDK_ID = QString::fromAscii("3acc3");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Dowloads from the web client\n"
+            "- Downloads from the web client\n"
             "- Performance enhancements\n"
             "- Bug fixes\n"
             "- This dialog :-)");
