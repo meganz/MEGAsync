@@ -90,13 +90,25 @@ border-radius: 5px;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="topMargin">
-       <number>27</number>
+       <number>22</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>64</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>64</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;</string>
         </property>
@@ -105,7 +117,7 @@ border-radius: 5px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
+          <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -203,6 +215,12 @@ border-radius: 5px;
    </item>
    <item>
     <widget class="QTextEdit" name="tChangelog">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>360</width>
