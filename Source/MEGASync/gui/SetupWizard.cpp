@@ -62,6 +62,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->eEmail->clear();
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
+                megaApi->sendEvent(99505, "MEGAsync account creation start");
 			}
 			else if (error->getErrorCode() == MegaError::API_EEXIST)
 			{
