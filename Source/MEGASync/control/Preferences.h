@@ -80,8 +80,6 @@ public:
     void setLanguage(QString &value);
     bool updateAutomatically();
     void setUpdateAutomatically(bool value);
-    bool guestModeEnabled();
-    void setGuestModeEnabled(bool value);
     bool hasDefaultUploadFolder();
     bool hasDefaultDownloadFolder();
     bool hasDefaultImportFolder();
@@ -306,7 +304,6 @@ protected:
     static const QString startOnStartupKey;
     static const QString languageKey;
     static const QString updateAutomaticallyKey;
-    static const QString guestModeKey;
     static const QString uploadLimitKBKey;
     static const QString upperSizeLimitKey;
     static const QString lowerSizeLimitKey;

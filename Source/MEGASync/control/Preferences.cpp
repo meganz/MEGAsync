@@ -141,7 +141,6 @@ const QString Preferences::showNotificationsKey     = QString::fromAscii("showNo
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
-const QString Preferences::guestModeKey             = QString::fromAscii("guestMode");
 const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
 const QString Preferences::upperSizeLimitKey         = QString::fromAscii("upperSizeLimit");
 const QString Preferences::lowerSizeLimitKey         = QString::fromAscii("lowerSizeLimit");
@@ -308,7 +307,7 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
 QString Preferences::email()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     QString value = settings->value(emailKey).toString();
     mutex.unlock();
     return value;
@@ -355,7 +354,7 @@ void Preferences::setSession(QString session)
 QString Preferences::getSession()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     QString value = settings->value(sessionKey).toString();
     mutex.unlock();
     return value;
@@ -364,7 +363,7 @@ QString Preferences::getSession()
 long long Preferences::totalStorage()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     long long value = settings->value(totalStorageKey).toLongLong();
     mutex.unlock();
     return value;
@@ -607,7 +606,7 @@ void Preferences::setInShareFolders(long long value)
 long long Preferences::totalBandwidth()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     long long value = settings->value(totalBandwidthKey).toLongLong();
     mutex.unlock();
     return value;
@@ -641,7 +640,7 @@ void Preferences::setUsedBandwidth(long long value)
 int Preferences::accountType()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     int value = settings->value(accountTypeKey).toInt();
     mutex.unlock();
     return value;
@@ -658,7 +657,6 @@ void Preferences::setAccountType(int value)
 bool Preferences::showNotifications()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
     bool value = settings->value(showNotificationsKey, defaultShowNotifications).toBool();
     mutex.unlock();
     return value;
@@ -729,22 +727,6 @@ void Preferences::setUpdateAutomatically(bool value)
 {
     mutex.lock();
     settings->setValue(updateAutomaticallyKey, value);
-    settings->sync();
-    mutex.unlock();
-}
-
-bool Preferences::guestModeEnabled()
-{
-    mutex.lock();
-    bool value = settings->value(guestModeKey, defaultGuestMode).toBool();
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setGuestModeEnabled(bool value)
-{
-    mutex.lock();
-    settings->setValue(guestModeKey, value);
     settings->sync();
     mutex.unlock();
 }
@@ -820,7 +802,7 @@ bool Preferences::canUpdate()
 int Preferences::uploadLimitKB()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     int value = settings->value(uploadLimitKBKey, defaultUploadLimitKB).toInt();
     mutex.unlock();
     return value;
@@ -854,7 +836,7 @@ void Preferences::setUpperSizeLimit(bool value)
 long long Preferences::upperSizeLimitValue()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     long long value = settings->value(upperSizeLimitValueKey, defaultUpperSizeLimitValue).toLongLong();
     mutex.unlock();
     return value;
@@ -871,7 +853,7 @@ void Preferences::setUpperSizeLimitValue(long long value)
 int Preferences::upperSizeLimitUnit()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     int value = settings->value(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit).toInt();
     mutex.unlock();
     return value;
@@ -904,7 +886,7 @@ void Preferences::setLowerSizeLimit(bool value)
 long long Preferences::lowerSizeLimitValue()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     long long value = settings->value(lowerSizeLimitValueKey, defaultLowerSizeLimitValue).toLongLong();
     mutex.unlock();
     return value;
@@ -921,7 +903,7 @@ void Preferences::setLowerSizeLimitValue(long long value)
 int Preferences::lowerSizeLimitUnit()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     int value = settings->value(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit).toInt();
     mutex.unlock();
     return value;
@@ -1245,7 +1227,7 @@ void Preferences::setDownloadFolder(QString value)
 long long Preferences::uploadFolder()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     long long value = settings->value(uploadFolderKey).toLongLong();
     mutex.unlock();
     return value;
@@ -1519,7 +1501,7 @@ void Preferences::removeAllFolders()
 QStringList Preferences::getExcludedSyncNames()
 {
     mutex.lock();
-    assert(logged() || guestModeEnabled());
+    assert(logged());
     QStringList value = excludedSyncNames;
     mutex.unlock();
     return value;
