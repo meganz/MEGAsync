@@ -347,6 +347,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayIcon = NULL;
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
+    trayGuestMenu = NULL;
     megaApi = NULL;
     megaApiLinks = NULL;
     delegateListener = NULL;
@@ -364,16 +365,20 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     translator = NULL;
     exitAction = NULL;
     exitActionOverquota = NULL;
+    exitGuestAction = NULL;
     settingsAction = NULL;
     settingsActionOverquota = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
+    importLinksGuestAction = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
+    loginAction = NULL;
     waiting = false;
     updated = false;
     updateAction = NULL;
     updateActionOverquota = NULL;
+    updateGuestAction = NULL;
     logoutActionOverquota = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
@@ -919,6 +924,10 @@ void MegaApplication::loggedIn()
 {
     if(infoDialog)
     {
+        if(!guestModeEnabled)
+        {
+            updateUserStats();
+        }
         infoDialog->init();
         return;
     }
@@ -1230,6 +1239,7 @@ void MegaApplication::exitApplication()
 void MegaApplication::pauseTransfers(bool pause)
 {
     megaApi->pauseTransfers(pause);
+    megaApiLinks->pauseTransfers(pause);
 }
 
 void MegaApplication::refreshTrayIcon()
@@ -1713,25 +1723,8 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
-void MegaApplication::setupWizardFinished(int result)
+void MegaApplication::setupWizardFinished()
 {
-    if(!preferences->logged())
-    {
-        if(result == SetupWizard::SKIP_WIZARD_CODE)
-        {
-            //preferences->setGuestModeEnabled(true);
-            //guestModeEnabled = true;
-            //guestMode();
-            return;
-        }
-
-        #ifdef __APPLE__
-            cleanAll();
-            ::exit(0);
-        #endif
-        QApplication::exit();
-    }
-
     if(setupWizard)
     {
         setupWizard->deleteLater();
@@ -2303,7 +2296,7 @@ void MegaApplication::onUserAction(int action)
         }
         setupWizard = new SetupWizard(this);
         setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished()));
         setupWizard->goToStep(action);
         setupWizard->show();
     }
@@ -3136,7 +3129,7 @@ void MegaApplication::createGuestMenu()
     #else
         settingsActionGuest = new QAction(tr("Preferences"), this);
     #endif
-    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(changeProxy()));
 
 
     if(loginAction)
