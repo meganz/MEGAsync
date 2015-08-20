@@ -235,6 +235,10 @@ void SetupWizard::goToStep(int page)
 {
     switch(page)
     {
+        case PAGE_SETUP:
+        ui->sPages->setCurrentWidget(ui->pSetup);
+        break;
+
         case PAGE_LOGIN:
             ui->sPages->setCurrentWidget(ui->pLogin);
             break;
@@ -532,7 +536,7 @@ void SetupWizard::on_bSkip_clicked()
     {
         setupPreferences();
     }
-    finished(SKIP_WIZARD_CODE);
+    finished(0);
     close();
 }
 void SetupWizard::on_bLocalFolder_clicked()
