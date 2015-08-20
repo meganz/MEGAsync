@@ -424,8 +424,8 @@ void InfoDialog::updateTransfers()
 
 void InfoDialog::transferFinished(int error)
 {
-    remainingUploads = megaApi->getNumPendingUploads();
-    remainingDownloads = megaApi->getNumPendingDownloads();
+    remainingUploads = megaApi->getNumPendingUploads() + megaApiLinks->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads() + megaApiLinks->getNumPendingDownloads();
 
     if(!remainingDownloads && ui->wTransfer1->isActive())
     {
@@ -868,7 +868,11 @@ void InfoDialog::onAllTransfersFinished()
         {
             gWidget->setIdleState(true);
         }
-        app->updateUserStats();
+
+        if(!guestMode)
+        {
+            app->updateUserStats();
+        }
         app->showNotificationMessage(tr("All transfers have been completed"));
     }
 }
@@ -1114,6 +1118,8 @@ void InfoDialog::regenerateLayout()
             connect(gWidget, SIGNAL(cancelAllDownloads()), this, SLOT(cancelAllDownloads()));
             connect(gWidget, SIGNAL(pauseClicked()), this, SLOT(onOverlayClicked()));
         }
+
+        ui->bSyncFolder->setVisible(false);
         dialogLayout->removeWidget(ui->sActiveTransfers);
         ui->sActiveTransfers->setVisible(false);
         dialogLayout->removeWidget(ui->wUsage);
@@ -1128,6 +1134,7 @@ void InfoDialog::regenerateLayout()
     }
     else
     {
+        ui->bSyncFolder->setVisible(true);
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
         dialogLayout->addWidget(ui->sActiveTransfers);
