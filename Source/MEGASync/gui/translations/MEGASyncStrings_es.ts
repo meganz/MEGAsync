@@ -1852,7 +1852,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Estoy de acuerdo con los href=&quot;https://mega.co.nz/#terms&quot;&gt;Terminos de Servicio&lt;/a&gt;</translation>
+        <translation>Estoy de acuerdo con los &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terminos de Servicio&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
