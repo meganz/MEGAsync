@@ -2973,7 +2973,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         //This prevents to handle logins in the initial setup wizard
         if(preferences->logged())
 		{
-            if(e->getErrorCode() == MegaError::API_OK)
+            int errorCode = e->getErrorCode();
+            if(errorCode == MegaError::API_OK)
 			{
                 const char *session = megaApi->dumpSession();
                 if(session)
@@ -2987,11 +2988,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     break;
                 }
 			}
-            else if(e->getErrorCode() == MegaError::API_EBLOCKED)
+            else if(errorCode == MegaError::API_EBLOCKED)
             {
                 QMessageBox::critical(NULL, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
             }
-            else if(e->getErrorCode() != MegaError::API_EACCESS) //Invalid session, already managed in TYPE_LOGOUT
+            else if(errorCode != MegaError::API_ESID && errorCode != MegaError::API_ESSL)
+            //Invalid session or public key, already managed in TYPE_LOGOUT
             {
                 QMessageBox::warning(NULL, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
@@ -3003,25 +3005,31 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 	}
     case MegaRequest::TYPE_LOGOUT:
     {
+        int errorCode = e->getErrorCode();
+        if(errorCode)
+        {
+            if(errorCode == MegaError::API_ESID)
+            {
+                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
+            }
+            else if(errorCode == MegaError::API_ESSL)
+            {
+                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Our SSL certificate can't be verified. You could be affected by a man-in-the-middle attack."
+                                                                               " Your antivirus software could be intercepting your communications and causing this problem."
+                                                                               " Please disable it and try again"));
+            }
+            else
+            {
+                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
+                                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
+            }
+        }
+
         if(preferences && preferences->logged())
         {
             preferences->unlink();
             closeDialogs();
             refreshTrayIcon();
-
-            if(e->getErrorCode())
-            {
-                if(e->getErrorCode() == MegaError::API_ESID)
-                {
-                    QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
-                }
-                else
-                {
-                    QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
-                                             .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
-                }
-            }
-
             preferences->setFirstStartDone();
             start();
         }
@@ -3514,7 +3522,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    if(e->getErrorCode() != MegaError::API_OK && transfer->getTag() > 0)
+    int errorCode = e->getErrorCode();
+    if(errorCode != MegaError::API_OK && transfer->getTag() > 0
+            && errorCode != MegaError::API_ESID
+            && errorCode != MegaError::API_ESSL
+            && errorCode != MegaError::API_EINCOMPLETE)
     {
         showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     }

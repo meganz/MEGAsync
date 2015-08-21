@@ -63,15 +63,16 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
                 megaApi->sendEvent(99505, "MEGAsync account creation start");
+                break;
 			}
-			else if (error->getErrorCode() == MegaError::API_EEXIST)
+
+            ui->sPages->setCurrentWidget(ui->pNewAccount);
+            if (error->getErrorCode() == MegaError::API_EEXIST)
 			{
-				ui->sPages->setCurrentWidget(ui->pNewAccount);
 				QMessageBox::warning(this, tr("Error"), tr("User already exists"), QMessageBox::Ok);
 			}
-			else
+            else if(error->getErrorCode() != MegaError::API_ESSL)
 			{
-				ui->sPages->setCurrentWidget(ui->pNewAccount);
                 QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
 			}
 			break;
@@ -95,23 +96,22 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     ui->sPages->setCurrentWidget(ui->pLogin);
                     QMessageBox::warning(this, tr("Error"), tr("Error getting session key"), QMessageBox::Ok);
                 }
+                break;
 			}
-			else if(error->getErrorCode() == MegaError::API_ENOENT)
+
+            ui->bBack->setEnabled(true);
+            ui->bNext->setEnabled(true);
+            ui->sPages->setCurrentWidget(ui->pLogin);
+            if(error->getErrorCode() == MegaError::API_ENOENT)
 			{
-				ui->bBack->setEnabled(true);
-				ui->bNext->setEnabled(true);
-				ui->sPages->setCurrentWidget(ui->pLogin);
                 QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromAscii(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
 			}
             else if(error->getErrorCode() == MegaError::API_EBLOCKED)
             {
                 QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
             }
-			else
+            else if(error->getErrorCode() != MegaError::API_ESSL)
 			{
-				ui->bBack->setEnabled(true);
-				ui->bNext->setEnabled(true);
-				ui->sPages->setCurrentWidget(ui->pLogin);
                 QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
 			}
 			break;
