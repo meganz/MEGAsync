@@ -1126,11 +1126,9 @@ void InfoDialog::regenerateLayout()
         ui->wUsage->setVisible(false);
         dialogLayout->addWidget(gWidget);
 
-        QLayoutItem *li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wRecent")));
-        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
-        li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wBottom")));
-        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
 
+        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wRecent);
+        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
     }
     else
     {
@@ -1139,14 +1137,12 @@ void InfoDialog::regenerateLayout()
         gWidget->setVisible(false);
         dialogLayout->addWidget(ui->sActiveTransfers);
         ui->sActiveTransfers->setVisible(true);
+
+        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wRecent);
         dialogLayout->addWidget(ui->wUsage);
         ui->wUsage->setVisible(true);
-        QLayoutItem *li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wRecent")));
-        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
-        li = dialogLayout->takeAt(getWidgetIndexByName(QString::fromUtf8("wBottom")));
-        ((QVBoxLayout *)dialogLayout)->insertItem(dialogLayout->count(), li);
+        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
     }
-
 }
 
 void InfoDialog::loginAction(int action)
