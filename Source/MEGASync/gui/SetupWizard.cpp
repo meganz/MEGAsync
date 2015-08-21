@@ -524,6 +524,10 @@ void SetupWizard::on_bCancel_clicked()
         }
         if(button == QMessageBox::Yes)
         {
+            if(megaApi->isLoggedIn())
+            {
+                megaApi->logout();
+            }
             close();
         }
     }
