@@ -926,7 +926,7 @@ void MegaApplication::loggedIn()
     {
         if(!guestModeEnabled)
         {
-            updateUserStats();
+            megaApi->getAccountDetails();
         }
         infoDialog->init();
         return;
