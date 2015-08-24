@@ -3014,9 +3014,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else if(errorCode == MegaError::API_ESSL)
             {
-                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Our SSL certificate can't be verified. You could be affected by a man-in-the-middle attack."
-                                                                               " Your antivirus software could be intercepting your communications and causing this problem."
-                                                                               " Please disable it and try again"));
+                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again."));
             }
             else
             {
