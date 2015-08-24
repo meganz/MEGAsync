@@ -118,10 +118,12 @@ QByteArray MacXPlatform::getLocalStorageKey()
 
 bool MacXPlatform::enableSetuidBit()
 {
-    QString command = QString::fromUtf8("chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true");
+    QString command = QString::fromUtf8("do shell script \"chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true\"");
     char *response = runWithRootPrivileges((char *)command.toStdString().c_str());
-    if(!response) return NULL;
-
+    if(!response)
+    {
+        return NULL;
+    }
     bool result = strlen(response) >= 4 && !strncmp(response, "true", 4);
     delete response;
     return result;
