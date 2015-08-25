@@ -290,6 +290,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>HTTPServer</name>
+    <message>
+        <source>Your download has started</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -927,6 +934,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
