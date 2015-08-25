@@ -206,7 +206,7 @@ char *runWithRootPrivileges(char *command)
     char *result = NULL;
 
     char* args[3];
-    args [0] = "-c";
+    args [0] = "-e";
     args [1] = command;
     args [2] = NULL;
 
@@ -227,14 +227,18 @@ char *runWithRootPrivileges(char *command)
     status = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment,
                                      kAuthorizationFlagDefaults, &authorizationRef);
     if (status != errAuthorizationSuccess)
+    {
         return NULL;
+    }
 
     // Call AuthorizationCopyRights to determine rights.
     status = AuthorizationCopyRights(authorizationRef, &rights, &myAuthorizationEnvironment, flags, NULL);
     if (status != errAuthorizationSuccess)
+    {
         return NULL;
+    }
 
-    status = AuthorizationExecuteWithPrivileges(authorizationRef, "/bin/sh",
+    status = AuthorizationExecuteWithPrivileges(authorizationRef, "/usr/bin/osascript",
                                                 kAuthorizationFlagDefaults, args, &pipe);
     AuthorizationFree(authorizationRef, kAuthorizationFlagDestroyRights);
     if (status == errAuthorizationSuccess)
