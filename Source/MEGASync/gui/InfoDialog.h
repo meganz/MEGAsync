@@ -79,7 +79,7 @@ private slots:
 
     void regenerateLayout();
 
-    void loginAction(int action);
+    void onUserAction(int action);
 
 #ifdef __APPLE__
     void on_cRecentlyUpdated_stateChanged(int arg1);
