@@ -458,12 +458,19 @@ void MegaApplication::initialize()
     delegateLinksListener = new MEGASyncDelegateListener(megaApiLinks, this);
     megaApiLinks->addListener(delegateLinksListener);
     uploader = new MegaUploader(megaApi);
-    downloader = new MegaDownloader(megaApi);
+    downloader = new MegaDownloader(megaApi, megaApiLinks);
     scanningTimer = new QTimer();
     scanningTimer->setSingleShot(false);
     scanningTimer->setInterval(500);
     scanningAnimationIndex = 1;
     connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+
+    //Start the HTTP server
+    httpServer = new HTTPServer(megaApiLinks, Preferences::HTTPS_PORT, true);
+    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
@@ -915,10 +922,6 @@ void MegaApplication::guestMode()
     updated = false;
     infoDialog = new InfoDialog(this, true);
 
-    //Start the HTTP server
-    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)));
-
 }
 void MegaApplication::loggedIn()
 {
@@ -971,13 +974,6 @@ void MegaApplication::loggedIn()
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
     Platform::startShellDispatcher(this);
-
-    //Start the HTTP server
-    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
-    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
 
     if(!guestModeEnabled)
     {
@@ -1157,6 +1153,9 @@ void MegaApplication::closeDialogs()
 
     delete infoOverQuota;
     infoOverQuota = NULL;
+
+    delete httpServer;
+    httpServer = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -1731,7 +1730,6 @@ void MegaApplication::setupWizardFinished()
         setupWizard = NULL;
     }
 
-    //preferences->setGuestModeEnabled(false);
     guestModeEnabled = false;
     infoDialog->setGuestMode(false);
 
@@ -1766,8 +1764,6 @@ void MegaApplication::setupWizardFinished()
 void MegaApplication::unlink()
 {
     //Reset fields that will be initialized again upon login
-    delete httpServer;
-    httpServer = NULL;
     stopUpdateTask();
     Platform::stopShellDispatcher();
     megaApi->logout();
@@ -2270,17 +2266,16 @@ void MegaApplication::downloadActionClicked()
 
 void MegaApplication::loginActionClicked()
 {
-    onUserAction(GuestWidget::LOGIN_CLICKED);
+    userAction(GuestWidget::LOGIN_CLICKED);
 }
 
-void MegaApplication::onUserAction(int action)
+void MegaApplication::userAction(int action)
 {
     if(preferences && guestModeEnabled)
     {
         delete httpServer;
         httpServer = NULL;
         guestModeEnabled = false;
-        //preferences->setGuestModeEnabled(false);
         closeDialogs();
         refreshTrayIcon();
         start();
