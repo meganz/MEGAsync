@@ -14,18 +14,20 @@ class MegaDownloader : public QObject
     Q_OBJECT
 
 public:
-    MegaDownloader(mega::MegaApi *megaApi);
+    // If you want to manage public transfers, provide megaApiLinks
+    MegaDownloader(mega::MegaApi *megaApi, mega::MegaApi *megaApiLinks = NULL);
     virtual ~MegaDownloader();
-    void processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path, mega::MegaApi *megaApiLinks = NULL);
-    void download(mega::MegaNode *parent, QString path, mega::MegaApi *apiLinks = NULL);
+    void processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path);
+    void download(mega::MegaNode *parent, QString path);
 
 signals:
     void dupplicateDownload(QString localPath, QString name, mega::MegaHandle handle);
 
 protected:
-    void download(mega::MegaNode *parent, QFileInfo info, mega::MegaApi *apiLinks = NULL);
+    void download(mega::MegaNode *parent, QFileInfo info);
 
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiLinks;
     QMap<mega::MegaHandle, QString> pathMap;
 };
 
