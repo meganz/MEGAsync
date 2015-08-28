@@ -172,9 +172,25 @@ int main(int argc, char *argv[])
         //Utilities::removeRecursively(dataDir);
 
 #ifdef WIN32
-        MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
-        megaApi->sendEvent(99504, "MEGAsync uninstall");
-        Sleep(5000);
+        if (preferences->installationTime() != -1)
+        {
+            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
+            QString stats = QString::fromUtf8("{\"it\":%1,\"act\":%2,\"lt\":%3}")
+                    .arg(preferences->installationTime())
+                    .arg(preferences->accountCreationTime())
+                    .arg(preferences->hasLoggedIn());
+
+            QByteArray base64stats = stats.toUtf8().toBase64();
+            base64stats.replace('+', '-');
+            base64stats.replace('/', '_');
+            while(base64stats.size() && base64stats[base64stats.size() - 1] == '=')
+            {
+                base64stats.resize(base64stats.size() - 1);
+            }
+
+            megaApi->sendEvent(99504, base64stats.constData());
+            Sleep(5000);
+        }
 #endif
         return 0;
     }
@@ -780,8 +796,11 @@ void MegaApplication::start()
 
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
+
     if(!preferences->lastExecutionTime())
+    {
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
+    }
 
     if(updated)
     {
@@ -789,6 +808,11 @@ void MegaApplication::start()
         preferences->setFirstSyncDone();
         preferences->setFirstFileSynced();
         preferences->setFirstWebDownloadDone();
+
+        if(!preferences->installationTime())
+        {
+            preferences->setInstallationTime(-1);
+        }
     }
 
     if(enableDebug)
@@ -802,6 +826,11 @@ void MegaApplication::start()
     //Start the initial setup wizard if needed
     if(!preferences->logged())
     {
+        if(!preferences->installationTime())
+        {
+            preferences->setInstallationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+        }
+
         if(!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(99500, "MEGAsync first start");
