@@ -65,7 +65,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 megaApi->sendEvent(99505, "MEGAsync account creation start");
                 if(!preferences->accountCreationTime())
                 {
-                    preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
+                    preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
                 break;
 			}
@@ -94,7 +94,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     megaApi->fetchNodes(delegateListener);
                     if(!preferences->hasLoggedIn())
                     {
-                        preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch());
+                        preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                     }
                 }
                 else
