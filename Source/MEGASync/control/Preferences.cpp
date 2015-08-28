@@ -191,6 +191,9 @@ const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstS
 const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
 const QString Preferences::firstFileSyncedKey       = QString::fromAscii("firstFileSynced");
 const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstWebclientDownload");
+const QString Preferences::installationTimeKey      = QString::fromAscii("installationTime");
+const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accountCreationTime");
+const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1047,6 +1050,49 @@ long long Preferences::lastExecutionTime()
     long long value = settings->value(lastExecutionTimeKey, 0).toLongLong();
     mutex.unlock();
     return value;
+}
+long long Preferences::installationTime()
+{
+    mutex.lock();
+    long long value = settings->value(installationTimeKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setInstallationTime(long long time)
+{
+    mutex.lock();
+    settings->setValue(installationTimeKey, time);
+    settings->sync();
+    mutex.unlock();
+}
+long long Preferences::accountCreationTime()
+{
+    mutex.lock();
+    long long value = settings->value(accountCreationTimeKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setAccountCreationTime(long long time)
+{
+    mutex.lock();
+    settings->setValue(accountCreationTimeKey, time);
+    settings->sync();
+    mutex.unlock();
+
+}
+long long Preferences::hasLoggedIn()
+{
+    mutex.lock();
+    long long value = settings->value(hasLoggedInKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setHasLoggedIn(long long time)
+{
+    mutex.lock();
+    settings->setValue(hasLoggedInKey, time);
+    settings->sync();
+    mutex.unlock();
 }
 
 bool Preferences::isFirstStartDone()
