@@ -1058,7 +1058,7 @@ long long Preferences::installationTime()
     mutex.unlock();
     return value;
 }
-void Preferences::setInstallationTime(qint64 time)
+void Preferences::setInstallationTime(long long time)
 {
     mutex.lock();
     settings->setValue(installationTimeKey, time);
@@ -1072,7 +1072,7 @@ long long Preferences::accountCreationTime()
     mutex.unlock();
     return value;
 }
-void Preferences::setAccountCreationTime(qint64 time)
+void Preferences::setAccountCreationTime(long long time)
 {
     mutex.lock();
     settings->setValue(accountCreationTimeKey, time);
@@ -1083,11 +1083,11 @@ void Preferences::setAccountCreationTime(qint64 time)
 long long Preferences::hasLoggedIn()
 {
     mutex.lock();
-    long long value = settings->value(hasLoggedInKey, 0).toBool();
+    long long value = settings->value(hasLoggedInKey, 0).toLongLong();
     mutex.unlock();
     return value;
 }
-void Preferences::setHasLoggedIn(qint64 time)
+void Preferences::setHasLoggedIn(long long time)
 {
     mutex.lock();
     settings->setValue(hasLoggedInKey, time);
