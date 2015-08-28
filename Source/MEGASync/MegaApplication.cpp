@@ -173,7 +173,12 @@ int main(int argc, char *argv[])
 
 #ifdef WIN32
         MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
-        megaApi->sendEvent(99504, "MEGAsync uninstall");
+        QString stats = QString::fromUtf8("{\"it\":\%1\,\"act\":\%2\,\"li\":\%3\}").arg(preferences->installationTime())
+                                                                                   .arg(preferences->accountCreationTime())
+                                                                                   .arg(preferences->hasLoggedIn());
+        QByteArray byteData;
+        byteData.append(stats.toStdString().c_str());
+        megaApi->sendEvent(99504, byteData.toBase64());
         Sleep(5000);
 #endif
         return 0;
@@ -780,8 +785,16 @@ void MegaApplication::start()
 
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
+
+    if(!preferences->installationTime())
+    {
+        preferences->setInstallationTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
+    }
+
     if(!preferences->lastExecutionTime())
+    {
         Platform::enableTrayIcon(QFileInfo(MegaApplication::applicationFilePath()).fileName());
+    }
 
     if(updated)
     {

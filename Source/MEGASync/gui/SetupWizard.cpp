@@ -63,6 +63,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
                 megaApi->sendEvent(99505, "MEGAsync account creation start");
+                if(!preferences->accountCreationTime())
+                {
+                    preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
+                }
                 break;
 			}
 
@@ -88,6 +92,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     delete session;
                     ui->lProgress->setText(tr("Fetching file list..."));
                     megaApi->fetchNodes(delegateListener);
+                    if(!preferences->hasLoggedIn())
+                    {
+                        preferences->setHasLoggedIn(true);
+                    }
                 }
                 else
                 {
