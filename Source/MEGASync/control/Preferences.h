@@ -122,8 +122,8 @@ public:
     void setInstallationTime(long long time);
     long long accountCreationTime();
     void setAccountCreationTime(long long time);
-    bool hasLoggedIn();
-    void setHasLoggedIn(bool value = false);
+    long long hasLoggedIn();
+    void setHasLoggedIn(long long time);
     bool isFirstStartDone();
     void setFirstStartDone(bool value = true);
     bool isFirstSyncDone();

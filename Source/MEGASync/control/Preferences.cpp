@@ -1080,17 +1080,17 @@ void Preferences::setAccountCreationTime(qint64 time)
     mutex.unlock();
 
 }
-bool Preferences::hasLoggedIn()
+long long Preferences::hasLoggedIn()
 {
     mutex.lock();
-    bool value = settings->value(hasLoggedInKey, false).toBool();
+    long long value = settings->value(hasLoggedInKey, 0).toBool();
     mutex.unlock();
     return value;
 }
-void Preferences::setHasLoggedIn(bool value)
+void Preferences::setHasLoggedIn(qint64 time)
 {
     mutex.lock();
-    settings->setValue(hasLoggedInKey, value);
+    settings->setValue(hasLoggedInKey, time);
     settings->sync();
     mutex.unlock();
 }
