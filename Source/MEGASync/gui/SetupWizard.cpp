@@ -94,7 +94,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     megaApi->fetchNodes(delegateListener);
                     if(!preferences->hasLoggedIn())
                     {
-                        preferences->setHasLoggedIn(true);
+                        preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch());
                     }
                 }
                 else
