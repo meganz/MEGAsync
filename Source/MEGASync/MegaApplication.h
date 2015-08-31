@@ -147,6 +147,7 @@ public slots:
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
     void userAction(int action);
+    void changeState();
 
 protected:
     void createTrayIcon();
