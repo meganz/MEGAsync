@@ -109,8 +109,6 @@ public slots:
     void start();
     void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
     void changeProxy();
-    void pauseSync();
-    void resumeSync();
     void importLinks();
     void showChangeLog();
     void uploadActionClicked();
