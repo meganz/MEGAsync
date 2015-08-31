@@ -616,23 +616,7 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::updateTrayIcon()
 {
     if(!trayIcon) return;
-    if(!infoDialog)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Logging in...");
-        #ifndef __APPLE__
-            #ifdef _WIN32
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
-            #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
-            #endif
-        #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
-            if(scanningTimer->isActive())
-                scanningTimer->stop();
-        #endif
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
-    }
-    else if(infoOverQuota)
+    if(infoOverQuota)
     {
         if(preferences->usedStorage() < preferences->totalStorage())
         {
