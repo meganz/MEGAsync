@@ -1117,9 +1117,6 @@ void MegaApplication::restoreSyncs()
 
 void MegaApplication::closeDialogs()
 {
-    delete infoDialog;
-    infoDialog = NULL;
-
     delete setupWizard;
     setupWizard = NULL;
 
@@ -1405,6 +1402,7 @@ void MegaApplication::cleanAll()
         Platform::notifyItemChange(preferences->getLocalFolder(i));
 
     closeDialogs();
+    delete infoDialog;
     delete httpServer;
     delete uploader;
     delete delegateListener;
