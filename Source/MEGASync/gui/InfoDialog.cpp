@@ -55,10 +55,6 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     menuSignalMapper = NULL;
     gWidget = NULL;
     guestMode = mode;
-    if(guestMode)
-    {
-        regenerateLayout();
-    }
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -91,6 +87,10 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     {
         setUsage();
         updateSyncsButton();
+    }
+    else
+    {
+        regenerateLayout();
     }
 
     ui->wDownloadDesc->hide();
@@ -415,9 +415,7 @@ void InfoDialog::updateTransfers()
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
         }
-
     }
-
 
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
@@ -1125,10 +1123,11 @@ void InfoDialog::regenerateLayout()
         dialogLayout->removeWidget(ui->wUsage);
         ui->wUsage->setVisible(false);
         dialogLayout->addWidget(gWidget);
-
+        gWidget->setVisible(true);
 
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wRecent);
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
+
     }
     else
     {
