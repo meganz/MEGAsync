@@ -83,16 +83,6 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
-    if(!guestMode)
-    {
-        setUsage();
-        updateSyncsButton();
-    }
-    else
-    {
-        regenerateLayout();
-    }
-
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
 
@@ -154,6 +144,17 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     setMinimumHeight(377);
     setMaximumHeight(377);
 #endif
+
+    if(!guestMode)
+    {
+        setUsage();
+        updateSyncsButton();
+    }
+    else
+    {
+        regenerateLayout();
+        gWidget->hideDownloads();
+    }
 }
 
 void InfoDialog::init()
@@ -1141,6 +1142,7 @@ void InfoDialog::regenerateLayout()
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wRecent);
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
 
+        overlay->setVisible(false);
     }
     else
     {
@@ -1155,6 +1157,10 @@ void InfoDialog::regenerateLayout()
         ui->wUsage->setVisible(true);
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
     }
+
+    setTransfer(transfer1);
+    updateTransfers();
+    app->onGlobalSyncStateChanged(NULL);
 }
 
 void InfoDialog::onUserAction(int action)
