@@ -16,7 +16,7 @@
 
 using namespace mega;
 
-InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
+InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
 {
@@ -54,7 +54,6 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     transferMenu = NULL;
     menuSignalMapper = NULL;
     gWidget = NULL;
-    guestMode = mode;
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -145,7 +144,7 @@ InfoDialog::InfoDialog(MegaApplication *app, bool mode, QWidget *parent) :
     setMaximumHeight(377);
 #endif
 
-    if(!guestMode)
+    if(preferences->logged())
     {
         setUsage();
         updateSyncsButton();
@@ -195,7 +194,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     ActiveTransfer *wTransfer;
     if(type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        wTransfer = guestMode ? gWidget->getTransfer() : ui->wTransfer1;
+        wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
         if(transfer1 != transfer)
         {
             delete transfer1;
@@ -296,7 +295,7 @@ void InfoDialog::updateTransfers()
                 remainingTime = QString::fromAscii("--:--:--");
             }
 
-            guestMode ? gWidget->setRemainingTime(remainingTime)
+            !preferences->logged() ? gWidget->setRemainingTime(remainingTime)
                       : ui->lRemainingTimeD->setText(remainingTime);
             ui->wDownloadDesc->show();
             QString fullPattern = QString::fromAscii("<span style=\"color: rgb(120, 178, 66); \">%1</span>%2");
@@ -315,22 +314,22 @@ void InfoDialog::updateTransfers()
             else if(downloadSpeed >= 0) downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
             else downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
 
-            guestMode ? gWidget->setDownloadLabel(fullPattern.arg(operation).arg(downloadString))
-                      : ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
-
-            if(!ui->wTransfer1->isActive())
-                ui->wDownloadDesc->hide();
-            else
-                ui->wDownloadDesc->show();
-
-            if(guestMode)
+            if(preferences->logged())
             {
+                ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
+                if(!ui->wTransfer1->isActive())
+                    ui->wDownloadDesc->hide();
+                else
+                    ui->wDownloadDesc->show();
+            }
+            else
+            {
+                gWidget->setDownloadLabel(fullPattern.arg(operation).arg(downloadString));
                 if(!gWidget->getTransfer()->isActive())
                     gWidget->hideDownloads();
                 else
                     gWidget->showDownloads();
             }
-
         }
     }
 
@@ -398,7 +397,7 @@ void InfoDialog::updateTransfers()
 
     if(remainingUploads || remainingDownloads)
     {
-        if(guestMode && gWidget->getTransfer()->isActive())
+        if(!preferences->logged() && gWidget->getTransfer()->isActive())
         {
             gWidget->setIdleState(false);
         }
@@ -443,7 +442,7 @@ void InfoDialog::transferFinished(int error)
         uploadsFinishedTimer.stop();
 
     if(!remainingDownloads && !remainingUploads &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated
-                                                     || (guestMode && !gWidget->idleState())))
+                                                     || (!preferences->logged() && !gWidget->idleState())))
     {
         if(!transfersFinishedTimer.isActive())
         {
@@ -488,12 +487,6 @@ void InfoDialog::setIndexing(bool indexing)
     this->indexing = indexing;
 }
 
-void InfoDialog::setGuestMode(bool mode)
-{
-    this->guestMode = mode;
-    regenerateLayout();
-}
-
 void InfoDialog::setWaiting(bool waiting)
 {
     this->waiting = waiting;
@@ -518,7 +511,7 @@ void InfoDialog::updateState()
 {
     if(ui->bPause->isChecked())
     {
-        if(guestMode)
+        if(!preferences->logged())
         {
             if(!gWidget->idleState())
             {
@@ -552,7 +545,7 @@ void InfoDialog::updateState()
     }
     else
     {
-        if(guestMode)
+        if(!preferences->logged())
         {
             gWidget->setPauseState(false);
             if(!gWidget->getTransfer()->isActive())
@@ -822,7 +815,7 @@ void InfoDialog::onAllDownloadsFinished()
     remainingDownloads = megaApi->getNumPendingDownloads() + megaApiLinks->getNumPendingDownloads();
     if(!remainingDownloads)
     {
-        if(guestMode)
+        if(!preferences->logged())
         {
             gWidget->getTransfer()->hideTransfer();
             gWidget->setDownloadLabel(QString::fromAscii(""));
@@ -853,12 +846,12 @@ void InfoDialog::onAllTransfersFinished()
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
-        else if(guestMode && !gWidget->idleState())
+        else if(!preferences->logged() && !gWidget->idleState())
         {
             gWidget->setIdleState(true);
         }
 
-        if(!guestMode)
+        if(preferences->logged())
         {
             app->updateUserStats();
         }
@@ -1094,9 +1087,18 @@ void InfoDialog::changeEvent(QEvent *event)
 
 void InfoDialog::regenerateLayout()
 {
+    static bool mode = true;
+
+    if(mode == preferences->logged())
+    {
+        return;
+    }
+    mode = preferences->logged();
+
+
     QLayout *dialogLayout = layout();
 
-    if(guestMode)
+    if(!preferences->logged())
     {
         if(!gWidget)
         {
