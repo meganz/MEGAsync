@@ -885,7 +885,6 @@ void MegaApplication::guestMode()
     if(infoDialog)
     {
         infoDialog->setGuestMode(true);
-        infoDialog->init();
         return;
     }
 
@@ -942,10 +941,6 @@ void MegaApplication::loggedIn()
     if(!infoDialog)
     {
         infoDialog = new InfoDialog(this);
-    }
-    else
-    {
-        infoDialog->init();
     }
 
     //Set the upload limit
@@ -3773,7 +3768,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
             infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
             infoDialog->updateTransfers();
         }
-
     }
 }
 

@@ -20,7 +20,6 @@ class InfoDialog : public QDialog
 
 public:
     explicit InfoDialog(MegaApplication *app, bool guestMode = false, QWidget *parent = 0);
-    void init();
     ~InfoDialog();
 
     void setUsage();
