@@ -573,6 +573,9 @@ void MegaApplication::initialize()
     {
         enableDebug = true;
     }
+
+    if(preferences->logged() && preferences->wasPaused())
+        pauseTransfers(true);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -899,6 +902,7 @@ void MegaApplication::guestMode()
 }
 void MegaApplication::loggedIn()
 {
+    megaApi->pauseTransfers(paused);
     megaApi->getAccountDetails();
 
     if(settingsDialog)
@@ -1999,16 +2003,6 @@ bool MegaApplication::eventFilter(QObject *o, QEvent *ev)
     return false;
 }
 #endif
-
-void MegaApplication::pauseSync()
-{
-    pauseTransfers(true);
-}
-
-void MegaApplication::resumeSync()
-{
-    pauseTransfers(false);
-}
 
 //Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
@@ -3239,10 +3233,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete rootNode;
 
                     //If we have got the filesystem, start the app
-                    Preferences *preferences = Preferences::instance();
-                    if(preferences->logged() && preferences->wasPaused())
-                        pauseTransfers(true);
-
                     loggedIn();
                     restoreSyncs();
                 }
