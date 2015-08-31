@@ -692,6 +692,12 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 
 void SetupWizard::closeEvent(QCloseEvent *event)
 {
+    if(event->spontaneous())
+    {
+        on_bCancel_clicked();
+        event->ignore();
+        return;
+    }
     event->accept();
 }
 
