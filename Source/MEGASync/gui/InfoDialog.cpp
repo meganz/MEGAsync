@@ -204,6 +204,11 @@ void InfoDialog::setUsage()
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
 {
+    if(!transfer)
+    {
+        return;
+    }
+
     int type = transfer->getType();
     QString fileName = QString::fromUtf8(transfer->getFileName());
     long long completedSize = transfer->getTransferredBytes();
@@ -213,8 +218,12 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     if(type == MegaTransfer::TYPE_DOWNLOAD)
     {
         wTransfer = guestMode ? gWidget->getTransfer() : ui->wTransfer1;
-        if(transfer1) delete transfer1;
-        transfer1 = transfer->copy();
+        if(transfer1 != transfer)
+        {
+            delete transfer1;
+            transfer1 = transfer->copy();
+        }
+
         if(!downloadStartTime)
         {
             downloadStartTime = QDateTime::currentMSecsSinceEpoch();
@@ -225,8 +234,12 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     else
     {
         wTransfer = ui->wTransfer2;
-        if(transfer2) delete transfer2;
-        transfer2 = transfer->copy();
+        if(transfer2 != transfer)
+        {
+            delete transfer2;
+            transfer2 = transfer->copy();
+        }
+
         if(!uploadStartTime)
         {
             uploadStartTime = QDateTime::currentMSecsSinceEpoch();
