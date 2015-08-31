@@ -50,6 +50,7 @@ private:
     Ui::GuestWidget *ui;
     QMenu *transferMenu;
     QPushButton *overlayIdle, *overlayPaused;
+    bool isIdle;
 };
 
 #endif // GUESWIDGET_H
