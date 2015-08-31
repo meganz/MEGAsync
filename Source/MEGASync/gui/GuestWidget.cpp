@@ -11,6 +11,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->setupUi(this);
 
     transferMenu = NULL;
+    isIdle = true;
 
     ui->wActiveDownload->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wActiveDownload->hideTransfer();
@@ -71,11 +72,12 @@ void GuestWidget::showDownloads()
 
 bool GuestWidget::idleState()
 {
-    return overlayIdle->isVisible();
+    return isIdle;
 }
 
 void GuestWidget::setIdleState(bool state)
 {
+    isIdle = state;
     if(state)
     {
         ui->wActiveDownload->hide();
