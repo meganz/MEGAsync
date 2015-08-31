@@ -884,7 +884,7 @@ void MegaApplication::guestMode()
 {
     if(infoDialog)
     {
-        infoDialog->setGuestMode(true);
+        infoDialog->regenerateLayout();
         return;
     }
 
@@ -894,7 +894,7 @@ void MegaApplication::guestMode()
     changeLanguage(language);
 
     updated = false;
-    infoDialog = new InfoDialog(this, true);
+    infoDialog = new InfoDialog(this);
 
 }
 void MegaApplication::loggedIn()
@@ -1694,7 +1694,7 @@ void MegaApplication::setupWizardFinished()
     }
 
     guestModeEnabled = false;
-    infoDialog->setGuestMode(false);
+    infoDialog->regenerateLayout();
 
     QStringList exclusions = preferences->getExcludedSyncNames();
     vector<string> vExclusions;
