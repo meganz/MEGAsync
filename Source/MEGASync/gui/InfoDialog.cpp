@@ -404,6 +404,7 @@ void InfoDialog::updateTransfers()
         else if(ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
+            updateState();
         }
     }
 
