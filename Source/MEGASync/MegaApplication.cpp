@@ -2244,6 +2244,12 @@ void MegaApplication::userAction(int action)
     }
 }
 
+void MegaApplication::changeState()
+{
+    if(infoDialog)
+        infoDialog->regenerateLayout();
+}
+
 void MegaApplication::processDownloads()
 {
     if(!downloadQueue.size())
