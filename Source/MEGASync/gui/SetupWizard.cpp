@@ -102,8 +102,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 {
                     ui->bBack->setEnabled(true);
                     ui->bNext->setEnabled(true);
-                    ui->bSkip->setVisible(true);
-                    ui->bSkip->setEnabled(true);
                     ui->sPages->setCurrentWidget(ui->pLogin);
                     QMessageBox::warning(this, tr("Error"), tr("Error getting session key"), QMessageBox::Ok);
                 }
