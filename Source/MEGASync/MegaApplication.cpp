@@ -784,7 +784,6 @@ void MegaApplication::updateTrayIcon()
 
 void MegaApplication::start()
 {
-    paused = false;
     indexing = false;
     overquotaCheck = false;
 
