@@ -319,6 +319,7 @@ void Preferences::setEmail(QString email)
     settings->setValue(emailKey, email);
     settings->sync();
     mutex.unlock();
+    ((MegaApplication *)qApp)->changeState();
 }
 
 QString Preferences::emailHash()
@@ -1683,6 +1684,7 @@ void Preferences::unlink()
     localFingerprints.clear();
     settings->sync();
     mutex.unlock();
+    ((MegaApplication *)qApp)->changeState();
 }
 
 bool Preferences::isCrashed()
