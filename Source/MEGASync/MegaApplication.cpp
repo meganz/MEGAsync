@@ -787,16 +787,6 @@ void MegaApplication::start()
     indexing = false;
     overquotaCheck = false;
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
-    #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
-    #endif
-#else
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
-#endif
-
 #ifdef Q_OS_LINUX
     if(isLinux && trayIcon->contextMenu())
     {
