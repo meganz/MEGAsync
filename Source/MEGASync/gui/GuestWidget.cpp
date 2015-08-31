@@ -22,6 +22,9 @@ GuestWidget::GuestWidget(QWidget *parent) :
     overlayIdle->resize(ui->wContainer->minimumSize());
 #ifdef __APPLE__
     overlayIdle->move(1, 25);
+#else
+    overlayIdle->move(2, 20);
+    overlayIdle->resize(overlayIdle->width()-4, overlayIdle->height());
 #endif
 
     overlayPaused = new QPushButton(this);
@@ -31,6 +34,12 @@ GuestWidget::GuestWidget(QWidget *parent) :
     overlayPaused->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
     overlayPaused->resize(ui->wContainer->minimumSize());
+
+#ifndef __APPLE__
+    overlayPaused->move(2, 0);
+    overlayPaused->resize(overlayPaused->width()-4, overlayPaused->height());
+#endif
+
     overlayPaused->hide();
 
     setIdleState(true);
@@ -131,7 +140,6 @@ void GuestWidget::onTransferCancel(int x, int y)
 #else
     transferMenu->popup(ui->wActiveDownload->mapToGlobal(QPoint(x, y)));
 #endif
-
 }
 
 void GuestWidget::on_bLogin_clicked()

@@ -660,7 +660,6 @@ void SetupWizard::wAdvancedSetup_clicked()
 
 void SetupWizard::setupPreferences()
 {
-
     QString email = ui->eLoginEmail->text().toLower().trimmed();
 
     int proxyType = preferences->proxyType();
@@ -680,7 +679,6 @@ void SetupWizard::setupPreferences()
     preferences->setProxyRequiresAuth(proxyAuth);
     preferences->setProxyUsername(proxyUsername);
     preferences->setProxyPassword(proxyPassword);
-
 }
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)

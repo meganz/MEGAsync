@@ -26,7 +26,6 @@ public:
         PAGE_SETUP = 0,
         PAGE_NEW_ACCOUNT = 1,
         PAGE_LOGIN = 2
-
     };
 
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
