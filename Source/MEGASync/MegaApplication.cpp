@@ -522,8 +522,6 @@ void MegaApplication::initialize()
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
-    initialMenu = new QMenu();
-
 #if (QT_VERSION == 0x050500) && defined(_WIN32)
     initialMenu->installEventFilter(this);
 #endif
@@ -543,12 +541,16 @@ void MegaApplication::initialize()
 #else
     notificator = new Notificator(applicationName(), trayIcon, NULL);
 #endif
+
+#ifdef Q_OS_LINUX
+    initialMenu = new QMenu();
     changeProxyAction = new QAction(tr("Settings"), this);
     connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
     initialExitAction = new QAction(tr("Exit"), this);
     connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
+#endif
 
 #ifdef _WIN32
     windowsExitAction = new QAction(tr("Exit"), this);
@@ -786,8 +788,6 @@ void MegaApplication::start()
     {
         trayIcon->setContextMenu(initialMenu);
     }
-#else
-        trayIcon->setContextMenu(initialMenu);
 #endif
 
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
@@ -2866,8 +2866,8 @@ void MegaApplication::createTrayIcon()
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
 
-    if (isLinux)
-    {
+    #ifdef Q_OS_LINUX
+
         if(showStatusAction)
         {
             showStatusAction->deleteLater();
@@ -2879,8 +2879,8 @@ void MegaApplication::createTrayIcon()
 
         initialMenu->insertAction(changeProxyAction, showStatusAction);
     }
-    else
-    {
+    #else
+
         #ifdef _WIN32
             trayIcon->setContextMenu(windowsMenu);
         #else
@@ -2901,7 +2901,7 @@ void MegaApplication::createTrayIcon()
                 scanningTimer->start();
             }
         #endif
-    }
+    #endif
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
 }
 
