@@ -849,19 +849,22 @@ void MegaApplication::start()
     //Start the initial setup wizard if needed
     if(!preferences->logged())
     {
+
         if(!preferences->installationTime())
         {
             preferences->setInstallationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
 
-        if(!preferences->isFirstStartDone())
-        {
-            megaApi->sendEvent(99500, "MEGAsync first start");
-        }
-
         updated = false;
         guestModeEnabled = true;
         guestMode();
+
+        if(!preferences->isFirstStartDone())
+        {
+            megaApi->sendEvent(99500, "MEGAsync first start");
+            userAction(SetupWizard::PAGE_SETUP);
+        }
+
         return;
     }
 	else
@@ -897,7 +900,7 @@ void MegaApplication::start()
         }
         else
         {
-                megaApi->fastLogin(preferences->email().toUtf8().constData(),
+            megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
                        preferences->privatePw().toUtf8().constData());
         }

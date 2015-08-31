@@ -236,8 +236,8 @@ void SetupWizard::goToStep(int page)
     switch(page)
     {
         case PAGE_SETUP:
-        ui->sPages->setCurrentWidget(ui->pSetup);
-        break;
+            ui->sPages->setCurrentWidget(ui->pSetup);
+            break;
 
         case PAGE_LOGIN:
             ui->sPages->setCurrentWidget(ui->pLogin);
