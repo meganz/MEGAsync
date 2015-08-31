@@ -2580,8 +2580,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #endif
 
 #ifndef __APPLE__
-        if(isLinux)
-        {
+        #ifdef Q_OS_LINUX
             if(showStatusAction)
             {
                 initialMenu->removeAction(showStatusAction);
@@ -2595,7 +2594,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
             if(trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
                 trayOverQuotaMenu->close();
-        }
+        #endif
         infoDialogTimer->start(200);
 #else
         showInfoDialog();
