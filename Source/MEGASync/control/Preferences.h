@@ -359,7 +359,6 @@ protected:
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
-    static const bool defaultGuestMode;
     static const int  defaultUploadLimitKB;
     static const int  defaultProxyType;
     static const int  defaultProxyProtocol;

@@ -27,6 +27,7 @@ void ActiveTransfer::setFileName(QString fileName)
     this->fileName = fileName;
 	QFont f = ui->lFileName->font();
 	QFontMetrics fm = QFontMetrics(f);
+    ui->lFileName->setStyleSheet(QString::fromUtf8("color: grey;"));
 	ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 }
 

@@ -860,7 +860,6 @@ void MegaApplication::start()
         }
 
         updated = false;
-        //preferences->setGuestModeEnabled(true);
         guestModeEnabled = true;
         guestMode();
         return;
@@ -925,18 +924,12 @@ void MegaApplication::guestMode()
 }
 void MegaApplication::loggedIn()
 {
-    if(infoDialog)
-    {
-        if(!guestModeEnabled)
-        {
-            megaApi->getAccountDetails();
-        }
-        infoDialog->init();
-        return;
-    }
+    megaApi->getAccountDetails();
 
     if(settingsDialog)
+    {
         settingsDialog->setProxyOnly(false);
+    }
 
     // Apply the "Start on startup" configuration, make sure configuration has the actual value
     // get the requested value
@@ -969,16 +962,19 @@ void MegaApplication::loggedIn()
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
     updated = false;
-    infoDialog = new InfoDialog(this);
+
+    if(!infoDialog)
+    {
+        infoDialog = new InfoDialog(this);
+    }
+    else
+    {
+        infoDialog->init();
+    }
 
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
     Platform::startShellDispatcher(this);
-
-    if(!guestModeEnabled)
-    {
-        updateUserStats();
-    }
 }
 
 void MegaApplication::startSyncs()
@@ -1153,9 +1149,6 @@ void MegaApplication::closeDialogs()
 
     delete infoOverQuota;
     infoOverQuota = NULL;
-
-    delete httpServer;
-    httpServer = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -1412,6 +1405,7 @@ void MegaApplication::cleanAll()
         Platform::notifyItemChange(preferences->getLocalFolder(i));
 
     closeDialogs();
+    delete httpServer;
     delete uploader;
     delete delegateListener;
     delete delegateLinksListener;
@@ -1835,9 +1829,7 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
-
 #if defined(WIN32) || defined(__APPLE__)
-
     if(!updateThread && preferences->canUpdate())
     {
         updateThread = new QThread();
@@ -2273,20 +2265,12 @@ void MegaApplication::userAction(int action)
 {
     if(preferences && guestModeEnabled)
     {
-        delete httpServer;
-        httpServer = NULL;
-        guestModeEnabled = false;
-        closeDialogs();
-        refreshTrayIcon();
-        start();
-
         if(setupWizard)
         {
             setupWizard->setVisible(true);
             setupWizard->raise();
             setupWizard->activateWindow();
             setupWizard->setFocus();
-            setupWizard->goToStep(action);
             return;
         }
         setupWizard = new SetupWizard(this);
@@ -2295,7 +2279,6 @@ void MegaApplication::userAction(int action)
         setupWizard->goToStep(action);
         setupWizard->show();
     }
-
 }
 
 void MegaApplication::processDownloads()
@@ -3103,7 +3086,6 @@ void MegaApplication::createGuestMenu()
     }
     connect(updateGuestAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
-
     if(importLinksGuestAction)
     {
         importLinksGuestAction->deleteLater();
@@ -3126,7 +3108,6 @@ void MegaApplication::createGuestMenu()
     #endif
     connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(changeProxy()));
 
-
     if(loginAction)
     {
         loginAction->deleteLater();
@@ -3143,7 +3124,6 @@ void MegaApplication::createGuestMenu()
     trayGuestMenu->addAction(loginAction);
     trayGuestMenu->addSeparator();
     trayGuestMenu->addAction(exitGuestAction);
-
 }
 
 //Called when a request is about to start
@@ -3994,7 +3974,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 {
     if(megaApi && megaApiLinks)
     {
-        indexing = megaApi->isScanning() || megaApiLinks->isScanning();
+        indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting() || megaApiLinks->isWaiting();
     }
 

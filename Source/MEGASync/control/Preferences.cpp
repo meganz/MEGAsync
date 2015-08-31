@@ -198,7 +198,6 @@ const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLog
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
-const bool Preferences::defaultGuestMode            = false;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
