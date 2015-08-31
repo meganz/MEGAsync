@@ -514,13 +514,16 @@ void InfoDialog::updateState()
     {
         if(!preferences->logged())
         {
-            if(!gWidget->idleState())
+            if(gWidget)
             {
-                gWidget->setPauseState(true);
-            }
-            else
-            {
-                gWidget->setPauseState(false);
+                if(!gWidget->idleState())
+                {
+                    gWidget->setPauseState(true);
+                }
+                else
+                {
+                    gWidget->setPauseState(false);
+                }
             }
             return;
         }
@@ -548,10 +551,13 @@ void InfoDialog::updateState()
     {
         if(!preferences->logged())
         {
-            gWidget->setPauseState(false);
-            if(!gWidget->getTransfer()->isActive())
+            if(gWidget)
             {
-                gWidget->setIdleState(true);
+                gWidget->setPauseState(false);
+                if(!gWidget->getTransfer()->isActive())
+                {
+                    gWidget->setIdleState(true);
+                }
             }
             return;
         }
