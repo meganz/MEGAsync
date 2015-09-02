@@ -25,6 +25,7 @@ public:
     void setUsage();
     void setTransfer(mega::MegaTransfer *transfer);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
+    void clearRecentFiles();
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);

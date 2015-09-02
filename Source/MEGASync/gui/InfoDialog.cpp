@@ -249,6 +249,14 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     updateRecentFiles();
 }
 
+void InfoDialog::clearRecentFiles()
+{
+    ui->wRecent1->clear();
+    ui->wRecent2->clear();
+    ui->wRecent3->clear();
+    updateRecentFiles();
+}
+
 void InfoDialog::updateTransfers()
 {
     remainingUploads = megaApi->getNumPendingUploads() + megaApiLinks->getNumPendingUploads();
