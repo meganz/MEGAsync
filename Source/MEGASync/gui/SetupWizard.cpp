@@ -239,16 +239,17 @@ void SetupWizard::goToStep(int page)
 
         case PAGE_LOGIN:
             ui->sPages->setCurrentWidget(ui->pLogin);
+            ui->bBack->setVisible(true);
             break;
 
         case PAGE_NEW_ACCOUNT:
             ui->sPages->setCurrentWidget(ui->pNewAccount);
+            ui->bBack->setVisible(true);
             break;
-
         default:
             return;
     }
-    ui->bBack->setVisible(true);
+
 }
 
 
@@ -486,6 +487,7 @@ void SetupWizard::on_bBack_clicked()
         sessionKey.clear();
         wTypicalSetup_clicked();
         megaApi->logout();
+        ui->bSkip->setVisible(false);
     }
     else if(w == ui->pAdvanced)
     {
