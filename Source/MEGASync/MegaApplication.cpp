@@ -396,7 +396,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     externalNodesTimestamp = 0;
     enableDebug = false;
     overquotaCheck = false;
-    guestModeEnabled = false;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -831,9 +830,14 @@ void MegaApplication::start()
             preferences->setInstallationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
 
+        startUpdateTask();
+        QString language = preferences->language();
+        changeLanguage(language);
         updated = false;
-        guestModeEnabled = true;
-        guestMode();
+        if(!infoDialog)
+        {
+            infoDialog = new InfoDialog(this);
+        }
 
         if(!preferences->isFirstStartDone())
         {
@@ -883,23 +887,6 @@ void MegaApplication::start()
     }
 }
 
-void MegaApplication::guestMode()
-{
-    if(infoDialog)
-    {
-        infoDialog->regenerateLayout();
-        return;
-    }
-
-    startUpdateTask();
-
-    QString language = preferences->language();
-    changeLanguage(language);
-
-    updated = false;
-    infoDialog = new InfoDialog(this);
-
-}
 void MegaApplication::loggedIn()
 {
     megaApi->pauseTransfers(paused);
@@ -920,11 +907,6 @@ void MegaApplication::loggedIn()
         preferences->setStartOnStartup(!startOnStartup);
     }
 
-    startUpdateTask();
-
-    QString language = preferences->language();
-    changeLanguage(language);
-
 #ifdef WIN32
     if(!preferences->lastExecutionTime()) showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
     else if(!updated) showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
@@ -940,8 +922,10 @@ void MegaApplication::loggedIn()
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
 
+    startUpdateTask();
+    QString language = preferences->language();
+    changeLanguage(language);
     updated = false;
-
     if(!infoDialog)
     {
         infoDialog = new InfoDialog(this);
@@ -1697,9 +1681,6 @@ void MegaApplication::setupWizardFinished()
         setupWizard = NULL;
     }
 
-    guestModeEnabled = false;
-    infoDialog->regenerateLayout();
-
     QStringList exclusions = preferences->getExcludedSyncNames();
     vector<string> vExclusions;
     for(int i=0; i<exclusions.size(); i++)
@@ -1929,7 +1910,7 @@ void MegaApplication::checkForUpdates()
 
 void MegaApplication::showTrayMenu(QPoint *point)
 {
-    if(trayGuestMenu && guestModeEnabled)
+    if(trayGuestMenu && !preferences->logged())
     {
         if(trayGuestMenu->isVisible())
             trayGuestMenu->close();
@@ -2050,7 +2031,7 @@ void MegaApplication::importLinks()
     LinkProcessor *linkProcessor = new LinkProcessor(megaApiLinks, linkList);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApiLinks, preferences, linkProcessor, guestModeEnabled);
+    importDialog = new ImportMegaLinksDialog(megaApiLinks, preferences, linkProcessor, !preferences->logged());
     importDialog->exec();
     if(!importDialog)
     {
@@ -2075,7 +2056,7 @@ void MegaApplication::importLinks()
     }
 
     //If the user wants to import some links, do it
-    if(!guestModeEnabled && importDialog->shouldImport())
+    if(preferences->logged() && importDialog->shouldImport())
     {
         connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
         connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, long long)),
@@ -2226,7 +2207,7 @@ void MegaApplication::loginActionClicked()
 
 void MegaApplication::userAction(int action)
 {
-    if(preferences && guestModeEnabled)
+    if(!preferences->logged())
     {
         if(setupWizard)
         {
@@ -2683,7 +2664,7 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
-        if(guestModeEnabled)
+        if(!preferences->logged())
         {
             changeProxy();
             return;
