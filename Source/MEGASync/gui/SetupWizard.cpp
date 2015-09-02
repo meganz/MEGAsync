@@ -694,7 +694,27 @@ void SetupWizard::closeEvent(QCloseEvent *event)
 {
     if(event->spontaneous())
     {
-        on_bCancel_clicked();
+        QPointer<QMessageBox> msg = new QMessageBox(this);
+        msg->setIcon(QMessageBox::Question);
+        msg->setWindowTitle(tr("MEGAsync"));
+        msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
+        msg->addButton(QMessageBox::Yes);
+        msg->addButton(QMessageBox::No);
+        msg->setDefaultButton(QMessageBox::No);
+        int button = msg->exec();
+        if(msg)
+        {
+            delete msg;
+        }
+        if(button == QMessageBox::Yes)
+        {
+            if(megaApi->isLoggedIn())
+            {
+                megaApi->logout();
+            }
+            event->accept();
+            return;
+        }
         event->ignore();
         return;
     }
