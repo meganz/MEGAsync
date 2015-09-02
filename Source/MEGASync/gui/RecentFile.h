@@ -33,6 +33,7 @@ public:
     RecentFileInfo getFileInfo();
     void setFileInfo(RecentFileInfo info);
     void disableGetLink(bool disable);
+    void clear();
     bool eventFilter(QObject *, QEvent * ev);
 
 private:

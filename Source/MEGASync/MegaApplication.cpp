@@ -1711,6 +1711,11 @@ void MegaApplication::setupWizardFinished()
 
 void MegaApplication::unlink()
 {
+    if(infoDialog)
+    {
+        infoDialog->clearRecentFiles();
+    }
+
     //Reset fields that will be initialized again upon login
     stopUpdateTask();
     Platform::stopShellDispatcher();
