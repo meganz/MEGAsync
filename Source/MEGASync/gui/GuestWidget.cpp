@@ -21,10 +21,9 @@ GuestWidget::GuestWidget(QWidget *parent) :
     overlayIdle->setIcon(QIcon(QString::fromAscii("://images/non_logged_graphic.png")));
     overlayIdle->setIconSize(QSize(104, 104));
     overlayIdle->resize(ui->wContainer->minimumSize());
-#ifdef __APPLE__
-    overlayIdle->move(1, 25);
-#else
+
     overlayIdle->move(2, 20);
+#ifndef __APPLE__
     overlayIdle->resize(overlayIdle->width()-4, overlayIdle->height());
 #endif
 
