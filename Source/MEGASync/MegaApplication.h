@@ -142,7 +142,7 @@ public slots:
     bool anUpdateIsAvailable();
     void triggerInstallUpdate();
     void scanningAnimationStep();
-    void setupWizardFinished();
+    void setupWizardFinished(int cancelWizard);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();

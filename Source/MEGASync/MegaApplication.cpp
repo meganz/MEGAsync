@@ -1673,12 +1673,17 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
-void MegaApplication::setupWizardFinished()
+void MegaApplication::setupWizardFinished(int cancelWizard)
 {
     if(setupWizard)
     {
         setupWizard->deleteLater();
         setupWizard = NULL;
+    }
+
+    if(cancelWizard)
+    {
+        return;
     }
 
     QStringList exclusions = preferences->getExcludedSyncNames();
@@ -2224,7 +2229,7 @@ void MegaApplication::userAction(int action)
         }
         setupWizard = new SetupWizard(this);
         setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished()));
+        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
         setupWizard->goToStep(action);
         setupWizard->show();
     }
