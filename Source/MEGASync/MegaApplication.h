@@ -155,7 +155,6 @@ protected:
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
-    void guestMode();
     void startSyncs();
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
@@ -269,7 +268,6 @@ protected:
     long long externalNodesTimestamp;
     bool enableDebug;
     bool overquotaCheck;
-    bool guestModeEnabled;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;

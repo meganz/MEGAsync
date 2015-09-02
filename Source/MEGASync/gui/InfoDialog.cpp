@@ -1082,12 +1082,15 @@ void InfoDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        if(preferences->totalStorage())
+        if(preferences->logged())
         {
-            setUsage();
+            if(preferences->totalStorage())
+            {
+                setUsage();
+            }
+            updateSyncsButton();
+            updateTransfers();
         }
-        updateSyncsButton();
-        updateTransfers();
     }
     QDialog::changeEvent(event);
 }
