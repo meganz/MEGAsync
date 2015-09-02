@@ -528,6 +528,7 @@ void SetupWizard::on_bCancel_clicked()
             {
                 megaApi->logout();
             }
+            finished(-1);
             close();
         }
     }
@@ -714,6 +715,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
             {
                 megaApi->logout();
             }
+            finished(-1);
             event->accept();
             return;
         }
