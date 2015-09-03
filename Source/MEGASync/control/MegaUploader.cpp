@@ -57,7 +57,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
         if(dupplicate->getType() == MegaNode::TYPE_FOLDER)
         {
             QDir dir(info.absoluteFilePath());
-            QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+            QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
             for(int i=0; i<entries.size(); i++)
                 upload(entries[i], dupplicate);
         }
