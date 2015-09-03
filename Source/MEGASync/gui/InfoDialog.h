@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QProcess>
 #include <QDateTime>
+#include <QPainter>
 
 #include "SettingsDialog.h"
 
@@ -41,6 +42,9 @@ public:
     void updateRecentFiles();
     void disableGetLink(bool disable);
     void addSync(mega::MegaHandle h);
+#ifdef __APPLE__
+    void moveArrow(QPoint p);
+#endif
 
 public slots:
    void addSync();
@@ -82,6 +86,9 @@ private slots:
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
+#ifdef __APPLE__
+    QPushButton *arrow;
+#endif
 
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
@@ -114,6 +121,10 @@ private:
 
 protected:
     void changeEvent(QEvent * event);
+#ifdef __APPLE__
+    void paintEvent( QPaintEvent * e);
+    void hideEvent(QHideEvent *event);
+#endif
 
 protected:
 	QDateTime lastPopupUpdate;
