@@ -3573,6 +3573,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     int errorCode = e->getErrorCode();
     if(errorCode != MegaError::API_OK && transfer->getTag() > 0
+            && errorCode != MegaError::API_EACCESS
             && errorCode != MegaError::API_ESID
             && errorCode != MegaError::API_ESSL
             && errorCode != MegaError::API_EINCOMPLETE)
