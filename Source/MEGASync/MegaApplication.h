@@ -249,7 +249,7 @@ protected:
     UpdateTask *updateTask;
     Notificator *notificator;
     long long lastActiveTime;
-    QNetworkConfigurationManager networkManager;
+    QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QList<QString> pendingLinks;
     MegaSyncLogger *logger;
@@ -271,6 +271,7 @@ protected:
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
+    bool networkConnectivity;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
