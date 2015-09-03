@@ -289,30 +289,6 @@ bool Utilities::removeRecursively(QString path)
     mega::MegaApi::removeRecursively(qpath.toUtf8().constData());
     success = dir.rmdir(dir.absolutePath());
     return success;
-
-    /*
-    if (!dir.exists())
-        return true;
-
-    const QString dirPath = dir.path();
-    // not empty -- we must empty it first
-    QDirIterator di(dirPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
-    while (di.hasNext()) {
-        di.next();
-        const QFileInfo& fi = di.fileInfo();
-        bool ok;
-        if (fi.isDir() && !fi.isSymLink())
-            ok = removeRecursively(QDir(di.filePath())); // recursive
-        else
-            ok = QFile::remove(di.filePath());
-        if (!ok)
-            success = false;
-    }
-
-    if (success)
-        success = dir.rmdir(dir.absolutePath());
-
-    return success;*/
 }
 
 void Utilities::copyRecursively(QString srcPath, QString dstPath)
@@ -337,7 +313,7 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     {
         QDir dstDir(dstPath);
         dstDir.mkpath(QString::fromAscii("."));
-        QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+        QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot);
         while (di.hasNext()) {
             di.next();
             if (!di.fileInfo().isSymLink())
