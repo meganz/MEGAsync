@@ -342,6 +342,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     appfinished = false;
     updateAvailable = false;
+    networkConnectivity = true;
     lastStartedDownload = 0;
     lastStartedUpload = 0;
     trayIcon = NULL;
@@ -620,6 +621,8 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::updateTrayIcon()
 {
     if(!trayIcon) return;
+
+    QString tooltip;
     if(infoOverQuota)
     {
         if(preferences->usedStorage() < preferences->totalStorage())
@@ -636,58 +639,77 @@ void MegaApplication::updateTrayIcon()
         }
 
         #ifndef __APPLE__
-            #ifdef _WIN32
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/warning_ico.ico")));
-            #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_warning.png")));
-            #endif
+            if(networkConnectivity)
+            {
+                #ifdef _WIN32
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/warning_ico.ico")));
+                #else
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_warning.png")));
+                #endif
+            }
         #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_overquota_mac.png")),QIcon(QString::fromAscii("://images/icon_overquota_mac_white.png")));
+            if(networkConnectivity)
+            {
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_overquota_mac.png")),QIcon(QString::fromAscii("://images/icon_overquota_mac_white.png")));
+            }
+
             if(scanningTimer->isActive())
                 scanningTimer->stop();
         #endif
-        trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Over quota"));
+
+        tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Over quota");
     }
     else if(paused)
     {
-        QString tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
+        tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Paused");
         if(!updateAvailable)
         {
             #ifndef __APPLE__
-                #ifdef _WIN32
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-                #else
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
-                #endif
+                if(networkConnectivity)
+                {
+                    #ifdef _WIN32
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+                    #else
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
+                    #endif
+                }
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")),QIcon(QString::fromAscii("://images/icon_paused_mac_white.png")));
+                if(networkConnectivity)
+                {
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")),QIcon(QString::fromAscii("://images/icon_paused_mac_white.png")));
+                }
+
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
-            trayIcon->setToolTip(tooltip);
         }
         else
         {
             //TODO: Change icon
             #ifndef __APPLE__
-                #ifdef _WIN32
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
-                #else
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
-                #endif
+                if(networkConnectivity)
+                {
+                    #ifdef _WIN32
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_pause.ico")));
+                    #else
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_paused.png")));
+                    #endif
+                }
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")),QIcon(QString::fromAscii("://images/icon_paused_mac_white.png")));
+                if(networkConnectivity)
+                {
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_paused_mac.png")),QIcon(QString::fromAscii("://images/icon_paused_mac_white.png")));
+                }
+
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
             tooltip += QString::fromAscii("\n") + tr("Update available!");
-            trayIcon->setToolTip(tooltip);
         }
     }
     else if(indexing || waiting || megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads()
             || megaApiLinks->getNumPendingUploads() || megaApiLinks->getNumPendingDownloads())
     {
-        QString tooltip;
         if(indexing) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Scanning");
         else if(waiting) tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Waiting");
         else tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Syncing");
@@ -695,32 +717,45 @@ void MegaApplication::updateTrayIcon()
         if(!updateAvailable)
         {
             #ifndef __APPLE__
-                #ifdef _WIN32
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-                #else
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
-                #endif
+                if(networkConnectivity)
+                {
+                    #ifdef _WIN32
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+                    #else
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+                    #endif
+                }
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+                if(networkConnectivity)
+                {
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+                }
+
                 if(!scanningTimer->isActive())
                 {
                     scanningAnimationIndex = 1;
                     scanningTimer->start();
                 }
             #endif
-            trayIcon->setToolTip(tooltip);
         }
         else
         {
             //TODO: Change icon
             #ifndef __APPLE__
-                #ifdef _WIN32
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-                #else
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
-                #endif
+                if(networkConnectivity)
+                {
+                    #ifdef _WIN32
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+                    #else
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+                    #endif
+                }
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+                if(networkConnectivity)
+                {
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+                }
+
                 if(!scanningTimer->isActive())
                 {
                     scanningAnimationIndex = 1;
@@ -728,7 +763,6 @@ void MegaApplication::updateTrayIcon()
                 }
             #endif
             tooltip += QString::fromAscii("\n") + tr("Update available!");
-            trayIcon->setToolTip(tooltip);
         }
     }
     else
@@ -736,37 +770,74 @@ void MegaApplication::updateTrayIcon()
         if(!updateAvailable)
         {
             #ifndef __APPLE__
-                #ifdef _WIN32
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-                #else
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
-                #endif
+                if(networkConnectivity)
+                {
+                    #ifdef _WIN32
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+                    #else
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
+                    #endif
+                }
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")),QIcon(QString::fromAscii("://images/icon_synced_mac_white.png")));
+                if(networkConnectivity)
+                {
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")),QIcon(QString::fromAscii("://images/icon_synced_mac_white.png")));
+                }
+
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date"));
+
+            tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Up to date");
         }
         else
         {
             //TODO: Change icon
             #ifndef __APPLE__
-                #ifdef _WIN32
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
-                #else
-                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
-                #endif
+                if(networkConnectivity)
+                {
+                    #ifdef _WIN32
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/app_ico.ico")));
+                    #else
+                        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_uptodate.png")));
+                    #endif
+                }
             #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")),QIcon(QString::fromAscii("://images/icon_synced_mac_white.png")));
+                if(networkConnectivity)
+                {
+                    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_synced_mac.png")),QIcon(QString::fromAscii("://images/icon_synced_mac_white.png")));
+                }
+
                 if(scanningTimer->isActive())
                     scanningTimer->stop();
             #endif
-            trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!"));
+
+            tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Update available!");
         }
 
         if(reboot)
             rebootApplication();
+    }
+
+    if(!networkConnectivity)
+    {
+        //Override the current state
+        #ifndef __APPLE__
+            #ifdef _WIN32
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/login_ico.ico")));
+            #else
+                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_logging.png")));
+            #endif
+        #else
+            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_logging_mac.png")),QIcon(QString::fromAscii("://images/icon_logging_mac_white.png")));
+        #endif
+
+        tooltip = QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("No Internet connection");
+    }
+
+    if(tooltip.size())
+    {
+        trayIcon->setToolTip(tooltip);
     }
 }
 
@@ -1198,7 +1269,9 @@ void MegaApplication::refreshTrayIcon()
     for(int i=0; i<configs.size(); i++)
     {
         QNetworkInterface networkInterface = configs.at(i);
-        if(networkInterface.flags() & QNetworkInterface::IsUp)
+        QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
+        if((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
+                && !(flags & QNetworkInterface::IsLoopBack))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(networkInterface.humanReadableName()).toUtf8().constData());
             int numActiveIPs = 0;
@@ -1234,13 +1307,15 @@ void MegaApplication::refreshTrayIcon()
 
             lastActiveTime = QDateTime::currentMSecsSinceEpoch();
             newNetworkInterfaces.append(networkInterface);
+            networkConnectivity = true;
         }
     }
 
     bool disconnect = false;
     if(!newNetworkInterfaces.size())
     {
-        networkManager.updateConfigurations();
+        networkConnectivity = false;
+        networkConfigurationManager.updateConfigurations();
     }
     else if(!activeNetworkInterfaces.size())
     {
@@ -1330,7 +1405,7 @@ void MegaApplication::refreshTrayIcon()
     {
         if(!(++counter % 6))
         {
-            networkManager.updateConfigurations();
+            networkConfigurationManager.updateConfigurations();
             megaApi->update();
         }
 
