@@ -255,6 +255,15 @@ void InfoDialog::clearRecentFiles()
     ui->wRecent2->clear();
     ui->wRecent3->clear();
     updateRecentFiles();
+
+#ifdef __APPLE__
+    ui->wRecentlyUpdated->hide();
+    ui->wRecent1->hide();
+    ui->wRecent2->hide();
+    ui->wRecent3->hide();
+    setMinimumHeight(377);
+    setMaximumHeight(377);
+#endif
 }
 
 void InfoDialog::updateTransfers()
