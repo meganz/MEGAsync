@@ -1282,14 +1282,15 @@ void MegaApplication::refreshTrayIcon()
                 switch(ip.protocol())
                 {
                 case QAbstractSocket::IPv4Protocol:
-                    if(!ip.toString().startsWith(QString::fromUtf8("127."), Qt::CaseInsensitive))
+                    if(!ip.toString().startsWith(QString::fromUtf8("127."), Qt::CaseInsensitive) && !ip.toString().startsWith(QString::fromUtf8("169.254."), Qt::CaseInsensitive))
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv4: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
                     }
                     break;
                 case QAbstractSocket::IPv6Protocol:
-                    if(!ip.toString().startsWith(QString::fromUtf8("FE80::"), Qt::CaseInsensitive) && !(ip.toString() == QString::fromUtf8("::1")))
+                    if(!ip.toString().startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive) && !ip.toString().startsWith(QString::fromUtf8("FD00:"), Qt::CaseInsensitive)
+                                                                                                   && !(ip.toString() == QString::fromUtf8("::1")))
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv6: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
