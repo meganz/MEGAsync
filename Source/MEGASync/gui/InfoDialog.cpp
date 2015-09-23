@@ -503,16 +503,12 @@ void InfoDialog::updateState()
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        if(indexing)
+        if(waiting)
         {
-            if(!scanningTimer.isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
-            }
+            if(scanningTimer.isActive())
+                scanningTimer.stop();
 
-            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-
+            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             #ifndef Q_OS_LINUX
@@ -522,12 +518,16 @@ void InfoDialog::updateState()
                 ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
             #endif
         }
-        else if(waiting)
+        else if(indexing)
         {
-            if(scanningTimer.isActive())
-                scanningTimer.stop();
+            if(!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
 
-            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             #ifndef Q_OS_LINUX
