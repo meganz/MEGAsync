@@ -1011,16 +1011,16 @@ void InfoDialog::scanningAnimationStep()
 #ifdef __APPLE__
 void InfoDialog::paintEvent( QPaintEvent * e)
 {
+    QDialog::paintEvent(e);
     QPainter p( this );
     p.setCompositionMode( QPainter::CompositionMode_Clear);
     p.fillRect( ui->wArrow->rect(), Qt::transparent );
-    ui->wArrow->update();
 }
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
-    event->accept();
     arrow->hide();
+    QDialog::hideEvent(event);
 }
 
 void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
