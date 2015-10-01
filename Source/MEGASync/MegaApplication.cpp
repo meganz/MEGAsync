@@ -1529,6 +1529,11 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posx = screenGeometry.right() - dialog->width() - 1;
         }
         *posy = screenIndex ? screenGeometry.top()+22: screenGeometry.top();
+
+        if(*posy == 0)
+        {
+            *posy = 22;
+        }
     #else
         #ifdef WIN32
             QRect totalGeometry = QApplication::desktop()->screenGeometry();

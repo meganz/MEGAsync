@@ -107,6 +107,10 @@ void MegaSystemTrayIcon::setIcon(const QIcon &icon, const QIcon &iconWhite)
     const bool menuVisible = m_sys->item->menu && m_sys->item->menuVisible;
 
     CGFloat hgt = [[[NSApplication sharedApplication] mainMenu] menuBarHeight];
+    if(!hgt)
+    {
+        hgt = 22;
+    }
     const short scale = hgt - 4;
 
     const QIcon::Mode mode = menuVisible ? QIcon::Selected : QIcon::Normal;
