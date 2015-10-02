@@ -3036,7 +3036,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     QString sessionKey = QString::fromUtf8(session);
                     preferences->setSession(sessionKey);
-                    delete session;
+                    delete [] session;
 
                     //Successful login, fetch nodes
                     megaApi->fetchNodes();
