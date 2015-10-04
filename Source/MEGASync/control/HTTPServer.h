@@ -14,7 +14,7 @@
 class HTTPRequest
 {
 public:
-    HTTPRequest() : contentLength(0) {}
+    HTTPRequest() : contentLength(0), origin(-1) {}
     QString data;
     int contentLength;
     int origin;
@@ -44,8 +44,10 @@ class HTTPServer: public QTcpServer
         void readClient();
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
-        void processRequest(QAbstractSocket *socket, HTTPRequest *request);
+        void processRequest(QAbstractSocket *socket, HTTPRequest request);
         void error(QAbstractSocket::SocketError);
+        void sslErrors(const QList<QSslError> & errors);
+        void peerVerifyError(const QSslError & error);
 
     private:
         bool disabled;
