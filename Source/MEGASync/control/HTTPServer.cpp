@@ -35,6 +35,8 @@ void HTTPServer::incomingConnection(int socket)
     {
         sslSocket = new QSslSocket(this);;
         s = sslSocket;
+        connect(sslSocket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrors(QList<QSslError>)));
+        connect(sslSocket, SIGNAL(peerVerifyError(QSslError)), this, SLOT(peerVerifyError(QSslError)));
     }
     else
     {
@@ -99,17 +101,26 @@ void HTTPServer::readClient()
         if(!Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
         {
             bool found = false;
-            for (int i = 0; i< Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
-            {
-                QStringList result = headers.filter(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i)), Qt::CaseInsensitive);
-                if(result.size())
+            for (int i = 0; i < Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
+            {                
+                QString check = QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i));
+                for(int j = 0; j < headers.size(); j++)
                 {
-                   found = true;
-                   request->origin = i;
+                    if(!headers[j].compare(check, Qt::CaseInsensitive))
+                    {
+                       request->origin = i;
+                       found = true;
+                       break;
+                    }
+                }
+
+                if (found)
+                {
+                    break;
                 }
             }
 
-            if(!found)
+            if (!found)
             {
                 rejectRequest(socket);
                 return;
@@ -138,7 +149,8 @@ void HTTPServer::readClient()
         }
 
         request->data = tokens[1];
-        processRequest(socket, request);
+        processRequest(socket, *request);
+        discardClient();
     }
 }
 void HTTPServer::discardClient()
@@ -170,14 +182,14 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
     }
 }
 
-void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
+void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
     QRegExp openLinkRequest(QString::fromUtf8("\\{\"a\":\"l\",\"h\":\"(.*)\",\"k\":\"(.*)\"\\}"));
     QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
 
-    if(request->data == QString::fromUtf8("{\"a\":\"v\"}"))
+    if(request.data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
         char *myHandle = megaApi->getMyUserHandle();
@@ -193,7 +205,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
             delete myHandle;
         }
     }
-    else if(openLinkRequest.exactMatch(request->data))
+    else if(openLinkRequest.exactMatch(request.data))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "OpenLink command received from the webclient");
         QStringList parameters = openLinkRequest.capturedTexts();
@@ -223,7 +235,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
             }
         }
     }
-    else if (syncRequest.exactMatch(request->data))
+    else if (syncRequest.exactMatch(request.data))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "SyncFolder command received from the webclient");
         QStringList parameters = syncRequest.capturedTexts();
@@ -253,13 +265,13 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
             }
         }
     }
-    else if(request->data.startsWith(externalDownloadRequestStart))
+    else if(request.data.startsWith(externalDownloadRequestStart))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownload command received from the webclient");
-        int start = request->data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
+        int start = request.data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
         if(start > 0)
         {
-            QString auth = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("esid"));
+            QString auth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("esid"));
             if(auth.length() != 58)
             {
                 auth.clear();
@@ -267,7 +279,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 
             if(auth.isEmpty())
             {
-                auth = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("en"));
+                auth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("en"));
                 if(auth.length() != 8)
                 {
                     auth.clear();
@@ -276,7 +288,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 
             if(auth.isEmpty())
             {
-                auth  = Utilities::extractJSONString(request->data.mid(0, start), QString::fromUtf8("auth"));
+                auth  = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("auth"));
                 if(auth.length() != 8 && auth.length() != 58)
                 {
                     auth.clear();
@@ -289,9 +301,9 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                 int end;
                 bool firstnode = true;
 
-                while(request->data[start] == QChar::fromAscii('{'))
+                while(request.data[start] == QChar::fromAscii('{'))
                 {
-                    end = request->data.indexOf(QChar::fromAscii('}'), start);
+                    end = request.data.indexOf(QChar::fromAscii('}'), start);
                     if(end < 0)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");
@@ -301,7 +313,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
                     }
 
                     end++;
-                    QString file = request->data.mid(start, end - start);
+                    QString file = request.data.mid(start, end - start);
                     start = end + 1;
 
 
@@ -386,19 +398,22 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 
     if(!response.size())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request->data).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request.data).toUtf8().constData());
         response = QString::fromUtf8("-2");
     }
 
-    socket->write(QString::fromUtf8("HTTP/1.0 200 Ok\r\n"
-        "Access-Control-Allow-Origin: %1\r\n"
-        "Content-Type: text/html; charset=\"utf-8\"\r\n"
-        "Content-Length: %2\r\n"
-        "\r\n"
-        "%3").arg(Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty() ?
-                      QString::fromUtf8("*") :
-                      Preferences::HTTPS_ALLOWED_ORIGINS.at(request->origin))
-                  .arg(response.size()).arg(response).toUtf8());
+    QString fullResponse = QString::fromUtf8("HTTP/1.0 200 Ok\r\n"
+                                             "Access-Control-Allow-Origin: %1\r\n"
+                                             "Content-Type: text/html; charset=\"utf-8\"\r\n"
+                                             "Content-Length: %2\r\n"
+                                             "\r\n"
+                                             "%3")
+            .arg((request.origin < 0 || request.origin >= Preferences::HTTPS_ALLOWED_ORIGINS.size())
+                 ? QString::fromUtf8("*") : Preferences::HTTPS_ALLOWED_ORIGINS.at(request.origin))
+            .arg(response.size())
+            .arg(response);
+
+    socket->write(fullResponse.toUtf8());
 
     socket->flush();
     socket->disconnectFromHost();
@@ -406,6 +421,16 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest *request)
 }
 
 void HTTPServer::error(QAbstractSocket::SocketError)
+{
+    discardClient();
+}
+
+void HTTPServer::sslErrors(const QList<QSslError> &errors)
+{
+    discardClient();
+}
+
+void HTTPServer::peerVerifyError(const QSslError &error)
 {
     discardClient();
 }
