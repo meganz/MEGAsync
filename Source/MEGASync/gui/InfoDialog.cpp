@@ -50,9 +50,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     waiting = false;
     transfer1 = NULL;
     transfer2 = NULL;
-    syncsMenu = NULL;
     transferMenu = NULL;
-    menuSignalMapper = NULL;
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -798,19 +796,6 @@ void InfoDialog::on_bOfficialWeb_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-    if(syncsMenu)
-    {
-        #ifdef __APPLE__
-            syncsMenu->close();
-            return;
-        #else
-            syncsMenu->deleteLater();
-            menuSignalMapper->deleteLater();
-            syncsMenu = NULL;
-            menuSignalMapper = NULL;
-        #endif
-    }
-
     int num = preferences->getNumSyncedFolders();
 
     MegaNode *rootNode = megaApi->getRootNode();
@@ -826,7 +811,7 @@ void InfoDialog::on_bSyncFolder_clicked()
     }
     else
     {
-        syncsMenu = new QMenu();
+        QMenu *syncsMenu = new QMenu();
 
 #if (QT_VERSION == 0x050500) && defined(_WIN32)
         syncsMenu->installEventFilter(app);
@@ -850,7 +835,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         addSyncAction->setIconVisibleInMenu(true);
         syncsMenu->addSeparator();
 
-        menuSignalMapper = new QSignalMapper();
+        QSignalMapper *menuSignalMapper = new QSignalMapper();
         int activeFolders = 0;
         for(int i=0; i<num; i++)
         {
@@ -868,15 +853,14 @@ void InfoDialog::on_bSyncFolder_clicked()
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
             connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
+
+        connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
+        connect(syncsMenu, SIGNAL(destroyed(QObject*)), menuSignalMapper, SLOT(deleteLater()));
+
 #ifdef __APPLE__
         syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
         if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
             this->hide();
-
-        syncsMenu->deleteLater();
-        menuSignalMapper->deleteLater();
-        menuSignalMapper = NULL;
-        syncsMenu = NULL;
 #else
         syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
 #endif
@@ -886,7 +870,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 
 void InfoDialog::openFolder(QString path)
 {
-	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
 }
 
 void InfoDialog::updateRecentFiles()
