@@ -96,6 +96,7 @@ private:
     QParallelAnimationGroup *animationGroup;
 #endif
 
+    QMenu *syncsMenu;
     QMenu *transferMenu;
 
     long long downloadSpeed;

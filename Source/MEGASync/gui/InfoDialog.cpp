@@ -14,6 +14,10 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 using namespace mega;
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
@@ -48,6 +52,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->lUploads->setText(QString::fromAscii(""));
     indexing = false;
     waiting = false;
+    syncsMenu = NULL;
     transfer1 = NULL;
     transfer2 = NULL;
     transferMenu = NULL;
@@ -811,7 +816,7 @@ void InfoDialog::on_bSyncFolder_clicked()
     }
     else
     {
-        QMenu *syncsMenu = new QMenu();
+        syncsMenu = new QMenu();
 
 #if (QT_VERSION == 0x050500) && defined(_WIN32)
         syncsMenu->installEventFilter(app);
