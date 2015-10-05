@@ -869,6 +869,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 #else
         syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
 #endif
+        syncsMenu = NULL;
     }
     delete rootNode;
 }
