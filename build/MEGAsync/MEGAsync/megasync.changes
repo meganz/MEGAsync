@@ -1,0 +1,19 @@
+Mon Aug  10 10:00:00 CEST 2015 - linux@mega.co.nz
+
+- Built with a custom version of QT that will allow us to debug crashes in QT libraries
+- List of allowed origins for webclient communications
+- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+- Report events for new installations
+- Built with a custom version of QT that will allow us to debug crashes in QT libraries
+- List of allowed origins for webclient communications
+- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+- Report events for new installations
+- Built with a custom version of QT that will allow us to debug crashes in QT libraries
+- List of allowed origins for webclient communications
+- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+- Report events for new installations
+- Built with a custom version of QT that will allow us to debug crashes in QT libraries
+- List of allowed origins for webclient communications
+- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+- Report events for new installations
+
