@@ -24,12 +24,21 @@ elif [[ $ver == 7.* ]]; then
 elif [[ $ver == 8.* ]]; then
     str="Debian_8.0"
 elif [[ $ver = "testing" ]]; then
-    str="Debian_7.0"
+    str="Debian_8.0"
 # Elementary OS Luna uses 12.04
 elif [[ $distro = "elementary OS Luna" ]]; then
     str="xUbuntu_12.04"
 # Elementary OS Freya Ubuntu 14.04 LTS
 elif [[ $distro = "elementary OS Freya" ]]; then
+    str="xUbuntu_14.04"
+# Linux Mint 13 Maya LTS (Ubuntu 12.04)
+elif [[ $distro = "Linux Mint 13 Maya" ]]; then
+    str="xUbuntu_12.04"
+# Linux Mint 17.1 Rebecca LTS (Ubuntu 14.04)
+elif [[ $distro = "Linux Mint 17.1 Rebecca" ]]; then
+    str="xUbuntu_14.04"
+# Linux Mint 17.2 Rafaela LTS (Ubuntu 14.04)
+elif [[ $distro = "Linux Mint 17.1 Rafaela" ]]; then
     str="xUbuntu_14.04"
 # fallback to LTS version, unsupported
 else
