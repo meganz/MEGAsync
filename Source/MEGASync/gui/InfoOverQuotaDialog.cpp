@@ -4,6 +4,10 @@
 #include "MegaApplication.h"
 #include <QPainter>
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 InfoOverQuotaDialog::InfoOverQuotaDialog(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::InfoOverQuotaDialog)
@@ -122,8 +126,8 @@ void InfoOverQuotaDialog::changeEvent(QEvent *event)
 
 void InfoOverQuotaDialog::on_bOfficialWeb_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/");
-    QDesktopServices::openUrl(QUrl(helpUrl));
+    QString webUrl = QString::fromAscii("https://mega.nz/");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
 #ifndef Q_OS_LINUX

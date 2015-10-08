@@ -795,8 +795,8 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bOfficialWeb_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/");
-    QDesktopServices::openUrl(QUrl(helpUrl));
+    QString webUrl = QString::fromAscii("https://mega.nz/");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
 void InfoDialog::on_bSyncFolder_clicked()

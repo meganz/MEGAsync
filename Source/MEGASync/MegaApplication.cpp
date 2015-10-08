@@ -13,6 +13,10 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 #ifndef WIN32
 //sleep
 #include <unistd.h>
@@ -2594,7 +2598,9 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         infoDialog->hide();
         QString localFolderPath = preferences->getLocalFolder(i);
         if(!localFolderPath.isEmpty())
-            QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
+        {
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
+        }
     }
     else if(reason == QSystemTrayIcon::MiddleClick)
     {
@@ -3344,7 +3350,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_SESSION_TRANSFER_URL:
     {
-        QDesktopServices::openUrl(QUrl(QString::fromUtf8(request->getLink())));
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8(request->getLink())));
         break;
     }
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
