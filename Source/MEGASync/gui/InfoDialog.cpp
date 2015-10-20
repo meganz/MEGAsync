@@ -14,6 +14,10 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 using namespace mega;
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
@@ -48,11 +52,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->lUploads->setText(QString::fromAscii(""));
     indexing = false;
     waiting = false;
+    syncsMenu = NULL;
     transfer1 = NULL;
     transfer2 = NULL;
-    syncsMenu = NULL;
     transferMenu = NULL;
-    menuSignalMapper = NULL;
     gWidget = NULL;
 
     //Set properties of some widgets
@@ -582,16 +585,12 @@ void InfoDialog::updateState()
         if((downloadSpeed<0) && (uploadSpeed<0))
             setTransferSpeeds(0, 0);
 
-        if(indexing)
+        if(waiting)
         {
-            if(!scanningTimer.isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
-            }
+            if(scanningTimer.isActive())
+                scanningTimer.stop();
 
-            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-
+            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             #ifndef Q_OS_LINUX
@@ -601,12 +600,16 @@ void InfoDialog::updateState()
                 ui->label->setPixmap(icon.pixmap(QSize(64, 64)));
             #endif
         }
-        else if(waiting)
+        else if(indexing)
         {
-            if(scanningTimer.isActive())
-                scanningTimer.stop();
+            if(!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
 
-            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             #ifndef Q_OS_LINUX
@@ -909,25 +912,12 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bOfficialWeb_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/");
-    QDesktopServices::openUrl(QUrl(helpUrl));
+    QString webUrl = QString::fromAscii("https://mega.nz/");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-    if(syncsMenu)
-    {
-        #ifdef __APPLE__
-            syncsMenu->close();
-            return;
-        #else
-            syncsMenu->deleteLater();
-            menuSignalMapper->deleteLater();
-            syncsMenu = NULL;
-            menuSignalMapper = NULL;
-        #endif
-    }
-
     int num = preferences->getNumSyncedFolders();
 
     MegaNode *rootNode = megaApi->getRootNode();
@@ -967,7 +957,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         addSyncAction->setIconVisibleInMenu(true);
         syncsMenu->addSeparator();
 
-        menuSignalMapper = new QSignalMapper();
+        QSignalMapper *menuSignalMapper = new QSignalMapper();
         int activeFolders = 0;
         for(int i=0; i<num; i++)
         {
@@ -985,25 +975,25 @@ void InfoDialog::on_bSyncFolder_clicked()
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
             connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
+
+        connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
+        connect(syncsMenu, SIGNAL(destroyed(QObject*)), menuSignalMapper, SLOT(deleteLater()));
+
 #ifdef __APPLE__
         syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
         if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
             this->hide();
-
-        syncsMenu->deleteLater();
-        menuSignalMapper->deleteLater();
-        menuSignalMapper = NULL;
-        syncsMenu = NULL;
 #else
         syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
 #endif
+        syncsMenu = NULL;
     }
     delete rootNode;
 }
 
 void InfoDialog::openFolder(QString path)
 {
-	QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
 }
 
 void InfoDialog::updateRecentFiles()
@@ -1192,16 +1182,16 @@ void InfoDialog::scanningAnimationStep()
 #ifdef __APPLE__
 void InfoDialog::paintEvent( QPaintEvent * e)
 {
+    QDialog::paintEvent(e);
     QPainter p( this );
     p.setCompositionMode( QPainter::CompositionMode_Clear);
     p.fillRect( ui->wArrow->rect(), Qt::transparent );
-    ui->wArrow->update();
 }
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
-    event->accept();
     arrow->hide();
+    QDialog::hideEvent(event);
 }
 
 void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)

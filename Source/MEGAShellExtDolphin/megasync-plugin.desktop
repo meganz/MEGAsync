@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+Name=MEGAsync
+X-KDE-ServiceTypes=KFileItemAction/Plugin
+MimeType=application/octet-stream;inode/directory;
+X-KDE-Library=megasync-plugin
+

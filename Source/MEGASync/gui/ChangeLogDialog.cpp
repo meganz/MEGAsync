@@ -1,8 +1,13 @@
 #include "ChangeLogDialog.h"
 #include "ui_ChangeLogDialog.h"
+#include <QtCore>
 #include <QDesktopServices>
 #include <QString>
 #include <QUrl>
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
 
 ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString changeLog, QWidget *parent) :
     QDialog(parent),
@@ -33,12 +38,12 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/#terms");
-    QDesktopServices::openUrl(QUrl(helpUrl));
+    QString temsUrl = QString::fromAscii("https://mega.nz/#terms");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/#privacy");
-    QDesktopServices::openUrl(QUrl(helpUrl));
+    QString policyUrl = QString::fromAscii("https://mega.nz/#privacy");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
 }

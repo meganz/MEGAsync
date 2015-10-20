@@ -90,7 +90,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if(session)
                 {
                     sessionKey = QString::fromUtf8(session);
-                    delete session;
+                    delete [] session;
                     ui->lProgress->setText(tr("Fetching file list..."));
                     megaApi->fetchNodes(delegateListener);
                     if(!preferences->hasLoggedIn())

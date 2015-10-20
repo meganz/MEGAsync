@@ -24,13 +24,13 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2015"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "2.1.1.6"
-VIAddVersionKey "FileVersion" "2.1.1.6"
-VIAddVersionKey "ProductVersion" "2.1.1.6"
-!define PRODUCT_VERSION "2.1.2"
+VIProductVersion "2.3.1.0"
+VIAddVersionKey "FileVersion" "2.3.1.0"
+VIAddVersionKey "ProductVersion" "2.3.1.0"
+!define PRODUCT_VERSION "2.3.1"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
-!define PRODUCT_WEB_SITE "http://www.mega.co.nz"
+!define PRODUCT_WEB_SITE "http://www.mega.nz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\MEGAsync.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
