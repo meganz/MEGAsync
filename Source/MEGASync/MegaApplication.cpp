@@ -1758,7 +1758,7 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
-void MegaApplication::setupWizardFinished(int cancelWizard)
+void MegaApplication::setupWizardFinished(int result)
 {
     if(setupWizard)
     {
@@ -1766,7 +1766,7 @@ void MegaApplication::setupWizardFinished(int cancelWizard)
         setupWizard = NULL;
     }
 
-    if(cancelWizard)
+    if(result == QDialog::Rejected)
     {
         return;
     }

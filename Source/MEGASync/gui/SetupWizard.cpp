@@ -200,8 +200,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     preferences->setProxyPassword(proxyPassword);
                     preferences->setDownloadFolder(downloadFolder);
 
-                    finished(0);
-                    close();
+                    done(QDialog::Accepted);
                     return;
                 }
 
@@ -505,8 +504,7 @@ void SetupWizard::on_bCancel_clicked()
         if(rootNode && selectedMegaFolderHandle == rootNode->getHandle()) syncName = QString::fromAscii("MEGA");
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         delete rootNode;
-        finished(0);
-        close();
+        done(QDialog::Accepted);
     }
     else
     {
@@ -528,8 +526,7 @@ void SetupWizard::on_bCancel_clicked()
             {
                 megaApi->logout();
             }
-            finished(-1);
-            close();
+            done(QDialog::Rejected);
         }
     }
 }
@@ -541,8 +538,7 @@ void SetupWizard::on_bSkip_clicked()
     {
         setupPreferences();
     }
-    finished(0);
-    close();
+    done(QDialog::Accepted);
 }
 void SetupWizard::on_bLocalFolder_clicked()
 {	
@@ -695,34 +691,34 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 
 void SetupWizard::closeEvent(QCloseEvent *event)
 {
-    if(event->spontaneous())
+    if(!event->spontaneous())
     {
-        QPointer<QMessageBox> msg = new QMessageBox(this);
-        msg->setIcon(QMessageBox::Question);
-        msg->setWindowTitle(tr("MEGAsync"));
-        msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
-        msg->addButton(QMessageBox::Yes);
-        msg->addButton(QMessageBox::No);
-        msg->setDefaultButton(QMessageBox::No);
-        int button = msg->exec();
-        if(msg)
-        {
-            delete msg;
-        }
-        if(button == QMessageBox::Yes)
-        {
-            if(megaApi->isLoggedIn())
-            {
-                megaApi->logout();
-            }
-            finished(-1);
-            event->accept();
-            return;
-        }
-        event->ignore();
+        event->accept();
         return;
     }
-    event->accept();
+
+    event->ignore();
+    QPointer<QMessageBox> msg = new QMessageBox(this);
+    msg->setIcon(QMessageBox::Question);
+    msg->setWindowTitle(tr("MEGAsync"));
+    msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
+    msg->addButton(QMessageBox::Yes);
+    msg->addButton(QMessageBox::No);
+    msg->setDefaultButton(QMessageBox::No);
+    int button = msg->exec();
+    if(msg)
+    {
+        delete msg;
+    }
+
+    if(button == QMessageBox::Yes)
+    {
+        if(megaApi->isLoggedIn())
+        {
+            megaApi->logout();
+        }
+        done(QDialog::Rejected);
+    }
 }
 
 void SetupWizard::lTermsLink_clicked()
