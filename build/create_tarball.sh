@@ -1,4 +1,26 @@
 #!/bin/bash
+
+##
+ # @file build/create_tarball.sh
+ # @brief Generates MEGAsync and extensions tarballs
+ #
+ # (c) 2013-2014 by Mega Limited, Auckland, New Zealand
+ #
+ # This file is part of the MEGA SDK - Client Access Engine.
+ #
+ # Applications using the MEGA API must present a valid application key
+ # and comply with the the rules set forth in the Terms of Service.
+ #
+ # The MEGA SDK is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ #
+ # @copyright Simplified (2-clause) BSD License.
+ #
+ # You should have received a copy of the license along with this
+ # program.
+##
+
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -40,6 +62,18 @@ sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasyn
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync-debug.dsc > MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync.debug/PKGBUILD
 
+# add ChangeLog entry
+# TODO: check for existing ChangeLog entry
+changelog="MEGAsync/MEGAsync/megasync.changes"
+changelogold="MEGAsync/MEGAsync/megasync.changes.old"
+if [ -f $changelog ]; then
+    mv $changelog $changelogold
+fi
+./generate_changelog_entry.sh ../Source/MEGASync/control/Preferences.cpp > $changelog
+if [ -f $changelogold ]; then
+    cat $changelogold >> $changelog
+    rm $changelogold
+fi
 
 # create archive
 mkdir $MEGASYNC_NAME

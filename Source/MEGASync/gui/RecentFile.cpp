@@ -6,6 +6,10 @@
 
 #include <QImageReader>
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 using namespace mega;
 
 RecentFile::RecentFile(QWidget *parent) :
@@ -265,6 +269,6 @@ void RecentFile::openFile()
     if(!info.localPath.isEmpty())
     {
         QWidget::window()->hide();
-        QDesktopServices::openUrl(QUrl::fromLocalFile(info.localPath));
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(info.localPath));
     }
 }

@@ -13,6 +13,10 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 #ifndef WIN32
 //sleep
 #include <unistd.h>
@@ -1608,6 +1612,11 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posx = screenGeometry.right() - dialog->width() - 1;
         }
         *posy = screenIndex ? screenGeometry.top()+22: screenGeometry.top();
+
+        if(*posy == 0)
+        {
+            *posy = 22;
+        }
     #else
         #ifdef WIN32
             QRect totalGeometry = QApplication::desktop()->screenGeometry();
@@ -2696,7 +2705,9 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         infoDialog->hide();
         QString localFolderPath = preferences->getLocalFolder(i);
         if(!localFolderPath.isEmpty())
-            QDesktopServices::openUrl(QUrl::fromLocalFile(localFolderPath));
+        {
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
+        }
     }
     else if(reason == QSystemTrayIcon::MiddleClick)
     {
@@ -3240,7 +3251,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     QString sessionKey = QString::fromUtf8(session);
                     preferences->setSession(sessionKey);
-                    delete session;
+                    delete [] session;
 
                     //Successful login, fetch nodes
                     megaApi->fetchNodes();
@@ -3273,7 +3284,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else if(errorCode == MegaError::API_ESSL)
             {
-                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again."));
+                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
+                                      tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
             }
             else
             {
@@ -3544,7 +3557,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_SESSION_TRANSFER_URL:
     {
-        QDesktopServices::openUrl(QUrl(QString::fromUtf8(request->getLink())));
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8(request->getLink())));
         break;
     }
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
@@ -3777,11 +3790,12 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     int errorCode = e->getErrorCode();
-    if(errorCode != MegaError::API_OK && transfer->getTag() > 0
+    if(errorCode != MegaError::API_OK && !transfer->isSyncTransfer()
             && errorCode != MegaError::API_EACCESS
             && errorCode != MegaError::API_ESID
             && errorCode != MegaError::API_ESSL
-            && errorCode != MegaError::API_EINCOMPLETE)
+            && errorCode != MegaError::API_EINCOMPLETE
+            && errorCode != MegaError::API_EEXIST)
     {
         showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     }
