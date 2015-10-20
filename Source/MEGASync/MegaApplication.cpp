@@ -3558,9 +3558,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         if((e->getErrorCode() == MegaError::API_OK))
         {
-            preferences->setUsedStorage(preferences->usedStorage()+transfer->getTotalBytes());
-            preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + transfer->getTotalBytes());
-            preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
             if(settingsDialog) settingsDialog->refreshAccountDetails();
 
             if(infoDialog)
