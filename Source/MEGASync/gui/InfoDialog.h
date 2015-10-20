@@ -125,8 +125,6 @@ private:
     bool waiting;
     GuestWidget *gWidget;
 
-    int getWidgetIndexByName(QString wName);
-
 protected:
     void changeEvent(QEvent * event);
 #ifdef __APPLE__

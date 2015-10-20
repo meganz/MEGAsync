@@ -1266,20 +1266,3 @@ void InfoDialog::on_bOfficialWebIcon_clicked()
 }
 #endif
 
-int InfoDialog::getWidgetIndexByName(QString wName)
-{
-    QVBoxLayout * dialogLayout = (QVBoxLayout *)layout();
-    if (dialogLayout != 0)
-    {
-        QWidget * w = findChild<QWidget*>(wName);
-        if (w != 0)
-        {
-            int index = dialogLayout->indexOf(w);
-            if (index >=0)
-            {
-                return index;
-            }
-        }
-    }
-    return -1;
-}
