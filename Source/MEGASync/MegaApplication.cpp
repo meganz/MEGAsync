@@ -917,7 +917,7 @@ void MegaApplication::start()
         if(!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(99500, "MEGAsync first start");
-            userAction(SetupWizard::PAGE_SETUP);
+            userAction(SetupWizard::PAGE_INITIAL);
         }
 
         return;
@@ -3288,7 +3288,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                       tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
                                        + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
             }
-            else
+            else if(errorCode != MegaError::API_EACCESS)
             {
                 QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
                                          .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
