@@ -56,15 +56,15 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     ui->bNext->setEnabled(true);
     ui->bSkip->setEnabled(true);
     switch (request->getType())
-	{
-		case MegaRequest::TYPE_CREATE_ACCOUNT:
-		{
+    {
+        case MegaRequest::TYPE_CREATE_ACCOUNT:
+        {
             if (error->getErrorCode() == MegaError::API_OK)
-			{
+            {
                 page_login();
 
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
-				ui->lVerify->setVisible(true);
+                ui->lVerify->setVisible(true);
                 ui->eName->clear();
                 ui->eEmail->clear();
                 ui->ePassword->clear();
@@ -76,24 +76,24 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
                 break;
-			}
+            }
 
             page_newaccount();
 
             if (error->getErrorCode() == MegaError::API_EEXIST)
-			{
-				QMessageBox::warning(this, tr("Error"), tr("User already exists"), QMessageBox::Ok);
-			}
+            {
+                QMessageBox::warning(this, tr("Error"), tr("User already exists"), QMessageBox::Ok);
+            }
             else if (error->getErrorCode() != MegaError::API_ESSL)
-			{
+            {
                 QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
-			}
-			break;
-		}
-		case MegaRequest::TYPE_LOGIN:
-		{
+            }
+            break;
+        }
+        case MegaRequest::TYPE_LOGIN:
+        {
             if (error->getErrorCode() == MegaError::API_OK)
-			{
+            {
                 megaApi->fetchNodes(delegateListener);
                 ui->lProgress->setText(tr("Fetching file list..."));
                 page_progress();
@@ -103,26 +103,26 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
                 break;
-			}
+            }
 
             page_login();
 
             if (error->getErrorCode() == MegaError::API_ENOENT)
-			{
+            {
                 QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
-			}
+            }
             else if (error->getErrorCode() == MegaError::API_EBLOCKED)
             {
                 QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
             }
             else if (error->getErrorCode() != MegaError::API_ESSL)
-			{
+            {
                 QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
-			}
-			break;
-		}
+            }
+            break;
+        }
         case MegaRequest::TYPE_CREATE_FOLDER:
-		{
+        {
             if (error->getErrorCode() == MegaError::API_OK)
             {
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
@@ -146,9 +146,9 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
 
             break;
-		}
+        }
         case MegaRequest::TYPE_FETCH_NODES:
-		{
+        {
             if (error->getErrorCode() != MegaError::API_OK)
             {
                 page_login();
@@ -198,8 +198,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
 
             page_mode();
-			break;
-		}
+            break;
+        }
         case MegaRequest::TYPE_LOGOUT:
         {
             page_login();
@@ -235,6 +235,7 @@ void SetupWizard::goToStep(int page)
         case PAGE_NEW_ACCOUNT:
             page_newaccount();
             break;
+
         default:
             return;
     }
@@ -277,7 +278,7 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-		megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
+        megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
 
         ui->lProgress->setText(tr("Logging in..."));
         page_progress();
@@ -332,8 +333,8 @@ void SetupWizard::on_bNext_clicked()
         }
 
         megaApi->createAccount(email.toUtf8().constData(),
-                                         password.toUtf8().constData(),
-										 name.toUtf8().constData(), delegateListener);
+                               password.toUtf8().constData(),
+                               name.toUtf8().constData(), delegateListener);
 
         ui->lProgress->setText(tr("Creating account..."));
         page_progress();
@@ -549,7 +550,7 @@ void SetupWizard::on_bLocalFolder_clicked()
     QString path =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
                                                       defaultPath,
                                                       QFileDialog::ShowDirsOnly
-													  | QFileDialog::DontResolveSymlinks);
+                                                      | QFileDialog::DontResolveSymlinks);
     if (path.length())
     {
         QDir dir(path);
