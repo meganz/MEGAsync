@@ -169,11 +169,11 @@ protected:
 #else
     QSystemTrayIcon *trayIcon;
 #endif
-#ifdef Q_OS_LINUX
+
     QAction *changeProxyAction;
     QAction *initialExitAction;
     QMenu *initialMenu;
-#endif
+
 #ifdef _WIN32
     QMenu *windowsMenu;
     QAction *windowsExitAction;

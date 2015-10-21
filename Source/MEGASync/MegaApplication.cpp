@@ -526,6 +526,8 @@ void MegaApplication::initialize()
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
+    initialMenu = new QMenu();
+
 #if (QT_VERSION == 0x050500) && defined(_WIN32)
     initialMenu->installEventFilter(this);
 #endif
@@ -546,15 +548,12 @@ void MegaApplication::initialize()
     notificator = new Notificator(applicationName(), trayIcon, NULL);
 #endif
 
-#ifdef Q_OS_LINUX
-    initialMenu = new QMenu();
     changeProxyAction = new QAction(tr("Settings"), this);
     connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
     initialExitAction = new QAction(tr("Exit"), this);
     connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
-#endif
 
 #ifdef _WIN32
     windowsExitAction = new QAction(tr("Exit"), this);
@@ -865,6 +864,8 @@ void MegaApplication::start()
     {
         trayIcon->setContextMenu(initialMenu);
     }
+#else
+        trayIcon->setContextMenu(initialMenu);
 #endif
 
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
@@ -899,7 +900,6 @@ void MegaApplication::start()
     //Start the initial setup wizard if needed
     if(!preferences->logged())
     {
-
         if(!preferences->installationTime())
         {
             preferences->setInstallationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -2944,7 +2944,8 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(exitAction);
 
     #ifdef Q_OS_LINUX
-
+    if(trayIcon->contextMenu())
+    {
         if(showStatusAction)
         {
             showStatusAction->deleteLater();
