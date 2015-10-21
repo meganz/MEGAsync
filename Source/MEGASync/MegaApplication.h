@@ -228,7 +228,7 @@ protected:
     int syncState;
     mega::QTMegaListener *delegateListener;
     mega::QTMegaListener *delegateLinksListener;
-	QMap<int, QString> uploadLocalPaths;
+    QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     MegaDownloader *downloader;
     QTimer *refreshTimer;

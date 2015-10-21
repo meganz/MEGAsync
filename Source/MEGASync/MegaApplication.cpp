@@ -2133,7 +2133,7 @@ void MegaApplication::importLinks()
         return;
     }
 
-    if(importDialog->result()!=QDialog::Accepted)
+    if(importDialog->result() != QDialog::Accepted)
     {
         delete importDialog;
         importDialog = NULL;
@@ -2164,7 +2164,6 @@ void MegaApplication::importLinks()
 
     delete importDialog;
     importDialog = NULL;
-
 }
 
 void MegaApplication::showChangeLog()
@@ -2323,7 +2322,9 @@ void MegaApplication::userAction(int action)
 void MegaApplication::changeState()
 {
     if(infoDialog)
+    {
         infoDialog->regenerateLayout();
+    }
 }
 
 void MegaApplication::processDownloads()
