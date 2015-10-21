@@ -170,6 +170,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
             delete root;
 
+            char *session = megaApi->dumpSession();
+            sessionKey = QString::fromUtf8(session);
+            delete [] session;
+
             QString email = ui->eLoginEmail->text().toLower().trimmed();
             if (preferences->hasEmail(email))
             {
