@@ -1807,7 +1807,6 @@ void MegaApplication::unlink()
     }
 
     //Reset fields that will be initialized again upon login
-    stopUpdateTask();
     Platform::stopShellDispatcher();
     megaApi->logout();
 }
