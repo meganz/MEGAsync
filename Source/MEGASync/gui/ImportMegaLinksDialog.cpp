@@ -86,14 +86,21 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
             else
             {
                 delete testNode;
-                testNode = NULL;
                 ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
+                testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
             }
         }
         else
         {
             ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
+            testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
         }
+
+        if(!testNode)
+        {
+            testNode = megaApi->getRootNode();
+        }
+
 
         MegaNode *p = testNode;
         while(p)
@@ -157,6 +164,12 @@ void ImportMegaLinksDialog::on_cDownload_clicked()
         QString importFolder = ui->eMegaFolder->text();
         MegaNode *nImportFolder = megaApi->getNodeByPath(importFolder.toUtf8().constData());
         MegaNode *parent = nImportFolder;
+
+        if(!parent)
+        {
+            parent = megaApi->getRootNode();
+        }
+
         while(parent)
         {
             if(megaApi->isSynced(parent))
