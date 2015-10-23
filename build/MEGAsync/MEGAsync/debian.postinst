@@ -3,7 +3,10 @@
 distro=$(lsb_release -ds)
 ver=$(lsb_release -rs)
 
-if [[ $ver = "15.04" ]]; then
+# Ubuntu
+if [[ $ver = "15.10" ]]; then
+    str="xUbuntu_15.10"
+elif [[ $ver = "15.04" ]]; then
     str="xUbuntu_15.04"
 elif [[ $ver = "14.10" ]]; then
     str="xUbuntu_14.10"
@@ -42,7 +45,7 @@ elif [[ $distro = "Linux Mint 17.1 Rafaela" ]]; then
     str="xUbuntu_14.04"
 # fallback to LTS version, unsupported
 else
-    str="xUbuntu_14.04"
+    str="xUbuntu_15.04"
 fi
 
 if [ -d /etc/apt/sources.list.d ]; then
