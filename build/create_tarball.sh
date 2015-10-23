@@ -64,8 +64,8 @@ sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > ME
 
 # add ChangeLog entry
 # TODO: check for existing ChangeLog entry
-changelog="MEGAsync/MEGAsync/megasync.changes"
-changelogold="MEGAsync/MEGAsync/megasync.changes.old"
+changelog="MEGAsync/MEGAsync/debian.changelog"
+changelogold="MEGAsync/MEGAsync/debian.changelog.old"
 if [ -f $changelog ]; then
     mv $changelog $changelogold
 fi
