@@ -25,36 +25,40 @@ ActiveTransfer::~ActiveTransfer()
 void ActiveTransfer::setFileName(QString fileName)
 {
     this->fileName = fileName;
-	QFont f = ui->lFileName->font();
-	QFontMetrics fm = QFontMetrics(f);
+    QFont f = ui->lFileName->font();
+    QFontMetrics fm = QFontMetrics(f);
     ui->lFileName->setStyleSheet(QString::fromUtf8("color: grey;"));
-	ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 }
 
 void ActiveTransfer::setProgress(long long completedSize, long long totalSize, bool cancellable)
 {
     unsigned int permil = 0;
 
-    if((totalSize>0) && (completedSize>0))
-        permil = (1000*completedSize)/totalSize;
+    if ((totalSize > 0) && (completedSize > 0))
+    {
+        permil = (1000 * completedSize) / totalSize;
+    }
 
-    if(permil > 1000)
+    if (permil > 1000)
+    {
         permil = 1000;
+    }
 
+    active = true;
     regular = cancellable;
     ui->pProgress->setProgress(permil, cancellable);
-    ui->lPercentage->setText(QString::number((permil+5)/10) + QString::fromAscii("%"));
+    ui->lPercentage->setText(QString::number((permil + 5) / 10) + QString::fromAscii("%"));
     ui->pProgress->show();
     ui->lType->show();
-    this->show();
-    active = true;
+    show();
 }
 
 void ActiveTransfer::setType(int type)
 {
     this->type = type;
     QIcon icon;
-    if(type)
+    if (type)
     {
         icon.addFile(QString::fromUtf8(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(119, 186, 216);"));
@@ -64,22 +68,23 @@ void ActiveTransfer::setType(int type)
         icon.addFile(QString::fromUtf8(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
     }
+
 #ifndef Q_OS_LINUX
-        ui->lType->setIcon(icon);
-        ui->lType->setIconSize(QSize(24, 24));
+    ui->lType->setIcon(icon);
+    ui->lType->setIconSize(QSize(24, 24));
 #else
-        ui->lType->setPixmap(icon.pixmap(QSize(24, 24)));
+    ui->lType->setPixmap(icon.pixmap(QSize(24, 24)));
 #endif
 }
 
 void ActiveTransfer::hideTransfer()
 {
+    active = false;
     ui->lFileName->setText(QString::fromAscii(""));
     ui->lPercentage->setText(QString::fromAscii(""));
-	ui->pProgress->hide();
+    ui->pProgress->hide();
     ui->lType->hide();
-    this->hide();
-    active = false;
+    hide();
 }
 
 bool ActiveTransfer::isActive()
@@ -89,12 +94,16 @@ bool ActiveTransfer::isActive()
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(!regular || !(event->button()==Qt::RightButton)) return;
+    if (!regular || !(event->button() == Qt::RightButton))
+    {
+        return;
+    }
+
     emit cancel(event->x(), event->y());
 }
 
 void ActiveTransfer::onCancelClicked(int x, int y)
 {
-    emit cancel(ui->pProgress->pos().x()+x,
-                 ui->pProgress->pos().y()+y);
+    emit cancel(ui->pProgress->pos().x() + x,
+                ui->pProgress->pos().y() + y);
 }
