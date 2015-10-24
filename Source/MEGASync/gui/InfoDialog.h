@@ -142,9 +142,9 @@ protected:
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiLinks;
-    mega::MegaTransfer *transfer1;
-    mega::MegaTransfer *transfer2;
+    mega::MegaApi *megaApiGuest;
+    mega::MegaTransfer *activeDownload;
+    mega::MegaTransfer *activeUpload;
 };
 
 #endif // INFODIALOG_H

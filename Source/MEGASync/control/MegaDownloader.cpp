@@ -5,10 +5,10 @@
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi *megaApi, MegaApi *megaApiLinks) : QObject()
+MegaDownloader::MegaDownloader(MegaApi *megaApi, MegaApi *megaApiGuest) : QObject()
 {
     this->megaApi = megaApi;
-    this->megaApiLinks = megaApiLinks;
+    this->megaApiGuest = megaApiGuest;
 }
 
 MegaDownloader::~MegaDownloader()
@@ -82,9 +82,9 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             delete [] fpRemote;
         }
 
-        if(parent->isPublic() && megaApiLinks)
+        if(parent->isPublic() && megaApiGuest)
         {
-            megaApiLinks->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
+            megaApiGuest->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
         }
         else
         {

@@ -95,7 +95,6 @@ int main(int argc, char *argv[])
     MegaApplication app(argc, argv);
 
     qInstallMsgHandler(msgHandler);
-
 #if QT_VERSION >= 0x050000
     qInstallMessageHandler(messageHandler);
 #endif
@@ -103,7 +102,7 @@ int main(int argc, char *argv[])
     app.setStyle(new MegaProxyStyle());
 
 #ifdef Q_OS_MACX
-    if ( QSysInfo::MacintoshVersion > QSysInfo::MV_10_8 )
+    if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
     {
         // fix Mac OS X 10.9 (mavericks) font issue
         // https://bugreports.qt-project.org/browse/QTBUG-32789
@@ -116,7 +115,10 @@ int main(int argc, char *argv[])
     QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
     QString appLockPath = QDir::current().filePath(QString::fromAscii("megasync.lock"));
     QDir crashDir(crashPath);
-    if(!crashDir.exists()) crashDir.mkpath(QString::fromAscii("."));
+    if (!crashDir.exists())
+    {
+        crashDir.mkpath(QString::fromAscii("."));
+    }
 
 #ifndef DEBUG
     CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
@@ -286,7 +288,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
 #endif
-
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
@@ -354,9 +355,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayOverQuotaMenu = NULL;
     trayGuestMenu = NULL;
     megaApi = NULL;
-    megaApiLinks = NULL;
+    megaApiGuest = NULL;
     delegateListener = NULL;
-    delegateLinksListener = NULL;
+    delegateGuestListener = NULL;
     httpServer = NULL;
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
@@ -413,7 +414,10 @@ MegaApplication::~MegaApplication()
 
 void MegaApplication::initialize()
 {
-    if(megaApi != NULL || megaApiLinks != NULL) return;
+    if (megaApi || megaApiGuest)
+    {
+        return;
+    }
 
     paused = false;
     indexing = false;
@@ -451,18 +455,17 @@ void MegaApplication::initialize()
 
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
-    megaApiLinks = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
-    megaApiLinks = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
+    megaApiGuest = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
-    delegateLinksListener = new MEGASyncDelegateListener(megaApiLinks, this);
-    megaApiLinks->addListener(delegateLinksListener);
+    delegateGuestListener = new MEGASyncDelegateListener(megaApiGuest, this);
+    megaApiGuest->addListener(delegateGuestListener);
     uploader = new MegaUploader(megaApi);
-    downloader = new MegaDownloader(megaApi, megaApiLinks);
+    downloader = new MegaDownloader(megaApi, megaApiGuest);
     scanningTimer = new QTimer();
     scanningTimer->setSingleShot(false);
     scanningTimer->setInterval(500);
@@ -470,7 +473,7 @@ void MegaApplication::initialize()
     connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
     //Start the HTTP server
-    httpServer = new HTTPServer(megaApiLinks, Preferences::HTTPS_PORT, true);
+    httpServer = new HTTPServer(megaApiGuest, Preferences::HTTPS_PORT, true);
     connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
     connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
@@ -577,8 +580,10 @@ void MegaApplication::initialize()
         enableDebug = true;
     }
 
-    if(preferences->logged() && preferences->wasPaused())
+    if (preferences->logged() && preferences->wasPaused())
+    {
         pauseTransfers(true);
+    }
 }
 
 QString MegaApplication::applicationFilePath()
@@ -598,7 +603,7 @@ QString MegaApplication::applicationDataPath()
 
 void MegaApplication::changeLanguage(QString languageCode)
 {
-    if(translator)
+    if (translator)
     {
         removeTranslator(translator);
         delete translator;
@@ -606,15 +611,21 @@ void MegaApplication::changeLanguage(QString languageCode)
     }
 
     QTranslator *newTranslator = new QTranslator();
-    if(newTranslator->load(Preferences::TRANSLATION_FOLDER + Preferences::TRANSLATION_PREFIX + languageCode))
+    if (newTranslator->load(Preferences::TRANSLATION_FOLDER
+                            + Preferences::TRANSLATION_PREFIX
+                            + languageCode))
     {
         installTranslator(newTranslator);
         translator = newTranslator;
     }
-    else delete newTranslator;
-
-    if(notificator)
+    else
     {
+        delete newTranslator;
+    }
+
+    if (notificator)
+    {
+        createTrayMenu();
         createTrayIcon();
         createOverQuotaMenu();
         createGuestMenu();
@@ -699,8 +710,8 @@ void MegaApplication::updateTrayIcon()
     else if (indexing || waiting
              || megaApi->getNumPendingUploads()
              || megaApi->getNumPendingDownloads()
-             || megaApiLinks->getNumPendingUploads()
-             || megaApiLinks->getNumPendingDownloads())
+             || megaApiGuest->getNumPendingUploads()
+             || megaApiGuest->getNumPendingDownloads())
     {
         if (indexing)
         {
@@ -820,10 +831,9 @@ void MegaApplication::start()
     indexing = false;
     overquotaCheck = false;
 
-#ifdef Q_OS_LINUX
-    if(isLinux && trayIcon->contextMenu())
+    if (isLinux && trayIcon->contextMenu())
     {
-        if(showStatusAction)
+        if (showStatusAction)
         {
             initialMenu->removeAction(showStatusAction);
 
@@ -835,9 +845,6 @@ void MegaApplication::start()
     {
         trayIcon->setContextMenu(initialMenu);
     }
-#else
-        trayIcon->setContextMenu(initialMenu);
-#endif
 
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
@@ -880,12 +887,12 @@ void MegaApplication::start()
         QString language = preferences->language();
         changeLanguage(language);
         updated = false;
-        if(!infoDialog)
+        if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
         }
 
-        if(!preferences->isFirstStartDone())
+        if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(99500, "MEGAsync first start");
             userAction(SetupWizard::PAGE_INITIAL);
@@ -935,10 +942,10 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {
-    megaApi->pauseTransfers(paused);
+    pauseTransfers(paused);
     megaApi->getAccountDetails();
 
-    if(settingsDialog)
+    if (settingsDialog)
     {
         settingsDialog->setProxyOnly(false);
     }
@@ -972,7 +979,7 @@ void MegaApplication::loggedIn()
     QString language = preferences->language();
     changeLanguage(language);
     updated = false;
-    if(!infoDialog)
+    if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
     }
@@ -1233,7 +1240,7 @@ void MegaApplication::exitApplication()
 void MegaApplication::pauseTransfers(bool pause)
 {
     megaApi->pauseTransfers(pause);
-    megaApiLinks->pauseTransfers(pause);
+    megaApiGuest->pauseTransfers(pause);
 }
 
 void MegaApplication::refreshTrayIcon()
@@ -1416,9 +1423,9 @@ void MegaApplication::cleanAll()
     delete httpServer;
     delete uploader;
     delete delegateListener;
-    delete delegateLinksListener;
+    delete delegateGuestListener;
     delete megaApi;
-    delete megaApiLinks;
+    delete megaApiGuest;
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
@@ -1536,11 +1543,11 @@ void MegaApplication::showInfoDialog()
         else
         {
             infoDialog->closeSyncsMenu();
-            if(trayMenu->isVisible())
+            if (trayMenu->isVisible())
             {
                 trayMenu->close();
             }
-            if(trayGuestMenu->isVisible())
+            if (trayGuestMenu->isVisible())
             {
                 trayGuestMenu->close();
             }
@@ -1563,7 +1570,6 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     QDesktopWidget *desktop = QApplication::desktop();
     int screenIndex = desktop->screenNumber(position);
     screenGeometry = desktop->availableGeometry(screenIndex);
-
 
     #ifdef __APPLE__
         if(positionTrayIcon.x() || positionTrayIcon.y())
@@ -1731,13 +1737,13 @@ void MegaApplication::onConnectivityCheckError()
 
 void MegaApplication::setupWizardFinished(int result)
 {
-    if(setupWizard)
+    if (setupWizard)
     {
         setupWizard->deleteLater();
         setupWizard = NULL;
     }
 
-    if(result == QDialog::Rejected)
+    if (result == QDialog::Rejected)
     {
         return;
     }
@@ -1772,7 +1778,7 @@ void MegaApplication::setupWizardFinished(int result)
 
 void MegaApplication::unlink()
 {
-    if(infoDialog)
+    if (infoDialog)
     {
         infoDialog->clearRecentFiles();
     }
@@ -1941,7 +1947,7 @@ void MegaApplication::applyProxySettings()
     }
 
     megaApi->setProxySettings(proxySettings);
-    megaApiLinks->setProxySettings(proxySettings);
+    megaApiGuest->setProxySettings(proxySettings);
     delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
 }
@@ -1975,33 +1981,45 @@ void MegaApplication::checkForUpdates()
 
 void MegaApplication::showTrayMenu(QPoint *point)
 {
-    if(trayGuestMenu && !preferences->logged())
+    if (trayGuestMenu && !preferences->logged())
     {
-        if(trayGuestMenu->isVisible())
+        if (trayGuestMenu->isVisible())
+        {
             trayGuestMenu->close();
-        QPoint p = point ? (*point)-QPoint(trayGuestMenu->sizeHint().width(), 0) : QCursor::pos();
+        }
+
+        QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
+                         : QCursor::pos();
         #ifdef __APPLE__
             trayGuestMenu->exec(p);
         #else
             trayGuestMenu->popup(p);
         #endif
     }
-    else if(trayMenu && !infoOverQuota)
+    else if (trayMenu && !infoOverQuota)
     {
         if(trayMenu->isVisible())
+        {
             trayMenu->close();
-        QPoint p = point ? (*point)-QPoint(trayMenu->sizeHint().width(), 0) : QCursor::pos();
+        }
+
+        QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
+                         : QCursor::pos();
         #ifdef __APPLE__
             trayMenu->exec(p);
         #else
             trayMenu->popup(p);
         #endif
     }
-    else if(trayOverQuotaMenu && infoOverQuota)
+    else if (trayOverQuotaMenu && infoOverQuota)
     {
         if(trayOverQuotaMenu->isVisible())
+        {
             trayOverQuotaMenu->close();
-        QPoint p = point ? (*point)-QPoint(trayOverQuotaMenu->sizeHint().width(), 0) : QCursor::pos();
+        }
+
+        QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
+                         : QCursor::pos();
         #ifdef __APPLE__
             trayOverQuotaMenu->exec(p);
         #else
@@ -2093,10 +2111,10 @@ void MegaApplication::importLinks()
     pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
-    LinkProcessor *linkProcessor = new LinkProcessor(megaApiLinks, linkList);
+    LinkProcessor *linkProcessor = new LinkProcessor(megaApiGuest, linkList);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApiLinks, preferences, linkProcessor, !preferences->logged());
+    importDialog = new ImportMegaLinksDialog(megaApiGuest, preferences, linkProcessor, !preferences->logged());
     importDialog->exec();
     if(!importDialog)
     {
@@ -2271,9 +2289,9 @@ void MegaApplication::loginActionClicked()
 
 void MegaApplication::userAction(int action)
 {
-    if(!preferences->logged())
+    if (!preferences->logged())
     {
-        if(setupWizard)
+        if (setupWizard)
         {
             setupWizard->setVisible(true);
             setupWizard->raise();
@@ -2291,10 +2309,60 @@ void MegaApplication::userAction(int action)
 
 void MegaApplication::changeState()
 {
-    if(infoDialog)
+    if (infoDialog)
     {
         infoDialog->regenerateLayout();
     }
+}
+
+void MegaApplication::createTrayIcon()
+{
+    if (isLinux)
+    {
+        if (trayIcon->contextMenu())
+        {
+            if (showStatusAction)
+            {
+                showStatusAction->deleteLater();
+                showStatusAction = NULL;
+            }
+
+            showStatusAction = new QAction(tr("Show status"), this);
+            connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
+
+            initialMenu->insertAction(changeProxyAction, showStatusAction);
+        }
+        return;
+    }
+
+#ifdef _WIN32
+    trayIcon->setContextMenu(windowsMenu);
+#else
+    trayIcon->setContextMenu(&emptyMenu);
+#endif
+
+    trayIcon->setToolTip(QCoreApplication::applicationName()
+                     + QString::fromAscii(" ")
+                     + Preferences::VERSION_STRING
+                     + QString::fromAscii("\n")
+                     + tr("Starting"));
+
+#ifndef __APPLE__
+    #ifdef _WIN32
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+    #else
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+    #endif
+#else
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
+                      QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+
+    if (!scanningTimer->isActive())
+    {
+        scanningAnimationIndex = 1;
+        scanningTimer->start();
+    }
+#endif
 }
 
 void MegaApplication::processDownloads()
@@ -2483,7 +2551,7 @@ void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
 void MegaApplication::externalDownload(QString megaLink)
 {
     pendingLinks.append(megaLink);
-    megaApiLinks->getPublicNode(megaLink.toUtf8().constData());
+    megaApiGuest->getPublicNode(megaLink.toUtf8().constData());
 }
 
 void MegaApplication::internalDownload(long long handle)
@@ -2627,8 +2695,9 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #endif
 
 #ifndef __APPLE__
-        #ifdef Q_OS_LINUX
-            if(showStatusAction)
+        if (isLinux)
+        {
+            if (showStatusAction)
             {
                 initialMenu->removeAction(showStatusAction);
 
@@ -2636,12 +2705,16 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 showStatusAction = NULL;
             }
 
-            if(trayMenu && trayMenu->isVisible())
+            if (trayMenu && trayMenu->isVisible())
+            {
                 trayMenu->close();
+            }
 
-            if(trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+            if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+            {
                 trayOverQuotaMenu->close();
-        #endif
+            }
+        }
         infoDialogTimer->start(200);
 #else
         showInfoDialog();
@@ -2698,13 +2771,13 @@ void MegaApplication::onMessageClicked()
 //Called when the user wants to open the settings dialog
 void MegaApplication::openSettings(int tab)
 {
-    if(settingsDialog)
+    if (settingsDialog)
     {
         //If the dialog is active
-		if(settingsDialog->isVisible())
+        if (settingsDialog->isVisible())
 		{
             //and visible -> show it
-            if(infoOverQuota)
+            if (infoOverQuota)
             {
                 settingsDialog->setOverQuotaMode(true);
             }
@@ -2726,13 +2799,13 @@ void MegaApplication::openSettings(int tab)
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
-    if(infoOverQuota)
+    if (infoOverQuota)
     {
         settingsDialog->setOverQuotaMode(true);
     }
     else
     {
-        if(!preferences->logged())
+        if (!preferences->logged())
         {
             changeProxy();
             return;
@@ -2806,7 +2879,7 @@ void MegaApplication::changeProxy()
 }
 
 //This function creates the tray icon
-void MegaApplication::createTrayIcon()
+void MegaApplication::createTrayMenu()
 {
     if(!trayMenu)
     {
@@ -2912,46 +2985,7 @@ void MegaApplication::createTrayIcon()
     trayMenu->addAction(downloadAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
-    trayMenu->addAction(exitAction);
-
-    #ifdef Q_OS_LINUX
-    if(trayIcon->contextMenu())
-    {
-        if(showStatusAction)
-        {
-            showStatusAction->deleteLater();
-            showStatusAction = NULL;
-        }
-
-        showStatusAction = new QAction(tr("Show status"), this);
-        connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
-
-        initialMenu->insertAction(changeProxyAction, showStatusAction);
-    }
-    #else
-
-        #ifdef _WIN32
-            trayIcon->setContextMenu(windowsMenu);
-        #else
-            trayIcon->setContextMenu(&emptyMenu);
-        #endif
-
-        #ifndef __APPLE__
-            #ifdef _WIN32
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
-            #else
-                trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
-            #endif
-        #else
-            trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
-            if(!scanningTimer->isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer->start();
-            }
-        #endif
-    #endif
-    trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Starting"));
+    trayMenu->addAction(exitAction); 
 }
 
 void MegaApplication::createOverQuotaMenu()
@@ -3049,7 +3083,7 @@ void MegaApplication::createOverQuotaMenu()
 
 void MegaApplication::createGuestMenu()
 {
-    if(!trayGuestMenu)
+    if (!trayGuestMenu)
     {
         trayGuestMenu = new QMenu();
         #ifndef __APPLE__
@@ -3062,13 +3096,13 @@ void MegaApplication::createGuestMenu()
     else
     {
         QList<QAction *> actions = trayGuestMenu->actions();
-        for(int i=0; i<actions.size(); i++)
+        for (int i = 0; i < actions.size(); i++)
         {
             trayGuestMenu->removeAction(actions[i]);
         }
     }
 
-    if(exitGuestAction)
+    if (exitGuestAction)
     {
         exitGuestAction->deleteLater();
         exitGuestAction = NULL;
@@ -3081,13 +3115,13 @@ void MegaApplication::createGuestMenu()
 #endif
     connect(exitGuestAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-    if(updateGuestAction)
+    if (updateGuestAction)
     {
         updateGuestAction->deleteLater();
         updateGuestAction = NULL;
     }
 
-    if(updateAvailable)
+    if (updateAvailable)
     {
         updateGuestAction = new QAction(tr("Install update"), this);
         updateGuestAction->setEnabled(true);
@@ -3104,7 +3138,7 @@ void MegaApplication::createGuestMenu()
     }
     connect(updateGuestAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
-    if(importLinksGuestAction)
+    if (importLinksGuestAction)
     {
         importLinksGuestAction->deleteLater();
         importLinksGuestAction = NULL;
@@ -3113,7 +3147,7 @@ void MegaApplication::createGuestMenu()
     importLinksGuestAction = new QAction(tr("Import links"), this);
     connect(importLinksGuestAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
-    if(settingsActionGuest)
+    if (settingsActionGuest)
     {
         settingsActionGuest->deleteLater();
         settingsActionGuest = NULL;
@@ -3126,7 +3160,7 @@ void MegaApplication::createGuestMenu()
     #endif
     connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(changeProxy()));
 
-    if(loginAction)
+    if (loginAction)
     {
         loginAction->deleteLater();
         loginAction = NULL;
@@ -3988,10 +4022,10 @@ void MegaApplication::onReloadNeeded(MegaApi*)
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 {
-    if(megaApi && megaApiLinks)
+    if(megaApi && megaApiGuest)
     {
         indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting() || megaApiLinks->isWaiting();
+        waiting = megaApi->isWaiting() || megaApiGuest->isWaiting();
     }
 
     if(infoDialog)
@@ -4008,7 +4042,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
                  .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
 
     int pendingUploads = megaApi->getNumPendingUploads();
-    int pendingDownloads = megaApi->getNumPendingDownloads() + megaApiLinks->getNumPendingDownloads();
+    int pendingDownloads = megaApi->getNumPendingDownloads() + megaApiGuest->getNumPendingDownloads();
     if(pendingUploads)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
