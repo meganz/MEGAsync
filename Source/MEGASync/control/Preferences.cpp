@@ -380,7 +380,7 @@ void Preferences::setTotalStorage(long long value)
 long long Preferences::usedStorage()
 {
     mutex.lock();
-    //assert(logged());
+    assert(logged());
 
     long long value = settings->value(usedStorageKey).toLongLong();
     mutex.unlock();
