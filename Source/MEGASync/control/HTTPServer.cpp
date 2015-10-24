@@ -425,12 +425,12 @@ void HTTPServer::error(QAbstractSocket::SocketError)
     discardClient();
 }
 
-void HTTPServer::sslErrors(const QList<QSslError> &errors)
+void HTTPServer::sslErrors(const QList<QSslError> &)
 {
     discardClient();
 }
 
-void HTTPServer::peerVerifyError(const QSslError &error)
+void HTTPServer::peerVerifyError(const QSslError &)
 {
     discardClient();
 }

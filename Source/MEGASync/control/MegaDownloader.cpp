@@ -24,7 +24,7 @@ void MegaDownloader::download(MegaNode *parent, QString path)
 void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path)
 {
     QDir dir(path);
-    if(!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+    if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
@@ -32,11 +32,10 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
     }
 
     QString currentPath;
-    while(!downloadQueue->isEmpty())
+    while (!downloadQueue->isEmpty())
     {
         MegaNode *node = downloadQueue->dequeue();
-
-        if(node->getAuth()->size() && pathMap.contains(node->getParentHandle()))
+        if (node->getAuth()->size() && pathMap.contains(node->getParentHandle()))
         {
             currentPath = pathMap[node->getParentHandle()];
         }
@@ -57,17 +56,21 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
 
-    if(parent->getType() == MegaNode::TYPE_FILE)
+    if (parent->getType() == MegaNode::TYPE_FILE)
     {
         QDir dir(currentPath);
-        QString fullPath = dir.filePath(QString::fromUtf8(megaApi->escapeFsIncompatible(parent->getName())));
+
+        char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
+        QString fullPath = dir.filePath(QString::fromUtf8(escapedName));
+        delete [] escapedName;
+
         QFileInfo info(fullPath);
-        if(info.exists())
+        if (info.exists())
         {
             const char *fpLocal = megaApi->getFingerprint(fullPath.toUtf8().constData());
             const char *fpRemote = megaApi->getFingerprint(parent);
 
-            if((fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
+            if ((fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
                     || (!fpRemote && parent->getSize() == info.size()
                         && parent->getModificationTime() == (info.lastModified().toMSecsSinceEpoch()/1000)))
             {
@@ -82,7 +85,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             delete [] fpRemote;
         }
 
-        if(parent->isPublic() && megaApiGuest)
+        if (parent->isPublic() && megaApiGuest)
         {
             megaApiGuest->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
         }
@@ -93,22 +96,26 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
     }
     else
     {
-        QString nodeName = QString::fromUtf8(megaApi->escapeFsIncompatible(parent->getName()));
+        char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
+        QString nodeName = QString::fromUtf8(escapedName);
+        delete [] escapedName;
+
         QString destPath = currentPath + QDir::separator() + nodeName;
         QDir dir(destPath);
-        if(!dir.exists())
+        if (!dir.exists())
         {
             dir.mkpath(QString::fromAscii("."));
         }
 
-        if(!parent->getAuth()->size())
+        if (!parent->getAuth()->size())
         {
             MegaNodeList *nList = megaApi->getChildren(parent);
-            for(int i=0;i<nList->size();i++)
+            for (int i = 0; i < nList->size(); i++)
             {
                 MegaNode *child = nList->get(i);
                 download(child, destPath);
             }
+            delete nList;
         }
         else
         {
