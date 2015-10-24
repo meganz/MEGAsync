@@ -48,7 +48,7 @@ void MultiQFileDialog::accept()
     QDialog::accept();
 }
 
-void MultiQFileDialog::onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void MultiQFileDialog::onSelectionChanged(const QItemSelection &, const QItemSelection &)
 {
     QString actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
 

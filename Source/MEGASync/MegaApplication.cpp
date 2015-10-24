@@ -3895,7 +3895,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
         onGlobalSyncStateChanged(megaApi);
 }
 
-void MegaApplication::onAccountUpdate(MegaApi *api)
+void MegaApplication::onAccountUpdate(MegaApi *)
 {
     megaApi->getAccountDetails();
 }
@@ -4088,7 +4088,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
     if(!isLinux) updateTrayIcon();
 }
 
-void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
 {
     onGlobalSyncStateChanged(api);
 }
