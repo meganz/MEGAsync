@@ -133,7 +133,8 @@ public slots:
     void rebootApplication(bool update = true);
     void exitApplication();
     void pauseTransfers(bool pause);
-    void refreshTrayIcon();
+    void checkNetworkInterfaces();
+    void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onDupplicateUpload(QString localPath, QString name, mega::MegaHandle handle);
@@ -198,11 +199,11 @@ protected:
     QAction *exitActionOverquota;
     QAction *updateActionOverquota;
 
-    QAction *importLinksGuestAction;
-    QAction *exitGuestAction;
+    QAction *importLinksActionGuest;
+    QAction *exitActionGuest;
     QAction *settingsActionGuest;
-    QAction *updateGuestAction;
-    QAction *loginAction;
+    QAction *updateActionGuest;
+    QAction *loginActionGuest;
 
     QTimer *scanningTimer;
     QTimer *connectivityTimer;
@@ -232,7 +233,7 @@ protected:
     QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     MegaDownloader *downloader;
-    QTimer *refreshTimer;
+    QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;

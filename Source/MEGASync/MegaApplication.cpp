@@ -371,20 +371,20 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     translator = NULL;
     exitAction = NULL;
     exitActionOverquota = NULL;
-    exitGuestAction = NULL;
+    exitActionGuest = NULL;
     settingsAction = NULL;
     settingsActionOverquota = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
-    importLinksGuestAction = NULL;
+    importLinksActionGuest = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
-    loginAction = NULL;
+    loginActionGuest = NULL;
     waiting = false;
     updated = false;
     updateAction = NULL;
     updateActionOverquota = NULL;
-    updateGuestAction = NULL;
+    updateActionGuest = NULL;
     logoutActionOverquota = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
@@ -564,9 +564,9 @@ void MegaApplication::initialize()
     windowsMenu->addAction(windowsExitAction);
 #endif
 
-    refreshTimer = new QTimer();
-    refreshTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
-    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTrayIcon()));
+    periodicTasksTimer = new QTimer();
+    periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
+    connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
 
     infoDialogTimer = new QTimer();
     infoDialogTimer->setSingleShot(true);
@@ -1243,36 +1243,40 @@ void MegaApplication::pauseTransfers(bool pause)
     megaApiGuest->pauseTransfers(pause);
 }
 
-void MegaApplication::refreshTrayIcon()
+void MegaApplication::checkNetworkInterfaces()
 {
     QList<QNetworkInterface> newNetworkInterfaces;
     QList<QNetworkInterface> configs = QNetworkInterface::allInterfaces();
+
     //Filter interfaces (QT provides interfaces with loopback IP addresses)
-    for(int i=0; i<configs.size(); i++)
+    for (int i = 0; i < configs.size(); i++)
     {
         QNetworkInterface networkInterface = configs.at(i);
         QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
-        if((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
+        if ((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
                 && !(flags & QNetworkInterface::IsLoopBack))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(networkInterface.humanReadableName()).toUtf8().constData());
+
             int numActiveIPs = 0;
             QList<QNetworkAddressEntry> addresses = networkInterface.addressEntries();
-            for(int i=0; i < addresses.size(); i++)
+            for (int i = 0; i < addresses.size(); i++)
             {
                 QHostAddress ip = addresses.at(i).ip();
-                switch(ip.protocol())
+                switch (ip.protocol())
                 {
                 case QAbstractSocket::IPv4Protocol:
-                    if(!ip.toString().startsWith(QString::fromUtf8("127."), Qt::CaseInsensitive) && !ip.toString().startsWith(QString::fromUtf8("169.254."), Qt::CaseInsensitive))
+                    if (!ip.toString().startsWith(QString::fromUtf8("127."), Qt::CaseInsensitive)
+                            && !ip.toString().startsWith(QString::fromUtf8("169.254."), Qt::CaseInsensitive))
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv4: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
                     }
                     break;
                 case QAbstractSocket::IPv6Protocol:
-                    if(!ip.toString().startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive) && !ip.toString().startsWith(QString::fromUtf8("FD00:"), Qt::CaseInsensitive)
-                                                                                                   && !(ip.toString() == QString::fromUtf8("::1")))
+                    if (!ip.toString().startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive)
+                            && !ip.toString().startsWith(QString::fromUtf8("FD00:"), Qt::CaseInsensitive)
+                            && !(ip.toString() == QString::fromUtf8("::1")))
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv6: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
@@ -1283,7 +1287,7 @@ void MegaApplication::refreshTrayIcon()
                 }
             }
 
-            if(!numActiveIPs)
+            if (!numActiveIPs)
             {
                 continue;
             }
@@ -1295,33 +1299,37 @@ void MegaApplication::refreshTrayIcon()
     }
 
     bool disconnect = false;
-    if(!newNetworkInterfaces.size())
+    if (!newNetworkInterfaces.size())
     {
         networkConnectivity = false;
         networkConfigurationManager.updateConfigurations();
     }
-    else if(!activeNetworkInterfaces.size())
+    else if (!activeNetworkInterfaces.size())
     {
         activeNetworkInterfaces = newNetworkInterfaces;
     }
-    else if(activeNetworkInterfaces.size() != newNetworkInterfaces.size())
+    else if (activeNetworkInterfaces.size() != newNetworkInterfaces.size())
     {
         disconnect = true;
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local network interface change detected");
     }
     else
     {
-        for(int i=0; i < newNetworkInterfaces.size(); i++)
+        for (int i = 0; i < newNetworkInterfaces.size(); i++)
         {
             QNetworkInterface networkInterface = newNetworkInterfaces.at(i);
-            int j=0;
-            for(; j < activeNetworkInterfaces.size(); j++)
+
+            int j = 0;
+            while (j < activeNetworkInterfaces.size())
             {
                 if(activeNetworkInterfaces.at(j).name() == networkInterface.name())
+                {
                     break;
+                }
+                j++;
             }
 
-            if(j == activeNetworkInterfaces.size())
+            if (j == activeNetworkInterfaces.size())
             {
                 //New interface
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New working network interface detected (%1)").arg(networkInterface.humanReadableName()).toUtf8().constData());
@@ -1331,39 +1339,41 @@ void MegaApplication::refreshTrayIcon()
             {
                 QNetworkInterface oldNetworkInterface = activeNetworkInterfaces.at(j);
                 QList<QNetworkAddressEntry> addresses = networkInterface.addressEntries();
-                if(addresses.size() != oldNetworkInterface.addressEntries().size())
+                if (addresses.size() != oldNetworkInterface.addressEntries().size())
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local IP change detected");
                     disconnect = true;
                 }
                 else
                 {
-                    for(int k=0; k < addresses.size(); k++)
+                    for (int k = 0; k < addresses.size(); k++)
                     {
                         QHostAddress ip = addresses.at(k).ip();
-                        switch(ip.protocol())
+                        switch (ip.protocol())
                         {
-                        case QAbstractSocket::IPv4Protocol:
-                        case QAbstractSocket::IPv6Protocol:
-                        {
-                            QList<QNetworkAddressEntry> oldAddresses = oldNetworkInterface.addressEntries();
-                            int l=0;
-                            for(; l<oldAddresses.size(); l++)
+                            case QAbstractSocket::IPv4Protocol:
+                            case QAbstractSocket::IPv6Protocol:
                             {
-                                if(oldAddresses.at(l).ip().toString() == ip.toString())
+                                QList<QNetworkAddressEntry> oldAddresses = oldNetworkInterface.addressEntries();
+                                int l = 0;
+                                while (l < oldAddresses.size())
                                 {
-                                    break;
+                                    if (oldAddresses.at(l).ip().toString() == ip.toString())
+                                    {
+                                        break;
+                                    }
+                                    l++;
+                                }
+
+                                if (l == oldAddresses.size())
+                                {
+                                    //New IP
+                                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New IP detected (%1) for interface %2").arg(ip.toString()).arg(networkInterface.name()).toUtf8().constData());
+                                    disconnect = true;
                                 }
                             }
-                            if(l == oldAddresses.size())
-                            {
-                                //New IP
-                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New IP detected (%1) for interface %2").arg(ip.toString()).arg(networkInterface.name()).toUtf8().constData());
-                                disconnect = true;
-                            }
-                        }
-                        default:
-                            break;
+                            default:
+                                break;
                         }
                     }
                 }
@@ -1371,7 +1381,7 @@ void MegaApplication::refreshTrayIcon()
         }
     }
 
-    if(disconnect || (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS)
+    if (disconnect || (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Reconnecting due to local network changes");
         megaApi->retryPendingConnections(true, true);
@@ -1382,11 +1392,16 @@ void MegaApplication::refreshTrayIcon()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Local network adapters haven't changed");
     }
+}
+
+void MegaApplication::periodicTasks()
+{
+    checkNetworkInterfaces();
 
     static int counter = 0;
-    if(megaApi)
+    if (megaApi)
     {
-        if(!(++counter % 6))
+        if (!(++counter % 6))
         {
             networkConfigurationManager.updateConfigurations();
             megaApi->update();
@@ -1394,9 +1409,17 @@ void MegaApplication::refreshTrayIcon()
 
         megaApi->updateStats();
         onGlobalSyncStateChanged(megaApi);
-        if(isLinux) updateTrayIcon();
+
+        if (isLinux)
+        {
+            updateTrayIcon();
+        }
     }
-    if(trayIcon) trayIcon->show();
+
+    if (trayIcon)
+    {
+        trayIcon->show();
+    }
 }
 
 void MegaApplication::cleanAll()
@@ -1412,7 +1435,7 @@ void MegaApplication::cleanAll()
     qInstallMessageHandler(0);
 #endif
 
-    refreshTimer->stop();
+    periodicTasksTimer->stop();
     stopUpdateTask();
     Platform::stopShellDispatcher();
     for(int i=0; i<preferences->getNumSyncedFolders(); i++)
@@ -2601,14 +2624,19 @@ void MegaApplication::onRequestLinksFinished()
 
 void MegaApplication::onUpdateCompleted()
 {
-    if(trayMenu)
+    if (trayMenu)
     {
         updateAction->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
     }
 
-    if(trayOverQuotaMenu)
+    if (trayOverQuotaMenu)
     {
         updateActionOverquota->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
+    }
+
+    if (trayGuestMenu)
+    {
+        updateActionGuest->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
     }
 
     updateAvailable = false;
@@ -2619,20 +2647,27 @@ void MegaApplication::onUpdateAvailable(bool requested)
 {
     updateAvailable = true;
 
-    if(trayMenu)
+    if (trayMenu)
     {
         updateAction->setText(tr("Install update"));
     }
 
-    if(trayOverQuotaMenu)
+    if (trayOverQuotaMenu)
     {
         updateActionOverquota->setText(tr("Install update"));
     }
 
-    if(settingsDialog)
-        settingsDialog->setUpdateAvailable(true);
+    if (trayGuestMenu)
+    {
+        updateActionGuest->setText(tr("Install update"));
+    }
 
-    if(requested)
+    if (settingsDialog)
+    {
+        settingsDialog->setUpdateAvailable(true);
+    }
+
+    if (requested)
     {
 #ifdef WIN32
         showInfoMessage(tr("A new version of MEGAsync is available! Click on this message to install it"));
@@ -3102,50 +3137,47 @@ void MegaApplication::createGuestMenu()
         }
     }
 
-    if (exitGuestAction)
+    if (exitActionGuest)
     {
-        exitGuestAction->deleteLater();
-        exitGuestAction = NULL;
+        exitActionGuest->deleteLater();
+        exitActionGuest = NULL;
     }
 
 #ifndef __APPLE__
-    exitGuestAction = new QAction(tr("Exit"), this);
+    exitActionGuest = new QAction(tr("Exit"), this);
 #else
     exitGuestAction = new QAction(tr("Quit"), this);
 #endif
-    connect(exitGuestAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(exitActionGuest, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-    if (updateGuestAction)
+    if (updateActionGuest)
     {
-        updateGuestAction->deleteLater();
-        updateGuestAction = NULL;
+        updateActionGuest->deleteLater();
+        updateActionGuest = NULL;
     }
 
     if (updateAvailable)
     {
-        updateGuestAction = new QAction(tr("Install update"), this);
-        updateGuestAction->setEnabled(true);
+        updateActionGuest = new QAction(tr("Install update"), this);
     }
     else
     {
-        updateGuestAction = new QAction(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING +
-                                  QString::fromAscii(" (") + Preferences::SDK_ID + QString::fromAscii(")"), this);
+        updateActionGuest = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
 #ifndef __APPLE__
-        updateGuestAction->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
-        updateGuestAction->setIconVisibleInMenu(true);
+        updateActionGuest->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
+        updateActionGuest->setIconVisibleInMenu(true);
 #endif
-        updateGuestAction->setEnabled(false);
     }
-    connect(updateGuestAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+    connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
-    if (importLinksGuestAction)
+    if (importLinksActionGuest)
     {
-        importLinksGuestAction->deleteLater();
-        importLinksGuestAction = NULL;
+        importLinksActionGuest->deleteLater();
+        importLinksActionGuest = NULL;
     }
 
-    importLinksGuestAction = new QAction(tr("Import links"), this);
-    connect(importLinksGuestAction, SIGNAL(triggered()), this, SLOT(importLinks()));
+    importLinksActionGuest = new QAction(tr("Import links"), this);
+    connect(importLinksActionGuest, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (settingsActionGuest)
     {
@@ -3160,22 +3192,22 @@ void MegaApplication::createGuestMenu()
     #endif
     connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(changeProxy()));
 
-    if (loginAction)
+    if (loginActionGuest)
     {
-        loginAction->deleteLater();
-        loginAction = NULL;
+        loginActionGuest->deleteLater();
+        loginActionGuest = NULL;
     }
 
-    loginAction = new QAction(tr("Login"), this);
-    connect(loginAction, SIGNAL(triggered()), this, SLOT(loginActionClicked()));
+    loginActionGuest = new QAction(tr("Login"), this);
+    connect(loginActionGuest, SIGNAL(triggered()), this, SLOT(loginActionClicked()));
 
-    trayGuestMenu->addAction(updateActionOverquota);
+    trayGuestMenu->addAction(updateActionGuest);
     trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(importLinksGuestAction);
+    trayGuestMenu->addAction(importLinksActionGuest);
     trayGuestMenu->addAction(settingsActionGuest);
-    trayGuestMenu->addAction(loginAction);
+    trayGuestMenu->addAction(loginActionGuest);
     trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(exitGuestAction);
+    trayGuestMenu->addAction(exitActionGuest);
 }
 
 //Called when a request is about to start
@@ -3282,19 +3314,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_LOGOUT:
     {
         int errorCode = e->getErrorCode();
-        if(errorCode)
+        if (errorCode)
         {
-            if(errorCode == MegaError::API_ESID)
+            if (errorCode == MegaError::API_ESID)
             {
                 QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
             }
-            else if(errorCode == MegaError::API_ESSL)
+            else if (errorCode == MegaError::API_ESSL)
             {
                 QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
                                       tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
                                        + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
             }
-            else if(errorCode != MegaError::API_EACCESS)
+            else if (errorCode != MegaError::API_EACCESS)
             {
                 QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
                                          .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
@@ -3306,7 +3338,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             preferences->unlink();
             closeDialogs();
-            refreshTrayIcon();
+            periodicTasks();
             preferences->setFirstStartDone();
             start();
         }
