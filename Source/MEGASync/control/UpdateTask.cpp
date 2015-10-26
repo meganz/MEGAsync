@@ -1,13 +1,13 @@
-#include "MegaApplication.h"
 #include "UpdateTask.h"
 #include "control/Utilities.h"
 #include <iostream>
 #include <QAuthenticator>
+#include <QDesktopServices>
 
 using namespace mega;
 using namespace std;
 
-UpdateTask::UpdateTask(MegaApi *megaApi, QObject *parent) :
+UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, QObject *parent) :
     QObject(parent)
 {
     m_WebCtrl = NULL;
@@ -18,6 +18,7 @@ UpdateTask::UpdateTask(MegaApi *megaApi, QObject *parent) :
     updateTimer = NULL;
     timeoutTimer = NULL;
     this->megaApi = megaApi;
+    this->appFolder = QDir(appFolder);
 }
 
 UpdateTask::~UpdateTask()
@@ -57,8 +58,6 @@ void UpdateTask::startUpdateThread()
 #else
     basePath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
 #endif
-
-    appFolder = QDir(MegaApplication::applicationDirPath() + QDir::separator());
 
     #ifdef __APPLE__
         appFolder.cdUp();
@@ -119,13 +118,15 @@ void UpdateTask::initialCleanup()
     for(int i=0; i<subdirs.size(); i++)
     {
         if(subdirs[i].startsWith(Preferences::UPDATE_BACKUP_FOLDER_NAME))
+        {
             Utilities::removeRecursively(basePathDir.absoluteFilePath(subdirs[i]));
+        }
     }
 
     //Remove update folder (old location)
-    Utilities::removeRecursively(MegaApplication::applicationDirPath() +
-                                 QDir::separator() +
-                                 Preferences::UPDATE_FOLDER_NAME);
+    Utilities::removeRecursively(
+                QDir::toNativeSeparators(
+                    appFolder.absoluteFilePath(Preferences::UPDATE_FOLDER_NAME)));
 
     //Initialize update info
     downloadURLs.clear();
@@ -142,13 +143,6 @@ void UpdateTask::finalCleanup()
 
     //Remove the update folder (new location)
     Utilities::removeRecursively(updateFolder.absolutePath());
-
-    #ifdef __APPLE__
-        QFile exeFile(MegaApplication::applicationFilePath());
-        exeFile.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner |
-                                  QFile::ExeGroup | QFile::ReadGroup |
-                                  QFile::ExeOther | QFile::ReadOther);
-    #endif
 
     emit updateCompleted();
 }
@@ -485,9 +479,9 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
     }
 
     //All files have been processed. Apply update
-    if(preferences->updateAutomatically() || forceInstall)
+    if (preferences->updateAutomatically() || forceInstall)
     {
-        if(!performUpdate())
+        if (!performUpdate())
         {
             postponeUpdate();
             return;
@@ -502,6 +496,7 @@ void UpdateTask::downloadFinished(QNetworkReply *reply)
         preferences->setLastUpdateTime(QDateTime::currentMSecsSinceEpoch());
         preferences->setLastUpdateVersion(updateVersion);
     }
+
     forceInstall = false;
     forceCheck = false;
     running = false;

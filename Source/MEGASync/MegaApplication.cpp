@@ -434,6 +434,9 @@ void MegaApplication::initialize()
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
 
     preferences = Preferences::instance();
+    connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
+    connect(preferences, SIGNAL(updated()), this, SLOT(showUpdatedMessage()));
+    preferences->initialize();
     if(preferences->error())
         QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
 
@@ -1871,17 +1874,23 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
 //KB/s
 void MegaApplication::setUploadLimit(int limit)
 {
-    if(limit<0) megaApi->setUploadLimit(-1);
-    else megaApi->setUploadLimit(limit*1024);
+    if (limit < 0)
+    {
+        megaApi->setUploadLimit(-1);
+    }
+    else
+    {
+        megaApi->setUploadLimit(limit * 1024);
+    }
 }
 
 void MegaApplication::startUpdateTask()
 {
 #if defined(WIN32) || defined(__APPLE__)
-    if(!updateThread && preferences->canUpdate())
+    if(!updateThread && preferences->canUpdate(MegaApplication::applicationFilePath()))
     {
         updateThread = new QThread();
-        updateTask = new UpdateTask(megaApi);
+        updateTask = new UpdateTask(megaApi, MegaApplication::applicationDirPath());
         updateTask->moveToThread(updateThread);
 
         connect(this, SIGNAL(startUpdaterThread()), updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);
@@ -1905,7 +1914,7 @@ void MegaApplication::startUpdateTask()
 
 void MegaApplication::stopUpdateTask()
 {
-    if(updateThread)
+    if (updateThread)
     {
         updateThread->quit();
         updateThread = NULL;
@@ -2624,6 +2633,13 @@ void MegaApplication::onRequestLinksFinished()
 
 void MegaApplication::onUpdateCompleted()
 {
+#ifdef __APPLE__
+    QFile exeFile(MegaApplication::applicationFilePath());
+    exeFile.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner |
+                              QFile::ExeGroup | QFile::ReadGroup |
+                              QFile::ExeOther | QFile::ReadOther);
+#endif
+
     if (trayMenu)
     {
         updateAction->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());

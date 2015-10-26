@@ -689,16 +689,20 @@ void SettingsDialog::loadSettings()
     {
         //General
         ui->cShowNotifications->setChecked(preferences->showNotifications());
-        ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
 
-    #ifdef WIN32
-        qt_ntfs_permission_lookup++; // turn checking on
-    #endif
-        if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
+        if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
+        {
+            ui->bUpdate->setEnabled(false);
             ui->cAutoUpdate->setEnabled(false);
-    #ifdef WIN32
-        qt_ntfs_permission_lookup--; // turn it off again
-    #endif
+            ui->cAutoUpdate->setChecked(false);
+        }
+        else
+        {
+            ui->bUpdate->setEnabled(true);
+            ui->cAutoUpdate->setEnabled(true);
+            ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+        }
+
         // if checked: make sure both sources are true
         ui->cStartOnStartup->setChecked(preferences->startOnStartup() && Platform::isStartOnStartupActive());
 
@@ -748,14 +752,15 @@ void SettingsDialog::loadSettings()
         QFont f = ui->bBandwidth->font();
         QFontMetrics fm = QFontMetrics(f);
         int neededWidth = fm.width(tr("Bandwidth"));
-        if(width < neededWidth)
+        if (width < neededWidth)
+        {
             ui->bBandwidth->setText(tr("Transfers"));
+        }
 
-        if(ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+        if (ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+        {
             ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
-
-        if(!preferences->canUpdate())
-            ui->bUpdate->setEnabled(false);
+        }
 
         //Account
         ui->lEmail->setText(preferences->email());
@@ -948,12 +953,17 @@ bool SettingsDialog::saveSettings()
         //General
         preferences->setShowNotifications(ui->cShowNotifications->isChecked());
 
-        bool updateAutomatically = ui->cAutoUpdate->isChecked();
-        if(updateAutomatically != preferences->updateAutomatically())
+        if (ui->cAutoUpdate->isEnabled())
         {
-            preferences->setUpdateAutomatically(updateAutomatically);
-            if(updateAutomatically)
-                on_bUpdate_clicked();
+            bool updateAutomatically = ui->cAutoUpdate->isChecked();
+            if (updateAutomatically != preferences->updateAutomatically())
+            {
+                preferences->setUpdateAutomatically(updateAutomatically);
+                if (updateAutomatically)
+                {
+                    on_bUpdate_clicked();
+                }
+            }
         }
 
         bool startOnStartup = ui->cStartOnStartup->isChecked();

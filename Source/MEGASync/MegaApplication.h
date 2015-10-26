@@ -86,7 +86,6 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void showUpdatedMessage();
     void updateUserStats();
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
@@ -149,6 +148,7 @@ public slots:
     void onConnectivityCheckError();
     void userAction(int action);
     void changeState();
+    void showUpdatedMessage();
 
 protected:
     void createTrayIcon();
