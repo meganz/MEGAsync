@@ -75,6 +75,7 @@ public:
 
 
     mega::MegaApi *getMegaApi() { return megaApi; }
+    mega::MegaApi *getMegaApiGuest() { return megaApiGuest; }
 
     void unlink();
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
@@ -85,7 +86,6 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void showUpdatedMessage();
     void updateUserStats();
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
@@ -108,11 +108,10 @@ public slots:
     void start();
     void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
     void changeProxy();
-    void pauseSync();
-    void resumeSync();
     void importLinks();
     void showChangeLog();
     void uploadActionClicked();
+    void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void logoutActionClicked();
@@ -133,7 +132,8 @@ public slots:
     void rebootApplication(bool update = true);
     void exitApplication();
     void pauseTransfers(bool pause);
-    void refreshTrayIcon();
+    void checkNetworkInterfaces();
+    void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onDupplicateUpload(QString localPath, QString name, mega::MegaHandle handle);
@@ -142,14 +142,19 @@ public slots:
     bool anUpdateIsAvailable();
     void triggerInstallUpdate();
     void scanningAnimationStep();
-    void setupWizardFinished();
+    void setupWizardFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
+    void userAction(int action);
+    void changeState();
+    void showUpdatedMessage();
 
 protected:
     void createTrayIcon();
+    void createTrayMenu();
     void createOverQuotaMenu();
+    void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
     void startSyncs();
@@ -167,22 +172,25 @@ protected:
     QSystemTrayIcon *trayIcon;
 #endif
 
+    QAction *changeProxyAction;
+    QAction *initialExitAction;
+    QMenu *initialMenu;
+
 #ifdef _WIN32
     QMenu *windowsMenu;
     QAction *windowsExitAction;
 #endif
 
-    QMenu *initialMenu;
     QMenu *trayMenu;
     QMenu *trayOverQuotaMenu;
+    QMenu *trayGuestMenu;
     QMenu emptyMenu;
     QAction *exitAction;
     QAction *settingsAction;
     QAction *importLinksAction;
     QAction *uploadAction;
     QAction *downloadAction;
-    QAction *changeProxyAction;
-    QAction *initialExitAction;
+
     QAction *updateAction;
     QAction *showStatusAction;
 
@@ -190,6 +198,12 @@ protected:
     QAction *settingsActionOverquota;
     QAction *exitActionOverquota;
     QAction *updateActionOverquota;
+
+    QAction *importLinksActionGuest;
+    QAction *exitActionGuest;
+    QAction *settingsActionGuest;
+    QAction *updateActionGuest;
+    QAction *loginActionGuest;
 
     QTimer *scanningTimer;
     QTimer *connectivityTimer;
@@ -200,6 +214,7 @@ protected:
     InfoOverQuotaDialog *infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiGuest;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
@@ -214,10 +229,11 @@ protected:
     int exportOps;
     int syncState;
     mega::QTMegaListener *delegateListener;
-	QMap<int, QString> uploadLocalPaths;
+    mega::QTMegaListener *delegateGuestListener;
+    QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     MegaDownloader *downloader;
-    QTimer *refreshTimer;
+    QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
     QTranslator *translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
@@ -235,7 +251,7 @@ protected:
     UpdateTask *updateTask;
     Notificator *notificator;
     long long lastActiveTime;
-    QNetworkConfigurationManager networkManager;
+    QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QList<QString> pendingLinks;
     MegaSyncLogger *logger;
@@ -257,6 +273,7 @@ protected:
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
+    bool networkConnectivity;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

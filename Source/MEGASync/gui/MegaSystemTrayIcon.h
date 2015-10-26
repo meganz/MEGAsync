@@ -28,6 +28,7 @@ public:
     virtual bool isSystemTrayAvailable() const;
     virtual bool supportsMessages() const;
     virtual QPoint getPosition();
+    QMenu *contextMenu();
 
 signals:
     void activated(QSystemTrayIcon::ActivationReason reason);

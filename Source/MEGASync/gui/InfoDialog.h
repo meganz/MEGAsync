@@ -6,7 +6,7 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QPainter>
-
+#include "GuestWidget.h"
 #include "SettingsDialog.h"
 
 namespace Ui {
@@ -20,12 +20,12 @@ class InfoDialog : public QDialog
 
 public:
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
-    void init();
     ~InfoDialog();
 
     void setUsage();
     void setTransfer(mega::MegaTransfer *transfer);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
+    void clearRecentFiles();
 	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
 	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
 	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
@@ -42,9 +42,13 @@ public:
     void updateRecentFiles();
     void disableGetLink(bool disable);
     void addSync(mega::MegaHandle h);
+
+
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
+
+    void regenerateLayout();
 
 public slots:
    void addSync();
@@ -72,6 +76,8 @@ private slots:
     void onOverlayClicked();
 
     void scanningAnimationStep();
+
+    void onUserAction(int action);
 
 #ifdef __APPLE__
     void on_cRecentlyUpdated_stateChanged(int arg1);
@@ -117,6 +123,7 @@ private:
 	int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;
+    GuestWidget *gWidget;
 
 protected:
     void changeEvent(QEvent * event);
@@ -135,8 +142,9 @@ protected:
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
-    mega::MegaTransfer *transfer1;
-    mega::MegaTransfer *transfer2;
+    mega::MegaApi *megaApiGuest;
+    mega::MegaTransfer *activeDownload;
+    mega::MegaTransfer *activeUpload;
 };
 
 #endif // INFODIALOG_H
