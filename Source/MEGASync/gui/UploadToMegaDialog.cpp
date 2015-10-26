@@ -7,11 +7,11 @@
 using namespace mega;
 
 UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::UploadToMegaDialog)
+    QDialog(parent),
+    ui(new Ui::UploadToMegaDialog)
 {
-	ui->setupUi(this);
-	setAttribute(Qt::WA_QuitOnClose, false);
+    ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
     this->megaApi = megaApi;
     this->delegateListener = new QTMegaRequestListener(megaApi, this);
 
@@ -31,7 +31,7 @@ UploadToMegaDialog::~UploadToMegaDialog()
 
 MegaHandle UploadToMegaDialog::getSelectedHandle()
 {
-	return selectedHandle;
+    return selectedHandle;
 }
 
 bool UploadToMegaDialog::isDefaultFolder()
@@ -64,18 +64,18 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
-	if(e->getErrorCode() != MegaError::API_OK || !node)
-	{
-		MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Request error: %1")
-					 .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
-		this->reject();
+    if(e->getErrorCode() != MegaError::API_OK || !node)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Request error: %1")
+                     .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
+        this->reject();
         delete node;
-		return;
-	}
+        return;
+    }
 
     selectedHandle = node->getHandle();
     delete node;
-	accept();
+    accept();
 }
 
 void UploadToMegaDialog::on_bChange_clicked()
@@ -88,7 +88,7 @@ void UploadToMegaDialog::on_bChange_clicked()
         delete defaultNode;
     }
 
-	int result = nodeSelector->exec();
+    int result = nodeSelector->exec();
     if(!nodeSelector || result != QDialog::Accepted)
     {
         delete nodeSelector;

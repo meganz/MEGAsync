@@ -18,7 +18,7 @@ public:
     void setFileName(QString fileName);
     void setProgress(long long completedSize, long long totalSize, bool cancellable);
     void setType(int type);
-	void hideTransfer();
+    void hideTransfer();
     bool isActive();
 
 signals:

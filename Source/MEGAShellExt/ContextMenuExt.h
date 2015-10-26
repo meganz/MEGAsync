@@ -55,7 +55,7 @@ public:
     IFACEMETHODIMP QueryContextMenu(HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT idCmdLast, UINT uFlags);
     IFACEMETHODIMP InvokeCommand(LPCMINVOKECOMMANDINFO pici);
     IFACEMETHODIMP GetCommandString(UINT_PTR idCommand, UINT uFlags, UINT *pwReserved, LPSTR pszName, UINT cchMax);
-	
+
     IFACEMETHODIMP HandleMenuMsg(UINT uMsg, WPARAM wParam, LPARAM lParam);
     IFACEMETHODIMP HandleMenuMsg2(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT *plResult);
 
@@ -72,7 +72,7 @@ private:
     long m_cRef;
 
     // The name of the selected file.
-	//wchar_t m_szSelectedFile[MAX_PATH];
+    //wchar_t m_szSelectedFile[MAX_PATH];
     std::vector<std::string> selectedFiles;
     std::vector<int> pathStates;
     std::vector<int> pathTypes;

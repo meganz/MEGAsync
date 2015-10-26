@@ -9,7 +9,7 @@ class DownloadFromMegaDialog;
 
 class DownloadFromMegaDialog : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DownloadFromMegaDialog(QString defaultPath = QString::fromUtf8(""), QWidget *parent = 0);
@@ -19,7 +19,7 @@ public:
     QString getPath();
 
 private slots:
-	void on_bChange_clicked();
+    void on_bChange_clicked();
     void on_bOK_clicked();
 
 protected:

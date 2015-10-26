@@ -533,7 +533,7 @@ void SetupWizard::on_bSkip_clicked()
 }
 
 void SetupWizard::on_bLocalFolder_clicked()
-{	
+{
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if (!defaultPath.size())
     {

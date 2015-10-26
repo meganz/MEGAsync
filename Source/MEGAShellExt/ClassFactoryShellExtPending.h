@@ -3,7 +3,7 @@
 
 #include "classfactory.h"
 class ClassFactoryShellExtPending :
-	public ClassFactory
+    public ClassFactory
 {
 public:
     IFACEMETHODIMP CreateInstance(IUnknown *pUnkOuter, REFIID riid, void **ppv);

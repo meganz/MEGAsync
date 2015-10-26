@@ -26,9 +26,9 @@ public:
     void setTransfer(mega::MegaTransfer *transfer);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
     void clearRecentFiles();
-	void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
-	void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
-	void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
+    void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
+    void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
+    void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
     void setPaused(bool paused);
     void updateTransfers();
     void transferFinished(int error);
@@ -69,7 +69,7 @@ private slots:
 
     void on_bSyncFolder_clicked();
 
-	void openFolder(QString path);
+    void openFolder(QString path);
 
     void on_bPause_clicked();
 
@@ -114,13 +114,13 @@ private:
     unsigned long long elapsedDownloadTime;
     unsigned long long elapsedUploadTime;
     unsigned long long lastUpdate;
-	int currentUpload;
-	int currentDownload;
-	int totalUploads;
-	int totalDownloads;
-	long long totalDownloadedSize, totalUploadedSize;
-	long long totalDownloadSize, totalUploadSize;
-	int remainingUploads, remainingDownloads;
+    int currentUpload;
+    int currentDownload;
+    int totalUploads;
+    int totalDownloads;
+    long long totalDownloadedSize, totalUploadedSize;
+    long long totalDownloadSize, totalUploadSize;
+    int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;
     GuestWidget *gWidget;
@@ -133,7 +133,7 @@ protected:
 #endif
 
 protected:
-	QDateTime lastPopupUpdate;
+    QDateTime lastPopupUpdate;
     QTimer scanningTimer;
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;

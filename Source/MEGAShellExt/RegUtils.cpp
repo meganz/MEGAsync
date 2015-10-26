@@ -18,83 +18,83 @@
 
 BOOL RegDelNodeRecurse (HKEY hKeyRoot, LPTSTR lpSubKey)
 {
-	LPTSTR lpEnd;
-	LONG lResult;
-	DWORD dwSize;
-	TCHAR szName[MAX_PATH];
-	HKEY hKey;
-	FILETIME ftWrite;
+    LPTSTR lpEnd;
+    LONG lResult;
+    DWORD dwSize;
+    TCHAR szName[MAX_PATH];
+    HKEY hKey;
+    FILETIME ftWrite;
 
-	// First, see if we can delete the key without having
-	// to recurse.
+    // First, see if we can delete the key without having
+    // to recurse.
 
-	lResult = RegDeleteKey(hKeyRoot, lpSubKey);
+    lResult = RegDeleteKey(hKeyRoot, lpSubKey);
 
-	if (lResult == ERROR_SUCCESS)
-		return TRUE;
+    if (lResult == ERROR_SUCCESS)
+        return TRUE;
 
-	lResult = RegOpenKeyEx (hKeyRoot, lpSubKey, 0, KEY_READ, &hKey);
+    lResult = RegOpenKeyEx (hKeyRoot, lpSubKey, 0, KEY_READ, &hKey);
 
-	if (lResult != ERROR_SUCCESS)
-	{
-		if (lResult == ERROR_FILE_NOT_FOUND) {
-			printf("Key not found.\n");
-			return TRUE;
-		}
-		else {
-			printf("Error opening key.\n");
-			return FALSE;
-		}
-	}
+    if (lResult != ERROR_SUCCESS)
+    {
+        if (lResult == ERROR_FILE_NOT_FOUND) {
+            printf("Key not found.\n");
+            return TRUE;
+        }
+        else {
+            printf("Error opening key.\n");
+            return FALSE;
+        }
+    }
 
-	// Check for an ending slash and add one if it is missing.
+    // Check for an ending slash and add one if it is missing.
 
-	lpEnd = lpSubKey + lstrlen(lpSubKey);
+    lpEnd = lpSubKey + lstrlen(lpSubKey);
 
-	if (*(lpEnd - 1) != TEXT('\\'))
-	{
-		*lpEnd =  TEXT('\\');
-		lpEnd++;
-		*lpEnd =  TEXT('\0');
-	}
+    if (*(lpEnd - 1) != TEXT('\\'))
+    {
+        *lpEnd =  TEXT('\\');
+        lpEnd++;
+        *lpEnd =  TEXT('\0');
+    }
 
-	// Enumerate the keys
+    // Enumerate the keys
 
-	dwSize = MAX_PATH;
-	lResult = RegEnumKeyEx(hKey, 0, szName, &dwSize, NULL,
-						   NULL, NULL, &ftWrite);
+    dwSize = MAX_PATH;
+    lResult = RegEnumKeyEx(hKey, 0, szName, &dwSize, NULL,
+                           NULL, NULL, &ftWrite);
 
-	if (lResult == ERROR_SUCCESS)
-	{
-		do {
+    if (lResult == ERROR_SUCCESS)
+    {
+        do {
 
-			StringCchCopy (lpEnd, MAX_PATH*2, szName);
+            StringCchCopy (lpEnd, MAX_PATH*2, szName);
 
-			if (!RegDelNodeRecurse(hKeyRoot, lpSubKey)) {
-				break;
-			}
+            if (!RegDelNodeRecurse(hKeyRoot, lpSubKey)) {
+                break;
+            }
 
-			dwSize = MAX_PATH;
+            dwSize = MAX_PATH;
 
-			lResult = RegEnumKeyEx(hKey, 0, szName, &dwSize, NULL,
-								   NULL, NULL, &ftWrite);
+            lResult = RegEnumKeyEx(hKey, 0, szName, &dwSize, NULL,
+                                   NULL, NULL, &ftWrite);
 
-		} while (lResult == ERROR_SUCCESS);
-	}
+        } while (lResult == ERROR_SUCCESS);
+    }
 
-	lpEnd--;
-	*lpEnd = TEXT('\0');
+    lpEnd--;
+    *lpEnd = TEXT('\0');
 
-	RegCloseKey (hKey);
+    RegCloseKey (hKey);
 
-	// Try again to delete the key.
+    // Try again to delete the key.
 
-	lResult = RegDeleteKey(hKeyRoot, lpSubKey);
+    lResult = RegDeleteKey(hKeyRoot, lpSubKey);
 
-	if (lResult == ERROR_SUCCESS)
-		return TRUE;
+    if (lResult == ERROR_SUCCESS)
+        return TRUE;
 
-	return FALSE;
+    return FALSE;
 }
 
 //*************************************************************
@@ -113,11 +113,10 @@ BOOL RegDelNodeRecurse (HKEY hKeyRoot, LPTSTR lpSubKey)
 
 BOOL RegDelNode (HKEY hKeyRoot, LPTSTR lpSubKey)
 {
-	TCHAR szDelKey[MAX_PATH*2];
+    TCHAR szDelKey[MAX_PATH*2];
 
-	StringCchCopy (szDelKey, MAX_PATH*2, lpSubKey);
-	return RegDelNodeRecurse(hKeyRoot, szDelKey);
-
+    StringCchCopy (szDelKey, MAX_PATH*2, lpSubKey);
+    return RegDelNodeRecurse(hKeyRoot, szDelKey);
 }
 
 HRESULT SetRegistryKeyAndValue(HKEY  hkey, PCWSTR pszSubKey, PCWSTR pszValueName,
@@ -188,7 +187,7 @@ HRESULT RegisterInprocServer(PCWSTR pszModule, const CLSID& clsid,
     // Create the HKCR\CLSID\{<CLSID>} key.
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey), L"CLSID\\%s", szCLSID);
     if (SUCCEEDED(hr))
-	{
+    {
         hr = SetRegistryKeyAndValue(HKEY_CLASSES_ROOT, szSubkey, NULL, pszFriendlyName);
 
         // Create the HKCR\CLSID\{<CLSID>}\InprocServer32 key.
@@ -224,7 +223,7 @@ HRESULT UnregisterInprocServer(const CLSID& clsid)
     wchar_t szSubkey[MAX_PATH];
 
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey), L"CLSID\\%s", szCLSID);
-	if (SUCCEEDED(hr)) RegDelNode(HKEY_CLASSES_ROOT, szSubkey);
+    if (SUCCEEDED(hr)) RegDelNode(HKEY_CLASSES_ROOT, szSubkey);
 
     return hr;
 }
@@ -271,7 +270,7 @@ HRESULT RegisterShellExtContextMenuHandler(
     hr = SetRegistryKeyAndValue(HKEY_CLASSES_ROOT, szSubkey, NULL, szCLSID);
     if (!SUCCEEDED(hr)) return hr;
 
-	// Create the key HKCR\Directory\shellex\ContextMenuHandlers\pszFriendlyName {<CLSID>}
+    // Create the key HKCR\Directory\shellex\ContextMenuHandlers\pszFriendlyName {<CLSID>}
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey),
         L"Directory\\shellex\\ContextMenuHandlers\\%s", pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
@@ -284,13 +283,13 @@ HRESULT RegisterShellExtContextMenuHandler(
 
 HRESULT RegisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
 {
-	HRESULT hr;
+    HRESULT hr;
 
     wchar_t szCLSID[MAX_PATH];
     StringFromGUID2(clsid, szCLSID, ARRAYSIZE(szCLSID));
-	wchar_t szSubkey[MAX_PATH];
+    wchar_t szSubkey[MAX_PATH];
 
-	// Create the key HKCR\<File Type>\shellex\ContextMenuHandlers\pszFriendlyName {<CLSID>}
+    // Create the key HKCR\<File Type>\shellex\ContextMenuHandlers\pszFriendlyName {<CLSID>}
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey),
         L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers\\%s", pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
@@ -298,11 +297,11 @@ HRESULT RegisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
 
     // Set the default value of the key.
     hr = SetRegistryKeyAndValue(HKEY_LOCAL_MACHINE, szSubkey, NULL, szCLSID);
-	if (!SUCCEEDED(hr)) return hr;
+    if (!SUCCEEDED(hr)) return hr;
 
-	hr = SetRegistryKeyAndValue(HKEY_LOCAL_MACHINE,
-		L"Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved",
-		szCLSID, pszFriendlyName);
+    hr = SetRegistryKeyAndValue(HKEY_LOCAL_MACHINE,
+        L"Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved",
+        szCLSID, pszFriendlyName);
 
     return hr;
 }
@@ -343,28 +342,28 @@ HRESULT UnregisterShellExtContextMenuHandler(
         L"%s\\shellex\\ContextMenuHandlers\\%s", pszFileType, pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
     
-	RegDelNode(HKEY_CLASSES_ROOT, szSubkey);
+    RegDelNode(HKEY_CLASSES_ROOT, szSubkey);
     return hr;
 }
 
 
 HRESULT UnregisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
 {
-	HRESULT hr;
-	wchar_t szCLSID[MAX_PATH];
+    HRESULT hr;
+    wchar_t szCLSID[MAX_PATH];
     StringFromGUID2(clsid, szCLSID, ARRAYSIZE(szCLSID));
 
-	wchar_t szSubkey[MAX_PATH];
-	hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey),
+    wchar_t szSubkey[MAX_PATH];
+    hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey),
         L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers\\%s", pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
-	RegDelNode(HKEY_LOCAL_MACHINE, szSubkey);
+    RegDelNode(HKEY_LOCAL_MACHINE, szSubkey);
 
-	HKEY hkey;
-	hr = RegOpenKey(HKEY_LOCAL_MACHINE,
-		L"Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved",
-		&hkey);
-	if (!SUCCEEDED(hr)) return hr;
+    HKEY hkey;
+    hr = RegOpenKey(HKEY_LOCAL_MACHINE,
+                    L"Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved",
+                    &hkey);
+    if (!SUCCEEDED(hr)) return hr;
 
     hr = HRESULT_FROM_WIN32(RegDeleteValue(hkey, szCLSID));
     if (!SUCCEEDED(hr)) return hr;

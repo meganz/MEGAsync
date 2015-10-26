@@ -49,9 +49,9 @@ class WinShellDispatcherTask : public QThread
     void exitTask();
 
  protected:
-	int dispatchPipe();
-	VOID GetAnswerToRequest(LPPIPEINST pipe);
-	QQueue<QString> uploadQueue;
+    int dispatchPipe();
+    VOID GetAnswerToRequest(LPPIPEINST pipe);
+    QQueue<QString> uploadQueue;
     QQueue<QString> exportQueue;
     MegaApplication *receiver;
     QString lastPath;
@@ -59,7 +59,7 @@ class WinShellDispatcherTask : public QThread
     int numHits;
 
  signals:
-	void newUploadQueue(QQueue<QString> uploadQueue);
+    void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
 
  protected:

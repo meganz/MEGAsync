@@ -35,15 +35,15 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Initialize fields
     this->app = app;
-	downloadSpeed = 0;
-	uploadSpeed = 0;
-	currentUpload = 0;
-	currentDownload = 0;
-	totalUploads = 0;
-	totalDownloads = 0;
-	totalDownloadedSize = totalUploadedSize = 0;
-	totalDownloadSize = totalUploadSize = 0;
-	remainingUploads = remainingDownloads = 0;
+    downloadSpeed = 0;
+    uploadSpeed = 0;
+    currentUpload = 0;
+    currentDownload = 0;
+    totalUploads = 0;
+    totalDownloads = 0;
+    totalDownloadedSize = totalUploadedSize = 0;
+    totalDownloadSize = totalUploadSize = 0;
+    remainingUploads = remainingDownloads = 0;
     uploadStartTime = 0;
     downloadStartTime = 0;
     effectiveDownloadSpeed = 200000;
@@ -178,7 +178,7 @@ void InfoDialog::setUsage()
                             preferences->totalStorage(), preferences->usedStorage());
     QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
             .arg(Utilities::getSizeString(preferences->totalStorage()));
-	ui->lPercentageUsed->setText(used);
+    ui->lPercentageUsed->setText(used);
     ui->lTotalUsed->setText(tr("Usage: %1").arg(Utilities::getSizeString(preferences->usedStorage())));
 }
 
@@ -775,14 +775,14 @@ void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpee
 
 void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize)
 {
-	this->totalDownloadedSize = totalDownloadedSize;
-	this->totalUploadedSize = totalUploadedSize;
+    this->totalDownloadedSize = totalDownloadedSize;
+    this->totalUploadedSize = totalUploadedSize;
 }
 
 void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize)
 {
-	this->totalDownloadSize = totalDownloadSize;
-	this->totalUploadSize = totalUploadSize;
+    this->totalDownloadSize = totalDownloadSize;
+    this->totalUploadSize = totalUploadSize;
 }
 
 void InfoDialog::setPaused(bool paused)
@@ -1088,8 +1088,8 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::updateRecentFiles()
 {
-	ui->wRecent1->updateWidget();
-	ui->wRecent2->updateWidget();
+    ui->wRecent1->updateWidget();
+    ui->wRecent2->updateWidget();
     ui->wRecent3->updateWidget();
 }
 

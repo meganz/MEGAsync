@@ -78,7 +78,7 @@ private slots:
     void on_rNoProxy_clicked();
 
     void on_bUpgrade_clicked();
-	void on_bUpgradeBandwidth_clicked();
+    void on_bUpgradeBandwidth_clicked();
 
     void on_rNoLimit_clicked();
 
@@ -120,7 +120,7 @@ private:
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
-	bool syncsChanged;
+    bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;
     QStringList languageCodes;

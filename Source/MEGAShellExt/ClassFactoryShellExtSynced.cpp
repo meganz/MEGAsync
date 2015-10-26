@@ -7,7 +7,7 @@
 
 IFACEMETHODIMP ClassFactoryShellExtSynced::CreateInstance(IUnknown *pUnkOuter, REFIID riid, void **ppv)
 {
-	HRESULT hr = CLASS_E_NOAGGREGATION;
+    HRESULT hr = CLASS_E_NOAGGREGATION;
 
     if(ppv == NULL)
         return E_POINTER;

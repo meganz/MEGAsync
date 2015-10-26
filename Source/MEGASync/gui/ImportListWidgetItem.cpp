@@ -5,8 +5,8 @@
 #include <QFileInfo>
 
 ImportListWidgetItem::ImportListWidgetItem(QString link, int id, QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::ImportListWidgetItem)
+    QWidget(parent),
+    ui(new Ui::ImportListWidgetItem)
 {
     ui->setupUi(this);
     this->id = id;

@@ -107,7 +107,7 @@ bool WindowsPlatform::startOnStartup(bool value)
         WCHAR *wStartupPath = (WCHAR *)startupPath.utf16();
 
         QString exec = MegaApplication::applicationFilePath();
-		exec = QDir::toNativeSeparators(exec);
+        exec = QDir::toNativeSeparators(exec);
         WCHAR *wExecPath = (WCHAR *)exec.utf16();
 
         res = CreateLink(wExecPath, wStartupPath, wDescription);

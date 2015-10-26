@@ -65,7 +65,7 @@ bool CrashGenerationClient::RequestDumpForException(
   const mach_msg_timeout_t kReceiveTimeoutMs = 5 * 1000;
   MachReceiveMessage acknowledge_message;
   result = acknowledge_port.WaitForMessage(&acknowledge_message,
-					   kReceiveTimeoutMs);
+                                           kReceiveTimeoutMs);
   return result == KERN_SUCCESS;
 }
 

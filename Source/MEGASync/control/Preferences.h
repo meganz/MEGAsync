@@ -301,8 +301,8 @@ protected:
     static const QString inboxFoldersKey;
     static const QString rubbishFoldersKey;
     static const QString inShareFoldersKey;
-	static const QString totalBandwidthKey;
-	static const QString usedBandwidthKey;
+    static const QString totalBandwidthKey;
+    static const QString usedBandwidthKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
@@ -329,7 +329,7 @@ protected:
     static const QString megaFolderHandleKey;
     static const QString folderActiveKey;
     static const QString temporaryInactiveKey;
-	static const QString downloadFolderKey;
+    static const QString downloadFolderKey;
     static const QString uploadFolderKey;
     static const QString hasDefaultUploadFolderKey;
     static const QString hasDefaultDownloadFolderKey;
@@ -371,7 +371,7 @@ protected:
     static const int defaultProxyPort;
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
-    static const QString defaultProxyPassword;	
+    static const QString defaultProxyPassword;
     static const bool defaultUpperSizeLimit;
     static const bool defaultLowerSizeLimit;
     static const long long defaultUpperSizeLimitValue;

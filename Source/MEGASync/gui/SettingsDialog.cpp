@@ -69,7 +69,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = Preferences::instance();
-	syncsChanged = false;
+    syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
     this->proxyOnly = proxyOnly;
@@ -1284,10 +1284,10 @@ void SettingsDialog::on_bDelete_clicked()
     if(selected.size()==0) return;
 
     int index = selected.first().topRow();
-	ui->tSyncs->removeRow(index);
+    ui->tSyncs->removeRow(index);
     syncNames.removeAt(index);
 
-	syncsChanged = true;
+    syncsChanged = true;
     stateChanged();
 }
 

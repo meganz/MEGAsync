@@ -27,7 +27,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 
 NodeSelector::~NodeSelector()
 {
-	delete delegateListener;
+    delete delegateListener;
     delete ui;
 }
 
@@ -177,8 +177,8 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     ui->bNewFolder->setEnabled(true);
-	if(e->getErrorCode() == MegaError::API_OK)
-	{
+    if(e->getErrorCode() == MegaError::API_OK)
+    {
         MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
         if(node)
         {
@@ -187,7 +187,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
             ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
             ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
         }
-	}
+    }
     else
     {
         QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
@@ -234,7 +234,7 @@ void NodeSelector::on_bNewFolder_clicked()
         {
             ui->bNewFolder->setEnabled(false);
             ui->tMegaFolders->setEnabled(false);
-			megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
+            megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
         }
         else
         {

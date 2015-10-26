@@ -323,7 +323,7 @@ IFACEMETHODIMP_(ULONG) ContextMenuExt::Release()
 
 // Initialize the context menu handler.
 IFACEMETHODIMP ContextMenuExt::Initialize(
-	LPCITEMIDLIST , LPDATAOBJECT pDataObj, HKEY )
+    LPCITEMIDLIST , LPDATAOBJECT pDataObj, HKEY )
 {
     __try
     {
@@ -396,7 +396,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 //            first menu item that is to be added.
 //
 IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
-	HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT , UINT uFlags)
+    HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT , UINT uFlags)
 {
     __try
     {
@@ -606,7 +606,7 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 //            since Windows 2000.
 //
 IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand, 
-	UINT uFlags, UINT *, LPSTR pszName, UINT cchMax)
+    UINT uFlags, UINT *, LPSTR pszName, UINT cchMax)
 {
     __try
     {
