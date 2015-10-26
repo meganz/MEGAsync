@@ -46,6 +46,8 @@ void RecentFile::updateWidget()
     if(!info.fileName.length())
 	{
         ui->lFileType->setText(QString());
+        ui->lFileName->setText(QString());
+        ui->lFileType->setIcon(QIcon());
         ui->lTime->setText(QString::fromAscii(""));
         ui->pArrow->installEventFilter(this);
         ui->pArrow->update();
@@ -149,6 +151,18 @@ void RecentFile::disableGetLink(bool disable)
     this->getLinkDisabled = disable;
     updateWidget();
     update();
+}
+
+void RecentFile::clear()
+{
+    info.fileName.clear();
+    info.fileHandle = mega::INVALID_HANDLE;
+    info.localPath.clear();
+    info.nodeKey.clear();
+    info.dateTime = QDateTime();
+
+    closeMenu();
+    getLinkDisabled = false;
 }
 
 bool RecentFile::eventFilter(QObject *, QEvent *ev)

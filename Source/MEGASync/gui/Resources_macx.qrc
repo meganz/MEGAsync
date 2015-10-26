@@ -419,5 +419,7 @@
         <file>images/small_word@2x.png</file>
         <file>images/app_64.png</file>
         <file>images/app_64@2x.png</file>
+        <file>images/non_logged_graphic.png</file>
+        <file>images/non_logged_graphic@2x.png</file>
     </qresource>
 </RCC>

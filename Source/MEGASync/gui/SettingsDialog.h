@@ -38,7 +38,7 @@ class SettingsDialog : public QDialog
 public:
     enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4};
 
-    explicit SettingsDialog(MegaApplication *app, bool proxyOnly=false, QWidget *parent = 0);
+    explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
     void setOverQuotaMode(bool mode);

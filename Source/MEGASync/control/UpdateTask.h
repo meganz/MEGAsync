@@ -22,7 +22,7 @@ class UpdateTask : public QObject
     Q_OBJECT
 
 public:
-    explicit UpdateTask(mega::MegaApi *megaApi, QObject *parent = 0);
+    explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, QObject *parent = 0);
     ~UpdateTask();
 
 protected:
