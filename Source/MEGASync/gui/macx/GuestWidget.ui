@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -237,7 +237,7 @@ color: rgb(102, 102, 102);</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -272,7 +272,10 @@ color: rgb(102, 102, 102);</string>
       <item>
        <widget class="QLabel" name="lDesc">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;MEGAsync is on guest mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>MEGAsync is on guest mode</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -357,7 +360,7 @@ color: rgb(102, 102, 102);</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

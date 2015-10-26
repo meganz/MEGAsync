@@ -290,6 +290,29 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>GuestWidget</name>
+    <message>
+        <source>MEGAsync is on guest mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create an account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translation type="unfinished">[$1614]</translation>
+    </message>
+    <message>
+        <source>Cancel download</source>
+        <translation type="unfinished">[$1615]</translation>
+    </message>
+</context>
+<context>
     <name>HTTPServer</name>
     <message>
         <source>Your download has started</source>
@@ -938,6 +961,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2142,7 +2173,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting session key</source>
         <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
-        <translation>[$2020]</translation>
+        <translation type="obsolete">[$2020]</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -2185,6 +2216,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating folder...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logging out...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
