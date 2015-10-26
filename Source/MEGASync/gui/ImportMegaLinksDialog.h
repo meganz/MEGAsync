@@ -16,7 +16,7 @@ class ImportMegaLinksDialog : public QDialog
 	Q_OBJECT
 
 public:
-    explicit ImportMegaLinksDialog(mega::MegaApi *megaApi, Preferences *preferences, LinkProcessor *linkProcessor, bool guestMode = false, QWidget *parent = 0);
+    explicit ImportMegaLinksDialog(mega::MegaApi *megaApi, Preferences *preferences, LinkProcessor *linkProcessor, QWidget *parent = 0);
 	~ImportMegaLinksDialog();
 
 	bool shouldImport();
@@ -43,7 +43,6 @@ private:
     mega::MegaApi *megaApi;
 	LinkProcessor *linkProcessor;
 	bool finished;
-    bool guestMode;
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

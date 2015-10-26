@@ -2146,7 +2146,7 @@ void MegaApplication::importLinks()
     LinkProcessor *linkProcessor = new LinkProcessor(megaApiGuest, linkList);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApiGuest, preferences, linkProcessor, !preferences->logged());
+    importDialog = new ImportMegaLinksDialog(megaApiGuest, preferences, linkProcessor);
     importDialog->exec();
     if(!importDialog)
     {

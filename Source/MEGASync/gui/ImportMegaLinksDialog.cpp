@@ -12,7 +12,7 @@
 
 using namespace mega;
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, bool guestMode, QWidget *parent) :
+ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *preferences, LinkProcessor *processor, QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::ImportMegaLinksDialog)
 {
@@ -22,7 +22,6 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     const int SLOT_HEIGHT = 35;
     this->megaApi = megaApi;
     this->linkProcessor = processor;
-    this->guestMode = guestMode;
 
     for (int i = 0; i < linkProcessor->size(); i++)
     {
@@ -74,7 +73,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
     ui->eLocalFolder->setText(defaultFolderPath);
 
-    if (!guestMode)
+    if (preferences->logged())
     {
         MegaNode *testNode = megaApi->getNodeByHandle(preferences->importFolder());
         if (testNode)
