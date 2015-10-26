@@ -127,7 +127,7 @@ bool QtLockedFile::lock(LockMode mode, bool block)
             if (gotMutex)
                 ReleaseMutex(m_mutex_hnd);
             return false;
-	}
+    }
         if (res != WAIT_OBJECT_0) {
             if (gotMutex)
                 ReleaseMutex(m_mutex_hnd);

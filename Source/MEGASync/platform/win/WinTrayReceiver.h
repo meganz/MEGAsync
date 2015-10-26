@@ -84,7 +84,7 @@ public:
     void stop();
     ~WinTrayReceiver();
 
-    /*	INotificationCB methods  */
+    /*  INotificationCB methods  */
     HRESULT __stdcall QueryInterface(REFIID riid, PVOID *ppv);
     ULONG __stdcall AddRef(VOID);
     ULONG __stdcall Release(VOID);

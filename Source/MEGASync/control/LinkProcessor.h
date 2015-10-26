@@ -8,47 +8,47 @@
 
 class LinkProcessor: public QObject, public mega::MegaRequestListener
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     LinkProcessor(mega::MegaApi *megaApi, QStringList linkList);
-	virtual ~LinkProcessor();
+    virtual ~LinkProcessor();
 
-	QString getLink(int id);
-	bool isSelected(int id);
-	int getError(int id);
+    QString getLink(int id);
+    bool isSelected(int id);
+    int getError(int id);
     mega::MegaNode *getNode(int id);
-	int size();
+    int size();
 
-	void requestLinkInfo();
-	void importLinks(QString nodePath);
+    void requestLinkInfo();
+    void importLinks(QString nodePath);
     void importLinks(mega::MegaNode *node);
     mega::MegaHandle getImportParentFolder();
 
-	void downloadLinks(QString localPath);
-	void setSelected(int linkId, bool selected);
+    void downloadLinks(QString localPath);
+    void setSelected(int linkId, bool selected);
 
-	int numSuccessfullImports();
-	int numFailedImports();
+    int numSuccessfullImports();
+    int numFailedImports();
     int getCurrentIndex();
 
 protected:
     mega::MegaApi *megaApi;
-	QStringList linkList;
-	QList<bool> linkSelected;
+    QStringList linkList;
+    QList<bool> linkSelected;
     QList<mega::MegaNode *> linkNode;
-	QList<int> linkError;
-	int currentIndex;
-	int remainingNodes;
-	int importSuccess;
-	int importFailed;
+    QList<int> linkError;
+    int currentIndex;
+    int remainingNodes;
+    int importSuccess;
+    int importFailed;
     mega::MegaHandle importParentFolder;
     mega::QTMegaRequestListener *delegateListener;
 
 signals:
-	void onLinkInfoAvailable(int i);
-	void onLinkInfoRequestFinish();
-	void onLinkImportFinish();
+    void onLinkInfoAvailable(int i);
+    void onLinkInfoRequestFinish();
+    void onLinkImportFinish();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
 
 public slots:

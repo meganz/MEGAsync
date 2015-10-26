@@ -11,7 +11,7 @@ static GObjectClass *parent_class;
 
 static void mega_ext_class_init(MEGAExtClass *class)
 {
-	parent_class = g_type_class_peek_parent(class);
+    parent_class = g_type_class_peek_parent(class);
 }
 
 static void mega_ext_instance_init(MEGAExt *mega_ext)
@@ -343,29 +343,29 @@ static GType mega_ext_type = 0;
 
 GType mega_ext_get_type (void)
 {
-	return mega_ext_type;
+    return mega_ext_type;
 }
 
 void mega_ext_register_type(GTypeModule *module)
 {
-	static const GTypeInfo mega_type_info = {
-		sizeof(MEGAExtClass),
-		NULL,
-		NULL,
-		(GClassInitFunc)mega_ext_class_init,
-		NULL,
-		NULL,
-		sizeof (MEGAExt),
-		0,
-		(GInstanceInitFunc)mega_ext_instance_init,
+    static const GTypeInfo mega_type_info = {
+        sizeof(MEGAExtClass),
+        NULL,
+        NULL,
+        (GClassInitFunc)mega_ext_class_init,
+        NULL,
+        NULL,
+        sizeof (MEGAExt),
+        0,
+        (GInstanceInitFunc)mega_ext_instance_init,
         NULL
-	};
+    };
 
-	static const GInterfaceInfo menu_provider_iface_info = {
-		(GInterfaceInitFunc) mega_ext_menu_provider_iface_init,
-		NULL,
-		NULL
-	};
+    static const GInterfaceInfo menu_provider_iface_info = {
+        (GInterfaceInitFunc) mega_ext_menu_provider_iface_init,
+        NULL,
+        NULL
+    };
 
     static const GInterfaceInfo info_provider_iface_info = {
         (GInterfaceInitFunc) mega_ext_info_provider_iface_init,
@@ -373,10 +373,10 @@ void mega_ext_register_type(GTypeModule *module)
         NULL
     };
 
-	mega_ext_type = g_type_module_register_type(module,
+    mega_ext_type = g_type_module_register_type(module,
         G_TYPE_OBJECT, "MEGAExtension", &mega_type_info, 0);
 
-	g_type_module_add_interface(module,
+    g_type_module_add_interface(module,
         mega_ext_type,
         NAUTILUS_TYPE_MENU_PROVIDER,
         &menu_provider_iface_info);

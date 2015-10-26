@@ -9,25 +9,25 @@ class PasteMegaLinksDialog;
 
 class PasteMegaLinksDialog : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit PasteMegaLinksDialog(QWidget *parent = 0);
-	~PasteMegaLinksDialog();
-	QStringList getLinks();
+    explicit PasteMegaLinksDialog(QWidget *parent = 0);
+    ~PasteMegaLinksDialog();
+    QStringList getLinks();
 
 private slots:
-	void on_bSubmit_clicked();
+    void on_bSubmit_clicked();
 
 protected:
     void changeEvent(QEvent * event);
 
 private:
-	Ui::PasteMegaLinksDialog *ui;
-	QStringList links;
+    Ui::PasteMegaLinksDialog *ui;
+    QStringList links;
 
-	QStringList extractLinks(QString text);
-	QString checkLink(QString link);
+    QStringList extractLinks(QString text);
+    QString checkLink(QString link);
 };
 
 #endif // PASTEMEGALINKSDIALOG_H

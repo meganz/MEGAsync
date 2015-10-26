@@ -22,7 +22,7 @@ class ExtServer: public QObject
 
  protected:
     QLocalServer *m_localServer;
-	QQueue<QString> uploadQueue;
+    QQueue<QString> uploadQueue;
     QQueue<QString> exportQueue;
 
  public Q_SLOTS:
@@ -35,7 +35,7 @@ class ExtServer: public QObject
     const char *GetAnswerToRequest(const char *buf);
 
  signals:
-	void newUploadQueue(QQueue<QString> uploadQueue);
+    void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
 };
 

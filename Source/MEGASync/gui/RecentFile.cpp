@@ -44,7 +44,7 @@ void RecentFile::updateWidget()
     closeMenu();
 
     if(!info.fileName.length())
-	{
+    {
         ui->lFileType->setText(QString());
         ui->lFileName->setText(QString());
         ui->lFileType->setIcon(QIcon());
@@ -52,7 +52,7 @@ void RecentFile::updateWidget()
         ui->pArrow->installEventFilter(this);
         ui->pArrow->update();
         return;
-	}
+    }
 
     if(info.fileName.compare(ui->lFileName->text()))
     {

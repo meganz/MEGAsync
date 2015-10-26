@@ -208,7 +208,7 @@ protected:
     QTimer *scanningTimer;
     QTimer *connectivityTimer;
     int scanningAnimationIndex;
-	SetupWizard *setupWizard;
+    SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
     InfoOverQuotaDialog *infoOverQuota;
@@ -219,11 +219,11 @@ protected:
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     MultiQFileDialog *multiUploadFileDialog;
-	QQueue<QString> uploadQueue;
+    QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
-	long long totalDownloadSize, totalUploadSize;
-	long long totalDownloadedSize, totalUploadedSize;
-	long long uploadSpeed, downloadSpeed;
+    long long totalDownloadSize, totalUploadSize;
+    long long totalDownloadedSize, totalUploadedSize;
+    long long uploadSpeed, downloadSpeed;
     long long lastStartedDownload;
     long long lastStartedUpload;
     int exportOps;

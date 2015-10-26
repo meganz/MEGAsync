@@ -3,7 +3,7 @@
 
 #include "classfactory.h"
 class ClassFactoryShellExtSyncing :
-	public ClassFactory
+    public ClassFactory
 {
 public:
     IFACEMETHODIMP CreateInstance(IUnknown *pUnkOuter, REFIID riid, void **ppv);

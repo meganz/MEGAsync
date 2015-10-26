@@ -1,4 +1,4 @@
-LIBRARY	"MEGAShellExt"
+LIBRARY "MEGAShellExt"
 EXPORTS
     DllGetClassObject   PRIVATE
     DllCanUnloadNow     PRIVATE

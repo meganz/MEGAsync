@@ -8,11 +8,11 @@
 #include <QMessageBox>
 
 DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *parent) :
-	QDialog(parent),
+    QDialog(parent),
     ui(new Ui::DownloadFromMegaDialog)
 {
-	ui->setupUi(this);
-	setAttribute(Qt::WA_QuitOnClose, false);
+    ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
 
     QString defaultDownloadPath;
 

@@ -134,8 +134,8 @@ const QString Preferences::cloudDriveFoldersKey     = QString::fromAscii("cloudD
 const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxFolders");
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
-const QString Preferences::totalBandwidthKey		= QString::fromAscii("totalBandwidth");
-const QString Preferences::usedBandwidthKey			= QString::fromAscii("usedBandwidth");
+const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
+const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
@@ -163,12 +163,12 @@ const QString Preferences::megaFolderKey            = QString::fromAscii("megaFo
 const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
 const QString Preferences::folderActiveKey          = QString::fromAscii("folderActive");
 const QString Preferences::temporaryInactiveKey     = QString::fromAscii("temporaryInactive");
-const QString Preferences::downloadFolderKey		= QString::fromAscii("downloadFolder");
-const QString Preferences::uploadFolderKey			= QString::fromAscii("uploadFolder");
-const QString Preferences::importFolderKey			= QString::fromAscii("importFolder");
-const QString Preferences::hasDefaultUploadFolderKey	= QString::fromAscii("hasDefaultUploadFolder");
-const QString Preferences::hasDefaultDownloadFolderKey	= QString::fromAscii("hasDefaultDownloadFolder");
-const QString Preferences::hasDefaultImportFolderKey	= QString::fromAscii("hasDefaultImportFolder");
+const QString Preferences::downloadFolderKey        = QString::fromAscii("downloadFolder");
+const QString Preferences::uploadFolderKey          = QString::fromAscii("uploadFolder");
+const QString Preferences::importFolderKey          = QString::fromAscii("importFolder");
+const QString Preferences::hasDefaultUploadFolderKey    = QString::fromAscii("hasDefaultUploadFolder");
+const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromAscii("hasDefaultDownloadFolder");
+const QString Preferences::hasDefaultImportFolderKey    = QString::fromAscii("hasDefaultImportFolder");
 const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
 const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
 const QString Preferences::localPathKey             = QString::fromAscii("localPath");
@@ -623,7 +623,7 @@ void Preferences::setTotalBandwidth(long long value)
 {
     mutex.lock();
     assert(logged());
-	settings->setValue(totalBandwidthKey, value);
+    settings->setValue(totalBandwidthKey, value);
     mutex.unlock();
 }
 
@@ -640,7 +640,7 @@ void Preferences::setUsedBandwidth(long long value)
 {
     mutex.lock();
     assert(logged());
-	settings->setValue(usedBandwidthKey, value);
+    settings->setValue(usedBandwidthKey, value);
     mutex.unlock();
 }
 
@@ -1216,8 +1216,8 @@ QString Preferences::downloadFolder()
 void Preferences::setDownloadFolder(QString value)
 {
     mutex.lock();
-	settings->setValue(downloadFolderKey, value);
-	settings->sync();
+    settings->setValue(downloadFolderKey, value);
+    settings->sync();
     mutex.unlock();
 }
 
@@ -1234,8 +1234,8 @@ void Preferences::setUploadFolder(long long value)
 {
     mutex.lock();
     assert(logged());
-	settings->setValue(uploadFolderKey, value);
-	settings->sync();
+    settings->setValue(uploadFolderKey, value);
+    settings->sync();
     mutex.unlock();
 }
 
@@ -1252,8 +1252,8 @@ void Preferences::setImportFolder(long long value)
 {
     mutex.lock();
     assert(logged());
-	settings->setValue(importFolderKey, value);
-	settings->sync();
+    settings->setValue(importFolderKey, value);
+    settings->sync();
     mutex.unlock();
 }
 

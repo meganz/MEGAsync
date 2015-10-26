@@ -7,7 +7,7 @@
 class ShellExt : public IShellIconOverlayIdentifier
 {
 public:
-	// IUnknown
+    // IUnknown
     IFACEMETHODIMP QueryInterface(REFIID riid, void **ppv);
     IFACEMETHODIMP_(ULONG) AddRef();
     IFACEMETHODIMP_(ULONG) Release();
@@ -16,13 +16,13 @@ public:
     STDMETHOD(GetPriority)(int* pPriority);
     STDMETHOD(IsMemberOf)(LPCWSTR pwszPath,DWORD dwAttrib);
 
-	ShellExt(int id);
-	~ShellExt(void);
+    ShellExt(int id);
+    ~ShellExt(void);
 
 private:
-	// Reference count of component.
+    // Reference count of component.
     long m_cRef;
-	int id;
+    int id;
     TCHAR szModule[MAX_PATH];
 };
 

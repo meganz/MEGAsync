@@ -18,13 +18,13 @@ int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int 
     LPWSTR request = new WCHAR[requestLen];
     StringCchPrintfW(request, requestLen, L"%c:%s", type, content);
     success = CallNamedPipeW(
-       MegaInterface::MEGA_PIPE,			// pipe name
+       MegaInterface::MEGA_PIPE,            // pipe name
        (LPVOID)request,                     // message to server
-       requestLen * sizeof(WCHAR),                          // message length
-       (LPVOID)response,					// buffer to receive reply
+       requestLen * sizeof(WCHAR),          // message length
+       (LPVOID)response,                    // buffer to receive reply
        responseLen,                         // size of read buffer
-       &readed,								// number of bytes read
-       NMPWAIT_NOWAIT);						// waits
+       &readed,                             // number of bytes read
+       NMPWAIT_NOWAIT);                     // waits
     delete request;
     if (success) return readed;
     return 0;

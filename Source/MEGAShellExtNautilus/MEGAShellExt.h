@@ -13,7 +13,7 @@ typedef struct _MEGAExt MEGAExt;
 typedef struct _MEGAExtClass MEGAExtClass;
 
 struct _MEGAExt {
-	GObject __parent;
+    GObject __parent;
     GIOChannel *chan;
     GIOChannel *notify_chan;
     int srv_sock;
@@ -27,7 +27,7 @@ struct _MEGAExt {
 };
 
 struct _MEGAExtClass {
-	GObjectClass __parent;
+    GObjectClass __parent;
 };
 
 typedef enum {

@@ -28,7 +28,7 @@ public:
     explicit RecentFile(QWidget *parent = 0);
     ~RecentFile();
     void setFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey, long long time);
-	void updateWidget();
+    void updateWidget();
     void closeMenu();
     RecentFileInfo getFileInfo();
     void setFileInfo(RecentFileInfo info);
@@ -46,11 +46,11 @@ protected:
     bool getLinkDisabled;
 
 private slots:
-	void on_pArrow_clicked();
-	void on_lFileType_customContextMenuRequested(const QPoint &pos);
-	void on_wText_customContextMenuRequested(const QPoint &pos);
-	void showInFolder();
-	void openFile();
+    void on_pArrow_clicked();
+    void on_lFileType_customContextMenuRequested(const QPoint &pos);
+    void on_wText_customContextMenuRequested(const QPoint &pos);
+    void showInFolder();
+    void openFile();
 };
 
 #endif // RECENTFILE_H

@@ -10,32 +10,32 @@ class ImportListWidgetItem;
 
 class ImportListWidgetItem : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	enum linkstatus {LOADING, CORRECT, WARNING, FAILED};
+    enum linkstatus {LOADING, CORRECT, WARNING, FAILED};
 
-	explicit ImportListWidgetItem(QString link, int id, QWidget *parent = 0);
-	~ImportListWidgetItem();
+    explicit ImportListWidgetItem(QString link, int id, QWidget *parent = 0);
+    ~ImportListWidgetItem();
 
-	void setData(QString fileName, linkstatus status, long long size=0);
-	void updateGui();
-	bool isSelected();
-	QString getLink();
+    void setData(QString fileName, linkstatus status, long long size=0);
+    void updateGui();
+    bool isSelected();
+    QString getLink();
 
 private slots:
-	void on_cSelected_stateChanged(int state);
+    void on_cSelected_stateChanged(int state);
 
 signals:
-	void stateChanged(int id, int state);
+    void stateChanged(int id, int state);
 
 private:
-	Ui::ImportListWidgetItem *ui;
-	QString fileName;
-	linkstatus status;
-	long long fileSize;
-	QString link;
-	int id;
+    Ui::ImportListWidgetItem *ui;
+    QString fileName;
+    linkstatus status;
+    long long fileSize;
+    QString link;
+    int id;
 };
 
 #endif // IMPORTLISTWIDGETITEM_H
