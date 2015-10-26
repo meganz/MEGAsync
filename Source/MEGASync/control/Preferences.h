@@ -14,8 +14,13 @@ Q_DECLARE_METATYPE(QList<long long>)
 
 using namespace std;
 
-class Preferences
+class Preferences : public QObject
 {
+    Q_OBJECT
+
+signals:
+    void stateChanged();
+    void updated();
 
 private:
     static Preferences *preferences;
@@ -24,6 +29,8 @@ private:
 public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
+
+    void initialize();
 
     //Thread safe functions
     bool logged();
@@ -66,10 +73,10 @@ public:
     long long inShareFolders();
     void setInShareFolders(long long value);
 
-	long long totalBandwidth();
-	void setTotalBandwidth(long long value);
-	long long usedBandwidth();
-	void setUsedBandwidth(long long value);
+    long long totalBandwidth();
+    void setTotalBandwidth(long long value);
+    long long usedBandwidth();
+    void setUsedBandwidth(long long value);
     int accountType();
     void setAccountType(int value);
     bool showNotifications();
@@ -86,7 +93,7 @@ public:
     void setHasDefaultUploadFolder(bool value);
     void setHasDefaultDownloadFolder(bool value);
     void setHasDefaultImportFolder(bool value);
-    bool canUpdate();
+    bool canUpdate(QString filePath);
     int uploadLimitKB();
     void setUploadLimitKB(int value);
     long long upperSizeLimitValue();
@@ -138,13 +145,12 @@ public:
     int lastUpdateVersion();
     void setLastUpdateVersion(int version);
 
-
-	QString downloadFolder();
-	void setDownloadFolder(QString value);
-	long long uploadFolder();
-	void setUploadFolder(long long value);
-	long long importFolder();
-	void setImportFolder(long long value);
+    QString downloadFolder();
+    void setDownloadFolder(QString value);
+    long long uploadFolder();
+    void setUploadFolder(long long value);
+    long long importFolder();
+    void setImportFolder(long long value);
 
     int getNumSyncedFolders();
     QString getSyncName(int num);
@@ -257,7 +263,6 @@ public:
     static QStringList HTTPS_ALLOWED_ORIGINS;
 
 protected:
-
     QMutex mutex;
     void login(QString account);
     void logout();
@@ -325,11 +330,11 @@ protected:
     static const QString folderActiveKey;
     static const QString temporaryInactiveKey;
 	static const QString downloadFolderKey;
-	static const QString uploadFolderKey;
+    static const QString uploadFolderKey;
     static const QString hasDefaultUploadFolderKey;
     static const QString hasDefaultDownloadFolderKey;
     static const QString hasDefaultImportFolderKey;
-	static const QString importFolderKey;
+    static const QString importFolderKey;
     static const QString fileNameKey;
     static const QString fileHandleKey;
     static const QString localPathKey;

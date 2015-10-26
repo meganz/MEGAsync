@@ -233,7 +233,7 @@ Preferences *Preferences::instance()
     return Preferences::preferences;
 }
 
-Preferences::Preferences() : mutex(QMutex::Recursive)
+void Preferences::initialize()
 {
 #if QT_VERSION < 0x050000
     QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
@@ -253,9 +253,9 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
     settings = new EncryptedSettings(settingsFile);
 
     QString currentAccount = settings->value(currentAccountKey).toString();
-    if(currentAccount.size())
+    if (currentAccount.size())
     {
-        if(hasEmail(currentAccount))
+        if (hasEmail(currentAccount))
         {
             login(currentAccount);
         }
@@ -264,25 +264,29 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
             errorFlag = true;
             retryFlag = true;
         }
-
-    }else
-        retryFlag = true;
-
-    if(QFile::exists(bakSettingsFile) && retryFlag)
+    }
+    else
     {
-        if(QFile::exists(settingsFile))
-            QFile::remove(settingsFile);
+        retryFlag = true;
+    }
 
-        if(QFile::rename(bakSettingsFile,settingsFile))
+    if (QFile::exists(bakSettingsFile) && retryFlag)
+    {
+        if (QFile::exists(settingsFile))
+        {
+            QFile::remove(settingsFile);
+        }
+
+        if (QFile::rename(bakSettingsFile,settingsFile))
         {
             delete settings;
             settings = new EncryptedSettings(settingsFile);
 
             //Retry with backup file
             currentAccount = settings->value(currentAccountKey).toString();
-            if(currentAccount.size())
+            if (currentAccount.size())
             {
-                if(hasEmail(currentAccount))
+                if (hasEmail(currentAccount))
                 {
                     login(currentAccount);
                     errorFlag = false;
@@ -293,13 +297,16 @@ Preferences::Preferences() : mutex(QMutex::Recursive)
                 }
             }
         }
-
     }
 
-    if(errorFlag)
+    if (errorFlag)
     {
         clearAll();
     }
+}
+
+Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
+{
 
 }
 
@@ -319,7 +326,7 @@ void Preferences::setEmail(QString email)
     settings->setValue(emailKey, email);
     settings->sync();
     mutex.unlock();
-    ((MegaApplication *)qApp)->changeState();
+    emit stateChanged();
 }
 
 QString Preferences::emailHash()
@@ -707,18 +714,6 @@ bool Preferences::updateAutomatically()
 {
     mutex.lock();
     bool value = settings->value(updateAutomaticallyKey, defaultUpdateAutomatically).toBool();
-
-#ifdef WIN32
-    qt_ntfs_permission_lookup++; // turn checking on
-#endif
-    if(value && !QFileInfo(MegaApplication::applicationFilePath()).isWritable())
-    {
-        this->setUpdateAutomatically(false);
-        value = false;
-    }
-#ifdef WIN32
-    qt_ntfs_permission_lookup--; // turn it off again
-#endif
     mutex.unlock();
     return value;
 }
@@ -779,7 +774,7 @@ void Preferences::setHasDefaultImportFolder(bool value)
     mutex.unlock();
 }
 
-bool Preferences::canUpdate()
+bool Preferences::canUpdate(QString filePath)
 {
     mutex.lock();
 
@@ -788,8 +783,10 @@ bool Preferences::canUpdate()
 #ifdef WIN32
     qt_ntfs_permission_lookup++; // turn checking on
 #endif
-    if(!QFileInfo(MegaApplication::applicationFilePath()).isWritable())
+    if (!QFileInfo(filePath).isWritable())
+    {
         value = false;
+    }
 #ifdef WIN32
     qt_ntfs_permission_lookup--; // turn it off again
 #endif
@@ -1684,7 +1681,7 @@ void Preferences::unlink()
     localFingerprints.clear();
     settings->sync();
     mutex.unlock();
-    ((MegaApplication *)qApp)->changeState();
+    emit stateChanged();
 }
 
 bool Preferences::isCrashed()
@@ -1781,10 +1778,12 @@ void Preferences::login(QString account)
     readFolders();
     loadExcludedSyncNames();
     int lastVersion = settings->value(lastVersionKey).toInt();
-    if(lastVersion != Preferences::VERSION_CODE)
+    if (lastVersion != Preferences::VERSION_CODE)
     {
-        if((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
-            ((MegaApplication *)qApp)->showUpdatedMessage();
+        if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
+        {
+            emit updated();
+        }
         settings->setValue(lastVersionKey, Preferences::VERSION_CODE);
     }
     settings->sync();
