@@ -135,14 +135,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangeLogDialog</name>
     <message>
         <source>Terms of Service</source>
+        <translatorcomment>Label for Terms of Service link.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Privacy Policy</source>
+        <translatorcomment>Label for Privacy Policy link.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New in this version:</source>
+        <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -286,6 +289,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
+        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -293,22 +297,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>GuestWidget</name>
     <message>
         <source>MEGAsync is on guest mode</source>
+        <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Login</source>
+        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create an account</source>
+        <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
+        <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
         <translation type="unfinished">[$1614]</translation>
     </message>
     <message>
         <source>Cancel download</source>
+        <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
         <translation type="unfinished">[$1615]</translation>
     </message>
 </context>
@@ -316,6 +325,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>HTTPServer</name>
     <message>
         <source>Your download has started</source>
+        <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -389,6 +399,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Label button for Choose action</translatorcomment>
         <translation>[$2023]</translation>
     </message>
     <message>
@@ -397,6 +408,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>[$2041]</translation>
     </message>
 </context>
@@ -532,30 +544,37 @@ Are you sure?</source>
     <name>InfoOverQuotaDialog</name>
     <message>
         <source>MEGAsync is currently disabled</source>
+        <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Upgrade your account</source>
+        <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
+        <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
         <translation type="unfinished">[$1604]</translation>
     </message>
     <message>
         <source>MEGA website</source>
+        <translatorcomment>Label to MEGA website link</translatorcomment>
         <translation type="unfinished">[$1606]</translation>
     </message>
     <message>
         <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the current amount of account usage.over the total actual plan.  Keep %1 and %2 codes.</translatorcomment>
         <translation type="unfinished">[$1607]</translation>
     </message>
     <message>
         <source>Usage: %1</source>
+        <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
         <translation type="unfinished">[$1608]</translation>
     </message>
 </context>
@@ -929,46 +948,57 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Over quota</source>
+        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation type="unfinished">[$1673]</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logout</source>
+        <translatorcomment>Label to indicate Logout action</translatorcomment>
         <translation type="unfinished">[$1726]</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
+        <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error getting link information</source>
+        <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DEBUG mode disabled</source>
+        <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
+        <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
+        <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Internet connection</source>
+        <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Login</source>
+        <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1123,18 +1153,22 @@ Are you sure?</source>
     </message>
     <message>
         <source>Do not ask me again</source>
+        <translatorcomment>Check box label to remember the option of a user.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
+        <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1216,14 +1250,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
+        <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1887,14 +1924,17 @@ when the application starts again</source>
     </message>
     <message>
         <source>Local cache: %1</source>
+        <translatorcomment>Label to indicate the user the total size of local cache. Keep %1 code, will be filled at runtime.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remote cache: %1</source>
+        <translatorcomment>Label to indicate the user the total size of remote cache. Keep %1 code, will be filled at runtime.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Excluded file and folder names</source>
+        <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2216,18 +2256,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
+        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Skip</source>
+        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Creating folder...</source>
+        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Logging out...</source>
+        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2265,6 +2309,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 folder</source>
+        <translatorcomment>Label to indicate one folder.</translatorcomment>
         <translation>[$1808]</translation>
     </message>
     <message>
