@@ -211,6 +211,11 @@ QPoint MegaSystemTrayIcon::getPosition()
     return m_sys->item->point;
 }
 
+QMenu *MegaSystemTrayIcon::contextMenu()
+{
+    return NULL;
+}
+
 void MegaSystemTrayIcon::showMessage(const QString &title, const QString &message,
                                        const QIcon& icon, QSystemTrayIcon::MessageIcon, int)
 {
