@@ -3162,7 +3162,7 @@ void MegaApplication::createGuestMenu()
 #ifndef __APPLE__
     exitActionGuest = new QAction(tr("Exit"), this);
 #else
-    exitGuestAction = new QAction(tr("Quit"), this);
+    exitActionGuest = new QAction(tr("Quit"), this);
 #endif
     connect(exitActionGuest, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
