@@ -2,7 +2,7 @@
 
 ##
  # @file build/generate_changelog_entry.sh
- # @brief Processes the input file and prints ChangeLog entry
+ # @brief Processes the input file and prints RPM ChangeLog entry
  #
  # (c) 2013-2014 by Mega Limited, Auckland, New Zealand
  #
