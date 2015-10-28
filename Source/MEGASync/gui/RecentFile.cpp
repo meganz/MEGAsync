@@ -62,13 +62,8 @@ void RecentFile::updateWidget()
 
         QIcon icon;
         icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
-
-#ifndef Q_OS_LINUX
         ui->lFileType->setIcon(icon);
         ui->lFileType->setIconSize(QSize(48, 48));
-#else
-        ui->lFileType->setPixmap(icon.pixmap(QSize(48, 48)));
-#endif
     }
 
     if(getLinkDisabled)
