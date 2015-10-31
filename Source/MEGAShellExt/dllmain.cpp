@@ -53,8 +53,10 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
     HRESULT hr = CLASS_E_CLASSNOTAVAILABLE;
     ClassFactory *pClassFactory = NULL;
 
-    if(ppv == NULL)
+    if (ppv == NULL)
+    {
         return E_POINTER;
+    }
 
     *ppv = NULL;
     if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))

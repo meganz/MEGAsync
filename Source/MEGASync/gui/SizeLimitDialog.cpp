@@ -89,11 +89,12 @@ int SizeLimitDialog::lowerSizeLimitUnit()
 
 void SizeLimitDialog::on_cExcludeUpperThan_clicked()
 {
-    if(ui->cExcludeUpperThan->isChecked())
+    if (ui->cExcludeUpperThan->isChecked())
     {
         ui->eUpperThan->setEnabled(true);
         ui->cbExcludeUpperUnit->setEnabled(true);
-    }else
+    }
+    else
     {
         ui->eUpperThan->setEnabled(false);
         ui->cbExcludeUpperUnit->setEnabled(false);
@@ -102,11 +103,12 @@ void SizeLimitDialog::on_cExcludeUpperThan_clicked()
 
 void SizeLimitDialog::on_cExcludeLowerThan_clicked()
 {
-    if(ui->cExcludeLowerThan->isChecked())
+    if (ui->cExcludeLowerThan->isChecked())
     {
         ui->eLowerThan->setEnabled(true);
         ui->cbExcludeLowerUnit->setEnabled(true);
-    }else
+    }
+    else
     {
         ui->eLowerThan->setEnabled(false);
         ui->cbExcludeLowerUnit->setEnabled(false);
@@ -115,8 +117,8 @@ void SizeLimitDialog::on_cExcludeLowerThan_clicked()
 
 void SizeLimitDialog::on_bOK_clicked()
 {
-    if((upperSizeLimit() && !upperSizeLimitValue()) ||
-            (lowerSizeLimit() && !lowerSizeLimitValue()))
+    if ((upperSizeLimit() && !upperSizeLimitValue())
+            || (lowerSizeLimit() && !lowerSizeLimitValue()))
     {
         QMessageBox::warning(this, tr("Warning"), tr("Size limits cannot be zero"), QMessageBox::Ok);
         return;

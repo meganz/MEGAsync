@@ -16,21 +16,21 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
 
     QString defaultDownloadPath;
 
-    if(!defaultPath.size() || !QFile(defaultPath).exists())
+    if (!defaultPath.size() || !QFile(defaultPath).exists())
     {
-    #ifdef WIN32
-        #if QT_VERSION < 0x050000
-            defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
-        #else
-            defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-        #endif
+#ifdef WIN32
+    #if QT_VERSION < 0x050000
+        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
     #else
-        #if QT_VERSION < 0x050000
-            defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
-        #else
-            defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-        #endif
+        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
     #endif
+#else
+    #if QT_VERSION < 0x050000
+        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
+    #else
+        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
+    #endif
+#endif
     }
     else
     {
@@ -71,11 +71,13 @@ void DownloadFromMegaDialog::on_bChange_clicked()
                                                   QFileDialog::ShowDirsOnly
                                                   | QFileDialog::DontResolveSymlinks);
 
-    if(!fPath.size())
+    if (!fPath.size())
+    {
         return;
+    }
 
     QTemporaryFile test(fPath + QDir::separator());
-    if(!test.open())
+    if (!test.open())
     {
         QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
         return;
@@ -95,11 +97,14 @@ void DownloadFromMegaDialog::changeEvent(QEvent *event)
 
 void DownloadFromMegaDialog::on_bOK_clicked()
 {
-    if(ui->eFolderPath->text().size())
+    if (ui->eFolderPath->text().size())
     {
         QDir dir(ui->eFolderPath->text());
-        if(!dir.exists())
+        if (!dir.exists())
+        {
             dir.mkpath(QString::fromUtf8("."));
+        }
+
         accept();
     }
 }

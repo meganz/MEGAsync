@@ -9,10 +9,12 @@ IFACEMETHODIMP ClassFactoryShellExtSyncing::CreateInstance(IUnknown *pUnkOuter, 
 {
     HRESULT hr = CLASS_E_NOAGGREGATION;
 
-    if(ppv == NULL)
+    if (ppv == NULL)
+    {
         return E_POINTER;
-    *ppv = NULL;
+    }
 
+    *ppv = NULL;
     if (pUnkOuter == NULL)
     {
         hr = E_OUTOFMEMORY;

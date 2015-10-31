@@ -77,7 +77,7 @@ bool GuestWidget::idleState()
 void GuestWidget::setIdleState(bool state)
 {
     isIdle = state;
-    if(state)
+    if (state)
     {
         ui->wActiveDownload->hide();
         ui->wDownloadDesc->hide();
@@ -109,7 +109,7 @@ GuestWidget::~GuestWidget()
 
 void GuestWidget::onTransferCancel(int x, int y)
 {
-    if(transferMenu)
+    if (transferMenu)
     {
 #ifdef __APPLE__
         transferMenu->close();
@@ -134,8 +134,10 @@ void GuestWidget::onTransferCancel(int x, int y)
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wActiveDownload->mapToGlobal(QPoint(x, y)));
-    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    {
         this->hide();
+    }
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else

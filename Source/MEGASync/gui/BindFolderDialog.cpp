@@ -68,7 +68,7 @@ void BindFolderDialog::on_bOK_clicked()
     MegaHandle handle = ui->wBinder->selectedMegaFolder();
 
     MegaNode *node = megaApi->getNodeByHandle(handle);
-    if(!localFolderPath.length() || !node)
+    if (!localFolderPath.length() || !node)
     {
         QMessageBox::warning(this, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         delete node;
@@ -76,27 +76,30 @@ void BindFolderDialog::on_bOK_clicked()
     }
 
     localFolderPath = QDir::toNativeSeparators(QDir(localFolderPath).canonicalPath());
-    if(!localFolderPath.size())
+    if (!localFolderPath.size())
     {
         accept();
         return;
     }
 
-    for(int i=0; i<localFolders.size(); i++)
+    for (int i = 0; i < localFolders.size(); i++)
     {
         QString c = QDir::toNativeSeparators(QDir(localFolders[i]).canonicalPath());
-        if(!c.size())
+        if (!c.size())
         {
             continue;
         }
 
-        if(localFolderPath.startsWith(c) && ((c.size() == localFolderPath.size()) || (localFolderPath[c.size()] == QDir::separator())))
+        if (localFolderPath.startsWith(c)
+                && ((c.size() == localFolderPath.size())
+                    || (localFolderPath[c.size()] == QDir::separator())))
         {
             QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             delete node;
             return;
         }
-        else if(c.startsWith(localFolderPath) && c[localFolderPath.size()]==QDir::separator())
+        else if (c.startsWith(localFolderPath)
+                 && c[localFolderPath.size()] == QDir::separator())
         {
             QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             delete node;
@@ -104,13 +107,13 @@ void BindFolderDialog::on_bOK_clicked()
         }
     }
 
-    for(int i=0; i<megaFolderHandles.size(); i++)
+    for (int i = 0; i < megaFolderHandles.size(); i++)
     {
         MegaNode *n = megaApi->getNodeByHandle(megaFolderHandles[i]);
-        if(n)
+        if (n)
         {
             const char *cPath = megaApi->getNodePath(node);
-            if(!cPath)
+            if (!cPath)
             {
                 delete n;
                 continue;
@@ -120,7 +123,7 @@ void BindFolderDialog::on_bOK_clicked()
             delete [] cPath;
 
             const char *nPath = megaApi->getNodePath(n);
-            if(!nPath)
+            if (!nPath)
             {
                 delete n;
                 continue;
@@ -129,14 +132,14 @@ void BindFolderDialog::on_bOK_clicked()
             QString p = QString::fromUtf8(nPath);
             delete [] nPath;
 
-            if(megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
+            if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
             {
                 QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 delete n;
                 delete node;
                 return;
             }
-            else if(p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
+            else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
             {
                 QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
                 delete n;
@@ -150,11 +153,12 @@ void BindFolderDialog::on_bOK_clicked()
 
    bool repeated;
    syncName = QFileInfo(localFolderPath).fileName();
-   do {
+   do
+   {
        repeated = false;
-       for(int i=0; i<syncNames.size(); i++)
+       for (int i = 0; i < syncNames.size(); i++)
        {
-           if(!syncName.compare(syncNames[i]))
+           if (!syncName.compare(syncNames[i]))
            {
                 repeated = true;
 
@@ -164,7 +168,7 @@ void BindFolderDialog::on_bOK_clicked()
                                     "Please enter a different name to identify this synced folder:").arg(syncName));
                 int result = id->exec();
 
-                if(!id || !result)
+                if (!id || !result)
                 {
                     delete id;
                     return;
@@ -181,7 +185,7 @@ void BindFolderDialog::on_bOK_clicked()
                 syncName = text;
            }
        }
-   }while(repeated);
+   } while (repeated);
 
    accept();
 }

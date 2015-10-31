@@ -17,8 +17,10 @@ PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent) :
 
     const QClipboard *clipboard = QApplication::clipboard();
     QString text = clipboard->text();
-    if(extractLinks(text).size()!=0)
+    if (extractLinks(text).size() != 0)
+    {
         ui->eLinks->setPlainText(text);
+    }
 
     ui->bSubmit->setDefault(true);
 }
@@ -38,12 +40,16 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     QString text = ui->eLinks->toPlainText();
     links = extractLinks(text);
     links = links.toSet().toList();
-    if(links.size()==0)
+    if (links.size() == 0)
     {
-        if(!text.trimmed().size())
+        if (!text.trimmed().size())
+        {
             QMessageBox::warning(this, tr("Warning"), tr("Enter one or more MEGA file links"));
+        }
         else
+        {
             QMessageBox::warning(this, tr("Warning"), tr("No valid MEGA links found. (Folder links aren't yet supported)"));
+        }
         return;
     }
 
@@ -53,7 +59,9 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 void PasteMegaLinksDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
+    {
         ui->retranslateUi(this);
+    }
 
     QDialog::changeEvent(event);
 }
@@ -70,10 +78,13 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
     tempLinks.append(tempLinksNewSite);
 
     QStringList finalLinks;
-    for(int i=0; i<tempLinks.size(); i++)
+    for (int i = 0; i < tempLinks.size(); i++)
     {
         QString link = checkLink(tempLinks[i].insert(0, QString::fromAscii("https://mega.nz/#!")));
-        if(!link.isNull()) finalLinks.append(link);
+        if (!link.isNull())
+        {
+            finalLinks.append(link);
+        }
     }
 
     return finalLinks;
@@ -84,15 +95,17 @@ QString PasteMegaLinksDialog::checkLink(QString link)
     link = QUrl::fromPercentEncoding(link.toUtf8());
     link.replace(QChar::fromAscii(' '), QChar::fromAscii('+'));
 
-    if(link.length()<70)
+    if (link.length() < 70)
     {
         return QString();
     }
 
     link.truncate(73);
     QByteArray data = link.toUtf8();
-    if(data.constData()[26]=='!')
+    if (data.constData()[26] == '!')
+    {
         return link;
+    }
 
     return QString();
 }

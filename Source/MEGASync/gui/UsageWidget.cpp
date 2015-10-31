@@ -131,7 +131,7 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#666666")));
     painter.drawText(QRectF(-17,4, 35, 17),Qt::AlignCenter,QString::fromUtf8("%1").arg(maxStorage.isEmpty() ? QString::fromUtf8("") :maxStorage.split(QString::fromUtf8(" ")).at(1)));
 
-    if(overquotaReached)
+    if (overquotaReached)
     {
         painter.setPen(QPen(QColor(Qt::red),10,Qt::SolidLine,Qt::FlatCap));
         painter.drawArc(QRectF(-72 / 2.0, -72 / 2.0, 72, 72), 90 * 16, -16 * 360);

@@ -43,7 +43,7 @@ using namespace mega;
         oss << "Module name: " << "megasync" << "\n";
 
         struct utsname osData;
-        if(!uname(&osData))
+        if (!uname(&osData))
         {
             oss << "Operating system: " << osData.sysname << "\n";
             oss << "System version:  " << osData.version << "\n";
@@ -61,13 +61,17 @@ using namespace mega;
         time_t rawtime;
         time(&rawtime);
         oss << "Error info:\n";
-        if(info)
+        if (info)
+        {
             oss << sys_siglist[sig] << " (" << sig << ") at address " << std::showbase << std::hex << info->si_addr << std::dec << "\n";
+        }
         else
+        {
             oss << "Out of memory" << endl;
+        }
 
         void *pnt = NULL;
-        if(secret)
+        if (secret)
         {
             #if defined(__APPLE__)
                 ucontext_t* uc = (ucontext_t*) secret;
@@ -97,15 +101,20 @@ using namespace mega;
         void *stack[32];
         size_t size;
         size = backtrace(stack, 32);
-        if(size>1)
+        if (size > 1)
         {
             stack[1] = pnt;
             char **messages = backtrace_symbols(stack, size);
             oss << "## " << messages[1] << "\n";
-            for (unsigned int i=2; i<size; i++)
+            for (unsigned int i = 2; i < size; i++)
+            {
                 oss << "#" << (i-1) << " " << messages[i] << "\n";
+            }
         }
-        else oss << "Error getting stacktrace\n";
+        else
+        {
+            oss << "Error getting stacktrace\n";
+        }
 
         write(dump_file, oss.str().c_str(), oss.str().size());
         close(dump_file);
@@ -250,33 +259,33 @@ void CrashHandler::tryReboot()
     Preferences *preferences = Preferences::instance();
     preferences->setCrashed(true);
 
-    if((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)
+    if ((QDateTime::currentMSecsSinceEpoch()-preferences->getLastReboot()) > Preferences::MIN_REBOOT_INTERVAL_MS)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Restarting app...");
         preferences->setLastReboot(QDateTime::currentMSecsSinceEpoch());
 
-        #ifndef __APPLE__
-            QString app = MegaApplication::applicationFilePath();
-            QProcess::startDetached(app);
-        #else
-            QString app = MegaApplication::applicationDirPath();
-            QString launchCommand = QString::fromUtf8("open");
-            QStringList args = QStringList();
+#ifndef __APPLE__
+        QString app = MegaApplication::applicationFilePath();
+        QProcess::startDetached(app);
+#else
+        QString app = MegaApplication::applicationDirPath();
+        QString launchCommand = QString::fromUtf8("open");
+        QStringList args = QStringList();
 
-            QDir appPath(app);
-            appPath.cdUp();
-            appPath.cdUp();
+        QDir appPath(app);
+        appPath.cdUp();
+        appPath.cdUp();
 
-            args.append(QString::fromAscii("-n"));
-            args.append(appPath.absolutePath());
-            QProcess::startDetached(launchCommand, args);
-        #endif
+        args.append(QString::fromAscii("-n"));
+        args.append(appPath.absolutePath());
+        QProcess::startDetached(launchCommand, args);
+#endif
 
-        #ifdef WIN32
-            Sleep(2000);
-        #else
-            sleep(2);
-        #endif
+#ifdef WIN32
+        Sleep(2000);
+#else
+        sleep(2);
+#endif
     }
     else
     {
@@ -322,26 +331,32 @@ QStringList CrashHandler::getPendingCrashReports()
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Checking pending crash repors");
     QDir dir(dumpPath);
     QFileInfoList fiList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
-    for(int i=0; i<fiList.size(); i++)
+    for (int i = 0; i < fiList.size(); i++)
     {
         QFile file(fiList[i].absoluteFilePath());
-        if(!file.fileName().endsWith(QString::fromAscii(".dmp")))
+        if (!file.fileName().endsWith(QString::fromAscii(".dmp")))
+        {
             continue;
+        }
 
-        if(file.size()>16384)
+        if (file.size() > 16384)
+        {
             continue;
+        }
 
-        if(!file.open(QIODevice::ReadOnly))
+        if (!file.open(QIODevice::ReadOnly))
+        {
             continue;
+        }
 
         QString crashReport = QString::fromUtf8(file.readAll());
         file.close();
 
         QStringList lines = crashReport.split(QString::fromAscii("\n"));
-        if((lines.size()<3) ||
-         (lines.at(0) != QString::fromAscii("MEGAprivate ERROR DUMP")) ||
-                (!lines.at(1).startsWith(QString::fromAscii("Application: ") + QApplication::applicationName())) ||
-                (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(Preferences::VERSION_CODE))))
+        if ((lines.size()<3)
+                || (lines.at(0) != QString::fromAscii("MEGAprivate ERROR DUMP"))
+                || (!lines.at(1).startsWith(QString::fromAscii("Application: ") + QApplication::applicationName()))
+                || (!lines.at(2).startsWith(QString::fromAscii("Version code: ") + QString::number(Preferences::VERSION_CODE))))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Invalid or outdated dump file: %1").arg(file.fileName()).toUtf8().constData());
             file.remove();
@@ -349,7 +364,7 @@ QStringList CrashHandler::getPendingCrashReports()
         }
 
         QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashReport.toUtf8(),QCryptographicHash::Md5).toHex());
-        if(!previousCrashes.contains(crashHash))
+        if (!previousCrashes.contains(crashHash))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New crash file: %1  Hash: %2")
                          .arg(file.fileName()).arg(crashHash).toUtf8().constData());
@@ -367,10 +382,13 @@ QStringList CrashHandler::getPendingCrashReports()
 
 void CrashHandler::sendPendingCrashReports(QString userMessage)
 {
-    if(networkManager) return;
+    if (networkManager)
+    {
+        return;
+    }
 
     QStringList crashes = getPendingCrashReports();
-    if(!crashes.size())
+    if (!crashes.size())
     {
         return;
     }
@@ -395,10 +413,10 @@ void CrashHandler::discardPendingCrashReports()
     Preferences *preferences = Preferences::instance();
     QStringList crashes = getPendingCrashReports();
     QStringList previousCrashes = preferences->getPreviousCrashes();
-    for(int i=0; i<crashes.size(); i++)
+    for (int i = 0; i < crashes.size(); i++)
     {
         QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashes[i].toUtf8(),QCryptographicHash::Md5).toHex());
-        if(!previousCrashes.contains(crashHash))
+        if (!previousCrashes.contains(crashHash))
         {
             previousCrashes.append(crashHash);
         }
@@ -411,7 +429,7 @@ void CrashHandler::onPostFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
     crashPostTimer.stop();
-    if(networkManager)
+    if (networkManager)
     {
         networkManager->deleteLater();
         networkManager = NULL;
@@ -431,7 +449,7 @@ void CrashHandler::onPostFinished(QNetworkReply *reply)
 void CrashHandler::onCrashPostTimeout()
 {
     loop.exit();
-    if(networkManager)
+    if (networkManager)
     {
         networkManager->deleteLater();
         networkManager = NULL;
@@ -445,11 +463,13 @@ void CrashHandler::deletePendingCrashReports()
 {
     QDir dir(dumpPath);
     QFileInfoList fiList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
-    for(int i=0; i<fiList.size(); i++)
+    for (int i = 0; i < fiList.size(); i++)
     {
         QFileInfo fi = fiList[i];
-        if(fi.fileName().endsWith(QString::fromAscii(".dmp")))
+        if (fi.fileName().endsWith(QString::fromAscii(".dmp")))
+        {
             QFile::remove(fi.absoluteFilePath());
+        }
     }
 }
 

@@ -43,16 +43,24 @@ IFACEMETHODIMP ShellExt::QueryInterface(REFIID riid, void **ppv)
 {
     __try
     {
-        if(ppv == NULL)
+        if (ppv == NULL)
+        {
             return E_POINTER;
+        }
 
         *ppv = NULL;
         if (riid == __uuidof (IShellIconOverlayIdentifier))
+        {
             *ppv = (IShellIconOverlayIdentifier *) this;
+        }
         else if (riid == IID_IUnknown)
+        {
             *ppv = this;
+        }
         else
+        {
             return E_NOINTERFACE;
+        }
 
         AddRef();
         return S_OK;
@@ -99,20 +107,30 @@ HRESULT ShellExt::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DW
 {
     __try
     {
-        if(pwszIconFile == NULL)
+        if (pwszIconFile == NULL)
+        {
             return E_POINTER;
-        if(pIndex == NULL)
+        }
+        if (pIndex == NULL)
+        {
             return E_POINTER;
-        if(pdwFlags == NULL)
+        }
+        if (pdwFlags == NULL)
+        {
             return E_POINTER;
-        if(cchMax < 1)
+        }
+        if (cchMax < 1)
+        {
             return E_INVALIDARG;
+        }
 
-        int len = lstrlen(szModule)+1;
+        int len = lstrlen(szModule) + 1;
         if (!len || (len > cchMax))
+        {
             return E_FAIL;
+        }
 
-        memcpy(pwszIconFile, szModule, len*sizeof(TCHAR));
+        memcpy(pwszIconFile, szModule, len * sizeof(TCHAR));
         *pIndex = id;
         *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
         return S_OK;
@@ -144,8 +162,10 @@ HRESULT ShellExt::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
     __try
     {
         (void)dwAttrib;
-        if(MegaInterface::getPathState(pwszPath) == id)
+        if (MegaInterface::getPathState(pwszPath) == id)
+        {
             return S_OK;
+        }
         return S_FALSE;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)

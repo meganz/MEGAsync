@@ -155,29 +155,41 @@ void Utilities::initializeExtensions()
 
 void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
 {
-    if(!path.size())
+    if (!path.size())
+    {
         return;
+    }
 
     QApplication::processEvents();
 
 #ifdef WIN32
-    if(path.startsWith(QString::fromAscii("\\\\?\\")))
+    if (path.startsWith(QString::fromAscii("\\\\?\\")))
+    {
         path = path.mid(4);
+    }
 #endif
 
     QFileInfo baseDir(path);
-    if(!baseDir.exists() || !baseDir.isDir()) return;
-    if((((*numFolders) > folderLimit)) ||
-       (((*numFiles) > fileLimit)))
+    if (!baseDir.exists() || !baseDir.isDir())
+    {
         return;
+    }
+
+    if ((((*numFolders) > folderLimit)) || (((*numFiles) > fileLimit)))
+    {
+        return;
+    }
 
     QDir dir(path);
     QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-    for(int i=0; i<entries.size(); i++)
+    for (int i = 0; i < entries.size(); i++)
     {
         QFileInfo info = entries[i];
-        if(info.isFile()) (*numFiles)++;
-        else if(info.isDir())
+        if (info.isFile())
+        {
+            (*numFiles)++;
+        }
+        else if (info.isDir())
         {
             countFilesAndFolders(info.absoluteFilePath(), numFiles, numFolders, fileLimit, folderLimit);
             (*numFolders)++;
@@ -187,35 +199,48 @@ void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFold
 
 void Utilities::getFolderSize(QString folderPath, long long *size)
 {
-    if(!folderPath.size())
+    if (!folderPath.size())
+    {
         return;
+    }
 
     QDir dir(folderPath);
     QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
-    for(int i=0; i<entries.size(); i++)
+    for (int i = 0; i < entries.size(); i++)
     {
         QFileInfo info = entries[i];
-        if(info.isFile())
-            (*size)+=info.size();
-        else if(info.isDir())
+        if (info.isFile())
+        {
+            (*size) += info.size();
+        }
+        else if (info.isDir())
+        {
             getFolderSize(info.absoluteFilePath(), size);
+        }
     }
 }
 
 QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
 {
-    if(extensionIcons.isEmpty()) initializeExtensions();
+    if (extensionIcons.isEmpty())
+    {
+        initializeExtensions();
+    }
 
     QFileInfo f(fileName);
-    if(extensionIcons.contains(f.suffix().toLower()))
+    if (extensionIcons.contains(f.suffix().toLower()))
+    {
         return QString(extensionIcons[f.suffix().toLower()]).insert(0, prefix);
+    }
     else
+    {
         return prefix + QString::fromAscii("generic.png");
+    }
 }
 
 QString Utilities::languageCodeToString(QString code)
 {
-    if(languageNames.isEmpty())
+    if (languageNames.isEmpty())
     {
         languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
         languageNames[QString::fromAscii("cs")] = QString::fromUtf8("Čeština");
@@ -280,8 +305,10 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
 
 bool Utilities::removeRecursively(QString path)
 {
-    if(!path.size())
+    if (!path.size())
+    {
         return false;
+    }
 
     QDir dir(path);
     bool success = false;
@@ -293,31 +320,45 @@ bool Utilities::removeRecursively(QString path)
 
 void Utilities::copyRecursively(QString srcPath, QString dstPath)
 {
-    if(!srcPath.size() || !dstPath.size())
+    if (!srcPath.size() || !dstPath.size())
+    {
         return;
+    }
 
     QFileInfo source(srcPath);
-    if(!source.exists()) return;
-    if(srcPath == dstPath) return;
+    if (!source.exists())
+    {
+        return;
+    }
+
+    if (srcPath == dstPath)
+    {
+        return;
+    }
 
     QFile dst(dstPath);
-    if(dst.exists())
+    if (dst.exists())
+    {
         return;
+    }
 
-    if(source.isFile())
+    if (source.isFile())
     {
         QFile src(srcPath);
         src.copy(dstPath);
     }
-    else if(source.isDir())
+    else if (source.isDir())
     {
         QDir dstDir(dstPath);
         dstDir.mkpath(QString::fromAscii("."));
         QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot);
-        while (di.hasNext()) {
+        while (di.hasNext())
+        {
             di.next();
             if (!di.fileInfo().isSymLink())
+            {
                 copyRecursively(di.filePath(), dstPath + QDir::separator() + di.fileName());
+            }
         }
     }
 }
@@ -325,13 +366,17 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
 bool Utilities::verifySyncedFolderLimits(QString path)
 {
 #ifdef WIN32
-    if(path.startsWith(QString::fromAscii("\\\\?\\")))
+    if (path.startsWith(QString::fromAscii("\\\\?\\")))
+    {
         path = path.mid(4);
+    }
 #endif
 
     QString rootPath = QDir::toNativeSeparators(QDir::rootPath());
-    if(rootPath == path)
+    if (rootPath == path)
+    {
         return false;
+    }
     return true;
 }
 
@@ -342,17 +387,25 @@ QString Utilities::getSizeString(unsigned long long bytes)
     unsigned long long GB = 1024 * MB;
     unsigned long long TB = 1024 * GB;
 
-    if(bytes > TB)
+    if (bytes > TB)
+    {
         return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" TB");
+    }
 
-    if(bytes > GB)
+    if (bytes > GB)
+    {
         return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" GB");
+    }
 
-    if(bytes > MB)
+    if (bytes > MB)
+    {
         return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" MB");
+    }
 
-    if(bytes > KB)
+    if (bytes > KB)
+    {
         return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" KB");
+    }
 
     return QString::number(bytes) + QString::fromAscii(" bytes");
 }
@@ -386,7 +439,7 @@ long long Utilities::extractJSONNumber(QString json, QString name)
 
     int end = pos + pattern.size();
     int count = 0;
-    while(json[end].isDigit())
+    while (json[end].isDigit())
     {
         end++;
         count++;

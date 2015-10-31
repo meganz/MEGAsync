@@ -35,12 +35,13 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     QByteArray utf8name = info.fileName().toUtf8();
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     MegaNode *dupplicate = NULL;
-    for(int i=0; i<children->size(); i++)
+    for (int i = 0; i < children->size(); i++)
     {
         MegaNode *child = children->get(i);
-        if(!strcmp(utf8name.constData(), child->getName()) &&
-            ((info.isDir() && (child->getType()==MegaNode::TYPE_FOLDER)) ||
-            (info.isFile() && (child->getType()==MegaNode::TYPE_FILE) && (info.size() == child->getSize()))))
+        if (!strcmp(utf8name.constData(), child->getName())
+                && ((info.isDir() && (child->getType() == MegaNode::TYPE_FOLDER))
+                    || (info.isFile() && (child->getType() == MegaNode::TYPE_FILE)
+                        && (info.size() == child->getSize()))))
         {
             dupplicate = child->copy();
             break;
@@ -48,40 +49,46 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     }
     delete children;
 
-    if(dupplicate)
+    if (dupplicate)
     {
-        if(dupplicate->getType() == MegaNode::TYPE_FILE)
+        if (dupplicate->getType() == MegaNode::TYPE_FILE)
         {
             emit dupplicateUpload(info.absoluteFilePath(), info.fileName(), dupplicate->getHandle());
         }
-        if(dupplicate->getType() == MegaNode::TYPE_FOLDER)
+
+        if (dupplicate->getType() == MegaNode::TYPE_FOLDER)
         {
             QDir dir(info.absoluteFilePath());
             QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-            for(int i=0; i<entries.size(); i++)
+            for (int i = 0; i < entries.size(); i++)
+            {
                 upload(entries[i], dupplicate);
+            }
         }
         delete dupplicate;
         return;
     }
 
     string localPath = megaApi->getLocalPath(parent);
-    if(localPath.size() && megaApi->isSyncable(info.fileName().toUtf8().constData()))
+    if (localPath.size() && megaApi->isSyncable(info.fileName().toUtf8().constData()))
     {
-    #ifdef WIN32
+#ifdef WIN32
         QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName());
-        if(destPath.startsWith(QString::fromAscii("\\\\?\\"))) destPath = destPath.mid(4);
-    #else
+        if (destPath.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            destPath = destPath.mid(4);
+        }
+#else
         QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + info.fileName());
-    #endif
+#endif
         megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
     }
-    else if(info.isFile())
+    else if (info.isFile())
     {
         megaApi->startUpload(currentPath.toUtf8().constData(), parent);
     }
-    else if(info.isDir())
+    else if (info.isDir())
     {
         folders.enqueue(info);
         megaApi->createFolder(info.fileName().toUtf8().constData(), parent, delegateListener);
@@ -93,16 +100,19 @@ void MegaUploader::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     switch(request->getType())
     {
         case MegaRequest::TYPE_CREATE_FOLDER:
-            if(e->getErrorCode() == MegaError::API_OK)
+            if (e->getErrorCode() == MegaError::API_OK)
             {
                 MegaNode *parent = megaApi->getNodeByHandle(request->getNodeHandle());
                 QDir dir(folders.dequeue().absoluteFilePath());
                 QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-                for(int i=0; i<entries.size(); i++)
+                for (int i = 0; i < entries.size(); i++)
                 {
                     QFileInfo info = entries[i];
-                    if(info.isFile()) megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
-                    else if(info.isDir())
+                    if (info.isFile())
+                    {
+                        megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
+                    }
+                    else if (info.isDir())
                     {
                         folders.enqueue(info);
                         megaApi->createFolder(info.fileName().toUtf8().constData(),

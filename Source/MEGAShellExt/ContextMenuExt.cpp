@@ -70,16 +70,23 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
         GetBufferedPaintBits = (pGetBufferedPaintBits)::GetProcAddress(UxThemeDLL, "GetBufferedPaintBits");
         BeginBufferedPaint = (pBeginBufferedPaint)::GetProcAddress(UxThemeDLL, "BeginBufferedPaint");
         EndBufferedPaint = (pEndBufferedPaint)::GetProcAddress(UxThemeDLL, "EndBufferedPaint");
-        if(GetBufferedPaintBits && BeginBufferedPaint && EndBufferedPaint)
+        if (GetBufferedPaintBits && BeginBufferedPaint && EndBufferedPaint)
+        {
             legacyIcon = false;
+        }
         else
+        {
             FreeLibrary(UxThemeDLL);
+        }
     }
 
-    if(g_hInst)
+    if (g_hInst)
     {
         hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
-        if(hIcon) m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
+        if (hIcon)
+        {
+            m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
+        }
     }
 }
 
@@ -127,7 +134,7 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
 
         int width   = GetSystemMetrics(SM_CXSMICON);
         int height  = GetSystemMetrics(SM_CYSMICON);
-        if(!width || !height)
+        if (!width || !height)
         {
             DeleteDC(hdc);
             return NULL;
@@ -143,14 +150,14 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
         bmInfo.bmiHeader.biBitCount    = 32;
 
         bitmap = CreateDIBSection(hdc, &bmInfo, DIB_RGB_COLORS, NULL, NULL, 0);
-        if(!bitmap)
+        if (!bitmap)
         {
             DeleteDC(hdc);
             return NULL;
         }
 
         HGDIOBJ h = SelectObject(hdc, bitmap);
-        if(!h || (h == HGDI_ERROR))
+        if (!h || (h == HGDI_ERROR))
         {
             DeleteDC(hdc);
             return NULL;
@@ -206,14 +213,14 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
     WIN32_FILE_ATTRIBUTE_DATA fad;
     int characters = DragQueryFileW(hDrop, i, NULL, 0);
     int type = MegaInterface::TYPE_UNKNOWN;
-    if(characters)
+    if (characters)
     {
         characters+=1; //NUL character
         std::string buffer;
         buffer.resize(characters*sizeof(wchar_t));
         int ok = DragQueryFileW(hDrop, i, (LPWSTR)buffer.data(), characters);
         ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
-        if(ok)
+        if (ok)
         {
             if (GetFileAttributesExW((LPCWSTR)buffer.data(),GetFileExInfoStandard,(LPVOID)&fad))
                 type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
@@ -223,17 +230,35 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
             selectedFiles.push_back(buffer);
             pathStates.push_back(state);
             pathTypes.push_back(type);
-            if(isSynced(type, state))
+            if (isSynced(type, state))
             {
-                if(type == MegaInterface::TYPE_FOLDER) syncedFolders++;
-                else if(type == MegaInterface::TYPE_FILE) syncedFiles++;
-                else syncedUnknowns++;
+                if (type == MegaInterface::TYPE_FOLDER)
+                {
+                    syncedFolders++;
+                }
+                else if (type == MegaInterface::TYPE_FILE)
+                {
+                    syncedFiles++;
+                }
+                else
+                {
+                    syncedUnknowns++;
+                }
             }
-            else if(isUnsynced(type, state))
+            else if (isUnsynced(type, state))
             {
-                if(type == MegaInterface::TYPE_FOLDER) unsyncedFolders++;
-                else if(type == MegaInterface::TYPE_FILE) unsyncedFiles++;
-                else unsyncedUnknowns++;
+                if (type == MegaInterface::TYPE_FOLDER)
+                {
+                    unsyncedFolders++;
+                }
+                else if (type == MegaInterface::TYPE_FILE)
+                {
+                    unsyncedFiles++;
+                }
+                else
+                {
+                    unsyncedUnknowns++;
+                }
             }
         }
     }
@@ -241,19 +266,23 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
 
 void ContextMenuExt::requestUpload()
 {
-    for(unsigned int i=0; i<selectedFiles.size(); i++)
+    for (unsigned int i = 0; i < selectedFiles.size(); i++)
     {
-        if(isUnsynced(pathTypes[i], pathStates[i]))
+        if (isUnsynced(pathTypes[i], pathStates[i]))
+        {
             MegaInterface::upload((PCWSTR)selectedFiles[i].data());
+        }
     }
 }
 
 void ContextMenuExt::requestGetLinks()
 {
-    for(unsigned int i=0; i<selectedFiles.size(); i++)
+    for (unsigned int i = 0; i < selectedFiles.size(); i++)
     {
-        if(isSynced(pathTypes[i], pathStates[i]))
+        if (isSynced(pathTypes[i], pathStates[i]))
+        {
             MegaInterface::pasteLink((PCWSTR)selectedFiles[i].data());
+        }
     }
 }
 
@@ -265,22 +294,36 @@ IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
 {
     __try
     {
-        if(ppv == NULL)
+        if (ppv == NULL)
+        {
             return E_POINTER;
+        }
 
         *ppv = NULL;
         if (riid == __uuidof (IContextMenu))
+        {
             *ppv = (IContextMenu *) this;
+        }
         else if (riid == __uuidof (IContextMenu2))
+        {
             *ppv = (IContextMenu2 *) this;
+        }
         else if (riid == __uuidof (IContextMenu3))
+        {
             *ppv = (IContextMenu3 *) this;
+        }
         else if (riid == __uuidof (IShellExtInit))
+        {
             *ppv = (IShellExtInit *) this;
+        }
         else if (riid == IID_IUnknown)
+        {
             *ppv = this;
+        }
         else
+        {
             return E_NOINTERFACE;
+        }
 
         AddRef();
         return S_OK;
@@ -356,11 +399,15 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
                 {
                     if (MegaInterface::startRequest())
                     {
-                        for(unsigned int i=0; i<nFiles; i++)
+                        for (unsigned int i = 0; i < nFiles; i++)
+                        {
                             processFile(hDrop, i);
+                        }
 
-                        if(selectedFiles.size())
+                        if (selectedFiles.size())
+                        {
                             hr = S_OK;
+                        }
                     }
                 }
 
@@ -411,10 +458,14 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         // http://www.codeproject.com/KB/shell/ctxextsubmenu.aspx
 
         int lastItem;
-        if(unsyncedFolders || unsyncedFiles)
+        if (unsyncedFolders || unsyncedFiles)
         {
             LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-            if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            if (!menuText)
+            {
+                return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            }
+
             MENUITEMINFO mii = { sizeof(mii) };
             mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
             mii.wID = idCmdFirst + IDM_UPLOAD;
@@ -431,10 +482,14 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             lastItem = IDM_UPLOAD;
         }
 
-        if(syncedFolders || syncedFiles)
+        if (syncedFolders || syncedFiles)
         {
             LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK, syncedFiles, syncedFolders);
-            if(!menuText) return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            if (!menuText)
+            {
+                return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            }
+
             MENUITEMINFO mii = { sizeof(mii) };
             mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
             mii.wID = idCmdFirst + IDM_GETLINK;
@@ -485,8 +540,10 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
     __try
     {
         BOOL fUnicode = FALSE;
-        if(pici == NULL)
+        if (pici == NULL)
+        {
             return E_FAIL;
+        }
 
         // Determine which structure is being passed in, CMINVOKECOMMANDINFO or
         // CMINVOKECOMMANDINFOEX based on the cbSize member of lpcmi. Although
@@ -522,7 +579,7 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             {
                 requestUpload();
             }
-            else if(!StrCmpIA(pici->lpVerb, m_pszGetLinkVerb))
+            else if (!StrCmpIA(pici->lpVerb, m_pszGetLinkVerb))
             {
                 requestGetLinks();
             }
@@ -679,13 +736,18 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
             plResult = &res;
         *plResult = FALSE;
 
-        if(!g_hInst)
+        if (!g_hInst)
+        {
             return E_FAIL;
+        }
 
-        if(!hIcon)
+        if (!hIcon)
         {
             hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
-            if(!hIcon) return E_FAIL;
+            if (!hIcon)
+            {
+                return E_FAIL;
+            }
         }
 
         switch (uMsg)

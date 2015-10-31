@@ -908,22 +908,24 @@ void TranslateOffset(DWORD64 absoluteoffset, DWORD64 *offset, string *modulename
 
     *offset = 0;
     modulename->clear();
-    if(EnumProcessModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
+    if (EnumProcessModules(GetCurrentProcess(), hMods, sizeof(hMods), &cbNeeded))
     {
-        for ( i = 0; !*offset && i < (cbNeeded / sizeof(HMODULE)); i++ )
+        for ( i = 0; !*offset && i < (cbNeeded / sizeof(HMODULE)); i++)
         {
-            if(GetModuleInformation(GetCurrentProcess(), hMods[i], &moduleInfo, sizeof(moduleInfo)))
+            if (GetModuleInformation(GetCurrentProcess(), hMods[i], &moduleInfo, sizeof(moduleInfo)))
             {
                 *offset = (DWORD64)absoluteoffset - (DWORD64)moduleInfo.lpBaseOfDll;
-                if((*offset>=0) && (*offset < (DWORD64)moduleInfo.SizeOfImage))
+                if ((*offset >= 0) && (*offset < (DWORD64)moduleInfo.SizeOfImage))
                 {
                     int s;
-                    if((s = GetModuleFileNameW(hMods[i], ModuleName, MAX_PATH)) && s != MAX_PATH)
+                    if ((s = GetModuleFileNameW(hMods[i], ModuleName, MAX_PATH)) && s != MAX_PATH)
                     {
                         mega::MegaApi::utf16ToUtf8(ModuleName, s, modulename);
                         int index = modulename->find_last_of("\\");
-                        if(index <= string::npos && index < (modulename->size() - 1))
-                            *modulename = modulename->substr(index+1, modulename->size()-(index+1));
+                        if (index <= string::npos && index < (modulename->size() - 1))
+                        {
+                            *modulename = modulename->substr(index + 1, modulename->size() - (index + 1));
+                        }
                         return;
                     }
                 }
@@ -946,7 +948,10 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   bool success = false;
 
 #ifndef CREATE_COMPATIBLE_MINIDUMPS
-  if(!exinfo) return false;
+  if (!exinfo)
+  {
+      return false;
+  }
 
   HANDLE dump_file = CreateFile(next_minidump_path_c_,
                                 GENERIC_WRITE,
@@ -967,11 +972,18 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
   int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));
-  if(nameSize)
+  if (nameSize)
   {
     int nameIndex = nameSize-1;
-    while(nameIndex && (moduleName[nameIndex]!='\\')) nameIndex--;
-    if(nameIndex+1<nameSize) nameIndex++;
+    while (nameIndex && (moduleName[nameIndex]!='\\'))
+    {
+        nameIndex--;
+    }
+
+    if (nameIndex + 1 < nameSize)
+    {
+        nameIndex++;
+    }
     oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
   }
 
@@ -995,7 +1007,7 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
       PFUNCTION_TABLE_ACCESS_ROUTINE64 SymFunctionTableAccess64_ = reinterpret_cast<PFUNCTION_TABLE_ACCESS_ROUTINE64>(
       GetProcAddress(dbghelp_module_, "SymFunctionTableAccess64"));
 
-      if(StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_)
+      if (StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_)
       {
           HANDLE hThread = GetCurrentThread();
           DWORD machineType;
@@ -1035,10 +1047,14 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
               }
 
               TranslateOffset((DWORD64)s.AddrPC.Offset, &offset, &modulename);
-              if(offset)
+              if (offset)
+              {
                 oss << "#" << frame_number << " 0x" << std::uppercase << std::hex << offset << " (" << modulename << ")\n";
+              }
               else
+              {
                 oss << "#" << frame_number << " ----------\n";
+              }
               ++frame_number;
           } while (s.AddrReturn.Offset != 0);
       }

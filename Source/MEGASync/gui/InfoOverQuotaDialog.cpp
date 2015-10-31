@@ -70,7 +70,10 @@ InfoOverQuotaDialog::~InfoOverQuotaDialog()
 
 void InfoOverQuotaDialog::setUsage()
 {
-    if(!preferences->totalStorage()) return;
+    if (!preferences->totalStorage())
+    {
+        return;
+    }
 
     int percentage = ceil((100 * preferences->usedStorage()) / (double)preferences->totalStorage());
     ui->pUsage->setProgress(preferences->cloudDriveStorage(), preferences->rubbishStorage(),
@@ -92,12 +95,12 @@ void InfoOverQuotaDialog::on_bSettings_clicked()
     app->showTrayMenu(&p);
 
 #ifdef __APPLE__
-    if(!iod)
+    if (!iod)
     {
         return;
     }
 
-    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
     }
@@ -114,7 +117,10 @@ void InfoOverQuotaDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        if(preferences->totalStorage()) setUsage();
+        if (preferences->totalStorage())
+        {
+            setUsage();
+        }
 
         ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
                                    + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))

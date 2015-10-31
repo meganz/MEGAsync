@@ -27,7 +27,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     ui->bRefresh->setText(tr("Refresh"));
     ui->bRefresh->setEnabled(true);
 
-    if(preferences->usedStorage() > preferences->totalStorage())
+    if (preferences->usedStorage() > preferences->totalStorage())
     {
         ui->wUsage->setOverQuotaReached(true);
     }

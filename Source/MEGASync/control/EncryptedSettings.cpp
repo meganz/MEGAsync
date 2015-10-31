@@ -53,8 +53,14 @@ bool EncryptedSettings::isGroupEmpty()
 
 void EncryptedSettings::remove(const QString &key)
 {
-    if(!key.length()) QSettings::remove(QString::fromAscii(""));
-    else QSettings::remove(hash(key));
+    if (!key.length())
+    {
+        QSettings::remove(QString::fromAscii(""));
+    }
+    else
+    {
+        QSettings::remove(hash(key));
+    }
 }
 
 void EncryptedSettings::clear()
@@ -74,14 +80,20 @@ void EncryptedSettings::sync()
 QByteArray EncryptedSettings::XOR(const QByteArray& key, const QByteArray& data) const
 {
     int keyLen = key.length();
-    if(!keyLen) return data;
+    if (!keyLen)
+    {
+        return data;
+    }
 
     QByteArray result;
     int rotation = abs(key[keyLen/3]*key[keyLen/5])%keyLen;
     int increment = abs(key[keyLen/2]*key[keyLen/7])%keyLen;
-    for(int i = 0 , j = rotation; i < data.length(); i++ , j-=increment)
+    for (int i = 0, j = rotation; i < data.length(); i++, j -= increment)
     {
-        if(j < 0) j += keyLen;
+        if (j < 0)
+        {
+            j += keyLen;
+        }
         result.append(data[i] ^ key[j]);
     }
     return result;
@@ -89,7 +101,10 @@ QByteArray EncryptedSettings::XOR(const QByteArray& key, const QByteArray& data)
 
 QString EncryptedSettings::encrypt(const QString key, const QString value) const
 {
-    if(value.isEmpty()) return value;
+    if (value.isEmpty())
+    {
+        return value;
+    }
 
     QByteArray k = hash(key).toAscii();
     QByteArray xValue = XOR(k, value.toUtf8());
@@ -100,7 +115,10 @@ QString EncryptedSettings::encrypt(const QString key, const QString value) const
 
 QString EncryptedSettings::decrypt(const QString key, const QString value) const
 {
-    if(value.isEmpty()) return value;
+    if (value.isEmpty())
+    {
+        return value;
+    }
 
     QByteArray k = hash(key).toAscii();
     QByteArray xValue = XOR(k, QByteArray::fromBase64(value.toAscii()));

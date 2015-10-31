@@ -23,17 +23,21 @@ ExportProcessor::~ExportProcessor()
 
 void ExportProcessor::requestLinks()
 {
-    for(int i=0; i<fileList.size(); i++)
+    for (int i = 0; i < fileList.size(); i++)
     {
 #ifdef WIN32
-        if(!fileList[i].startsWith(QString::fromAscii("\\\\")))
+        if (!fileList[i].startsWith(QString::fromAscii("\\\\")))
+        {
             fileList[i].insert(0, QString::fromAscii("\\\\?\\"));
+        }
+
         string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
 #else
         string tmpPath((const char*)fileList[i].toUtf8().constData());
 #endif
+
         MegaNode *node = megaApi->getSyncedNode(&tmpPath);
-        if(!node)
+        if (!node)
         {
             const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
             node = megaApi->getNodeByFingerprint(fpLocal);
@@ -52,7 +56,7 @@ void ExportProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError
 {
     currentIndex++;
     remainingNodes--;
-    if(e->getErrorCode() != MegaError::API_OK)
+    if (e->getErrorCode() != MegaError::API_OK)
     {
         publicLinks.append(QString());
         importFailed++;
@@ -64,7 +68,7 @@ void ExportProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError
         importSuccess++;
     }
 
-    if(!remainingNodes)
+    if (!remainingNodes)
     {
         emit onRequestLinksFinished();
     }

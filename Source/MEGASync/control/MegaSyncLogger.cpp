@@ -40,17 +40,19 @@ MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
 void MegaSyncLogger::log(const char *time, int loglevel, const char *source, const char *message)
 {
 #ifdef LOG_TO_LOGGER
-    if(connected)
+    if (connected)
     {
         QString m = QString::fromUtf8(message);
-        if(m.size() > MAX_MESSAGE_SIZE)
-            m = m.left(MAX_MESSAGE_SIZE-3).append(QString::fromUtf8("..."));
+        if (m.size() > MAX_MESSAGE_SIZE)
+        {
+            m = m.left(MAX_MESSAGE_SIZE - 3).append(QString::fromUtf8("..."));
+        }
 
 #ifdef DEBUG
         QString fileName;
         QFileInfo info(QString::fromUtf8(source));
         fileName = info.fileName();
-        if(fileName.size())
+        if (fileName.size())
         {
             m.append(QString::fromUtf8(" (%1)").arg(fileName));
         }
@@ -60,7 +62,7 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
     }
 #endif
 
-    if(logToFile || logToStdout)
+    if (logToFile || logToStdout)
     {
         QString fileName;
         QFileInfo info(QString::fromUtf8(source));
@@ -91,20 +93,20 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
         }
 
         oss << message;
-        if(fileName.size())
+        if (fileName.size())
         {
             oss << " ("<< fileName.toStdString() << ")";
         }
 
-        if(logToStdout)
+        if (logToStdout)
         {
             cout << oss.str() << endl;
         }
 
-        if(logToFile)
+        if (logToFile)
         {
             static QString filePath;
-            if(filePath.isEmpty())
+            if (filePath.isEmpty())
             {
                 QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
                 filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
@@ -140,10 +142,12 @@ bool MegaSyncLogger::isLogToFileEnabled()
 
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
 {
-    if(!connected)
+    if (!connected)
+    {
         return;
+    }
 
-    if(!xmlWriter)
+    if (!xmlWriter)
     {
         xmlWriter = new QXmlStreamWriter(client);
         xmlWriter->writeStartDocument();
@@ -156,7 +160,7 @@ void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
         xmlWriter->writeEndElement();
     }
 
-    if(xmlWriter->hasError())
+    if (xmlWriter->hasError())
     {
         connected = false;
         delete xmlWriter;
@@ -204,7 +208,7 @@ void MegaSyncLogger::clientConnected()
 {
     disconnected();
 
-    while(megaServer->hasPendingConnections())
+    while (megaServer->hasPendingConnections())
     {
         QLocalSocket *socket = megaServer->nextPendingConnection();
         socket->disconnectFromServer();
@@ -221,13 +225,13 @@ void MegaSyncLogger::clientConnected()
 void MegaSyncLogger::disconnected()
 {
     connected = false;
-    if(xmlWriter)
+    if (xmlWriter)
     {
         delete xmlWriter;
         xmlWriter = NULL;
     }
 
-    if(client)
+    if (client)
     {
         client->deleteLater();
         client = NULL;

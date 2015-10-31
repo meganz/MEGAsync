@@ -34,8 +34,10 @@ MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath)
 {
     WCHAR chReadBuf[2];
     int cbRead = sendRequest(MegaInterface::OP_PATH_STATE, filePath, chReadBuf, sizeof(chReadBuf));
-    if(cbRead>sizeof(WCHAR))
-        return ((MegaInterface::FileState)(chReadBuf[0]-L'0'));
+    if (cbRead > sizeof(WCHAR))
+    {
+        return ((MegaInterface::FileState)(chReadBuf[0] - L'0'));
+    }
     return MegaInterface::FILE_NOTFOUND;
 }
 
@@ -46,8 +48,11 @@ LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)
 
     LPWSTR chReadBuf = new WCHAR[128];
     int cbRead = sendRequest(MegaInterface::OP_STRING, request, chReadBuf, 128*sizeof(WCHAR));
-    if(cbRead>sizeof(WCHAR))
+    if (cbRead > sizeof(WCHAR))
+    {
         return chReadBuf;
+    }
+
     delete chReadBuf;
     return NULL;
 }
@@ -56,8 +61,10 @@ bool MegaInterface::upload(PCWSTR path)
 {
     WCHAR chReadBuf[2];
     int cbRead = sendRequest(MegaInterface::OP_UPLOAD, path, chReadBuf, sizeof(chReadBuf));
-    if(cbRead>sizeof(WCHAR))
+    if (cbRead > sizeof(WCHAR))
+    {
         return true;
+    }
     return false;
 }
 
@@ -65,8 +72,10 @@ bool MegaInterface::send(PCWSTR path)
 {
     WCHAR chReadBuf[2];
     int cbRead = sendRequest(MegaInterface::OP_SEND, path, chReadBuf, sizeof(chReadBuf));
-    if(cbRead>sizeof(WCHAR))
+    if (cbRead > sizeof(WCHAR))
+    {
         return true;
+    }
     return false;
 }
 
@@ -74,8 +83,10 @@ bool MegaInterface::pasteLink(PCWSTR path)
 {
     WCHAR chReadBuf[2];
     int cbRead = sendRequest(MegaInterface::OP_LINK, path, chReadBuf, sizeof(chReadBuf));
-    if(cbRead>sizeof(WCHAR))
+    if (cbRead > sizeof(WCHAR))
+    {
         return true;
+    }
     return false;
 }
 
@@ -83,23 +94,29 @@ bool MegaInterface::shareFolder(PCWSTR path)
 {
     WCHAR chReadBuf[2];
     int cbRead = sendRequest(MegaInterface::OP_SHARE, path, chReadBuf, sizeof(chReadBuf));
-    if(cbRead>sizeof(WCHAR))
+    if (cbRead > sizeof(WCHAR))
+    {
         return true;
+    }
     return false;
 }
 
 bool MegaInterface::startRequest()
 {
     WCHAR chReadBuf[2];
-    if(sendRequest(MegaInterface::OP_INIT, L"", chReadBuf, sizeof(chReadBuf)))
+    if (sendRequest(MegaInterface::OP_INIT, L"", chReadBuf, sizeof(chReadBuf)))
+    {
         return true;
+    }
     return false;
 }
 
 bool MegaInterface::endRequest()
 {
     WCHAR chReadBuf[2];
-    if(sendRequest(MegaInterface::OP_END, L"", chReadBuf, sizeof(chReadBuf)))
+    if (sendRequest(MegaInterface::OP_END, L"", chReadBuf, sizeof(chReadBuf)))
+    {
         return true;
+    }
     return false;
 }

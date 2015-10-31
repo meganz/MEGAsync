@@ -32,7 +32,7 @@ void UsageProgressBar::setProgress(long long valueCloud, long long valueRubbish,
     int percentageinbox = ceil(1000 * valueInbox / (double)totalBytes) + percentageShares;
     int percentageTotal = ceil(1000 * totalUsed / (double)totalBytes);
 
-    if(percentageTotal > 1000)
+    if (percentageTotal > 1000)
     {
         percentageCloud = percentageRubbish = percentageShares = percentageinbox = 993;
         ui->wCloud->setStyleSheet(QString::fromAscii("QWidget{background-color: #d90007; border-radius: 6px;}"));
@@ -40,21 +40,21 @@ void UsageProgressBar::setProgress(long long valueCloud, long long valueRubbish,
         ui->wShares->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
         ui->wInbox->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
     }
-    if(percentageShares > 1000)
+    if (percentageShares > 1000)
     {
         percentageShares = 993;
         ui->wShares->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
     }
-    if(percentageRubbish > 1000)
+    if (percentageRubbish > 1000)
     {
         percentageRubbish = 993;
         ui->wRubbish->setStyleSheet(QString::fromAscii("border-radius: 6px;"));
     }
-    if(percentageinbox < 35)
+    if (percentageinbox < 35)
     {
         percentageCloud = percentageRubbish = percentageShares = percentageinbox = 35;
     }
-    else if(percentageinbox > 1000)
+    else if (percentageinbox > 1000)
     {
         percentageinbox = 993;
         ui->wInbox->setStyleSheet(QString::fromAscii("border-radius: 6px;"));

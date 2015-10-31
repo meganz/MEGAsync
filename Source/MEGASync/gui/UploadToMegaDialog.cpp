@@ -42,13 +42,13 @@ bool UploadToMegaDialog::isDefaultFolder()
 void UploadToMegaDialog::setDefaultFolder(long long handle)
 {
     MegaNode *node = megaApi->getNodeByHandle(handle);
-    if(!node)
+    if (!node)
     {
         return;
     }
 
     const char *path = megaApi->getNodePath(node);
-    if(!path)
+    if (!path)
     {
         delete node;
         return;
@@ -64,7 +64,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
-    if(e->getErrorCode() != MegaError::API_OK || !node)
+    if (e->getErrorCode() != MegaError::API_OK || !node)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Request error: %1")
                      .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
@@ -82,14 +82,14 @@ void UploadToMegaDialog::on_bChange_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::UPLOAD_SELECT, this);
     MegaNode *defaultNode = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
-    if(defaultNode)
+    if (defaultNode)
     {
         nodeSelector->setSelectedFolderHandle(defaultNode->getHandle());
         delete defaultNode;
     }
 
     int result = nodeSelector->exec();
-    if(!nodeSelector || result != QDialog::Accepted)
+    if (!nodeSelector || result != QDialog::Accepted)
     {
         delete nodeSelector;
         return;
@@ -97,14 +97,14 @@ void UploadToMegaDialog::on_bChange_clicked()
 
     MegaHandle selectedMegaFolderHandle = nodeSelector->getSelectedFolderHandle();
     MegaNode *node = megaApi->getNodeByHandle(selectedMegaFolderHandle);
-    if(!node)
+    if (!node)
     {
         delete nodeSelector;
         return;
     }
 
     const char *nPath = megaApi->getNodePath(node);
-    if(!nPath)
+    if (!nPath)
     {
         delete nodeSelector;
         delete node;
@@ -129,7 +129,7 @@ void UploadToMegaDialog::changeEvent(QEvent *event)
 void UploadToMegaDialog::on_bOK_clicked()
 {
     MegaNode *node = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
-    if(node && node->isFolder())
+    if (node && node->isFolder())
     {
         selectedHandle = node->getHandle();
         delete node;
@@ -137,12 +137,15 @@ void UploadToMegaDialog::on_bOK_clicked()
         return;
     }
     delete node;
-    if(!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
+    if (!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
     {
         ui->bChange->setEnabled(false);
         ui->bOK->setEnabled(false);
         MegaNode *rootNode = megaApi->getRootNode();
-        if(!rootNode) return;
+        if (!rootNode)
+        {
+            return;
+        }
 
         megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
         delete rootNode;

@@ -110,23 +110,39 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         // send translated string
         case 'T':
         {
-            if(strlen(buf)<3) break;
+            if (strlen(buf) < 3)
+            {
+                break;
+            }
 
             bool ok;
             QStringList parameters = QString::fromAscii(content).split(QChar::fromAscii(':'));
 
-            if(parameters.size() != 3)
+            if (parameters.size() != 3)
+            {
                 break;
+            }
 
             int stringId = parameters[0].toInt(&ok);
-            if(!ok) break;
+            if (!ok)
+            {
+                break;
+            }
+
             int numFiles = parameters[1].toInt(&ok);
-            if(!ok) break;
+            if (!ok)
+            {
+                break;
+            }
+
             int numFolders = parameters[2].toInt(&ok);
-            if(!ok) break;
+            if (!ok)
+            {
+                break;
+            }
 
             QString actionString;
-            switch(stringId)
+            switch (stringId)
             {
                 case STRING_UPLOAD:
                     actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
@@ -143,17 +159,41 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             }
 
             QString sNumFiles;
-            if(numFiles == 1) sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-            else if(numFiles > 1) sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files").arg(numFiles);
+            if (numFiles == 1)
+            {
+                sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
+            }
+            else if (numFiles > 1)
+            {
+                sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files").arg(numFiles);
+            }
 
             QString sNumFolders;
-            if(numFolders == 1) sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-            else if(numFolders > 1) sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
+            if (numFolders == 1)
+            {
+                sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
+            }
+            else if (numFolders > 1)
+            {
+                sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
+            }
 
             QString fullString;
-            if(numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)").arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            else if(numFiles && !numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFiles);
-            else if(!numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFolders);
+            if (numFiles && numFolders)
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
+                        .arg(actionString).arg(sNumFiles).arg(sNumFolders);
+            }
+            else if (numFiles && !numFolders)
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
+                        .arg(actionString).arg(sNumFiles);
+            }
+            else if (!numFiles && numFolders)
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
+                        .arg(actionString).arg(sNumFolders);
+            }
 
             strncpy(out, fullString.toUtf8().constData(), BUFSIZE);
             break;
@@ -162,7 +202,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         {
             QString filePath = QString::fromUtf8(content);
             QFileInfo file(filePath);
-            if(file.exists())
+            if (file.exists())
             {
                 //LOG_debug << "Adding file to upload queue";
                 uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
@@ -173,7 +213,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         {
             QString filePath = QString::fromUtf8(content);
             QFileInfo file(filePath);
-            if(file.exists())
+            if (file.exists())
             {
                 exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
@@ -183,7 +223,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         case 'P':
         {
             int state = MegaApi::STATE_NONE;
-            if(!Preferences::instance()->overlayIconsDisabled())
+            if (!Preferences::instance()->overlayIconsDisabled())
             {
                 string tmpPath(content);
                 state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
@@ -209,20 +249,21 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         }
         case 'E':
         {
-            if(!uploadQueue.isEmpty())
+            if (!uploadQueue.isEmpty())
             {
                 emit newUploadQueue(uploadQueue);
                 uploadQueue.clear();
             }
 
-            if(!exportQueue.isEmpty())
+            if (!exportQueue.isEmpty())
             {
                 emit newExportQueue(exportQueue);
                 exportQueue.clear();
             }
         }
         case 'I':
-        default:;
+        default:
+            break;
     }
 
     return out;

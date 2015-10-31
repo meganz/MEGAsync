@@ -23,7 +23,7 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
           CLSCTX_LOCAL_SERVER,
           __uuidof (ITrayNotify),
           (PVOID *) &m_ITrayNotify);
-    if(hr != S_OK)
+    if (hr != S_OK)
     {
         hr = CoCreateInstance (
           __uuidof (TrayNotify),
@@ -31,24 +31,48 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
           CLSCTX_LOCAL_SERVER,
           __uuidof (ITrayNotifyNew),
           (PVOID *) &m_ITrayNotifyNew);
-        if(hr != S_OK) return false;
+        if (hr != S_OK)
+        {
+            return false;
+        }
     }
 
     WinTrayReceiver *receiver = NULL;
-    if(m_ITrayNotify) receiver = new WinTrayReceiver(m_ITrayNotify, executable);
-    else receiver = new WinTrayReceiver(m_ITrayNotifyNew, executable);
+    if (m_ITrayNotify)
+    {
+        receiver = new WinTrayReceiver(m_ITrayNotify, executable);
+    }
+    else
+    {
+        receiver = new WinTrayReceiver(m_ITrayNotifyNew, executable);
+    }
 
     hr = receiver->start();
-    if(hr != S_OK) return false;
+    if (hr != S_OK)
+    {
+        return false;
+    }
 
     return true;
 }
 
 void WindowsPlatform::notifyItemChange(QString path)
 {
-    if(path.isEmpty()) return;
-    if(path.startsWith(QString::fromAscii("\\\\?\\"))) path = path.mid(4);
-    if(path.length()>=MAX_PATH) return;
+    if (path.isEmpty())
+    {
+        return;
+    }
+
+    if (path.startsWith(QString::fromAscii("\\\\?\\")))
+    {
+        path = path.mid(4);
+    }
+
+    if (path.length() >= MAX_PATH)
+    {
+        return;
+    }
+
     WCHAR *windowsPath = (WCHAR *)path.utf16();
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
 }
@@ -70,7 +94,7 @@ HRESULT WindowsPlatform::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, L
         // Set the path to the shortcut target and add the description.
         psl->SetPath(lpszPathObj);
         psl->SetDescription(lpszDesc);
-        if(pszIconfile)
+        if (pszIconfile)
         {
             psl->SetIconLocation(pszIconfile, iIconindex);
         }
@@ -94,14 +118,20 @@ bool WindowsPlatform::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_STARTUP, NULL, 0, path);
-    if(res != S_OK) return false;
+    if (res != S_OK)
+    {
+        return false;
+    }
 
     QString startupPath = QString::fromWCharArray(path);
     startupPath += QString::fromAscii("\\MEGAsync.lnk");
 
-    if(value)
+    if (value)
     {
-        if(QFile(startupPath).exists()) return true;
+        if (QFile(startupPath).exists())
+        {
+            return true;
+        }
 
         WCHAR wDescription[]=L"Start MEGAsync";
         WCHAR *wStartupPath = (WCHAR *)startupPath.utf16();
@@ -112,7 +142,10 @@ bool WindowsPlatform::startOnStartup(bool value)
 
         res = CreateLink(wExecPath, wStartupPath, wDescription);
 
-        if(res != S_OK) return false;
+        if (res != S_OK)
+        {
+            return false;
+        }
         return true;
     }
     else
@@ -126,12 +159,17 @@ bool WindowsPlatform::isStartOnStartupActive()
 {
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_STARTUP, NULL, 0, path);
-    if(res != S_OK)
+    if (res != S_OK)
+    {
         return false;
+    }
 
     QString startupPath = QString::fromWCharArray(path);
     startupPath += QString::fromAscii("\\MEGAsync.lnk");
-    if(QFileInfo(startupPath).isSymLink()) return true;
+    if (QFileInfo(startupPath).isSymLink())
+    {
+        return true;
+    }
     return false;
 }
 
@@ -145,14 +183,17 @@ void WindowsPlatform::showInFolder(QString pathIn)
 
 void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    if(shellDispatcherTask) return;
+    if (shellDispatcherTask)
+    {
+        return;
+    }
     shellDispatcherTask = new WinShellDispatcherTask(receiver);
     shellDispatcherTask->start();
 }
 
 void WindowsPlatform::stopShellDispatcher()
 {
-    if(shellDispatcherTask)
+    if (shellDispatcherTask)
     {
         shellDispatcherTask->exitTask();
         shellDispatcherTask->wait();
@@ -163,13 +204,21 @@ void WindowsPlatform::stopShellDispatcher()
 
 void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
-    if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    {
         syncPath = syncPath.mid(4);
+    }
 
-    if(!syncPath.size()) return;
+    if (!syncPath.size())
+    {
+        return;
+    }
 
     QDir syncDir(syncPath);
-    if(!syncDir.exists()) return;
+    if (!syncDir.exists())
+    {
+        return;
+    }
 
     DWORD dwVersion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
@@ -186,15 +235,24 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
-    if(res != S_OK) return;
+    if (res != S_OK)
+    {
+        return;
+    }
 
     QString linksPath = QString::fromWCharArray(path);
     linksPath += QString::fromAscii("\\Links");
     QFileInfo info(linksPath);
-    if(!info.isDir()) return;
+    if (!info.isDir())
+    {
+        return;
+    }
 
     QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
-    if(QFile(linkPath).exists()) return;
+    if (QFile(linkPath).exists())
+    {
+        return;
+    }
 
     WCHAR wDescription[]=L"MEGAsync synchronized folder";
     linkPath = QDir::toNativeSeparators(linkPath);
@@ -217,10 +275,15 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
-    if(!syncPath.size()) return;
+    if (!syncPath.size())
+    {
+        return;
+    }
 
-    if(syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    {
         syncPath = syncPath.mid(4);
+    }
 
     SHFOLDERCUSTOMSETTINGS fcs = {0};
     fcs.dwSize = sizeof(SHFOLDERCUSTOMSETTINGS);
@@ -229,12 +292,18 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 
     WCHAR path[MAX_PATH];
     HRESULT res = SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, path);
-    if(res != S_OK) return;
+    if (res != S_OK)
+    {
+        return;
+    }
 
     QString linksPath = QString::fromWCharArray(path);
     linksPath += QString::fromAscii("\\Links");
     QFileInfo info(linksPath);
-    if(!info.isDir()) return;
+    if (!info.isDir())
+    {
+        return;
+    }
 
     QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
 
@@ -259,8 +328,10 @@ QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
     entropy.pbData = (BYTE *)key.constData();
     entropy.cbData = key.size();
 
-    if(!CryptProtectData(&dataIn, L"", &entropy, NULL, NULL, 0, &dataOut))
+    if (!CryptProtectData(&dataIn, L"", &entropy, NULL, NULL, 0, &dataOut))
+    {
         return data;
+    }
 
     QByteArray result((const char *)dataOut.pbData, dataOut.cbData);
     LocalFree(dataOut.pbData);
@@ -289,12 +360,14 @@ QByteArray WindowsPlatform::decrypt(QByteArray data, QByteArray key)
 QByteArray WindowsPlatform::getLocalStorageKey()
 {
     HANDLE hToken = NULL;
-    if(!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
+    if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
+    {
         return QByteArray();
+    }
 
     DWORD dwBufferSize = 0;
     GetTokenInformation(hToken, TokenUser, NULL, 0, &dwBufferSize);
-    if(!dwBufferSize)
+    if (!dwBufferSize)
     {
         CloseHandle(hToken);
         return QByteArray();

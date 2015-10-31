@@ -19,11 +19,8 @@ public:
 
 private slots:
     void on_bSourceFolder_clicked();
-
     void on_cVersion_currentIndexChanged(const QString &version);
-
     void on_cLocation_currentIndexChanged(const QString &location);
-
     void on_sReports_valueChanged(int selected);
 
 private:

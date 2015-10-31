@@ -72,7 +72,7 @@ void ConnectivityChecker::onTestFinished(QNetworkReply *reply)
 
 void ConnectivityChecker::onTestTimeout()
 {
-    if(reply)
+    if (reply)
     {
         reply->abort();
     }
@@ -80,7 +80,7 @@ void ConnectivityChecker::onTestTimeout()
 
 void ConnectivityChecker::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *auth)
 {
-    if(!proxy.user().isEmpty())
+    if (!proxy.user().isEmpty())
     {
         auth->setUser(proxy.user());
         auth->setPassword(proxy.password());

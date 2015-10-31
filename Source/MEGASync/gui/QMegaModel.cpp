@@ -14,11 +14,11 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
     this->folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
 
     MegaUserList *contacts = megaApi->getContacts();
-    for(int i = 0; i < contacts->size(); i++)
+    for (int i = 0; i < contacts->size(); i++)
     {
         MegaUser *contact = contacts->get(i);
         MegaNodeList *folders = megaApi->getInShares(contact);
-        for(int j = 0; j < folders->size(); j++)
+        for (int j = 0; j < folders->size(); j++)
         {
             MegaNode *folder = folders->get(j)->copy();
             ownNodes.append(folder);
@@ -51,7 +51,7 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
         case Qt::DecorationRole:
         {
             MegaNode *node = item->getNode();
-            if(node->getType() >= MegaNode::TYPE_FOLDER)
+            if (node->getType() >= MegaNode::TYPE_FOLDER)
             {
                 return folderIcon;
             }
@@ -61,7 +61,7 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
         case Qt::ForegroundRole:
         {
             int access = megaApi->getAccess(item->getNode());
-            if(access < requiredRights)
+            if (access < requiredRights)
             {
                 return QVariant(QBrush(QColor(170,170,170, 127)));
             }
@@ -70,7 +70,7 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
         }
         case Qt::DisplayRole:
         {
-            if(item->getParent() || item->getNode()->getType() == MegaNode::TYPE_ROOT)
+            if (item->getParent() || item->getNode()->getType() == MegaNode::TYPE_ROOT)
             {
                 return QVariant(QString::fromUtf8(item->getNode()->getName()));
             }
@@ -95,12 +95,12 @@ QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) co
         return QModelIndex();
     }
 
-    if(parent.isValid())
+    if (parent.isValid())
     {
         MegaItem * item = NULL;
         item = (MegaItem *)parent.internalPointer();
 
-        if(!item->areChildrenSet())
+        if (!item->areChildrenSet())
         {
             item->setChildren(megaApi->getChildren(item->getNode()));
         }
@@ -108,7 +108,7 @@ QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) co
         return createIndex(row, column, item->getChild(row));
     }
 
-    if(row == 0)
+    if (row == 0)
     {
         return createIndex(row, column, rootItem);
     }
@@ -120,7 +120,7 @@ QModelIndex QMegaModel::parent(const QModelIndex &index) const
 {
     MegaItem *item = (MegaItem *)index.internalPointer();
     MegaItem *parent = item->getParent();
-    if(!parent)
+    if (!parent)
     {
         return QModelIndex();
     }
@@ -130,10 +130,10 @@ QModelIndex QMegaModel::parent(const QModelIndex &index) const
 
 int QMegaModel::rowCount(const QModelIndex &parent) const
 {
-    if(parent.isValid())
+    if (parent.isValid())
     {
         MegaItem *item = (MegaItem *)parent.internalPointer();
-        if(!item->areChildrenSet())
+        if (!item->areChildrenSet())
         {
             item->setChildren(megaApi->getChildren(item->getNode()));
         }
@@ -153,7 +153,7 @@ void QMegaModel::showFiles(bool show)
 {
     this->displayFiles = show;
     this->rootItem->displayFiles(show);
-    for(int i = 0; i < inshareItems.size(); i++)
+    for (int i = 0; i < inshareItems.size(); i++)
     {
         inshareItems.at(i)->displayFiles(show);
     }
