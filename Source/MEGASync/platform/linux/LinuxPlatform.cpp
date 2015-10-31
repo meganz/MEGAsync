@@ -23,7 +23,9 @@ bool LinuxPlatform::enableTrayIcon(QString executable)
 void LinuxPlatform::notifyItemChange(QString path)
 {
     if (notify_server && !Preferences::instance()->overlayIconsDisabled())
+    {
         notify_server->notifyItemChange(path);
+    }
 }
 
 // enable or disable MEGASync launching at startup
@@ -31,29 +33,42 @@ void LinuxPlatform::notifyItemChange(QString path)
 bool LinuxPlatform::startOnStartup(bool value)
 {
     // copy desktop file into autostart directory
-    if (value) {
+    if (value)
+    {
         if (QFile(desktop_file).exists())
+        {
             return true;
-        else {
+        }
+        else
+        {
             // make sure directory exist
-            if (!QDir(autostart_dir).exists()) {
-                if (!QDir().mkdir(autostart_dir)) {
+            if (!QDir(autostart_dir).exists())
+            {
+                if (!QDir().mkdir(autostart_dir))
+                {
                     //LOG_debug << "Failed to create autostart dir: " << autostart_dir;
                     return false;
                 }
             }
             QString app_desktop = QString::fromAscii("/usr/share/applications/megasync.desktop");
-            if (QFile(app_desktop).exists()) {
+            if (QFile(app_desktop).exists())
+            {
                 return QFile::copy(app_desktop, desktop_file);
-            } else {
+            }
+            else
+            {
                 //LOG_debug << "Desktop file does not exist: " << app_desktop;
                 return false;
             }
         }
-    // remove desktop file if it exists
-    } else {
+    }
+    else
+    {
+        // remove desktop file if it exists
         if (QFile(desktop_file).exists())
+        {
             return QFile::remove(desktop_file);
+        }
     }
     return true;
 }
@@ -71,18 +86,26 @@ void LinuxPlatform::showInFolder(QString pathIn)
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
 {
     if (!ext_server)
+    {
         ext_server = new ExtServer(receiver);
+    }
+
     if (!notify_server)
+    {
         notify_server = new NotifyServer();
+    }
 }
 
 void LinuxPlatform::stopShellDispatcher()
 {
-    if(ext_server) {
+    if (ext_server)
+    {
         delete ext_server;
         ext_server = NULL;
     }
-    if(notify_server) {
+
+    if (notify_server)
+    {
         delete notify_server;
         notify_server = NULL;
     }
@@ -90,17 +113,25 @@ void LinuxPlatform::stopShellDispatcher()
 
 void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
-    if(QFile(custom_icon).exists())
+    if (QFile(custom_icon).exists())
+    {
         QProcess::startDetached(set_icon.arg(syncPath).arg(custom_icon));
+    }
+
     if (notify_server)
+    {
         notify_server->notifySyncAdd(syncPath);
+    }
 }
 
 void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
     QProcess::startDetached(remove_icon.arg(syncPath));
+
     if (notify_server)
+    {
         notify_server->notifySyncDel(syncPath);
+    }
 }
 
 QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)

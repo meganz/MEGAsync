@@ -19,75 +19,96 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_bSourceFolder_clicked()
 {
-    #if QT_VERSION < 0x050000
-        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        QString defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
+#if QT_VERSION < 0x050000
+    QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#else
+    QString defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+#endif
 
     QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),
                                                       defaultPath,
                                                       QFileDialog::ShowDirsOnly
                                                       | QFileDialog::DontResolveSymlinks);
-    if(path.length())
+    if (path.length())
+    {
         parseCrashes(path);
+    }
 }
 
 void MainWindow::parseCrashes(QString folder)
 {
     QDir dir(folder);
     QFileInfoList fiList = dir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time);
-    for(int i=0; i<fiList.size(); i++)
+    for (int i = 0; i < fiList.size(); i++)
     {
         QFile file(fiList[i].absoluteFilePath());
-        if(file.size()>16384)
+        if (file.size() > 16384)
+        {
             continue;
+        }
 
-        if(!file.open(QIODevice::ReadOnly))
+        if (!file.open(QIODevice::ReadOnly))
+        {
             continue;
+        }
 
         QString fileContents = QString::fromUtf8(file.readAll());
         QStringList crashReports = fileContents.split(QString::fromUtf8("------------------------------\n"), QString::SkipEmptyParts);
-        if(crashReports.size()-2 >= 0 && crashReports[crashReports.size()-2].split(QString::fromUtf8("\n")).size()<3)
+        if ((crashReports.size() - 2) >= 0
+                && crashReports[crashReports.size() - 2].split(QString::fromUtf8("\n")).size() < 3)
+        {
                 crashReports.removeLast();
+        }
 
-        for(int j=0; j<crashReports.size()-1; j++)
+        for (int j = 0; j < crashReports.size() - 1; j++)
         {
             QString crashReport = crashReports[j];
             file.close();
 
             QStringList lines = crashReport.split(QString::fromUtf8("\n"));
-            if((lines.size()<3) ||
-             (lines.at(0) != QString::fromUtf8("MEGAprivate ERROR DUMP")) ||
-             (!lines.at(1).startsWith(QString::fromUtf8("Application: "))) ||
-             (!lines.at(2).startsWith(QString::fromUtf8("Version"))))
+            if ((lines.size()<3)
+                    || (lines.at(0) != QString::fromUtf8("MEGAprivate ERROR DUMP"))
+                    || (!lines.at(1).startsWith(QString::fromUtf8("Application: ")))
+                    || (!lines.at(2).startsWith(QString::fromUtf8("Version"))))
             {
                 continue;
             }
 
-            if(!reports.contains(lines.at(2)))
+            if (!reports.contains(lines.at(2)))
+            {
                 reports.insert(lines.at(2), QHash<QString, QStringList>());
+            }
 
             QHash<QString, QStringList> &version = reports[lines.at(2)];
             int locationIndex = 5;
-            if(lines.at(4).startsWith(QString::fromUtf8("Operating")))
+            if (lines.at(4).startsWith(QString::fromUtf8("Operating")))
+            {
                 locationIndex = 6;
-            if(lines.at(5).startsWith(QString::fromUtf8("System")))
+            }
+
+            if (lines.at(5).startsWith(QString::fromUtf8("System")))
+            {
                 locationIndex = 9;
-            if(!version.contains(lines.at(locationIndex)))
+            }
+
+            if (!version.contains(lines.at(locationIndex)))
+            {
                 version.insert(lines.at(locationIndex), QStringList());
+            }
 
             QStringList &fullReports = version[lines.at(locationIndex)];
             crashReport.insert(0, tr("File: ") + fiList[i].fileName() + QString::fromUtf8("\n\n"));
-            if(crashReports[crashReports.size()-1].size())
+            if (crashReports[crashReports.size() - 1].size())
+            {
                 crashReport.insert(0, tr("User comment: ") + crashReports[crashReports.size()-1]);
+            }
             fullReports.append(crashReport);
         }
     }
 
     QStringList versions = reports.keys();
     ui->cVersion->clear();
-    if(versions.size())
+    if (versions.size())
     {
         versions.sort();
         ui->cVersion->addItems(versions);
@@ -104,7 +125,7 @@ void MainWindow::on_cVersion_currentIndexChanged(const QString &version)
     QHash<QString, QStringList> &hVersion = reports[version];
     QStringList crashLocations = hVersion.keys();
     ui->cLocation->clear();
-    if(crashLocations.size())
+    if (crashLocations.size())
     {
         crashLocations.sort();
         ui->cLocation->addItems(crashLocations);
@@ -112,9 +133,10 @@ void MainWindow::on_cVersion_currentIndexChanged(const QString &version)
 
         int acum = 0;
         QHash<QString, QStringList> &hVersion = reports[ui->cVersion->currentText()];
-        for(int i=0; i<crashLocations.size(); i++)
+        for (int i = 0; i < crashLocations.size(); i++)
+        {
             acum += hVersion[crashLocations[i]].size();
-
+        }
         ui->eVersion->setText(QString::number(acum));
     }
     else
@@ -129,7 +151,7 @@ void MainWindow::on_cLocation_currentIndexChanged(const QString &location)
     QHash<QString, QStringList> &hVersion = reports[ui->cVersion->currentText()];
     QStringList &fullReports = hVersion[location];
     ui->eLocation->setText(QString::number(fullReports.size()));
-    if(fullReports.size())
+    if (fullReports.size())
     {
         ui->sReports->setMinimum(1);
         ui->sReports->setMaximum(fullReports.size());
@@ -147,11 +169,14 @@ void MainWindow::on_cLocation_currentIndexChanged(const QString &location)
 
 void MainWindow::on_sReports_valueChanged(int selected)
 {
-    if(selected > 0)
+    if (selected > 0)
     {
         QHash<QString, QStringList> &hVersion = reports[ui->cVersion->currentText()];
         QStringList &fullReports = hVersion[ui->cLocation->currentText()];
         ui->eReport->setText(fullReports[selected-1]);
     }
-    else ui->eReport->clear();
+    else
+    {
+        ui->eReport->clear();
+    }
 }

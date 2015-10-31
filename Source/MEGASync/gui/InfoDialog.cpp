@@ -167,7 +167,7 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::setUsage()
 {
-    if(!preferences->totalStorage())
+    if (!preferences->totalStorage())
     {
         return;
     }
@@ -246,8 +246,10 @@ void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString l
     ui->wRecent1->setFile(fileName, fileHandle, localPath, nodeKey, QDateTime::currentDateTime().toMSecsSinceEpoch());
 
 #ifdef __APPLE__
-    if(!ui->wRecentlyUpdated->isVisible())
+    if (!ui->wRecentlyUpdated->isVisible())
+    {
         showRecentList();
+    }
 #endif
     updateRecentFiles();
 }
@@ -564,11 +566,13 @@ void InfoDialog::updateSyncsButton()
 {
     int num = preferences->getNumSyncedFolders();
     long long firstSyncHandle = mega::INVALID_HANDLE;
-    if(num == 1)
+    if (num == 1)
+    {
         firstSyncHandle = preferences->getMegaFolderHandle(0);
+    }
 
     MegaNode *rootNode = megaApi->getRootNode();
-    if(!rootNode)
+    if (!rootNode)
     {
         preferences->setCrashed(true);
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
@@ -576,10 +580,14 @@ void InfoDialog::updateSyncsButton()
     }
     long long rootHandle = rootNode->getHandle();
 
-    if((num == 1) && (firstSyncHandle==rootHandle))
+    if ((num == 1) && (firstSyncHandle == rootHandle))
+    {
         ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
+    }
     else
+    {
         ui->bSyncFolder->setText(tr("Syncs"));
+    }
 
     delete rootNode;
 }
@@ -596,7 +604,7 @@ void InfoDialog::setWaiting(bool waiting)
 
 void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
 {
-    if(isInShare)
+    if (isInShare)
     {
         preferences->setInShareStorage(preferences->inShareStorage() + bytes);
         preferences->setInShareFiles(preferences->inShareFiles()+1);
@@ -722,7 +730,7 @@ void InfoDialog::updateState()
 void InfoDialog::showRecentlyUpdated(bool show)
 {
     ui->wRecent->setVisible(show);
-    if(!show)
+    if (!show)
     {
         this->setMinimumHeight(377);
         this->setMaximumHeight(377);
@@ -737,11 +745,15 @@ void InfoDialog::showRecentlyUpdated(bool show)
 void InfoDialog::closeSyncsMenu()
 {
 #ifdef __APPLE__
-    if(syncsMenu && syncsMenu->isVisible())
+    if (syncsMenu && syncsMenu->isVisible())
+    {
         syncsMenu->close();
+    }
 
-    if(transferMenu && transferMenu->isVisible())
+    if (transferMenu && transferMenu->isVisible())
+    {
         transferMenu->close();
+    }
 
     ui->wRecent1->closeMenu();
     ui->wRecent2->closeMenu();
@@ -751,11 +763,15 @@ void InfoDialog::closeSyncsMenu()
 
 void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
 {
-    if(downloadSpeed || this->downloadSpeed<0)
+    if (downloadSpeed || this->downloadSpeed < 0)
+    {
         this->downloadSpeed = downloadSpeed;
+    }
 
-    if(uploadSpeed || this->uploadSpeed<0)
+    if (uploadSpeed || this->uploadSpeed < 0)
+    {
         this->uploadSpeed = uploadSpeed;
+    }
 }
 
 void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize)
@@ -783,7 +799,7 @@ void InfoDialog::addSync()
 
 void InfoDialog::onTransfer1Cancel(int x, int y)
 {
-    if(transferMenu)
+    if (transferMenu)
     {
 #ifdef __APPLE__
         transferMenu->close();
@@ -813,8 +829,11 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
-    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    {
         this->hide();
+    }
+
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
@@ -824,7 +843,7 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
 
 void InfoDialog::onTransfer2Cancel(int x, int y)
 {
-    if(transferMenu)
+    if (transferMenu)
     {
 #ifdef __APPLE__
         transferMenu->close();
@@ -854,8 +873,11 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
-    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    {
         this->hide();
+    }
+
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
@@ -895,7 +917,7 @@ void InfoDialog::cancelCurrentDownload()
 void InfoDialog::onAllUploadsFinished()
 {
     remainingUploads = megaApi->getNumPendingUploads() + megaApiGuest->getNumPendingUploads();
-    if(!remainingUploads)
+    if (!remainingUploads)
     {
         ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
@@ -973,12 +995,12 @@ void InfoDialog::on_bSettings_clicked()
     app->showTrayMenu(&p);
 
 #ifdef __APPLE__
-    if(!iod)
+    if (!iod)
     {
         return;
     }
 
-    if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+    if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
     }
@@ -996,13 +1018,13 @@ void InfoDialog::on_bSyncFolder_clicked()
     int num = preferences->getNumSyncedFolders();
 
     MegaNode *rootNode = megaApi->getRootNode();
-    if(!rootNode)
+    if (!rootNode)
     {
         preferences->setCrashed(true);
         return;
     }
 
-    if((num == 1) && (preferences->getMegaFolderHandle(0) == rootNode->getHandle()))
+    if ((num == 1) && (preferences->getMegaFolderHandle(0) == rootNode->getHandle()))
     {
         openFolder(preferences->getLocalFolder(0));
     }
@@ -1034,10 +1056,12 @@ void InfoDialog::on_bSyncFolder_clicked()
 
         QSignalMapper *menuSignalMapper = new QSignalMapper();
         int activeFolders = 0;
-        for(int i=0; i<num; i++)
+        for (int i = 0; i < num; i++)
         {
-            if(!preferences->isFolderActive(i))
+            if (!preferences->isFolderActive(i))
+            {
                 continue;
+            }
 
             activeFolders++;
             QAction *action = syncsMenu->addAction(preferences->getSyncName(i), menuSignalMapper, SLOT(map()));
@@ -1056,8 +1080,10 @@ void InfoDialog::on_bSyncFolder_clicked()
 
 #ifdef __APPLE__
         syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
-        if(!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        {
             this->hide();
+        }
 #else
         syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
 #endif
@@ -1088,9 +1114,9 @@ void InfoDialog::disableGetLink(bool disable)
 void InfoDialog::addSync(MegaHandle h)
 {
     static BindFolderDialog *dialog = NULL;
-    if(dialog)
+    if (dialog)
     {
-        if(h != mega::INVALID_HANDLE)
+        if (h != mega::INVALID_HANDLE)
         {
             dialog->setMegaFolder(h);
         }
@@ -1102,12 +1128,13 @@ void InfoDialog::addSync(MegaHandle h)
     }
 
     dialog = new BindFolderDialog(app);
-    if(h != mega::INVALID_HANDLE)
+    if (h != mega::INVALID_HANDLE)
     {
         dialog->setMegaFolder(h);
     }
+
     int result = dialog->exec();
-    if(result != QDialog::Accepted)
+    if (result != QDialog::Accepted)
     {
         delete dialog;
         dialog = NULL;
@@ -1120,14 +1147,14 @@ void InfoDialog::addSync(MegaHandle h)
     QString syncName = dialog->getSyncName();
     delete dialog;
     dialog = NULL;
-    if(!localFolderPath.length() || !node)
+    if (!localFolderPath.length() || !node)
     {
         delete node;
         return;
     }
 
    const char *nPath = megaApi->getNodePath(node);
-   if(!nPath)
+   if (!nPath)
    {
        delete node;
        return;
@@ -1269,7 +1296,7 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
     ui->wRecent3->hide();
     ui->cRecentlyUpdated->setEnabled(false);
 
-    if(ui->cRecentlyUpdated->isChecked())
+    if (ui->cRecentlyUpdated->isChecked())
     {
         minHeightAnimation->setTargetObject(this);
         maxHeightAnimation->setTargetObject(this);
@@ -1307,7 +1334,7 @@ void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
 
 void InfoDialog::onAnimationFinished()
 {
-    if(this->minimumHeight() == 552)
+    if (this->minimumHeight() == 552)
     {
         ui->wRecent1->show();
         ui->wRecent2->show();

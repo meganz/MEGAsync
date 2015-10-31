@@ -31,7 +31,7 @@ void HTTPServer::incomingConnection(int socket)
     QTcpSocket* s = NULL;
     QSslSocket *sslSocket = NULL;
 
-    if(sslEnabled)
+    if (sslEnabled)
     {
         sslSocket = new QSslSocket(this);;
         s = sslSocket;
@@ -50,7 +50,7 @@ void HTTPServer::incomingConnection(int socket)
     s->setSocketDescriptor(socket);
     requests.insert(s, new HTTPRequest());
 
-    if(sslSocket)
+    if (sslSocket)
     {
         sslSocket->setPeerVerifyMode(QSslSocket::VerifyNone);
 
@@ -98,15 +98,15 @@ void HTTPServer::readClient()
             return;
         }
 
-        if(!Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
+        if (!Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
         {
             bool found = false;
             for (int i = 0; i < Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
             {                
                 QString check = QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i));
-                for(int j = 0; j < headers.size(); j++)
+                for (int j = 0; j < headers.size(); j++)
                 {
-                    if(!headers[j].compare(check, Qt::CaseInsensitive))
+                    if (!headers[j].compare(check, Qt::CaseInsensitive))
                     {
                        request->origin = i;
                        found = true;
@@ -129,7 +129,7 @@ void HTTPServer::readClient()
 
         QString contentLengthId = QString::fromUtf8("Content-length: ");
         QStringList contentLengthHeader = headers.filter(QRegExp(contentLengthId, Qt::CaseInsensitive));
-        if(!contentLengthHeader.size())
+        if (!contentLengthHeader.size())
         {
             rejectRequest(socket);
             return;
@@ -137,13 +137,13 @@ void HTTPServer::readClient()
 
         bool ok;
         request->contentLength = contentLengthHeader[0].mid(contentLengthId.size(), contentLengthHeader[0].size() - contentLengthId.size()).toInt(&ok);
-        if(!ok || request->contentLength < tokens[1].size())
+        if (!ok || request->contentLength < tokens[1].size())
         {
             rejectRequest(socket);
             return;
         }
 
-        if(request->contentLength > tokens[1].size())
+        if (request->contentLength > tokens[1].size())
         {
             return;
         }
@@ -160,7 +160,7 @@ void HTTPServer::discardClient()
     socket->deleteLater();
 
     HTTPRequest *request = requests.value(socket);
-    if(request)
+    if (request)
     {
         requests.remove(socket);
         delete request;
@@ -175,7 +175,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
     socket->deleteLater();
 
     HTTPRequest *request = requests.value(socket);
-    if(request)
+    if (request)
     {
         requests.remove(socket);
         delete request;
@@ -189,11 +189,11 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
 
-    if(request.data == QString::fromUtf8("{\"a\":\"v\"}"))
+    if (request.data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
         char *myHandle = megaApi->getMyUserHandle();
-        if(!myHandle)
+        if (!myHandle)
         {
             response = QString::fromUtf8("{\"v\":\"%1\"}").arg(Preferences::VERSION_STRING);
         }
@@ -205,15 +205,15 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             delete myHandle;
         }
     }
-    else if(openLinkRequest.exactMatch(request.data))
+    else if (openLinkRequest.exactMatch(request.data))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "OpenLink command received from the webclient");
         QStringList parameters = openLinkRequest.capturedTexts();
-        if(parameters.size() == 3)
+        if (parameters.size() == 3)
         {
             QString handle = parameters[1];
             QString key = parameters[2];
-            if(handle.size() == 8 && key.size() == 43)
+            if (handle.size() == 8 && key.size() == 43)
             {
                 QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
                 emit onLinkReceived(link);
@@ -222,12 +222,12 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                 Preferences *preferences = Preferences::instance();
                 QString defaultPath = preferences->downloadFolder();
 
-                if(preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
+                if (preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
                 {
                     ((MegaApplication *)qApp)->showInfoMessage(tr("Your download has started"));
                 }
 
-                if(!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
+                if (!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
                 {
                     megaApi->sendEvent(99503, "MEGAsync first webclient download");
                     isFirstWebDownloadDone = true;
@@ -239,14 +239,14 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "SyncFolder command received from the webclient");
         QStringList parameters = syncRequest.capturedTexts();
-        if(parameters.size() == 2)
+        if (parameters.size() == 2)
         {
             QString handle = parameters[1];
             MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
             MegaNode *node = megaApi->getNodeByHandle(h);
-            if(!node)
+            if (!node)
             {
-                if(!megaApi->isLoggedIn())
+                if (!megaApi->isLoggedIn())
                 {
                     response = QString::fromUtf8("-11");
                 }
@@ -255,9 +255,9 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     response = QString::fromUtf8("-9");
                 }
             }
-            else if(node->getType() == MegaNode::TYPE_FOLDER
-                 || node->getType() == MegaNode::TYPE_ROOT
-                 || node->getType() == MegaNode::TYPE_INCOMING)
+            else if (node->getType() == MegaNode::TYPE_FOLDER
+                     || node->getType() == MegaNode::TYPE_ROOT
+                     || node->getType() == MegaNode::TYPE_INCOMING)
             {
                 emit onSyncRequested(h);
                 response = QString::fromUtf8("0");
@@ -265,46 +265,46 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             }
         }
     }
-    else if(request.data.startsWith(externalDownloadRequestStart))
+    else if (request.data.startsWith(externalDownloadRequestStart))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownload command received from the webclient");
         int start = request.data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
-        if(start > 0)
+        if (start > 0)
         {
             QString auth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("esid"));
-            if(auth.length() != 58)
+            if (auth.length() != 58)
             {
                 auth.clear();
             }
 
-            if(auth.isEmpty())
+            if (auth.isEmpty())
             {
                 auth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("en"));
-                if(auth.length() != 8)
+                if (auth.length() != 8)
                 {
                     auth.clear();
                 }
             }
 
-            if(auth.isEmpty())
+            if (auth.isEmpty())
             {
                 auth  = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("auth"));
-                if(auth.length() != 8 && auth.length() != 58)
+                if (auth.length() != 8 && auth.length() != 58)
                 {
                     auth.clear();
                 }
             }
 
-            if(!auth.isEmpty())
+            if (!auth.isEmpty())
             {
                 QQueue<mega::MegaNode *> downloadQueue;
                 int end;
                 bool firstnode = true;
 
-                while(request.data[start] == QChar::fromAscii('{'))
+                while (request.data[start] == QChar::fromAscii('{'))
                 {
                     end = request.data.indexOf(QChar::fromAscii('}'), start);
-                    if(end < 0)
+                    if (end < 0)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");
                         qDeleteAll(downloadQueue);
@@ -316,9 +316,8 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     QString file = request.data.mid(start, end - start);
                     start = end + 1;
 
-
                     int type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
-                    if(type < 0)
+                    if (type < 0)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without type in webclient request");
                         qDeleteAll(downloadQueue);
@@ -327,7 +326,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     }
 
                     QString handle = Utilities::extractJSONString(file, QString::fromUtf8("h"));
-                    if(handle.isEmpty())
+                    if (handle.isEmpty())
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without handle in webclient request");
                         qDeleteAll(downloadQueue);
@@ -339,7 +338,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     name.replace(QString::fromUtf8("-"), QString::fromUtf8("+"));
                     name.replace(QString::fromUtf8("_"), QString::fromUtf8("/"));
                     name = QString::fromUtf8(QByteArray::fromBase64(name.toUtf8().constData()).constData());
-                    if(name.isEmpty())
+                    if (name.isEmpty())
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without name in webclient request");
                         qDeleteAll(downloadQueue);
@@ -350,7 +349,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
                     MegaHandle p = INVALID_HANDLE;
 
-                    if(!firstnode)
+                    if (!firstnode)
                     {
                         QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
                         p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
@@ -360,7 +359,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                         firstnode = false;
                     }
 
-                    if(type != MegaNode::TYPE_FILE)
+                    if (type != MegaNode::TYPE_FILE)
                     {
                         MegaNode *node = megaApi->createPublicFolderNode(h, name.toUtf8().constData(), p, auth.toUtf8().constData());
                         downloadQueue.append(node);
@@ -368,7 +367,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     else
                     {
                         QString key = Utilities::extractJSONString(file, QString::fromUtf8("k"));
-                        if(key.isEmpty())
+                        if (key.isEmpty())
                         {
                             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without key in webclient request");
                             qDeleteAll(downloadQueue);
@@ -386,7 +385,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     }
                 }
 
-                if(downloadQueue.size())
+                if (downloadQueue.size())
                 {
                     emit onExternalDownloadRequested(downloadQueue);
                     emit onExternalDownloadRequestFinished();
@@ -396,7 +395,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         }
     }
 
-    if(!response.size())
+    if (!response.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request.data).toUtf8().constData());
         response = QString::fromUtf8("-2");
@@ -414,7 +413,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             .arg(response);
 
     socket->write(fullResponse.toUtf8());
-
     socket->flush();
     socket->disconnectFromHost();
     socket->deleteLater();

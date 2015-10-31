@@ -117,17 +117,20 @@ int WinShellDispatcherTask::dispatchPipe()
         if (i < 0 || i > (INSTANCES - 1))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher closing...");
-            for(int j=0; j < INSTANCES; j++)
+            for (int j = 0; j < INSTANCES; j++)
+            {
                 CloseHandle(Pipe[j].hPipeInst);
+            }
 
-            for(int j=0; j < (INSTANCES+1); j++)
+            for (int j = 0; j < (INSTANCES + 1); j++)
+            {
                 CloseHandle(hEvents[j]);
+            }
 
             return 0;
         }
 
         // Get the result if the operation was pending.
-
         if (Pipe[i].fPendingIO)
         {
             fSuccess = GetOverlappedResult(
@@ -140,7 +143,7 @@ int WinShellDispatcherTask::dispatchPipe()
             {
             // Pending connect operation
             case CONNECTING_STATE:
-                if (! fSuccess)
+                if (!fSuccess)
                 {
                     printf("Error %d.\n", GetLastError());
                     return 0;
@@ -150,7 +153,7 @@ int WinShellDispatcherTask::dispatchPipe()
 
             // Pending read operation
             case READING_STATE:
-                if (! fSuccess || cbRet == 0)
+                if (!fSuccess || cbRet == 0)
                 {
                     DisconnectAndReconnect(i);
                     continue;
@@ -161,7 +164,7 @@ int WinShellDispatcherTask::dispatchPipe()
 
             // Pending write operation
             case WRITING_STATE:
-                if (! fSuccess || cbRet != Pipe[i].cbToWrite)
+                if (!fSuccess || cbRet != Pipe[i].cbToWrite)
                 {
                     DisconnectAndReconnect(i);
                     continue;
@@ -178,7 +181,6 @@ int WinShellDispatcherTask::dispatchPipe()
         }
 
         // The pipe state determines which operation to do next.
-
         switch (Pipe[i].dwState)
         {
             // READING_STATE:
@@ -210,14 +212,12 @@ int WinShellDispatcherTask::dispatchPipe()
             }
 
             // An error occurred; disconnect from the client.
-
             DisconnectAndReconnect(i);
             break;
 
             // WRITING_STATE:
             // The request was successfully read from the client.
             // Get the reply data and write it to the client.
-
         case WRITING_STATE:
             GetAnswerToRequest(&Pipe[i]);
 
@@ -346,18 +346,35 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
     {
         case L'T':
         {
-            if(lstrlen(pipe->chRequest)<3) break;
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
 
             bool ok;
             QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii(':'));
-            if(parameters.size() != 3) break;
+            if (parameters.size() != 3)
+            {
+                break;
+            }
 
-            int stringId    = parameters[0].toInt(&ok);
-            if(!ok) break;
-            int numFiles    = parameters[1].toInt(&ok);
-            if(!ok) break;
-            int numFolders  = parameters[2].toInt(&ok);
-            if(!ok) break;
+            int stringId = parameters[0].toInt(&ok);
+            if (!ok)
+            {
+                break;
+            }
+
+            int numFiles = parameters[1].toInt(&ok);
+            if (!ok)
+            {
+                break;
+            }
+
+            int numFolders = parameters[2].toInt(&ok);
+            if (!ok)
+            {
+                break;
+            }
 
             QString actionString;
             switch(stringId)
@@ -377,30 +394,61 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             }
 
             QString sNumFiles;
-            if(numFiles == 1) sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-            else if(numFiles > 1) sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files").arg(numFiles);
+            if (numFiles == 1)
+            {
+                sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
+            }
+            else if (numFiles > 1)
+            {
+                sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files")
+                        .arg(numFiles);
+            }
 
             QString sNumFolders;
-            if(numFolders == 1) sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-            else if(numFolders > 1) sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders").arg(numFolders);
+            if (numFolders == 1)
+            {
+                sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
+            }
+            else if (numFolders > 1)
+            {
+                sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders")
+                        .arg(numFolders);
+            }
 
             QString fullString;
-            if(numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)").arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            else if(numFiles && !numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFiles);
-            else if(!numFiles && numFolders) fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)").arg(actionString).arg(sNumFolders);
+            if (numFiles && numFolders)
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
+                        .arg(actionString).arg(sNumFiles).arg(sNumFolders);
+            }
+            else if (numFiles && !numFolders)
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
+                        .arg(actionString).arg(sNumFiles);
+            }
+            else if (!numFiles && numFolders)
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
+                        .arg(actionString).arg(sNumFolders);
+            }
 
             wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)fullString.utf16());
             break;
         }
         case L'F':
         {
-            if(lstrlen(pipe->chRequest)<3) break;
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
             QString filePath = QString::fromWCharArray(content);
-            if(filePath.startsWith(QString::fromAscii("\\\\?\\")))
+            if (filePath.startsWith(QString::fromAscii("\\\\?\\")))
+            {
                 filePath = filePath.mid(4);
+            }
 
             QFileInfo file(filePath);
-            if(file.exists())
+            if (file.exists())
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to upload queue: %1").arg(filePath).toUtf8().constData());
                 uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
@@ -409,30 +457,41 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'L':
         {
-            if(lstrlen(pipe->chRequest)<3) break;
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
+
             QString filePath = QString::fromWCharArray(content);
-            if(filePath.startsWith(QString::fromAscii("\\\\?\\")))
+            if (filePath.startsWith(QString::fromAscii("\\\\?\\")))
+            {
                 filePath = filePath.mid(4);
+            }
 
             QFileInfo file(filePath);
-            if(file.exists())
+            if (file.exists())
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to export queue: %1").arg(filePath).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding file to export queue: %1")
+                             .arg(filePath).toUtf8().constData());
                 exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
             break;
         }
         case L'P':
         {
-            if((lstrlen(pipe->chRequest)<3) || (Preferences::instance()->overlayIconsDisabled()))
-                    break;
+            if ((lstrlen(pipe->chRequest) < 3) || (Preferences::instance()->overlayIconsDisabled()))
+            {
+                break;
+            }
 
             int state;
             QString temp = QString::fromWCharArray(content);
-            if(temp.startsWith(QString::fromAscii("\\\\?\\")))
+            if (temp.startsWith(QString::fromAscii("\\\\?\\")))
+            {
                 temp = temp.mid(4);
+            }
 
-            if((temp == lastPath) && (numHits < 3))
+            if ((temp == lastPath) && (numHits < 3))
             {
                 state = lastState;
                 numHits++;
@@ -445,7 +504,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 state = megaApi->syncPathState(&tmpPath);
                 lastState = state;
                 lastPath = temp;
-                numHits=1;
+                numHits = 1;
             }
 
             switch(state)
@@ -468,13 +527,13 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'E':
         {
-            if(!uploadQueue.isEmpty())
+            if (!uploadQueue.isEmpty())
             {
                 emit newUploadQueue(uploadQueue);
                 uploadQueue.clear();
             }
 
-            if(!exportQueue.isEmpty())
+            if (!exportQueue.isEmpty())
             {
                 emit newExportQueue(exportQueue);
                 exportQueue.clear();

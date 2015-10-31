@@ -169,24 +169,24 @@ unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsi
     char buffer[1024];
 
     ifstream input(filePath, std::ios::in | std::ios::binary);
-    if(input.fail())
+    if (input.fail())
     {
         return 0;
     }
 
-    while(input.good())
+    while (input.good())
     {
         input.read(buffer, sizeof(buffer));
         signatureGenerator.add((byte *)buffer, (unsigned)input.gcount());
     }
 
-    if(input.bad())
+    if (input.bad())
     {
         return 0;
     }
 
     unsigned signatureSize = signatureGenerator.get(key, signature, signbuflen);
-    if(signatureSize < signbuflen)
+    if (signatureSize < signbuflen)
     {
         cerr << "Invalid signature size: " << signatureSize;
         return 0;
@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
     string privk;
     bool win = true;
 
-    if((argc==2) && !strcmp(argv[1], "-g"))
+    if ((argc == 2) && !strcmp(argv[1], "-g"))
     {
         //Generate a keypair
         CryptoPP::Integer pubk[AsymmCipher::PUBKEY];
@@ -233,26 +233,29 @@ int main(int argc, char *argv[])
         delete privkstr;
         return 0;
     }
-    else if((argc == 6) && !strcmp(argv[1], "-s") && (!strcmp(argv[2], "win") || !strcmp(argv[2], "osx")))
+    else if ((argc == 6) && !strcmp(argv[1], "-s")
+             && (!strcmp(argv[2], "win") || !strcmp(argv[2], "osx")))
     {
         //Sign an update
         win = !strcmp(argv[2], "win");
 
         //Prepare the update folder path
         string updateFolder(argv[3]);
-        if(updateFolder[updateFolder.size()-1] != '/')
+        if (updateFolder[updateFolder.size()-1] != '/')
+        {
             updateFolder.append("/");
+        }
 
         //Read keys
         ifstream keyFile(argv[4], std::ios::in);
-        if(keyFile.bad())
+        if (keyFile.bad())
         {
             printUsage(argv[0]);
             return 2;
         }
         getline(keyFile, pubk);
         getline(keyFile, privk);
-        if(!pubk.size() || !privk.size())
+        if (!pubk.size() || !privk.size())
         {
             cerr << "Invalid key file" << endl;
             keyFile.close();
@@ -261,7 +264,7 @@ int main(int argc, char *argv[])
         keyFile.close();
 
         long versionCode = strtol (argv[5], NULL, 10);
-        if(!versionCode)
+        if (!versionCode)
         {
             cerr << "Invalid version code" << endl;
             return 5;
@@ -277,14 +280,20 @@ int main(int argc, char *argv[])
         signatureGenerator.add((const byte *)argv[5], strlen(argv[5]));
 
         unsigned int numFiles;
-        if(win) numFiles = SIZEOF_ARRAY(UPDATE_FILES_WIN);
-        else numFiles = SIZEOF_ARRAY(UPDATE_FILES_OSX);
+        if (win)
+        {
+            numFiles = SIZEOF_ARRAY(UPDATE_FILES_WIN);
+        }
+        else
+        {
+            numFiles = SIZEOF_ARRAY(UPDATE_FILES_OSX);
+        }
 
-        for(unsigned int i=0; i<numFiles; i++)
+        for (unsigned int i = 0; i < numFiles; i++)
         {
             string filePath = updateFolder + (win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i];
             signatureSize = signFile(filePath.data(), &aprivk, signature, sizeof(signature));
-            if(!signatureSize)
+            if (!signatureSize)
             {
                 cerr << "Error signing file: " << filePath << endl;
                 return 4;
@@ -306,13 +315,13 @@ int main(int argc, char *argv[])
         }
 
         signatureSize = signatureGenerator.get(&aprivk, signature, sizeof(signature));
-        if(!signatureSize)
+        if (!signatureSize)
         {
             cerr << "Error signing the update file" << endl;
             return 6;
         }
 
-        if(signatureSize < sizeof(signature))
+        if (signatureSize < sizeof(signature))
         {
             cerr << "Error signing the update file: invalid signature size: " << signatureSize << endl;
             return 7;
@@ -325,7 +334,7 @@ int main(int argc, char *argv[])
         //Print update file
         cout << argv[5] << endl;
         cout << updateFileSignature << endl;
-        for(unsigned int i=0; i<numFiles; i++)
+        for (unsigned int i = 0; i < numFiles; i++)
         {
             cout << downloadURLs[i] << endl;
             cout << (win ? TARGET_PATHS_WIN : TARGET_PATHS_OSX)[i] << endl;

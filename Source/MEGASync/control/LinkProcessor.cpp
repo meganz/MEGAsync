@@ -8,7 +8,7 @@ LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QObject()
 {
     this->megaApi = megaApi;
     this->linkList = linkList;
-    for(int i=0; i<linkList.size();i++)
+    for (int i = 0; i < linkList.size(); i++)
     {
         linkSelected.append(true);
         linkNode.append(NULL);
@@ -27,8 +27,10 @@ LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QObject()
 LinkProcessor::~LinkProcessor()
 {
     delete delegateListener;
-    for(int i=0; i<linkNode.size();i++)
+    for (int i = 0; i < linkNode.size(); i++)
+    {
         delete linkNode[i];
+    }
 }
 
 QString LinkProcessor::getLink(int id)
@@ -58,48 +60,62 @@ int LinkProcessor::size()
 
 void LinkProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    if(request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
+    if (request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
     {
-        if(e->getErrorCode() != MegaError::API_OK)
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
             linkNode[currentIndex] = NULL;
+        }
         else
+        {
             linkNode[currentIndex] = request->getPublicMegaNode();
+        }
 
         linkError[currentIndex] = e->getErrorCode();
         linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
-        if(!linkError[currentIndex])
+        if (!linkError[currentIndex])
         {
             QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
-            if(!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
+            if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
+            {
                 linkSelected[currentIndex] = false;
+            }
         }
         currentIndex++;
         emit onLinkInfoAvailable(currentIndex-1);
-        if(currentIndex == linkList.size())
+        if (currentIndex == linkList.size())
+        {
             emit onLinkInfoRequestFinish();
+        }
     }
-    else if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
+    else if (request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
     {
         MegaNode *n = megaApi->getNodeByHandle(request->getNodeHandle());
         importLinks(n);
         delete n;
     }
-    else if(request->getType() == MegaRequest::TYPE_COPY)
+    else if (request->getType() == MegaRequest::TYPE_COPY)
     {
         remainingNodes--;
-        if(e->getErrorCode()==MegaError::API_OK)
+        if (e->getErrorCode()==MegaError::API_OK)
+        {
             importSuccess++;
+        }
         else
+        {
             importFailed++;
+        }
 
-        if(!remainingNodes)
+        if (!remainingNodes)
+        {
             emit onLinkImportFinish();
+        }
     }
 }
 
 void LinkProcessor::requestLinkInfo()
 {
-    for(int i=0; i<linkList.size(); i++)
+    for (int i = 0; i < linkList.size(); i++)
     {
         megaApi->getPublicNode(linkList[i].toUtf8().constData(), delegateListener);
     }
@@ -108,7 +124,7 @@ void LinkProcessor::requestLinkInfo()
 void LinkProcessor::importLinks(QString megaPath)
 {
     MegaNode *node = megaApi->getNodeByPath(megaPath.toUtf8().constData());
-    if(node)
+    if (node)
     {
         importLinks(node);
         delete node;
@@ -116,7 +132,7 @@ void LinkProcessor::importLinks(QString megaPath)
     else
     {
         MegaNode *rootNode = megaApi->getRootNode();
-        if(!rootNode)
+        if (!rootNode)
         {
             emit onLinkImportFinish();
             return;
@@ -129,36 +145,39 @@ void LinkProcessor::importLinks(QString megaPath)
 
 void LinkProcessor::importLinks(MegaNode *node)
 {
-    if(!node) return;
+    if (!node)
+    {
+        return;
+    }
 
     MegaNodeList *children = megaApi->getChildren(node);
     importParentFolder = node->getHandle();
 
-    for(int i=0; i<linkList.size(); i++)
+    for (int i = 0; i < linkList.size(); i++)
     {
-        if(!linkNode[i])
+        if (!linkNode[i])
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Trying to import a NULL node");
         }
 
-        if(linkNode[i] && linkSelected[i] && !linkError[i])
+        if (linkNode[i] && linkSelected[i] && !linkError[i])
         {
             bool dupplicate = false;
             long long dupplicateHandle;
             const char* name = linkNode[i]->getName();
             long long size = linkNode[i]->getSize();
 
-            for(int j=0; j<children->size(); j++)
+            for (int j = 0; j < children->size(); j++)
             {
                 MegaNode *child = children->get(j);
-                if(!strcmp(name, child->getName()) && (size == child->getSize()))
+                if (!strcmp(name, child->getName()) && (size == child->getSize()))
                 {
                     dupplicate = true;
                     dupplicateHandle = child->getHandle();
                 }
             }
 
-            if(!dupplicate)
+            if (!dupplicate)
             {
                 remainingNodes++;
                 megaApi->copyNode(linkNode[i], node, delegateListener);
@@ -179,9 +198,9 @@ MegaHandle LinkProcessor::getImportParentFolder()
 
 void LinkProcessor::downloadLinks(QString localPath)
 {
-    for(int i=0; i<linkList.size(); i++)
+    for (int i = 0; i < linkList.size(); i++)
     {
-        if(linkNode[i] && linkSelected[i])
+        if (linkNode[i] && linkSelected[i])
         {
             megaApi->startDownload(linkNode[i], (localPath+QDir::separator()).toUtf8().constData());
         }

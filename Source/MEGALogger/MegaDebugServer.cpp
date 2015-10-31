@@ -67,11 +67,13 @@ void MegaDebugServer::clientConnected()
     ui->actionLoad->setEnabled(false);
     ui->statusBar->showMessage(tr("Connected"));
 
-    for(;;)
+    for (;;)
     {
         megaSyncClient = megaServer->nextPendingConnection();
-        if(!megaServer->hasPendingConnections())
+        if (!megaServer->hasPendingConnections())
+        {
             break;
+        }
 
         megaSyncClient->disconnectFromServer();
         megaSyncClient->deleteLater();
@@ -88,7 +90,7 @@ void MegaDebugServer::parseReader(QXmlStreamReader *reader)
     do
     {
         QXmlStreamReader::TokenType token = reader->readNext();
-        if(token == QXmlStreamReader::StartElement && reader->name() == "log")
+        if (token == QXmlStreamReader::StartElement && reader->name() == "log")
         {
             QXmlStreamAttributes attr = reader->attributes();
             DebugRow dr;
@@ -109,12 +111,13 @@ void MegaDebugServer::appendDebugRow(DebugRow *dr)
 {
     int index = debugDataModel->rowCount();
 
-    if(index >= MAX_LOG_MESSAGES)
+    if (index >= MAX_LOG_MESSAGES)
     {
         QList<QStandardItem*> items = debugDataModel->takeRow(0);
-        for(int i=0; i<items.size(); i++)
+        for (int i = 0; i < items.size(); i++)
+        {
             delete items[i];
-
+        }
         index--;
     }
 
@@ -131,7 +134,7 @@ void MegaDebugServer::appendDebugRow(DebugRow *dr)
 
 void MegaDebugServer::startstop()
 {
-    if(!megaServer)
+    if (!megaServer)
     {
         QLocalServer::removeServer(MEGA_LOGGER);
         megaServer = new QLocalServer();
@@ -162,7 +165,7 @@ void MegaDebugServer::startstop()
 
 void MegaDebugServer::disconnected()
 {
-    if(megaServer)
+    if (megaServer)
     {
         delete reader;
         megaServer->deleteLater();
@@ -229,7 +232,7 @@ void MegaDebugServer::saveToFile()
     /* Writes a document start with the XML version number. */
     xmlWriterLog.writeStartDocument();
     xmlWriterLog.writeStartElement("MEGA");
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         xmlWriterLog.writeStartElement("log");
         //Add timestamp and value

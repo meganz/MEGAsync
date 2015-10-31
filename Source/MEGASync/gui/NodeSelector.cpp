@@ -34,7 +34,7 @@ NodeSelector::~NodeSelector()
 void NodeSelector::nodesReady()
 {
     MegaNode *rootNode = megaApi->getRootNode();
-    if(!rootNode)
+    if (!rootNode)
     {
         return;
     }
@@ -89,19 +89,19 @@ long long NodeSelector::getSelectedFolderHandle()
 void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedHandle);
-    if(!node)
+    if (!node)
     {
         return;
     }
 
     QList<MegaNode *> list;
-    while(node)
+    while (node)
     {
         list.append(node);
         node = megaApi->getParentNode(node);
     }
 
-    if(!list.size())
+    if (!list.size())
     {
         return;
     }
@@ -111,11 +111,11 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
     QModelIndex parentModelIndex;
     node = list.at(index);
 
-    for(int i = 0; i < model->rowCount(); i++)
+    for (int i = 0; i < model->rowCount(); i++)
     {
         QModelIndex tmp = model->index(i, 0);
         MegaNode *n = model->getNode(tmp);
-        if(n->getHandle() == node->getHandle())
+        if (n->getHandle() == node->getHandle())
         {
             node = NULL;
             parentModelIndex = modelIndex;
@@ -126,9 +126,9 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         }
     }
 
-    if(node)
+    if (node)
     {
-        for(int k = 0; k < list.size(); k++)
+        for (int k = 0; k < list.size(); k++)
         {
             delete list.at(k);
         }
@@ -136,14 +136,14 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         return;
     }
 
-    while(index >= 0)
+    while (index >= 0)
     {
         node = list.at(index);
-        for(int j = 0; j < model->rowCount(modelIndex); j++)
+        for (int j = 0; j < model->rowCount(modelIndex); j++)
         {
             QModelIndex tmp = model->index(j, 0, modelIndex);
             MegaNode *n = model->getNode(tmp);
-            if(n->getHandle() == node->getHandle())
+            if (n->getHandle() == node->getHandle())
             {
                 node = NULL;
                 parentModelIndex = modelIndex;
@@ -154,9 +154,9 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
             }
         }
 
-        if(node)
+        if (node)
         {
-            for(int k = 0; k < list.size(); k++)
+            for (int k = 0; k < list.size(); k++)
             {
                 delete list.at(k);
             }
@@ -165,7 +165,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         }
     }
 
-    for(int k = 0; k < list.size(); k++)
+    for (int k = 0; k < list.size(); k++)
     {
         delete list.at(k);
     }
@@ -177,10 +177,10 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     ui->bNewFolder->setEnabled(true);
-    if(e->getErrorCode() == MegaError::API_OK)
+    if (e->getErrorCode() == MegaError::API_OK)
     {
         MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
-        if(node)
+        if (node)
         {
             QModelIndex row = model->insertNode(node, selectedItem);
             setSelectedFolderHandle(node->getHandle());
@@ -218,7 +218,7 @@ void NodeSelector::on_bNewFolder_clicked()
     id->setLabelText(tr("Enter the new folder name:"));
     int result = id->exec();
 
-    if(!id || !result)
+    if (!id || !result)
     {
         delete id;
         return;
@@ -230,7 +230,7 @@ void NodeSelector::on_bNewFolder_clicked()
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
-        if(!node || node->isFile())
+        if (!node || node->isFile())
         {
             ui->bNewFolder->setEnabled(false);
             ui->tMegaFolders->setEnabled(false);
@@ -238,12 +238,12 @@ void NodeSelector::on_bNewFolder_clicked()
         }
         else
         {
-            for(int i = 0; i < model->rowCount(selectedItem); i++)
+            for (int i = 0; i < model->rowCount(selectedItem); i++)
             {
                 QModelIndex row = model->index(i, 0, selectedItem);
                 MegaNode *node = model->getNode(row);
 
-                if(text.compare(QString::fromUtf8(node->getName())) == 0)
+                if (text.compare(QString::fromUtf8(node->getName())) == 0)
                 {
                     setSelectedFolderHandle(node->getHandle());
                     ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
@@ -266,14 +266,14 @@ void NodeSelector::on_bOk_clicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     int access = megaApi->getAccess(node);
-    if((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
+    if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
             QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
             delete node;
             return;
 
     }
-    else if((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
+    else if ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
     {
         QMessageBox::warning(this, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
         delete node;
@@ -284,7 +284,7 @@ void NodeSelector::on_bOk_clicked()
     MegaNode *check = megaApi->getNodeByPath(path);
     delete [] path;
     delete node;
-    if(!check)
+    if (!check)
     {
         QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
                                                      "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),

@@ -24,16 +24,24 @@ IFACEMETHODIMP ClassFactory::QueryInterface(REFIID riid, void **ppv)
 {
     __try
     {
-        if(ppv == NULL)
+        if (ppv == NULL)
+        {
             return E_POINTER;
+        }
 
         *ppv = NULL;
         if (riid == __uuidof (IClassFactory))
+        {
             *ppv = (IClassFactory *) this;
+        }
         else if (riid == IID_IUnknown)
+        {
             *ppv = (IUnknown *) this;
+        }
         else
+        {
             return E_NOINTERFACE;
+        }
 
         AddRef();
         return S_OK;

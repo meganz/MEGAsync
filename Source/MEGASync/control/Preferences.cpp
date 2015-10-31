@@ -221,7 +221,7 @@ Preferences *Preferences::preferences = NULL;
 
 Preferences *Preferences::instance()
 {
-    if(!preferences)
+    if (!preferences)
     {
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.nz"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.co.nz"));
@@ -398,7 +398,7 @@ void Preferences::setUsedStorage(long long value)
 {
     mutex.lock();
     assert(logged());
-    if(value < 0)
+    if (value < 0)
     {
         value = 0;
     }
@@ -1033,7 +1033,7 @@ QString Preferences::proxyHostAndPort()
     QString hostname = proxyServer();
 
     QHostAddress ipAddress(hostname);
-    if(ipAddress.protocol() == QAbstractSocket::IPv6Protocol)
+    if (ipAddress.protocol() == QAbstractSocket::IPv6Protocol)
     {
         proxy = QString::fromUtf8("[") + hostname + QString::fromAscii("]:") + QString::number(proxyPort());
     }
@@ -1269,7 +1269,7 @@ QString Preferences::getSyncName(int num)
 {
     mutex.lock();
     assert(logged() && (syncNames.size()>num));
-    if(num >= syncNames.size())
+    if (num >= syncNames.size())
     {
         mutex.unlock();
         return QString();
@@ -1283,7 +1283,7 @@ QString Preferences::getLocalFolder(int num)
 {
     mutex.lock();
     assert(logged() && (localFolders.size()>num));
-    if(num >= localFolders.size())
+    if (num >= localFolders.size())
     {
         mutex.unlock();
         return QString();
@@ -1291,7 +1291,11 @@ QString Preferences::getLocalFolder(int num)
 
     QFileInfo fileInfo(localFolders.at(num));
     QString value = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
-    if(value.isEmpty()) value = QDir::toNativeSeparators(localFolders.at(num));
+    if (value.isEmpty())
+    {
+        value = QDir::toNativeSeparators(localFolders.at(num));
+    }
+
     mutex.unlock();
     return value;
 }
@@ -1300,7 +1304,7 @@ QString Preferences::getMegaFolder(int num)
 {
     mutex.lock();
     assert(logged() && (megaFolders.size()>num));
-    if(num >= megaFolders.size())
+    if (num >= megaFolders.size())
     {
         mutex.unlock();
         return QString();
@@ -1314,7 +1318,7 @@ long long Preferences::getLocalFingerprint(int num)
 {
     mutex.lock();
     assert(logged() && (localFingerprints.size()>num));
-    if(num >= localFingerprints.size())
+    if (num >= localFingerprints.size())
     {
         mutex.unlock();
         return 0;
@@ -1327,7 +1331,7 @@ long long Preferences::getLocalFingerprint(int num)
 void Preferences::setLocalFingerprint(int num, long long fingerprint)
 {
     mutex.lock();
-    if(num >= localFingerprints.size())
+    if (num >= localFingerprints.size())
     {
         mutex.unlock();
         return;
@@ -1341,7 +1345,7 @@ MegaHandle Preferences::getMegaFolderHandle(int num)
 {
     mutex.lock();
     assert(logged() && (megaFolderHandles.size()>num));
-    if(num >= megaFolderHandles.size())
+    if (num >= megaFolderHandles.size())
     {
         mutex.unlock();
         return mega::INVALID_HANDLE;
@@ -1354,7 +1358,7 @@ MegaHandle Preferences::getMegaFolderHandle(int num)
 bool Preferences::isFolderActive(int num)
 {
     mutex.lock();
-    if(num >= activeFolders.size())
+    if (num >= activeFolders.size())
     {
         mutex.unlock();
         return false;
@@ -1367,7 +1371,7 @@ bool Preferences::isFolderActive(int num)
 bool Preferences::isTemporaryInactiveFolder(int num)
 {
     mutex.lock();
-    if(num >= temporaryInactiveFolders.size())
+    if (num >= temporaryInactiveFolders.size())
     {
         mutex.unlock();
         return false;
@@ -1380,7 +1384,7 @@ bool Preferences::isTemporaryInactiveFolder(int num)
 void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
 {
     mutex.lock();
-    if(num >= activeFolders.size() || num >= temporaryInactiveFolders.size())
+    if (num >= activeFolders.size() || num >= temporaryInactiveFolders.size())
     {
         mutex.unlock();
         return;
@@ -1390,8 +1394,10 @@ void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
     writeFolders();
     mutex.unlock();
 
-    if(enabled)
+    if (enabled)
+    {
         Platform::syncFolderAdded(localFolders[num], syncNames[num]);
+    }
 }
 
 QStringList Preferences::getSyncNames()
@@ -1432,8 +1438,16 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     assert(logged());
 
     QFileInfo localFolderInfo(localFolder);
-    if(syncName.isEmpty()) syncName = localFolderInfo.fileName();
-    if(syncName.isEmpty()) syncName = QDir::toNativeSeparators(localFolder);
+    if (syncName.isEmpty())
+    {
+        syncName = localFolderInfo.fileName();
+    }
+
+    if (syncName.isEmpty())
+    {
+        syncName = QDir::toNativeSeparators(localFolder);
+    }
+
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
 
     localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
@@ -1452,7 +1466,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
 void Preferences::setMegaFolderHandle(int num, MegaHandle handle)
 {
     mutex.lock();
-    if(num >= megaFolderHandles.size())
+    if (num >= megaFolderHandles.size())
     {
         mutex.unlock();
         return;
@@ -1481,8 +1495,11 @@ void Preferences::removeAllFolders()
 {
     mutex.lock();
     assert(logged());
-    for(int i=0; i<localFolders.size(); i++)
+
+    for (int i = 0; i < localFolders.size(); i++)
+    {
         Platform::syncFolderRemoved(localFolders[i], syncNames[i]);
+    }
 
     syncNames.clear();
     localFolders.clear();
@@ -1509,10 +1526,15 @@ void Preferences::setExcludedSyncNames(QStringList names)
     mutex.lock();
     assert(logged());
     excludedSyncNames = names;
-    if(!excludedSyncNames.size())
+    if (!excludedSyncNames.size())
+    {
         settings->remove(excludedSyncNamesKey);
+    }
     else
+    {
         settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
+    }
+
     settings->sync();
     mutex.unlock();
 }
@@ -1522,14 +1544,17 @@ QStringList Preferences::getPreviousCrashes()
     mutex.lock();
     QStringList previousCrashes;
     QString currentAccount;
-    if(logged())
+    if (logged())
     {
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
     previousCrashes = settings->value(previousCrashesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
-    if(!currentAccount.isEmpty())
+    if (!currentAccount.isEmpty())
+    {
         settings->beginGroup(currentAccount);
+    }
+
     mutex.unlock();
     return previousCrashes;
 }
@@ -1538,17 +1563,26 @@ void Preferences::setPreviousCrashes(QStringList crashes)
 {
     mutex.lock();
     QString currentAccount;
-    if(logged())
+    if (logged())
     {
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
-    if(!crashes.size())
+
+    if (!crashes.size())
+    {
         settings->remove(previousCrashesKey);
+    }
     else
+    {
         settings->setValue(previousCrashesKey, crashes.join(QString::fromAscii("\n")));
-    if(!currentAccount.isEmpty())
+    }
+
+    if (!currentAccount.isEmpty())
+    {
         settings->beginGroup(currentAccount);
+    }
+
     settings->sync();
     mutex.unlock();
 }
@@ -1557,7 +1591,7 @@ long long Preferences::getLastReboot()
 {
     mutex.lock();
     QString currentAccount;
-    if(logged())
+    if (logged())
     {
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
@@ -1565,8 +1599,11 @@ long long Preferences::getLastReboot()
 
     long long value = settings->value(lastRebootKey).toLongLong();
 
-    if(!currentAccount.isEmpty())
+    if (!currentAccount.isEmpty())
+    {
         settings->beginGroup(currentAccount);
+    }
+
     mutex.unlock();
     return value;
 }
@@ -1575,7 +1612,7 @@ void Preferences::setLastReboot(long long value)
 {
     mutex.lock();
     QString currentAccount;
-    if(logged())
+    if (logged())
     {
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
@@ -1583,8 +1620,11 @@ void Preferences::setLastReboot(long long value)
 
     settings->setValue(lastRebootKey, value);
 
-    if(!currentAccount.isEmpty())
+    if (!currentAccount.isEmpty())
+    {
         settings->beginGroup(currentAccount);
+    }
+
     settings->sync();
     mutex.unlock();
 }
@@ -1593,7 +1633,7 @@ long long Preferences::getLastExit()
 {
     mutex.lock();
     QString currentAccount;
-    if(logged())
+    if (logged())
     {
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
@@ -1601,8 +1641,11 @@ long long Preferences::getLastExit()
 
     long long value = settings->value(lastExitKey).toLongLong();
 
-    if(!currentAccount.isEmpty())
+    if (!currentAccount.isEmpty())
+    {
         settings->beginGroup(currentAccount);
+    }
+
     mutex.unlock();
     return value;
 }
@@ -1611,7 +1654,7 @@ void Preferences::setLastExit(long long value)
 {
     mutex.lock();
     QString currentAccount;
-    if(logged())
+    if (logged())
     {
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
@@ -1619,8 +1662,11 @@ void Preferences::setLastExit(long long value)
 
     settings->setValue(lastExitKey, value);
 
-    if(!currentAccount.isEmpty())
+    if (!currentAccount.isEmpty())
+    {
         settings->beginGroup(currentAccount);
+    }
+
     settings->sync();
     mutex.unlock();
 }
@@ -1638,9 +1684,12 @@ void Preferences::enterUser(int i)
 {
     mutex.lock();
     assert(!logged());
-    assert(i<settings->numChildGroups());
-    if(i<settings->numChildGroups())
+    assert(i < settings->numChildGroups());
+    if (i < settings->numChildGroups())
+    {
         settings->beginGroup(i);
+    }
+
     readFolders();
     loadExcludedSyncNames();
     mutex.unlock();
@@ -1756,8 +1805,10 @@ bool Preferences::error()
 void Preferences::clearAll()
 {
     mutex.lock();
-    if(logged())
+    if (logged())
+    {
         unlink();
+    }
 
     settings->clear();
     settings->sync();
@@ -1803,12 +1854,15 @@ bool Preferences::hasEmail(QString email)
     mutex.lock();
     assert(!logged());
     bool value = settings->containsGroup(email);
-    if(value)
+    if (value)
     {
         settings->beginGroup(email);
         QString storedEmail = settings->value(emailKey).toString();
         value = !storedEmail.compare(email);
-        if(!value) settings->remove(QString::fromAscii(""));
+        if (!value)
+        {
+            settings->remove(QString::fromAscii(""));
+        }
         settings->endGroup();
     }
     mutex.unlock();
@@ -1818,7 +1872,10 @@ bool Preferences::hasEmail(QString email)
 void Preferences::logout()
 {
     mutex.lock();
-    if(logged()) settings->endGroup();
+    if (logged())
+    {
+        settings->endGroup();
+    }
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -1833,11 +1890,13 @@ void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
     excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
-    if(excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
+    if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
+    {
         excludedSyncNames.clear();
+    }
 
-    if((settings->value(lastVersionKey).toInt() < 108) &&
-       (Preferences::VERSION_CODE >= 108))
+    if ((settings->value(lastVersionKey).toInt() < 108)
+            && (Preferences::VERSION_CODE >= 108))
     {
         excludedSyncNames.clear();
         excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
@@ -1846,14 +1905,15 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
-    if((settings->value(lastVersionKey).toInt() < 1015) &&
-       (Preferences::VERSION_CODE >= 1015))
+    if ((settings->value(lastVersionKey).toInt() < 1015)
+            && (Preferences::VERSION_CODE >= 1015))
     {
         excludedSyncNames.append(QString::fromUtf8("Icon?"));
     }
 
     QMap<QString, QString> strMap;
-    foreach ( QString str, excludedSyncNames ) {
+    foreach (QString str, excludedSyncNames)
+    {
         strMap.insert( str.toLower(), str );
     }
     excludedSyncNames = strMap.values();
@@ -1875,16 +1935,18 @@ void Preferences::readFolders()
 
     settings->beginGroup(syncsGroupKey);
     int numSyncs = settings->numChildGroups();
-    for(int i=0; i<numSyncs; i++)
+    for (int i = 0; i < numSyncs; i++)
     {
         settings->beginGroup(QString::number(i));
-            syncNames.append(settings->value(syncNameKey).toString());
-            localFolders.append(settings->value(localFolderKey).toString());
-            megaFolders.append(settings->value(megaFolderKey).toString());
-            megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
-            activeFolders.append(settings->value(folderActiveKey, true).toBool());
-            temporaryInactiveFolders.append(settings->value(temporaryInactiveKey, false).toBool());
-            localFingerprints.append(settings->value(localFingerprintKey, 0).toLongLong());
+
+        syncNames.append(settings->value(syncNameKey).toString());
+        localFolders.append(settings->value(localFolderKey).toString());
+        megaFolders.append(settings->value(megaFolderKey).toString());
+        megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
+        activeFolders.append(settings->value(folderActiveKey, true).toBool());
+        temporaryInactiveFolders.append(settings->value(temporaryInactiveKey, false).toBool());
+        localFingerprints.append(settings->value(localFingerprintKey, 0).toLongLong());
+
         settings->endGroup();
     }
     settings->endGroup();
@@ -1897,19 +1959,23 @@ void Preferences::writeFolders()
     assert(logged());
 
     settings->beginGroup(syncsGroupKey);
-        settings->remove(QString::fromAscii(""));
-        for(int i=0; i<localFolders.size(); i++)
-        {
-            settings->beginGroup(QString::number(i));
-                settings->setValue(syncNameKey, syncNames[i]);
-                settings->setValue(localFolderKey, localFolders[i]);
-                settings->setValue(megaFolderKey, megaFolders[i]);
-                settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
-                settings->setValue(folderActiveKey, activeFolders[i]);
-                settings->setValue(temporaryInactiveKey,temporaryInactiveFolders[i]);
-                settings->setValue(localFingerprintKey, localFingerprints[i]);
-            settings->endGroup();
-        }
+
+    settings->remove(QString::fromAscii(""));
+    for (int i = 0; i < localFolders.size(); i++)
+    {
+        settings->beginGroup(QString::number(i));
+
+        settings->setValue(syncNameKey, syncNames[i]);
+        settings->setValue(localFolderKey, localFolders[i]);
+        settings->setValue(megaFolderKey, megaFolders[i]);
+        settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
+        settings->setValue(folderActiveKey, activeFolders[i]);
+        settings->setValue(temporaryInactiveKey,temporaryInactiveFolders[i]);
+        settings->setValue(localFingerprintKey, localFingerprints[i]);
+
+        settings->endGroup();
+    }
+
     settings->endGroup();
     settings->sync();
     mutex.unlock();

@@ -10,21 +10,24 @@ void MacXPlatform::initialize(int argc, char *argv[])
 #endif
 
     setMacXActivationPolicy();
-
     SetProcessName(QString::fromUtf8("MEGAsync"));
 
     fd = -1;
-    if(argc)
+    if (argc)
     {
         long int value = strtol(argv[argc-1], NULL, 10);
-        if(value > 0 && value < INT_MAX)
+        if (value > 0 && value < INT_MAX)
+        {
             fd = value;
+        }
     }
 
-    if(fd < 0)
+    if (fd < 0)
     {
-        if(!enableSetuidBit())
+        if (!enableSetuidBit())
+        {
             ::exit(0);
+        }
 
         //Reboot
         QString app = MegaApplication::applicationDirPath();
@@ -79,9 +82,12 @@ void MacXPlatform::showInFolder(QString pathIn)
 
 void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    if(systemServiceTask) return;
-    systemServiceTask = new MacXSystemServiceTask(receiver);
+    if (systemServiceTask)
+    {
+        return;
+    }
 
+    systemServiceTask = new MacXSystemServiceTask(receiver);
 }
 
 void MacXPlatform::stopShellDispatcher()
@@ -120,7 +126,7 @@ bool MacXPlatform::enableSetuidBit()
 {
     QString command = QString::fromUtf8("do shell script \"chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true\"");
     char *response = runWithRootPrivileges((char *)command.toStdString().c_str());
-    if(!response)
+    if (!response)
     {
         return NULL;
     }

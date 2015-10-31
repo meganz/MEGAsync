@@ -20,10 +20,10 @@ mega::MegaNode *MegaItem::getNode()
 void MegaItem::setChildren(MegaNodeList *children)
 {
     this->children = children;
-    for(int i = 0; i < children->size(); i++)
+    for (int i = 0; i < children->size(); i++)
     {
         MegaNode *node = children->get(i);
-        if(!showFiles && node->getType() == MegaNode::TYPE_FILE)
+        if (!showFiles && node->getType() == MegaNode::TYPE_FILE)
         {
             break;
         }
@@ -61,16 +61,16 @@ int MegaItem::insertPosition(MegaNode *node)
     int type = node->getType();
 
     int i;
-    for(i = 0; i < childItems.size(); i++)
+    for (i = 0; i < childItems.size(); i++)
     {
         MegaNode *n = childItems.at(i)->getNode();
         int nodeType = n->getType();
-        if(type < nodeType)
+        if (type < nodeType)
         {
             continue;
         }
 
-        if(qstricmp(node->getName(), n->getName()) <= 0)
+        if (qstricmp(node->getName(), n->getName()) <= 0)
         {
             break;
         }

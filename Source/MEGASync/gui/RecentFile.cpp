@@ -43,7 +43,7 @@ void RecentFile::updateWidget()
 {
     closeMenu();
 
-    if(!info.fileName.length())
+    if (!info.fileName.length())
     {
         ui->lFileType->setText(QString());
         ui->lFileName->setText(QString());
@@ -54,7 +54,7 @@ void RecentFile::updateWidget()
         return;
     }
 
-    if(info.fileName.compare(ui->lFileName->text()))
+    if (info.fileName.compare(ui->lFileName->text()))
     {
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
@@ -66,7 +66,7 @@ void RecentFile::updateWidget()
         ui->lFileType->setIconSize(QSize(48, 48));
     }
 
-    if(getLinkDisabled)
+    if (getLinkDisabled)
     {
         ui->pArrow->installEventFilter(this);
         ui->pArrow->update();
@@ -79,56 +79,82 @@ void RecentFile::updateWidget()
 
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = info.dateTime.secsTo(now);
-    if(secs < 2)
+    if (secs < 2)
+    {
         ui->lTime->setText(tr("just now"));
-    else if(secs < 60)
+    }
+    else if (secs < 60)
+    {
         ui->lTime->setText(tr("%1 seconds ago").arg(secs));
-    else if(secs < 3600)
+    }
+    else if (secs < 3600)
     {
         int minutes = secs/60;
-        if(minutes == 1)
+        if (minutes == 1)
+        {
             ui->lTime->setText(tr("1 minute ago"));
+        }
         else
+        {
             ui->lTime->setText(tr("%1 minutes ago").arg(minutes));
+        }
     }
-    else if(secs < 86400)
+    else if (secs < 86400)
     {
         int hours = secs/3600;
-        if(hours == 1)
+        if (hours == 1)
+        {
             ui->lTime->setText(tr("1 hour ago"));
+        }
         else
+        {
             ui->lTime->setText(tr("%1 hours ago").arg(hours));
+        }
     }
-    else if(secs < 2592000)
+    else if (secs < 2592000)
     {
         int days = secs/86400;
-        if(days == 1)
+        if (days == 1)
+        {
             ui->lTime->setText(tr("1 day ago"));
+        }
         else
+        {
             ui->lTime->setText(tr("%1 days ago").arg(days));
+        }
     }
-    else if(secs < 31536000)
+    else if (secs < 31536000)
     {
         int months = secs/2592000;
-        if(months == 1)
+        if (months == 1)
+        {
             ui->lTime->setText(tr("1 month ago"));
+        }
         else
+        {
             ui->lTime->setText(tr("%1 months ago").arg(months));
+        }
     }
     else
     {
         int years = secs/31536000;
-        if(years == 1)
+        if (years == 1)
+        {
             ui->lTime->setText(tr("1 year ago"));
+        }
         else
+        {
             ui->lTime->setText(tr("%1 years ago").arg(years));
+        }
     }
 }
 
 void RecentFile::closeMenu()
 {
-    if(menu)
+    if (menu)
+    {
         menu->close();
+    }
 }
 
 RecentFileInfo RecentFile::getFileInfo()
@@ -175,22 +201,29 @@ void RecentFile::changeEvent(QEvent *event)
 
 void RecentFile::on_pArrow_clicked()
 {
-    if(getLinkDisabled)
+    if (getLinkDisabled)
+    {
         return;
+    }
 
-    if(info.fileHandle != mega::INVALID_HANDLE)
+    if (info.fileHandle != mega::INVALID_HANDLE)
+    {
         ((MegaApplication*)qApp)->copyFileLink(info.fileHandle, info.nodeKey);
+    }
 }
 
 void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 {
-    if(menu)
+    if (menu)
     {
         menu->close();
         return;
     }
 
-    if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
+    if (info.localPath.isEmpty() || !QFileInfo(info.localPath).exists())
+    {
+        return;
+    }
 
     menu = new QMenu();
 
@@ -218,13 +251,16 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 {
-    if(menu)
+    if (menu)
     {
         menu->close();
         return;
     }
 
-    if(info.localPath.isEmpty() || !QFileInfo(info.localPath).exists()) return;
+    if (info.localPath.isEmpty() || !QFileInfo(info.localPath).exists())
+    {
+        return;
+    }
 
     menu = new QMenu();
 
@@ -252,7 +288,7 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
 
 void RecentFile::showInFolder()
 {
-    if(!info.localPath.isEmpty())
+    if (!info.localPath.isEmpty())
     {
         QWidget::window()->hide();
         Platform::showInFolder(info.localPath);
@@ -261,7 +297,7 @@ void RecentFile::showInFolder()
 
 void RecentFile::openFile()
 {
-    if(!info.localPath.isEmpty())
+    if (!info.localPath.isEmpty())
     {
         QWidget::window()->hide();
         QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(info.localPath));
