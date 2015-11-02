@@ -62,33 +62,43 @@ sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasyn
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync-debug.dsc > MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync.debug/PKGBUILD
 
-# TODO: check for existing ChangeLog entry
+# read the last generated ChangeLog version
+version_file="version"
 
-# add RPM ChangeLog entry
-changelog="MEGAsync/MEGAsync/megasync.changes"
-changelogold="MEGAsync/MEGAsync/megasync.changes.old"
-if [ -f $changelog ]; then
-    mv $changelog $changelogold
-fi
-./generate_rpm_changelog_entry.sh ../Source/MEGASync/control/Preferences.cpp > $changelog
-if [ -f $changelogold ]; then
-    cat $changelogold >> $changelog
-    rm $changelogold
+if [ -s "$version_file" ]; then
+    last_version=$(cat "$version_file")
+else
+    last_version="none"
 fi
 
-# add DEB ChangeLog entry
-changelog="MEGAsync/MEGAsync/debian.changelog"
-changelogold="MEGAsync/MEGAsync/debian.changelog.old"
-if [ -f $changelog ]; then
-    mv $changelog $changelogold
-fi
-./generate_deb_changelog_entry.sh $MEGASYNC_VERSION ../Source/MEGASync/control/Preferences.cpp > $changelog
-if [ -f $changelogold ]; then
-    cat $changelogold >> $changelog
-    rm $changelogold
-fi
+if [ "$last_version" != "$MEGASYNC_VERSION" ]; then
+    # add RPM ChangeLog entry
+    changelog="MEGAsync/MEGAsync/megasync.changes"
+    changelogold="MEGAsync/MEGAsync/megasync.changes.old"
+    if [ -f $changelog ]; then
+        mv $changelog $changelogold
+    fi
+    ./generate_rpm_changelog_entry.sh ../Source/MEGASync/control/Preferences.cpp > $changelog
+    if [ -f $changelogold ]; then
+        cat $changelogold >> $changelog
+        rm $changelogold
+    fi
 
+    # add DEB ChangeLog entry
+    changelog="MEGAsync/MEGAsync/debian.changelog"
+    changelogold="MEGAsync/MEGAsync/debian.changelog.old"
+    if [ -f $changelog ]; then
+        mv $changelog $changelogold
+    fi
+    ./generate_deb_changelog_entry.sh $MEGASYNC_VERSION ../Source/MEGASync/control/Preferences.cpp > $changelog
+    if [ -f $changelogold ]; then
+        cat $changelogold >> $changelog
+        rm $changelogold
+    fi
 
+    # update version file
+    echo $MEGASYNC_VERSION > $version_file
+fi
 
 # create archive
 mkdir $MEGASYNC_NAME
