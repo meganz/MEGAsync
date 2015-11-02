@@ -1,4 +1,12 @@
-Mon Aug  10 10:00:00 CEST 2015 - linux@mega.co.nz
+Thu Oct 8 19:51:46 CEST 2015 - linux@mega.co.nz
+
+- Inform about MITM attacks
+- Compatibility with OS X 10.11 El Capita
+- Improvements for the synchronization engine
+- Bug fixes
+
+-------------------------------------------------------------------
+Mon Aug 10 10:00:00 CEST 2015 - linux@mega.co.nz
 
 - Built with a custom version of QT that will allow us to debug crashes in QT libraries
 - List of allowed origins for webclient communications
