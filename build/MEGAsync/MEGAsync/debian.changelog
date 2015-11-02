@@ -1,0 +1,30 @@
+megasync (2.3.1) stable; urgency=low
+
+  * Inform about MITM attacks
+  * Compatibility with OS X 10.11 El Capita
+  * Improvements for the synchronization engine
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Thu, 8 Oct 2015 19:51:46 +0100
+
+megasync (2.1.1) stable; urgency=low
+
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 10 Aug 2015 10:10:10 +0100
+
