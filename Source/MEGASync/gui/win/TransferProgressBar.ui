@@ -155,6 +155,10 @@ border: 2px solid rgb(178, 178, 178);;
   <zorder>bCancel</zorder>
   <zorder>wProgress</zorder>
  </widget>
+ <tabstops>
+  <tabstop>bCancel</tabstop>
+  <tabstop>lProgress</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_win.qrc"/>
  </resources>

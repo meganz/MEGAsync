@@ -96,6 +96,9 @@ color: grey;
           <bold>true</bold>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -135,6 +138,9 @@ color: grey;
           <bold>true</bold>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -156,6 +162,9 @@ color: grey;
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">border: none;</string>

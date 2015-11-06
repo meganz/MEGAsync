@@ -67,6 +67,9 @@ QPushButton
        <height>24</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string>Please select the download folder for your files:</string>
      </property>
@@ -95,6 +98,9 @@ QPushButton
       </property>
       <item>
        <widget class="QLabel" name="label_2">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>Local folder:</string>
         </property>
@@ -104,6 +110,9 @@ QPushButton
        <widget class="QLineEdit" name="eFolderPath">
         <property name="enabled">
          <bool>true</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Local folder:</string>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -205,6 +214,15 @@ QPushButton
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>infoLabel</tabstop>
+  <tabstop>label_2</tabstop>
+  <tabstop>eFolderPath</tabstop>
+  <tabstop>bChange</tabstop>
+  <tabstop>cDefaultPath</tabstop>
+  <tabstop>bOK</tabstop>
+  <tabstop>bCancel</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_win.qrc"/>
  </resources>

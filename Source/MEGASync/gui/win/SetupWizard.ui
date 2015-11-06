@@ -187,6 +187,9 @@ margin-bottom: 9px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">border: none;</string>
          </property>
@@ -294,6 +297,9 @@ margin-bottom: 9px;
            <bold>false</bold>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -346,6 +352,9 @@ margin-bottom: 9px;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Name:</string>
             </property>
@@ -353,6 +362,9 @@ margin-bottom: 9px;
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="eName">
+            <property name="accessibleName">
+             <string>Name:</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -360,6 +372,9 @@ margin-bottom: 9px;
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="lEmail">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Email:</string>
             </property>
@@ -367,13 +382,22 @@ margin-bottom: 9px;
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="eEmail">
+            <property name="accessibleName">
+             <string>Email:</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lPassword">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Password:</string>
             </property>
@@ -381,6 +405,9 @@ margin-bottom: 9px;
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="ePassword">
+            <property name="accessibleName">
+             <string>Password:</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -391,6 +418,9 @@ margin-bottom: 9px;
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="lRepeatPassword">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Repeat password:</string>
             </property>
@@ -398,6 +428,9 @@ margin-bottom: 9px;
           </item>
           <item row="3" column="1">
            <widget class="QLineEdit" name="eRepeatPassword">
+            <property name="accessibleName">
+             <string>Repeat password:</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -438,6 +471,9 @@ margin-bottom: 9px;
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="accessibleName">
+                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -448,6 +484,9 @@ margin-bottom: 9px;
              </item>
              <item>
               <widget class="QLabel" name="lTermsLink">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -498,6 +537,9 @@ margin-bottom: 9px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">border: none;
 </string>
@@ -526,6 +568,9 @@ margin-bottom: 9px;
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -574,6 +619,9 @@ margin-bottom: 9px;
           </property>
           <item row="1" column="0">
            <widget class="QLabel" name="lLoginEmail">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Email:</string>
             </property>
@@ -581,6 +629,9 @@ margin-bottom: 9px;
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="eLoginEmail">
+            <property name="accessibleName">
+             <string>Email:</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -588,6 +639,9 @@ margin-bottom: 9px;
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lLoginPassword">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Password:</string>
             </property>
@@ -595,6 +649,9 @@ margin-bottom: 9px;
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="eLoginPassword">
+            <property name="accessibleName">
+             <string>Password:</string>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -625,6 +682,9 @@ margin-bottom: 9px;
           <font>
            <pointsize>-1</pointsize>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="text">
           <string>Please verify your account using the confirmation link that we have sent to your email account</string>
@@ -661,6 +721,9 @@ margin-bottom: 9px;
           </property>
           <item>
            <widget class="QLabel" name="lProgress">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -734,6 +797,9 @@ margin-bottom: 9px;
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">font-size:20px;
@@ -898,6 +964,9 @@ border: none;</string>
                     <height>48</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">background: transparent;
 
@@ -939,6 +1008,9 @@ color: #333333;
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size: 13px;
@@ -1112,6 +1184,9 @@ border: none;</string>
                     <bold>false</bold>
                    </font>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:20px;
 font: &quot;Helvetica&quot;;
@@ -1149,6 +1224,9 @@ color: #333333;
                     <width>16777215</width>
                     <height>32</height>
                    </size>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size: 13px;
@@ -1215,6 +1293,9 @@ color: #666666;
            <bold>false</bold>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
 
@@ -1237,6 +1318,9 @@ color: #666666;
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
@@ -1298,6 +1382,9 @@ font-weight: normal;
               <height>0</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">margin-left: 2px;</string>
             </property>
@@ -1335,6 +1422,9 @@ font-weight: normal;
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lMegaFolder">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">margin-left: 2px;</string>
             </property>
@@ -1436,6 +1526,9 @@ font-weight: normal;
            <bold>false</bold>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -1454,6 +1547,9 @@ font-weight: normal;
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">border: none;
@@ -1489,6 +1585,9 @@ font-weight: normal;
        </item>
        <item>
         <widget class="QLabel" name="label_6">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="text">
           <string>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</string>
          </property>
@@ -1580,20 +1679,45 @@ font-weight: normal;
  <tabstops>
   <tabstop>rHaveAccount</tabstop>
   <tabstop>rDontHaveAccount</tabstop>
+  <tabstop>lCreateAccount</tabstop>
+  <tabstop>lName</tabstop>
+  <tabstop>eName</tabstop>
+  <tabstop>lEmail</tabstop>
+  <tabstop>eEmail</tabstop>
+  <tabstop>lPassword</tabstop>
+  <tabstop>ePassword</tabstop>
+  <tabstop>lRepeatPassword</tabstop>
+  <tabstop>eRepeatPassword</tabstop>
+  <tabstop>cAgreeWithTerms</tabstop>
+  <tabstop>lTermsLink</tabstop>
+  <tabstop>lLogin</tabstop>
+  <tabstop>lLoginEmail</tabstop>
+  <tabstop>eLoginEmail</tabstop>
+  <tabstop>lLoginPassword</tabstop>
+  <tabstop>eLoginPassword</tabstop>
+  <tabstop>lVerify</tabstop>
+  <tabstop>lProgress</tabstop>
+  <tabstop>lSetupType</tabstop>
+  <tabstop>rTypicalSetup</tabstop>
+  <tabstop>lTypicalHeader</tabstop>
+  <tabstop>lTypicalDesc</tabstop>
+  <tabstop>rAdvancedSetup</tabstop>
+  <tabstop>lAdvancedHeader</tabstop>
+  <tabstop>lAdvancedDesc</tabstop>
+  <tabstop>lAdvancedSetup</tabstop>
+  <tabstop>lAdvancedLabel</tabstop>
+  <tabstop>lLocalFolder</tabstop>
+  <tabstop>eLocalFolder</tabstop>
+  <tabstop>bLocalFolder</tabstop>
+  <tabstop>lMegaFolder</tabstop>
+  <tabstop>eMegaFolder</tabstop>
+  <tabstop>bMegaFolder</tabstop>
+  <tabstop>lWelcome</tabstop>
+  <tabstop>label_6</tabstop>
+  <tabstop>bSkip</tabstop>
   <tabstop>bBack</tabstop>
   <tabstop>bNext</tabstop>
   <tabstop>bCancel</tabstop>
-  <tabstop>eName</tabstop>
-  <tabstop>eEmail</tabstop>
-  <tabstop>ePassword</tabstop>
-  <tabstop>eRepeatPassword</tabstop>
-  <tabstop>cAgreeWithTerms</tabstop>
-  <tabstop>eLoginEmail</tabstop>
-  <tabstop>eLoginPassword</tabstop>
-  <tabstop>eLocalFolder</tabstop>
-  <tabstop>bLocalFolder</tabstop>
-  <tabstop>eMegaFolder</tabstop>
-  <tabstop>bMegaFolder</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources_win.qrc"/>

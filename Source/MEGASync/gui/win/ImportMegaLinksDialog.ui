@@ -193,7 +193,7 @@ height: 16px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="Resources.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -272,7 +272,7 @@ height: 16px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="Resources.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -357,8 +357,19 @@ height: 16px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cDownload</tabstop>
+  <tabstop>eLocalFolder</tabstop>
+  <tabstop>bLocalFolder</tabstop>
+  <tabstop>cImport</tabstop>
+  <tabstop>eMegaFolder</tabstop>
+  <tabstop>bMegaFolder</tabstop>
+  <tabstop>bOk</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>linkList</tabstop>
+ </tabstops>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -107,7 +107,7 @@ font-size: 12px;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="Resources.qrc">:/images/small_photoshop.png</pixmap>
+      <pixmap resource="../Resources_win.qrc">:/images/small_photoshop.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>false</bool>
@@ -132,6 +132,9 @@ font-size: 12px;
       <font>
        <pointsize>-1</pointsize>
       </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string/>
@@ -168,6 +171,9 @@ font-size: 12px;
        <height>24</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -178,8 +184,13 @@ font-size: 12px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cSelected</tabstop>
+  <tabstop>lName</tabstop>
+  <tabstop>lState</tabstop>
+ </tabstops>
  <resources>
-  <include location="Resources.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
