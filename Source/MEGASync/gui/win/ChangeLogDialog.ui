@@ -97,6 +97,9 @@ border-radius: 5px;
       </property>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;</string>
         </property>
@@ -104,7 +107,7 @@ border-radius: 5px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
         </property>
         <property name="iconSize">
@@ -131,6 +134,9 @@ border-radius: 5px;
        <width>16777215</width>
        <height>30</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
       <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -173,6 +179,9 @@ border-radius: 5px;
       </item>
       <item>
        <widget class="QLabel" name="lVersion">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string notr="true">2.0.1</string>
         </property>
@@ -180,6 +189,9 @@ border-radius: 5px;
       </item>
       <item>
        <widget class="QLabel" name="lSDKVersion">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string notr="true">(SDK)</string>
         </property>
@@ -312,6 +324,9 @@ border-radius: 5px;
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string notr="true">&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
@@ -322,8 +337,17 @@ border-radius: 5px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lMEGAsync</tabstop>
+  <tabstop>lVersion</tabstop>
+  <tabstop>lSDKVersion</tabstop>
+  <tabstop>tChangelog</tabstop>
+  <tabstop>bTerms</tabstop>
+  <tabstop>bPolicy</tabstop>
+  <tabstop>lCopyright</tabstop>
+ </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -158,7 +158,16 @@ background-color:white;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -211,6 +220,9 @@ background-color:white;
           <height>16777215</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -218,7 +230,7 @@ background-color:white;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
         </property>
         <property name="iconSize">
@@ -264,6 +276,9 @@ background-color:white;
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">QCheckBox::indicator {
@@ -319,6 +334,9 @@ background-color:white;
           <height>16777215</height>
          </size>
         </property>
+        <property name="accessibleName">
+         <string>Settings</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 margin-top:-1px;
@@ -330,7 +348,7 @@ margin-top:-1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -400,6 +418,9 @@ margin-top:-1px;
            <pointsize>-1</pointsize>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="text">
           <string>MEGAsync is currently disabled</string>
          </property>
@@ -417,13 +438,31 @@ margin-top:-1px;
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
            <widget class="QWidget" name="widget_2" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -438,6 +477,9 @@ margin-top:-1px;
                 <font>
                  <pointsize>-1</pointsize>
                 </font>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
                 <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
@@ -611,6 +653,9 @@ margin-top:-1px;
              <width>16777215</width>
              <height>20</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">#lTotalUsed
@@ -807,7 +852,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -867,8 +912,18 @@ color: #666666;
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>bSettings</tabstop>
+  <tabstop>lDisabled</tabstop>
+  <tabstop>lDescDisabled</tabstop>
+  <tabstop>bUpgrade</tabstop>
+  <tabstop>lTotalUsed</tabstop>
+  <tabstop>bSyncFolder</tabstop>
+  <tabstop>bOfficialWebIcon</tabstop>
+  <tabstop>bOfficialWeb</tabstop>
+ </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

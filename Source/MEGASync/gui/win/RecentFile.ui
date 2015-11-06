@@ -78,6 +78,9 @@
        <height>48</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -158,6 +161,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">#lFileName
 {
@@ -175,6 +181,9 @@ color: #333333;
       </item>
       <item>
        <widget class="QLabel" name="lTime">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">#lTime
 {
@@ -326,6 +335,11 @@ QPushButton:hover
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lFileName</tabstop>
+  <tabstop>lTime</tabstop>
+  <tabstop>pArrow</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
