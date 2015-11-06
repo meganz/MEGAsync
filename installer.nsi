@@ -466,6 +466,17 @@ modeselected:
   File "${QT_PATH}\plugins\imageformats\qtiff4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  SetOutPath "$INSTDIR\accessible"
+  File "${QT_PATH}\plugins\accessible\qtaccessiblecompatwidgets4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\accessible" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\accessible" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${QT_PATH}\plugins\accessible\qtaccessiblewidgets4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\accessible\qtaccessiblewidgets4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\accessible\qtaccessiblewidgets4.dll" "$USERNAME" "GenericRead + GenericWrite"
 !else
   ;x86_32 files
   File "${QT_PATH}\bin\Qt5Core.dll"
@@ -805,6 +816,8 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qtiff.dll"
   Delete "$INSTDIR\imageformats\qwbmp.dll"
   Delete "$INSTDIR\imageformats\qwebp.dll"
+  Delete "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll"
+  Delete "$INSTDIR\accessible\qtaccessiblewidgets4.dll"
   Delete "$INSTDIR\iconengines\qsvgicon.dll"
   Delete "$INSTDIR\platforms\qwindows.dll"
   Delete "$INSTDIR\bearer\qgenericbearer.dll"
@@ -875,6 +888,7 @@ Section Uninstall
   RMDir "$SMPROGRAMS\$ICONS_GROUP"
   RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR\iconengines"
+  RmDir "$INSTDIR\accessible"
   RMDir "$INSTDIR\platforms"
   RMDir "$INSTDIR\bearer"
   RMDir "$INSTDIR"
