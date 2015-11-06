@@ -864,6 +864,22 @@ void MegaApplication::start()
         trayIcon->setContextMenu(initialMenu);
     }
 
+#ifndef __APPLE__
+    #ifdef _WIN32
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
+    #else
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+    #endif
+#else
+    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
+                      QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+
+    if (!scanningTimer->isActive())
+    {
+        scanningAnimationIndex = 1;
+        scanningTimer->start();
+    }
+#endif
     trayIcon->setToolTip(QCoreApplication::applicationName() + QString::fromAscii(" ") + Preferences::VERSION_STRING + QString::fromAscii("\n") + tr("Logging in"));
     trayIcon->show();
 
