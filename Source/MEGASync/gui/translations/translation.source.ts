@@ -539,6 +539,14 @@ Are you sure?</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
         <translation>[$1931]</translation>
     </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">[$1647]</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">[$1646]</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -576,6 +584,10 @@ Are you sure?</source>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
         <translation type="unfinished">[$1608]</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">[$1646]</translation>
     </message>
 </context>
 <context>
