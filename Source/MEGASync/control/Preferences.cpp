@@ -35,8 +35,8 @@ const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
-const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 30000;
-const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 5000;
+const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
+const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 
 const qint16 Preferences::HTTPS_PORT = 6342;
