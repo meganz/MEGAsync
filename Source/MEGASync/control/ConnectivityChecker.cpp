@@ -15,7 +15,7 @@ ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
 
     this->testURL = testURL;
     this->reply = NULL;
-    timeoutms = 5000;
+    timeoutms = 10000;
 }
 
 void ConnectivityChecker::setProxy(QNetworkProxy proxy)
