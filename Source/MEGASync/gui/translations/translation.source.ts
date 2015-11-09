@@ -1949,6 +1949,30 @@ when the application starts again</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clear local cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to delete your local cache now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear remote cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to delete your remote cache now?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>

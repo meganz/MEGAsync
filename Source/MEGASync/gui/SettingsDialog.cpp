@@ -1779,6 +1779,13 @@ QString SettingsDialog::getFormatString()
 
 void SettingsDialog::on_bClearCache_clicked()
 {
+#if 0 //Strings for the translation system. These lines don't need to be built
+    QT_TR_NOOP("Clear local cache");
+    QT_TR_NOOP("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
+               "Please, check your backup folders to see if you need to rescue something before continuing:");
+    QT_TR_NOOP("Do you want to delete your local cache now?");
+#endif
+
     QtConcurrent::run(deleteCache);
 
     cacheSize = 0;
@@ -1789,6 +1796,13 @@ void SettingsDialog::on_bClearCache_clicked()
 
 void SettingsDialog::on_bClearRemoteCache_clicked()
 {
+#if 0 //Strings for the translation system. These lines don't need to be built
+    QT_TR_NOOP("Clear remote cache");
+    QT_TR_NOOP("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
+               "Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.");
+    QT_TR_NOOP("Do you want to delete your remote cache now?");
+#endif
+
     QtConcurrent::run(deleteRemoteCache, megaApi);
 
     remoteCacheSize = 0;
