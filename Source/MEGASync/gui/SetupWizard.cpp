@@ -33,6 +33,14 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
         .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 
     page_initial();
+
+#if 0 //Strings for the translation system. These lines don't need to be built
+    QT_TR_NOOP("Very Weak");
+    QT_TR_NOOP("Weak");
+    QT_TR_NOOP("Medium");
+    QT_TR_NOOP("Good");
+    QT_TR_NOOP("Strong");
+#endif
 }
 
 SetupWizard::~SetupWizard()
