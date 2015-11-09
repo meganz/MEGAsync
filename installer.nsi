@@ -27,7 +27,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 VIProductVersion "2.3.1.0"
 VIAddVersionKey "FileVersion" "2.3.1.0"
 VIAddVersionKey "ProductVersion" "2.3.1.0"
-!define PRODUCT_VERSION "2.3.1"
+!define PRODUCT_VERSION "2.4.1"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -617,6 +617,14 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\ssleay32.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\ssleay32.dll" "$USERNAME" "GenericRead + GenericWrite"
 
+  File "${SRCDIR_MEGASYNC}\libcurl.dll"
+  AccessControl::SetFileOwner "$INSTDIR\libcurl.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\libcurl.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\cares.dll"
+  AccessControl::SetFileOwner "$INSTDIR\cares.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\cares.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
@@ -828,6 +836,8 @@ Section Uninstall
   Delete "$INSTDIR\MEGAlogger.exe"
   Delete "$INSTDIR\libeay32.dll"
   Delete "$INSTDIR\ssleay32.dll"
+  Delete "$INSTDIR\libcurl.dll"
+  Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
