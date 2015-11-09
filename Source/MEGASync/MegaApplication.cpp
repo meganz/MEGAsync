@@ -92,6 +92,9 @@ void msgHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+    QApplication::setDesktopSettingsAware(false);
+#endif
     MegaApplication app(argc, argv);
 
     qInstallMsgHandler(msgHandler);
