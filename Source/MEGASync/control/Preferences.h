@@ -12,8 +12,6 @@
 
 Q_DECLARE_METATYPE(QList<long long>)
 
-using namespace std;
-
 class Preferences : public QObject
 {
     Q_OBJECT

@@ -23,6 +23,7 @@
 #endif
 
 using namespace mega;
+using namespace std;
 
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();

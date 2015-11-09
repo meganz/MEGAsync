@@ -10,6 +10,7 @@
 #endif
 
 using namespace mega;
+using namespace std;
 
 MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
 {

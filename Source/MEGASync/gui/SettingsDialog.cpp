@@ -24,6 +24,7 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 using namespace mega;
+using namespace std;
 
 long long calculateCacheSize()
 {
