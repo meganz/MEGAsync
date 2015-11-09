@@ -2,6 +2,7 @@
 #include "MEGAService.h"
 
 using namespace mega;
+using namespace std;
 
 MacXSystemServiceTask::MacXSystemServiceTask(MegaApplication *receiver)
 {
