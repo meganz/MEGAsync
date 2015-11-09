@@ -4121,7 +4121,7 @@ void MegaApplication::onUsersUpdate(MegaApi* , MegaUserList *)
 //Called when nodes have been updated in MEGA
 void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 {
-    if (!infoDialog)
+    if (!infoDialog || !nodes)
     {
         return;
     }
@@ -4129,13 +4129,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     bool externalNodes = 0;
     bool nodesRemoved = false;
     long long usedStorage = preferences->usedStorage();
-
-    //If this is a full reload, return
-    if (!nodes)
-    {
-        return;
-    }
-
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
