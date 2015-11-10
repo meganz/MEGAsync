@@ -2758,17 +2758,17 @@ void MegaApplication::onUpdateCompleted()
 
     if (trayMenu)
     {
-        updateAction->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
+        updateAction->setText(tr("About MEGAsync"));
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
+        updateActionOverquota->setText(tr("About MEGAsync"));
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setText(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName());
+        updateActionGuest->setText(tr("About MEGAsync"));
     }
 
     updateAvailable = false;
@@ -3155,7 +3155,7 @@ void MegaApplication::createTrayMenu()
     }
     else
     {
-        updateAction = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
+        updateAction = new QAction(tr("About MEGAsync"), this);
 #ifndef __APPLE__
         updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
@@ -3247,7 +3247,7 @@ void MegaApplication::createOverQuotaMenu()
     }
     else
     {
-        updateActionOverquota = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
+        updateActionOverquota = new QAction(tr("About MEGAsync"), this);
 
 #ifndef __APPLE__
         updateActionOverquota->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
@@ -3310,7 +3310,7 @@ void MegaApplication::createGuestMenu()
     }
     else
     {
-        updateActionGuest = new QAction(tr("About") + QString::fromUtf8(" ") + QCoreApplication::applicationName(), this);
+        updateActionGuest = new QAction(tr("About MEGAsync"), this);
 #ifndef __APPLE__
         updateActionGuest->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateActionGuest->setIconVisibleInMenu(true);
