@@ -1211,6 +1211,8 @@ bool SettingsDialog::saveSettings()
                                                                             "when the application starts again"), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
+
+            QT_TR_NOOP("Do you want to restart MEGAsync now?");
         }
 
         if (sizeLimitsChanged)
