@@ -7,6 +7,7 @@
 #include "MegaApplication.h"
 
 using namespace mega;
+using namespace std;
 
 #if defined(Q_OS_MAC)
 #include "client/mac/handler/exception_handler.h"
