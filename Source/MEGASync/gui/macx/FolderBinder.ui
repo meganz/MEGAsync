@@ -89,6 +89,9 @@ height: 16px;
           <height>28</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>MEGA folder:</string>
         </property>
@@ -135,6 +138,9 @@ height: 16px;
           <height>28</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Local folder:</string>
         </property>
@@ -173,8 +179,10 @@ height: 16px;
   </layout>
  </widget>
  <tabstops>
+  <tabstop>lLocalFolder</tabstop>
   <tabstop>eLocalFolder</tabstop>
   <tabstop>bLocalFolder</tabstop>
+  <tabstop>lMegaFolder</tabstop>
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>

@@ -44,6 +44,9 @@ QPushButton
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string>MEGAsync has detected a problem. These are the details:</string>
      </property>
@@ -61,6 +64,9 @@ QPushButton
    </item>
    <item>
     <widget class="QLabel" name="label_2">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string>You can help us to improve MEGAsync by sending this error report. It doesn't contain any personal information. If you want to give us more details, please write them below:</string>
      </property>

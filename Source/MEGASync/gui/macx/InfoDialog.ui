@@ -264,6 +264,9 @@ padding-left: 1px;
           <height>16777215</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">margin-top:-2px;</string>
         </property>
@@ -727,6 +730,9 @@ color: rgb(102, 102, 102);</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -809,6 +815,9 @@ color: rgb(102, 102, 102);</string>
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
                 <string/>
@@ -917,6 +926,9 @@ color: rgb(102, 102, 102);</string>
              <width>16777215</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">margin-left:1px;</string>
@@ -1171,6 +1183,9 @@ background-color: #F7F7F7;
              <height>20</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">#lTotalUsed
 {
@@ -1207,6 +1222,9 @@ color: #333333;
              <width>16777215</width>
              <height>20</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">#lPercentageUsed
@@ -1438,6 +1456,19 @@ color: #666666;
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lHeader</tabstop>
+  <tabstop>bPause</tabstop>
+  <tabstop>bSettings</tabstop>
+  <tabstop>lRecentlyUpdated</tabstop>
+  <tabstop>cRecentlyUpdated</tabstop>
+  <tabstop>lTotalUsed</tabstop>
+  <tabstop>lPercentageUsed</tabstop>
+  <tabstop>bSyncFolder</tabstop>
+  <tabstop>bOfficialWebIcon</tabstop>
+  <tabstop>bOfficialWeb</tabstop>
+  <tabstop>label</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>
  </resources>

@@ -139,6 +139,9 @@ padding-left: 6px;</string>
        <pointsize>-1</pointsize>
       </font>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -177,6 +180,9 @@ padding-left: 6px;</string>
        <height>28</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">border: none;
 padding-right: -2px;</string>
@@ -201,6 +207,11 @@ padding-right: -2px;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cSelected</tabstop>
+  <tabstop>lImage</tabstop>
+  <tabstop>lName</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>
  </resources>

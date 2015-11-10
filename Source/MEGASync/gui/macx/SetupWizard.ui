@@ -192,6 +192,9 @@ margin-bottom: 9px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">border: none;</string>
          </property>
@@ -230,6 +233,9 @@ margin-bottom: 9px;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="text">
              <string>I have a MEGA account</string>
             </property>
@@ -245,6 +251,9 @@ margin-bottom: 9px;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
              <string>I don't have a MEGA account</string>
@@ -453,6 +462,9 @@ margin-bottom: 9px;
              </item>
              <item>
               <widget class="QLabel" name="lTermsLink">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -534,6 +546,9 @@ margin-bottom: 9px;
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -634,6 +649,9 @@ margin-bottom: 9px;
            <pointsize>-1</pointsize>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="text">
           <string>Please verify your account using the confirmation link that we have sent to your email account</string>
          </property>
@@ -669,6 +687,9 @@ margin-bottom: 9px;
           </property>
           <item>
            <widget class="QLabel" name="lProgress">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -742,6 +763,9 @@ margin-bottom: 9px;
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">font-size:20px;
@@ -906,6 +930,9 @@ border: none;</string>
                     <height>48</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">background: transparent;
 
@@ -947,6 +974,9 @@ color: #333333;
                     <italic>false</italic>
                     <bold>false</bold>
                    </font>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size: 13px;
@@ -1120,6 +1150,9 @@ border: none;</string>
                     <bold>false</bold>
                    </font>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:20px;
 font: &quot;Helvetica&quot;;
@@ -1157,6 +1190,9 @@ color: #333333;
                     <width>16777215</width>
                     <height>32</height>
                    </size>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size: 13px;
@@ -1223,6 +1259,9 @@ color: #666666;
            <bold>false</bold>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
 
@@ -1245,6 +1284,9 @@ color: #666666;
            <italic>false</italic>
            <bold>false</bold>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
@@ -1444,6 +1486,9 @@ font-weight: normal;
            <bold>false</bold>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true"/>
          </property>
@@ -1500,6 +1545,9 @@ font-weight: normal;
        </item>
        <item>
         <widget class="QLabel" name="label_6">
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="text">
           <string>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</string>
          </property>
@@ -1599,12 +1647,28 @@ font-weight: normal;
   <tabstop>ePassword</tabstop>
   <tabstop>eRepeatPassword</tabstop>
   <tabstop>cAgreeWithTerms</tabstop>
+  <tabstop>lTermsLink</tabstop>
+  <tabstop>lLogin</tabstop>
   <tabstop>eLoginEmail</tabstop>
   <tabstop>eLoginPassword</tabstop>
+  <tabstop>lVerify</tabstop>
+  <tabstop>lProgress</tabstop>
+  <tabstop>lSetupType</tabstop>
+  <tabstop>rTypicalSetup</tabstop>
+  <tabstop>lTypicalHeader</tabstop>
+  <tabstop>lTypicalDesc</tabstop>
+  <tabstop>rAdvancedSetup</tabstop>
+  <tabstop>lAdvancedHeader</tabstop>
+  <tabstop>lAdvancedDesc</tabstop>
+  <tabstop>bSkip</tabstop>
+  <tabstop>lAdvancedSetup</tabstop>
+  <tabstop>lAdvancedLabel</tabstop>
   <tabstop>eLocalFolder</tabstop>
   <tabstop>bLocalFolder</tabstop>
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
+  <tabstop>lWelcome</tabstop>
+  <tabstop>label_6</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>

@@ -341,6 +341,16 @@ padding-left: 10px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cDownload</tabstop>
+  <tabstop>eLocalFolder</tabstop>
+  <tabstop>bLocalFolder</tabstop>
+  <tabstop>cImport</tabstop>
+  <tabstop>eMegaFolder</tabstop>
+  <tabstop>bMegaFolder</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bOk</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
