@@ -66,6 +66,9 @@ height: 16px;
        <pointsize>-1</pointsize>
       </font>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string>Select a MEGA folder:</string>
      </property>
@@ -80,7 +83,7 @@ height: 16px;
    <item>
     <widget class="QTreeView" name="tMegaFolders">
      <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
+      <enum>Qt::TabFocus</enum>
      </property>
      <property name="autoExpandDelay">
       <number>-1</number>
@@ -163,7 +166,7 @@ height: 16px;
       <item>
        <widget class="QPushButton" name="bOk">
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::TabFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true"/>

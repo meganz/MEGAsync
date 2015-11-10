@@ -191,6 +191,9 @@
          </property>
          <item>
           <widget class="QLabel" name="lDownloads">
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(102, 102, 102);</string>
            </property>
@@ -212,6 +215,9 @@
              <width>60</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">margin-right: 8px;
@@ -271,6 +277,9 @@ color: rgb(102, 102, 102);</string>
       </property>
       <item>
        <widget class="QLabel" name="lDesc">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>MEGAsync is on guest mode</string>
         </property>
@@ -359,6 +368,14 @@ color: rgb(102, 102, 102);</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lDownloads</tabstop>
+  <tabstop>lRemainingTimeD</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>lDesc</tabstop>
+  <tabstop>bLogin</tabstop>
+  <tabstop>bCreateAccount</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>
  </resources>

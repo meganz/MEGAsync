@@ -144,6 +144,9 @@ border-radius: 5px;
        <height>30</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -185,6 +188,12 @@ border-radius: 5px;
       </item>
       <item>
        <widget class="QLabel" name="lVersion">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
         <property name="text">
          <string notr="true">2.0.1</string>
         </property>
@@ -192,6 +201,12 @@ border-radius: 5px;
       </item>
       <item>
        <widget class="QLabel" name="lSDKVersion">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
         <property name="text">
          <string notr="true">(SDK)</string>
         </property>
@@ -333,6 +348,9 @@ border-radius: 5px;
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string notr="true">&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
@@ -343,6 +361,15 @@ border-radius: 5px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>lMEGAsync</tabstop>
+  <tabstop>lVersion</tabstop>
+  <tabstop>lSDKVersion</tabstop>
+  <tabstop>tChangelog</tabstop>
+  <tabstop>bTerms</tabstop>
+  <tabstop>bPolicy</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_linux.qrc"/>
  </resources>

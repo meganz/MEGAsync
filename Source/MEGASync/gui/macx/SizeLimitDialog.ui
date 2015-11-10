@@ -306,6 +306,16 @@ height: 24px;
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cExcludeUpperThan</tabstop>
+  <tabstop>eUpperThan</tabstop>
+  <tabstop>cbExcludeUpperUnit</tabstop>
+  <tabstop>cExcludeLowerThan</tabstop>
+  <tabstop>eLowerThan</tabstop>
+  <tabstop>cbExcludeLowerUnit</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bOK</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -70,6 +70,9 @@ margin-left: 5px;
    </property>
    <item>
     <widget class="QLabel" name="lHeader">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="text">
       <string>Enter one or multiple MEGA file links</string>
      </property>

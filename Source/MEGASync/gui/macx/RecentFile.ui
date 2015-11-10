@@ -70,6 +70,9 @@
        <height>48</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">border: none;
 padding-left: 16px;</string>
@@ -141,6 +144,9 @@ padding-left: 16px;</string>
           <height>16777215</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">#lFileName
 {
@@ -158,6 +164,9 @@ color: #333333;
       </item>
       <item>
        <widget class="QLabel" name="lTime">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">#lTime
 {
@@ -242,6 +251,9 @@ color: #666666;
          </size>
         </property>
         <property name="toolTip">
+         <string>Get MEGA link</string>
+        </property>
+        <property name="accessibleName">
          <string>Get MEGA link</string>
         </property>
         <property name="styleSheet">
