@@ -679,7 +679,7 @@ Exit anyway?</source>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation type="obsolete">[$1640]</translation>
+        <translation type="unfinished">[$1640]</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
@@ -709,7 +709,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation>[$1645]</translation>
+        <translation type="obsolete">[$1645]</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1977,6 +1977,10 @@ when the application starts again</source>
     <message>
         <source>Do you want to delete your remote cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to restart MEGAsync now?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
