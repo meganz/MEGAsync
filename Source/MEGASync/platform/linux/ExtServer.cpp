@@ -5,6 +5,7 @@
 #include "control/Utilities.h"
 
 using namespace mega;
+using namespace std;
 
 ExtServer::ExtServer(MegaApplication *app): QObject(),
     m_localServer(0)
