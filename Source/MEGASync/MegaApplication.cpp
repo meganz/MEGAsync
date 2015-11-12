@@ -330,6 +330,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
          {
              logger->sendLogsToStdout(true);
              MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+         } else if (!strcmp("--version", argv[1]))
+         {
+            QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
+            ::exit(0);
          }
     }
 #endif
@@ -1568,7 +1572,7 @@ void MegaApplication::onInstallUpdateClicked()
 }
 
 void MegaApplication::showInfoDialog()
-{    
+{
     if (isLinux && showStatusAction && megaApi)
     {
         megaApi->retryPendingConnections();
@@ -2600,7 +2604,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
 
 //Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
-{    
+{
     if (appfinished || !megaApi->isLoggedIn())
     {
         return;
@@ -3016,7 +3020,7 @@ void MegaApplication::changeProxy()
     }
 
     if (settingsDialog)
-    {            
+    {
         settingsDialog->setProxyOnly(proxyOnly);
 
         //If the dialog is active
@@ -3170,7 +3174,7 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(downloadAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
-    trayMenu->addAction(exitAction); 
+    trayMenu->addAction(exitAction);
 }
 
 void MegaApplication::createOverQuotaMenu()
