@@ -23,6 +23,10 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
     ui->bOk->setDefault(true);
 
     nodesReady();
+
+#ifdef 0
+    QT_TR_NOOP("Are you sure that you want to delete \"%1\"?");
+#endif
 }
 
 NodeSelector::~NodeSelector()
