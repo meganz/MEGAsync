@@ -149,6 +149,8 @@ public slots:
     void userAction(int action);
     void changeState();
     void showUpdatedMessage();
+    void handleMEGAurl(const QUrl &url);
+    void handleLocalPath(const QUrl &url);
 
 protected:
     void createTrayIcon();
