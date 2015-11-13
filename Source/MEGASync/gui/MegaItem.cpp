@@ -82,6 +82,30 @@ int MegaItem::insertPosition(MegaNode *node)
 void MegaItem::insertNode(MegaNode *node, int index)
 {
     childItems.insert(index, new MegaItem(node, this, showFiles));
+    insertedNodes.append(node);
+}
+
+void MegaItem::removeNode(MegaNode *node)
+{
+    for (int i = 0; i < childItems.size(); i++)
+    {
+        if (childItems[i]->getNode()->getHandle() == node->getHandle())
+        {
+            delete childItems[i];
+            childItems.removeAt(i);
+            break;
+        }
+    }
+
+    for (int i = 0; i < insertedNodes.size(); i++)
+    {
+        if (insertedNodes[i]->getHandle() == node->getHandle())
+        {
+            delete insertedNodes[i];
+            insertedNodes.removeAt(i);
+            break;
+        }
+    }
 }
 
 void MegaItem::displayFiles(bool enable)
@@ -93,5 +117,6 @@ MegaItem::~MegaItem()
 {
     delete children;
     qDeleteAll(childItems);
+    qDeleteAll(insertedNodes);
 }
 
