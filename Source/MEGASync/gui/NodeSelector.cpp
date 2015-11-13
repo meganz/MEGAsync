@@ -204,7 +204,9 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     {
         if(e->getErrorCode() == MegaError::API_OK)
         {
+            MegaNode *parent = model->getNode(selectedItem.parent());
             model->removeNode(selectedItem);
+            setSelectedFolderHandle(parent->getHandle());
         }
     }
 
