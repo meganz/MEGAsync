@@ -24,7 +24,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 
     nodesReady();
 
-#ifdef 0
+#if 0
     QT_TR_NOOP("Are you sure that you want to delete \"%1\"?");
 #endif
 }
