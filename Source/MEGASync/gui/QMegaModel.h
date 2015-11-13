@@ -22,6 +22,8 @@ public:
     void setRequiredRights(int requiredRights);
     void showFiles(bool show);
     QModelIndex insertNode(mega::MegaNode *node, const QModelIndex &parent);
+    void removeNode(QModelIndex &item);
+
     mega::MegaNode *getNode(const QModelIndex &index);
 
     virtual ~QMegaModel();

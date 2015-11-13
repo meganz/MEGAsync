@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QPointer>
+#include <QMenu>
 #include "control/Utilities.h"
 
 
@@ -24,9 +25,8 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 
     nodesReady();
 
-#if 0
-    QT_TR_NOOP("Are you sure that you want to delete \"%1\"?");
-#endif
+    ui->tMegaFolders->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tMegaFolders, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
 }
 
 NodeSelector::~NodeSelector()
@@ -181,22 +181,72 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     ui->bNewFolder->setEnabled(true);
-    if (e->getErrorCode() == MegaError::API_OK)
+
+    if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
     {
-        MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
-        if (node)
+        if (e->getErrorCode() == MegaError::API_OK)
         {
-            QModelIndex row = model->insertNode(node, selectedItem);
-            setSelectedFolderHandle(node->getHandle());
-            ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
-            ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
+            MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
+            if (node)
+            {
+                QModelIndex row = model->insertNode(node, selectedItem);
+                setSelectedFolderHandle(node->getHandle());
+                ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
+                ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
+            }
+        }
+        else
+        {
+            QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         }
     }
-    else
+    else if (request->getType() == MegaRequest::TYPE_REMOVE)
     {
-        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        if(e->getErrorCode() == MegaError::API_OK)
+        {
+            model->removeNode(selectedItem);
+        }
     }
+
     ui->tMegaFolders->setEnabled(true);
+}
+
+void NodeSelector::onCustomContextMenu(const QPoint &point)
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    MegaNode *parent = megaApi->getParentNode(node);
+
+    if (parent && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
+    {
+        QMenu customMenu;
+        customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
+        customMenu.exec(ui->tMegaFolders->mapToGlobal(point));
+    }
+
+    delete parent;
+    delete node;
+}
+
+void NodeSelector::onDeleteClicked()
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    if(!node || megaApi->getAccess(node) < MegaShare::ACCESS_FULL)
+    {
+        delete node;
+        return;
+    }
+
+    if(QMessageBox::question(this,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure that you want to delete \"%1\"?")
+                                .arg(QString::fromUtf8(node->getName())),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    {
+        ui->tMegaFolders->setEnabled(false);
+        ui->bNewFolder->setEnabled(false);
+        megaApi->remove(node, delegateListener);
+    }
+    delete node;
 }
 
 void NodeSelector::changeEvent(QEvent *event)

@@ -166,10 +166,20 @@ QModelIndex QMegaModel::insertNode(MegaNode *node, const QModelIndex &parent)
 
     beginInsertRows(parent, index, index);
     item->insertNode(node, index);
-    ownNodes.append(node);
     endInsertRows();
 
     return this->index(index, 0, parent);
+}
+
+void QMegaModel::removeNode(QModelIndex &item)
+{
+    MegaNode *node = ((MegaItem *)item.internalPointer())->getNode();
+    MegaItem *parent = (MegaItem *)item.parent().internalPointer();
+    int index = parent->indexOf((MegaItem *)item.internalPointer());
+
+    beginRemoveRows(item.parent(), index, index);
+    parent->removeNode(node);
+    endRemoveRows();
 }
 
 MegaNode *QMegaModel::getNode(const QModelIndex &index)
