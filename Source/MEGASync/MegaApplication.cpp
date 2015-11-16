@@ -2088,18 +2088,15 @@ void MegaApplication::showUpdatedMessage()
 {
     updated = true;
 }
+
 void MegaApplication::handleMEGAurl(const QUrl &url)
 {
     megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
 }
+
 void MegaApplication::handleLocalPath(const QUrl &url)
 {
-    #ifndef __APPLE__
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(url.fragment() + QString::fromUtf8("/Rubbish")));
-    #else
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(url.fragment() + QString::fromUtf8("/.debris")));
-    #endif
-
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
 }
 
 void MegaApplication::updateUserStats()
