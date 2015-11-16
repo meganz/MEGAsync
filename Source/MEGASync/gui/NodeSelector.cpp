@@ -218,7 +218,7 @@ void NodeSelector::onCustomContextMenu(const QPoint &point)
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     MegaNode *parent = megaApi->getParentNode(node);
 
-    if (parent && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
+    if (parent && node && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
     {
         QMenu customMenu;
         customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
@@ -263,8 +263,16 @@ void NodeSelector::changeEvent(QEvent *event)
 
 void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 {
-    selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
-    selectedFolder =  model->getNode(selectedItem)->getHandle();
+    if (ui->tMegaFolders->selectionModel()->selectedIndexes().size())
+    {
+        selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
+        selectedFolder =  model->getNode(selectedItem)->getHandle();
+    }
+    else
+    {
+        selectedItem = QModelIndex();
+        selectedFolder = mega::INVALID_HANDLE;
+    }
 }
 
 void NodeSelector::on_bNewFolder_clicked()
@@ -285,6 +293,12 @@ void NodeSelector::on_bNewFolder_clicked()
     if (!text.isEmpty())
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
+        if (!parent)
+        {
+            parent = megaApi->getRootNode();
+            selectedItem = QModelIndex();
+        }
+
         MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
         if (!node || node->isFile())
         {
@@ -321,6 +335,12 @@ void NodeSelector::on_bNewFolder_clicked()
 void NodeSelector::on_bOk_clicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    if (!node)
+    {
+        reject();
+        return;
+    }
+
     int access = megaApi->getAccess(node);
     if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
