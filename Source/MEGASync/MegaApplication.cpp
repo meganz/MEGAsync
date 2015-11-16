@@ -643,7 +643,10 @@ void MegaApplication::changeLanguage(QString languageCode)
     QTranslator *newTranslator = new QTranslator();
     if (newTranslator->load(Preferences::TRANSLATION_FOLDER
                             + Preferences::TRANSLATION_PREFIX
-                            + languageCode))
+                            + languageCode)
+            || newTranslator->load(Preferences::TRANSLATION_FOLDER
+                                   + Preferences::TRANSLATION_PREFIX
+                                   + QString::fromUtf8("en")))
     {
         installTranslator(newTranslator);
         translator = newTranslator;

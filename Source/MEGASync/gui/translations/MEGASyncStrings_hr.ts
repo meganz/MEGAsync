@@ -102,7 +102,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another syncPlease enter a different name to identify this synced folder:</translation>
+        <translation>Naziv &quot;%1&quot; se već koristi za drugu sinkronizacijuMolimo unesite drugi naziv kako bi identificirali ovu sinkroniziranu mapu:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -132,6 +132,24 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ChangeLogDialog</name>
+    <message>
+        <source>Terms of Service</source>
+        <translatorcomment>Label for Terms of Service link.</translatorcomment>
+        <translation type="unfinished">uvjetima usluge</translation>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translatorcomment>Label for Privacy Policy link.</translatorcomment>
+        <translation type="unfinished">Izjava o privatnosti</translation>
+    </message>
+    <message>
+        <source>New in this version:</source>
+        <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
+        <translation type="unfinished">New in this version:</translation>
+    </message>
+</context>
+<context>
     <name>CrashReportDialog</name>
     <message>
         <source>Error report</source>
@@ -144,7 +162,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync je otkrio problem. Ovo su detalji:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Možete nam pomoći da unaprijedimo MEGAsync tako što ćete nam poslati ovo izvješće o pogreškama. Ono ne sadrži nikakve privatne informacije. Ako nam želite dati još detalja, molimo upišite ih ispod:</translation>
     </message>
@@ -207,8 +225,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Greška</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
 </context>
@@ -240,12 +258,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
+        <source>You don&#039;t have write permissions in this folder.</source>
         <translation type="obsolete">Nemate dopuštenje da zapisujete u ovu mapu.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync neće biti u mogućnosti preuzeti tu.</translation>
     </message>
     <message>
@@ -254,8 +272,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Da li želite nastaviti?</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
     <message>
@@ -271,7 +289,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
+        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation type="unfinished">Ne možete sinkronizirati dijeljenu mapu bez dozvole za Potpuni pristup</translation>
+    </message>
+</context>
+<context>
+    <name>GuestWidget</name>
+    <message>
+        <source>MEGAsync is on guest mode</source>
+        <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
+        <translation type="unfinished">MEGAsync is in guest mode</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Prijava</translation>
+    </message>
+    <message>
+        <source>Create an account</source>
+        <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">kreiraj račun</translation>
+    </message>
+    <message>
+        <source>Cancel all downloads</source>
+        <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
+        <translation type="unfinished">Otkaži sva preuzimanja</translation>
+    </message>
+    <message>
+        <source>Cancel download</source>
+        <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
+        <translation type="unfinished">Otkaži preuzimanje</translation>
+    </message>
+</context>
+<context>
+    <name>HTTPServer</name>
+    <message>
+        <source>Your download has started</source>
+        <translatorcomment>Notification shown when a web download is started.</translatorcomment>
+        <translation type="unfinished">Your download has started</translation>
     </message>
 </context>
 <context>
@@ -322,7 +377,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
         <translation>Nije nađeno</translation>
     </message>
     <message>
@@ -344,6 +399,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Choose</source>
+        <translatorcomment>Label button for Choose action</translatorcomment>
         <translation>Odaberi</translation>
     </message>
     <message>
@@ -351,7 +407,8 @@ Are you sure?</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
 </context>
@@ -482,36 +539,55 @@ Are you sure?</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
         <translation>MEGAsync počinje</translation>
     </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">Pauza</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Postavke</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
     <message>
         <source>MEGAsync is currently disabled</source>
+        <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
         <translation type="unfinished">MEGAsync je trenutno onemogućen</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
         <translation type="unfinished">Vaš račun prelazi dozvoljenu kvotu. [A]Nadogradite[/A]i nastavite uživati sigurno, end-to-end enkriptirano spremište.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
+        <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
         <translation type="unfinished">Nadogradite Vaš račun</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
+        <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
         <translation type="unfinished">Potrošnja:Podatak privremeno nedostupan</translation>
     </message>
     <message>
         <source>MEGA website</source>
+        <translatorcomment>Label to MEGA website link</translatorcomment>
         <translation type="unfinished">MEGA web stranica</translation>
     </message>
     <message>
         <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the current amount of account usage.over the total actual plan.  Keep %1 and %2 codes.</translatorcomment>
         <translation type="unfinished">%1 od %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
+        <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
         <translation type="unfinished">Potrošnja: %1</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Postavke</translation>
     </message>
 </context>
 <context>
@@ -529,7 +605,7 @@ Are you sure?</source>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Odaberite da li želite instalirati $(^NameDA) samo za sebe ili za sve korisnike na računalu. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -564,7 +640,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
+because the remote folder doesn&#039;t exist</source>
         <translation type="obsolete">Vaša sinkronizacija &quot;%1&quot; je onemogućena zbog toga što udaljena mapa ne postoji</translation>
     </message>
     <message>
@@ -574,7 +650,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
+because the local folder doesn&#039;t exist</source>
         <translation type="obsolete">Vaš sync &quot;%1&quot; je otkazan zato što lokalna mapa ne postoji</translation>
     </message>
     <message>
@@ -583,11 +659,11 @@ because the local folder doesn&apos;t exist</source>
         <translation>Greška: Neispravna odredišna mapa. Upload je otkazan</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">Mapa (%1) nije uploadana zbog toga jer je prevelika (ova beta je limitirna na %2 mapa ili %3 datoteka).</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 mapa nisu uploadane zato jer su prevelike (ova beta je limitirna na %2 mapa ili %3 datoteka).</translation>
     </message>
     <message>
@@ -600,12 +676,12 @@ Exit anyway?</source>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation>O MEGAsyncu</translation>
+        <translation type="unfinished">O MEGAsyncu</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
         <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
-        <translation>MEGAsync verzija koda %1</translation>
+        <translation type="obsolete">MEGAsync verzija koda %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -630,7 +706,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation>O</translation>
+        <translation type="obsolete">O</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -652,7 +728,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
         <translation>Ažurirano</translation>
     </message>
     <message>
@@ -691,11 +767,11 @@ Exit anyway?</source>
         <translation>Na čekanju</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Mapa (%1) nije uploadana iz razloga jer je ekstremno velika. Radimo ovu provjeru kako bi spriječili uploadanje cijelih driveova, što je neefikasno i opasno.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 mapa nije uploadano iz razloga jer su ekstremno velike. Radimo ovu provjeru kako bi spriječili uploadanje cijelih driveova, što je neefikasno i opasno.</translation>
     </message>
     <message>
@@ -732,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.co.nz/#sync</translation>
+        <translation>Pojavio se problem prilikom instaliranja nadogradnje. Molimo pokušajte ponovno ili preuzmite najnoviju verziju sa: https://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -770,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Unable to get the filesystem.Please, try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Nemogućnost dohvaćanja datotečnog sustava.Molimo, pokušajte ponovno. Ako se problem nastavi kontaktirajte bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -832,19 +908,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync nije u mogućnosti spojiti se. Molimo provjerite svoju internetsku vezu i lokalnu konfiguraciju firewalla. Napomena - većina antivirusnih programa sadrži firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Vaš sync &quot;%1&quot; je otkazan zato što udaljena mapa ne postoji</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
+        <translation type="unfinished">Vaša sinkronizacija %1 je onemogućena jer lokalan mapa ne postoji</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
+        <translation type="unfinished">Vaš račun je blokiran. Molimo kontktirajte support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -854,12 +930,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation type="unfinished">You have been logged out on this computer from another location</translation>
+        <translation type="unfinished">Odjavljeni ste sa ovog računala sa druge lokacije</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation type="unfinished">You have been logged out because of this error: %1</translation>
+        <translation type="unfinished">Odjavljeni ste zbog ove greške: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -869,32 +945,67 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
+        <translation type="unfinished">Vaša sinkronizacija %1 je onemogućena jer je lokalna mapa promjenjena</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
+        <translation type="unfinished">Vaša sinkronizacija %1 je onemogućena. Udaljena mapa (ili dio nje) nema potpuni pristup</translation>
     </message>
     <message>
         <source>Over quota</source>
+        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
         <translation type="unfinished">Kvota prevaziđena</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
+        <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">Vaša sinkronizacija &quot;%1&quot; je otkazana iz razloga što sinkronizacija sa VirtualBox dijeljenih mapa nije podržana zbog neispravnosti datotečnog sistema.</translation>
     </message>
     <message>
         <source>Logout</source>
+        <translatorcomment>Label to indicate Logout action</translatorcomment>
         <translation type="unfinished">Odjava</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
+        <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
         <translation type="unfinished">Prijenos neuspješan:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
+        <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
         <translation type="unfinished">Pogreška pri dobivanju informacije o linku</translation>
+    </message>
+    <message>
+        <source>DEBUG mode disabled</source>
+        <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
+        <translation type="unfinished">DEBUG mode disabled</translation>
+    </message>
+    <message>
+        <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
+        <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
+        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+    </message>
+    <message>
+        <source>Error: Invalid destination folder. The download has been cancelled</source>
+        <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
+        <translation type="unfinished">Error: Invalid destination folder. The download has been cancelled.</translation>
+    </message>
+    <message>
+        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
+        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+    </message>
+    <message>
+        <source>No Internet connection</source>
+        <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
+        <translation type="unfinished">No Internet connection</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Label to indicate Login action</translatorcomment>
+        <translation type="unfinished">Prijava</translation>
     </message>
 </context>
 <context>
@@ -907,7 +1018,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Unutarnja pogreška</translation>
+        <translation>Interna pogrška</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1037,7 +1148,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">The destination folder is synced and you already have a file inside it with the same name (%1).If you continue the upload, the previous file will be overwritten.Are you sure?</translation>
+        <translation type="obsolete">Odredišna mapa je sinkronizirana i već imate datoteku unutar nje sa istim nazivom (%1).Ako nastavite sa uploadom. prijašnja datoteka biti će prepisana.Da li ste sigurni?</translation>
     </message>
 </context>
 <context>
@@ -1048,18 +1159,22 @@ Are you sure?</source>
     </message>
     <message>
         <source>Do not ask me again</source>
+        <translatorcomment>Check box label to remember the option of a user.</translatorcomment>
         <translation type="unfinished">Ne pitaj me ponovno</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
         <translation type="unfinished">Otkaži</translation>
     </message>
     <message>
         <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
         <translation type="unfinished">U redu</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
+        <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
         <translation type="unfinished">Odredišna mapa je sinkronizirana i već imate datoteku unutar nje sa istim nazivom. Ako nastavite sa uploadom, prijašnja datoteka biti će prepisana. Da li ste sigurni?</translation>
     </message>
 </context>
@@ -1078,7 +1193,7 @@ Are you sure?</source>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation>Dohvaćanje mapa...</translation>
+        <translation type="obsolete">Dohvaćanje mapa...</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -1098,7 +1213,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation>&quot;Cloud&quot; pogon</translation>
+        <translation type="obsolete">&quot;Cloud&quot; pogon</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1111,10 +1226,10 @@ Are you sure?</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&#039;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation>The root folder can&apos;t be synced.Please, select a subfolder.</translation>
+        <translation type="obsolete">Root mapa ne može biti sinkronizirana.Molimo da odaberete podmapu.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1128,9 +1243,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Neispravna mapa za sinkrnonizaciju.Molimo provjerite kako niste koristili znakove kao &apos;&apos; &apos;/&apos; ili &apos;:&apos; za nazive mapa.</translation>
+Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
+        <translation>Neispravna mapa za sinkrnonizaciju.Molimo provjerite kako niste koristili znakove kao &#039;&#039; &#039;/&#039; ili &#039;:&#039; za nazive mapa.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1139,11 +1254,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
         <translation type="unfinished">Trebate imati Čitaj i Piši ili Potpuni pristup kako bi mogli uploadati u odabranu mapu.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
+        <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
         <translation type="unfinished">Trebate prava za Potpuni pristup kako bi bili u mogućnosti sinkronizirati određenu mapu.</translation>
+    </message>
+    <message>
+        <source>Please enter a valid folder name</source>
+        <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
+        <translation type="unfinished">Please enter a valid folder name</translation>
     </message>
 </context>
 <context>
@@ -1179,7 +1301,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Unesite jedan ili više MEGA datotečnih linkova</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>Valjani MEGA linkovi nisu pronađeni. (Linkovi za mape još nisu podržani)</translation>
     </message>
@@ -1359,7 +1481,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation>Engleski</translation>
+        <translation type="obsolete">Jezik aplikacije</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1416,7 +1538,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Limitiranje stope uploada</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&#039;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Nemoj ograničiti</translation>
     </message>
@@ -1456,7 +1578,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation>Isključena imena datoteka</translation>
+        <translation type="obsolete">Isključena imena datoteka</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
@@ -1491,7 +1613,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>:</source>
         <translatorcomment>Label to indicate colon to separate IP and Port to be used.</translatorcomment>
-        <translation>:</translation>
+        <translation type="obsolete">:</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -1603,7 +1725,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Vaše proxy postavke su pogrešne ili proxy ne reagira</translation>
     </message>
@@ -1689,7 +1811,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation>Prikaži Mac OS notifikacije</translation>
+        <translation type="obsolete">Prikaži Mac OS notifikacije</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -1719,14 +1841,14 @@ Do you want to restart MEGAsync now?</source>
         <translation>Preuzimanja:</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Ova sinkronizacija neće biti moguća jer ne postoji lokalna mapa</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
+        <translation>Ova sinkronizacija ne može biti omogućena zbog toga što udaljena mapa ne postoji</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -1740,10 +1862,10 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
-        <translation>Odaberite lokalnu mapu</translation>
+        <translation type="obsolete">Odaberite lokalnu mapu</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
@@ -1760,7 +1882,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Unable to write file</source>
         <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
-        <translation type="unfinished">Unable to write file</translation>
+        <translation type="unfinished">Nemogućnost zapisa datoteke</translation>
     </message>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
@@ -1786,12 +1908,12 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">The new excluded file names will be taken into accountwhen the application starts again</translation>
+        <translation type="unfinished">Nova izuzeta imena datoteka biti će unesena na račun sljedeći puta kad se aplikacija pokrene.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
         <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">The new excluded file sizes will be taken into account when the application starts again.</translation>
+        <translation type="unfinished">Nove izuzete veličine datoteka biti će unesene na račun sljedeći puta kada se aplikacija pokrene.</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1800,11 +1922,52 @@ when the application starts again</source>
     </message>
     <message>
         <source>Local cache: %1</source>
+        <translatorcomment>Label to indicate the user the total size of local cache. Keep %1 code, will be filled at runtime.</translatorcomment>
         <translation type="unfinished">Lokalni cache: %1</translation>
     </message>
     <message>
         <source>Remote cache: %1</source>
+        <translatorcomment>Label to indicate the user the total size of remote cache. Keep %1 code, will be filled at runtime.</translatorcomment>
         <translation type="unfinished">Udaljeni cache: %1</translation>
+    </message>
+    <message>
+        <source>Excluded file and folder names</source>
+        <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
+        <translation type="unfinished">Excluded file and folder names</translation>
+    </message>
+    <message>
+        <source>Clear local cache</source>
+        <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
+        <translation type="unfinished">Clear local cache</translation>
+    </message>
+    <message>
+        <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
+        <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
+        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+    </message>
+    <message>
+        <source>Do you want to delete your local cache now?</source>
+        <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
+        <translation type="unfinished">Do you want to delete your local cache now?</translation>
+    </message>
+    <message>
+        <source>Clear remote cache</source>
+        <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
+        <translation type="unfinished">Clear remote cache</translation>
+    </message>
+    <message>
+        <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
+        <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
+        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+    </message>
+    <message>
+        <source>Do you want to delete your remote cache now?</source>
+        <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
+        <translation type="unfinished">Do you want to delete your remote cache now?</translation>
+    </message>
+    <message>
+        <source>Do you want to restart MEGAsync now?</source>
+        <translation type="unfinished">Želite li ponovno pokrenuti MEGAsync sada?</translation>
     </message>
 </context>
 <context>
@@ -1820,8 +1983,8 @@ when the application starts again</source>
         <translation>Imam MEGA račun</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&#039;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Nemam MEGA račun</translation>
     </message>
     <message>
@@ -1852,7 +2015,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Slažem se sa MEGA-inim &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Uvjetima pružanja usluge&lt;/a&gt;</translation>
+        <translation>Slažem se sa MEGA-inim &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Uvjetima pružanja usluge&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -1971,7 +2134,7 @@ when the application starts again</source>
         <translation>Da li ste potvrdili Vaš račun?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&#039;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA mapa ne postoji</translation>
     </message>
@@ -2006,14 +2169,14 @@ when the application starts again</source>
         <translation>Molimo, unesite jaču lozinku</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&#039;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Unešene lozinke se ne podudaraju</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Morate prihvatiti uvjete korištenja usluge</translation>
+        <translation>Morate prihvatiti Uvijete pružanja usluge.</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2070,7 +2233,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem.Please, try again. If the problem persists please contact bug@mega.co.nz</translation>
+        <translation>Nemogućnost dohvaćanja datotečnog sustava.Molimo, pokušajte ponovno. Ako se problem nastavi kontaktirajte bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2080,7 +2243,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting session key</source>
         <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
-        <translation>Greška pri dohvaćanju ključa sesije</translation>
+        <translation type="obsolete">Greška pri dohvaćanju ključa sesije</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -2098,12 +2261,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Vaš Cloud pogon biti će sinkroniziran sa ovom mapom:</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Nemate dopuštenje da zapisujete u ovu lokalnu mapu.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&#039;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync neće biti u mogućnosti preuzeti tu.</translation>
     </message>
@@ -2115,7 +2278,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
+        <translation type="unfinished">Vaš račun je blokiran. Molimo kontktirajte support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2123,7 +2286,48 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
+        <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
         <translation type="unfinished">Da li ste sigurni da želite prekinuti čarobnjaka i povratiti sve promjene?</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
+        <translation type="unfinished">Preskočite</translation>
+    </message>
+    <message>
+        <source>Creating folder...</source>
+        <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
+        <translation type="unfinished">Kreiranje mape...</translation>
+    </message>
+    <message>
+        <source>Logging out...</source>
+        <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
+        <translation type="unfinished">Odjavljivanje...</translation>
+    </message>
+    <message>
+        <source>Very Weak</source>
+        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
+        <translation type="unfinished">Jako slabo</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
+        <translation type="unfinished">Slabo</translation>
+    </message>
+    <message>
+        <source>Medium</source>
+        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
+        <translation type="unfinished">Srednje</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
+        <translation type="unfinished">Dobro</translation>
+    </message>
+    <message>
+        <source>Strong</source>
+        <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
+        <translation type="unfinished">Jako</translation>
     </message>
 </context>
 <context>
@@ -2160,6 +2364,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 folder</source>
+        <translatorcomment>Label to indicate one folder.</translatorcomment>
         <translation>1 mapa</translation>
     </message>
     <message>
@@ -2169,12 +2374,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>%1 (%2, %3)</source>
-        <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime.</translatorcomment>
+        <translatorcomment>Keep %1 (%2, %3) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files, 3 folders)</translatorcomment>
         <translation>%1 (%2, %3)</translation>
     </message>
     <message>
         <source>%1 (%2)</source>
-        <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime.</translatorcomment>
+        <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
 </context>
@@ -2275,12 +2480,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Dolazna dijeljenja</translation>
     </message>
     <message>
-        <source> Rubbish Bin</source>
-        <translation type="unfinished">Koš za smeće</translation>
-    </message>
-    <message>
         <source>Cloud Drive</source>
         <translation type="unfinished">&quot;Cloud&quot; pogon</translation>
+    </message>
+    <message>
+        <source>Rubbish Bin</source>
+        <translation type="unfinished">Koš za smeće</translation>
     </message>
 </context>
 <context>
