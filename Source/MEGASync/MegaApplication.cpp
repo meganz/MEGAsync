@@ -446,6 +446,10 @@ void MegaApplication::initialize()
     isLinux = false;
 #endif
 
+    //Register own url schemes
+    QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
+    QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
+
     //Register metatypes to use them in signals/slots
     qRegisterMetaType<QQueue<QString> >("QQueueQString");
     qRegisterMetaTypeStreamOperators<QQueue<QString> >("QQueueQString");
@@ -2087,6 +2091,16 @@ void MegaApplication::applyProxySettings()
 void MegaApplication::showUpdatedMessage()
 {
     updated = true;
+}
+
+void MegaApplication::handleMEGAurl(const QUrl &url)
+{
+    megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
+}
+
+void MegaApplication::handleLocalPath(const QUrl &url)
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
 }
 
 void MegaApplication::updateUserStats()
