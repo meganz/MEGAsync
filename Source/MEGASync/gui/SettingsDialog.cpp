@@ -4,6 +4,7 @@
 #include <QRect>
 #include <QTranslator>
 #include <QGraphicsDropShadowEffect>
+#include <QMessageBox>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -1781,12 +1782,39 @@ QString SettingsDialog::getFormatString()
 
 void SettingsDialog::on_bClearCache_clicked()
 {
-#if 0 //Strings for the translation system. These lines don't need to be built
-    QT_TR_NOOP("Clear local cache");
-    QT_TR_NOOP("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
-               "Please, check your backup folders to see if you need to rescue something before continuing:");
-    QT_TR_NOOP("Do you want to delete your local cache now?");
+    QString syncs;
+    int numFolders = preferences->getNumSyncedFolders();
+    for (int i = 0; i < numFolders; i++)
+    {
+        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
+        if (fi.exists() && fi.isDir())
+        {
+            syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>").arg(fi.absoluteFilePath()).arg(preferences->getSyncName(i));
+        }
+    }
+
+    QPointer<QMessageBox> warningDel = new QMessageBox(this);
+    warningDel->setIcon(QMessageBox::Warning);
+    warningDel->setWindowTitle(tr("Clear local cache"));
+    warningDel->setTextFormat(Qt::RichText);
+
+#if QT_VERSION > 0x050100
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
 #endif
+
+    warningDel->setText(tr("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
+                           "Please, check your backup folders to see if you need to rescue something before continuing:")
+                           + QString::fromUtf8("<br/>") + syncs
+                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your local cache now?"));
+    warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    warningDel->setDefaultButton(QMessageBox::No);
+    int result = warningDel->exec();
+    if (!warningDel || result != QMessageBox::Yes)
+    {
+        delete warningDel;
+        return;
+    }
+    delete warningDel;
 
     QtConcurrent::run(deleteCache);
 
@@ -1798,15 +1826,45 @@ void SettingsDialog::on_bClearCache_clicked()
 
 void SettingsDialog::on_bClearRemoteCache_clicked()
 {
-#if 0 //Strings for the translation system. These lines don't need to be built
-    QT_TR_NOOP("Clear remote cache");
-    QT_TR_NOOP("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
-               "Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.");
-    QT_TR_NOOP("Do you want to delete your remote cache now?");
+    MegaNode *syncDebris = megaApi->getNodeByPath("//bin/SyncDebris");
+    if (!syncDebris)
+    {
+        remoteCacheSize = 0;
+        ui->bClearRemoteCache->hide();
+        ui->lRemoteCacheSize->hide();
+        onClearCache();
+        return;
+    }
+
+    QPointer<QMessageBox> warningDel = new QMessageBox(this);
+    warningDel->setIcon(QMessageBox::Warning);
+    warningDel->setWindowTitle(tr("Clear remote cache"));
+    warningDel->setTextFormat(Qt::RichText);
+
+#if QT_VERSION > 0x050100
+    warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
 #endif
 
-    QtConcurrent::run(deleteRemoteCache, megaApi);
+    char *base64Handle = syncDebris->getBase64Handle();
+    warningDel->setText(tr("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
+                           "Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.")
+                           .replace(QString::fromUtf8("[A]"), tr("<a href=\"mega://#fm/%1\">SyncDebris</a>").arg(QString::fromUtf8(base64Handle)))
+                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote cache now?"));
+    delete [] base64Handle;
 
+    warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    warningDel->setDefaultButton(QMessageBox::No);
+    int result = warningDel->exec();
+    if (!warningDel || result != QMessageBox::Yes)
+    {
+        delete warningDel;
+        delete syncDebris;
+        return;
+    }
+    delete warningDel;
+    delete syncDebris;
+
+    QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
     ui->bClearRemoteCache->hide();
     ui->lRemoteCacheSize->hide();
