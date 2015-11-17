@@ -45,6 +45,8 @@ protected:
 
 public slots:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    void onCustomContextMenu(const QPoint &);
+    void onDeleteClicked();
 
 protected:
     void changeEvent(QEvent * event);
