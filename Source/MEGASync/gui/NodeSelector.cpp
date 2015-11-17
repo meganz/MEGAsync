@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QPointer>
+#include <QMenu>
 #include "control/Utilities.h"
 
 
@@ -24,9 +25,8 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 
     nodesReady();
 
-#if 0
-    QT_TR_NOOP("Are you sure that you want to delete \"%1\"?");
-#endif
+    ui->tMegaFolders->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tMegaFolders, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
 }
 
 NodeSelector::~NodeSelector()
@@ -181,22 +181,97 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     ui->bNewFolder->setEnabled(true);
-    if (e->getErrorCode() == MegaError::API_OK)
-    {
-        MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
-        if (node)
-        {
-            QModelIndex row = model->insertNode(node, selectedItem);
-            setSelectedFolderHandle(node->getHandle());
-            ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
-            ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
-        }
-    }
-    else
+    ui->bOk->setEnabled(true);
+
+    if (e->getErrorCode() != MegaError::API_OK)
     {
         QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        ui->tMegaFolders->setEnabled(true);
+        return;
     }
+
+    if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
+            if (node)
+            {
+                QModelIndex row = model->insertNode(node, selectedItem);
+                setSelectedFolderHandle(node->getHandle());
+                ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
+                ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
+            }
+        }
+        else
+        {
+            QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        }
+    }
+    else if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            MegaNode *parent = model->getNode(selectedItem.parent());
+            model->removeNode(selectedItem);
+            setSelectedFolderHandle(parent->getHandle());
+        }
+    }
+
     ui->tMegaFolders->setEnabled(true);
+}
+
+void NodeSelector::onCustomContextMenu(const QPoint &point)
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    MegaNode *parent = megaApi->getParentNode(node);
+
+    if (parent && node && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
+    {
+        QMenu customMenu;
+        customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
+        customMenu.exec(ui->tMegaFolders->mapToGlobal(point));
+    }
+
+    delete parent;
+    delete node;
+}
+
+void NodeSelector::onDeleteClicked()
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    int access = megaApi->getAccess(node);
+    if(!node || access < MegaShare::ACCESS_FULL)
+    {
+        delete node;
+        return;
+    }
+
+    if(QMessageBox::question(this,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure that you want to delete \"%1\"?")
+                                .arg(QString::fromUtf8(node->getName())),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    {
+        ui->tMegaFolders->setEnabled(false);
+        ui->bNewFolder->setEnabled(false);
+        ui->bOk->setEnabled(false);
+        const char *name = node->getName();
+        if (access == MegaShare::ACCESS_FULL
+                || !strcmp(name, "NO_KEY")
+                || !strcmp(name, "CRYPTO_ERROR")
+                || !strcmp(name, "BLANK"))
+        {
+            megaApi->remove(node, delegateListener);
+        }
+        else
+        {
+            MegaNode *rubbish = megaApi->getRubbishNode();
+            megaApi->moveNode(node, rubbish, delegateListener);
+            delete rubbish;
+        }
+    }
+    delete node;
 }
 
 void NodeSelector::changeEvent(QEvent *event)
@@ -211,8 +286,16 @@ void NodeSelector::changeEvent(QEvent *event)
 
 void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 {
-    selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
-    selectedFolder =  model->getNode(selectedItem)->getHandle();
+    if (ui->tMegaFolders->selectionModel()->selectedIndexes().size())
+    {
+        selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
+        selectedFolder =  model->getNode(selectedItem)->getHandle();
+    }
+    else
+    {
+        selectedItem = QModelIndex();
+        selectedFolder = mega::INVALID_HANDLE;
+    }
 }
 
 void NodeSelector::on_bNewFolder_clicked()
@@ -233,10 +316,18 @@ void NodeSelector::on_bNewFolder_clicked()
     if (!text.isEmpty())
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
+        if (!parent)
+        {
+            parent = megaApi->getRootNode();
+            selectedFolder = parent->getHandle();
+            selectedItem = QModelIndex();
+        }
+
         MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
         if (!node || node->isFile())
         {
             ui->bNewFolder->setEnabled(false);
+            ui->bOk->setEnabled(false);
             ui->tMegaFolders->setEnabled(false);
             megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
         }
@@ -269,6 +360,12 @@ void NodeSelector::on_bNewFolder_clicked()
 void NodeSelector::on_bOk_clicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    if (!node)
+    {
+        reject();
+        return;
+    }
+
     int access = megaApi->getAccess(node);
     if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {

@@ -20,6 +20,7 @@ public:
 
     int insertPosition(mega::MegaNode *node);
     void insertNode(mega::MegaNode *node, int index);
+    void removeNode(mega::MegaNode *node);
     void displayFiles(bool enable);
 
     ~MegaItem();
@@ -30,6 +31,7 @@ protected:
     mega::MegaNode *node;
     mega::MegaNodeList *children;
     QList<MegaItem *> childItems;
+    QList<mega::MegaNode *> insertedNodes;
 };
 
 #endif // MEGAITEM_H
