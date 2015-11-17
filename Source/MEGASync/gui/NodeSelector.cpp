@@ -181,6 +181,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
     ui->bNewFolder->setEnabled(true);
+    ui->bOk->setEnabled(true);
 
     if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
     {
@@ -200,9 +201,9 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
             QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         }
     }
-    else if (request->getType() == MegaRequest::TYPE_REMOVE)
+    else if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
     {
-        if(e->getErrorCode() == MegaError::API_OK)
+        if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaNode *parent = model->getNode(selectedItem.parent());
             model->removeNode(selectedItem);
@@ -232,7 +233,8 @@ void NodeSelector::onCustomContextMenu(const QPoint &point)
 void NodeSelector::onDeleteClicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
-    if(!node || megaApi->getAccess(node) < MegaShare::ACCESS_FULL)
+    int access = megaApi->getAccess(node);
+    if(!node || access < MegaShare::ACCESS_FULL)
     {
         delete node;
         return;
@@ -246,7 +248,21 @@ void NodeSelector::onDeleteClicked()
     {
         ui->tMegaFolders->setEnabled(false);
         ui->bNewFolder->setEnabled(false);
-        megaApi->remove(node, delegateListener);
+        ui->bOk->setEnabled(false);
+        const char *name = node->getName();
+        if (access == MegaShare::ACCESS_FULL
+                || !strcmp(name, "NO_KEY")
+                || !strcmp(name, "CRYPTO_ERROR")
+                || !strcmp(name, "BLANK"))
+        {
+            megaApi->remove(node, delegateListener);
+        }
+        else
+        {
+            MegaNode *rubbish = megaApi->getRubbishNode();
+            megaApi->moveNode(node, rubbish, delegateListener);
+            delete rubbish;
+        }
     }
     delete node;
 }
@@ -303,6 +319,7 @@ void NodeSelector::on_bNewFolder_clicked()
         if (!node || node->isFile())
         {
             ui->bNewFolder->setEnabled(false);
+            ui->bOk->setEnabled(false);
             ui->tMegaFolders->setEnabled(false);
             megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
         }
