@@ -2877,7 +2877,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else if (reason == QSystemTrayIcon::Trigger)
             {
-                showInfoMessage(tr("Logging in..."));
+                if (!megaApi->isLoggedIn())
+                {
+                    showInfoMessage(tr("Logging in..."));
+                }
+                else
+                {
+                    showInfoMessage(tr("Fetching file list..."));
+                }
             }
             return;
         }
@@ -2928,7 +2935,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else
             {
-                showInfoMessage(tr("Logging in..."));
+                if (!megaApi->isLoggedIn())
+                {
+                    showInfoMessage(tr("Logging in..."));
+                }
+                else
+                {
+                    showInfoMessage(tr("Fetching file list..."));
+                }
             }
 
             return;
