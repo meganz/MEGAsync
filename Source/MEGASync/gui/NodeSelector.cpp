@@ -183,6 +183,13 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     ui->bNewFolder->setEnabled(true);
     ui->bOk->setEnabled(true);
 
+    if (e->getErrorCode() != MegaError::API_OK)
+    {
+        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        ui->tMegaFolders->setEnabled(true);
+        return;
+    }
+
     if(request->getType() == MegaRequest::TYPE_CREATE_FOLDER)
     {
         if (e->getErrorCode() == MegaError::API_OK)
@@ -312,6 +319,7 @@ void NodeSelector::on_bNewFolder_clicked()
         if (!parent)
         {
             parent = megaApi->getRootNode();
+            selectedFolder = parent->getHandle();
             selectedItem = QModelIndex();
         }
 
