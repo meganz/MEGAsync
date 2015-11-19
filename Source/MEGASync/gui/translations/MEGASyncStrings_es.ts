@@ -308,7 +308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create an account</source>
         <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">crea una cuenta</translation>
+        <translation type="unfinished">Crear cuenta</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
