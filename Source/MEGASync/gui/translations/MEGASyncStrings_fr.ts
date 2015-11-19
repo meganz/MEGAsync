@@ -308,7 +308,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create an account</source>
         <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">créer un compte</translation>
+        <translation type="unfinished">Créer un compte</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -985,7 +985,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">Mode DEBUG activé. Un journal de bord a été créé sur votre bureau (un log de MEGAsync).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -995,7 +995,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">Notre clef SSL ne peut pas être vérifiée. Il se peut que vous saoyez affecté(e) par une attaque de l&#039;homme au milieu. ou il se peut que votre logiciel anti-virus intercepte vos communications et donc pose problème. Veuillez temporairement désactivé votre anti-virus et essayer à nouveau.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1943,7 +1943,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Les versions sauvegardées de fichiers précédemment synchronisés sur votre ordinateur vont être supprimées de façon permanente. Veuillez vérifier vos dossiers de sauvegarde et regardez si vous devez sauvegardez quelque chose avant d&#039;aller plus loin.</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -1958,7 +1958,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Les versions sauvegardées de fichiers précédemment synchronisés sur MEGA vont être supprimées de façon permanente. Veuillez vérifier votre [A]dossier dans la Corbeille de votre compte MEGA et regardez si vous devez sauvegardez quelque chose avant d&#039;aller plus loin.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
