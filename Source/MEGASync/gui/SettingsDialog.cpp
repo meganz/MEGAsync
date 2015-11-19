@@ -105,8 +105,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     #endif
-    ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 #endif
+    ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
 #ifdef __APPLE__
     this->setWindowTitle(tr("Preferences - MEGAsync"));
