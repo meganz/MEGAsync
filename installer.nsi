@@ -27,7 +27,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 VIProductVersion "2.3.1.0"
 VIAddVersionKey "FileVersion" "2.3.1.0"
 VIAddVersionKey "ProductVersion" "2.3.1.0"
-!define PRODUCT_VERSION "2.4.1"
+!define PRODUCT_VERSION "2.4.8"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
