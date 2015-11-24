@@ -1,6 +1,7 @@
 #ifndef CHANGELOGDIALOG_H
 #define CHANGELOGDIALOG_H
 
+#include "control/Preferences.h"
 #include <QDialog>
 
 namespace Ui {
@@ -19,6 +20,9 @@ private:
     Ui::ChangeLogDialog *ui;
 
     void setChangeLogNotes(QString notes);
+
+protected:
+    void changeEvent(QEvent *event);
 
 private slots:
     void on_bTerms_clicked();
