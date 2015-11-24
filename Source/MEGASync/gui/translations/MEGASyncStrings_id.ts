@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation type="unfinished">New in this version:</translation>
+        <translation type="unfinished">Baru di versi ini:</translation>
     </message>
 </context>
 <context>
@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="unfinished">MEGAsync dalam mode guest</translation>
     </message>
     <message>
         <source>Login</source>
@@ -326,7 +326,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation type="unfinished">Your download has started</translation>
+        <translation type="unfinished">Download anda telah dimulai</translation>
     </message>
 </context>
 <context>
@@ -980,27 +980,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">mode DEBUG dimatikan</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">mode DEBUG dinyalakan. Log telah dibuat pada desktop anda (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation type="unfinished">Error: Invalid destination folder. The download has been cancelled.</translation>
+        <translation type="unfinished">Error: Folder tujuan tidak sah. Download telah dibatalkan.</translation>
     </message>
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">SSL key kami tidak bisa diverifikasi. Anda mungkin terpengaruh dengan serangan man-in-the-middle atau software antivirus anda dapat memotong komunikasi anda dan menyebabkan masalah ini. Harap matikan software antivirus anda sementara dan coba kembali.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation type="unfinished">No Internet connection</translation>
+        <translation type="unfinished">Tidak ada koneksi Internet</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1265,7 +1265,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Please enter a valid folder name</translation>
+        <translation type="unfinished">Harap masukan nama folder yang valid</translation>
     </message>
 </context>
 <context>
@@ -1933,37 +1933,37 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Excluded file and folder names</translation>
+        <translation type="unfinished">Nama file dan folder terkecuali</translation>
     </message>
     <message>
         <source>Clear local cache</source>
         <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear local cache</translation>
+        <translation type="unfinished">Hapus cache lokal</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek folder cadangan anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan.</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your local cache now?</translation>
+        <translation type="unfinished">Apakah anda ingin menghapus local cache anda sekarang?</translation>
     </message>
     <message>
         <source>Clear remote cache</source>
         <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear remote cache</translation>
+        <translation type="unfinished">Hapus remote cache</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Versi cadangan file sebelumnya pada komputer anda akan dihapus secara permanen. Harap cek [A] folder pada kotak Sampah akun MEGA anda untuk melihat jika anda ingin menyelamatkan sesuatu sebelum melanjutkan.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your remote cache now?</translation>
+        <translation type="unfinished">Apakah anda ingin menghapus remote cache anda sekarang?</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>

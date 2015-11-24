@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation type="unfinished">New in this version:</translation>
+        <translation type="unfinished">Bu sürümde neler yeni:</translation>
     </message>
 </context>
 <context>
@@ -980,7 +980,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">HATA AYIKLAMA modu devre dışı</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
@@ -1000,7 +1000,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation type="unfinished">No Internet connection</translation>
+        <translation type="unfinished">İnternet bağlantısı yok</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1938,7 +1938,7 @@ when the application starts again</source>
     <message>
         <source>Clear local cache</source>
         <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear local cache</translation>
+        <translation type="unfinished">Yerel önbelliği temizle</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -1953,7 +1953,7 @@ when the application starts again</source>
     <message>
         <source>Clear remote cache</source>
         <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear remote cache</translation>
+        <translation type="unfinished">Uzak önbelliği temizle</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
