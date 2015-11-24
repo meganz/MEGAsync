@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation type="unfinished">New in this version:</translation>
+        <translation type="unfinished">Nieuw in deze versie:</translation>
     </message>
 </context>
 <context>
@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="unfinished">MEGAsync is in gastmodus</translation>
     </message>
     <message>
         <source>Login</source>
@@ -326,7 +326,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation type="unfinished">Your download has started</translation>
+        <translation type="unfinished">Uw download is gestart</translation>
     </message>
 </context>
 <context>
@@ -980,27 +980,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">DEBUG modus uitgeschakeld</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">Debug modus is ingeschakeld. Een log wordt gemaakt op uw bureaublad (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation type="unfinished">Error: Invalid destination folder. The download has been cancelled.</translation>
+        <translation type="unfinished">Fout: Ongeldige doelmap. Het downloaden is geannuleerd.</translation>
     </message>
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">Onze SSL-sleutel kan niet worden geverifieerd. Het is mogelijk dat u wordt geschaad door een man-in-the-middle-aanval of uw antivirussoftware zou uw communicatie kunnen onderscheppen en dit probleem veroorzaken. Schakel alstublieft tijdelijk uw antivirussoftware uit en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation type="unfinished">No Internet connection</translation>
+        <translation type="unfinished">Geen internetverbinding</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1265,7 +1265,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Please enter a valid folder name</translation>
+        <translation type="unfinished">Vul alstublieft een geldige naam voor de map in</translation>
     </message>
 </context>
 <context>
@@ -1933,22 +1933,22 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Excluded file and folder names</translation>
+        <translation type="unfinished">Namen van bestanden en mappen uitgesloten</translation>
     </message>
     <message>
         <source>Clear local cache</source>
         <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear local cache</translation>
+        <translation type="unfinished">Verwijder tijdelijke bestanden</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backup-versies van eerder gesynchroniseerde bestanden op uw computer zullen permanent worden verwijderd. Controleer alstublieft uw back-up mappen om te zien of het nodig is dat u iets redt voordat u verder gaat.</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your local cache now?</translation>
+        <translation type="unfinished">Wilt u uw tijdelijke bestanden nu verwijderen?</translation>
     </message>
     <message>
         <source>Clear remote cache</source>
@@ -1958,7 +1958,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backup-versies van eerder gesynchroniseerde bestanden in MEGA zullen permanent worden verwijderd. Controleer alsublieft uw [A] map in de prullenbak van uw MEGA-account om te zien of het nodig is dat u iets redt voordat u verder gaat.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>

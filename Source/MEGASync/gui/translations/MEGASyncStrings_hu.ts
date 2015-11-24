@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Disco en la Nube</translation>
+        <translation type="obsolete">Tárhelyem </translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -1213,7 +1213,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Disco en la Nube</translation>
+        <translation type="obsolete">Tárhelyem </translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2481,7 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Disco en la Nube</translation>
+        <translation type="unfinished">Tárhelyem </translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -2492,7 +2492,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Disco en la Nube</translation>
+        <translation type="unfinished">Tárhelyem </translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

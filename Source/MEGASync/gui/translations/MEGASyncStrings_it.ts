@@ -146,7 +146,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation type="unfinished">New in this version:</translation>
+        <translation type="unfinished">Nuovo in questa versione:</translation>
     </message>
 </context>
 <context>

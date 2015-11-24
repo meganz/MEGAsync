@@ -980,12 +980,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">Đã tắt chế độ DEBUG</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">Chế độ DEBUG đã được bật. Sẽ có một tệp log ghi lại các hoạt động xuất hiện trên màn hình desktop của bạn (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -2477,7 +2477,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Nội dung chia sẻ mới</translation>
+        <translation type="unfinished">Mục Chia Sẻ Bạn Nhận Được</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2500,7 +2500,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Nội dung chia sẻ mới</translation>
+        <translation type="unfinished">Mục Chia Sẻ Bạn Nhận Được</translation>
     </message>
     <message>
         <source>Inbox</source>
