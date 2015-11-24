@@ -136,7 +136,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">términos de empleo</translation>
+        <translation type="unfinished">Términos del Servicio</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
