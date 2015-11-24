@@ -47,3 +47,13 @@ void ChangeLogDialog::on_bPolicy_clicked()
     QString policyUrl = QString::fromAscii("https://mega.nz/#privacy");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
 }
+
+void ChangeLogDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        setChangeLogNotes(Preferences::CHANGELOG);
+    }
+    QDialog::changeEvent(event);
+}
