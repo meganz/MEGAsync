@@ -11,16 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.4.8.0";
-const int Preferences::VERSION_CODE = 2408;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.5.0.0";
+const int Preferences::VERSION_CODE = 2500;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.4.8");
-const QString Preferences::SDK_ID = QString::fromAscii("c74d7");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.5");
+const QString Preferences::SDK_ID = QString::fromAscii("c1390");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Allow the usage of MEGAsync without being logged in\n"
             "- New network layer using cURL and c-ares (Win32)\n"
-            "- Accessibility support (Win32)\n"
+            "- Accessibility and SOCKS5 proxy support (Win32)\n"
             "- Bug fixes and improvements for the synchronization engine");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
