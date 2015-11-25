@@ -1933,8 +1933,7 @@ void SettingsDialog::onProxyTestSuccess()
     preferences->setProxyUsername(ui->eProxyUsername->text());
     preferences->setProxyPassword(ui->eProxyPassword->text());
 
-    app->applyProxySettings();
-    megaApi->retryPendingConnections(true, true);
+    app->applyProxySettings();   
 
     if (proxyTestProgressDialog)
     {
