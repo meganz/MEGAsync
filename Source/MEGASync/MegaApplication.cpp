@@ -130,6 +130,7 @@ int main(int argc, char *argv[])
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
+        preferences->initialize();
         if (!preferences->error())
         {
             if (preferences->logged())
