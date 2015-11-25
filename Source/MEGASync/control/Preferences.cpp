@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 2500;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.5");
-const QString Preferences::SDK_ID = QString::fromAscii("d9f77");
+const QString Preferences::SDK_ID = QString::fromAscii("24ce4");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Allow the usage of MEGAsync without being logged in\n"
             "- New network layer using cURL and c-ares (Win32)\n"
