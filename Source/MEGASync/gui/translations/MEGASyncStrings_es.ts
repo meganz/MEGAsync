@@ -192,7 +192,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>Carpeta local</translation>
+        <translation>Carpeta local:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
@@ -212,7 +212,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
-        <translation>Elegir</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -235,12 +235,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Carpeta local</translation>
+        <translation>Carpeta local:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Carpeta en MEGA</translation>
+        <translation>Carpeta en MEGA:</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -250,7 +250,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
-        <translation>Elegir</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -400,7 +400,7 @@ Are you sure?</source>
     <message>
         <source>Choose</source>
         <translatorcomment>Label button for Choose action</translatorcomment>
-        <translation>Elegir</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1506,7 +1506,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Actualiza a Pro</translation>
+        <translation>Hazte Pro</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -1823,7 +1823,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Elegir</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Default folders</source>
@@ -1877,7 +1877,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportar clave principal de cifrado</translation>
+        <translation type="unfinished">Exportar clave maestra</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2015,7 +2015,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Estoy de acuerdo con los &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Terminos de Servicio&lt;/a&gt;</translation>
+        <translation>Estoy de acuerdo con los &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Términos del Servicio&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -2064,12 +2064,12 @@ when the application starts again</source>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label displayed to show the local folder synchronized.</translatorcomment>
-        <translation>Carpeta local</translation>
+        <translation>Carpeta local:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label displayed to show the MEGA folder synchronized.</translatorcomment>
-        <translation>Carpeta en MEGA</translation>
+        <translation>Carpeta en MEGA:</translation>
     </message>
     <message>
         <source>Change</source>
@@ -2096,7 +2096,7 @@ when the application starts again</source>
     <message>
         <source>Back</source>
         <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Atrás</translation>
+        <translation>Volver</translation>
     </message>
     <message>
         <source>Next</source>
@@ -2302,7 +2302,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Cerrar sesión</translation>
+        <translation type="unfinished">Cerrando sesión...</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -2436,7 +2436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
-        <translation>Carpeta en MEGA</translation>
+        <translation>Carpeta en MEGA:</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2466,7 +2466,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>Elegir</translation>
+        <translation>Seleccionar</translation>
     </message>
 </context>
 <context>
