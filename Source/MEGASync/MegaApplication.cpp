@@ -3026,7 +3026,7 @@ void MegaApplication::openSettings(int tab)
     }
     else
     {
-        if (!preferences->logged())
+        if (!megaApi->isFilesystemAvailable() || !preferences->logged())
         {
             changeProxy();
             return;
@@ -3047,7 +3047,7 @@ void MegaApplication::changeProxy()
 
     if (megaApi)
     {
-        proxyOnly = !megaApi->isLoggedIn();
+        proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
     }
 
