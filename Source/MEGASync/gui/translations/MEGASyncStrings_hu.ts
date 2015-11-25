@@ -1943,7 +1943,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">A számítógépen tárolt korábbi szinkronizált fájlok biztonsági másolatai végleges törlésre kerülnek. Kérjük ellenőrizze le biztonsági másolatainak mappáit, hátha van olyan, amit menteni szeretne a folytatás előtt.</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>

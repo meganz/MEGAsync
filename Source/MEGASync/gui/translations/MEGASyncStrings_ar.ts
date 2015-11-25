@@ -925,7 +925,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation type="unfinished">خطأ في تسجيل دخول: 1٪</translation>
+        <translation type="unfinished">خطأ في تسجيل دخول: %1</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
