@@ -1457,6 +1457,7 @@ void MegaApplication::checkNetworkInterfaces()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Reconnecting due to local network changes");
         megaApi->retryPendingConnections(true, true);
+        megaApiGuest->retryPendingConnections(true, true);
         activeNetworkInterfaces = newNetworkInterfaces;
         lastActiveTime = QDateTime::currentMSecsSinceEpoch();
     }
@@ -1477,9 +1478,11 @@ void MegaApplication::periodicTasks()
         {
             networkConfigurationManager.updateConfigurations();
             megaApi->update();
+            megaApiGuest->update();
         }
 
         megaApi->updateStats();
+        megaApiGuest->updateStats();
         onGlobalSyncStateChanged(megaApi);
 
         if (isLinux)
@@ -1584,6 +1587,7 @@ void MegaApplication::showInfoDialog()
     if (isLinux && showStatusAction && megaApi)
     {
         megaApi->retryPendingConnections();
+        megaApiGuest->retryPendingConnections();
     }
 
     if (infoOverQuota)
@@ -2090,6 +2094,8 @@ void MegaApplication::applyProxySettings()
     megaApiGuest->setProxySettings(proxySettings);
     delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
+    megaApi->retryPendingConnections(true, true);
+    megaApiGuest->retryPendingConnections(true, true);
 }
 
 void MegaApplication::showUpdatedMessage()
@@ -2865,6 +2871,7 @@ void MegaApplication::onUpdateError()
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     megaApi->retryPendingConnections();
+    megaApiGuest->retryPendingConnections();
 
     if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
     {
@@ -3049,6 +3056,7 @@ void MegaApplication::changeProxy()
     {
         proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
+        megaApiGuest->retryPendingConnections();
     }
 
     if (settingsDialog)
