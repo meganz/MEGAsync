@@ -2265,10 +2265,10 @@ void MegaApplication::importLinks()
     pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
-    LinkProcessor *linkProcessor = new LinkProcessor(megaApiGuest, linkList);
+    LinkProcessor *linkProcessor = new LinkProcessor(megaApi, megaApiGuest, linkList);
 
     //Open the import dialog
-    importDialog = new ImportMegaLinksDialog(megaApiGuest, preferences, linkProcessor);
+    importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
     importDialog->exec();
     if (!importDialog)
     {

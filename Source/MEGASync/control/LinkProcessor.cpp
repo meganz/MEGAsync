@@ -4,9 +4,10 @@
 
 using namespace mega;
 
-LinkProcessor::LinkProcessor(MegaApi *megaApi, QStringList linkList) : QObject()
+LinkProcessor::LinkProcessor(MegaApi *megaApi, MegaApi *megaApiGuest, QStringList linkList) : QObject()
 {
     this->megaApi = megaApi;
+    this->megaApiGuest = megaApiGuest;
     this->linkList = linkList;
     for (int i = 0; i < linkList.size(); i++)
     {
@@ -117,7 +118,7 @@ void LinkProcessor::requestLinkInfo()
 {
     for (int i = 0; i < linkList.size(); i++)
     {
-        megaApi->getPublicNode(linkList[i].toUtf8().constData(), delegateListener);
+        megaApiGuest->getPublicNode(linkList[i].toUtf8().constData(), delegateListener);
     }
 }
 
@@ -202,7 +203,7 @@ void LinkProcessor::downloadLinks(QString localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
-            megaApi->startDownload(linkNode[i], (localPath+QDir::separator()).toUtf8().constData());
+            megaApiGuest->startDownload(linkNode[i], (localPath + QDir::separator()).toUtf8().constData());
         }
     }
 }
