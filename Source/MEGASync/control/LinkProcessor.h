@@ -11,7 +11,7 @@ class LinkProcessor: public QObject, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    LinkProcessor(mega::MegaApi *megaApi, QStringList linkList);
+    LinkProcessor(mega::MegaApi *megaApi, mega::MegaApi *megaApiGuest, QStringList linkList);
     virtual ~LinkProcessor();
 
     QString getLink(int id);
@@ -34,6 +34,7 @@ public:
 
 protected:
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiGuest;
     QStringList linkList;
     QList<bool> linkSelected;
     QList<mega::MegaNode *> linkNode;
