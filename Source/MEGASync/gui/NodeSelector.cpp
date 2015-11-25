@@ -37,9 +37,10 @@ NodeSelector::~NodeSelector()
 
 void NodeSelector::nodesReady()
 {
-    MegaNode *rootNode = megaApi->getRootNode();
-    if (!rootNode)
+    if (!megaApi->isFilesystemAvailable())
     {
+        ui->bOk->setEnabled(false);
+        ui->bNewFolder->setEnabled(false);
         return;
     }
 
@@ -319,6 +320,11 @@ void NodeSelector::on_bNewFolder_clicked()
         if (!parent)
         {
             parent = megaApi->getRootNode();
+            if (!parent)
+            {
+                delete id;
+                return;
+            }
             selectedFolder = parent->getHandle();
             selectedItem = QModelIndex();
         }
