@@ -1078,7 +1078,7 @@ bool SettingsDialog::saveSettings()
                             preferences->setSyncState(i, enabled);
 
                             MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-                            megaApi->disableSync(node);
+                            megaApi->removeSync(node);
                             delete node;
                         }
                         break;
