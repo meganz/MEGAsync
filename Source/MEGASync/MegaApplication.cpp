@@ -304,6 +304,7 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+    appfinished = false;
     logger = new MegaSyncLogger();
 
     #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
@@ -363,7 +364,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
     QDir::setCurrent(dataPath);
 
-    appfinished = false;
     updateAvailable = false;
     networkConnectivity = true;
     lastStartedDownload = 0;
@@ -634,6 +634,11 @@ QString MegaApplication::applicationDataPath()
 
 void MegaApplication::changeLanguage(QString languageCode)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (translator)
     {
         removeTranslator(translator);
@@ -668,6 +673,11 @@ void MegaApplication::changeLanguage(QString languageCode)
 
 void MegaApplication::updateTrayIcon()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!trayIcon)
     {
         return;
@@ -862,6 +872,11 @@ void MegaApplication::updateTrayIcon()
 
 void MegaApplication::start()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     indexing = false;
     overquotaCheck = false;
 
@@ -994,6 +1009,11 @@ void MegaApplication::start()
 
 void MegaApplication::loggedIn()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     pauseTransfers(paused);
     megaApi->getAccountDetails();
 
@@ -1061,6 +1081,11 @@ void MegaApplication::loggedIn()
 
 void MegaApplication::startSyncs()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     //Start syncs
     MegaNode *rubbishNode =  megaApi->getRubbishNode();
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
@@ -1101,6 +1126,11 @@ void MegaApplication::startSyncs()
 //to the Mega node that is passed as parameter
 void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaNode *node = megaApi->getNodeByHandle(nodeHandle);
 
     //If the destination node doesn't exist in the current filesystem, clear the queue and show an error message
@@ -1123,6 +1153,11 @@ void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
 
 void MegaApplication::processDownloadQueue(QString path)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
@@ -1150,6 +1185,11 @@ void MegaApplication::unityFix()
 
 void MegaApplication::disableSyncs()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
        if (!preferences->isFolderActive(i))
@@ -1168,6 +1208,11 @@ void MegaApplication::disableSyncs()
 
 void MegaApplication::restoreSyncs()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
        if (!preferences->isTemporaryInactiveFolder(i) || preferences->isFolderActive(i))
@@ -1234,6 +1279,11 @@ void MegaApplication::closeDialogs()
 
 void MegaApplication::rebootApplication(bool update)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     reboot = true;
     if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()))
     {
@@ -1258,6 +1308,11 @@ void MegaApplication::rebootApplication(bool update)
 
 void MegaApplication::exitApplication()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
 #ifndef __APPLE__
     if (!megaApi->isLoggedIn())
     {
@@ -1311,12 +1366,22 @@ void MegaApplication::exitApplication()
 
 void MegaApplication::pauseTransfers(bool pause)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     megaApi->pauseTransfers(pause);
     megaApiGuest->pauseTransfers(pause);
 }
 
 void MegaApplication::checkNetworkInterfaces()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QList<QNetworkInterface> newNetworkInterfaces;
     QList<QNetworkInterface> configs = QNetworkInterface::allInterfaces();
 
@@ -1469,6 +1534,11 @@ void MegaApplication::checkNetworkInterfaces()
 
 void MegaApplication::periodicTasks()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     checkNetworkInterfaces();
 
     static int counter = 0;
@@ -1561,16 +1631,31 @@ void MegaApplication::cleanAll()
 
 void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     addRecentFile(name, handle);
 }
 
 void MegaApplication::onDupplicateUpload(QString localPath, QString name, MegaHandle handle)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     addRecentFile(name, handle, localPath);
 }
 
 void MegaApplication::onInstallUpdateClicked()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (updateAvailable)
     {
         showInfoMessage(tr("Installing update..."));
@@ -1584,6 +1669,11 @@ void MegaApplication::onInstallUpdateClicked()
 
 void MegaApplication::showInfoDialog()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (isLinux && showStatusAction && megaApi)
     {
         megaApi->retryPendingConnections();
@@ -1668,6 +1758,11 @@ void MegaApplication::showInfoDialog()
 
 void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QPoint position, positionTrayIcon;
     QRect screenGeometry;
 
@@ -1759,11 +1854,21 @@ bool MegaApplication::anUpdateIsAvailable()
 
 void MegaApplication::triggerInstallUpdate()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     emit installUpdate();
 }
 
 void MegaApplication::scanningAnimationStep()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     scanningAnimationIndex = scanningAnimationIndex%4;
     scanningAnimationIndex++;
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac") +
@@ -1777,6 +1882,11 @@ void MegaApplication::scanningAnimationStep()
 
 void MegaApplication::runConnectivityCheck()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::NoProxy);
     if (preferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM)
@@ -1843,16 +1953,31 @@ void MegaApplication::runConnectivityCheck()
 
 void MegaApplication::onConnectivityCheckSuccess()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Connectivity test finished OK");
 }
 
 void MegaApplication::onConnectivityCheckError()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
 void MegaApplication::setupWizardFinished(int result)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (setupWizard)
     {
         setupWizard->deleteLater();
@@ -1896,6 +2021,11 @@ void MegaApplication::setupWizardFinished(int result)
 
 void MegaApplication::unlink()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (infoDialog)
     {
         infoDialog->clearRecentFiles();
@@ -1908,6 +2038,11 @@ void MegaApplication::unlink()
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
 
     if (notificator)
@@ -1930,6 +2065,11 @@ void MegaApplication::showInfoMessage(QString message, QString title)
 
 void MegaApplication::showWarningMessage(QString message, QString title)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, message.toUtf8().constData());
 
     if (!preferences->showNotifications())
@@ -1948,6 +2088,11 @@ void MegaApplication::showWarningMessage(QString message, QString title)
 
 void MegaApplication::showErrorMessage(QString message, QString title)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, message.toUtf8().constData());
     if (notificator)
     {
@@ -1968,6 +2113,11 @@ void MegaApplication::showErrorMessage(QString message, QString title)
 
 void MegaApplication::showNotificationMessage(QString message, QString title)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
 
     if (!preferences->showNotifications())
@@ -1986,6 +2136,11 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
 //KB/s
 void MegaApplication::setUploadLimit(int limit)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (limit < 0)
     {
         megaApi->setUploadLimit(-1);
@@ -1998,6 +2153,11 @@ void MegaApplication::setUploadLimit(int limit)
 
 void MegaApplication::startUpdateTask()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
 #if defined(WIN32) || defined(__APPLE__)
     if (!updateThread && preferences->canUpdate(MegaApplication::applicationFilePath()))
     {
@@ -2036,6 +2196,11 @@ void MegaApplication::stopUpdateTask()
 
 void MegaApplication::applyProxySettings()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QNetworkProxy proxy(QNetworkProxy::NoProxy);
     MegaProxy *proxySettings = new MegaProxy();
     proxySettings->setProxyType(preferences->proxyType());
@@ -2105,16 +2270,31 @@ void MegaApplication::showUpdatedMessage()
 
 void MegaApplication::handleMEGAurl(const QUrl &url)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
 }
 
 void MegaApplication::handleLocalPath(const QUrl &url)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
 }
 
 void MegaApplication::updateUserStats()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     long long lastRequest = preferences->lastStatsRequest();
     if ((QDateTime::currentMSecsSinceEpoch() - lastRequest)
             > Preferences::MIN_UPDATE_STATS_INTERVAL)
@@ -2126,6 +2306,11 @@ void MegaApplication::updateUserStats()
 
 void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (infoDialog)
     {
         infoDialog->addRecentFile(fileName, fileHandle, localPath, nodeKey);
@@ -2134,12 +2319,22 @@ void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QStr
 
 void MegaApplication::checkForUpdates()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     this->showInfoMessage(tr("Checking for updates..."));
     emit tryUpdate();
 }
 
 void MegaApplication::showTrayMenu(QPoint *point)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (trayGuestMenu && !preferences->logged())
     {
         if (trayGuestMenu->isVisible())
@@ -2189,6 +2384,11 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
 void MegaApplication::toggleLogging()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (logger->isLogToFileEnabled())
     {
         logger->sendLogsToFile(false);
@@ -2208,6 +2408,11 @@ void MegaApplication::toggleLogging()
 #if (QT_VERSION == 0x050500) && defined(_WIN32)
 bool MegaApplication::eventFilter(QObject *o, QEvent *ev)
 {
+    if (appfinished)
+    {
+        return false;
+    }
+
     QMenu *menu = dynamic_cast<QMenu *>(o);
     if (menu && menu->isVisible() && menu->isEnabled()
             && ev->type() == QEvent::MouseButtonRelease)
@@ -2231,6 +2436,11 @@ bool MegaApplication::eventFilter(QObject *o, QEvent *ev)
 //Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (pasteMegaLinksDialog)
     {
         pasteMegaLinksDialog->setVisible(true);
@@ -2319,6 +2529,11 @@ void MegaApplication::importLinks()
 
 void MegaApplication::showChangeLog()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (changeLogDialog)
     {
         changeLogDialog->setVisible(true);
@@ -2336,6 +2551,11 @@ void MegaApplication::showChangeLog()
 
 void MegaApplication::uploadActionClicked()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     #ifdef __APPLE__
          if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_7)
          {
@@ -2450,11 +2670,21 @@ void MegaApplication::downloadActionClicked()
 
 void MegaApplication::loginActionClicked()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     userAction(GuestWidget::LOGIN_CLICKED);
 }
 
 void MegaApplication::userAction(int action)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!preferences->logged())
     {
         if (setupWizard)
@@ -2475,6 +2705,11 @@ void MegaApplication::userAction(int action)
 
 void MegaApplication::changeState()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (infoDialog)
     {
         infoDialog->regenerateLayout();
@@ -2483,6 +2718,11 @@ void MegaApplication::changeState()
 
 void MegaApplication::createTrayIcon()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (isLinux)
     {
         if (trayIcon->contextMenu())
@@ -2533,6 +2773,11 @@ void MegaApplication::createTrayIcon()
 
 void MegaApplication::processDownloads()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!downloadQueue.size())
     {
         return;
@@ -2600,12 +2845,22 @@ void MegaApplication::processDownloads()
 
 void MegaApplication::logoutActionClicked()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     unlink();
 }
 
 //Called when the user wants to generate the public link for a node
 void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (nodeKey.size())
     {
         //Public node
@@ -2715,17 +2970,32 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 
 void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     downloadQueue.append(newDownloadQueue);
 }
 
 void MegaApplication::externalDownload(QString megaLink)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     pendingLinks.append(megaLink);
     megaApiGuest->getPublicNode(megaLink.toUtf8().constData());
 }
 
 void MegaApplication::internalDownload(long long handle)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if (!node)
     {
@@ -2738,6 +3008,11 @@ void MegaApplication::internalDownload(long long handle)
 
 void MegaApplication::syncFolder(long long handle)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (infoDialog)
     {
         infoDialog->addSync(handle);
@@ -2747,6 +3022,11 @@ void MegaApplication::syncFolder(long long handle)
 //Called when the link import finishes
 void MegaApplication::onLinkImportFinished()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
     preferences->setImportFolder(linkProcessor->getImportParentFolder());
     linkProcessor->deleteLater();
@@ -2754,6 +3034,11 @@ void MegaApplication::onLinkImportFinished()
 
 void MegaApplication::onRequestLinksFinished()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     ExportProcessor *exportProcessor = ((ExportProcessor *)QObject::sender());
     QStringList links = exportProcessor->getValidLinks();
     if (!links.size())
@@ -2777,6 +3062,11 @@ void MegaApplication::onRequestLinksFinished()
 
 void MegaApplication::onUpdateCompleted()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
 #ifdef __APPLE__
     QFile exeFile(MegaApplication::applicationFilePath());
     exeFile.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner |
@@ -2805,6 +3095,11 @@ void MegaApplication::onUpdateCompleted()
 
 void MegaApplication::onUpdateAvailable(bool requested)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     updateAvailable = true;
 
     if (trayMenu)
@@ -2839,6 +3134,11 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
 void MegaApplication::onInstallingUpdate(bool requested)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (requested)
     {
         showInfoMessage(tr("Update available. Downloading..."));
@@ -2847,6 +3147,11 @@ void MegaApplication::onInstallingUpdate(bool requested)
 
 void MegaApplication::onUpdateNotFound(bool requested)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (requested)
     {
         if (!updateAvailable)
@@ -2863,6 +3168,11 @@ void MegaApplication::onUpdateNotFound(bool requested)
 
 void MegaApplication::onUpdateError()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
                     .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 }
@@ -2870,6 +3180,11 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     megaApi->retryPendingConnections();
     megaApiGuest->retryPendingConnections();
 
@@ -2986,6 +3301,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
 void MegaApplication::onMessageClicked()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (lastTrayMessage == tr("A new version of MEGAsync is available! Click on this message to install it"))
     {
         triggerInstallUpdate();
@@ -2999,6 +3319,11 @@ void MegaApplication::onMessageClicked()
 //Called when the user wants to open the settings dialog
 void MegaApplication::openSettings(int tab)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (settingsDialog)
     {
         //If the dialog is active
@@ -3050,6 +3375,11 @@ void MegaApplication::openSettings(int tab)
 
 void MegaApplication::changeProxy()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     bool proxyOnly = true;
 
     if (megaApi)
@@ -3110,6 +3440,11 @@ void MegaApplication::changeProxy()
 //This function creates the tray icon
 void MegaApplication::createTrayMenu()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!trayMenu)
     {
         trayMenu = new QMenu();
@@ -3219,6 +3554,11 @@ void MegaApplication::createTrayMenu()
 
 void MegaApplication::createOverQuotaMenu()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!trayOverQuotaMenu)
     {
         trayOverQuotaMenu = new QMenu();
@@ -3310,6 +3650,11 @@ void MegaApplication::createOverQuotaMenu()
 
 void MegaApplication::createGuestMenu()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!trayGuestMenu)
     {
         trayGuestMenu = new QMenu();
@@ -3405,6 +3750,11 @@ void MegaApplication::createGuestMenu()
 //Called when a request is about to start
 void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     int type = request->getType();
     if (type == MegaRequest::TYPE_LOGIN)
     {
@@ -3415,6 +3765,11 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 //Called when a request has finished
 void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
         //Cancel pending uploads and disable syncs
@@ -4143,6 +4498,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     //Show information to users
     if (transfer->getNumRetry() == 1)
     {
@@ -4157,6 +4517,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 
 void MegaApplication::onAccountUpdate(MegaApi *)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     megaApi->getAccountDetails();
 }
 
@@ -4169,6 +4534,11 @@ void MegaApplication::onUsersUpdate(MegaApi* , MegaUserList *)
 //Called when nodes have been updated in MEGA
 void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!infoDialog || !nodes)
     {
         return;
@@ -4314,6 +4684,11 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
 void MegaApplication::onReloadNeeded(MegaApi*)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     //Don't reload the filesystem here because it's unsafe
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
@@ -4323,6 +4698,11 @@ void MegaApplication::onReloadNeeded(MegaApi*)
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (megaApi && megaApiGuest)
     {
         indexing = megaApi->isScanning();
@@ -4362,11 +4742,21 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 
 void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     onGlobalSyncStateChanged(api);
 }
 
 void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, const char *filePath, int)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     QString localPath = QString::fromUtf8(filePath);
     Platform::notifyItemChange(localPath);
 }
