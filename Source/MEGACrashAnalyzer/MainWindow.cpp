@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
-#include <QMap>
+#include <QMultiMap>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -153,7 +153,7 @@ void MainWindow::parseCrashes(QString folder)
     ui->cVersion->clear();
     if (versions.size())
     {
-        QMap<int, QString> sortedMap;
+        QMultiMap<int, QString> sortedMap;
         for (int i=0; i < versions.size(); i++)
         {
             QHash<QString, QStringList> &hVersion = reports[versions.at(i)];
@@ -163,7 +163,7 @@ void MainWindow::parseCrashes(QString folder)
             {
                 acum += hVersion.value(crashLocations[j]).size();
             }
-            sortedMap[acum] = versions.at(i);
+            sortedMap.insert(acum, versions.at(i));
         }
         QStringList sortedVersions = sortedMap.values();
         std::reverse(sortedVersions.begin(), sortedVersions.end());
@@ -183,10 +183,10 @@ void MainWindow::on_cVersion_currentIndexChanged(const QString &version)
     ui->cLocation->clear();
     if (crashLocations.size())
     {
-        QMap<int, QString> sortedMap;
+        QMultiMap<int, QString> sortedMap;
         for (int i=0; i< crashLocations.size(); i++)
         {
-            sortedMap[hVersion.value(crashLocations.at(i)).size()] = crashLocations.at(i);
+            sortedMap.insert(hVersion.value(crashLocations.at(i)).size(), crashLocations.at(i));
         }
         QStringList sortedLocations = sortedMap.values();
         std::reverse(sortedLocations.begin(), sortedLocations.end());
