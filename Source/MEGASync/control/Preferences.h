@@ -138,6 +138,11 @@ public:
     bool isFirstWebDownloadDone();
     void setFirstWebDownloadDone(bool value = true);
 
+    int transferDownloadMethod();
+    void setTransferDownloadMethod(int value);
+    int transferUploadMethod();
+    void setTransferUploadMethod(int value);
+
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
     int lastUpdateVersion();
@@ -224,6 +229,14 @@ public:
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3
+    };
+
+    enum {
+        TRANSFER_METHOD_NORMAL = 0,
+        TRANSFER_METHOD_ALTERNATIVE_PORT = 1,
+        TRANSFER_METHOD_AUTO = 2,
+        TRANSFER_METHOD_AUTO_NORMAL = 3,
+        TRANSFER_METHOD_AUTO_ALTERNATIVE = 4
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
@@ -358,6 +371,8 @@ protected:
     static const QString installationTimeKey;
     static const QString accountCreationTimeKey;
     static const QString hasLoggedInKey;
+    static const QString transferDownloadMethodKey;
+    static const QString transferUploadMethodKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -376,6 +391,8 @@ protected:
     static const long long defaultLowerSizeLimitValue;
     static const int defaultUpperSizeLimitUnit;
     static const int defaultLowerSizeLimitUnit;
+    static const int defaultTransferDownloadMethod;
+    static const int defaultTransferUploadMethod;
 };
 
 #endif // PREFERENCES_H
