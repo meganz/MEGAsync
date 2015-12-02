@@ -188,6 +188,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     QRegExp openLinkRequest(QString::fromUtf8("\\{\"a\":\"l\",\"h\":\"(.*)\",\"k\":\"(.*)\"\\}"));
     QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
+    QPointer<QAbstractSocket> safeSocket = socket;
 
     if (request.data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
@@ -412,10 +413,13 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             .arg(response.size())
             .arg(response);
 
-    socket->write(fullResponse.toUtf8());
-    socket->flush();
-    socket->disconnectFromHost();
-    socket->deleteLater();
+    if (safeSocket)
+    {
+        safeSocket->write(fullResponse.toUtf8());
+        safeSocket->flush();
+        safeSocket->disconnectFromHost();
+        safeSocket->deleteLater();
+    }
 }
 
 void HTTPServer::error(QAbstractSocket::SocketError)
