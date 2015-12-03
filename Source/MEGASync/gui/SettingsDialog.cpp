@@ -1846,7 +1846,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     char *base64Handle = syncDebris->getBase64Handle();
     warningDel->setText(tr("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
                            "Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.")
-                           .replace(QString::fromUtf8("[A]"), tr("<a href=\"mega://#fm/%1\">SyncDebris</a>").arg(QString::fromUtf8(base64Handle)))
+                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>").arg(QString::fromUtf8(base64Handle)))
                            + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote cache now?"));
     delete [] base64Handle;
 
