@@ -490,6 +490,11 @@ void MegaApplication::initialize()
 #endif
     megaApiGuest = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
+    megaApi->setDownloadMethod(preferences->transferDownloadMethod());
+    megaApiGuest->setDownloadMethod(preferences->transferDownloadMethod());
+    megaApi->setUploadMethod(preferences->transferUploadMethod());
+    megaApiGuest->setUploadMethod(preferences->transferUploadMethod());
+
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
     delegateGuestListener = new MEGASyncDelegateListener(megaApiGuest, this);
@@ -4496,18 +4501,28 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 }
 
 //Called when there is a temporal problem in a transfer
-void MegaApplication::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError* e)
+void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
 {
     if (appfinished)
     {
         return;
     }
 
+    preferences->setTransferDownloadMethod(api->getDownloadMethod());
+    preferences->setTransferUploadMethod(api->getUploadMethod());
+
     //Show information to users
     if (transfer->getNumRetry() == 1)
     {
-        showWarningMessage(tr("Temporary transmission error: ")
+        if (e->getErrorCode() == MegaError::API_EFAILED)
+        {
+            showWarningMessage(tr("Temporary error, retrying."));
+        }
+        else
+        {
+            showWarningMessage(tr("Temporary transmission error: ")
                            + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        }
     }
     else
     {
