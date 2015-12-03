@@ -231,14 +231,6 @@ public:
         ACCOUNT_TYPE_PROIII = 3
     };
 
-    enum {
-        TRANSFER_METHOD_NORMAL = 0,
-        TRANSFER_METHOD_ALTERNATIVE_PORT = 1,
-        TRANSFER_METHOD_AUTO = 2,
-        TRANSFER_METHOD_AUTO_NORMAL = 3,
-        TRANSFER_METHOD_AUTO_ALTERNATIVE = 4
-    };
-
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
