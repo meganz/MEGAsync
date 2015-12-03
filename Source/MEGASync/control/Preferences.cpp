@@ -142,13 +142,16 @@ const QString Preferences::startOnStartupKey        = QString::fromAscii("startO
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
 const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
-const QString Preferences::upperSizeLimitKey         = QString::fromAscii("upperSizeLimit");
-const QString Preferences::lowerSizeLimitKey         = QString::fromAscii("lowerSizeLimit");
+const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperSizeLimit");
+const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
-const QString Preferences::upperSizeLimitValueKey         = QString::fromAscii("upperSizeLimitValue");
-const QString Preferences::lowerSizeLimitValueKey         = QString::fromAscii("lowerSizeLimitValue");
-const QString Preferences::upperSizeLimitUnitKey         = QString::fromAscii("upperSizeLimitUnit");
-const QString Preferences::lowerSizeLimitUnitKey         = QString::fromAscii("lowerSizeLimitUnit");
+const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
+const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
+
+const QString Preferences::upperSizeLimitValueKey       = QString::fromAscii("upperSizeLimitValue");
+const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lowerSizeLimitValue");
+const QString Preferences::upperSizeLimitUnitKey        = QString::fromAscii("upperSizeLimitUnit");
+const QString Preferences::lowerSizeLimitUnitKey        = QString::fromAscii("lowerSizeLimitUnit");
 
 const QString Preferences::proxyTypeKey             = QString::fromAscii("proxyType");
 const QString Preferences::proxyProtocolKey         = QString::fromAscii("proxyProtocol");
@@ -201,14 +204,16 @@ const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
+const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
+const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 #ifdef WIN32
-const int  Preferences::defaultProxyType            = PROXY_TYPE_AUTO;
+const int  Preferences::defaultProxyType            = Preferences::PROXY_TYPE_AUTO;
 #else
-const int  Preferences::defaultProxyType            = PROXY_TYPE_NONE;
+const int  Preferences::defaultProxyType            = Preferences::PROXY_TYPE_NONE;
 #endif
 const int  Preferences::defaultProxyProtocol        = Preferences::PROXY_PROTOCOL_HTTP;
 const QString  Preferences::defaultProxyServer      = QString::fromAscii("127.0.0.1");
@@ -690,6 +695,38 @@ void Preferences::setStartOnStartup(bool value)
 {
     mutex.lock();
     settings->setValue(startOnStartupKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::transferDownloadMethod()
+{
+    mutex.lock();
+    int value = settings->value(transferDownloadMethodKey, defaultTransferDownloadMethod).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setTransferDownloadMethod(int value)
+{
+    mutex.lock();
+    settings->setValue(transferDownloadMethodKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::transferUploadMethod()
+{
+    mutex.lock();
+    int value = settings->value(transferUploadMethodKey, defaultTransferUploadMethod).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setTransferUploadMethod(int value)
+{
+    mutex.lock();
+    settings->setValue(transferUploadMethodKey, value);
     settings->sync();
     mutex.unlock();
 }

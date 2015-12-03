@@ -138,6 +138,11 @@ public:
     bool isFirstWebDownloadDone();
     void setFirstWebDownloadDone(bool value = true);
 
+    int transferDownloadMethod();
+    void setTransferDownloadMethod(int value);
+    int transferUploadMethod();
+    void setTransferUploadMethod(int value);
+
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
     int lastUpdateVersion();
@@ -358,6 +363,8 @@ protected:
     static const QString installationTimeKey;
     static const QString accountCreationTimeKey;
     static const QString hasLoggedInKey;
+    static const QString transferDownloadMethodKey;
+    static const QString transferUploadMethodKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -376,6 +383,8 @@ protected:
     static const long long defaultLowerSizeLimitValue;
     static const int defaultUpperSizeLimitUnit;
     static const int defaultLowerSizeLimitUnit;
+    static const int defaultTransferDownloadMethod;
+    static const int defaultTransferUploadMethod;
 };
 
 #endif // PREFERENCES_H
