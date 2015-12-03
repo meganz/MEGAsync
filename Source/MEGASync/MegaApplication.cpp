@@ -4514,8 +4514,15 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     //Show information to users
     if (transfer->getNumRetry() == 1)
     {
-        showWarningMessage(tr("Temporary transmission error: ")
+        if (e->getErrorCode() == MegaError::API_EFAILED)
+        {
+            showWarningMessage(tr("Temporary error, retrying."));
+        }
+        else
+        {
+            showWarningMessage(tr("Temporary transmission error: ")
                            + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        }
     }
     else
     {
