@@ -1436,6 +1436,12 @@ void MegaApplication::checkNetworkInterfaces()
 
             lastActiveTime = QDateTime::currentMSecsSinceEpoch();
             newNetworkInterfaces.append(networkInterface);
+
+            if (!networkConnectivity)
+            {
+                megaApi->retryPendingConnections(false, true);
+                megaApiGuest->retryPendingConnections(false, true);
+            }
             networkConnectivity = true;
         }
     }
