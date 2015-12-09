@@ -1387,6 +1387,7 @@ void MegaApplication::checkNetworkInterfaces()
         return;
     }
 
+    bool disconnect = false;
     QList<QNetworkInterface> newNetworkInterfaces;
     QList<QNetworkInterface> configs = QNetworkInterface::allInterfaces();
 
@@ -1439,14 +1440,12 @@ void MegaApplication::checkNetworkInterfaces()
 
             if (!networkConnectivity)
             {
-                megaApi->retryPendingConnections(false, true);
-                megaApiGuest->retryPendingConnections(false, true);
+                disconnect = true;
+                networkConnectivity = true;
             }
-            networkConnectivity = true;
         }
     }
 
-    bool disconnect = false;
     if (!newNetworkInterfaces.size())
     {
         networkConnectivity = false;
