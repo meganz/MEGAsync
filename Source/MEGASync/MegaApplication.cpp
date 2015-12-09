@@ -4522,7 +4522,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         if (e->getErrorCode() == MegaError::API_EFAILED)
         {
-            showWarningMessage(tr("Temporary error, retrying."));
+            showWarningMessage(tr("Temporary error, retrying."), QString::fromUtf8(transfer->getFileName()));
         }
         else
         {
