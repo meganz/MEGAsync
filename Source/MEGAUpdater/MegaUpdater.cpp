@@ -28,13 +28,17 @@ const char *TARGET_PATHS_WIN[] = {
     "QtSvg4.dll",
     "libeay32.dll",
     "ssleay32.dll",
+    "libcurl.dll",
+    "cares.dll",
     "imageformats/qgif4.dll",
     "imageformats/qico4.dll",
     "imageformats/qjpeg4.dll",
     "imageformats/qmng4.dll",
     "imageformats/qsvg4.dll",
     "imageformats/qtga4.dll",
-    "imageformats/qtiff4.dll"
+    "imageformats/qtiff4.dll",
+    "accessible/qtaccessiblecompatwidgets4.dll",
+    "accessible/qtaccessiblewidgets4.dll"
 };
 
 const char *UPDATE_FILES_WIN[] = {
@@ -49,13 +53,17 @@ const char *UPDATE_FILES_WIN[] = {
     "QtSvg4.dll",
     "libeay32.dll",
     "ssleay32.dll",
+    "libcurl.dll",
+    "cares.dll",
     "qgif4.dll",
     "qico4.dll",
     "qjpeg4.dll",
     "qmng4.dll",
     "qsvg4.dll",
     "qtga4.dll",
-    "qtiff4.dll"
+    "qtiff4.dll",
+    "qtaccessiblecompatwidgets4.dll",
+    "qtaccessiblewidgets4.dll"
 };
 
 const char *TARGET_PATHS_OSX[] = {
