@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">bestanden</translation>
+        <translation type="obsolete">Bestanden</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">mappen</translation>
+        <translation type="obsolete">Mappen</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privacybeleid</translation>
+        <translation type="unfinished">Privacy Policy</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -527,7 +527,7 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Aan het uploaden</translation>
+        <translation>Uploaden</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Je synchronisatie &quot;%1&quot; is gestopt omdat de lokale map niet bestaat</translation>
+        <translation type="obsolete">Uw sync &quot;%1&quot; is uitgeschakeld omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Login</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Ophalen de file lijst ...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Tijdelijke fout, opnieuw proberen.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1267,6 +1275,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Vul alstublieft een geldige naam voor de map in</translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Verwijder</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1356,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Zojuist</translation>
+        <translation>zojuist</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1503,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Gratis</translation>
+        <translation>GRATIS</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1698,7 +1710,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>overdrachten</translation>
+        <translation>Overdrachten</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1914,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO lite</translation>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2188,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Je moet de algemene gebruikersvoorwaarden accepteren.</translation>
+        <translation>Je moet onze gebruikersvoorwaarden accepteren</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2520,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">gebruikt</translation>
+        <translation type="unfinished">Gebruikt</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">beschikbaar</translation>
+        <translation type="unfinished">Beschikbaar</translation>
     </message>
 </context>
 <context>

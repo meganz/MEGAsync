@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">pliki</translation>
+        <translation type="obsolete">Pliki</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">katalogi</translation>
+        <translation type="obsolete">Katalogi</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -522,7 +522,7 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Pobieranie</translation>
+        <translation>Trwa pobieranie</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Synchronizacja &quot;%1&quot; została zablokowana, ponieważ lokalny katalog nie istnieje</translation>
+        <translation type="obsolete">Twoja synchronizacja &quot;%1&quot; została zablokowana ponieważ lokalny katalog nie istnieje</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Logowanie</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Pobieram listę plików</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Chwilowy problem, ponawianie.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1018,7 +1026,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Wystąpił błąd wewnętrzny</translation>
+        <translation>Wewnętrzny błąd</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Wpisz poprawną nazwę katalogu</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Czy na pewno chcesz usunąć &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Usuń</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Teraz</translation>
+        <translation>teraz</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Darmowe</translation>
+        <translation>ZA DARMO</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1501,7 +1517,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Dostępna przestrzeń</translation>
+        <translation>Wielkość pamięci</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>działań</translation>
+        <translation>Ruch</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO lite</translation>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Musisz zaakceptować regulamin</translation>
+        <translation>Musisz zaakceptować nasz regulamin</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">użyte</translation>
+        <translation type="unfinished">Użyte</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">dostępne</translation>
+        <translation type="unfinished">Dostępne</translation>
     </message>
 </context>
 <context>

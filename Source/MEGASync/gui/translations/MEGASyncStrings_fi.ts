@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">tiedostoa</translation>
+        <translation type="obsolete">Tiedostot</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">kansiota</translation>
+        <translation type="obsolete">Kansiot</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Yksityisyyskäytäntö</translation>
+        <translation type="unfinished">Tietosuojakäytäntö</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Synkronointisi &quot;%1&quot; on poiskytketty koska paikalliskansiota ei ole olemassa</translation>
+        <translation type="obsolete">Synkronointisi &quot;%1&quot; on estetty, koska paikallista kansiota ei ole olemassa</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Kirjaudu</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Haetaan tiedostoluetteloa...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Tilapäinen häiriö, yritetään uudelleen.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Please enter a valid folder name</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Are you sure that you want to delete &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Poista</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Juuri nyt</translation>
+        <translation>juuri nyt</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Ilmainen</translation>
+        <translation>FREE</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>siirrot</translation>
+        <translation>Siirrot</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO lite</translation>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1943,7 +1959,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -1958,7 +1974,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Sinun tulee hyväksyä käyttöehdot</translation>
+        <translation>Sinun on hyväksyttävä käyttöehdot</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">käytetty</translation>
+        <translation type="unfinished">Käytetty</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">saatavilla</translation>
+        <translation type="unfinished">Vapaa</translation>
     </message>
 </context>
 <context>

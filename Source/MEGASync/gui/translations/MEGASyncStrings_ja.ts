@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">プライバシーに関するポリシー</translation>
+        <translation type="unfinished">プライバシーポリシー</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">ローカル・フォルダが存在しないため、あなたの sync &quot;%1&quot;は解除されました。</translation>
+        <translation type="obsolete">ローカルフォルダが存在しません。シンク&quot;%1&quot; は無効となりました。</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">ログイン</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">ファイルリスト取得中</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">一時的なエラー、再試行します。</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Please enter a valid folder name</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Are you sure that you want to delete &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">削除</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>今</translation>
+        <translation>たった今</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>転送分</translation>
+        <translation>転送</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">プロ・ライト</translation>
+        <translation type="unfinished">プロライト</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1943,7 +1959,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -1958,7 +1974,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>利用規約に同意して下さい。</translation>
+        <translation>当社の利用規約に同意していただく必要があります。</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2512,7 +2528,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">利用可能</translation>
+        <translation type="unfinished">使用可能</translation>
     </message>
 </context>
 <context>

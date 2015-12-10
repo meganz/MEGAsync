@@ -31,7 +31,7 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">файлов(а)</translation>
+        <translation type="obsolete">Файлы</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -522,7 +522,7 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Загрузка</translation>
+        <translation>Скачивание</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Ваша синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует</translation>
+        <translation type="obsolete">Синхронизация &quot;%1&quot; была отключена, так как локальная папка не существует.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Вход</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Получение списка файлов ...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Временная ошибка. Попробуйте ещё раз.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Введите действительное имя папки</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Действительно удалить &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Сейчас</translation>
+        <translation>только что</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Бесплатно</translation>
+        <translation>БЕСПЛАТНО</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1501,7 +1517,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Свободное место</translation>
+        <translation>Дисковое пространство</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>передачи</translation>
+        <translation>Трансферы</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO lite</translation>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Вам нужно согласиться с условиями предоставления услуг</translation>
+        <translation>Вы должны принять наши условия предоставления услуг</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">используется</translation>
+        <translation type="unfinished">Используется</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">доступно</translation>
+        <translation type="unfinished">Доступно</translation>
     </message>
 </context>
 <context>

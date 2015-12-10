@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">files</translation>
+        <translation type="obsolete">Files</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">folders</translation>
+        <translation type="obsolete">Folders</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privacy policy</translation>
+        <translation type="unfinished">Privacy Policy</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the local folder doesn&#039;t exist</translation>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Login</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Fetching file list...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Temporary error, retrying.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1018,7 +1026,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Internal Error</translation>
+        <translation>Internal error</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Please enter a valid folder name</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Are you sure that you want to delete &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Delete</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Just now</translation>
+        <translation>just now</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Free</translation>
+        <translation>FREE</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1501,7 +1517,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Storage Space</translation>
+        <translation>Storage space</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>transfers</translation>
+        <translation>Transfers</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1811,7 +1827,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation type="obsolete">Show OS X notifications</translation>
+        <translation type="obsolete">Show Mac OS notifications</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -1872,7 +1888,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Export Master Key</translation>
+        <translation type="unfinished">Export Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -1943,7 +1959,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -1958,7 +1974,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup versions of previously synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">used</translation>
+        <translation type="unfinished">Used</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">available</translation>
+        <translation type="unfinished">Available</translation>
     </message>
 </context>
 <context>

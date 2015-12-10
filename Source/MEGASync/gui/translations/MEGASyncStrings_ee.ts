@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">faili</translation>
+        <translation type="obsolete">Failid</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">kausta</translation>
+        <translation type="obsolete">Kaustad</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privaatsuseeskiri</translation>
+        <translation type="unfinished">Privaatsustingimused</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -527,7 +527,7 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Üles laeb</translation>
+        <translation>Üleslaadimine</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Teie sünkroniseering &quot;%1&quot; on keelatud, kuna kohalikku kausta pole olemas</translation>
+        <translation type="obsolete">Teie sünkroniseering &quot;%1&quot; on keelatud, sest sihtkausta pole olemas</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Sisselogimine</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Faili loendi hankimine...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Ajutine viga, proovime uuesti.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1018,7 +1026,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Sisemine Viga</translation>
+        <translation>Sisemine viga</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Palun sisestage kaustale korrektne nimi</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Olete &quot;%1&quot; kustutamises kindel?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Kustuta</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Praegu</translation>
+        <translation>just nüüd</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Tasuta</translation>
+        <translation>TASUTA</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1501,7 +1517,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Hoiuruum</translation>
+        <translation>Andmemaht</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>edastused</translation>
+        <translation>Ülekanded</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Peate nõustuma teenusetingimustega</translation>
+        <translation>Peate nõustuma meie teenuse tingimustega</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">kasutusel</translation>
+        <translation type="unfinished">Kasutusel</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">saadaval</translation>
+        <translation type="unfinished">Saadaval</translation>
     </message>
 </context>
 <context>

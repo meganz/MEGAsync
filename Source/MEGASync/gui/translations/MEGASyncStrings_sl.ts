@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">datoteke</translation>
+        <translation type="obsolete">Datoteke</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">mape</translation>
+        <translation type="obsolete">Mape</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -522,12 +522,12 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Prevzemam</translation>
+        <translation>Prenašam</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Nalagam</translation>
+        <translation>Prenašam</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Vaša sinhronizacija &quot;%1&quot; je bila onemogočena, ker lokalna mapa ne obstaja</translation>
+        <translation type="obsolete">Vaša sinhronizacija &quot;%1&quot; je bila onemogočena, ker lokalna mapa ne obstaja.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Prijava</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Prebiram spisek datotek...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Začasna napaka, ponavljam prenos.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Prosim, vnesite veljavno ime mape</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Ali ste prepričani, da želite izbrisati &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Briši</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Ravnokar</translation>
+        <translation>ravnokar</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Brezplačno</translation>
+        <translation>BREZPLAČNO</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1501,7 +1517,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Prosto</translation>
+        <translation>Prostor za shranjevanje</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>prenosi</translation>
+        <translation>Prenosi</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO lite</translation>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Sprejeti morate naše Pogoje uporabe.</translation>
+        <translation>Sprejeti morate naše pogoje poslovanja</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">uporabljeno</translation>
+        <translation type="unfinished">Uporabljeno</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">na voljo</translation>
+        <translation type="unfinished">Na voljo</translation>
     </message>
 </context>
 <context>

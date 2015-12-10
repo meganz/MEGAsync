@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">因本機資料夾不存在，您的同步 &quot;%1&quot; 已被停用。</translation>
+        <translation type="obsolete">您的同步&quot;%1&quot;未啟用因為本機資料夾不存在</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -835,7 +835,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation>同步將停止。</translation>
+        <translation>同步將停止。還是退出?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -980,7 +980,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">無法使用DEBUG模式</translation>
+        <translation type="unfinished">DEBUG模式已禁用</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
@@ -1006,6 +1006,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Login</source>
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">登錄</translation>
+    </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">取得檔案列表...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">暫時性的錯誤，正在重試中。</translation>
     </message>
 </context>
 <context>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">請輸入有效的資料夾名稱</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">您確定要刪除 &quot;%1&quot; 嗎？</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">刪除</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>剛剛</translation>
+        <translation>正是現在</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite體驗版</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1933,7 +1949,7 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">檔案與資料夾名稱未同步</translation>
+        <translation type="unfinished">不包括檔案與資料夾名稱</translation>
     </message>
     <message>
         <source>Clear local cache</source>
@@ -1958,7 +1974,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">在MEGA中已同步的檔案之備份版本將被永久刪除。請檢查您於MEGA帳戶之垃圾桶中的 [A] 資料夾，並確定在繼續進行此動作前，是否需要先備份或救回任何檔案。</translation>
+        <translation type="unfinished">在MEGA中已同步的檔案之備份版本將被永久刪除。請檢查您於MEGA帳戶之垃圾夾中的 [A] 資料夾，並確定在繼續進行此動作前，是否需要先備份或救回任何檔案。</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>您需要接受服務條款</translation>
+        <translation>您必須同意我們的服務條款</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2287,7 +2303,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation type="unfinished">您確定想要取消執行精靈並回復所有改變?</translation>
+        <translation type="unfinished">您確定想要取消執行嚮導並復原所有改變?</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -2512,7 +2528,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可用</translation>
+        <translation type="unfinished">可使用的</translation>
     </message>
 </context>
 <context>

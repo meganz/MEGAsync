@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">tệp tin</translation>
+        <translation type="obsolete">Tệp tin</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">thư mục</translation>
+        <translation type="obsolete">Thư mục</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Chính sách pháp lý</translation>
+        <translation type="unfinished">Chính sách Riêng tư</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Đồng bộ &quot;%1&quot; của bạn đã bị ngắtdo thư mục nội tại không có tồn tại</translation>
+        <translation type="obsolete">Đồng bộ cho &quot;%1&quot; vừa bị hủy vì thư mục chứa nó trên máy này bị mất</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1007,6 +1007,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Đăng nhập</translation>
     </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Đang lấy danh sách các tệp tin...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Tạm thời có lỗi, đang thử lại.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Xin đặt tên cho thư mục một cách đàng hoàng</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Bạn có chắc muốn xóa &quot;%1&quot; không?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Xóa</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Vừa xong</translation>
+        <translation>vừa xong</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Miễn phí</translation>
+        <translation>MIỄN PHÍ</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>các truyền tải</translation>
+        <translation>Phiên truyền tải</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Bạn phải chấp thuận Điều Khoản Sử Dụng.</translation>
+        <translation>Bạn cần phải chấp nhận điều khoản dịch vụ của chúng tôi</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">đã dùng</translation>
+        <translation type="unfinished">Đã dùng</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">còn sẵn</translation>
+        <translation type="unfinished">Khả dụng</translation>
     </message>
 </context>
 <context>

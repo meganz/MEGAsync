@@ -31,12 +31,12 @@
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">fájlok</translation>
+        <translation type="obsolete">Fájlok</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">mappák</translation>
+        <translation type="obsolete">Mappák</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Adatvédelem</translation>
+        <translation type="unfinished">Adatvédelmi nyilatkozat</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -527,7 +527,7 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Feltöltés</translation>
+        <translation>Feltöltés folyamatban</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">A(z) &quot;%1&quot; szinkron letiltásra került, mivel a helyi mappa nem létezik</translation>
+        <translation type="obsolete">Szinkronizációd &quot;%1&quot; le lett tiltva, mert a helyi könyvtár nem létezik.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -995,7 +995,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">SSL kulcsunk nem erősíthető meg. Lehetséges, hogy közbeékelődéses támadás áldozata, vagy vírusírtó szoftvere elfogja az üzeneteket és ez okozhatja a problémát. Kérjük átmenetileg tiltsa le vírusírtó szoftverét, majd próbálja újra.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1006,6 +1006,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Login</source>
         <translatorcomment>Label to indicate Login action</translatorcomment>
         <translation type="unfinished">Bejelentkezés</translation>
+    </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translation type="unfinished">Fájllista kiolvasása...</translation>
+    </message>
+    <message>
+        <source>Temporary error, retrying.</source>
+        <translation type="unfinished">Átmeneti hiba, újrapróbálkozás</translation>
     </message>
 </context>
 <context>
@@ -1018,7 +1026,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Belső Hiba</translation>
+        <translation>Belső hiba</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1267,6 +1275,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
         <translation type="unfinished">Kérjük érvényes mappanevet írjon be</translation>
     </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished">Biztosan szeretné törölni a(z) &quot;%1&quot;-t?</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Törlés</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1344,7 +1360,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>Épp az imént</translation>
+        <translation>az imént</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -1491,7 +1507,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Ingyenes</translation>
+        <translation>INGYENES</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1698,7 +1714,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>átvitelek</translation>
+        <translation>Átvitelek</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1902,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO lite</translation>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2176,7 +2192,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>El kell fogadnia az Általános Szolgáltatási Feltételeket</translation>
+        <translation>El kell fogadnod általános szolgáltatási feltételeinket</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2508,11 +2524,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">felhasználva</translation>
+        <translation type="unfinished">Felhasználva</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">érhető el</translation>
+        <translation type="unfinished">Elérhető</translation>
     </message>
 </context>
 <context>
