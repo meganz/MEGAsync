@@ -36,7 +36,7 @@
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">carpetas</translation>
+        <translation type="obsolete">Carpetas</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>No se ha podido acceder al sistema de archivos. Por favor, inténtalo de nuevo. Si el problema persiste contacta con bug@mega.co.nz</translation>
+        <translation>No se ha podido acceder al sistema de archivos. Por favor, inténtalo de nuevo. Si el problema persiste contacta con bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1013,7 +1013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Error temporal, re-intentando.</translation>
+        <translation type="unfinished">Error temporal, reintentando.</translation>
     </message>
 </context>
 <context>
@@ -1253,7 +1253,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Carpeta no válida para sincronización.Asegúrate de que no usas caracteres como &#039;&#039;, &#039;/&#039; o &#039;:&#039; en tus nombres de carpeta.</translation>
+        <translation>Carpeta no válida para sincronización. Asegúrate de que no usas caracteres como &#039;&#039;, &#039;/&#039; o &#039;:&#039; en tus nombres de carpeta.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1918,7 +1918,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">Lite</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
