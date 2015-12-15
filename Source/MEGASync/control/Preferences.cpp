@@ -1245,7 +1245,7 @@ void Preferences::setLastUpdateVersion(int version)
 QString Preferences::downloadFolder()
 {
     mutex.lock();
-    QString value = settings->value(downloadFolderKey).toString();
+    QString value = QDir::toNativeSeparators(settings->value(downloadFolderKey).toString());
     mutex.unlock();
     return value;
 }
@@ -1253,7 +1253,7 @@ QString Preferences::downloadFolder()
 void Preferences::setDownloadFolder(QString value)
 {
     mutex.lock();
-    settings->setValue(downloadFolderKey, value);
+    settings->setValue(downloadFolderKey, QDir::toNativeSeparators(value));
     settings->sync();
     mutex.unlock();
 }
