@@ -45,7 +45,8 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     this->setMaximumHeight(this->minimumHeight());
 
     QString defaultFolderPath;
-    QFileInfo test(preferences->downloadFolder());
+    QString downloadFolder = QDir::toNativeSeparators(preferences->downloadFolder());
+    QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
 #ifdef WIN32
@@ -68,7 +69,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     }
     else
     {
-        defaultFolderPath = preferences->downloadFolder();
+        defaultFolderPath = downloadFolder;
     }
 
     ui->eLocalFolder->setText(defaultFolderPath);
@@ -156,7 +157,7 @@ QString ImportMegaLinksDialog::getImportPath()
 
 QString ImportMegaLinksDialog::getDownloadPath()
 {
-    return ui->eLocalFolder->text();
+    return QDir::toNativeSeparators(ui->eLocalFolder->text());
 }
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
@@ -261,6 +262,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
                                                       | QFileDialog::DontResolveSymlinks);
     if (path.length())
     {
+        path = QDir::toNativeSeparators(path);
         QDir dir(path);
         if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
         {
