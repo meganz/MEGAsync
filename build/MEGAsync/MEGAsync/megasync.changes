@@ -1,3 +1,11 @@
+Mon Jan 4 12:16:28 CET 2016 - linux@mega.co.nz
+
+- Allow the usage of MEGAsync without being logged in
+- New network layer using cURL and c-ares (Win32)
+- Accessibility and SOCKS5 proxy support (Win32)
+- Bug fixes and improvements for the synchronization engine
+
+-------------------------------------------------------------------
 Thu Oct 8 19:51:46 CEST 2015 - linux@mega.co.nz
 
 - Inform about MITM attacks
