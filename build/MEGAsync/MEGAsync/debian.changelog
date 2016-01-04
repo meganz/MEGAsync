@@ -1,3 +1,12 @@
+megasync (2.5.3) stable; urgency=low
+
+  * Allow the usage of MEGAsync without being logged in
+  * New network layer using cURL and c-ares (Win32)
+  * Accessibility and SOCKS5 proxy support (Win32)
+  * Bug fixes and improvements for the synchronization engine
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 04 Jan 2016 12:16:28 +0100
+
 megasync (2.3.1) stable; urgency=low
 
   * Inform about MITM attacks
