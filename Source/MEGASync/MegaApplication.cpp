@@ -212,12 +212,12 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    SharedTools::QtLockedFile singleInstanceChecker(appLockPath);
+    QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
     for (int i = 0; i < 10; i++)
     {
-        singleInstanceChecker.open(SharedTools::QtLockedFile::ReadWrite);
-        if (singleInstanceChecker.lock(SharedTools::QtLockedFile::WriteLock, false))
+        singleInstanceChecker.open(QtLockedFile::ReadWrite);
+        if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
         {
             alreadyStarted = false;
             break;
@@ -317,7 +317,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     #endif
 
     #ifdef DEBUG
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
     #else
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
     #endif
