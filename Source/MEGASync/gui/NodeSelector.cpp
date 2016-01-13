@@ -50,14 +50,22 @@ void NodeSelector::nodesReady()
     case NodeSelector::UPLOAD_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_READWRITE);
         model->showFiles(false);
+        model->setDisableFolders(false);
         break;
     case NodeSelector::SYNC_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_FULL);
         model->showFiles(false);
+        model->setDisableFolders(false);
         break;
     case NodeSelector::DOWNLOAD_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_READ);
         model->showFiles(true);
+        model->setDisableFolders(false);
+        break;
+    case NodeSelector::STREAM_SELECT:
+        model->setRequiredRights(MegaShare::ACCESS_READ);
+        model->showFiles(true);
+        model->setDisableFolders(true);
         break;
     }
 
@@ -375,9 +383,9 @@ void NodeSelector::on_bOk_clicked()
     int access = megaApi->getAccess(node);
     if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
-            QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
-            delete node;
-            return;
+        QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
+        delete node;
+        return;
 
     }
     else if ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
@@ -386,12 +394,18 @@ void NodeSelector::on_bOk_clicked()
         delete node;
         return;
     }
+    else if ((selectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
+    {
+        QMessageBox::warning(this, tr("Error"), tr("You need to select a File for streaming."), QMessageBox::Ok);
+        delete node;
+        return;
+    }
 
     const char* path = megaApi->getNodePath(node);
     MegaNode *check = megaApi->getNodeByPath(path);
     delete [] path;
     delete node;
-    if (!check)
+    if (selectMode != NodeSelector::STREAM_SELECT && !check)
     {
         QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
                                                      "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
