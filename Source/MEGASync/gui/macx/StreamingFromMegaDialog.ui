@@ -89,13 +89,13 @@ font-size: 11px;
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>7</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>18</number>
+       <number>9</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -325,7 +325,7 @@ font-size: 11px;
               <widget class="QWidget" name="pFileInfo">
                <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>6</number>
                 </property>
                 <property name="leftMargin">
                  <number>9</number>
@@ -358,10 +358,6 @@ font-size: 11px;
                   </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
-                    <normaloff>:/images/drag_podcast.png</normaloff>:/images/drag_podcast.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -578,7 +574,7 @@ font-size: 11px;
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>7</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -612,7 +608,7 @@ font-size: 11px;
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>0</number>
+             <number>23</number>
             </property>
             <item>
              <widget class="QPushButton" name="bOpenDefault">
