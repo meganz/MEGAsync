@@ -20,6 +20,7 @@
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
 #include "gui/DownloadFromMegaDialog.h"
+#include "gui/StreamingFromMegaDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
@@ -114,6 +115,7 @@ public slots:
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
+    void streamActionClicked();
     void logoutActionClicked();
     void processDownloads();
     void shellUpload(QQueue<QString> newUploadQueue);
@@ -192,6 +194,7 @@ protected:
     QAction *importLinksAction;
     QAction *uploadAction;
     QAction *downloadAction;
+    QAction *streamAction;
 
     QAction *updateAction;
     QAction *showStatusAction;
@@ -220,6 +223,7 @@ protected:
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
+    StreamingFromMegaDialog *streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
