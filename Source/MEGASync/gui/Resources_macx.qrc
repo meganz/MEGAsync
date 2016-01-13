@@ -409,5 +409,11 @@
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
+        <file>images/streaming_link.png</file>
+        <file>images/streaming_link@2x.png</file>
+        <file>images/streaming_off_icon.png</file>
+        <file>images/streaming_off_icon@2x.png</file>
+        <file>images/streaming_on_icon.png</file>
+        <file>images/streaming_on_icon@2x.png</file>
     </qresource>
 </RCC>
