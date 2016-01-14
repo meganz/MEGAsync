@@ -31,11 +31,17 @@
 font-size: 11px;
 }
 
-#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc, #lFileSize
+#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc 
 {
   font-family: &quot;HelveticaNeue-Light&quot;;
   font-size: 12px;
   color: #000000;
+}
+#lFileSize
+{
+  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-size: 12px;
+  color: #666666;
 }
 #wContainer
 {
@@ -55,6 +61,13 @@ font-size: 11px;
 {
 	font-size: 12px;
 	color: #000000;
+}
+#bCopyLink
+{
+    border: 1px solid #8f8f91;
+    border-radius: 4px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgba(246,247,250,30), stop: 1 rgba(232,233,235,30));
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -537,10 +550,7 @@ font-size: 11px;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">    border: 1px solid #8f8f91;
-    border-radius: 4px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+               <string notr="true">
 </string>
               </property>
               <property name="text">
@@ -677,12 +687,15 @@ font-size: 11px;
        <height>48</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <property name="leftMargin">
        <number>12</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="rightMargin">
        <number>16</number>

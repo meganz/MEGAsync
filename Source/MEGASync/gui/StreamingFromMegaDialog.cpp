@@ -278,6 +278,8 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status
 #endif
 
     ui->sFileInfo->setCurrentWidget(ui->pFileInfo);
+    ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                                   "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
     ui->bCopyLink->setEnabled(true);
 }
 
