@@ -40,6 +40,39 @@ void StreamingFromMegaDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
+void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
+{
+    if (!event->spontaneous())
+    {
+        event->accept();
+        return;
+    }
+
+    QString message = selectedMegaNode ? tr("Are you sure that you want to stop the streaming of \"%1\"?").arg(QString::fromUtf8(selectedMegaNode->getName()))
+                                       : tr("Are you sure that you want to stop the streaming ?");
+
+    event->ignore();
+    QPointer<QMessageBox> msg = new QMessageBox(this);
+    msg->setIcon(QMessageBox::Question);
+    msg->setWindowTitle(tr("Stream from MEGA"));
+    msg->setText(message);
+    msg->addButton(QMessageBox::Yes);
+    msg->addButton(QMessageBox::No);
+    msg->setDefaultButton(QMessageBox::No);
+    int button = msg->exec();
+    if (msg)
+    {
+        delete msg;
+    }
+
+    if (button == QMessageBox::Yes)
+    {
+        megaApi->httpServerStop();
+        event->accept();
+    }
+
+}
+
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::STREAM_SELECT, this);
