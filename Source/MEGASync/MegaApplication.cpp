@@ -385,6 +385,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoOverQuota = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
+    streamSelector = NULL;
     reboot = false;
     translator = NULL;
     exitAction = NULL;
