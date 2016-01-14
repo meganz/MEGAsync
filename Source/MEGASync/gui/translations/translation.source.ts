@@ -1021,6 +1021,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Temporary error, retrying.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Streaming</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1290,6 +1302,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Delete</source>
         <translation type="unfinished">[$1730]</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2450,6 +2466,89 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translation type="unfinished">[$1687]</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">[$1578]</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translation type="unfinished">[$1642]</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translation type="unfinished">[$1600]</translation>
+    </message>
+    <message>
+        <source>Error opening the default application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

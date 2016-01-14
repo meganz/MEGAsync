@@ -396,7 +396,7 @@ void NodeSelector::on_bOk_clicked()
     }
     else if ((selectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
     {
-        QMessageBox::warning(this, tr("Error"), tr("You need to select a File for streaming."), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
         delete node;
         return;
     }

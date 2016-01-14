@@ -48,29 +48,32 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
         return;
     }
 
-    QString message = selectedMegaNode ? tr("Are you sure that you want to stop the streaming of \"%1\"?").arg(QString::fromUtf8(selectedMegaNode->getName()))
-                                       : tr("Are you sure that you want to stop the streaming ?");
-
-    event->ignore();
-    QPointer<QMessageBox> msg = new QMessageBox(this);
-    msg->setIcon(QMessageBox::Question);
-    msg->setWindowTitle(tr("Stream from MEGA"));
-    msg->setText(message);
-    msg->addButton(QMessageBox::Yes);
-    msg->addButton(QMessageBox::No);
-    msg->setDefaultButton(QMessageBox::No);
-    int button = msg->exec();
-    if (msg)
+    if (selectedMegaNode)
     {
-        delete msg;
+        event->ignore();
+        QPointer<QMessageBox> msg = new QMessageBox(this);
+        msg->setIcon(QMessageBox::Question);
+        msg->setWindowTitle(tr("Stream from MEGA"));
+        msg->setText(tr("Are you sure that you want to stop the streaming?"));
+        msg->addButton(QMessageBox::Yes);
+        msg->addButton(QMessageBox::No);
+        msg->setDefaultButton(QMessageBox::No);
+        int button = msg->exec();
+        if (msg)
+        {
+            delete msg;
+        }
+
+        if (button == QMessageBox::Yes)
+        {
+            megaApi->httpServerStop();
+            event->accept();
+        }
     }
-
-    if (button == QMessageBox::Yes)
+    else
     {
-        megaApi->httpServerStop();
         event->accept();
     }
-
 }
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
@@ -85,7 +88,7 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
     selectedMegaNode = megaApi->getNodeByHandle(nodeSelector->getSelectedFolderHandle());
     if (!selectedMegaNode)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Error retrieving file"), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("File not found"), QMessageBox::Ok);
         return;
     }
     updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), CORRECT);
@@ -95,8 +98,8 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
     QPointer<QInputDialog> id = new QInputDialog(this);
-    id->setWindowTitle(tr("Import link"));
-    id->setLabelText(tr("Enter a MEGA file link :"));
+    id->setWindowTitle(tr("Open link"));
+    id->setLabelText(tr("Enter a MEGA file link:"));
     int result = id->exec();
     if (!id || !result)
     {
@@ -126,11 +129,15 @@ void StreamingFromMegaDialog::on_bCopyLink_clicked()
 
 void StreamingFromMegaDialog::on_bClose_clicked()
 {
-    QString message = selectedMegaNode ? tr("Are you sure that you want to stop the streaming of \"%1\"?").arg(QString::fromUtf8(selectedMegaNode->getName()))
-                                       : tr("Are you sure that you want to stop the streaming ?");
+    if (!selectedMegaNode)
+    {
+        close();
+        return;
+    }
+
     if (QMessageBox::question(this,
-                             QString::fromUtf8("Stream from MEGA"),
-                             message,
+                             tr("Stream from MEGA"),
+                             tr("Are you sure that you want to stop the streaming?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
 
@@ -196,7 +203,7 @@ bool StreamingFromMegaDialog::generateStreamURL()
     streamURL = QString::fromUtf8(megaApi->httpServerGetLocalLink(selectedMegaNode));
     if (streamURL.isEmpty())
     {
-        QMessageBox::warning(this, tr("Error"), tr("Error generating Streaming Link"), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Error generating streaming link"), QMessageBox::Ok);
         return false;
     }
 
@@ -224,7 +231,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 {
     if (app.isEmpty())
     {
-        QMessageBox::warning(this, tr("Error"), tr("Error opening with default application. Please, use choose an application option"), QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Error opening the default application."), QMessageBox::Ok);
         return;
     }
 #ifndef __APPLE__
@@ -246,12 +253,8 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status
     QIcon typeIcon;
     typeIcon.addFile(Utilities::getExtensionPixmapMedium(fileName), QSize(), QIcon::Normal, QIcon::Off);
 
-#ifdef __APPLE__
     ui->lFileType->setIcon(typeIcon);
     ui->lFileType->setIconSize(QSize(48, 48));
-#else
-    ui->lFileType->setPixmap(typeIcon.pixmap(QSize(48, 48)));
-#endif
 
     QIcon statusIcon;
     switch (status)
@@ -270,12 +273,8 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status
         break;
     }
 
-#ifdef __APPLE__
     ui->lState->setIcon(statusIcon);
     ui->lState->setIconSize(QSize(8, 8));
-#else
-    ui->lState->setPixmap(statusIcon.pixmap(QSize(8, 8)));
-#endif
 
     ui->sFileInfo->setCurrentWidget(ui->pFileInfo);
     ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
