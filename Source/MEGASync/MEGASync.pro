@@ -44,6 +44,8 @@ debug {
     DEFINES += LOG_TO_LOGGER
 }
 
+CONFIG += USE_LIBUV
+
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
