@@ -33,6 +33,7 @@ NodeSelector::~NodeSelector()
 {
     delete delegateListener;
     delete ui;
+    delete model;
 }
 
 void NodeSelector::nodesReady()
