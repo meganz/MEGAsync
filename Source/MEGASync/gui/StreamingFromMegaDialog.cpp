@@ -167,23 +167,23 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
 {
     QString defaultPath;
 
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting Applications path");
 #ifdef WIN32
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
-    #endif
+    WCHAR buffer[MAX_PATH];
+    if (SHGetFolderPath(0, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, buffer) == S_OK)
+    {
+        defaultPath = QString::fromUtf16(buffer);
+    }
 #else
     #if QT_VERSION < 0x050000
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting Applications path (QT4)");
         defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
     #else
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting Applications path (QT5)");
         defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
     #endif
 #endif
+
+    defaultPath = QDir::toNativeSeparators(defaultPath);
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
 
     QString path =  QFileDialog::getOpenFileName(0, tr("Choose application"), defaultPath);
     if (path.length() && !streamURL.isEmpty())
