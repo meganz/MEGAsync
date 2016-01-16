@@ -36,7 +36,7 @@ public:
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
-    static QString getDefaultOpenApp(QString file);
+    static QString getDefaultOpenApp(QString extension);
 
     static int fd;
 };

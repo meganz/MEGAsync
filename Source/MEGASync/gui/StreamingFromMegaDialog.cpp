@@ -235,7 +235,9 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
         return;
     }
 #ifndef __APPLE__
-    //TODO: Set default method to open the stream link for Win & Linux
+    QString command = QString::fromUtf8("\"") + QDir::toNativeSeparators(app) + QString::fromUtf8("\"")
+            + QString::fromUtf8(" ") + QString::fromAscii(" \"%1\"").arg(streamURL);
+    QProcess::startDetached(command);
 #else
     QString args;
     args = QLatin1String("-a ");

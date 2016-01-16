@@ -122,9 +122,9 @@ QByteArray MacXPlatform::getLocalStorageKey()
     return QByteArray(128, 0);
 }
 
-QString MacXPlatform::getDefaultOpenApp(QString file)
+QString MacXPlatform::getDefaultOpenApp(QString extension)
 {
-    return defaultOpenApp(file);
+    return defaultOpenApp(extension);
 }
 
 bool MacXPlatform::enableSetuidBit()

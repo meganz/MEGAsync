@@ -466,9 +466,6 @@ void unSetFolderIcon(QString path)
     [folderPath release];
 }
 
-
-
-
 QString defaultOpenApp(QString extension)
 {
     CFURLRef appURL = NULL;
@@ -500,7 +497,4 @@ QString defaultOpenApp(QString extension)
     CFRelease(info);
 
     return defaultAppPath;
-
-
-
 }
