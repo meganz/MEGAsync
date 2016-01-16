@@ -1,5 +1,6 @@
 #include "WindowsPlatform.h"
 #include <Shlobj.h>
+#include <Shlwapi.h>
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
@@ -386,5 +387,53 @@ QByteArray WindowsPlatform::getLocalStorageKey()
     QByteArray result((char *)userToken->User.Sid, dwLength);
     CloseHandle(hToken);
     delete userToken;
+    return result;
+}
+
+QString WindowsPlatform::getDefaultOpenApp(QString extension)
+{
+    DWORD length = 0;
+    ASSOCSTR type = ASSOCSTR_CONTENTTYPE;
+    QString extensionWithDot = QString::fromUtf8(".") + extension;
+    QString mimeType;
+
+    HRESULT ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+                                 NULL, NULL, &length);
+    if (ret == S_FALSE)
+    {
+        WCHAR *buffer = new WCHAR[length];
+        ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+                               NULL, buffer, &length);
+        if (ret == S_OK)
+        {
+            mimeType = QString::fromUtf16(buffer);
+        }
+        delete [] buffer;
+    }
+
+    if (!mimeType.startsWith(QString::fromUtf8("video")))
+    {
+        return QString();
+    }
+
+    type = ASSOCSTR_EXECUTABLE;
+    ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+                                 NULL, NULL, &length);
+    if (ret != S_FALSE)
+    {
+       return QString();
+    }
+
+    WCHAR *buffer = new WCHAR[length];
+    ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+                           NULL, buffer, &length);
+    if (ret != S_OK)
+    {
+        delete [] buffer;
+        return QString();
+    }
+
+    QString result = QString::fromUtf16(buffer);
+    delete [] buffer;
     return result;
 }
