@@ -1259,6 +1259,9 @@ void MegaApplication::closeDialogs()
     delete settingsDialog;
     settingsDialog = NULL;
 
+    delete streamSelector;
+    streamSelector = NULL;
+
     delete uploadFolderSelector;
     uploadFolderSelector = NULL;
 
@@ -2696,7 +2699,7 @@ void MegaApplication::streamActionClicked()
         return;
     }
 
-    streamSelector = new StreamingFromMegaDialog(megaApi, NULL);
+    streamSelector = new StreamingFromMegaDialog(megaApi);
     int result = streamSelector->exec();
     if (!streamSelector)
     {
