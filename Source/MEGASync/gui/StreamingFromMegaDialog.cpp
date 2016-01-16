@@ -236,9 +236,10 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 {
     if (app.isEmpty())
     {
-        QMessageBox::warning(this, tr("Error"), tr("Error opening the default application."), QMessageBox::Ok);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(streamURL));
         return;
     }
+
 #ifndef __APPLE__
     QString command = QString::fromUtf8("\"") + QDir::toNativeSeparators(app) + QString::fromUtf8("\"")
             + QString::fromUtf8(" ") + QString::fromAscii(" \"%1\"").arg(streamURL);
@@ -253,7 +254,6 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 
 void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status)
 {
-
     ui->lFileName->setText(fileName);
     ui->lFileSize->setText(Utilities::getSizeString(selectedMegaNode->getSize()));
 
