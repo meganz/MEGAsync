@@ -625,6 +625,10 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\cares.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\cares.dll" "$USERNAME" "GenericRead + GenericWrite"
   
+  File "${SRCDIR_MEGASYNC}\libuv.dll"
+  AccessControl::SetFileOwner "$INSTDIR\libuv.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\libuv.dll" "$USERNAME" "GenericRead + GenericWrite"
+
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
