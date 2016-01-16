@@ -188,8 +188,8 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
     QString path =  QFileDialog::getOpenFileName(0, tr("Choose application"), defaultPath);
     if (path.length() && !streamURL.isEmpty())
     {
-        QDir dir(path);
-        if (!dir.exists())
+        QFileInfo info(path);
+        if (!info.exists())
         {
             return;
         }
