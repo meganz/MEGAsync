@@ -12,6 +12,11 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
     ui(new Ui::StreamingFromMegaDialog)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
+                                | Qt::WindowMinimizeButtonHint
+                                | Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
 
     this->megaApi = megaApi;
     this->selectedMegaNode = NULL;
