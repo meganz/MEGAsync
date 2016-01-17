@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</translation>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the local folder doesn&#039;t exist</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1015,6 +1015,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Temporary error, retrying.</translation>
     </message>
+    <message>
+        <source>Streaming</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Streaming</translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Streaming from MEGA</translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream from MEGA</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">seconds</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">minutes</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Free bandwidth quota exceeded</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">Pro bandwidth quota exceeded.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1282,6 +1317,19 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translation type="unfinished">Delete</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">Only files can be used for streaming.</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Select items</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">Select just one file.</translation>
     </message>
 </context>
 <context>
@@ -1893,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Export master key</translation>
+        <translation type="unfinished">Export Master Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -1918,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2435,6 +2483,104 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Size limits cannot be zero</translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream from MEGA</translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
+        <translation type="unfinished">Select media from...</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
+        <translation type="unfinished">Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
+        <translation type="unfinished">Public link</translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
+        <translation type="unfinished">File info:</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
+        <translation type="unfinished">Nothing selected</translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
+        <translation type="unfinished">Open with:</translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
+        <translation type="unfinished">Default application</translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
+        <translation type="unfinished">Choose application</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Close</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
+        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when a file is not found</translatorcomment>
+        <translation type="unfinished">File not found</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Open link</translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Enter a MEGA file link:</translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
+        <translation type="unfinished">The link has been copied to the clipboard</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
+        <translation type="unfinished">Error generating streaming link</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
+        <translation type="unfinished">Decryption error</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished">Error getting link information</translation>
     </message>
 </context>
 <context>

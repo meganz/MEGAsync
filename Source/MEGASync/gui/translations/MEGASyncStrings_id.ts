@@ -522,12 +522,12 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Sedang mengunduh</translation>
+        <translation>Mengunduh</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Mengunggah</translation>
+        <translation>Uploading</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Ada kesalahan meng-install update. Harap coba kembali beberapa saat lagi atau download versi terakhir dari: https://mega.nz/#sync</translation>
+        <translation>Terdapat masalah saat meng-install update. Harap coba kembali lagi nanti atau download versi terakhir dari: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Tidak dapat mendapatkan filesystem. Harap, coba kembali. Jika tetap terdapat masalah harap hubungi bug@mega.nz</translation>
+        <translation>Tidak dapat mendapatkan filesystem. Harap, coba kembali. Jika masih terdapat masalah, harap kontak bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
+        <translation type="unfinished">Kontak anda telah diblok. Harap hubungi support@mega.co.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1014,6 +1014,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Pengguna sementara, mencoba kembali.</translation>
+    </message>
+    <message>
+        <source>Streaming</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Streaming</translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Streaming from MEGA</translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream from MEGA</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">detik</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">menit</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Harap upgrade ke Pro untuk melanjutkan, atau tunggu %1 untuk melanjutkan dengan gratis.</translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Bandwidth quota gratis terlampaui</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">kuota bandwith pro terlampaui</translation>
     </message>
 </context>
 <context>
@@ -1282,6 +1317,19 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translation type="unfinished">Hapus</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">Only files can be used for streaming.</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Pilih item</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">Pilih hanya satu file.</translation>
     </message>
 </context>
 <context>
@@ -1918,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2249,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Tidak dapat mendapatkan filesystem. Harap, coba kembali. Jika tetap terdapat masalah harap hubungi bug@mega.nz</translation>
+        <translation>Tidak dapat mendapatkan filesystem. Harap, coba kembali. Jika masih terdapat masalah, harap kontak bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2294,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
+        <translation type="unfinished">Kontak anda telah diblok. Harap hubungi support@mega.co.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2435,6 +2483,104 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Batas ukuran tidak boleh nol</translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream from MEGA</translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
+        <translation type="unfinished">Select media from...</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
+        <translation type="unfinished">Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
+        <translation type="unfinished">Link / Tautan untuk umum</translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
+        <translation type="unfinished">Info file:</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
+        <translation type="unfinished">Tidak ada terpilih</translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
+        <translation type="unfinished">Buka dengan:</translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
+        <translation type="unfinished">Default application</translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
+        <translation type="unfinished">Choose application</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Tutup</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
+        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when a file is not found</translatorcomment>
+        <translation type="unfinished">File tidak ditemukan</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Buka link</translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Enter a MEGA file link:</translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
+        <translation type="unfinished">Link telah disalin ke clipboard</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
+        <translation type="unfinished">Error generating streaming link</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
+        <translation type="unfinished">Decryption error</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished">Error mendapatkan informasi link</translation>
     </message>
 </context>
 <context>

@@ -1030,6 +1030,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished">Streaming desde MEGA</translation>
     </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">segundos</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">minutos</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Por favor mejora a Pro para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Ancho de banda gratuito excedido</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">Cuota de ancho de banda Pro excedida.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1302,6 +1322,14 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
         <translation type="unfinished">Sólo se puede hacer streaming de archivos</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Seleccionar elementos</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">Seleccione sólo un fichero.</translation>
     </message>
 </context>
 <context>
@@ -2491,7 +2519,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open with:</source>
-        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>        
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
         <translation type="unfinished">Abrir con:</translation>
     </message>
     <message>
@@ -2548,11 +2576,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
         <translation type="unfinished">Error de desencriptado </translation>
-    </message>
-    <message>
-        <source>Error opening the default application.</source>
-        <translatorcomment>Text shown when there is an error opening the default application for streaming</translatorcomment>
-        <translation type="unfinished">Error abriendo la aplicación por defecto</translation>
     </message>
     <message>
         <source>Error getting link information</source>

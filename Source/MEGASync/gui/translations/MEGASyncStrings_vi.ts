@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="unfinished">MEGAsync hiện đang ở chế độ khách</translation>
     </message>
     <message>
         <source>Login</source>
@@ -626,7 +626,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;Phiên bản beta hiện không còn nữa hoặc đã hết hạn.&lt;br&gt;Để biết thêm, xin follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; để có cập nhật.</translation>
+        <translation type="obsolete">Cảm ơn quý khách đã tham gia đội thử nghiệm MEGAsync.&lt;br&gt;Phiên bản beta này hiện không còn nữa hoặc đã hết hạn.&lt;br&gt;Để biết thêm, xin follow trang &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; để có cập nhật.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Đồng bộ cho &quot;%1&quot; vừa bị hủy vì thư mục chứa nó trên máy này bị mất</translation>
+        <translation type="obsolete">Đồng bộ &quot;%1&quot; của bạn đã bị ngắtdo thư mục nội tại không có tồn tại</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -808,12 +808,12 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Có lỗi phát sinh khi cài đặt bản cập nhật mới. Xin thử cài lại sau hoặc lên trang web https://mega.nz/#sync để tải về phiên bản mới nhất.</translation>
+        <translation>Lỗi phát sinh trong quá trình cài đặt bản cập nhật. Xin thử lại sau hoặc tải phiên bản mới đầy đủ từ trang: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Cám ơn sự hợp tác của quý vị!</translation>
+        <translation>Cám ơn sự hợp tác của quý khách!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Không lấy được tệp tin hệ thống.Xin thử lại. Nếu lỗi vaacn cứ tiếp diễn, xin liên hệ bug@mega.nz</translation>
+        <translation>Không truy xuất được filesystem.Xin thử lại sau. Nếu lỗi vẫn tiếp diễn, xin liên hệ bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz</translation>
+        <translation type="unfinished">Tài khoản của bạn đã bị khóa. Xin liên hệ support@mega.co.nz để được giải quyết.</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -995,7 +995,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">Không xác thực được phương phức bảo mật SSL key. Lỗi này có thể gây ra từ việc bạn bị hack trung gian hoặc là chương trình diệt vi-rút trên máy tính cua bạn gây ảnh hưởng tới việc bạn giao tiếp tới nội dung mạng. Xin thử tạm ngưng chương trình diệt vi-rút và thử lại công việc này.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1014,6 +1014,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Tạm thời có lỗi, đang thử lại.</translation>
+    </message>
+    <message>
+        <source>Streaming</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream dữ liệu</translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream từ MEGA</translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream từ MEGA</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">giây</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">phút</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Là người dùng miễn phí bạn sẽ phải chờ %1 để tiếp tục. Bạn có thể nâng cấp lên hạng Pro để không bị giới hạn.</translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Đã vượt mức băng thông miễn phí</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">Đã vượt quá băng thông gói Pro.</translation>
     </message>
 </context>
 <context>
@@ -1282,6 +1317,19 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translation type="unfinished">Xóa</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">Chỉ có tệp tin mới có thể stream được.</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Lựa chọn mục</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">Xin chọn đúng MỘT tệp tin.</translation>
     </message>
 </context>
 <context>
@@ -1594,7 +1642,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Các dạng tệp tin bị khai trừ khỏi đồng bộ hóa</translation>
+        <translation type="obsolete">Danh sách dạng tệp tin bị khai trừ khỏi đồng bộ hóa</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
@@ -1893,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Xuất mã masterkey</translation>
+        <translation type="unfinished">Xuất mã Master Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -1918,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1949,12 +1997,12 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Excluded file and folder names</translation>
+        <translation type="unfinished">Dạng tên tệp và thư mục được khai trừ</translation>
     </message>
     <message>
         <source>Clear local cache</source>
         <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear local cache</translation>
+        <translation type="unfinished">Dọn cache rác trên máy</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -1964,12 +2012,12 @@ when the application starts again</source>
     <message>
         <source>Do you want to delete your local cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your local cache now?</translation>
+        <translation type="unfinished">Bạn có muốn xóa cache rác trên máy của mình không?</translation>
     </message>
     <message>
         <source>Clear remote cache</source>
         <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear remote cache</translation>
+        <translation type="unfinished">Dọn remote cache</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -1979,7 +2027,7 @@ when the application starts again</source>
     <message>
         <source>Do you want to delete your remote cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your remote cache now?</translation>
+        <translation type="unfinished">Bạn có muốn xóa remote cache rác không?</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2249,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Không lấy được tệp tin hệ thống.Xin thử lại. Nếu lỗi vaacn cứ tiếp diễn, xin liên hệ bug@mega.nz</translation>
+        <translation>Không truy xuất được filesystem.Xin thử lại sau. Nếu lỗi vẫn tiếp diễn, xin liên hệ bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2294,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz</translation>
+        <translation type="unfinished">Tài khoản của bạn đã bị khóa. Xin liên hệ support@mega.co.nz để được giải quyết.</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2435,6 +2483,104 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Giới hạn kích thước không được nhỏ hơn 0</translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Stream từ MEGA</translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
+        <translation type="unfinished">Chọn dữ liệu từ...</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
+        <translation type="unfinished">Ổ Mây</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
+        <translation type="unfinished">Đường dẫn công khai</translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
+        <translation type="unfinished">Thông tin tệp:</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
+        <translation type="unfinished">Chưa có mục nào được chọn</translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
+        <translation type="unfinished">Mở với:</translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
+        <translation type="unfinished">Ứng dụng mặc định</translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
+        <translation type="unfinished">Chọn chương trình</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Đóng</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
+        <translation type="unfinished">Bạn có chắc muốn ngưng việc streaming?</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages</translatorcomment>
+        <translation type="unfinished">Lỗi</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when a file is not found</translatorcomment>
+        <translation type="unfinished">Không tìm thấy tệp tin</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Mở đường liên kết</translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Nhập MEGA link:</translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
+        <translation type="unfinished">Liên kết đã được sao chép vào bộ nhớ. Ấn Ctrl+V khi gõ văn bản để dán liên kết.</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
+        <translation type="unfinished">Lỗi tạo đường dẫn liên kết cho việc streaming</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
+        <translation type="unfinished">Lỗi giải mã</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished">Lỗi khi khai thác thông tin của đường liên kết</translation>
     </message>
 </context>
 <context>
