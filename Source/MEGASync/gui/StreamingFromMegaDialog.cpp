@@ -203,13 +203,14 @@ bool StreamingFromMegaDialog::generateStreamURL()
         return false;
     }
 
-    streamURL = QString::fromUtf8(megaApi->httpServerGetLocalLink(selectedMegaNode));
-    if (streamURL.isEmpty())
+    char *link = megaApi->httpServerGetLocalLink(selectedMegaNode);
+    if (!link)
     {
         QMessageBox::warning(this, tr("Error"), tr("Error generating streaming link"), QMessageBox::Ok);
         return false;
     }
-
+    streamURL = QString::fromUtf8(link);
+    delete [] link;
     return true;
 }
 
