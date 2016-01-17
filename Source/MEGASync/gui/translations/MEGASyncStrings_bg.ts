@@ -1040,7 +1040,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Моля, преминете към Pro за да продължите веднага, или изчакайте % 1 за да продължите безплатно.</translation>
+        <translation type="unfinished">Моля, преминете към Pro за да продължите веднага, или изчакайте %1 за да продължите безплатно.</translation>
     </message>
     <message>
         <source>Free bandwidth quota exceeded</source>

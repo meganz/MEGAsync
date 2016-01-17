@@ -950,7 +950,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Din synkronisering &quot;%&quot; har stängts av. Fjärrmappen (eller delar av den) har inte full behörighet. </translation>
+        <translation type="unfinished">Din synkronisering &quot;%1&quot; har stängts av. Fjärrmappen (eller delar av den) har inte full behörighet. </translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -960,7 +960,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Din synkronisering har avaktiverats p.g.a att VirtualBox delade mappar inte stöds av säkerhetsskäl. </translation>
+        <translation type="unfinished">Din synkronisering &quot;%1&quot; har avaktiverats p.g.a att VirtualBox delade mappar inte stöds av säkerhetsskäl. </translation>
     </message>
     <message>
         <source>Logout</source>
