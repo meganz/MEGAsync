@@ -66,7 +66,7 @@ void NodeSelector::nodesReady()
     case NodeSelector::STREAM_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_READ);
         model->showFiles(true);
-        model->setDisableFolders(true);
+        model->setDisableFolders(false);
         break;
     }
 
@@ -402,18 +402,23 @@ void NodeSelector::on_bOk_clicked()
         return;
     }
 
-    const char* path = megaApi->getNodePath(node);
-    MegaNode *check = megaApi->getNodeByPath(path);
-    delete [] path;
-    delete node;
-    if (selectMode != NodeSelector::STREAM_SELECT && !check)
+    if (selectMode == NodeSelector::SYNC_SELECT)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
-                                                     "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
-                             QMessageBox::Ok);
-        return;
+        const char* path = megaApi->getNodePath(node);
+        MegaNode *check = megaApi->getNodeByPath(path);
+        delete [] path;
+        if (!check)
+        {
+            QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
+                                                         "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
+                                 QMessageBox::Ok);
+            delete node;
+            return;
+        }
+        delete check;
     }
-    delete check;
+
+    delete node;
     accept();
 }
 

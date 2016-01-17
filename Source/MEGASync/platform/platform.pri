@@ -28,7 +28,6 @@ unix:!macx {
 
     LIBS += -lssl -lcrypto
     DEFINES += USE_DBUS
-    QMAKE_CXXFLAGS += -std=c++11
 
     # do not install desktop files if no_desktop is defined,
     # make build tool take care of these files

@@ -47,37 +47,30 @@ void StreamingFromMegaDialog::changeEvent(QEvent *event)
 
 void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 {
-    if (!event->spontaneous())
+    if (!event->spontaneous() || !selectedMegaNode)
     {
         event->accept();
         return;
     }
 
-    if (selectedMegaNode)
+    event->ignore();
+    QPointer<QMessageBox> msg = new QMessageBox(this);
+    msg->setIcon(QMessageBox::Question);
+    msg->setWindowTitle(tr("Stream from MEGA"));
+    msg->setText(tr("Are you sure that you want to stop the streaming?"));
+    msg->addButton(QMessageBox::Yes);
+    msg->addButton(QMessageBox::No);
+    msg->setDefaultButton(QMessageBox::No);
+    int button = msg->exec();
+    if (msg)
     {
-        event->ignore();
-        QPointer<QMessageBox> msg = new QMessageBox(this);
-        msg->setIcon(QMessageBox::Question);
-        msg->setWindowTitle(tr("Stream from MEGA"));
-        msg->setText(tr("Are you sure that you want to stop the streaming?"));
-        msg->addButton(QMessageBox::Yes);
-        msg->addButton(QMessageBox::No);
-        msg->setDefaultButton(QMessageBox::No);
-        int button = msg->exec();
-        if (msg)
-        {
-            delete msg;
-        }
-
-        if (button == QMessageBox::Yes)
-        {
-            megaApi->httpServerStop();
-            event->accept();
-        }
+        delete msg;
     }
-    else
+
+    if (button == QMessageBox::Yes)
     {
-        event->accept();
+        megaApi->httpServerStop();
+        done(QDialog::Accepted);
     }
 }
 
@@ -90,12 +83,19 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
         delete nodeSelector;
         return;
     }
-    selectedMegaNode = megaApi->getNodeByHandle(nodeSelector->getSelectedFolderHandle());
-    if (!selectedMegaNode)
+    MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedFolderHandle());
+    if (!node)
     {
         QMessageBox::warning(this, tr("Error"), tr("File not found"), QMessageBox::Ok);
         return;
     }
+
+    if (selectedMegaNode)
+    {
+        delete selectedMegaNode;
+    }
+    selectedMegaNode = node;
+
     updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), CORRECT);
     generateStreamURL();
     delete nodeSelector;
@@ -108,8 +108,8 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
     int result = id->exec();
     if (!id || !result)
     {
-      delete id;
-      return;
+        delete id;
+        return;
     }
 
     QString text = id->textValue();
@@ -120,8 +120,8 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
         return;
     }
     megaApi->getPublicNode(text.toUtf8().constData(), delegateListener);
-
 }
+
 void StreamingFromMegaDialog::on_bCopyLink_clicked()
 {
     if (!streamURL.isEmpty())
@@ -129,7 +129,6 @@ void StreamingFromMegaDialog::on_bCopyLink_clicked()
         QApplication::clipboard()->setText(streamURL);
         ((MegaApplication *)qApp)->showInfoMessage(tr("The link has been copied to the clipboard"));
     }
-
 }
 
 void StreamingFromMegaDialog::on_bClose_clicked()
@@ -147,7 +146,7 @@ void StreamingFromMegaDialog::on_bClose_clicked()
     {
 
         megaApi->httpServerStop();
-        close();
+        done(QDialog::Accepted);
     }
 }
 
@@ -201,7 +200,6 @@ bool StreamingFromMegaDialog::generateStreamURL()
 {
     if (!selectedMegaNode)
     {
-        selectedMegaNode = NULL;
         return false;
     }
 
@@ -229,7 +227,6 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
             updateFileInfo(name, CORRECT);
         }
     }
-
 }
 
 void StreamingFromMegaDialog::openStreamWithApp(QString app)
@@ -241,8 +238,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
     }
 
 #ifndef __APPLE__
-    QString command = QString::fromUtf8("\"") + QDir::toNativeSeparators(app) + QString::fromUtf8("\"")
-            + QString::fromUtf8(" ") + QString::fromAscii(" \"%1\"").arg(streamURL);
+    QString command = QString::fromUtf8("\"%1\" \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
     QProcess::startDetached(command);
 #else
     QString args;
@@ -293,23 +289,22 @@ void StreamingFromMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request
 {
     switch (request->getType())
     {
-        case MegaRequest::TYPE_GET_PUBLIC_NODE:
-
+    case MegaRequest::TYPE_GET_PUBLIC_NODE:
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            selectedMegaNode = NULL;
             QMessageBox::warning(this, tr("Error"), tr("Error getting link information"), QMessageBox::Ok);
         }
         else
         {
+            if (selectedMegaNode)
+            {
+                delete selectedMegaNode;
+            }
             selectedMegaNode = request->getPublicMegaNode();
             onLinkInfoAvailable();
         }
-
-            break;
-        default:
-            break;
+        break;
+    default:
+        break;
     }
-
 }
-

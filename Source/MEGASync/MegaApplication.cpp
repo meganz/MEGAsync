@@ -2700,19 +2700,9 @@ void MegaApplication::streamActionClicked()
     }
 
     streamSelector = new StreamingFromMegaDialog(megaApi);
-    int result = streamSelector->exec();
-    if (!streamSelector)
-    {
-        return;
-    }
-
-    if (result != QDialog::Accepted)
-    {
-        delete streamSelector;
-        streamSelector = NULL;
-        return;
-    }
-
+    streamSelector->exec();
+    delete streamSelector;
+    streamSelector = NULL;
 }
 
 void MegaApplication::loginActionClicked()
@@ -4518,7 +4508,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if (appfinished || transfer->isStreamingTransfer())
     {
         return;
-    } 
+    }
 
     //Update statics
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
