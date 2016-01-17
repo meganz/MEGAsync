@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Профилът ви е бил блокиран. Моля свържете се с support@mega.co.nz</translation>
+        <translation type="unfinished">Профилът ви е блокиран. Моля, свържете се с support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1966,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Профилът ви е бил блокиран. Моля свържете се с support@mega.co.nz</translation>
+        <translation type="unfinished">Профилът ви е блокиран. Моля, свържете се с support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

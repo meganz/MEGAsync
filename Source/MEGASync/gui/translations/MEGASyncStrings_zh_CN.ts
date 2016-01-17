@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">您的账户已被冻结. 请联系 support@mega.co.nz</translation>
+        <translation type="unfinished">您的帐户已被封锁. 请联系 support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">您的账户已被冻结. 请联系 support@mega.co.nz</translation>
+        <translation type="unfinished">您的帐户已被封锁. 请联系 support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

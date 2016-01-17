@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>אירעה שגיאה בעת עדכון המערכת. אנא נסה שוב מאוחר יותר או הורד את הגרסה האחרונה מ: https://mega.co.nz/#sync</translation>
+        <translation>אירעה שגיאה בעת התקנת העדכון. אנא נסה שוב מאוחר יותר או הורד את הגרסא האחרונה מ: https://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>לא היתה אפשרות לזהות את מערכת הקבצים.אנא נסה שוב. אם הבעיה נמשכת, אנא צור קשר עם bug@mega.co.nz</translation>
+        <translation>אין אפשרות לקבל את מערכת הקבצים.אנא נסה שוב. אם הבעיה ממשיכה צור קשר עם bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.co.nz</translation>
+        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1018,17 +1018,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Streaming</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming</translation>
+        <translation type="unfinished">להזרים</translation>
     </message>
     <message>
         <source>Streaming from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming from MEGA</translation>
+        <translation type="unfinished">הזרמת מדיה מ-MEGA</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">הזרם מ-MEGA </translation>
     </message>
     <message>
         <source>seconds</source>
@@ -1321,7 +1321,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation type="unfinished">ניתן להזרים רק קבצים. </translation>
     </message>
     <message>
         <source>Select items</source>
@@ -1941,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">ייצא מפתח מסטר</translation>
+        <translation type="unfinished">ייצא מפתח מאסטר</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -1966,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2297,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>לא היתה אפשרות לזהות את מערכת הקבצים.אנא נסה שוב. אם הבעיה נמשכת, אנא צור קשר עם bug@mega.co.nz</translation>
+        <translation>אין אפשרות לקבל את מערכת הקבצים.אנא נסה שוב. אם הבעיה ממשיכה צור קשר עם bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.co.nz</translation>
+        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2490,12 +2490,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">הזרם מ-MEGA </translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">בחר מדיה מ... </translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2510,27 +2510,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">File info:</translation>
+        <translation type="unfinished">מידע: </translation>
     </message>
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Nothing selected</translation>
+        <translation type="unfinished">לא נבחרו פריטים</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">פתח באמצעות: </translation>
     </message>
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">Default application</translation>
+        <translation type="unfinished">יישום ברירת מחדל</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation type="unfinished">Choose application</translation>
+        <translation type="unfinished">בחר יישום</translation>
     </message>
     <message>
         <source>Close</source>
@@ -2540,7 +2540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">האם אתה בטוח שברצונך לעצור את ההזרמה? </translation>
     </message>
     <message>
         <source>Error</source>
@@ -2560,7 +2560,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">הכנס קישור לקובץ של MEGA</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2570,7 +2570,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">שגיאה ביצירת קישור להזרמת מדיה</translation>
     </message>
     <message>
         <source>Decryption error</source>

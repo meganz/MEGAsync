@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Nastao je problem prilikom instaliranja ažuriranja. Molimo pokušajte ponovo kasnije ili preuzmite najnoviju verziju sa: https://mega.co.nz/#sync</translation>
+        <translation>Pojavio se problem prilikom instaliranja nadogradnje. Molimo pokušajte ponovno ili preuzmite najnoviju verziju sa: https://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Nemoguće dohvatiti datotečni sustav.Molimo pokušajte ponovno. Ako se problem nastavi molimo kontaktirajte bug@mega.co.nz</translation>
+        <translation>Nemogućnost dohvaćanja datotečnog sustava.Molimo, pokušajte ponovno. Ako se problem nastavi kontaktirajte bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Vaš račun je blokiran. Molimo kontaktirajte support@mega.co.nz</translation>
+        <translation type="unfinished">Vaš račun je blokiran. Molimo kontktirajte support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1966,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2297,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Nemoguće dohvatiti datotečni sustav.Molimo pokušajte ponovno. Ako se problem nastavi molimo kontaktirajte bug@mega.co.nz</translation>
+        <translation>Nemogućnost dohvaćanja datotečnog sustava.Molimo, pokušajte ponovno. Ako se problem nastavi kontaktirajte bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Vaš račun je blokiran. Molimo kontaktirajte support@mega.co.nz</translation>
+        <translation type="unfinished">Vaš račun je blokiran. Molimo kontktirajte support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
