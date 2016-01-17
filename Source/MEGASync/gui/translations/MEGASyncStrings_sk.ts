@@ -1018,17 +1018,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Streaming</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming</translation>
+        <translation type="unfinished">Streamovanie</translation>
     </message>
     <message>
         <source>Streaming from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming from MEGA</translation>
+        <translation type="unfinished">Streamovanie z MEGA</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Streamovať z MEGA</translation>
     </message>
     <message>
         <source>seconds</source>
@@ -1321,7 +1321,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation type="unfinished">Iba súbory môžu byť použité pre streamovanie.</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -1941,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportovať Hlavný kľúč</translation>
+        <translation type="unfinished">Exportovať Hlavný Kľúč</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2490,12 +2490,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Streamovať z MEGA</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">Vyberte médium z...</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2510,27 +2510,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">File info:</translation>
+        <translation type="unfinished">Info o súbore:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Nothing selected</translation>
+        <translation type="unfinished">Nič ste nevybrali</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">Otvoriť cez:</translation>
     </message>
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">Default application</translation>
+        <translation type="unfinished">Prednastavená aplikácia</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation type="unfinished">Choose application</translation>
+        <translation type="unfinished">Zvoľte aplikáciu</translation>
     </message>
     <message>
         <source>Close</source>
@@ -2540,7 +2540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">Ste si istý, že chcete ukončiť streamovanie?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2560,7 +2560,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">Vložte MEGA odkaz na súbor:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2570,7 +2570,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">Chyba pri generovaní odkazu pre streamovanie</translation>
     </message>
     <message>
         <source>Decryption error</source>
