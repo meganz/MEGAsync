@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>პრობლემა განახლების ინსტალაციისას, გთხოვთ კიდევ სცადოთ მოგვიანებით ან გადმოწეროთ ბოლო ვერსია: https://mega.co.nz/#sync</translation>
+        <translation>პრობლემა განახლების ინსტალაციისას, გთხოვთ კიდევ სცადოთ მოგვიანებით ან გადმოწეროთ ბოლო ვერსია: https://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>ფაილური სისტემი წაკითხვა ვერ მოხერხდა. გთხოვთ კიდევ სცადოთ. თუ პრობლემა მეორდება, გთხოვთ დაუკავშირდეთ bug@mega.co.nz</translation>
+        <translation>ფაილური სისტემის წაკითხვა ვერ მოხერხდა. გთხოვთ კიდევ სცადოთ. თუ პრობლემა მეორდება, გთხოვთ დაუკავშრდეთ bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">თქვენი ანგარიში დაბლოკილია. გთხოვთ დაუკავშირდეთ support@mega.co.nz</translation>
+        <translation type="unfinished">თქვენი ანგარიში დაბლოკილია. გთხოვთ დაუკავშირდეთ support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1018,7 +1018,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Streaming</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming</translation>
+        <translation type="unfinished">ონლაინში</translation>
     </message>
     <message>
         <source>Streaming from MEGA</source>
@@ -2297,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>ფაილური სისტემი წაკითხვა ვერ მოხერხდა. გთხოვთ კიდევ სცადოთ. თუ პრობლემა მეორდება, გთხოვთ დაუკავშირდეთ bug@mega.co.nz</translation>
+        <translation>ფაილური სისტემის წაკითხვა ვერ მოხერხდა. გთხოვთ კიდევ სცადოთ. თუ პრობლემა მეორდება, გთხოვთ დაუკავშრდეთ bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">თქვენი ანგარიში დაბლოკილია. გთხოვთ დაუკავშირდეთ support@mega.co.nz</translation>
+        <translation type="unfinished">თქვენი ანგარიში დაბლოკილია. გთხოვთ დაუკავშირდეთ support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2510,7 +2510,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">File info:</translation>
+        <translation type="unfinished">ფაილის ინფო:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
@@ -2520,7 +2520,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">გაიხსნას ამით:</translation>
     </message>
     <message>
         <source>Default application</source>

@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Lỗi phát sinh trong quá trình cài đặt bản cập nhật. Xin thử lại sau hoặc tải phiên bản mới đầy đủ từ trang: https://mega.co.nz/#sync</translation>
+        <translation>Có lỗi phát sinh khi cài đặt bản cập nhật mới. Xin thử cài lại sau hoặc lên trang web https://mega.nz/#sync để tải về phiên bản mới nhất.</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Không truy xuất được filesystem.Xin thử lại sau. Nếu lỗi vẫn tiếp diễn, xin liên hệ bug@mega.co.nz</translation>
+        <translation>Không lấy được tệp tin hệ thống.Xin thử lại. Nếu lỗi vaacn cứ tiếp diễn, xin liên hệ bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Tài khoản của bạn đã bị khóa. Xin liên hệ support@mega.co.nz để được giải quyết.</translation>
+        <translation type="unfinished">Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2297,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Không truy xuất được filesystem.Xin thử lại sau. Nếu lỗi vẫn tiếp diễn, xin liên hệ bug@mega.co.nz</translation>
+        <translation>Không lấy được tệp tin hệ thống.Xin thử lại. Nếu lỗi vaacn cứ tiếp diễn, xin liên hệ bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Tài khoản của bạn đã bị khóa. Xin liên hệ support@mega.co.nz để được giải quyết.</translation>
+        <translation type="unfinished">Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

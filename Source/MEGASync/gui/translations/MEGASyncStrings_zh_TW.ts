@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>有安裝更新的問題。請稍後再試，或下載最新版本：https://mega.co.nz/#sync</translation>
+        <translation>安裝更新時發生問題。請待會再試一次或下載最新版本：https://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>無法進入檔案系統。請再試一次。若仍發生此問題，請與 bug@mega.co.nz 聯繫。</translation>
+        <translation>未能連結檔案系統。請再試一次。如果問題持續請連繫bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">您的帳戶已被封鎖。 請與 support@mega.co.nz 聯繫。</translation>
+        <translation type="unfinished">您的帳號已被鎖定。請連繫support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2297,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>無法進入檔案系統。請再試一次。若仍發生此問題，請與 bug@mega.co.nz 聯繫。</translation>
+        <translation>未能連結檔案系統。請再試一次。如果問題持續請連繫bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">您的帳戶已被封鎖。 請與 support@mega.co.nz 聯繫。</translation>
+        <translation type="unfinished">您的帳號已被鎖定。請連繫support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

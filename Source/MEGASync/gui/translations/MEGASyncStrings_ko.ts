@@ -808,7 +808,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>업데이트를 설치하던 중 문제가 있었습니다. 나중에 다시 시도하거나 최신 버전을 다운로드하세요: https://mega.co.nz/#sync</translation>
+        <translation>업데이트를 설치하는 중에 문제가 있었습니다. 나중에 다시 시도하거나 다음에서 최신 버전을 다운로드 하세요: http://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>파일시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락하세요.</translation>
+        <translation>파일시스템을 불러올 수 없습니다.다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -920,7 +920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">계정이 차단되었습니다. support@mega.co.nz로 문의하세요.</translation>
+        <translation type="unfinished">계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1321,7 +1321,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation type="unfinished">파일만 스트리밍할 수 있습니다.</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -2297,7 +2297,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>파일시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.co.nz로 연락하세요.</translation>
+        <translation>파일시스템을 불러올 수 없습니다.다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -2342,7 +2342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">계정이 차단되었습니다. support@mega.co.nz로 문의하세요.</translation>
+        <translation type="unfinished">계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -2540,7 +2540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">스트리밍을 중단하시겠습니까?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2570,7 +2570,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">스트리밍 링크 생성 실패</translation>
     </message>
     <message>
         <source>Decryption error</source>
