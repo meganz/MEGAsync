@@ -179,10 +179,14 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
             defaultPath = QString::fromUtf16(buffer);
         }
     #else
-        #if QT_VERSION < 0x050000
-            defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
+        #ifdef __APPLE__
+            #if QT_VERSION < 0x050000
+                defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
+            #else
+                defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
+            #endif
         #else
-            defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
+            defaultPath = QString::fromUtf8("/usr/bin");
         #endif
     #endif
     }
