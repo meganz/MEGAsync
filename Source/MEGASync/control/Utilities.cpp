@@ -268,6 +268,7 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
         languageNames[QString::fromAscii("sk")] = QString::fromUtf8("Slovenský");
         languageNames[QString::fromAscii("sl")] = QString::fromUtf8("Slovenščina");
+        languageNames[QString::fromAscii("sr")] = QString::fromUtf8("Serbian");
         languageNames[QString::fromAscii("sv")] = QString::fromUtf8("Svenska");
         languageNames[QString::fromAscii("tl")] = QString::fromUtf8("Tagalog");
         languageNames[QString::fromAscii("tr")] = QString::fromUtf8("Türkçe");
