@@ -660,7 +660,7 @@ because the local folder doesn&#039;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">De map (% 1) werd niet geüpload omdat het te groot is (deze beta is beperkt tot %2 mappen of %3 bestanden.</translation>
+        <translation type="obsolete">De map (%1) werd niet geüpload omdat het te groot is (deze beta is beperkt tot %2 mappen of %3 bestanden.</translation>
     </message>
     <message>
         <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
@@ -1191,7 +1191,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">De doelmap wordt gesynchroniseerd en daarin hebt u al een bestandmet dezelfde naam (% 1).Als u de upload voortzet, wordt het vorige bestand overschreven.Weet u dat zeker?</translation>
+        <translation type="obsolete">De doelmap wordt gesynchroniseerd en daarin hebt u al een bestandmet dezelfde naam (%1).Als u de upload voortzet, wordt het vorige bestand overschreven.Weet u dat zeker?</translation>
     </message>
 </context>
 <context>
@@ -1312,7 +1312,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Weet u zeker dat u &quot;% 1&quot; wilt verwijderen?</translation>
+        <translation type="unfinished">Weet u zeker dat u &quot;%1&quot; wilt verwijderen?</translation>
     </message>
     <message>
         <source>Delete</source>
