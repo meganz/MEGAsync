@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>420</width>
-    <height>322</height>
+    <height>303</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>420</width>
-    <height>322</height>
+    <height>300</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>420</width>
-    <height>322</height>
+    <height>303</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,20 +31,23 @@
 font-size: 11px;
 }
 
-#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc, #lFileSize
+#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc 
 {
   font-family: &quot;HelveticaNeue-Light&quot;;
   font-size: 12px;
   color: #000000;
 }
+#lFileSize
+{
+  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-size: 12px;
+  color: #666666;
+}
 #wContainer
 {
 	background-color: white;
 }
-#lFileInfoDesc, #lOpenWithDesc, #lStreamResourceDesc
-{
-    padding-left: 13px;
-}
+
 #lNothingSelected
 {
    font-size: 12px;
@@ -55,6 +58,13 @@ font-size: 11px;
 {
 	font-size: 12px;
 	color: #000000;
+}
+#bCopyLink
+{
+    border: 1px solid #dfdfd1;
+    border-radius: 4px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgba(246,247,250,30), stop: 1 rgba(232,233,235,30));
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -78,7 +88,7 @@ font-size: 11px;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>80</height>
+       <height>84</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -89,16 +99,16 @@ font-size: 11px;
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>7</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="topMargin">
-       <number>18</number>
+       <number>9</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -142,9 +152,9 @@ font-size: 11px;
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
          <property name="spacing">
-          <number>5</number>
+          <number>16</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -156,31 +166,10 @@ font-size: 11px;
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="bFromCloud">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>197</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>197</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
            <property name="text">
             <string>Cloud Drive</string>
            </property>
@@ -188,18 +177,6 @@ font-size: 11px;
          </item>
          <item>
           <widget class="QPushButton" name="bFromPublicLink">
-           <property name="minimumSize">
-            <size>
-             <width>197</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>197</width>
-             <height>32</height>
-            </size>
-           </property>
            <property name="text">
             <string>Public link</string>
            </property>
@@ -218,13 +195,13 @@ font-size: 11px;
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -239,7 +216,7 @@ font-size: 11px;
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -252,13 +229,13 @@ font-size: 11px;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>40</height>
+             <height>37</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>40</height>
+             <height>37</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -277,13 +254,13 @@ font-size: 11px;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>60</height>
+             <height>44</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>60</height>
+             <height>44</height>
             </size>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -297,7 +274,7 @@ font-size: 11px;
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>17</number>
+             <number>0</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -307,20 +284,20 @@ font-size: 11px;
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>50</height>
+                <height>44</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
                 <width>16777215</width>
-                <height>60</height>
+                <height>44</height>
                </size>
               </property>
               <property name="styleSheet">
                <string notr="true">background-color: white;</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="pFileInfo">
                <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -328,7 +305,7 @@ font-size: 11px;
                  <number>0</number>
                 </property>
                 <property name="leftMargin">
-                 <number>9</number>
+                 <number>0</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
@@ -353,15 +330,15 @@ font-size: 11px;
                     <height>48</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
                   <property name="styleSheet">
-                   <string notr="true">border: none;</string>
+                   <string notr="true">border: none;
+padding-left: -16px;</string>
                   </property>
                   <property name="text">
                    <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../Resources_win.qrc">
-                    <normaloff>:/images/drag_podcast.png</normaloff>:/images/drag_podcast.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -427,6 +404,18 @@ font-size: 11px;
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>260</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
                         <property name="text">
                          <string/>
                         </property>
@@ -451,6 +440,9 @@ font-size: 11px;
                           <width>8</width>
                           <height>8</height>
                          </size>
+                        </property>
+                        <property name="focusPolicy">
+                         <enum>Qt::NoFocus</enum>
                         </property>
                         <property name="styleSheet">
                          <string notr="true">border:none;</string>
@@ -495,15 +487,33 @@ font-size: 11px;
                   <x>0</x>
                   <y>0</y>
                   <width>361</width>
-                  <height>50</height>
+                  <height>44</height>
                  </rect>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <property name="spacing">
                   <number>0</number>
                  </property>
                  <property name="leftMargin">
-                  <number>16</number>
+                  <number>0</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
@@ -516,6 +526,18 @@ font-size: 11px;
                  </property>
                  <item>
                   <widget class="QLabel" name="lNothingSelected">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Nothing selected</string>
                    </property>
@@ -527,33 +549,50 @@ font-size: 11px;
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="bCopyLink">
-              <property name="minimumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>32</width>
-                <height>32</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">    border: 1px solid #8f8f91;
-    border-radius: 4px;
-    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
-</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/streaming_link.png</normaloff>:/images/streaming_link.png</iconset>
-              </property>
+             <widget class="QWidget" name="widget_3" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_7">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QToolButton" name="bCopyLink">
+                 <property name="minimumSize">
+                  <size>
+                   <width>36</width>
+                   <height>36</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_macx.qrc">
+                   <normaloff>:/images/streaming_link.png</normaloff>:/images/streaming_link.png</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -567,7 +606,7 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>90</height>
+          <height>88</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -578,7 +617,7 @@ font-size: 11px;
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -598,9 +637,9 @@ font-size: 11px;
            <property name="styleSheet">
             <string notr="true"/>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,1">
             <property name="spacing">
-             <number>8</number>
+             <number>16</number>
             </property>
             <property name="leftMargin">
              <number>0</number>
@@ -612,24 +651,12 @@ font-size: 11px;
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>0</number>
+             <number>23</number>
             </property>
             <item>
              <widget class="QPushButton" name="bOpenDefault">
               <property name="enabled">
                <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>197</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>197</width>
-                <height>16777215</height>
-               </size>
               </property>
               <property name="text">
                <string>Default application</string>
@@ -643,13 +670,13 @@ font-size: 11px;
               </property>
               <property name="minimumSize">
                <size>
-                <width>197</width>
+                <width>0</width>
                 <height>0</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>197</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -681,18 +708,21 @@ font-size: 11px;
        <height>48</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <property name="leftMargin">
        <number>12</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="rightMargin">
        <number>16</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>4</number>
       </property>
       <item>
        <spacer name="horizontalSpacer">
@@ -734,8 +764,16 @@ font-size: 11px;
   <zorder>wClose</zorder>
   <zorder>wContainer</zorder>
  </widget>
+ <tabstops>
+  <tabstop>bFromCloud</tabstop>
+  <tabstop>bFromPublicLink</tabstop>
+  <tabstop>bCopyLink</tabstop>
+  <tabstop>bOpenDefault</tabstop>
+  <tabstop>bOpenOther</tabstop>
+  <tabstop>bClose</tabstop>
+ </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
