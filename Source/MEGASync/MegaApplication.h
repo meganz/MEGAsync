@@ -223,7 +223,7 @@ protected:
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
-    StreamingFromMegaDialog *streamSelector;
+    QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;

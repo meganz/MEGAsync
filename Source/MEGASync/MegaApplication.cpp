@@ -2700,9 +2700,7 @@ void MegaApplication::streamActionClicked()
     }
 
     streamSelector = new StreamingFromMegaDialog(megaApi);
-    streamSelector->exec();
-    delete streamSelector;
-    streamSelector = NULL;
+    streamSelector->show();
 }
 
 void MegaApplication::loginActionClicked()
