@@ -11,17 +11,17 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.5.3.0";
-const int Preferences::VERSION_CODE = 2503;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.6.0.0";
+const int Preferences::VERSION_CODE = 2600;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.5.3");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.6.0");
 const QString Preferences::SDK_ID = QString::fromAscii("2bc7f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Allow the usage of MEGAsync without being logged in\n"
-            "- New network layer using cURL and c-ares (Win32)\n"
-            "- Accessibility and SOCKS5 proxy support (Win32)\n"
-            "- Bug fixes and improvements for the synchronization engine");
+            "- Streaming from MEGA with a builtin HTTP proxy server\n"
+            "- Fixed the automatic detection of the proxy (Win32)\n"
+            "- More translations\n"
+            "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -145,6 +145,7 @@ const QString Preferences::uploadLimitKBKey         = QString::fromAscii("upload
 const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperSizeLimit");
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
+const QString Preferences::lastCustomStreamingAppKey    = QString::fromAscii("lastCustomStreamingApp");
 const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
 const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
 
@@ -1194,6 +1195,22 @@ void Preferences::setFirstWebDownloadDone(bool value)
 {
     mutex.lock();
     settings->setValue(firstWebDownloadKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+QString Preferences::lastCustomStreamingApp()
+{
+    mutex.lock();
+    QString value = settings->value(lastCustomStreamingAppKey).toString();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastCustomStreamingApp(const QString &value)
+{
+    mutex.lock();
+    settings->setValue(lastCustomStreamingAppKey, value);
     settings->sync();
     mutex.unlock();
 }

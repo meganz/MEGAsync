@@ -137,6 +137,8 @@ public:
     void setFirstFileSynced(bool value = true);
     bool isFirstWebDownloadDone();
     void setFirstWebDownloadDone(bool value = true);
+    QString lastCustomStreamingApp();
+    void setLastCustomStreamingApp(const QString &value);
 
     int transferDownloadMethod();
     void setTransferDownloadMethod(int value);
@@ -365,6 +367,7 @@ protected:
     static const QString hasLoggedInKey;
     static const QString transferDownloadMethodKey;
     static const QString transferUploadMethodKey;
+    static const QString lastCustomStreamingAppKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

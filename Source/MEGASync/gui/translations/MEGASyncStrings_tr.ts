@@ -522,12 +522,12 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>İndirilenler</translation>
+        <translation>İndiriliyor</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Karşıya yükleniyor</translation>
+        <translation>Yükleniyor</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Yerel klasör olmadığı için &quot;%1&quot; senkronizasyonu devre dışı bırakıldı</translation>
+        <translation type="obsolete">&quot;%1&quot; senkronizasyonu, yerel klasör olmadığı için devre dışı bırakıldı</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -995,7 +995,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">SSL anahtarı doğrulanamıyor. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısından etkilenmiş olabilirsiniz veya antivirüs yazılımınız iletişimi engelliyor olabilir. Lütfen antivirüs yazılımınızı geçici olarak devre dışı bırakın ve tekrar deneyin.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1014,6 +1014,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Geçici hata, tekrar deneniyor.</translation>
+    </message>
+    <message>
+        <source>Streaming</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Akış</translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Streaming from MEGA</translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">MEGA&#039;dan yayınla</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">saniye</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">dakika</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Hemen devam etmek için lütfen Pro&#039;ya yükseltin veya ücretsizdevam etmek için %1 bekleyin.</translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Ücretsiz bant genişliği kotası aşıldı</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">ücretli üyelik bant genişliği kotası aşıldı.</translation>
     </message>
 </context>
 <context>
@@ -1282,6 +1317,19 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translation type="unfinished">Sil</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">Only files can be used for streaming.</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Öğeleri seçin</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">Sadece bir dosya seçin.</translation>
     </message>
 </context>
 <context>
@@ -1893,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Ana Anahtarı Dışa Aktar</translation>
+        <translation type="unfinished">Ana Anahtarı dışa aktar</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -1918,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -1974,7 +2022,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">MEGA&#039;daki senkronize dosyaların önceki sürümlerinin yedekleri kalıcı olarak silinecek. Devam etmeden önce bir şey kurtarmak gerekip gerekmeyeceğini görmek için MEGA hesabınızın Çöp Kutusundaki [A] klasörünü kontrol edin.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2435,6 +2483,104 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Boyut sınırları sıfır olamaz</translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">MEGA&#039;dan yayınla</translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
+        <translation type="unfinished">Select media from...</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
+        <translation type="unfinished">Bulut Sürücüsü</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
+        <translation type="unfinished">Umumi link</translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
+        <translation type="unfinished">Dosya bilgisi:</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
+        <translation type="unfinished">Hiçbir şey seçili değil</translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
+        <translation type="unfinished">Bununla aç:</translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
+        <translation type="unfinished">Varsayılan uygulama</translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
+        <translation type="unfinished">Uygulama seçin</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Kapat</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
+        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages</translatorcomment>
+        <translation type="unfinished">Hata</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when a file is not found</translatorcomment>
+        <translation type="unfinished">Dosya bulunamadı</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Bağlantıyı aç</translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Enter a MEGA file link:</translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
+        <translation type="unfinished">Bağlantı panoya kopyalandı</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
+        <translation type="unfinished">Error generating streaming link</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
+        <translation type="unfinished">Deşifreleme hatası</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished">Bağlantı bilgisi alınırken hata oldu</translation>
     </message>
 </context>
 <context>

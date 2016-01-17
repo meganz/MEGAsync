@@ -522,12 +522,12 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Prenašam</translation>
+        <translation>Prevzemam</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Prenašam</translation>
+        <translation>Nalagam</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Vaša sinhronizacija &quot;%1&quot; je bila onemogočena, ker lokalna mapa ne obstaja.</translation>
+        <translation type="obsolete">Vaša sinhronizacija &quot;%1&quot; je bila onemogočena, ker lokalna mapa ne obstaja</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1015,6 +1015,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Začasna napaka, ponavljam prenos.</translation>
     </message>
+    <message>
+        <source>Streaming</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Pretakanje</translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Pretakanje z MEGA</translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Pretoči z MEGA</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">sekund</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">minut</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Prosim, nadgradite v Pro, da nadaljujete takoj, ali počakajte %1 za brezplačno nadaljevanje.</translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Presežena kvota brezplačne pasovne širine</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">pro pasovna širina presežena.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1282,6 +1317,19 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translation type="unfinished">Briši</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">Samo datoteke se lahko uporablja za pretakanje.</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">Izberi elemente</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">Izberite samo eno datoteko.</translation>
     </message>
 </context>
 <context>
@@ -1893,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Izvozi glavni ključ</translation>
+        <translation type="unfinished">Izvozi Glavni ključ</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -1918,7 +1966,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2435,6 +2483,104 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Omejitve velikosti ne morejo biti nič</translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Pretoči z MEGA</translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
+        <translation type="unfinished">Izberi medij z...</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
+        <translation type="unfinished">Oblak</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
+        <translation type="unfinished">Javna povezava</translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
+        <translation type="unfinished">Podatki datoteke:</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
+        <translation type="unfinished">Nič izbranega</translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
+        <translation type="unfinished">Odpri z:</translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
+        <translation type="unfinished">Privzeta aplikacija</translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
+        <translation type="unfinished">Izberi aplikacijo</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">Zapri</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
+        <translation type="unfinished">Ali ste prepričani, da želite zaustaviti pretakanje?</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages</translatorcomment>
+        <translation type="unfinished">Napaka</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when a file is not found</translatorcomment>
+        <translation type="unfinished">Datoteka ni najdena</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Odpri povezavo</translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">Vnesite MEGA povezavo datoteke:</translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
+        <translation type="unfinished">Povezava je bila kopirana v odložišče</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
+        <translation type="unfinished">Napaka pri generiranju povezave za pretok</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
+        <translation type="unfinished">Napaka v dekripciji</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished">Napaka pri prejemanju informacije iz povezave</translation>
     </message>
 </context>
 <context>

@@ -651,7 +651,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">로컬 폴더가 존재하지 않아서 동기화 &quot;%1&quot;가 해제되었습니다.</translation>
+        <translation type="obsolete">로컬 폴더가 존재하지 않아서 동기화 &quot;%1&quot;이 비활성화 되었습니다.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1015,6 +1015,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">일시적 오류, 재시도중</translation>
     </message>
+    <message>
+        <source>Streaming</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">스트리밍</translation>
+    </message>
+    <message>
+        <source>Streaming from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">MEGA에서 스트리밍</translation>
+    </message>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">MEGA에서 스트림</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="unfinished">초</translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <translation type="unfinished">분</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">즉시 계속하려면 Pro로 업그레이드 하거나 무료로 계속하려면 %1 동안 기다리세요.</translation>
+    </message>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">무료 대역폭 할당량 초과</translation>
+    </message>
+    <message>
+        <source>Pro bandwidth quota exceeded.</source>
+        <translation type="unfinished">프로 대역폭 할당량을 초과하였습니다.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1282,6 +1317,19 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translation type="unfinished">삭제</translation>
+    </message>
+    <message>
+        <source>Only files can be used for streaming.</source>
+        <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
+        <translation type="unfinished">파일만 스트리밍할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Select items</source>
+        <translation type="unfinished">항목 선택</translation>
+    </message>
+    <message>
+        <source>Select just one file.</source>
+        <translation type="unfinished">하나의 파일만 선택하세요</translation>
     </message>
 </context>
 <context>
@@ -2435,6 +2483,104 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">크기 제한은 0이 될 수 없습니다</translation>
+    </message>
+</context>
+<context>
+    <name>StreamingFromMegaDialog</name>
+    <message>
+        <source>Stream from MEGA</source>
+        <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">MEGA에서 스트림</translation>
+    </message>
+    <message>
+        <source>Select media from...</source>
+        <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
+        <translation type="unfinished">미디어를 선택...</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
+        <translation type="unfinished">클라우드 드라이브</translation>
+    </message>
+    <message>
+        <source>Public link</source>
+        <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
+        <translation type="unfinished">공개 링크</translation>
+    </message>
+    <message>
+        <source>File info:</source>
+        <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
+        <translation type="unfinished">파일 정보:</translation>
+    </message>
+    <message>
+        <source>Nothing selected</source>
+        <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
+        <translation type="unfinished">선택된 것 없음</translation>
+    </message>
+    <message>
+        <source>Open with:</source>
+        <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
+        <translation type="unfinished">이 프로그램으로 열기:</translation>
+    </message>
+    <message>
+        <source>Default application</source>
+        <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
+        <translation type="unfinished">기본 어플리케이션</translation>
+    </message>
+    <message>
+        <source>Choose application</source>
+        <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
+        <translation type="unfinished">어플리케이션 선택</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
+        <translation type="unfinished">닫기</translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to stop the streaming?</source>
+        <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
+        <translation type="unfinished">스트리밍을 중단하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title for dialogs with error messages</translatorcomment>
+        <translation type="unfinished">오류</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when a file is not found</translatorcomment>
+        <translation type="unfinished">파일이 발견되지 않음</translation>
+    </message>
+    <message>
+        <source>Open link</source>
+        <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">링크 열기</translation>
+    </message>
+    <message>
+        <source>Enter a MEGA file link:</source>
+        <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
+        <translation type="unfinished">MEGA 파일 링크를 입력하세요:</translation>
+    </message>
+    <message>
+        <source>The link has been copied to the clipboard</source>
+        <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
+        <translation type="unfinished">링크가 클립보드로 복사되었습니다</translation>
+    </message>
+    <message>
+        <source>Error generating streaming link</source>
+        <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
+        <translation type="unfinished">스트리밍 링크 생성 실패</translation>
+    </message>
+    <message>
+        <source>Decryption error</source>
+        <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
+        <translation type="unfinished">해독 오류</translation>
+    </message>
+    <message>
+        <source>Error getting link information</source>
+        <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished">링크 정보 얻기 오류</translation>
     </message>
 </context>
 <context>

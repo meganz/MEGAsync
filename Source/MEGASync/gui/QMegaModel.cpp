@@ -31,6 +31,7 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
 
     this->requiredRights = MegaShare::ACCESS_READ;
     this->displayFiles = false;
+    this->disableFolders = false;
 }
 
 int QMegaModel::columnCount(const QModelIndex &) const
@@ -61,7 +62,7 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
         case Qt::ForegroundRole:
         {
             int access = megaApi->getAccess(item->getNode());
-            if (access < requiredRights)
+            if (access < requiredRights || (disableFolders && item->getNode()->isFolder()))
             {
                 return QVariant(QBrush(QColor(170,170,170, 127)));
             }
@@ -147,6 +148,11 @@ int QMegaModel::rowCount(const QModelIndex &parent) const
 void QMegaModel::setRequiredRights(int requiredRights)
 {
     this->requiredRights = requiredRights;
+}
+
+void QMegaModel::setDisableFolders(bool option)
+{
+    this->disableFolders = option;
 }
 
 void QMegaModel::showFiles(bool show)
