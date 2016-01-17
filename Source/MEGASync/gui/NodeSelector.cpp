@@ -23,6 +23,12 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
     ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
 
+    if (selectMode == NodeSelector::STREAM_SELECT)
+    {
+        setWindowTitle(tr("Select items"));
+        ui->label->setText(tr("Select just one file."));
+    }
+
     nodesReady();
 
     ui->tMegaFolders->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -33,6 +39,7 @@ NodeSelector::~NodeSelector()
 {
     delete delegateListener;
     delete ui;
+    delete model;
 }
 
 void NodeSelector::nodesReady()
@@ -50,14 +57,22 @@ void NodeSelector::nodesReady()
     case NodeSelector::UPLOAD_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_READWRITE);
         model->showFiles(false);
+        model->setDisableFolders(false);
         break;
     case NodeSelector::SYNC_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_FULL);
         model->showFiles(false);
+        model->setDisableFolders(false);
         break;
     case NodeSelector::DOWNLOAD_SELECT:
         model->setRequiredRights(MegaShare::ACCESS_READ);
         model->showFiles(true);
+        model->setDisableFolders(false);
+        break;
+    case NodeSelector::STREAM_SELECT:
+        model->setRequiredRights(MegaShare::ACCESS_READ);
+        model->showFiles(true);
+        model->setDisableFolders(false);
         break;
     }
 
@@ -74,6 +89,11 @@ void NodeSelector::nodesReady()
     QModelIndex defaultSelection = model->index(0, 0);
     ui->tMegaFolders->selectionModel()->select(defaultSelection, QItemSelectionModel::ClearAndSelect);
     ui->tMegaFolders->selectionModel()->setCurrentIndex(defaultSelection, QItemSelectionModel::ClearAndSelect);
+
+    if (selectMode == NodeSelector::STREAM_SELECT)
+    {
+        ui->tMegaFolders->expandToDepth(0);
+    }
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
@@ -375,9 +395,9 @@ void NodeSelector::on_bOk_clicked()
     int access = megaApi->getAccess(node);
     if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
-            QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
-            delete node;
-            return;
+        QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
+        delete node;
+        return;
 
     }
     else if ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
@@ -386,19 +406,30 @@ void NodeSelector::on_bOk_clicked()
         delete node;
         return;
     }
-
-    const char* path = megaApi->getNodePath(node);
-    MegaNode *check = megaApi->getNodeByPath(path);
-    delete [] path;
-    delete node;
-    if (!check)
+    else if ((selectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
-                                                     "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
-                             QMessageBox::Ok);
+        QMessageBox::warning(this, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
+        delete node;
         return;
     }
-    delete check;
+
+    if (selectMode == NodeSelector::SYNC_SELECT)
+    {
+        const char* path = megaApi->getNodePath(node);
+        MegaNode *check = megaApi->getNodeByPath(path);
+        delete [] path;
+        if (!check)
+        {
+            QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
+                                                         "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
+                                 QMessageBox::Ok);
+            delete node;
+            return;
+        }
+        delete check;
+    }
+
+    delete node;
     accept();
 }
 

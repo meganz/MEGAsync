@@ -122,6 +122,11 @@ QByteArray MacXPlatform::getLocalStorageKey()
     return QByteArray(128, 0);
 }
 
+QString MacXPlatform::getDefaultOpenApp(QString extension)
+{
+    return defaultOpenApp(extension);
+}
+
 bool MacXPlatform::enableSetuidBit()
 {
     QString command = QString::fromUtf8("do shell script \"chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true\"");

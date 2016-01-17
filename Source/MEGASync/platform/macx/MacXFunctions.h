@@ -15,5 +15,6 @@ void addPathToPlaces(QString path, QString pathName);
 void removePathFromPlaces(QString path);
 void setFolderIcon(QString path);
 void unSetFolderIcon(QString path);
+QString defaultOpenApp(QString extension);
 
 #endif // MACXFUNCTIONS_H

@@ -385,6 +385,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoOverQuota = NULL;
     setupWizard = NULL;
     settingsDialog = NULL;
+    streamSelector = NULL;
     reboot = false;
     translator = NULL;
     exitAction = NULL;
@@ -397,6 +398,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksActionGuest = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
+    streamAction = NULL;
     loginActionGuest = NULL;
     waiting = false;
     updated = false;
@@ -1256,6 +1258,9 @@ void MegaApplication::closeDialogs()
 
     delete settingsDialog;
     settingsDialog = NULL;
+
+    delete streamSelector;
+    streamSelector = NULL;
 
     delete uploadFolderSelector;
     uploadFolderSelector = NULL;
@@ -2678,6 +2683,28 @@ void MegaApplication::downloadActionClicked()
     }
 }
 
+void MegaApplication::streamActionClicked()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (streamSelector)
+    {
+        streamSelector->setVisible(true);
+        streamSelector->activateWindow();
+        streamSelector->raise();
+        streamSelector->setFocus();
+        return;
+    }
+
+    streamSelector = new StreamingFromMegaDialog(megaApi);
+    streamSelector->exec();
+    delete streamSelector;
+    streamSelector = NULL;
+}
+
 void MegaApplication::loginActionClicked()
 {
     if (appfinished)
@@ -3532,6 +3559,17 @@ void MegaApplication::createTrayMenu()
     downloadAction = new QAction(tr("Download from MEGA"), this);
     connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
 
+    if (streamAction)
+    {
+        streamAction->deleteLater();
+        streamAction = NULL;
+    }
+
+    QT_TR_NOOP("Streaming");
+    QT_TR_NOOP("Streaming from MEGA");
+    streamAction = new QAction(tr("Stream from MEGA"), this);
+    connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
+
     if (updateAction)
     {
         updateAction->deleteLater();
@@ -3557,6 +3595,7 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(importLinksAction);
     trayMenu->addAction(uploadAction);
     trayMenu->addAction(downloadAction);
+    trayMenu->addAction(streamAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
@@ -4237,7 +4276,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished)
+    if (appfinished || transfer->isStreamingTransfer())
     {
         return;
     }
@@ -4277,7 +4316,7 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished)
+    if (appfinished || transfer->isStreamingTransfer())
     {
         return;
     }
@@ -4466,7 +4505,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished)
+    if (appfinished || transfer->isStreamingTransfer())
     {
         return;
     }
@@ -4508,7 +4547,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished)
+    if (appfinished || transfer->isStreamingTransfer())
     {
         return;
     }

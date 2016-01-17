@@ -1,5 +1,7 @@
 #include "LinuxPlatform.h"
+#include <map>
 
+using namespace std;
 using namespace mega;
 
 ExtServer *LinuxPlatform::ext_server = NULL;
@@ -147,4 +149,67 @@ QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray key)
 QByteArray LinuxPlatform::getLocalStorageKey()
 {
     return QByteArray(128, 0);
+}
+
+QString LinuxPlatform::getDefaultOpenApp(QString extension)
+{
+    char *mimeType = MegaApi::getMimeType(extension.toUtf8().constData());
+    if (!mimeType)
+    {
+        return QString();
+    }
+
+    QString getDefaultAppDesktopFileName = QString::fromUtf8("xdg-mime query default ") + QString::fromUtf8(mimeType);
+    delete mimeType;
+
+    QProcess process;
+    process.start(getDefaultAppDesktopFileName,
+                  QIODevice::ReadWrite | QIODevice::Text);
+    if(!process.waitForFinished(5000))
+    {
+        return QString();
+    }
+
+    QString desktopFileName = QString::fromUtf8(process.readAllStandardOutput());
+    desktopFileName = desktopFileName.trimmed();
+    desktopFileName.replace(QString::fromUtf8(";"), QString::fromUtf8(""));
+    if (!desktopFileName.size())
+    {
+        return QString();
+    }
+
+    QFileInfo desktopFile(QString::fromUtf8("/usr/share/applications/") + desktopFileName);
+    if (!desktopFile.exists())
+    {
+        return QString();
+    }
+
+    QFile f(desktopFile.absoluteFilePath());
+    if (!f.open(QFile::ReadOnly | QFile::Text))
+    {
+        return QString();
+    }
+
+    QTextStream in(&f);
+    QStringList contents = in.readAll().split(QString::fromUtf8("\n"));
+    contents = contents.filter(QRegExp(QString::fromUtf8("^Exec=")));
+    if (!contents.size())
+    {
+        return QString();
+    }
+
+    QString line = contents.at(contents.size() - 1);
+    int index = line.indexOf(QChar::fromAscii('%'));
+    int size = -1;
+    if (index != -1)
+    {
+        size = index - 6;
+    }
+
+    if (!size)
+    {
+        return QString();
+    }
+
+    return line.mid(5, size);
 }

@@ -20,6 +20,7 @@ public:
     virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     void setRequiredRights(int requiredRights);
+    void setDisableFolders(bool option);
     void showFiles(bool show);
     QModelIndex insertNode(mega::MegaNode *node, const QModelIndex &parent);
     void removeNode(QModelIndex &item);
@@ -38,6 +39,7 @@ protected:
     QIcon folderIcon;
     int requiredRights;
     bool displayFiles;
+    bool disableFolders;
 };
 
 #endif // QMEGAMODEL_H

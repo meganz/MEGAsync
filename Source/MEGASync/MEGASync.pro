@@ -44,6 +44,8 @@ debug {
     DEFINES += LOG_TO_LOGGER
 }
 
+CONFIG += USE_LIBUV
+
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
@@ -86,6 +88,7 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_sk.ts \
     gui/translations/MEGASyncStrings_sl.ts \
+    gui/translations/MEGASyncStrings_sr.ts \
     gui/translations/MEGASyncStrings_sv.ts \
     gui/translations/MEGASyncStrings_tl.ts \
     gui/translations/MEGASyncStrings_tr.ts \

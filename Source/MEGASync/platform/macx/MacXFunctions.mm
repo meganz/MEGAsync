@@ -466,4 +466,35 @@ void unSetFolderIcon(QString path)
     [folderPath release];
 }
 
+QString defaultOpenApp(QString extension)
+{
+    CFURLRef appURL = NULL;
+    CFStringRef ext;
+    CFStringRef info;
+    char *buffer;
 
+    ext = CFStringCreateWithCString (NULL, extension.toUtf8().constData(),
+    kCFStringEncodingMacRoman);
+
+    LSGetApplicationForInfo (kLSUnknownType,
+    kLSUnknownCreator, ext, kLSRolesAll, NULL, &appURL);
+
+    if (appURL == NULL)
+    {
+        return QString();
+    }
+    
+    info = CFURLCopyFileSystemPath(appURL, kCFURLPOSIXPathStyle);
+    CFIndex size = CFStringGetMaximumSizeOfFileSystemRepresentation(info);
+    buffer = new char[size];
+
+    CFStringGetCString (info, buffer, size, kCFStringEncodingMacRoman);
+
+    QString defaultAppPath = QString::fromUtf8(buffer);
+    delete [] buffer;
+
+    CFRelease(ext);
+    CFRelease(info);
+
+    return defaultAppPath;
+}

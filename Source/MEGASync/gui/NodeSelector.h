@@ -19,7 +19,7 @@ class NodeSelector : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    enum { UPLOAD_SELECT = 0, DOWNLOAD_SELECT, SYNC_SELECT};
+    enum { UPLOAD_SELECT = 0, DOWNLOAD_SELECT, SYNC_SELECT, STREAM_SELECT};
 
     explicit NodeSelector(mega::MegaApi *megaApi,  int selectMode, QWidget *parent = 0);
 

@@ -26,7 +26,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QMegaModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
-    $$PWD/GuestWidget.cpp
+    $$PWD/GuestWidget.cpp \
+    $$PWD/StreamingFromMegaDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -54,7 +55,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QMegaModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
-    $$PWD/GuestWidget.h
+    $$PWD/GuestWidget.h \
+    $$PWD/StreamingFromMegaDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -86,7 +88,8 @@ win32 {
                 $$PWD/win/MessageBox.ui \
                 $$PWD/win/InfoOverQuotaDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
-                $$PWD/win/GuestWidget.ui
+                $$PWD/win/GuestWidget.ui \
+                $$PWD/win/StreamingFromMegaDialog.ui
 }
 
 macx {
@@ -113,7 +116,8 @@ macx {
                 $$PWD/macx/MessageBox.ui \
                 $$PWD/macx/InfoOverQuotaDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
-                $$PWD/macx/GuestWidget.ui
+                $$PWD/macx/GuestWidget.ui \
+                $$PWD/macx/StreamingFromMegaDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -144,5 +148,6 @@ unix:!macx {
                 $$PWD/linux/MessageBox.ui\
                 $$PWD/linux/InfoOverQuotaDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
-                $$PWD/linux/GuestWidget.ui
+                $$PWD/linux/GuestWidget.ui \
+                $$PWD/linux/StreamingFromMegaDialog.ui
 }

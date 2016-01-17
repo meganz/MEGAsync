@@ -28,6 +28,7 @@ unix:!macx {
 
     LIBS += -lssl -lcrypto
     DEFINES += USE_DBUS
+
     # do not install desktop files if no_desktop is defined,
     # make build tool take care of these files
     !contains(DEFINES, no_desktop) {
