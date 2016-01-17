@@ -145,6 +145,7 @@ const QString Preferences::uploadLimitKBKey         = QString::fromAscii("upload
 const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperSizeLimit");
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
+const QString Preferences::lastCustomStreamingAppKey    = QString::fromAscii("lastCustomStreamingApp");
 const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
 const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
 
@@ -1194,6 +1195,22 @@ void Preferences::setFirstWebDownloadDone(bool value)
 {
     mutex.lock();
     settings->setValue(firstWebDownloadKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+QString Preferences::lastCustomStreamingApp()
+{
+    mutex.lock();
+    QString value = settings->value(lastCustomStreamingAppKey).toString();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastCustomStreamingApp(const QString &value)
+{
+    mutex.lock();
+    settings->setValue(lastCustomStreamingAppKey, value);
     settings->sync();
     mutex.unlock();
 }

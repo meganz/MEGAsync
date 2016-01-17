@@ -166,20 +166,30 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
 {
     QString defaultPath;
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting Applications path");
-#ifdef WIN32
-    WCHAR buffer[MAX_PATH];
-    if (SHGetFolderPath(0, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, buffer) == S_OK)
+    Preferences *preferences = Preferences::instance();
+    QString lastPath = preferences->lastCustomStreamingApp();
+    QFileInfo lastFile(lastPath);
+    if (!lastPath.size() || !lastFile.exists())
     {
-        defaultPath = QString::fromUtf16(buffer);
-    }
-#else
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting Applications path");
+    #ifdef WIN32
+        WCHAR buffer[MAX_PATH];
+        if (SHGetFolderPath(0, CSIDL_PROGRAM_FILES, NULL, SHGFP_TYPE_CURRENT, buffer) == S_OK)
+        {
+            defaultPath = QString::fromUtf16(buffer);
+        }
     #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
+        #if QT_VERSION < 0x050000
+            defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
+        #else
+            defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
+        #endif
     #endif
-#endif
+    }
+    else
+    {
+        defaultPath = lastPath;
+    }
 
     defaultPath = QDir::toNativeSeparators(defaultPath);
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
@@ -192,6 +202,7 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
         {
             return;
         }
+        preferences->setLastCustomStreamingApp(path);
         openStreamWithApp(path);
     }
 }
