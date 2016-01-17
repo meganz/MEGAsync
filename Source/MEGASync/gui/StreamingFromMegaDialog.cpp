@@ -227,6 +227,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
         {
             updateFileInfo(name, CORRECT);
         }
+        generateStreamURL();
     }
 }
 
