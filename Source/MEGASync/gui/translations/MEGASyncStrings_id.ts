@@ -1375,22 +1375,22 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>%Ya</translation>
+        <translation>&amp;Ya</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>%Tidak</translation>
+        <translation>&amp;Tidak</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>%OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>%Batalkan</translation>
+        <translation>&amp;Batalkan</translation>
     </message>
 </context>
 <context>
