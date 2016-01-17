@@ -5,6 +5,10 @@
 #include "platform/Platform.h"
 #include "control/Utilities.h"
 
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
 using namespace mega;
 
 StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget *parent) :
