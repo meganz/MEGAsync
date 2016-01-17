@@ -237,12 +237,15 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
         if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
         {
             updateFileInfo(tr("Decryption error"), WARNING);
+            delete selectedMegaNode;
+            selectedMegaNode = NULL;
+            streamURL.clear();
         }
         else
         {
             updateFileInfo(name, CORRECT);
+            generateStreamURL();
         }
-        generateStreamURL();
     }
 }
 
@@ -287,21 +290,22 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status
         statusIcon.addFile(QString::fromUtf8(":/images/streaming_on_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->bOpenDefault->setEnabled(true);
         ui->bOpenOther->setEnabled(true);
+        ui->bCopyLink->setEnabled(true);
+        ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                                       "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
         break;
     default:
-        statusIcon.addFile(QString::fromUtf8(":/streaming_off_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        statusIcon.addFile(QString::fromUtf8(":/images/streaming_off_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->bOpenDefault->setEnabled(false);
         ui->bOpenOther->setEnabled(false);
+        ui->bCopyLink->setEnabled(false);
+        ui->bCopyLink->setStyleSheet(QString());
         break;
     }
 
     ui->lState->setIcon(statusIcon);
     ui->lState->setIconSize(QSize(8, 8));
-
     ui->sFileInfo->setCurrentWidget(ui->pFileInfo);
-    ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                   "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
-    ui->bCopyLink->setEnabled(true);
 }
 
 void StreamingFromMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
