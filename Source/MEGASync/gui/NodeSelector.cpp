@@ -89,6 +89,11 @@ void NodeSelector::nodesReady()
     QModelIndex defaultSelection = model->index(0, 0);
     ui->tMegaFolders->selectionModel()->select(defaultSelection, QItemSelectionModel::ClearAndSelect);
     ui->tMegaFolders->selectionModel()->setCurrentIndex(defaultSelection, QItemSelectionModel::ClearAndSelect);
+
+    if (selectMode == NodeSelector::STREAM_SELECT)
+    {
+        ui->tMegaFolders->expandToDepth(0);
+    }
 }
 
 void NodeSelector::showDefaultUploadOption(bool show)
