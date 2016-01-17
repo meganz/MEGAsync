@@ -23,6 +23,12 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
     ui->cbAlwaysUploadToLocation->hide();
     ui->bOk->setDefault(true);
 
+    if (selectMode == NodeSelector::STREAM_SELECT)
+    {
+        setWindowTitle(tr("Select items"));
+        ui->label->setText(tr("Select just one file."));
+    }
+
     nodesReady();
 
     ui->tMegaFolders->setContextMenuPolicy(Qt::CustomContextMenu);
