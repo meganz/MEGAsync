@@ -64,7 +64,7 @@ font-size: 11px;
 }
 #bCopyLink
 {
-    border: 1px solid #8f8f91;
+    border: 1px solid #dfdfd1;
     border-radius: 4px;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 rgba(246,247,250,30), stop: 1 rgba(232,233,235,30));
@@ -435,6 +435,12 @@ font-size: 11px;
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>260</width>
+                          <height>16777215</height>
+                         </size>
                         </property>
                         <property name="text">
                          <string/>
