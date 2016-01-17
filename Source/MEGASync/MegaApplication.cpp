@@ -212,12 +212,12 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    SharedTools::QtLockedFile singleInstanceChecker(appLockPath);
+    QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
     for (int i = 0; i < 10; i++)
     {
-        singleInstanceChecker.open(SharedTools::QtLockedFile::ReadWrite);
-        if (singleInstanceChecker.lock(SharedTools::QtLockedFile::WriteLock, false))
+        singleInstanceChecker.open(QtLockedFile::ReadWrite);
+        if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
         {
             alreadyStarted = false;
             break;
@@ -317,7 +317,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     #endif
 
     #ifdef DEBUG
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
     #else
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
     #endif
@@ -4321,7 +4321,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && !e->getValue())
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
@@ -4552,8 +4552,37 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         return;
     }
 
+    onTransferUpdate(api, transfer);
+
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
+
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue())
+    {
+        int t = e->getValue();
+        QString waitTime;
+        if (t < 60)
+        {
+            waitTime = QString::number(t) + QString::fromUtf8(" ") + tr("seconds");
+        }
+        else
+        {
+            waitTime = QString::number(ceil(t / 60.0)) + QString::fromUtf8(" ") + tr("minutes");
+        }
+
+        QString timeleft = tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ")
+                .arg(waitTime);
+
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
+        {
+            showErrorMessage(tr("Free bandwidth quota exceeded") + QString::fromUtf8(". ") + timeleft);
+        }
+        else
+        {
+            showErrorMessage(tr("Pro bandwidth quota exceeded.") + QString::fromUtf8(" ") + timeleft);
+        }
+        return;
+    }
 
     //Show information to users
     if (transfer->getNumRetry() == 1)
