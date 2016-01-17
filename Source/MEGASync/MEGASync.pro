@@ -88,6 +88,7 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_sk.ts \
     gui/translations/MEGASyncStrings_sl.ts \
+    gui/translations/MEGASyncStrings_sr.ts \
     gui/translations/MEGASyncStrings_sv.ts \
     gui/translations/MEGASyncStrings_tl.ts \
     gui/translations/MEGASyncStrings_tr.ts \

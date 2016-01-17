@@ -20,7 +20,7 @@ const QString Preferences::SDK_ID = QString::fromAscii("2bc7f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Streaming from MEGA with a builtin HTTP proxy server\n"
             "- Fixed the automatic detection of the proxy (Win32)\n"
-            "- Better translations\n"
+            "- More translations\n"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
