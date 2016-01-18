@@ -842,6 +842,7 @@ Section Uninstall
   Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
+  Delete "$INSTDIR\libuv.dll"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
