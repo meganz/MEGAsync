@@ -200,6 +200,10 @@ void QMegaModel::removeNode(QModelIndex &item)
 MegaNode *QMegaModel::getNode(const QModelIndex &index)
 {
     MegaItem *item = (MegaItem *)index.internalPointer();
+    if (!item)
+    {
+        return NULL;
+    }
     return item->getNode();
 }
 
