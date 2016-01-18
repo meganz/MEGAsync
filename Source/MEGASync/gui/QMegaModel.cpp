@@ -47,6 +47,11 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
     }
 
     MegaItem *item = (MegaItem *)index.internalPointer();
+    if (!item->getNode())
+    {
+        return QVariant();
+    }
+
     switch(role)
     {
         case Qt::DecorationRole:
@@ -181,6 +186,10 @@ void QMegaModel::removeNode(QModelIndex &item)
 {
     MegaNode *node = ((MegaItem *)item.internalPointer())->getNode();
     MegaItem *parent = (MegaItem *)item.parent().internalPointer();
+    if (!node || !parent)
+    {
+        return;
+    }
     int index = parent->indexOf((MegaItem *)item.internalPointer());
 
     beginRemoveRows(item.parent(), index, index);

@@ -87,6 +87,11 @@ void MegaItem::insertNode(MegaNode *node, int index)
 
 void MegaItem::removeNode(MegaNode *node)
 {
+    if (!node)
+    {
+        return;
+    }
+
     for (int i = 0; i < childItems.size(); i++)
     {
         if (childItems[i]->getNode()->getHandle() == node->getHandle())
