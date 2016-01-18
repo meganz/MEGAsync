@@ -1936,7 +1936,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Esposta Chiave Master</translation>
+        <translation type="unfinished">Esporta Chiave Master</translation>
     </message>
     <message>
         <source>Export Master key</source>
