@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="unfinished">MEGAsync è in modalità ospite</translation>
     </message>
     <message>
         <source>Login</source>
@@ -326,7 +326,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation type="unfinished">Your download has started</translation>
+        <translation type="unfinished">Il tuo download è partito</translation>
     </message>
 </context>
 <context>
@@ -980,7 +980,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">Modalità debug disattivata</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
@@ -1000,7 +1000,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation type="unfinished">No Internet connection</translation>
+        <translation type="unfinished">Nessuna connessione ad Internet</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1023,7 +1023,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Streaming from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming from MEGA</translation>
+        <translation type="unfinished">Streaming da MEGA</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
@@ -1308,7 +1308,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Please enter a valid folder name</translation>
+        <translation type="unfinished">Per favore, inserisci un nome valido per la cartella</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -1997,7 +1997,7 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Excluded file and folder names</translation>
+        <translation type="unfinished">Nomi di file e cartelle esclusi</translation>
     </message>
     <message>
         <source>Clear local cache</source>
@@ -2017,7 +2017,7 @@ when the application starts again</source>
     <message>
         <source>Clear remote cache</source>
         <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear remote cache</translation>
+        <translation type="unfinished">Pulisci cache remota</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -2495,7 +2495,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">Seleziona media da...</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2525,12 +2525,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">Default application</translation>
+        <translation type="unfinished">Applicazione predefinita</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation type="unfinished">Choose application</translation>
+        <translation type="unfinished">Scegli app</translation>
     </message>
     <message>
         <source>Close</source>
@@ -2560,7 +2560,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">Inserisci il link di un file MEGA:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2570,7 +2570,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">Errore nella creazione del link per lo streaming</translation>
     </message>
     <message>
         <source>Decryption error</source>
