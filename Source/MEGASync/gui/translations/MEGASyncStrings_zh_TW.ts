@@ -1941,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">匯出萬能密鑰</translation>
+        <translation type="unfinished">匯出金鑰</translation>
     </message>
     <message>
         <source>Unable to write file</source>

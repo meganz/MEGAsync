@@ -1941,7 +1941,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">I-export ang Master Key</translation>
+        <translation type="unfinished">I-export ang Master key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2540,7 +2540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">Sigurado ka bang gusto mong tumigil sa pag-iistream?</translation>
     </message>
     <message>
         <source>Error</source>
