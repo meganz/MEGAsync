@@ -140,7 +140,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
     {
         QModelIndex tmp = model->index(i, 0);
         MegaNode *n = model->getNode(tmp);
-        if (n->getHandle() == node->getHandle())
+        if (n && n->getHandle() == node->getHandle())
         {
             node = NULL;
             parentModelIndex = modelIndex;
@@ -168,7 +168,7 @@ void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
         {
             QModelIndex tmp = model->index(j, 0, modelIndex);
             MegaNode *n = model->getNode(tmp);
-            if (n->getHandle() == node->getHandle())
+            if (n && n->getHandle() == node->getHandle())
             {
                 node = NULL;
                 parentModelIndex = modelIndex;
@@ -234,8 +234,11 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaNode *parent = model->getNode(selectedItem.parent());
-            model->removeNode(selectedItem);
-            setSelectedFolderHandle(parent->getHandle());
+            if (parent)
+            {
+                model->removeNode(selectedItem);
+                setSelectedFolderHandle(parent->getHandle());
+            }
         }
     }
 
@@ -309,8 +312,17 @@ void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 {
     if (ui->tMegaFolders->selectionModel()->selectedIndexes().size())
     {
-        selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
-        selectedFolder =  model->getNode(selectedItem)->getHandle();
+        MegaNode *node = model->getNode(selectedItem);
+        if (node)
+        {
+            selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
+            selectedFolder = node->getHandle();
+        }
+        else
+        {
+            selectedItem = QModelIndex();
+            selectedFolder = mega::INVALID_HANDLE;
+        }
     }
     else
     {
@@ -364,7 +376,7 @@ void NodeSelector::on_bNewFolder_clicked()
                 QModelIndex row = model->index(i, 0, selectedItem);
                 MegaNode *node = model->getNode(row);
 
-                if (text.compare(QString::fromUtf8(node->getName())) == 0)
+                if (node && text.compare(QString::fromUtf8(node->getName())) == 0)
                 {
                     setSelectedFolderHandle(node->getHandle());
                     ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
