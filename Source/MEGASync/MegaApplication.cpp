@@ -3960,12 +3960,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                               "Please, try again. If the problem persists "
-                                                               "please contact bug@mega.co.nz"), QMessageBox::Ok);
                     preferences->setCrashed(true);
-                    preferences->unlink();
-                    rebootApplication(false);
                 }
             }
             else
@@ -3997,6 +3992,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         MegaNodeList *inShares = megaApi->getInShares();
         if (!root || !inbox || !rubbish || !inShares)
         {
+            preferences->setCrashed(true);
             delete root;
             delete inbox;
             delete rubbish;
