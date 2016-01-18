@@ -481,6 +481,7 @@ QString defaultOpenApp(QString extension)
 
     if (appURL == NULL)
     {
+        CFRelease(ext);
         return QString();
     }
     
