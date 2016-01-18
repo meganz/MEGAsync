@@ -317,7 +317,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     #endif
 
     #ifdef DEBUG
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
+        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
     #else
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
     #endif
@@ -3563,8 +3563,6 @@ void MegaApplication::createTrayMenu()
         streamAction = NULL;
     }
 
-    QT_TR_NOOP("Streaming");
-    QT_TR_NOOP("Streaming from MEGA");
     streamAction = new QAction(tr("Stream from MEGA"), this);
     connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
 
