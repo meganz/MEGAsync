@@ -3991,6 +3991,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
+        MegaNode *root = megaApi->getRootNode();
+        MegaNode *inbox = megaApi->getInboxNode();
+        MegaNode *rubbish = megaApi->getRubbishNode();
+        MegaNodeList *inShares = megaApi->getInShares();
+        if (!root || !inbox || !rubbish || !inShares)
+        {
+            delete root;
+            delete inbox;
+            delete rubbish;
+            delete inShares;
+            break;
+        }
+
         //Account details retrieved, update the preferences and the information dialog
         MegaAccountDetails *details = request->getMegaAccountDetails();
         preferences->setAccountType(details->getProLevel());
@@ -3999,21 +4012,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setTotalBandwidth(details->getTransferMax());
         preferences->setUsedBandwidth(details->getTransferOwnUsed());
 
-        MegaNode *root = megaApi->getRootNode();
         MegaHandle rootHandle = root->getHandle();
         preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
         preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
         preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
         delete root;
 
-        MegaNode *inbox = megaApi->getInboxNode();
         MegaHandle inboxHandle = inbox->getHandle();
         preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
         preferences->setInboxFiles(details->getNumFiles(inboxHandle));
         preferences->setInboxFolders(details->getNumFolders(inboxHandle));
         delete inbox;
 
-        MegaNode *rubbish = megaApi->getRubbishNode();
         MegaHandle rubbishHandle = rubbish->getHandle();
         preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
         preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
@@ -4021,7 +4031,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         delete rubbish;
 
         long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
-        MegaNodeList *inShares = megaApi->getInShares();
         for (int i = 0; i < inShares->size(); i++)
         {
             MegaNode *node = inShares->get(i);
