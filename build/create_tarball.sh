@@ -40,7 +40,7 @@ cd $cwd
 archives=$cwd/archives
 rm -fr $archives
 mkdir $archives
-../Source/MEGASync/mega/contrib/build_sdk.sh -n -f -w -s -o $archives
+../Source/MEGASync/mega/contrib/build_sdk.sh -n -f -w -s -o -v $archives
 
 # get current version
 MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../Source/MEGASync/control/Preferences.cpp`
