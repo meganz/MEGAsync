@@ -312,15 +312,14 @@ void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 {
     if (ui->tMegaFolders->selectionModel()->selectedIndexes().size())
     {
+        selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
         MegaNode *node = model->getNode(selectedItem);
         if (node)
         {
-            selectedItem = ui->tMegaFolders->selectionModel()->selectedIndexes().at(0);
-            selectedFolder = node->getHandle();
+            selectedFolder =  node->getHandle();
         }
         else
         {
-            selectedItem = QModelIndex();
             selectedFolder = mega::INVALID_HANDLE;
         }
     }
