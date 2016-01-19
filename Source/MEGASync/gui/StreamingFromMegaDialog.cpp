@@ -35,6 +35,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
 
 StreamingFromMegaDialog::~StreamingFromMegaDialog()
 {
+    megaApi->httpServerStop();
     delete ui;
     delete delegateListener;
     delete selectedMegaNode;
@@ -74,7 +75,6 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     if (button == QMessageBox::Yes)
     {
-        megaApi->httpServerStop();
         done(QDialog::Accepted);
     }
 }
@@ -150,7 +150,6 @@ void StreamingFromMegaDialog::on_bClose_clicked()
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
 
-        megaApi->httpServerStop();
         done(QDialog::Accepted);
     }
 }
