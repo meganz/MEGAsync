@@ -1,3 +1,11 @@
+Tue Jan 19 14:52:38 CET 2016 - linux@mega.co.nz
+
+- Streaming from MEGA with a builtin HTTP proxy server
+- Fixed the automatic detection of the proxy (Win32)
+- More and better translations
+- Bug fixes
+
+-------------------------------------------------------------------
 Mon Jan 4 12:16:28 CET 2016 - linux@mega.co.nz
 
 - Allow the usage of MEGAsync without being logged in

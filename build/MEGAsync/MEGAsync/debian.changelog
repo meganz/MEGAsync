@@ -1,3 +1,12 @@
+megasync (2.6.1) stable; urgency=low
+
+  * Streaming from MEGA with a builtin HTTP proxy server
+  * Fixed the automatic detection of the proxy (Win32)
+  * More and better translations
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 19 Jan 2016 14:52:38 +0100
+
 megasync (2.5.3) stable; urgency=low
 
   * Allow the usage of MEGAsync without being logged in
