@@ -200,6 +200,23 @@ DATA
 fi
 %endif
 
+# openSUSE Tumbleweed (rolling release)
+%if 0%{?suse_version} > 1320
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_Tumbleweed/
+gpgcheck=1
+autorefresh=1
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_Tumbleweed/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
+%endif
+
 # openSUSE 13.2
 %if 0%{?suse_version} == 1320
 if [ -d "/etc/zypp/repos.d/" ]; then
