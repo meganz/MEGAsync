@@ -1609,6 +1609,12 @@ void MegaApplication::cleanAll()
     delete uploader;
     delete delegateListener;
     delete delegateGuestListener;
+
+    // Ensure that aren't objects deleted with deleteLater()
+    // that may try to access megaApi or megaApiGuest after
+    // their deletion
+    QApplication::processEvents();
+
     delete megaApi;
     delete megaApiGuest;
 
