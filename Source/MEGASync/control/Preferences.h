@@ -106,6 +106,10 @@ public:
     void setUpperSizeLimitUnit(int value);
     int lowerSizeLimitUnit();
     void setLowerSizeLimitUnit(int value);
+    int folderPermissionsValue();
+    void setFolderPermissionsValue(int permissions);
+    int filePermissionsValue();
+    void setFilePermissionsValue(int permissions);
     int proxyType();
     void setProxyType(int value);
     int proxyProtocol();
@@ -321,6 +325,8 @@ protected:
     static const QString lowerSizeLimitValueKey;
     static const QString upperSizeLimitUnitKey;
     static const QString lowerSizeLimitUnitKey;
+    static const QString folderPermissionsKey;
+    static const QString filePermissionsKey;
     static const QString proxyTypeKey;
     static const QString proxyProtocolKey;
     static const QString proxyServerKey;
@@ -388,6 +394,8 @@ protected:
     static const int defaultLowerSizeLimitUnit;
     static const int defaultTransferDownloadMethod;
     static const int defaultTransferUploadMethod;
+    static const int defaultFolderPermissions;
+    static const int defaultFilePermissions;
 };
 
 #endif // PREFERENCES_H

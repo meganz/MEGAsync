@@ -154,6 +154,9 @@ const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lo
 const QString Preferences::upperSizeLimitUnitKey        = QString::fromAscii("upperSizeLimitUnit");
 const QString Preferences::lowerSizeLimitUnitKey        = QString::fromAscii("lowerSizeLimitUnit");
 
+const QString Preferences::folderPermissionsKey         = QString::fromAscii("folderPermissions");
+const QString Preferences::filePermissionsKey           = QString::fromAscii("filePermissions");
+
 const QString Preferences::proxyTypeKey             = QString::fromAscii("proxyType");
 const QString Preferences::proxyProtocolKey         = QString::fromAscii("proxyProtocol");
 const QString Preferences::proxyServerKey           = QString::fromAscii("proxyServer");
@@ -211,6 +214,8 @@ const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
+const int Preferences::defaultFolderPermissions = 0;
+const int Preferences::defaultFilePermissions   = 0;
 #ifdef WIN32
 const int  Preferences::defaultProxyType            = Preferences::PROXY_TYPE_AUTO;
 #else
@@ -948,6 +953,38 @@ void Preferences::setLowerSizeLimitUnit(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(lowerSizeLimitUnitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::folderPermissionsValue()
+{
+    mutex.lock();
+    int permissions = settings->value(folderPermissionsKey, defaultFolderPermissions).toInt();
+    mutex.unlock();
+    return permissions;
+}
+
+void Preferences::setFolderPermissionsValue(int permissions)
+{
+    mutex.lock();
+    settings->setValue(folderPermissionsKey, permissions);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::filePermissionsValue()
+{
+    mutex.lock();
+    int permissions = settings->value(filePermissionsKey, defaultFilePermissions).toInt();
+    mutex.unlock();
+    return permissions;
+}
+
+void Preferences::setFilePermissionsValue(int permissions)
+{
+    mutex.lock();
+    settings->setValue(filePermissionsKey, permissions);
     settings->sync();
     mutex.unlock();
 }
