@@ -1420,6 +1420,10 @@ void MegaApplication::checkNetworkInterfaces()
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv4: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
                     }
+                    else
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IPv4: %1").arg(ip.toString()).toUtf8().constData());
+                    }
                     break;
                 case QAbstractSocket::IPv6Protocol:
                     if (!ip.toString().startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive)
@@ -1429,8 +1433,13 @@ void MegaApplication::checkNetworkInterfaces()
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv6: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
                     }
+                    else
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IPv6: %1").arg(ip.toString()).toUtf8().constData());
+                    }
                     break;
                 default:
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IP: %1").arg(ip.toString()).toUtf8().constData());
                     break;
                 }
             }
@@ -1449,10 +1458,17 @@ void MegaApplication::checkNetworkInterfaces()
                 networkConnectivity = true;
             }
         }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
+                         .arg(networkInterface.humanReadableName())
+                         .arg(QString::number(flags)).toUtf8().constData());
+        }
     }
 
     if (!newNetworkInterfaces.size())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "No active network interfaces found");
         networkConnectivity = false;
         networkConfigurationManager.updateConfigurations();
     }
