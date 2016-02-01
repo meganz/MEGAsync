@@ -117,11 +117,18 @@ macx {
                 $$PWD/macx/InfoOverQuotaDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
                 $$PWD/macx/GuestWidget.ui \
-                $$PWD/macx/StreamingFromMegaDialog.ui
+                $$PWD/macx/StreamingFromMegaDialog.ui \
+                $$PWD/macx/PermissionsDialog.ui \
+                $$PWD/macx/PermissionsWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
     HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
+
+    HEADERS += $$PWD/PermissionsDialog.h \
+               $$PWD/PermissionsWidget.h
+    SOURCES += $$PWD/PermissionsDialog.cpp \
+               $$PWD/PermissionsWidget.cpp
 }
 
 unix:!macx {
@@ -149,5 +156,13 @@ unix:!macx {
                 $$PWD/linux/InfoOverQuotaDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui \
-                $$PWD/linux/StreamingFromMegaDialog.ui
+                $$PWD/linux/StreamingFromMegaDialog.ui \
+                $$PWD/linux/PermissionsDialog.ui \
+                $$PWD/linux/PermissionsWidget.ui
+
+    HEADERS += $$PWD/PermissionsDialog.h \
+               $$PWD/PermissionsWidget.h
+    SOURCES += $$PWD/PermissionsDialog.cpp \
+               $$PWD/PermissionsWidget.cpp
 }
+

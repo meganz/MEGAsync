@@ -1905,6 +1905,13 @@ border: none;</string>
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QPushButton" name="bPermissions">
+               <property name="text">
+                <string>Permissions</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>

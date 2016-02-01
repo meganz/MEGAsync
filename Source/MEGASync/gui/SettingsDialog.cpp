@@ -78,6 +78,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
+#ifndef WIN32
+    filePermissions = 0;
+    folderPermissions = 0;
+    permissionsChanged = false;
+#endif
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
     shouldClose = false;
@@ -1172,6 +1177,21 @@ bool SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
+#ifndef WIN32
+        if (permissionsChanged)
+        {
+            megaApi->setDefaultFilePermissions(filePermissions);
+            filePermissions = megaApi->getDefaultFilePermissions();
+            preferences->setFilePermissionsValue(filePermissions);
+
+            megaApi->setDefaultFolderPermissions(folderPermissions);
+            folderPermissions = megaApi->getDefaultFolderPermissions();
+            preferences->setFolderPermissionsValue(folderPermissions);
+
+            QMessageBox::information(this, tr("Info"), tr("The new permissions have been applied."), QMessageBox::Ok);
+            permissionsChanged = false;
+        }
+#endif
 
         //Bandwidth
         if (ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length() == 0)
@@ -1397,7 +1417,32 @@ void SettingsDialog::loadSizeLimits()
     lowerLimitUnit = preferences->lowerSizeLimitUnit();
     ui->lLimitsInfo->setText(getFormatString());
 }
+#ifndef WIN32
+void SettingsDialog::on_bPermissions_clicked()
+{
+    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
+    dialog->setFolderPermissions(preferences->folderPermissionsValue());
+    dialog->setFilePermissions(preferences->filePermissionsValue());
 
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    filePermissions = dialog->filePermissions();
+    folderPermissions = dialog->folderPermissions();
+    delete dialog;
+
+    if (filePermissions != preferences->filePermissionsValue() ||
+       folderPermissions != preferences->folderPermissionsValue())
+    {
+        permissionsChanged = true;
+        stateChanged();
+    }
+}
+#endif
 void SettingsDialog::on_bAdd_clicked()
 {
     QStringList currentLocalFolders;
