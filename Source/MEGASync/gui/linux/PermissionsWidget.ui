@@ -6,13 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>316</width>
+    <width>340</width>
     <height>31</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
+    <width>254</width>
     <height>31</height>
    </size>
   </property>
@@ -25,7 +31,21 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+font-family: &quot;HelveticaNeue-Light&quot;;
+}
+</string>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>15</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QCheckBox" name="cbRead">
      <property name="text">

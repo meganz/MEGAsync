@@ -6,236 +6,345 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
-    <height>378</height>
+    <width>450</width>
+    <height>330</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Permissions</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+
+#lFolders, #lFiles
+{
+  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-size: 12px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>16</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>16</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
    <item>
     <widget class="QWidget" name="widget_5" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_4">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+      <property name="formAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="horizontalSpacing">
+       <number>10</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lFolders">
         <property name="text">
          <string>Folders</string>
         </property>
        </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="label_7">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Group permissions:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="PermissionsWidget" name="wFolderGroup" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lFolderPermissionsDesc">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Numeric value:</string>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QLabel" name="label_9">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Public permissions:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="PermissionsWidget" name="wFolderPublic" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="5" column="1">
+       <widget class="QLabel" name="lFolderPermissions">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QLabel" name="lFolderPermissionsDesc">
-          <property name="text">
-           <string>Numeric value:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lFolderPermissions">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Group permissions:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Public permissions:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="PermissionsWidget" name="wFolderPublic" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>254</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="PermissionsWidget" name="wFolderGroup" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>254</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="widget_8" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_5">
+     <layout class="QFormLayout" name="formLayout_2">
+      <property name="labelAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+      <property name="formAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="horizontalSpacing">
+       <number>10</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lFiles">
         <property name="text">
          <string>Files</string>
         </property>
        </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QLabel" name="label_8">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Group permissions:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="PermissionsWidget" name="wFileGroup" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lFilePermissionsDesc">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Numeric value:</string>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <item>
-         <widget class="QLabel" name="label_11">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Public permissions:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="PermissionsWidget" name="wFilePublic" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>31</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>31</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="5" column="1">
+       <widget class="QLabel" name="lFilePermissions">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QLabel" name="lFilePermissionsDesc">
-          <property name="text">
-           <string>Numeric value:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="lFilePermissions">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Group permissions:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="PermissionsWidget" name="wFileGroup" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>254</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Public permissions:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="PermissionsWidget" name="wFilePublic" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>254</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+       </widget>
       </item>
      </layout>
+     <zorder>lFiles</zorder>
+     <zorder>widget_5</zorder>
+     <zorder>wFileGroup</zorder>
+     <zorder>wFilePublic</zorder>
     </widget>
    </item>
    <item>
