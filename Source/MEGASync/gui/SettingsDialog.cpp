@@ -1188,7 +1188,6 @@ bool SettingsDialog::saveSettings()
             folderPermissions = megaApi->getDefaultFolderPermissions();
             preferences->setFolderPermissionsValue(folderPermissions);
 
-            QMessageBox::information(this, tr("Info"), tr("The new permissions have been applied."), QMessageBox::Ok);
             permissionsChanged = false;
         }
 #endif
