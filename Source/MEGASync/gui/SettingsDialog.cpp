@@ -1189,6 +1189,8 @@ bool SettingsDialog::saveSettings()
             preferences->setFolderPermissionsValue(folderPermissions);
 
             permissionsChanged = false;
+            filePermissions   = 0;
+            folderPermissions = 0;
         }
 #endif
 
@@ -1420,8 +1422,8 @@ void SettingsDialog::loadSizeLimits()
 void SettingsDialog::on_bPermissions_clicked()
 {
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(preferences->folderPermissionsValue());
-    dialog->setFilePermissions(preferences->filePermissionsValue());
+    dialog->setFolderPermissions(folderPermissions ? folderPermissions : preferences->folderPermissionsValue());
+    dialog->setFilePermissions(filePermissions ? filePermissions : preferences->filePermissionsValue());
 
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
