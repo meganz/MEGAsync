@@ -1192,6 +1192,7 @@ bool SettingsDialog::saveSettings()
         app->setUploadLimit(preferences->uploadLimitKB());
 
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
+        app->setUseHttpsOnly(preferences->usingHttpsOnly());
 
         //Advanced
         if (excludedNamesChanged)
