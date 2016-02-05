@@ -876,7 +876,7 @@ void SettingsDialog::loadSettings()
         ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
         ui->eLimit->setEnabled(ui->rLimit->isChecked());
 
-        ui->cbUseHttps->setChecked(preferences->useHttps());
+        ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
         double totalBandwidth = preferences->totalBandwidth();
         if (totalBandwidth == 0)
@@ -1191,7 +1191,7 @@ bool SettingsDialog::saveSettings()
 
         app->setUploadLimit(preferences->uploadLimitKB());
 
-        preferences->setUseHttps(ui->cbUseHttps->isChecked());
+        preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
 
         //Advanced
         if (excludedNamesChanged)

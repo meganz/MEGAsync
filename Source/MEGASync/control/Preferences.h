@@ -81,8 +81,8 @@ public:
     void setShowNotifications(bool value);
     bool startOnStartup();
     void setStartOnStartup(bool value);
-    bool useHttps();
-    void setUseHttps(bool value);
+    bool usingHttpsOnly();
+    void setUseHttpsOnly(bool value);
     QString language();
     void setLanguage(QString &value);
     bool updateAutomatically();
@@ -370,7 +370,7 @@ protected:
     static const QString transferDownloadMethodKey;
     static const QString transferUploadMethodKey;
     static const QString lastCustomStreamingAppKey;
-    static const QString useHttpsKey;
+    static const QString useHttpsOnlyKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -391,7 +391,7 @@ protected:
     static const int defaultLowerSizeLimitUnit;
     static const int defaultTransferDownloadMethod;
     static const int defaultTransferUploadMethod;
-    static const bool defaultUseHttps;
+    static const bool defaultUseHttpsOnly;
 };
 
 #endif // PREFERENCES_H

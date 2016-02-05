@@ -2267,7 +2267,7 @@ border: none;</string>
           <string notr="true">padding-left : 10px;</string>
          </property>
          <property name="text">
-          <string>Don't use Http</string>
+          <string>Don't use HTTP</string>
          </property>
         </widget>
        </item>
@@ -2277,7 +2277,7 @@ border: none;</string>
           <string notr="true">padding-left: 2px;</string>
          </property>
          <property name="text">
-          <string>Enable this option if you have problems with transfers</string>
+          <string>Enable this option only if your transfers don't start</string>
          </property>
         </widget>
        </item>
