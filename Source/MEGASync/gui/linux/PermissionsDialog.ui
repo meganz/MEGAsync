@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>330</height>
+    <height>345</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Permissions</string>
+   <string>Permissions for new folders and files</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -82,6 +82,9 @@ font-size: 11px;
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lFolders">
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Folders</string>
         </property>
@@ -101,6 +104,9 @@ font-size: 11px;
           <height>31</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Numeric value:</string>
         </property>
@@ -113,6 +119,9 @@ font-size: 11px;
           <width>50</width>
           <height>31</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -136,6 +145,9 @@ font-size: 11px;
           <height>31</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Group permissions:</string>
         </property>
@@ -155,30 +167,11 @@ font-size: 11px;
           <height>31</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Public permissions:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="PermissionsWidget" name="wFolderPublic" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>254</width>
-          <height>31</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>31</height>
-         </size>
         </property>
        </widget>
       </item>
@@ -187,14 +180,36 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>35</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>35</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="PermissionsWidget" name="wFolderPublic" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>254</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
         </property>
        </widget>
       </item>
@@ -220,7 +235,7 @@ font-size: 11px;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -230,6 +245,9 @@ font-size: 11px;
       </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lFiles">
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Files</string>
         </property>
@@ -249,6 +267,9 @@ font-size: 11px;
           <height>31</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Numeric value:</string>
         </property>
@@ -261,6 +282,9 @@ font-size: 11px;
           <width>50</width>
           <height>31</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -284,6 +308,9 @@ font-size: 11px;
           <height>31</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Group permissions:</string>
         </property>
@@ -294,14 +321,17 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>35</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>35</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
         </property>
        </widget>
       </item>
@@ -319,6 +349,9 @@ font-size: 11px;
           <height>31</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="text">
          <string>Public permissions:</string>
         </property>
@@ -329,26 +362,35 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>35</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>35</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
         </property>
        </widget>
       </item>
      </layout>
+     <zorder>lFilePermissionsDesc</zorder>
+     <zorder>lFilePermissions</zorder>
+     <zorder>label_8</zorder>
+     <zorder>label_11</zorder>
      <zorder>lFiles</zorder>
-     <zorder>widget_5</zorder>
      <zorder>wFileGroup</zorder>
      <zorder>wFilePublic</zorder>
     </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="focusPolicy">
+      <enum>Qt::TabFocus</enum>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -367,6 +409,23 @@ font-size: 11px;
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>lFolders</tabstop>
+  <tabstop>label_7</tabstop>
+  <tabstop>wFolderGroup</tabstop>
+  <tabstop>label_9</tabstop>
+  <tabstop>wFolderPublic</tabstop>
+  <tabstop>lFolderPermissionsDesc</tabstop>
+  <tabstop>lFolderPermissions</tabstop>
+  <tabstop>lFiles</tabstop>
+  <tabstop>label_8</tabstop>
+  <tabstop>wFileGroup</tabstop>
+  <tabstop>label_11</tabstop>
+  <tabstop>wFilePublic</tabstop>
+  <tabstop>lFilePermissionsDesc</tabstop>
+  <tabstop>lFilePermissions</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

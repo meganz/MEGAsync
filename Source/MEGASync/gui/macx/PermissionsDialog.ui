@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Permissions</string>
+   <string>Permissions for new folders and files</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
