@@ -2137,7 +2137,8 @@ border: none;</string>
        <item>
         <widget class="QLabel" name="label">
          <property name="styleSheet">
-          <string notr="true">padding-left: 5px;</string>
+          <string notr="true">padding-left: 6px;
+font-style: normal;</string>
          </property>
          <property name="text">
           <string>Enable this option only if your transfers don't start</string>
