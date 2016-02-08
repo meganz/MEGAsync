@@ -496,6 +496,7 @@ void MegaApplication::initialize()
     megaApiGuest->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     megaApiGuest->setUploadMethod(preferences->transferUploadMethod());
+    setUseHttpsOnly(preferences->usingHttpsOnly());
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -1295,7 +1296,8 @@ void MegaApplication::rebootApplication(bool update)
     }
 
     reboot = true;
-    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()))
+    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()
+                   || megaApiGuest->getNumPendingDownloads() || megaApiGuest->isWaiting()))
     {
         if (!updateBlocked)
         {
@@ -2181,11 +2183,24 @@ void MegaApplication::setUploadLimit(int limit)
     if (limit < 0)
     {
         megaApi->setUploadLimit(-1);
+        megaApiGuest->setUploadLimit(-1);
     }
     else
     {
         megaApi->setUploadLimit(limit * 1024);
+        megaApiGuest->setUploadLimit(limit * 1024);
     }
+}
+
+void MegaApplication::setUseHttpsOnly(bool httpsOnly)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    megaApi->useHttpsOnly(httpsOnly);
+    megaApiGuest->useHttpsOnly(httpsOnly);
 }
 
 void MegaApplication::startUpdateTask()
@@ -4512,7 +4527,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
+    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads()
+            && !megaApiGuest->getNumPendingDownloads())
     {
         if (totalUploadSize || totalDownloadSize)
         {

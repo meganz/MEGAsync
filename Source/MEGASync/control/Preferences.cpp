@@ -198,12 +198,14 @@ const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstW
 const QString Preferences::installationTimeKey      = QString::fromAscii("installationTime");
 const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accountCreationTime");
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
+const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHttpsOnly");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
+const bool Preferences::defaultUseHttpsOnly         = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
@@ -696,6 +698,22 @@ void Preferences::setStartOnStartup(bool value)
 {
     mutex.lock();
     settings->setValue(startOnStartupKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::usingHttpsOnly()
+{
+    mutex.lock();
+    bool value = settings->value(useHttpsOnlyKey, defaultUseHttpsOnly).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setUseHttpsOnly(bool value)
+{
+    mutex.lock();
+    settings->setValue(useHttpsOnlyKey, value);
     settings->sync();
     mutex.unlock();
 }

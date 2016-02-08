@@ -2048,7 +2048,7 @@ border: none;</string>
            <number>3</number>
           </property>
           <property name="bottomMargin">
-           <number>5</number>
+           <number>18</number>
           </property>
           <item row="1" column="0">
            <widget class="QRadioButton" name="rAutoLimit">
@@ -2259,6 +2259,26 @@ border: none;</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbUseHttps">
+         <property name="styleSheet">
+          <string notr="true">padding-left : 10px;</string>
+         </property>
+         <property name="text">
+          <string>Don't use HTTP</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">padding-left: 2px;</string>
+         </property>
+         <property name="text">
+          <string>Enable this option only if your transfers don't start</string>
+         </property>
         </widget>
        </item>
        <item>
@@ -3975,6 +3995,22 @@ background:transparent;</string>
     <hint type="destinationlabel">
      <x>249</x>
      <y>259</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbUseHttps</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>stateChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>
