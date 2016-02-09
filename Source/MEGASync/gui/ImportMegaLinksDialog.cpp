@@ -2,6 +2,7 @@
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
 #include "gui/NodeSelector.h"
+#include "gui/MultiQFileDialog.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -256,10 +257,18 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 #endif
     }
 
-    QString path = QFileDialog::getExistingDirectory(0, tr("Select local folder"),
-                                                      defaultPath,
-                                                      QFileDialog::ShowDirsOnly
-                                                      | QFileDialog::DontResolveSymlinks);
+    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
+    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    dialog->setFileMode(QFileDialog::DirectoryOnly);
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
+    {
+        delete dialog;
+        return;
+    }
+    QString path = dialog->selectedFiles().value(0);
+    delete dialog;
+
     if (path.length())
     {
         path = QDir::toNativeSeparators(path);

@@ -496,6 +496,7 @@ void MegaApplication::initialize()
     megaApiGuest->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     megaApiGuest->setUploadMethod(preferences->transferUploadMethod());
+    setUseHttpsOnly(preferences->usingHttpsOnly());
 
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
@@ -1298,7 +1299,8 @@ void MegaApplication::rebootApplication(bool update)
     }
 
     reboot = true;
-    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()))
+    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()
+                   || megaApiGuest->getNumPendingDownloads() || megaApiGuest->isWaiting()))
     {
         if (!updateBlocked)
         {
@@ -1423,6 +1425,10 @@ void MegaApplication::checkNetworkInterfaces()
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv4: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
                     }
+                    else
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IPv4: %1").arg(ip.toString()).toUtf8().constData());
+                    }
                     break;
                 case QAbstractSocket::IPv6Protocol:
                     if (!ip.toString().startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive)
@@ -1432,8 +1438,13 @@ void MegaApplication::checkNetworkInterfaces()
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv6: %1").arg(ip.toString()).toUtf8().constData());
                         numActiveIPs++;
                     }
+                    else
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IPv6: %1").arg(ip.toString()).toUtf8().constData());
+                    }
                     break;
                 default:
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IP: %1").arg(ip.toString()).toUtf8().constData());
                     break;
                 }
             }
@@ -1452,10 +1463,17 @@ void MegaApplication::checkNetworkInterfaces()
                 networkConnectivity = true;
             }
         }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
+                         .arg(networkInterface.humanReadableName())
+                         .arg(QString::number(flags)).toUtf8().constData());
+        }
     }
 
     if (!newNetworkInterfaces.size())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "No active network interfaces found");
         networkConnectivity = false;
         networkConfigurationManager.updateConfigurations();
     }
@@ -2168,11 +2186,24 @@ void MegaApplication::setUploadLimit(int limit)
     if (limit < 0)
     {
         megaApi->setUploadLimit(-1);
+        megaApiGuest->setUploadLimit(-1);
     }
     else
     {
         megaApi->setUploadLimit(limit * 1024);
+        megaApiGuest->setUploadLimit(limit * 1024);
     }
+}
+
+void MegaApplication::setUseHttpsOnly(bool httpsOnly)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    megaApi->useHttpsOnly(httpsOnly);
+    megaApiGuest->useHttpsOnly(httpsOnly);
 }
 
 void MegaApplication::startUpdateTask()
@@ -4499,7 +4530,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
+    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads()
+            && !megaApiGuest->getNumPendingDownloads())
     {
         if (totalUploadSize || totalDownloadSize)
         {

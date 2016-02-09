@@ -3,6 +3,7 @@
 
 #include "MegaApplication.h"
 #include "control/Utilities.h"
+#include "gui/MultiQFileDialog.h"
 
 using namespace mega;
 
@@ -559,10 +560,19 @@ void SetupWizard::on_bLocalFolder_clicked()
             #endif
         #endif
     }
-    QString path =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
-                                                      defaultPath,
-                                                      QFileDialog::ShowDirsOnly
-                                                      | QFileDialog::DontResolveSymlinks);
+
+    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
+    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    dialog->setFileMode(QFileDialog::DirectoryOnly);
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
+    {
+        delete dialog;
+        return;
+    }
+    QString path = dialog->selectedFiles().value(0);
+    delete dialog;
+
     if (path.length())
     {
         QDir dir(path);

@@ -15,10 +15,14 @@ class MultiQFileDialog : public QFileDialog
 public:
     MultiQFileDialog(QWidget * parent = 0, const QString & caption = QString(),
                   const QString & directory = QString(),
+                  bool multiSelect = true,
                   const QString & filter = QString() );
 
 protected:
     QLineEdit *le;
+    bool eventFilter(QObject *obj, QEvent *e);
+    bool showHidden;
+    bool multiSelect;
 
 signals:
 

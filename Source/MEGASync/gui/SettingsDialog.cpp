@@ -503,8 +503,8 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(266);
-    maxHeightAnimation->setEndValue(266);
+    minHeightAnimation->setEndValue(350);
+    maxHeightAnimation->setEndValue(350);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -881,6 +881,8 @@ void SettingsDialog::loadSettings()
         ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
         ui->eLimit->setEnabled(ui->rLimit->isChecked());
 
+        ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
+
         double totalBandwidth = preferences->totalBandwidth();
         if (totalBandwidth == 0)
         {
@@ -1209,6 +1211,9 @@ bool SettingsDialog::saveSettings()
         }
 
         app->setUploadLimit(preferences->uploadLimitKB());
+
+        preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
+        app->setUseHttpsOnly(preferences->usingHttpsOnly());
 
         //Advanced
         if (excludedNamesChanged)

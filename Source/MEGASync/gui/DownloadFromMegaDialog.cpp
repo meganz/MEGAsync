@@ -1,11 +1,13 @@
 #include "DownloadFromMegaDialog.h"
 #include "ui_DownloadFromMegaDialog.h"
 #include "control/Utilities.h"
+#include "gui/MultiQFileDialog.h"
 
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QTemporaryFile>
 #include <QMessageBox>
+#include <QPointer>
 
 DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *parent) :
     QDialog(parent),
@@ -66,10 +68,17 @@ QString DownloadFromMegaDialog::getPath()
 
 void DownloadFromMegaDialog::on_bChange_clicked()
 {
-    QString fPath =  QFileDialog::getExistingDirectory(0, tr("Select local folder"),
-                                                  ui->eFolderPath->text(),
-                                                  QFileDialog::ShowDirsOnly
-                                                  | QFileDialog::DontResolveSymlinks);
+    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), ui->eFolderPath->text(), false);
+    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    dialog->setFileMode(QFileDialog::DirectoryOnly);
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
+    {
+        delete dialog;
+        return;
+    }
+    QString fPath = dialog->selectedFiles().value(0);
+    delete dialog;
 
     if (!fPath.size())
     {
