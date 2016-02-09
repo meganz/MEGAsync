@@ -22,6 +22,8 @@
 
 #ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#else
+#include "gui/PermissionsDialog.h"
 #endif
 
 using namespace mega;

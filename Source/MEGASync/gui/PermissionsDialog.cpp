@@ -21,8 +21,7 @@ PermissionsDialog::~PermissionsDialog()
 
 int PermissionsDialog::folderPermissions()
 {
-    bool ok;
-    return ui->lFolderPermissions->text().toInt(&ok, 8);
+    return ui->lFolderPermissions->text().toInt(NULL, 8);
 }
 
 void PermissionsDialog::setFolderPermissions(int permissions)
@@ -36,8 +35,7 @@ void PermissionsDialog::setFolderPermissions(int permissions)
 
 int PermissionsDialog::filePermissions()
 {
-    bool ok;
-    return ui->lFilePermissions->text().toInt(&ok, 8);
+    return ui->lFilePermissions->text().toInt(NULL, 8);
 }
 
 void PermissionsDialog::setFilePermissions(int permissions)
@@ -47,12 +45,10 @@ void PermissionsDialog::setFilePermissions(int permissions)
 
     ui->wFileGroup->setDefaultPermissions(group);
     ui->wFilePublic->setDefaultPermissions(others);
-
 }
 
 void PermissionsDialog::permissionsChanged()
 {
-
     ui->lFolderPermissions->setText(QString::fromUtf8("7%1%2").arg(ui->wFolderGroup->getCurrentPermissions())
                                                                .arg(ui->wFolderPublic->getCurrentPermissions()));
 

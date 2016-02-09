@@ -14,7 +14,6 @@
 #include "BindFolderDialog.h"
 #include "SizeLimitDialog.h"
 #include "DownloadFromMegaDialog.h"
-#include "PermissionsDialog.h"
 #include "Preferences.h"
 #include "megaapi.h"
 
