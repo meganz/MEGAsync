@@ -2985,14 +2985,25 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 
     //If there is a default upload folder in the preferences
     MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
-    if (preferences->hasDefaultUploadFolder() && node)
+    if (node)
     {
-        //use it to upload the list of files
-        processUploadQueue(node->getHandle());
-        delete node;
-        return;
-    }
+        const char *path = megaApi->getNodePath(node);
+        if (path && !strncmp(path, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
+        {
+            preferences->setHasDefaultUploadFolder(false);
+            preferences->setUploadFolder(mega::INVALID_HANDLE);
+        }
 
+        if (preferences->hasDefaultUploadFolder())
+        {
+            //use it to upload the list of files
+            processUploadQueue(node->getHandle());
+            delete node;
+            return;
+        }
+
+        delete node;
+    }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
 
