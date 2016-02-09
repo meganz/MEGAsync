@@ -498,6 +498,9 @@ void MegaApplication::initialize()
     megaApiGuest->setUploadMethod(preferences->transferUploadMethod());
     setUseHttpsOnly(preferences->usingHttpsOnly());
 
+    megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
+    megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
     delegateGuestListener = new MEGASyncDelegateListener(megaApiGuest, this);

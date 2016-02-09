@@ -1752,7 +1752,7 @@ border: none;</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="leftMargin">
-              <number>0</number>
+              <number>7</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -1825,6 +1825,13 @@ border: none;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bPermissions">
+               <property name="text">
+                <string>Permissions</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

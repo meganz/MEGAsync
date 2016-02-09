@@ -22,6 +22,8 @@
 
 #ifdef WIN32
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#else
+#include "gui/PermissionsDialog.h"
 #endif
 
 using namespace mega;
@@ -78,6 +80,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
+#ifndef WIN32
+    filePermissions = 0;
+    folderPermissions = 0;
+    permissionsChanged = false;
+#endif
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
     shouldClose = false;
@@ -1174,6 +1181,22 @@ bool SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
+#ifndef WIN32
+        if (permissionsChanged)
+        {
+            megaApi->setDefaultFilePermissions(filePermissions);
+            filePermissions = megaApi->getDefaultFilePermissions();
+            preferences->setFilePermissionsValue(filePermissions);
+
+            megaApi->setDefaultFolderPermissions(folderPermissions);
+            folderPermissions = megaApi->getDefaultFolderPermissions();
+            preferences->setFolderPermissionsValue(folderPermissions);
+
+            permissionsChanged = false;
+            filePermissions   = 0;
+            folderPermissions = 0;
+        }
+#endif
 
         //Bandwidth
         if (ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length() == 0)
@@ -1402,7 +1425,32 @@ void SettingsDialog::loadSizeLimits()
     lowerLimitUnit = preferences->lowerSizeLimitUnit();
     ui->lLimitsInfo->setText(getFormatString());
 }
+#ifndef WIN32
+void SettingsDialog::on_bPermissions_clicked()
+{
+    QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
+    dialog->setFolderPermissions(folderPermissions ? folderPermissions : preferences->folderPermissionsValue());
+    dialog->setFilePermissions(filePermissions ? filePermissions : preferences->filePermissionsValue());
 
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    filePermissions = dialog->filePermissions();
+    folderPermissions = dialog->folderPermissions();
+    delete dialog;
+
+    if (filePermissions != preferences->filePermissionsValue() ||
+       folderPermissions != preferences->folderPermissionsValue())
+    {
+        permissionsChanged = true;
+        stateChanged();
+    }
+}
+#endif
 void SettingsDialog::on_bAdd_clicked()
 {
     QStringList currentLocalFolders;

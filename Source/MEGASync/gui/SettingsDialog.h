@@ -85,7 +85,9 @@ private slots:
     void on_rLimit_clicked();
 
     void on_cProxyRequiresPassword_clicked();
-
+#ifndef WIN32
+    void on_bPermissions_clicked();
+#endif
     void on_bAdd_clicked();
     void on_bApply_clicked();
     void on_bDelete_clicked();
@@ -142,6 +144,11 @@ private:
     int upperLimitUnit;
     int lowerLimitUnit;
     bool sizeLimitsChanged;
+#ifndef WIN32
+    int folderPermissions;
+    int filePermissions;
+    bool permissionsChanged;
+#endif
     int debugCounter;
 
 #ifdef __APPLE__
