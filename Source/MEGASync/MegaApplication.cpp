@@ -332,7 +332,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
          {
              logger->sendLogsToStdout(true);
              MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-         } else if (!strcmp("--version", argv[1]))
+         }
+         else if (!strcmp("--version", argv[1]))
          {
             QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
             ::exit(0);
@@ -2444,9 +2445,10 @@ void MegaApplication::toggleLogging()
         return;
     }
 
-    if (logger->isLogToFileEnabled())
+    if (logger->isLogToFileEnabled() || logger->isLogToStdoutEnabled())
     {
         logger->sendLogsToFile(false);
+        logger->sendLogsToStdout(false);
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
         showInfoMessage(tr("DEBUG mode disabled"));
     }
