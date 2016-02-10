@@ -42,7 +42,7 @@ border-radius: 5px;
   font-size: 14px;
   color: #333333;
 }
-#bPolicy, #bTerms
+#bPolicy, #bTerms, #bAck
 {
   font-family: &quot;Helvetica&quot;;
   font-size: 11px;
@@ -107,7 +107,7 @@ border-radius: 5px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
         </property>
         <property name="iconSize">
@@ -317,6 +317,34 @@ border-radius: 5px;
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="wAck" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="bAck">
+        <property name="text">
+         <string>Acknowledgements</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lCopyright">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -347,7 +375,7 @@ border-radius: 5px;
   <tabstop>lCopyright</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
