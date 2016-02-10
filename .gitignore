@@ -8,9 +8,9 @@ MEGAupdater
 installer_mac.sh
 
 # executable on Linux
-Source/MEGASync/megasync
-Source/MEGASync/sdk/core
-Source/MEGASync/3rdparty
+src/MEGASync/megasync
+src/MEGASync/sdk/core
+src/MEGASync/3rdparty
 
 # Compiled Object files
 *.slo

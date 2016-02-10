@@ -33,7 +33,7 @@ git submodule update --init --recursive
 
 Building:
 ```
-cd Source
+cd src
 ./configure
 qmake MEGA.pro
 lrelease MEGASync/MEGASync.pro

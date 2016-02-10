@@ -8,8 +8,8 @@ QTBASE=/QT/qt5/qtbase
 rm -rf Release_x64
 mkdir Release_x64
 cd Release_x64
-$QTBASE/bin/lrelease ../Source/MEGASync/MEGASync.pro
-$QTBASE/bin/qmake -r ../Source -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
+$QTBASE/bin/lrelease ../src/MEGASync/MEGASync.pro
+$QTBASE/bin/qmake -r ../src -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
 make -j4
 cp -R MEGASync/MEGAsync.app MEGASync/MEGAsync_orig.app
 $QTBASE/bin/macdeployqt MEGASync/MEGAsync.app

@@ -26,7 +26,7 @@ IFS=$'\n\t'
 
 # make sure the source tree is in "clean" state
 cwd=$(pwd)
-cd ../Source
+cd ../src
 make distclean 2> /dev/null || true
 cd MEGASync
 make distclean 2> /dev/null || true
@@ -40,10 +40,10 @@ cd $cwd
 archives=$cwd/archives
 rm -fr $archives
 mkdir $archives
-../Source/MEGASync/mega/contrib/build_sdk.sh -n -f -w -s -v -o $archives
+../src/MEGASync/mega/contrib/build_sdk.sh -n -f -w -s -v -o $archives
 
 # get current version
-MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../Source/MEGASync/control/Preferences.cpp`
+MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../src/MEGASync/control/Preferences.cpp`
 export MEGASYNC_NAME=megasync-$MEGASYNC_VERSION
 rm -rf $MEGASYNC_NAME.tar.gz
 rm -rf $MEGASYNC_NAME
@@ -78,7 +78,7 @@ if [ "$last_version" != "$MEGASYNC_VERSION" ]; then
     if [ -f $changelog ]; then
         mv $changelog $changelogold
     fi
-    ./generate_rpm_changelog_entry.sh ../Source/MEGASync/control/Preferences.cpp > $changelog
+    ./generate_rpm_changelog_entry.sh ../src/MEGASync/control/Preferences.cpp > $changelog
     if [ -f $changelogold ]; then
         cat $changelogold >> $changelog
         rm $changelogold
@@ -90,7 +90,7 @@ if [ "$last_version" != "$MEGASYNC_VERSION" ]; then
     if [ -f $changelog ]; then
         mv $changelog $changelogold
     fi
-    ./generate_deb_changelog_entry.sh $MEGASYNC_VERSION ../Source/MEGASync/control/Preferences.cpp > $changelog
+    ./generate_deb_changelog_entry.sh $MEGASYNC_VERSION ../src/MEGASync/control/Preferences.cpp > $changelog
     if [ -f $changelogold ]; then
         cat $changelogold >> $changelog
         rm $changelogold
@@ -105,9 +105,9 @@ mkdir $MEGASYNC_NAME
 ln -s ../MEGAsync/MEGAsync/megasync.spec $MEGASYNC_NAME/megasync.spec
 ln -s ../MEGAsync/MEGAsync/debian.postinst $MEGASYNC_NAME/debian.postinst
 ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
-ln -s ../../Source/configure $MEGASYNC_NAME/configure
-ln -s ../../Source/MEGA.pro $MEGASYNC_NAME/MEGA.pro
-ln -s ../../Source/MEGASync $MEGASYNC_NAME/MEGASync
+ln -s ../../src/configure $MEGASYNC_NAME/configure
+ln -s ../../src/MEGA.pro $MEGASYNC_NAME/MEGA.pro
+ln -s ../../src/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s $archives $MEGASYNC_NAME/archives
 tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
@@ -124,9 +124,9 @@ mkdir $MEGASYNC_NAMED
 ln -s ../MEGAsync/MEGAsync.debug/megasync-debug.spec $MEGASYNC_NAMED/
 ln -s ../MEGAsync/MEGAsync.debug/debian.postinst $MEGASYNC_NAMED/
 ln -s ../MEGAsync/MEGAsync.debug/debian.postrm $MEGASYNC_NAMED/
-ln -s ../../Source/configure $MEGASYNC_NAMED/configure
-ln -s ../../Source/MEGA.pro $MEGASYNC_NAMED/MEGA.pro
-ln -s ../../Source/MEGASync $MEGASYNC_NAMED/MEGASync
+ln -s ../../src/configure $MEGASYNC_NAMED/configure
+ln -s ../../src/MEGA.pro $MEGASYNC_NAMED/MEGA.pro
+ln -s ../../src/MEGASync $MEGASYNC_NAMED/MEGASync
 ln -s $archives $MEGASYNC_NAMED/archives
 tar czfh $MEGASYNC_NAMED.tar.gz $MEGASYNC_NAMED
 rm -rf $MEGASYNC_NAMED
@@ -142,7 +142,7 @@ mv $MEGASYNC_NAMED.tar.gz MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSI
 #
 
 # make sure the source tree is in "clean" state
-cd ../Source/MEGAShellExtNautilus/
+cd ../src/MEGAShellExtNautilus/
 make distclean 2> /dev/null || true
 cd ../../build
 
@@ -164,15 +164,15 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNautilus/PKGBUILD > 
 mkdir $EXT_NAME
 ln -s ../MEGAsync/MEGAShellExtNautilus/nautilus-megasync.spec $EXT_NAME/nautilus-megasync.spec
 ln -s ../MEGAsync/MEGAShellExtNautilus/debian.postinst $EXT_NAME/debian.postinst
-ln -s ../../Source/MEGAShellExtNautilus/mega_ext_client.c $EXT_NAME/mega_ext_client.c
-ln -s ../../Source/MEGAShellExtNautilus/mega_ext_client.h $EXT_NAME/mega_ext_client.h
-ln -s ../../Source/MEGAShellExtNautilus/mega_ext_module.c $EXT_NAME/mega_ext_module.c
-ln -s ../../Source/MEGAShellExtNautilus/mega_notify_client.h $EXT_NAME/mega_notify_client.h
-ln -s ../../Source/MEGAShellExtNautilus/mega_notify_client.c $EXT_NAME/mega_notify_client.c
-ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
-ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
-ln -s ../../Source/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
-ln -s ../../Source/MEGAShellExtNautilus/data $EXT_NAME/data
+ln -s ../../src/MEGAShellExtNautilus/mega_ext_client.c $EXT_NAME/mega_ext_client.c
+ln -s ../../src/MEGAShellExtNautilus/mega_ext_client.h $EXT_NAME/mega_ext_client.h
+ln -s ../../src/MEGAShellExtNautilus/mega_ext_module.c $EXT_NAME/mega_ext_module.c
+ln -s ../../src/MEGAShellExtNautilus/mega_notify_client.h $EXT_NAME/mega_notify_client.h
+ln -s ../../src/MEGAShellExtNautilus/mega_notify_client.c $EXT_NAME/mega_notify_client.c
+ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
+ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
+ln -s ../../src/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
+ln -s ../../src/MEGAShellExtNautilus/data $EXT_NAME/data
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
@@ -188,7 +188,7 @@ mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION
 #
 
 # make sure the source tree is in "clean" state
-cd ../Source/MEGAShellExtThunar/
+cd ../src/MEGAShellExtThunar/
 make distclean 2> /dev/null || true
 cd ../../build
 
@@ -209,11 +209,11 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtThunar/PKGBUILD > ME
 # create archive
 mkdir $EXT_NAME
 ln -s ../MEGAsync/MEGAShellExtThunar/thunar-megasync.spec $EXT_NAME/thunar-megasync.spec
-ln -s ../../Source/MEGAShellExtThunar/mega_ext_client.c $EXT_NAME/mega_ext_client.c
-ln -s ../../Source/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
-ln -s ../../Source/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
-ln -s ../../Source/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
-ln -s ../../Source/MEGAShellExtThunar/MEGAShellExtThunar.pro $EXT_NAME/MEGAShellExtThunar.pro
+ln -s ../../src/MEGAShellExtThunar/mega_ext_client.c $EXT_NAME/mega_ext_client.c
+ln -s ../../src/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
+ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
+ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
+ln -s ../../src/MEGAShellExtThunar/MEGAShellExtThunar.pro $EXT_NAME/MEGAShellExtThunar.pro
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
