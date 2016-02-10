@@ -117,12 +117,6 @@ padding-bottom: -1px;
 {
 padding-bottom: 1px;
 }
-
-#lEmail
-{
- padding-bottom: -5px;
-}
-
 #lProxyType
 {
 padding-bottom: -1px;
@@ -596,7 +590,7 @@ background:transparent;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -790,6 +784,12 @@ background:transparent;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -820,7 +820,7 @@ background:transparent;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>17</height>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="text">
