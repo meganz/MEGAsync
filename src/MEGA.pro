@@ -3,11 +3,11 @@ TEMPLATE = subdirs
 SUBDIRS += MEGASync
 
 CONFIG(debug, debug|release) {
-    SUBDIRS += MEGALogger
+    #SUBDIRS += MEGALogger
 }
 
 win32 {
-    SUBDIRS += MEGACrashAnalyzer
+    #SUBDIRS += MEGACrashAnalyzer
     CONFIG(with_ext) {
         SUBDIRS += MEGAShellExt
     }
