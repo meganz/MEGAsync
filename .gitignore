@@ -6,6 +6,7 @@ Release_x32
 Release_x64
 MEGAupdater
 installer_mac.sh
+MEGA.pro.user
 
 # executable on Linux
 src/MEGASync/megasync
