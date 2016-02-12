@@ -50,7 +50,7 @@ void ChangeLogDialog::on_bPolicy_clicked()
 
 void ChangeLogDialog::on_bAck_clicked()
 {
-    QString ackUrl = QString::fromAscii("https://github.com/meganz/desktop/blob/master/LICENCE.md");
+    QString ackUrl = QString::fromAscii("https://github.com/meganz/MEGAsync/blob/master/ACKNOWLEDGEMENTS.md");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(ackUrl));
 }
 
