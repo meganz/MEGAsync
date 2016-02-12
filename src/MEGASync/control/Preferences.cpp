@@ -202,6 +202,7 @@ const QString Preferences::installationTimeKey      = QString::fromAscii("instal
 const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accountCreationTime");
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
 const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHttpsOnly");
+const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -209,6 +210,7 @@ const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
 const bool Preferences::defaultUseHttpsOnly         = false;
+const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
@@ -719,6 +721,22 @@ void Preferences::setUseHttpsOnly(bool value)
 {
     mutex.lock();
     settings->setValue(useHttpsOnlyKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::SSLcertificateException()
+{
+    mutex.lock();
+    bool value = settings->value(SSLcertificateExceptionKey, defaultSSLcertificateException).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setSSLcertificateException(bool value)
+{
+    mutex.lock();
+    settings->setValue(SSLcertificateExceptionKey, value);
     settings->sync();
     mutex.unlock();
 }
