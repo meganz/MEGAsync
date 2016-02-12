@@ -107,7 +107,7 @@ border-radius: 5px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/app_128.png</normaloff>:/images/app_128.png</iconset>
         </property>
         <property name="iconSize">
@@ -332,7 +332,7 @@ border-radius: 5px;
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <item>
        <widget class="QPushButton" name="bAck">
@@ -356,7 +356,7 @@ border-radius: 5px;
       <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
-      <string notr="true">&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
+      <string notr="true">&lt;html&gt; Copyright &amp;copy; 2016 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -375,7 +375,7 @@ border-radius: 5px;
   <tabstop>lCopyright</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -368,7 +368,7 @@ border-radius: 5px;
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <item>
        <widget class="QPushButton" name="bAck">
@@ -392,7 +392,7 @@ border-radius: 5px;
       <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
-      <string notr="true">&lt;html&gt; Copyright &amp;copy; 2015 Mega Limited. All rights reserved.&lt;/html&gt;</string>
+      <string notr="true">&lt;html&gt; Copyright &amp;copy; 2016 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
