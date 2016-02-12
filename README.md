@@ -47,7 +47,27 @@ https://mega.nz/#!YkdC1QDB!V45YubgxVQq9aGF3oKLeCFYWcNdjVn3CzAUy-1ch-ps
 
 10.-  Enjoy!
 
-It's recommended to to `Project -> Run` in QTCreator and disable the option `Run in terminal`
+It's recommended to go to `Project -> Run` in QTCreator and disable the option `Run in terminal`
+
+# OS X compilation
+
+##### Requirements:
+* Xcode
+* QT 5.X
+
+##### Preparation:
+1.- Install Xcode in your system
+
+2.- Clone or download this repo
+
+3.- Download the required third party libraries and configuration file (`config.h`) from this link:
+https://mega.nz/#!op8USTDR!OOpw_d9m2Zzc5dad7br8f18GgiKKq88EdLjp4230_ko
+
+4.- Uncompress that file and move the folder `3rdparty` into `src/MEGASync/mega/bindings/qt`/ and the file `config.h` into `src/MEGASync/mega/include/mega/`
+
+5.- Run the script `installer_mac.sh` to build the project and generate the application bundle for MEGAsync. If you want to generate an Apple disk image (DMG file), add the flag `--create-dmg`. Build directory is `Release_x64`
+
+6.- Enjoy!
 
 ## Linux compilation
 
@@ -65,7 +85,3 @@ qmake MEGA.pro
 lrelease MEGASync/MEGASync.pro
 make
 ```
-
-## End user installation instructions
-
-* [Linux](INSTALL.md)
