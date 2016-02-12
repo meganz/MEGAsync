@@ -1,19 +1,12 @@
 MEGAsync and MEGAShellExtNautilus projects OBS files.
 
 Supported distributives and versions (i586 and x86_64 platforms):
-* Ubuntu 14.04
-* Ubuntu 13.10
-* Ubuntu 12.10
-* Ubuntu 12.04
-* Debian 7.0
-* openSUSE 13.1
-* openSUSE 12.3
-* Fedora 20
-* Fedora 19
-
-Currently non supported:
-* Centos (it ships with QT 4.6.2, while minimal supported QT version is QT 4.7)
-
+* Ubuntu 12.04 - 15.10
+* Debian 7.0 - 8.0
+* openSUSE 12.2 - 13.2, Leap 42.1 and Tumbleweed
+* Fedora 19 - 23
+* Centos 7
+* RHEL 7
 
 "build" directory structure is ready for Open Build Service integration.
 
