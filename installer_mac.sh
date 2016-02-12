@@ -6,7 +6,7 @@ Usage () {
 
 APP_NAME=MEGAsync
 MOUNTDIR=tmp
-RESOURCES=resourcesDMG
+RESOURCES=installer/resourcesDMG
 QTBASE=/QT/qt5/qtbase
 
 sign=0
@@ -14,9 +14,9 @@ createdmg=0
 
 while [ "$1" != "" ]; do
     case $1 in
-        --sign )           		sign=1
+        --sign )		sign=1
                                 ;;
-        --create-dmg )    		createdmg=1
+        --create-dmg )		createdmg=1
                                 ;;
         -h | --help )           Usage
                                 exit
