@@ -502,7 +502,14 @@ void MegaApplication::initialize()
     setUseHttpsOnly(preferences->usingHttpsOnly());
 
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
+    megaApiGuest->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+    megaApiGuest->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+
+    megaApi->retrySSLerrors(true);
+    megaApiGuest->retrySSLerrors(true);
+    megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
+    megaApiGuest->setPublicKeyPinning(!preferences->SSLcertificateException());
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -3972,22 +3979,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         int errorCode = e->getErrorCode();
         if (errorCode)
         {
-            if (errorCode == MegaError::API_ESID)
+            if (errorCode == MegaError::API_EINCOMPLETE && request->getParamType() == MegaError::API_ESSL)
             {
-                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
-            }
-            else if (errorCode == MegaError::API_ESSL)
-            {
-                /*QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
-                                      tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));*/
                 if (!sslKeyPinningError)
                 {
                     sslKeyPinningError = new QMessageBox(QMessageBox::Critical, QString::fromAscii("MEGAsync"),
                                                 tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                                + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")), QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
-                    sslKeyPinningError->setButtonText(QMessageBox::Yes, trUtf8("Don't care"));
+                                                + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")),
+                                                         QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
+                    sslKeyPinningError->setButtonText(QMessageBox::Yes, trUtf8("I don't care"));
                     sslKeyPinningError->setButtonText(QMessageBox::Cancel, trUtf8("Logout"));
+                    sslKeyPinningError->setButtonText(QMessageBox::Retry, trUtf8("Retry"));
+                    sslKeyPinningError->setDefaultButton(QMessageBox::Retry);
                     int result = sslKeyPinningError->exec();
                     if (!sslKeyPinningError)
                     {
@@ -3996,34 +3999,60 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     if (result == QMessageBox::Cancel)
                     {
-                        //LOGOUT
-                        qDebug() << "LOGOUT";
+                        // Logout
+                        megaApi->localLogout();
+                        delete sslKeyPinningError;
+                        sslKeyPinningError = NULL;
                         return;
                     }
                     else if (result == QMessageBox::Retry)
                     {
-                        //Retry
-                        qDebug() << "RETRY";
+                        // Retry
+                        megaApi->retryPendingConnections();
+                        megaApiGuest->retryPendingConnections();
+                        delete sslKeyPinningError;
+                        sslKeyPinningError = NULL;
                         return;
                     }
 
+                    // Ignore
                     QPointer<ConfirmSSLexception> ex = new ConfirmSSLexception();
                     result = ex->exec();
-
-                    if(!ex || !result)
+                    if (!ex || !result)
                     {
+                        megaApi->retryPendingConnections();
+                        megaApiGuest->retryPendingConnections();
+                        delete sslKeyPinningError;
+                        sslKeyPinningError = NULL;
                         delete ex;
                         return;
                     }
-                    preferences->setSSLcertificateException(ex->isDefaultDownloadOption());
-                    delete ex;
 
+                    megaApi->setPublicKeyPinning(false);
+                    megaApiGuest->setPublicKeyPinning(false);
+
+                    if (ex->dontAskAgain())
+                    {
+                        preferences->setSSLcertificateException(true);
+                    }
+
+                    delete sslKeyPinningError;
+                    sslKeyPinningError = NULL;
+                    delete ex;
                 }
-                else
-                {
-                    sslKeyPinningError->raise();
-                    sslKeyPinningError->activateWindow();
-                }
+
+                break;
+            }
+
+            if (errorCode == MegaError::API_ESID)
+            {
+                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
+            }
+            else if (errorCode == MegaError::API_ESSL)
+            {
+                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
+                                      tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
             }
             else if (errorCode != MegaError::API_EACCESS)
             {
