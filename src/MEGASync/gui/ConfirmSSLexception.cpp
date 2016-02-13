@@ -14,7 +14,7 @@ ConfirmSSLexception::~ConfirmSSLexception()
     delete ui;
 }
 
-bool ConfirmSSLexception::isDefaultDownloadOption()
+bool ConfirmSSLexception::dontAskAgain()
 {
     return ui->cRemember->isChecked();
 }

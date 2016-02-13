@@ -15,7 +15,7 @@ public:
     explicit ConfirmSSLexception(QWidget *parent = 0);
     ~ConfirmSSLexception();
 
-    bool isDefaultDownloadOption();
+    bool dontAskAgain();
 
 protected:
     void changeEvent(QEvent * event);

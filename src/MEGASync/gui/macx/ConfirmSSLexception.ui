@@ -7,23 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>430</width>
-    <height>160</height>
+    <height>220</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>430</width>
-    <height>160</height>
+    <height>220</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>430</width>
-    <height>160</height>
+    <height>240</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Confirm SSL exception</string>
+   <string>Warning</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -55,17 +55,20 @@ QPushButton
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
+   <property name="spacing">
     <number>12</number>
    </property>
+   <property name="leftMargin">
+    <number>17</number>
+   </property>
    <property name="topMargin">
-    <number>9</number>
+    <number>12</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>18</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>6</number>
    </property>
    <item>
     <widget class="QLabel" name="lConfirmation">
@@ -97,20 +100,20 @@ QPushButton
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>50</height>
+       <height>85</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>50</height>
+       <height>85</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">padding-top: -10px;</string>
      </property>
      <property name="text">
-      <string>You are about to allow that your communications could be intercepted and attackers might steal your private information</string>
+      <string>You are about to allow that your communications are intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -126,12 +129,27 @@ QPushButton
    </item>
    <item>
     <widget class="QWidget" name="wButtons" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>30</height>
+      </size>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>9</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
