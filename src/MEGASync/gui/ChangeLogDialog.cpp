@@ -48,6 +48,12 @@ void ChangeLogDialog::on_bPolicy_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
 }
 
+void ChangeLogDialog::on_bAck_clicked()
+{
+    QString ackUrl = QString::fromAscii("https://github.com/meganz/MEGAsync/blob/master/ACKNOWLEDGEMENTS.md");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(ackUrl));
+}
+
 void ChangeLogDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
