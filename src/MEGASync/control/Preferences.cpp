@@ -728,7 +728,17 @@ void Preferences::setUseHttpsOnly(bool value)
 bool Preferences::SSLcertificateException()
 {
     mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
     bool value = settings->value(SSLcertificateExceptionKey, defaultSSLcertificateException).toBool();
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     mutex.unlock();
     return value;
 }
@@ -736,7 +746,17 @@ bool Preferences::SSLcertificateException()
 void Preferences::setSSLcertificateException(bool value)
 {
     mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
     settings->setValue(SSLcertificateExceptionKey, value);
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     settings->sync();
     mutex.unlock();
 }
