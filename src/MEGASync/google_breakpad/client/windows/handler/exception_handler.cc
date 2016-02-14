@@ -987,7 +987,10 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
   }
 
-  oss << "Operating system: Windows\n";
+  DWORD dwVersion = GetVersion();
+  oss << "Operating system: Windows "
+      << (int)(LOBYTE(LOWORD(dwVersion))) << "."
+      << (int)(HIBYTE(LOWORD(dwVersion))) << "\n";
   oss << "Error info:\n";
 
   DWORD64 offset;
