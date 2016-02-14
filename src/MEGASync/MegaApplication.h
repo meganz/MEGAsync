@@ -247,6 +247,7 @@ protected:
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
     QMessageBox *exitDialog;
+    QMessageBox *sslKeyPinningError;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
 

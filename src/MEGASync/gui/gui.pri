@@ -27,7 +27,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
-    $$PWD/StreamingFromMegaDialog.cpp
+    $$PWD/StreamingFromMegaDialog.cpp \
+    $$PWD/ConfirmSSLexception.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -56,7 +57,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
-    $$PWD/StreamingFromMegaDialog.h
+    $$PWD/StreamingFromMegaDialog.h \
+    $$PWD/ConfirmSSLexception.h
 
 INCLUDEPATH += $$PWD
 
@@ -89,7 +91,8 @@ win32 {
                 $$PWD/win/InfoOverQuotaDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
-                $$PWD/win/StreamingFromMegaDialog.ui
+                $$PWD/win/StreamingFromMegaDialog.ui \
+                $$PWD/win/ConfirmSSLexception.ui
 }
 
 macx {
@@ -119,7 +122,8 @@ macx {
                 $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
                 $$PWD/macx/PermissionsDialog.ui \
-                $$PWD/macx/PermissionsWidget.ui
+                $$PWD/macx/PermissionsWidget.ui \
+                $$PWD/macx/ConfirmSSLexception.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -158,7 +162,8 @@ unix:!macx {
                 $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
                 $$PWD/linux/PermissionsDialog.ui \
-                $$PWD/linux/PermissionsWidget.ui
+                $$PWD/linux/PermissionsWidget.ui \
+                $$PWD/linux/ConfirmSSLexception.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

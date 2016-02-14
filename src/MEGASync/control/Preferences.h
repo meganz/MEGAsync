@@ -83,6 +83,8 @@ public:
     void setStartOnStartup(bool value);
     bool usingHttpsOnly();
     void setUseHttpsOnly(bool value);
+    bool SSLcertificateException();
+    void setSSLcertificateException(bool value);
     QString language();
     void setLanguage(QString &value);
     bool updateAutomatically();
@@ -377,6 +379,7 @@ protected:
     static const QString transferUploadMethodKey;
     static const QString lastCustomStreamingAppKey;
     static const QString useHttpsOnlyKey;
+    static const QString SSLcertificateExceptionKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -400,6 +403,7 @@ protected:
     static const int defaultFolderPermissions;
     static const int defaultFilePermissions;
     static const bool defaultUseHttpsOnly;
+    static const bool defaultSSLcertificateException;
 };
 
 #endif // PREFERENCES_H

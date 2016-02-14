@@ -1,6 +1,7 @@
 #include "MegaApplication.h"
 #include "gui/CrashReportDialog.h"
 #include "gui/MegaProxyStyle.h"
+#include "gui/ConfirmSSLexception.h"
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
@@ -418,6 +419,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateTask = NULL;
     multiUploadFileDialog = NULL;
     exitDialog = NULL;
+    sslKeyPinningError = NULL;
     downloadNodeSelector = NULL;
     notificator = NULL;
     externalNodesTimestamp = 0;
@@ -500,7 +502,14 @@ void MegaApplication::initialize()
     setUseHttpsOnly(preferences->usingHttpsOnly());
 
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
+    megaApiGuest->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+    megaApiGuest->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+
+    megaApi->retrySSLerrors(true);
+    megaApiGuest->retrySSLerrors(true);
+    megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
+    megaApiGuest->setPublicKeyPinning(!preferences->SSLcertificateException());
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -1290,6 +1299,9 @@ void MegaApplication::closeDialogs()
 
     delete infoOverQuota;
     infoOverQuota = NULL;
+
+    delete sslKeyPinningError;
+    sslKeyPinningError = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -3868,6 +3880,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         return;
     }
 
+    if (sslKeyPinningError && request->getType() != MegaRequest::TYPE_LOGOUT)
+    {
+        delete sslKeyPinningError;
+        sslKeyPinningError = NULL;
+    }
+
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
         //Cancel pending uploads and disable syncs
@@ -3967,6 +3985,68 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         int errorCode = e->getErrorCode();
         if (errorCode)
         {
+            if (errorCode == MegaError::API_EINCOMPLETE && request->getParamType() == MegaError::API_ESSL)
+            {
+                if (!sslKeyPinningError)
+                {
+                    sslKeyPinningError = new QMessageBox(QMessageBox::Critical, QString::fromAscii("MEGAsync"),
+                                                tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+                                                + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")),
+                                                         QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
+                    sslKeyPinningError->setButtonText(QMessageBox::Yes, trUtf8("I don't care"));
+                    sslKeyPinningError->setButtonText(QMessageBox::Cancel, trUtf8("Logout"));
+                    sslKeyPinningError->setButtonText(QMessageBox::Retry, trUtf8("Retry"));
+                    sslKeyPinningError->setDefaultButton(QMessageBox::Retry);
+                    int result = sslKeyPinningError->exec();
+                    if (!sslKeyPinningError)
+                    {
+                        return;
+                    }
+
+                    if (result == QMessageBox::Cancel)
+                    {
+                        // Logout
+                        megaApi->localLogout();
+                        delete sslKeyPinningError;
+                        sslKeyPinningError = NULL;
+                        return;
+                    }
+                    else if (result == QMessageBox::Retry)
+                    {
+                        // Retry
+                        megaApi->retryPendingConnections();
+                        megaApiGuest->retryPendingConnections();
+                        delete sslKeyPinningError;
+                        sslKeyPinningError = NULL;
+                        return;
+                    }
+
+                    // Ignore
+                    QPointer<ConfirmSSLexception> ex = new ConfirmSSLexception(sslKeyPinningError);
+                    result = ex->exec();
+                    if (!ex || !result)
+                    {
+                        megaApi->retryPendingConnections();
+                        megaApiGuest->retryPendingConnections();
+                        delete sslKeyPinningError;
+                        sslKeyPinningError = NULL;
+                        return;
+                    }
+
+                    if (ex->dontAskAgain())
+                    {
+                        preferences->setSSLcertificateException(true);
+                    }
+
+                    megaApi->setPublicKeyPinning(false);
+                    megaApiGuest->setPublicKeyPinning(false);
+                    delete sslKeyPinningError;
+                    sslKeyPinningError = NULL;
+                }
+
+                break;
+            }
+
             if (errorCode == MegaError::API_ESID)
             {
                 QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
