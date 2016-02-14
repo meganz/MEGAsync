@@ -3880,6 +3880,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         return;
     }
 
+    if (sslKeyPinningError && request->getType() != MegaRequest::TYPE_LOGOUT)
+    {
+        delete sslKeyPinningError;
+        sslKeyPinningError = NULL;
+    }
+
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
         //Cancel pending uploads and disable syncs
@@ -4016,7 +4022,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
 
                     // Ignore
-                    QPointer<ConfirmSSLexception> ex = new ConfirmSSLexception();
+                    QPointer<ConfirmSSLexception> ex = new ConfirmSSLexception(sslKeyPinningError);
                     result = ex->exec();
                     if (!ex || !result)
                     {
@@ -4024,21 +4030,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         megaApiGuest->retryPendingConnections();
                         delete sslKeyPinningError;
                         sslKeyPinningError = NULL;
-                        delete ex;
                         return;
                     }
-
-                    megaApi->setPublicKeyPinning(false);
-                    megaApiGuest->setPublicKeyPinning(false);
 
                     if (ex->dontAskAgain())
                     {
                         preferences->setSSLcertificateException(true);
                     }
 
+                    megaApi->setPublicKeyPinning(false);
+                    megaApiGuest->setPublicKeyPinning(false);
                     delete sslKeyPinningError;
                     sslKeyPinningError = NULL;
-                    delete ex;
                 }
 
                 break;
