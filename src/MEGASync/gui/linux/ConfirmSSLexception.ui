@@ -47,14 +47,9 @@ QPushButton
 	height: 14px;
 }
 
-#cRemember
-{
-    spacing: 10px;
-}
-
 </string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
    <property name="spacing">
     <number>12</number>
    </property>
@@ -75,17 +70,17 @@ QPushButton
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>20</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>20</height>
+       <height>16777215</height>
       </size>
      </property>
      <property name="text">
-      <string>Are you sure to continue?</string>
+      <string> Are you sure you want to continue?</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -100,20 +95,20 @@ QPushButton
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>85</height>
+       <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>85</height>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">padding-top: -10px;</string>
      </property>
      <property name="text">
-      <string>You are about to allow that your communications are intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</string>
+      <string>You are about to allow that your communications are intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account. You are about to allow that your communications are intercepted.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -122,6 +117,12 @@ QPushButton
    </item>
    <item>
     <widget class="QCheckBox" name="cRemember">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Remember my decision and don't ask me again</string>
      </property>
@@ -173,14 +174,14 @@ QPushButton
       <item>
        <widget class="QPushButton" name="bCancel">
         <property name="text">
-         <string>Cancel</string>
+         <string>No</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bOK">
         <property name="text">
-         <string>OK</string>
+         <string>Yes</string>
         </property>
        </widget>
       </item>
