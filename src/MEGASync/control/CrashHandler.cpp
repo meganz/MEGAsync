@@ -106,10 +106,9 @@ using namespace std;
         {
             stack[1] = pnt;
             char **messages = backtrace_symbols(stack, size);
-            oss << "## " << messages[1] << "\n";
-            for (unsigned int i = 2; i < size; i++)
+            for (unsigned int i = 1; i < size; i++)
             {
-                oss << "#" << (i-1) << " " << messages[i] << "\n";
+                oss << messages[i] << "\n";
             }
         }
         else
