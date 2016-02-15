@@ -2145,6 +2145,7 @@ border: none;</string>
         <widget class="QLabel" name="label">
          <property name="styleSheet">
           <string notr="true">padding-left: 6px;
+padding-right: 6px;
 font-style: normal;</string>
          </property>
          <property name="text">

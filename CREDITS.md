@@ -1,4 +1,4 @@
-## ACKNOWLEDGEMENTS
+## CREDITS
 
 Here is the list of the external libraries used by MEGAsync.
 We thank them all for their contributions:

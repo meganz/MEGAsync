@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
-    <height>350</height>
+    <width>460</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>450</width>
-    <height>350</height>
+    <width>460</width>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>450</width>
-    <height>350</height>
+    <width>460</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,7 @@ font-size: 11px;
       <string notr="true"/>
      </property>
      <property name="text">
-      <string>From this dialog you will be able to edit newly created permissions of folders and files for the group of users that owns them and the rest of users. If you don't need custom permissions, please leave it as default.</string>
+      <string>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don't need to change them, please leave them as default for security reasons.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

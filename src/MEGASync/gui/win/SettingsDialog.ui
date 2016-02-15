@@ -2274,7 +2274,8 @@ border: none;</string>
        <item>
         <widget class="QLabel" name="label">
          <property name="styleSheet">
-          <string notr="true">padding-left: 2px;</string>
+          <string notr="true">padding-left: 3px;
+padding-right: 3px;</string>
          </property>
          <property name="text">
           <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>

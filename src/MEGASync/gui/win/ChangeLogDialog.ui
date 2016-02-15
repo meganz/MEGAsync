@@ -337,7 +337,7 @@ border-radius: 5px;
       <item>
        <widget class="QPushButton" name="bAck">
         <property name="text">
-         <string>Acknowledgements</string>
+         <string>Credits</string>
         </property>
        </widget>
       </item>
