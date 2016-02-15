@@ -2148,10 +2148,13 @@ border: none;</string>
 font-style: normal;</string>
          </property>
          <property name="text">
-          <string>Enable this option only if your transfers don't start</string>
+          <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
          </property>
          <property name="textFormat">
           <enum>Qt::AutoText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
