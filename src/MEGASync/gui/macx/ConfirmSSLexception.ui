@@ -80,7 +80,7 @@ QPushButton
       </size>
      </property>
      <property name="text">
-      <string> Are you sure you want to continue?</string>
+      <string>Are you sure you want to continue?</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
