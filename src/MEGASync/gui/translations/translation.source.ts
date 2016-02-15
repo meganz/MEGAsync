@@ -149,8 +149,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Acknowledgements</source>
-        <translatorcomment>Label for a link that redirects to an acknowledgements section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
+        <source>Credits</source>
+        <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -167,11 +167,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You are about to allow that your communications are intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
-        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -184,6 +179,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Yes</source>
         <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
+        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1458,6 +1458,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
         <translation type="unfinished">[$2034]</translation>
     </message>
+    <message>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
+        <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
@@ -2157,7 +2162,7 @@ when the application starts again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable this option only if your transfers don&apos;t start</source>
+        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
