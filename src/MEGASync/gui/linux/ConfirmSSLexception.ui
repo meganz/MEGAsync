@@ -108,7 +108,7 @@ QPushButton
       <string notr="true">padding-top: -10px;</string>
      </property>
      <property name="text">
-      <string>You are about to allow that your communications are intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</string>
+      <string>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
