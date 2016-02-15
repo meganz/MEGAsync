@@ -419,21 +419,29 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     type = ASSOCSTR_EXECUTABLE;
     ret = AssocQueryString(0, type, extensionWithDot.utf16(),
                                  NULL, NULL, &length);
-    if (ret != S_FALSE)
-    {
-       return QString();
-    }
-
-    WCHAR *buffer = new WCHAR[length];
-    ret = AssocQueryString(0, type, extensionWithDot.utf16(),
-                           NULL, buffer, &length);
-    if (ret != S_OK)
-    {
+    if (ret == S_FALSE)
+    { 
+        WCHAR *buffer = new WCHAR[length];
+        ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+                               NULL, buffer, &length);
+        if (ret == S_OK)
+        {
+            QString result = QString::fromUtf16(buffer);
+            delete [] buffer;
+            return result;
+        }
         delete [] buffer;
-        return QString();
     }
 
-    QString result = QString::fromUtf16(buffer);
-    delete [] buffer;
-    return result;
+    WCHAR buff[MAX_PATH];
+    if (SHGetFolderPath(0, CSIDL_PROGRAM_FILESX86, NULL, SHGFP_TYPE_CURRENT, buff) == S_OK)
+    {
+        QString path = QString::fromUtf16(buff);
+        path.append(QString::fromUtf8("\\Windows Media Player\\wmplayer.exe"));
+        if (QFile(path).exists())
+        {
+            return path;
+        }
+    }
+    return QString();
 }
