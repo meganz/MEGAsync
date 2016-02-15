@@ -4280,6 +4280,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     {
                         showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                                          .arg(preferences->getSyncName(i)));
+
+                        if (megaApi->isLoggedIn())
+                        {
+                            megaApi->fetchNodes();
+                        }
                     }
                     else if (e->getErrorCode() != MegaError::API_ENOENT) // Managed in onNodesUpdate
                     {
@@ -4870,7 +4875,10 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 //NO_KEY node created by this client detected
                 if (!noKeyDetected)
                 {
-                    megaApi->fetchNodes();
+                    if (megaApi->isLoggedIn())
+                    {
+                        megaApi->fetchNodes();
+                    }
                 }
                 else if (noKeyDetected > 20)
                 {
