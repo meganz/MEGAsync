@@ -148,6 +148,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
         <translation type="unfinished">Újdonság ebben a verzióban:</translation>
     </message>
+    <message>
+        <source>Credits</source>
+        <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
+        <translation type="unfinished">Érdemlista</translation>
+    </message>
+</context>
+<context>
+    <name>ConfirmSSLexception</name>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
+        <translation type="unfinished">Figyelmeztetés</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to continue?</source>
+        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
+        <translation type="unfinished">Biztos benne, hogy folytatni szeretné?</translation>
+    </message>
+    <message>
+        <source>Remember my decision and don&#039;t ask me again</source>
+        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished">Nem</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished">Igen</translation>
+    </message>
+    <message>
+        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
+        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
+        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -846,7 +884,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Fájlrendszer olvasása sikertelen.Kérlek próbáld újra később. Ha a probléma továbbra is fennállna, vedd fel a kapcsolatot a bug@mega.nz-vel</translation>
+        <translation type="obsolete">Fájlrendszer olvasása sikertelen.Kérlek próbáld újra később. Ha a probléma továbbra is fennállna, vedd fel a kapcsolatot a bug@mega.nz-vel</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1018,17 +1056,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Streaming</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming</translation>
+        <translation type="unfinished">Közvetítés</translation>
     </message>
     <message>
         <source>Streaming from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming from MEGA</translation>
+        <translation type="unfinished">Közvetítés a MEGÁ-ról</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Közvetítés a MEGÁ-ról</translation>
     </message>
     <message>
         <source>seconds</source>
@@ -1049,6 +1087,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro bandwidth quota exceeded.</source>
         <translation type="unfinished">A Pro sávszélességi kvóta túllépve.</translation>
+    </message>
+    <message>
+        <source>I don&#039;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <translation type="unfinished">I don&#039;t care</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Újra</translation>
     </message>
 </context>
 <context>
@@ -1368,6 +1416,62 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>Nem talált érvényes MEGA linket. (Könyvtár linkek még nincsenek támogatva)</translation>
+    </message>
+</context>
+<context>
+    <name>PermissionsDialog</name>
+    <message>
+        <source>Permissions for new folders and files</source>
+        <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
+        <translation type="unfinished">Permissions for new folders and files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Header for the section that allows to set the default permissions for new folders created by MEGAsync. Please keep the first capital letter</translatorcomment>
+        <translation type="unfinished">Mappák</translation>
+    </message>
+    <message>
+        <source>Numeric value:</source>
+        <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
+        <translation type="unfinished">Numeric value:</translation>
+    </message>
+    <message>
+        <source>Group permissions:</source>
+        <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Group permissions:</translation>
+    </message>
+    <message>
+        <source>Public permissions:</source>
+        <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Public permissions:</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
+        <translation type="unfinished">Fájlok</translation>
+    </message>
+    <message>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
+        <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
+        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+    </message>
+</context>
+<context>
+    <name>PermissionsWidget</name>
+    <message>
+        <source>Read</source>
+        <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Read</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Write</translation>
+    </message>
+    <message>
+        <source>Execution</source>
+        <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Execution</translation>
     </message>
 </context>
 <context>
@@ -2033,6 +2137,21 @@ when the application starts again</source>
         <source>Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Szeretné most újraindítani a MEGAsync-et?</translation>
     </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Engedélyek</translation>
+    </message>
+    <message>
+        <source>Don&#039;t use HTTP</source>
+        <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
+        <translation type="unfinished">Don&#039;t use HTTP</translation>
+    </message>
+    <message>
+        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
+        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2490,12 +2609,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Közvetítés a MEGÁ-ról</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">Média kiválasztása...</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2510,27 +2629,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">File info:</translation>
+        <translation type="unfinished">Fájl infó:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Nothing selected</translation>
+        <translation type="unfinished">Semmi sincs kijelölve</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">Megnyitás:</translation>
     </message>
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">Default application</translation>
+        <translation type="unfinished">Alapértelmezett alkalmazás</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation type="unfinished">Choose application</translation>
+        <translation type="unfinished">Alkalmazás kiválasztása</translation>
     </message>
     <message>
         <source>Close</source>

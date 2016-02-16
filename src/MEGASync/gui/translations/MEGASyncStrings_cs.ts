@@ -148,6 +148,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
         <translation type="unfinished">Novinky v této verzi:</translation>
     </message>
+    <message>
+        <source>Credits</source>
+        <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
+        <translation type="unfinished">Zásluhy</translation>
+    </message>
+</context>
+<context>
+    <name>ConfirmSSLexception</name>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
+        <translation type="unfinished">Upozornění</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to continue?</source>
+        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
+        <translation type="unfinished">Opravdu chcete pokračovat?</translation>
+    </message>
+    <message>
+        <source>Remember my decision and don&#039;t ask me again</source>
+        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Zapamatovat si mé rozhodnutí a neptat se znovu</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished">Ne</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished">Ano</translation>
+    </message>
+    <message>
+        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
+        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
+        <translation type="unfinished">Chystáte se povolit volbu, která by mohla umožnit vašim komunikacím, aby byly zachyceny. Vaše data by byla pro útočníky stále nedostupná díky našemu koncovému šifrování, ale mohli by naslepo přesouvat vaše soubory a složky v MEGA, odstranit je nebo vám odepřít přístup k vašemu účtu.</translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -846,7 +884,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Nelze získat systém souborů.Zkuste to znovu. Pokud problém přetrvává, obraťte se na bug@mega.nz</translation>
+        <translation type="obsolete">Nelze získat systém souborů.Zkuste to znovu. Pokud problém přetrvává, obraťte se na bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1050,6 +1088,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Pro bandwidth quota exceeded.</source>
         <translation type="unfinished">Překročena kvóta šířky pásma Pro.</translation>
     </message>
+    <message>
+        <source>I don&#039;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <translation type="unfinished">Ignorovat</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Opakovat</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1236,7 +1284,7 @@ Are you sure?</source>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation type="obsolete">Získávání složek...</translation>
+        <translation type="obsolete">Načítání složek...</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -1368,6 +1416,62 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>Nenalezeny žádné platné odkazy MEGA. (Odkazy na složky nejsou zatím podporovány)</translation>
+    </message>
+</context>
+<context>
+    <name>PermissionsDialog</name>
+    <message>
+        <source>Permissions for new folders and files</source>
+        <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
+        <translation type="unfinished">Oprávnění pro nové složky a soubory</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Header for the section that allows to set the default permissions for new folders created by MEGAsync. Please keep the first capital letter</translatorcomment>
+        <translation type="unfinished">Složky</translation>
+    </message>
+    <message>
+        <source>Numeric value:</source>
+        <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
+        <translation type="unfinished">Číselná hodnota</translation>
+    </message>
+    <message>
+        <source>Group permissions:</source>
+        <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Oprávnění skupiny:</translation>
+    </message>
+    <message>
+        <source>Public permissions:</source>
+        <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Veřejná oprávnění:</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
+        <translation type="unfinished">Soubory</translation>
+    </message>
+    <message>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
+        <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
+        <translation type="unfinished">Soubory a složky mají vlastníka a patří skupině uživatelů. Pomocí tohoto dialogu můžete udělit různé přístupové oprávnění pro nové soubory a složky vytvořené pomocí MEGAsync pro uživatele, kteří patří do stejné skupiny, a pro zbytek uživatelů v počítači. Pokud je nepotřebujete změnit, ponechte je z bezpečnostních důvodů na výchozích oprávněních.</translation>
+    </message>
+</context>
+<context>
+    <name>PermissionsWidget</name>
+    <message>
+        <source>Read</source>
+        <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Čtení</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Zápis</translation>
+    </message>
+    <message>
+        <source>Execution</source>
+        <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Spuštění</translation>
     </message>
 </context>
 <context>
@@ -2032,6 +2136,21 @@ when the application starts again</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Chcete restartovat MEGAsync nyní?</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Oprávnění</translation>
+    </message>
+    <message>
+        <source>Don&#039;t use HTTP</source>
+        <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
+        <translation type="unfinished">Nepoužívat HTTP</translation>
+    </message>
+    <message>
+        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
+        <translation type="unfinished">Povolte tuto volbu pouze v případě, že se vaše převody nespustí. Za normálních okolností je HTTP uspokojivé, protože všechny přenosy jsou již šifrovány.</translation>
     </message>
 </context>
 <context>

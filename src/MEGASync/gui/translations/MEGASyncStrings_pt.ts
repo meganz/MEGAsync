@@ -148,6 +148,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
         <translation type="unfinished">Novidades nesta versão:</translation>
     </message>
+    <message>
+        <source>Credits</source>
+        <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
+        <translation type="unfinished">Créditos</translation>
+    </message>
+</context>
+<context>
+    <name>ConfirmSSLexception</name>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
+        <translation type="unfinished">Aviso</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to continue?</source>
+        <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
+        <translation type="unfinished">Deseja continuar?</translation>
+    </message>
+    <message>
+        <source>Remember my decision and don&#039;t ask me again</source>
+        <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Lembrar-se da minha decisão e não me perguntar novamente</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished">Não</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
+        <translation type="unfinished">Sim</translation>
+    </message>
+    <message>
+        <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
+        <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
+        <translation type="unfinished">Você está prestes a activar uma opção que poderá permitir às suas comunicações serem interceptadas. Os seus dados seriam estariam ainda assim inacessíveis aos atacantes devido à nossa encriptação fim-a-fim, mas poderiam mover cegamente os seus ficheiros e pastas no MEGA, apagá-los e negá-lo acesso à sua conta.</translation>
+    </message>
 </context>
 <context>
     <name>CrashReportDialog</name>
@@ -558,7 +596,7 @@ Are you sure?</source>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">A sua conta excedeu a cota de espaço permitido. [A] Atualize [/A] e continue a desfrutar de forma segura, do armazenamento criptografado ponto a ponto.</translation>
+        <translation type="unfinished">A sua conta excedeu a quota de espaço permitido. [A]Actualize[/A] e continue a desfrutar de forma segura do armazenamento encriptado ponto-a-ponto.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -626,7 +664,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Obrigado por testar MEGAsync.</translation>
+        <translation type="obsolete">Obrigado por testar o MEGAsync. &lt;br&gt;Esta versão beta já não é a actual e expirou.&lt;br&gt;Por favor siga &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; no Twitter para actualizações.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -846,7 +884,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation>Não é possível obter o sistema de arquivos.Por favor, tente novamente. Se o problema persistir, entre em contato com bug@mega.nz</translation>
+        <translation type="obsolete">Não é possível obter o sistema de arquivos.Por favor, tente novamente. Se o problema persistir, entre em contato com bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -985,7 +1023,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">Modo de DEPURAÇÃO activado. Um registo está a ser criado no seu ambiente de trabalho (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -995,7 +1033,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">A nossa chave SSL não pode ser verificada. Pode estar a ser alvo de um ataque man-in-the-middle ou o seu programa anti-vírus pode estar a interceptar as suas comunicações e a causar este problema. Por favor desactive o seu programa anti-vírus temporariamente a tente novamente.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1040,7 +1078,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </translation>
+        <translation type="unfinished">Por favor faça o upgrade para Pro para continuar imediatamente, o esperar %1 para continuar de graça.</translation>
     </message>
     <message>
         <source>Free bandwidth quota exceeded</source>
@@ -1049,6 +1087,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro bandwidth quota exceeded.</source>
         <translation type="unfinished">A largura de banda Pro foi excedida.</translation>
+    </message>
+    <message>
+        <source>I don&#039;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <translation type="unfinished">Ignorar</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Tente novamente</translation>
     </message>
 </context>
 <context>
@@ -1368,6 +1416,62 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>Não foram encontrados links MEGA válidos. (Ligações de pasta ainda não são permitidas)</translation>
+    </message>
+</context>
+<context>
+    <name>PermissionsDialog</name>
+    <message>
+        <source>Permissions for new folders and files</source>
+        <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
+        <translation type="unfinished">Permissões para novas pastas e ficheiros</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Header for the section that allows to set the default permissions for new folders created by MEGAsync. Please keep the first capital letter</translatorcomment>
+        <translation type="unfinished">Pastas</translation>
+    </message>
+    <message>
+        <source>Numeric value:</source>
+        <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
+        <translation type="unfinished">Valor numérico:</translation>
+    </message>
+    <message>
+        <source>Group permissions:</source>
+        <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Permissões de grupo:</translation>
+    </message>
+    <message>
+        <source>Public permissions:</source>
+        <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Permissões públicas:</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
+        <translation type="unfinished">Ficheiros</translation>
+    </message>
+    <message>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
+        <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
+        <translation type="unfinished">Os ficheiros e pastas têm um dono e pertencem a um grupo de utilizadores. Usando este diálogo você pode atribuir diferentes permissões de acesso a novas pastas e ficheiros criados pela MEGAsync a utilizadores que pertencem ao mesmo grupo e aos restantes utilizadores no computador. Se não precisa de mudá-los, por favor deixe-os nas permissões por defeito por razões de segurança.</translation>
+    </message>
+</context>
+<context>
+    <name>PermissionsWidget</name>
+    <message>
+        <source>Read</source>
+        <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Ler</translation>
+    </message>
+    <message>
+        <source>Write</source>
+        <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Escrever</translation>
+    </message>
+    <message>
+        <source>Execution</source>
+        <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
+        <translation type="unfinished">Execução</translation>
     </message>
 </context>
 <context>
@@ -1907,7 +2011,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>Esta sincronização não pode ser ativada porque a pasta local não existe</translation>
+        <translation>Esta sincronização não pode ser activada porque a pasta local não existe</translation>
     </message>
     <message>
         <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
@@ -2007,7 +2111,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">As cópias de segurança de versões prévias dos seus ficheiros sincronizados no seu computador serão permanentemente apagadas. Por favor, verifique as suas pastas com cópias de segurança para ver se precisa de salvar algo antes de continuar:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -2022,7 +2126,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">As cópias de segurança de versões prévias dos seus ficheiros sincronizados no MEGA serão permanentemente eliminados. Por favor, verifique a sua [A] pasta no Caixote do Lixo da sua conta MEGA para ver se necessita de guardar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2032,6 +2136,21 @@ when the application starts again</source>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Queres reiniciar o MEGAsync agora?</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation type="unfinished">Permissões</translation>
+    </message>
+    <message>
+        <source>Don&#039;t use HTTP</source>
+        <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
+        <translation type="unfinished">Não usar HTTP</translation>
+    </message>
+    <message>
+        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
+        <translation type="unfinished">Active esta opção apenas se as suas transferências não começarem. Em circunstâncias normais o HTTP é suficiente uma vez que as transferências já são encriptadas. </translation>
     </message>
 </context>
 <context>
