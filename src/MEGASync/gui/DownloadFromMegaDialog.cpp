@@ -114,6 +114,13 @@ void DownloadFromMegaDialog::on_bOK_clicked()
             dir.mkpath(QString::fromUtf8("."));
         }
 
+        QTemporaryFile test(ui->eFolderPath->text() + QDir::separator());
+        if (!test.open())
+        {
+            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
+            return;
+        }
+
         accept();
     }
 }

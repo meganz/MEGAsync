@@ -2890,8 +2890,17 @@ void MegaApplication::processDownloads()
     if (preferences->hasDefaultDownloadFolder()
             && QFile(defaultPath).exists())
     {
-        processDownloadQueue(defaultPath);
-        return;
+        QTemporaryFile *test = new QTemporaryFile(defaultPath + QDir::separator());
+        if (test->open())
+        {
+            delete test;
+            processDownloadQueue(defaultPath);
+            return;
+        }
+        delete test;
+
+        preferences->setHasDefaultDownloadFolder(false);
+        preferences->setDownloadFolder(QString());
     }
 
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
