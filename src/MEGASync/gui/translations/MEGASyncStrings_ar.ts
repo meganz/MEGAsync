@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">تذكر قراري ولا تسألني مرة أخرى</translation>
     </message>
     <message>
         <source>No</source>
@@ -1091,7 +1091,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don&#039;t care</translation>
+        <translation type="unfinished">لا أهتم</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1423,7 +1423,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">أذونات للمجلدات والملفات الجديدة</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1438,12 +1438,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">أذونات المجموعات:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">أذونات عامة:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1461,17 +1461,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Read</translation>
+        <translation type="unfinished">قراءة</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Write</translation>
+        <translation type="unfinished">تعديل</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">تنفيذ</translation>
     </message>
 </context>
 <context>
@@ -2145,7 +2145,7 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don&#039;t use HTTP</translation>
+        <translation type="unfinished">لا تستخدم بروتوكول HTTP</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
@@ -2659,7 +2659,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">هل تريد بالفعل إيقاف التشغيل؟</translation>
     </message>
     <message>
         <source>Error</source>

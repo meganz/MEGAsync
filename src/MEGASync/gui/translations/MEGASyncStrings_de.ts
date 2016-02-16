@@ -91,7 +91,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Achtung - Demomodus</translation>
+        <translation type="obsolete">Achtung</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -159,7 +159,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation type="unfinished">Achtung - Demomodus</translation>
+        <translation type="unfinished">Achtung</translation>
     </message>
     <message>
         <source>Are you sure you want to continue?</source>
@@ -293,7 +293,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>Achtung - Demomodus</translation>
+        <translation>Achtung</translation>
     </message>
     <message>
         <source>You don&#039;t have write permissions in this folder.</source>
@@ -421,7 +421,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation>Achtung - Demomodus</translation>
+        <translation>Achtung</translation>
     </message>
     <message>
         <source>You are about to import this file to a synced folder.
@@ -1231,7 +1231,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Achtung - Demomodus</translation>
+        <translation type="obsolete">Achtung</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file 
@@ -1246,7 +1246,7 @@ Are you sure?</source>
     <name>MessageBox</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Achtung - Demomodus</translation>
+        <translation type="unfinished">Achtung</translation>
     </message>
     <message>
         <source>Do not ask me again</source>
@@ -1325,7 +1325,7 @@ Please, select a subfolder.</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Achtung - Demomodus</translation>
+        <translation>Achtung</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
@@ -1405,7 +1405,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Achtung - Demomodus</translation>
+        <translation>Achtung</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -1831,7 +1831,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Achtung - Demomodus</translation>
+        <translation>Achtung</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
@@ -2369,7 +2369,7 @@ when the application starts again</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation>Achtung - Demomodus</translation>
+        <translation>Achtung</translation>
     </message>
     <message>
         <source>You have %1 in your Cloud Drive.
@@ -2596,7 +2596,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation type="unfinished">Achtung - Demomodus</translation>
+        <translation type="unfinished">Achtung</translation>
     </message>
     <message>
         <source>Size limits cannot be zero</source>

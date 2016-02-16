@@ -1438,12 +1438,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Permisos de Grupo:</translation>
+        <translation type="unfinished">Permisos de grupo:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Permisos Públicos:</translation>
+        <translation type="unfinished">Permisos públicos:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1461,12 +1461,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Leer</translation>
+        <translation type="unfinished">Lectura</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Escribir</translation>
+        <translation type="unfinished">Escritura</translation>
     </message>
     <message>
         <source>Execution</source>
@@ -2758,7 +2758,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas</translation>
+        <translation type="unfinished">Carpetas Compartidas</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2781,7 +2781,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas</translation>
+        <translation type="unfinished">Carpetas Compartidas</translation>
     </message>
     <message>
         <source>Inbox</source>
