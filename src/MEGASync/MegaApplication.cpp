@@ -4754,7 +4754,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
 void MegaApplication::onAccountUpdate(MegaApi *)
 {
-    if (appfinished)
+    if (appfinished || !preferences->logged())
     {
         return;
     }
@@ -4771,12 +4771,7 @@ void MegaApplication::onUsersUpdate(MegaApi* , MegaUserList *)
 //Called when nodes have been updated in MEGA
 void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 {
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (!infoDialog || !nodes)
+    if (appfinished || !infoDialog || !nodes || !preferences->logged())
     {
         return;
     }
