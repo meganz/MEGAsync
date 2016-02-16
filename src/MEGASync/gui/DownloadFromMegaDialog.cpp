@@ -68,6 +68,7 @@ QString DownloadFromMegaDialog::getPath()
 
 void DownloadFromMegaDialog::on_bChange_clicked()
 {
+#ifndef _WIN32
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), ui->eFolderPath->text(), false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);
@@ -79,6 +80,9 @@ void DownloadFromMegaDialog::on_bChange_clicked()
     }
     QString fPath = dialog->selectedFiles().value(0);
     delete dialog;
+#else
+    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), ui->eFolderPath->text());
+#endif
 
     if (!fPath.size())
     {

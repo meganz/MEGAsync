@@ -257,6 +257,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 #endif
     }
 
+#ifndef _WIN32
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);
@@ -268,7 +269,9 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     }
     QString path = dialog->selectedFiles().value(0);
     delete dialog;
-
+#else
+    QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
+#endif
     if (path.length())
     {
         path = QDir::toNativeSeparators(path);
