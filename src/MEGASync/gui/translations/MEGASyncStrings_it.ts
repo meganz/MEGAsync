@@ -988,7 +988,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">La tua sincronizzazione &quot;%!&quot; è stata disattivata. La cartella remota (o parte di essa) non ha l&#039;accesso completo.</translation>
+        <translation type="unfinished">La tua sincronizzazione &quot;%1&quot; è stata disattivata. La cartella remota (o parte di essa) non ha l&#039;accesso completo.</translation>
     </message>
     <message>
         <source>Over quota</source>
