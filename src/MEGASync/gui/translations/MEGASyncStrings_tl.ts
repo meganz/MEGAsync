@@ -1091,7 +1091,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don&#039;t care</translation>
+        <translation type="unfinished">Wala akong pakialam</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1461,17 +1461,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Read</translation>
+        <translation type="unfinished">Basahin</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Write</translation>
+        <translation type="unfinished">Sumulat</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">Paganahin</translation>
     </message>
 </context>
 <context>
@@ -2145,7 +2145,7 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don&#039;t use HTTP</translation>
+        <translation type="unfinished">Huwag gumamit ng HTTP</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>

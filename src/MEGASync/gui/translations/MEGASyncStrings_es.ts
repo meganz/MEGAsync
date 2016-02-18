@@ -141,7 +141,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Politica de Privacidad</translation>
+        <translation type="unfinished">Política de privacidad</translation>
     </message>
     <message>
         <source>New in this version:</source>

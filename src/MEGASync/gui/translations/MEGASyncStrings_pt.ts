@@ -643,7 +643,7 @@ Are you sure?</source>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selecione se deseja instalar $ (^ NameDA) para si mesmo ou para todos os utilizadores deste computador. $ (^ ClickNext)</translation>
+        <translation>Seleccione se deseja instalar $ (^ NameDA) para si mesmo ou para todos os utilizadores deste computador. $ (^ ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -846,7 +846,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Houve um problema ao instalar a atualização. Por favor, tente novamente mais tarde ou descarregar a última versão de:https://mega.nz/#sync</translation>
+        <translation>Houve um problema ao instalar a actualização. Por favor, tente novamente mais tarde ou descarregar a última versão de:https://mega.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>

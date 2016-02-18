@@ -2150,7 +2150,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Bu seçeneği sadece aktarımlarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarımlar zaten şifreli olduğu için HTTP tatmin edicidir.</translation>
     </message>
 </context>
 <context>

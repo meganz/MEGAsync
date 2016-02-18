@@ -1433,7 +1433,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation type="unfinished">Numeric value:</translation>
+        <translation type="unfinished">القيمة الرقمية:</translation>
     </message>
     <message>
         <source>Group permissions:</source>
