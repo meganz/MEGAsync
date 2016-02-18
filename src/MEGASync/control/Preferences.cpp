@@ -11,12 +11,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.7.0.0";
-const int Preferences::VERSION_CODE = 2700;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.7.1.0";
+const int Preferences::VERSION_CODE = 2701;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.7");
-const QString Preferences::SDK_ID = QString::fromAscii("37959");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.7.1");
+const QString Preferences::SDK_ID = QString::fromAscii("ad50d");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Allow to select hidden files and folders\n"
            "-  Management of permissions (OS X, Linux)\n"

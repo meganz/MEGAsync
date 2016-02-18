@@ -4049,6 +4049,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     megaApi->setPublicKeyPinning(false);
                     megaApiGuest->setPublicKeyPinning(false);
+                    megaApi->retryPendingConnections(true);
+                    megaApiGuest->retryPendingConnections(true);
                     delete sslKeyPinningError;
                     sslKeyPinningError = NULL;
                 }
