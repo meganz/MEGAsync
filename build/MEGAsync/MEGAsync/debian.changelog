@@ -1,3 +1,13 @@
+megasync (2.7.1) stable; urgency=low
+
+  * Allow to select hidden files and folders
+  * Management of permissions (OS X, Linux)
+  * Better management of HTTPS errors
+  * Allow to use HTTPS connections only
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Sun, 21 Feb 2016 02:38:15 +0100
+
 megasync (2.6.1) stable; urgency=low
 
   * Streaming from MEGA with a builtin HTTP proxy server

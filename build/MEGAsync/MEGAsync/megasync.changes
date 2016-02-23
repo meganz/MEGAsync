@@ -1,3 +1,12 @@
+Sun Feb 21 02:38:15 CET 2016 - linux@mega.co.nz
+
+- Allow to select hidden files and folders
+-  Management of permissions (OS X, Linux)
+- Better management of HTTPS errors
+- Allow to use HTTPS connections only
+- Bug fixes
+
+-------------------------------------------------------------------
 Tue Jan 19 14:52:38 CET 2016 - linux@mega.co.nz
 
 - Streaming from MEGA with a builtin HTTP proxy server
