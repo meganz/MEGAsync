@@ -27,3 +27,8 @@ macx {
 CONFIG(with_updater) {
     SUBDIRS += MEGAUpdater
 }
+
+CONFIG(with_tools) {
+    SUBDIRS += MEGASync/mega/contrib/QtCreator/MEGACli
+    SUBDIRS += MEGASync/mega/contrib/QtCreator/MEGASimplesync
+}

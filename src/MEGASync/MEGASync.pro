@@ -45,6 +45,7 @@ debug {
 }
 
 CONFIG += USE_LIBUV
+CONFIG += USE_MEGAAPI
 
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
