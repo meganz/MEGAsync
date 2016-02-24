@@ -2574,6 +2574,7 @@ void MegaApplication::importLinks()
         {
             preferences->setDownloadFolder(importDialog->getDownloadPath());
         }
+        connect(linkProcessor, SIGNAL(dupplicateDownload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
         linkProcessor->downloadLinks(importDialog->getDownloadPath());
     }
 

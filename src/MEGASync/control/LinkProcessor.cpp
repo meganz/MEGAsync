@@ -1,6 +1,7 @@
 #include "LinkProcessor.h"
 #include "Utilities.h"
 #include <QDir>
+#include <QDateTime>
 
 using namespace mega;
 
@@ -203,6 +204,32 @@ void LinkProcessor::downloadLinks(QString localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
+            QDir dir(localPath);
+
+            char *escapedName = megaApi->escapeFsIncompatible(linkNode[i]->getName());
+            QString fullPath = dir.filePath(QString::fromUtf8(escapedName));
+            delete [] escapedName;
+
+            QFileInfo info(fullPath);
+            if (info.exists())
+            {
+                const char *fpLocal = megaApi->getFingerprint(fullPath.toUtf8().constData());
+                const char *fpRemote = megaApi->getFingerprint(linkNode[i]);
+
+                if ((fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
+                        || (!fpRemote && linkNode[i]->getSize() == info.size()
+                            && linkNode[i]->getModificationTime() == (info.lastModified().toMSecsSinceEpoch()/1000)))
+                {
+                    delete [] fpLocal;
+                    delete [] fpRemote;
+                    emit dupplicateDownload(QDir::toNativeSeparators(fullPath),
+                                            QString::fromUtf8(linkNode[i]->getName()),
+                                            linkNode[i]->getHandle());
+                    continue;
+                }
+                delete [] fpLocal;
+                delete [] fpRemote;
+            }
             megaApiGuest->startDownload(linkNode[i], (localPath + QDir::separator()).toUtf8().constData());
         }
     }
