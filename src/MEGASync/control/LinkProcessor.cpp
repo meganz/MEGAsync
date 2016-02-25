@@ -215,8 +215,9 @@ void LinkProcessor::downloadLinks(QString localPath)
             {
                 const char *fpLocal = megaApi->getFingerprint(fullPath.toUtf8().constData());
                 const char *fpRemote = megaApi->getFingerprint(linkNode[i]);
+                const char *key = linkNode[i]->getBase64Key();
 
-                if ((fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
+                if (key && (fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
                         || (!fpRemote && linkNode[i]->getSize() == info.size()
                             && linkNode[i]->getModificationTime() == (info.lastModified().toMSecsSinceEpoch()/1000)))
                 {
@@ -224,11 +225,14 @@ void LinkProcessor::downloadLinks(QString localPath)
                     delete [] fpRemote;
                     emit dupplicateDownload(QDir::toNativeSeparators(fullPath),
                                             QString::fromUtf8(linkNode[i]->getName()),
-                                            linkNode[i]->getHandle());
+                                            linkNode[i]->getHandle(),
+                                            QString::fromUtf8(key));
+                    delete [] key;
                     continue;
                 }
                 delete [] fpLocal;
                 delete [] fpRemote;
+                delete [] key;
             }
             megaApiGuest->startDownload(linkNode[i], (localPath + QDir::separator()).toUtf8().constData());
         }
