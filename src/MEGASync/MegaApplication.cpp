@@ -3022,10 +3022,12 @@ void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
             //use it to upload the list of files
             processUploadQueue(node->getHandle());
             delete node;
+            delete [] path;
             return;
         }
 
         delete node;
+        delete [] path;
     }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
