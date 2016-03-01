@@ -1,3 +1,9 @@
+megasync (2.7.2) stable; urgency=high
+
+  * Fixed the compilation. The previous version failed with some CPUs
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 01 Mar 2016 13:10:21 +0100
+
 megasync (2.7.1) stable; urgency=low
 
   * Allow to select hidden files and folders
