@@ -2,6 +2,7 @@
 #include "Utilities.h"
 #include <QDir>
 #include <QDateTime>
+#include <QApplication>
 
 using namespace mega;
 
@@ -204,6 +205,8 @@ void LinkProcessor::downloadLinks(QString localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
+            QApplication::processEvents();
+
             QDir dir(localPath);
 
             char *escapedName = megaApi->escapeFsIncompatible(linkNode[i]->getName());
