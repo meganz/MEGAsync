@@ -535,8 +535,8 @@ void MegaApplication::initialize()
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
-    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
-    connect(downloader, SIGNAL(dupplicateDownload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateUpload(QString, QString, mega::MegaHandle)));
+    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateTransfer(QString, QString, mega::MegaHandle)));
+    connect(downloader, SIGNAL(dupplicateDownload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateTransfer(QString, QString, mega::MegaHandle)));
 
     if (preferences->isCrashed())
     {
@@ -1694,14 +1694,14 @@ void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
     addRecentFile(name, handle);
 }
 
-void MegaApplication::onDupplicateUpload(QString localPath, QString name, MegaHandle handle)
+void MegaApplication::onDupplicateTransfer(QString localPath, QString name, MegaHandle handle, QString nodeKey)
 {
     if (appfinished)
     {
         return;
     }
 
-    addRecentFile(name, handle, localPath);
+    addRecentFile(name, handle, localPath, nodeKey);
 }
 
 void MegaApplication::onInstallUpdateClicked()
@@ -2574,6 +2574,7 @@ void MegaApplication::importLinks()
         {
             preferences->setDownloadFolder(importDialog->getDownloadPath());
         }
+        connect(linkProcessor, SIGNAL(dupplicateDownload(QString, QString, mega::MegaHandle, QString)), this, SLOT(onDupplicateTransfer(QString, QString, mega::MegaHandle, QString)));
         linkProcessor->downloadLinks(importDialog->getDownloadPath());
     }
 

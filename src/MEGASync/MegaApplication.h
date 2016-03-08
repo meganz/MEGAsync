@@ -139,7 +139,7 @@ public slots:
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
-    void onDupplicateUpload(QString localPath, QString name, mega::MegaHandle handle);
+    void onDupplicateTransfer(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey = QString());
     void onInstallUpdateClicked();
     void showInfoDialog();
     bool anUpdateIsAvailable();
