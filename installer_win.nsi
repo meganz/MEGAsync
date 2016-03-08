@@ -40,10 +40,15 @@ VIAddVersionKey "ProductVersion" "2.7.1.0"
 !define CSIDL_COMMON_APPDATA '0x23'
 
 ; To be defined depending on your working environment
+
+!ifdef BUILD_X64_VERSION
+!define QT_PATH "C:\Qt\qt-4.8.7-x64-msvc2010\qt-4.8.7-x64-msvc2010\"
+!else
 !ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6.0\"
 !else
 !define QT_PATH "C:\Qt\Qt5.5.0\5.5\msvc2010"
+!endif
 !endif
 
 !define BUILDPATH_X86 "Release_x32"
