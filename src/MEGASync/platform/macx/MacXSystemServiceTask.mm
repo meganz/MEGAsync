@@ -33,16 +33,15 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
             if(!node)
             {
                 const char *fpLocal = megaApi->getFingerprint(itemsSelected.at(i).toUtf8().constData());
-                node = megaApi->getNodeByFingerprint(fpLocal);
+                node = megaApi->getExportableNodeByFingerprint(fpLocal);
 
-                const char *path = megaApi->getNodePath(node);
+                /*const char *path = megaApi->getNodePath(node);
                 if (path && !strncmp(path, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
                 {
                     delete node;
                     node = NULL;
-                }
+                }*/
                 delete [] fpLocal;
-                delete [] path;
             }
 
             if(node)
