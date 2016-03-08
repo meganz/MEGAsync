@@ -43,6 +43,7 @@ class HTTPServer: public QTcpServer
     private slots:
         void readClient();
         void discardClient();
+        void discardRequest();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
         void processRequest(QAbstractSocket *socket, HTTPRequest request);
         void error(QAbstractSocket::SocketError);

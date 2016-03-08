@@ -166,6 +166,17 @@ void HTTPServer::discardClient()
         delete request;
     }
 }
+void HTTPServer::discardRequest()
+{
+    QAbstractSocket* socket = (QSslSocket*)sender();
+
+    HTTPRequest *request = requests.value(socket);
+    if (request)
+    {
+        requests.remove(socket);
+        delete request;
+    }
+}
 
 void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
 {
@@ -434,5 +445,5 @@ void HTTPServer::sslErrors(const QList<QSslError> &)
 
 void HTTPServer::peerVerifyError(const QSslError &)
 {
-    discardClient();
+    discardRequest();
 }
