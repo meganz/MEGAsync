@@ -21,7 +21,6 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
 
     MegaApplication *app = (MegaApplication *)qApp;
     MegaApi *megaApi = app->getMegaApi();
-    int state;
 
     for(int i=0;i < itemsSelected.size();i++)
     {
