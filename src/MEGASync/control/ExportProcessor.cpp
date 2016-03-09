@@ -41,6 +41,7 @@ void ExportProcessor::requestLinks()
         {
             const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
             node = megaApi->getNodeByFingerprint(fpLocal);
+            delete [] fpLocal;
         }
         megaApi->exportNode(node, delegateListener);
         delete node;
