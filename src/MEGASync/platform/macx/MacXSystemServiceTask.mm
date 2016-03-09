@@ -22,25 +22,18 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
     MegaApplication *app = (MegaApplication *)qApp;
     MegaApi *megaApi = app->getMegaApi();
 
-    for(int i=0;i < itemsSelected.size();i++)
+    for(int i = 0; i < itemsSelected.size(); i++)
     {
 
         QFileInfo file(itemsSelected.at(i));
-        if(file.exists())
+        if (file.exists())
         {
             string tmpPath(itemsSelected.at(i).toUtf8().constData());
             MegaNode *node = megaApi->getSyncedNode(&tmpPath);
-            if(!node)
+            if (!node)
             {
                 const char *fpLocal = megaApi->getFingerprint(itemsSelected.at(i).toUtf8().constData());
                 node = megaApi->getExportableNodeByFingerprint(fpLocal);
-
-                /*const char *path = megaApi->getNodePath(node);
-                if (path && !strncmp(path, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
-                {
-                    delete node;
-                    node = NULL;
-                }*/
                 delete [] fpLocal;
             }
 
