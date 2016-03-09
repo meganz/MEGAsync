@@ -150,13 +150,14 @@ void HTTPServer::readClient()
 
         request->data = tokens[1];
         processRequest(socket, *request);
-        discardClient();
+
+        requests.remove(socket);
+        delete request;
     }
 }
 void HTTPServer::discardClient()
 {
     QAbstractSocket* socket = (QSslSocket*)sender();
-    socket->disconnectFromHost();
     socket->deleteLater();
 
     HTTPRequest *request = requests.value(socket);
