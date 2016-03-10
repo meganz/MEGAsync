@@ -18,8 +18,13 @@ display_help() {
     echo ""
 }
 
-while getopts ":f" opt; do
+FLAG_CRYPTOPP=""
+
+while getopts ":fq" opt; do
     case $opt in
+        q) 
+            FLAG_CRYPTOPP="-q"; 
+            ;;
         f)
             if [ -d "$archives" ]; then
                 rm -fr $archives
@@ -44,12 +49,13 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_sdk.sh -n -f -w -s -v -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n -f -w -s -v -o $archives
     rm_archives=1
 fi
 
 cd MEGASync/mega
 ./contrib/build_sdk.sh \
+    $FLAG_CRYPTOPP \
     -o $archives \
     -f \
     -l \
