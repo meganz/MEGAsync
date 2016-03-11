@@ -172,6 +172,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
 {
     socket->write(QString::fromUtf8("HTTP/1.0 %1\r\n"
                   "\r\n").arg(response).toUtf8());
+    socket->flush();
     socket->disconnectFromHost();
     socket->deleteLater();
 
