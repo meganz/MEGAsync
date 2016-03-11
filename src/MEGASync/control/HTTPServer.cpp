@@ -426,15 +426,12 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
 void HTTPServer::error(QAbstractSocket::SocketError)
 {
-    discardClient();
 }
 
 void HTTPServer::sslErrors(const QList<QSslError> &)
 {
-    discardClient();
 }
 
 void HTTPServer::peerVerifyError(const QSslError &)
 {
-    discardClient();
 }
