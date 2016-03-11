@@ -384,6 +384,30 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
+QString Utilities::getTimeString(long long milliseconds)
+{
+    int seconds = (int) (milliseconds / 1000) % 60;
+    int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
+    int hours   = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+
+    QString time;
+    if(hours)
+    {
+        time.append(QString::fromUtf8("%1 h ").arg(hours));
+    }
+
+    if(minutes)
+    {
+        time.append(QString::fromUtf8("%1 m ").arg(minutes));
+    }
+
+    if(seconds)
+    {
+        time.append(QString::fromUtf8("%1 s").arg(seconds));
+    }
+
+    return time;
+}
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
