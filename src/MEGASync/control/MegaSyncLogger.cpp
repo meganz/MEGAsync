@@ -115,7 +115,8 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
             QFile file(filePath);
             file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
             QTextStream out(&file);
-            out << oss.str().c_str() << endl;
+            out.setCodec("UTF-8");
+            out << QString::fromUtf8(oss.str().c_str()) << endl;
         }
     }
 }
