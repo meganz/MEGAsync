@@ -15,12 +15,12 @@ class UpgradeDialog : public QDialog
 
 public:
     explicit UpgradeDialog(mega::MegaApi* api, QWidget *parent = 0);
-    void setTimeStamp(long long remainingTime);
+    void setTimestamp(long long finishTime);
     ~UpgradeDialog();
 
 private:
     Ui::UpgradeDialog *ui;
-    long long remainingTime;
+    long long finishTime;
     QTimer *timer;
 
 private slots:

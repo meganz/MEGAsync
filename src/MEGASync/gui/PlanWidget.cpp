@@ -98,7 +98,6 @@ void PlanWidget::updatePlanInfo()
                         .arg(details.currency));
     ui->lStorageInfo->setText(Utilities::getSizeString(details.gbStorage * TOBYTES));
     ui->lBandWidthInfo->setText(Utilities::getSizeString(details.gbTransfer * TOBYTES));
-
 }
 
 void PlanWidget::setPlanInfo(PlanInfo data)

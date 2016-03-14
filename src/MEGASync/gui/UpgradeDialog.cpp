@@ -4,6 +4,7 @@
 #include "ui_UpgradeDialog.h"
 #include "gui/PlanWidget.h"
 #include <QDebug>
+#include <QDateTime>
 
 UpgradeDialog::UpgradeDialog(mega::MegaApi *api, QWidget *parent) :
     QDialog(parent),
@@ -11,15 +12,19 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi *api, QWidget *parent) :
 {
     ui->setupUi(this);
     this->megaApi = api;
-    remainingTime = 0;
+    finishTime = 0;
 
     Preferences *preferences = Preferences::instance();
+    ui->lDescRecommendation->setTextFormat(Qt::RichText);
+    ui->lDescRecommendation->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
+    ui->lDescRecommendation->setOpenExternalLinks(true);
+
     ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours which took you over our current limit."
                                         " To circumvent this limit, you can [A]upgrade to Pro[/A], "
                                         "which will give you your own bandwidth package and also ample extra storage space.")
                                         .arg(preferences->totalBandwidth())
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\" color:#d90007;\">"))
-                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")));
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro\"><span style=\"color:#d90007; text-decoration:none;\">"))
+                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     QHBoxLayout* layout = new QHBoxLayout();
     layout->setContentsMargins(0,0,0,0);
@@ -31,12 +36,12 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi *api, QWidget *parent) :
     timer = new QTimer();
     timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(unitTimeElapsed()));
-
 }
 
-void UpgradeDialog::setTimeStamp(long long time)
+void UpgradeDialog::setTimestamp(long long time)
 {
-    remainingTime = time;
+    finishTime = time;
+    unitTimeElapsed();
     if (!timer->isActive())
     {
         timer->start(1000);
@@ -50,15 +55,15 @@ UpgradeDialog::~UpgradeDialog()
 
 void UpgradeDialog::unitTimeElapsed()
 {
-    if (remainingTime - 1000 >= 0)
+    long long remainingTime = finishTime - QDateTime::currentMSecsSinceEpoch() / 1000;
+    if (remainingTime > 0)
     {
-        remainingTime -= 1000;
         ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free.").arg(Utilities::getTimeString(remainingTime)));
-        qDebug() << Utilities::getTimeString(remainingTime);
+        qDebug() << finishTime << " " << (QDateTime::currentMSecsSinceEpoch() / 1000) << " "
+                 << remainingTime << " " << Utilities::getTimeString(remainingTime);
     }
     else
     {
         //Timer reaches 0
     }
-
 }

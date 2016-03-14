@@ -384,24 +384,24 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
-QString Utilities::getTimeString(long long milliseconds)
+QString Utilities::getTimeString(long long secs)
 {
-    int seconds = (int) (milliseconds / 1000) % 60;
-    int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
-    int hours   = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+    int seconds = (int) secs % 60;
+    int minutes = (int) ((secs / 60) % 60);
+    int hours   = (int) (secs / (60 * 60));
 
     QString time;
-    if(hours)
+    if (hours)
     {
         time.append(QString::fromUtf8("%1 h ").arg(hours));
     }
 
-    if(minutes)
+    if (minutes)
     {
         time.append(QString::fromUtf8("%1 m ").arg(minutes));
     }
 
-    if(seconds)
+    if (seconds)
     {
         time.append(QString::fromUtf8("%1 s").arg(seconds));
     }
