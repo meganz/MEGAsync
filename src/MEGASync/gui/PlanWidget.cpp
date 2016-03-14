@@ -32,7 +32,23 @@ PlanWidget::PlanWidget(mega::MegaApi *megaApi, PlanInfo data, QWidget *parent) :
 
 void PlanWidget::onOverlayClicked()
 {
-    api->getSessionTransferURL("pro");
+    switch (details.level)
+    {
+        case PRO_LITE:
+            api->getSessionTransferURL("pro_lite");
+            break;
+        case PRO_I:
+            api->getSessionTransferURL("pro_1");
+            break;
+        case PRO_II:
+            api->getSessionTransferURL("pro_2");
+            break;
+        case PRO_III:
+            api->getSessionTransferURL("pro_3");
+            break;
+        default:
+            api->getSessionTransferURL("pro");
+    }
 }
 
 PlanWidget::~PlanWidget()
