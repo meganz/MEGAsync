@@ -85,53 +85,9 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="lDescTime">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Please upgrade to Pro to continue immediately, or wait</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="lRemainingTime">
         <property name="minimumSize">
          <size>
-          <width>85</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>85</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>TIME</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="lContinue">
-        <property name="minimumSize">
-         <size>
           <width>0</width>
           <height>20</height>
          </size>
@@ -143,7 +99,10 @@
          </size>
         </property>
         <property name="text">
-         <string>to continue for free.</string>
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -246,7 +205,7 @@
          </size>
         </property>
         <property name="text">
-         <string>You have utilized XXX of data transfer in the last 6 hours which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space.</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
