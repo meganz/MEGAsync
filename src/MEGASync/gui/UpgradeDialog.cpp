@@ -14,17 +14,10 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi *api, QWidget *parent) :
     this->megaApi = api;
     finishTime = 0;
 
-    Preferences *preferences = Preferences::instance();
     ui->lDescRecommendation->setTextFormat(Qt::RichText);
     ui->lDescRecommendation->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     ui->lDescRecommendation->setOpenExternalLinks(true);
-
-    ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours which took you over our current limit."
-                                        " To circumvent this limit, you can [A]upgrade to Pro[/A], "
-                                        "which will give you your own bandwidth package and also ample extra storage space.")
-                                        .arg(preferences->totalBandwidth())
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro\"><span style=\"color:#d90007; text-decoration:none;\">"))
-                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+    refreshAccountDetails();
 
     QHBoxLayout* layout = new QHBoxLayout();
     layout->setContentsMargins(0,0,0,0);
@@ -46,6 +39,18 @@ void UpgradeDialog::setTimestamp(long long time)
     {
         timer->start(1000);
     }
+}
+
+void UpgradeDialog::refreshAccountDetails()
+{
+    Preferences *preferences = Preferences::instance();
+    ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours which took you over our current limit."
+                                        " To circumvent this limit, you can [A]upgrade to Pro[/A], "
+                                        "which will give you your own bandwidth package and also ample extra storage space.")
+                                        .arg(Utilities::getSizeString(preferences->totalBandwidth()))
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro\"><span style=\"color:#d90007; text-decoration:none;\">"))
+                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+
 }
 
 UpgradeDialog::~UpgradeDialog()

@@ -16,6 +16,7 @@ class UpgradeDialog : public QDialog
 public:
     explicit UpgradeDialog(mega::MegaApi* api, QWidget *parent = 0);
     void setTimestamp(long long finishTime);
+    void refreshAccountDetails();
     ~UpgradeDialog();
 
 private:
