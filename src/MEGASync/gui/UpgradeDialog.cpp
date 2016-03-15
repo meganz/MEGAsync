@@ -1,17 +1,17 @@
 #include "UpgradeDialog.h"
+#include "ui_UpgradeDialog.h"
 #include "Utilities.h"
 #include "Preferences.h"
-#include "ui_UpgradeDialog.h"
-#include "gui/PlanWidget.h"
-#include <QDebug>
 #include <QDateTime>
 
-UpgradeDialog::UpgradeDialog(mega::MegaApi *api, QWidget *parent) :
+using namespace mega;
+
+UpgradeDialog::UpgradeDialog(MegaPricing *pricing, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UpgradeDialog)
 {
     ui->setupUi(this);
-    this->megaApi = api;
+    this->pricing = pricing;
     finishTime = 0;
 
     ui->lDescRecommendation->setTextFormat(Qt::RichText);
@@ -19,12 +19,10 @@ UpgradeDialog::UpgradeDialog(mega::MegaApi *api, QWidget *parent) :
     ui->lDescRecommendation->setOpenExternalLinks(true);
     refreshAccountDetails();
 
-    QHBoxLayout* layout = new QHBoxLayout();
-    layout->setContentsMargins(0,0,0,0);
-    layout->setSpacing(0);
-
-    //Add PLAN widgets layout->addWidget()
-    ui->wPlans->setLayout(layout);
+    plansLayout = new QHBoxLayout();
+    plansLayout->setContentsMargins(0,0,0,0);
+    plansLayout->setSpacing(0);
+    updatePlans();
 
     timer = new QTimer();
     timer->setSingleShot(false);
@@ -39,6 +37,12 @@ void UpgradeDialog::setTimestamp(long long time)
     {
         timer->start(1000);
     }
+}
+
+void UpgradeDialog::setPricing(MegaPricing *pricing)
+{
+    this->pricing = pricing;
+    updatePlans();
 }
 
 void UpgradeDialog::refreshAccountDetails()
@@ -58,14 +62,67 @@ UpgradeDialog::~UpgradeDialog()
     delete ui;
 }
 
+void UpgradeDialog::updatePlans()
+{
+    clearPlans(plansLayout);
+
+    int products = pricing->getNumProducts();
+    for (int it = 0; it < products; it++)
+    {
+        if (pricing->getMonths(it) == 1)
+        {
+            PlanInfo data = {
+                pricing->getAmount(it),
+                convertCurrency(pricing->getCurrency(it)),
+                pricing->getGBStorage(it),
+                pricing->getGBTransfer(it),
+                pricing->getProLevel(it)
+            };
+            plansLayout->addWidget(new PlanWidget(data));
+        }
+    }
+
+    ui->wPlans->setLayout(plansLayout);   
+}
+
+void UpgradeDialog::clearPlans(QLayout *layout)
+{
+    while (QLayoutItem* item = plansLayout->takeAt(0))
+    {
+        if (QWidget* widget = item->widget())
+        {
+            delete widget;
+        }
+
+        if (QLayout* childLayout = item->layout())
+        {
+            clearPlans(childLayout);
+        }
+        delete item;
+    }
+}
+
+QString UpgradeDialog::convertCurrency(const char *currency)
+{
+    if (!strcmp(currency, "EUR"))
+    {
+        return QString::fromUtf8("€");
+    }
+
+    if (!strcmp(currency, "USD"))
+    {
+        return QString::fromUtf8("$");
+    }
+
+    return QString::fromUtf8(currency);
+}
+
 void UpgradeDialog::unitTimeElapsed()
 {
     long long remainingTime = finishTime - QDateTime::currentMSecsSinceEpoch() / 1000;
     if (remainingTime > 0)
     {
         ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free.").arg(Utilities::getTimeString(remainingTime)));
-        qDebug() << finishTime << " " << (QDateTime::currentMSecsSinceEpoch() / 1000) << " "
-                 << remainingTime << " " << Utilities::getTimeString(remainingTime);
     }
     else
     {
