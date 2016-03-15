@@ -422,6 +422,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     sslKeyPinningError = NULL;
     downloadNodeSelector = NULL;
     notificator = NULL;
+    pricing = NULL;
+    bwOverquotaTimestamp = 0;
+    bwOverquotaDialog = NULL;
     externalNodesTimestamp = 0;
     enableDebug = false;
     overquotaCheck = false;
@@ -1638,13 +1641,21 @@ void MegaApplication::cleanAll()
     }
 
     closeDialogs();
-    delete infoDialog;
-    delete httpServer;
-    delete uploader;
-    delete delegateListener;
-    delete delegateGuestListener;
 
-    // Ensure that aren't objects deleted with deleteLater()
+    delete bwOverquotaDialog;
+    bwOverquotaDialog = NULL;
+    delete infoDialog;
+    infoDialog = NULL;
+    delete httpServer;
+    httpServer = NULL;
+    delete uploader;
+    uploader = NULL;
+    delete delegateListener;
+    delegateListener = NULL;
+    delete delegateGuestListener;
+    delegateGuestListener = NULL;
+
+    // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi or megaApiGuest after
     // their deletion
     QApplication::processEvents();
@@ -1733,6 +1744,17 @@ void MegaApplication::showInfoDialog()
     {
         megaApi->retryPendingConnections();
         megaApiGuest->retryPendingConnections();
+    }
+
+    if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+    {
+        openBwOverquotaDialog();
+        return;
+    }
+    else if (bwOverquotaTimestamp)
+    {
+        bwOverquotaTimestamp = 0;
+        megaApi->getAccountDetails();
     }
 
     if (infoOverQuota)
@@ -2072,6 +2094,20 @@ void MegaApplication::setupWizardFinished(int result)
 
     loggedIn();
     startSyncs();
+}
+
+void MegaApplication::overquotaDialogFinished(int result)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (bwOverquotaDialog)
+    {
+        bwOverquotaDialog->deleteLater();
+        bwOverquotaDialog = NULL;
+    }
 }
 
 void MegaApplication::unlink()
@@ -3483,6 +3519,20 @@ void MegaApplication::openSettings(int tab)
     settingsDialog->activateWindow();
 }
 
+void MegaApplication::openBwOverquotaDialog()
+{
+    if (!bwOverquotaDialog)
+    {
+       bwOverquotaDialog = new UpgradeDialog(megaApi);
+       connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+    }
+
+    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
+    bwOverquotaDialog->show();
+    bwOverquotaDialog->raise();
+    bwOverquotaDialog->activateWindow();
+}
+
 void MegaApplication::changeProxy()
 {
     if (appfinished)
@@ -3953,9 +4003,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
+    case MegaRequest::TYPE_GET_PRICING:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            if (pricing)
+            {
+                delete pricing;
+            }
+            pricing = request->getPricing();
+        }
+        break;
+    }
     case MegaRequest::TYPE_LOGIN:
     {
         connectivityTimer->stop();
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            megaApi->getPricing();
+        }
 
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
@@ -4224,6 +4290,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (settingsDialog)
         {
             settingsDialog->refreshAccountDetails();
+        }
+
+        if (bwOverquotaDialog)
+        {
+            bwOverquotaDialog->refreshAccountDetails();
         }
 
         delete details;
@@ -4712,6 +4783,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue())
     {
         int t = e->getValue();
+        bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
+
         QString waitTime;
         if (t < 60)
         {
@@ -4733,6 +4806,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         {
             showErrorMessage(tr("Pro bandwidth quota exceeded.") + QString::fromUtf8(" ") + timeleft);
         }
+
+        openBwOverquotaDialog();
         return;
     }
 
