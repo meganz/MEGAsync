@@ -30,7 +30,7 @@ public:
            PRO_LITE = 4
     } ProLevel;
 
-    explicit PlanWidget(mega::MegaApi *megaApi, PlanInfo data, QWidget *parent = 0);
+    explicit PlanWidget(PlanInfo data, QWidget *parent = 0);
     void setPlanInfo(PlanInfo data);
     ~PlanWidget();
 

@@ -1,11 +1,12 @@
 #include "PlanWidget.h"
 #include "ui_PlanWidget.h"
 #include "Utilities.h"
-#include <QDebug>
+#include <QDesktopServices>
+#include <QUrl>
 
 #define TOBYTES 1024 * 1024 * 1024
 
-PlanWidget::PlanWidget(mega::MegaApi *megaApi, PlanInfo data, QWidget *parent) :
+PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PlanWidget)
 {
@@ -32,22 +33,25 @@ PlanWidget::PlanWidget(mega::MegaApi *megaApi, PlanInfo data, QWidget *parent) :
 
 void PlanWidget::onOverlayClicked()
 {
+    QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro")));
+
     switch (details.level)
     {
         case PRO_LITE:
-            api->getSessionTransferURL("pro_lite");
+            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_lite")));
             break;
         case PRO_I:
-            api->getSessionTransferURL("pro_1");
+            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_1")));
             break;
         case PRO_II:
-            api->getSessionTransferURL("pro_2");
+            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_2")));
             break;
         case PRO_III:
-            api->getSessionTransferURL("pro_3");
+            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_3")));
             break;
         default:
-            api->getSessionTransferURL("pro");
+            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro")));
+            break;
     }
 }
 
