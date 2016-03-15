@@ -136,6 +136,8 @@ const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxF
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
+const QString Preferences::temporalBandwidthKey     = QString::fromAscii("temporalBandwidth");
+const QString Preferences::temporalBandwidthIntervalKey     = QString::fromAscii("temporalBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
@@ -640,6 +642,40 @@ void Preferences::setTotalBandwidth(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(totalBandwidthKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::temporalBandwidth()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(temporalBandwidthKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setTemporalBandwidth(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(temporalBandwidthKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::temporalBandwidthInterval()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(temporalBandwidthIntervalKey, 6).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setTemporalBandwidthInterval(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(temporalBandwidthIntervalKey, value);
     mutex.unlock();
 }
 
