@@ -192,6 +192,9 @@ QPushButton
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="topMargin">
+            <number>8</number>
+           </property>
            <item>
             <spacer name="horizontalSpacer">
              <property name="orientation">
@@ -226,7 +229,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Resources_linux.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/proicrest.png</normaloff>:/images/proicrest.png</iconset>
              </property>
              <property name="iconSize">
@@ -257,6 +260,21 @@ QPushButton
       </item>
       <item>
        <widget class="QLabel" name="lProPlan">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>41</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>41</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">margin-top: -10px;</string>
+        </property>
         <property name="text">
          <string>PRO LITE</string>
         </property>
@@ -293,14 +311,14 @@ QPushButton
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>22</number>
          </property>
          <item>
           <widget class="QLabel" name="lPrice">
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>60</height>
+             <height>50</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -404,7 +422,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Resources_linux.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/storage.png</normaloff>:/images/storage.png</iconset>
              </property>
              <property name="iconSize">
@@ -490,7 +508,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Resources_linux.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/bwupgrade.png</normaloff>:/images/bwupgrade.png</iconset>
              </property>
              <property name="iconSize">
@@ -559,7 +577,7 @@ QPushButton
   </layout>
  </widget>
  <resources>
-  <include location="Resources_linux.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
