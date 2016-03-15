@@ -48,13 +48,19 @@ void UpgradeDialog::setPricing(MegaPricing *pricing)
 void UpgradeDialog::refreshAccountDetails()
 {
     Preferences *preferences = Preferences::instance();
-    ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours which took you over our current limit."
+    if (preferences->temporalBandwidth())
+    {
+        ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours which took you over our current limit."
                                         " To circumvent this limit, you can [A]upgrade to Pro[/A], "
                                         "which will give you your own bandwidth package and also ample extra storage space.")
-                                        .arg(Utilities::getSizeString(preferences->totalBandwidth()))
+                                        .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
                                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro\"><span style=\"color:#d90007; text-decoration:none;\">"))
                                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
-
+    }
+    else
+    {
+        ui->lDescRecommendation->setText(QString());
+    }
 }
 
 UpgradeDialog::~UpgradeDialog()
