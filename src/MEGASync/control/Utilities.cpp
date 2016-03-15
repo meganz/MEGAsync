@@ -416,22 +416,22 @@ QString Utilities::getSizeString(unsigned long long bytes)
     unsigned long long GB = 1024 * MB;
     unsigned long long TB = 1024 * GB;
 
-    if (bytes > TB)
+    if (bytes >= TB)
     {
         return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" TB");
     }
 
-    if (bytes > GB)
+    if (bytes >= GB)
     {
         return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" GB");
     }
 
-    if (bytes > MB)
+    if (bytes >= MB)
     {
         return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" MB");
     }
 
-    if (bytes > KB)
+    if (bytes >= KB)
     {
         return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" KB");
     }
