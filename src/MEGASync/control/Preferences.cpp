@@ -648,16 +648,14 @@ void Preferences::setTotalBandwidth(long long value)
 long long Preferences::temporalBandwidth()
 {
     mutex.lock();
-    assert(logged());
     long long value = settings->value(temporalBandwidthKey, 0).toLongLong();
     mutex.unlock();
-    return value;
+    return value > 0 ? value : 0;
 }
 
 void Preferences::setTemporalBandwidth(long long value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(temporalBandwidthKey, value);
     mutex.unlock();
 }
@@ -665,7 +663,6 @@ void Preferences::setTemporalBandwidth(long long value)
 long long Preferences::temporalBandwidthInterval()
 {
     mutex.lock();
-    assert(logged());
     long long value = settings->value(temporalBandwidthIntervalKey, 6).toLongLong();
     mutex.unlock();
     return value;
@@ -674,7 +671,6 @@ long long Preferences::temporalBandwidthInterval()
 void Preferences::setTemporalBandwidthInterval(long long value)
 {
     mutex.lock();
-    assert(logged());
     settings->setValue(temporalBandwidthIntervalKey, value);
     mutex.unlock();
 }

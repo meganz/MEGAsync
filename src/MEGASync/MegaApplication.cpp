@@ -4237,6 +4237,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
         delete rubbish;
 
+        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+
         long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
         for (int i = 0; i < inShares->size(); i++)
         {
