@@ -10,7 +10,6 @@ PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PlanWidget)
 {
-    api = megaApi;
     details = data;
 
     ui->setupUi(this);

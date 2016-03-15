@@ -37,7 +37,6 @@ public:
 private:
     Ui::PlanWidget *ui;
     QPushButton *overlay;
-    mega::MegaApi *api;
     PlanInfo details;
 
     void updatePlanInfo();
