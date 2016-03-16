@@ -4787,29 +4787,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         int t = e->getValue();
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
-
-        QString waitTime;
-        if (t < 60)
-        {
-            waitTime = QString::number(t) + QString::fromUtf8(" ") + tr("seconds");
-        }
-        else
-        {
-            waitTime = QString::number(ceil(t / 60.0)) + QString::fromUtf8(" ") + tr("minutes");
-        }
-
-        QString timeleft = tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ")
-                .arg(waitTime);
-
-        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_FREE)
-        {
-            showErrorMessage(tr("Free bandwidth quota exceeded") + QString::fromUtf8(". ") + timeleft);
-        }
-        else
-        {
-            showErrorMessage(tr("Pro bandwidth quota exceeded.") + QString::fromUtf8(" ") + timeleft);
-        }
-
         openBwOverquotaDialog();
         return;
     }
