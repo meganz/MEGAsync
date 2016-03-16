@@ -18,17 +18,18 @@ PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
     details = data;
 
     ui->setupUi(this);
-    ui->lTip->setVisible(false);
+    ui->lTip->setText(QString::fromUtf8(""));
 
     //Create the overlay widget with transparent background
     //that will be shown over the Plans to manage clicked() events
     overlay = new QPushButton(this);
     overlay->setObjectName(QString::fromUtf8("bOverlay"));
     overlay->setStyleSheet(QString::fromAscii(
-                               "QPushButton#bOverlay:hover {border-radius: 3px; border: 3px solid; border-color: rgba(0, 0, 0);} "
-                               "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); background: transparent; border: none;} "
-                               "QPushButton#bOverlay:pressed {border-radius: 3px; border: 3px solid; border-color: rgba(255, 51, 58, 0.8);}"));
-    overlay->resize(ui->wContainer->minimumSize());
+                               "QPushButton#bOverlay:hover {border-image: url(://images/account_type_over.png);} "
+                               "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); border: none;} "
+                               "QPushButton#bOverlay:pressed {border-image: url(://images/account_type_press.png);}"));
+
+    overlay->resize(this->size());
     ui->lBandWidth->setText(ui->lBandWidth->text().toUpper());
     ui->lStorage->setText(ui->lStorage->text().toUpper());
     ui->lPeriod->setText(QString::fromUtf8("/%1").arg(ui->lPeriod->text()));
@@ -96,7 +97,7 @@ void PlanWidget::updatePlanInfo()
         default:
             break;
     }
-    ui->lPrice->setText(QString::fromUtf8("<span style='font-size:48px;'>%1</span><span style='font-size: 36px;'>.%2 %3</span>")
+    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"HelveticaNeue\"; font-size:44px;'>%1</span><span style='font-family:\"HelveticaNeue\"; font-size: 33px;'>.%2 %3</span>")
                         .arg(details.amount / 100)
                         .arg(details.amount % 100)
                         .arg(details.currency));
