@@ -428,5 +428,9 @@
         <file>images/bwupgrade@2x.png</file>
         <file>images/storage.png</file>
         <file>images/storage@2x.png</file>
+        <file>images/account_type_over.png</file>
+        <file>images/account_type_over@2x.png</file>
+        <file>images/account_type_press.png</file>
+        <file>images/account_type_press@2x.png</file>
     </qresource>
 </RCC>
