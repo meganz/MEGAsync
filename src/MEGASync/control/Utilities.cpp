@@ -388,20 +388,41 @@ QString Utilities::getTimeString(long long secs)
 {
     int seconds = (int) secs % 60;
     int minutes = (int) ((secs / 60) % 60);
-    int hours   = (int) (secs / (60 * 60));
+    int hours   = (int) (secs / (60 * 60)) % 24;
+    int days = (int)(secs / (60 * 60 * 24));
 
+    int items = 0;
     QString time;
-    if (hours)
+
+    if (days)
     {
+        items++;
+        time.append(QString::fromUtf8("%1 d ").arg(days));
+    }
+
+    if (items || hours)
+    {
+        items++;
         time.append(QString::fromUtf8("%1 h ").arg(hours));
     }
 
-    if (minutes)
+    if (items == 2)
     {
+        return time;
+    }
+
+    if (items || minutes)
+    {
+        items++;
         time.append(QString::fromUtf8("%1 m ").arg(minutes));
     }
 
-    if (seconds)
+    if (items == 2)
+    {
+        return time;
+    }
+
+    if (items || seconds)
     {
         time.append(QString::fromUtf8("%1 s").arg(seconds));
     }
