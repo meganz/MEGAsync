@@ -1054,16 +1054,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Tạm thời có lỗi, đang thử lại.</translation>
     </message>
     <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream dữ liệu</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream từ MEGA</translation>
-    </message>
-    <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished">Stream từ MEGA</translation>
@@ -1438,12 +1428,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">Các quyền hạn cho nhóm:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">Các quyền hạn cho công khai:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1472,6 +1462,21 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
         <translation type="unfinished">Execution</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">tháng</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">Lưu trữ</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">Băng thông</translation>
     </message>
 </context>
 <context>
@@ -2150,7 +2155,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Chỉ nên bật tính năng này khi các phiên truyền tải lên/xuống không hoạt động. Trong các trường hợp bình thường, giao thức HTTP rất thích hợp để truyền tải các nội dung mã hóa.</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">Lỗi khi khai thác thông tin của đường liên kết</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Đã vượt mức băng thông miễn phí</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">Phiên tải xuống này không thể thực hiện được vì nó sẽ chiếm hết toàn bộ băng thông cho phép của IP nhà bạn. Giới hạn này có thể linh động và cũng tùy thuộc vào số lượng băng thông chưa sử dụng hiện ta có.</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">Bạn vừa sử dụng %1 dữ liệu trong vòng 6 giờ qua, đồng nghĩa là bạn đã vượt quá giới hạn cho phép đối với hạng tài khoản của bạn. Để tránh khỏi giới hạn này, bạn có thể [A]nâng cấp lên hạng Pro[/A], để lấy băng thông riêng và thên không gian dự trữ.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Là người dùng miễn phí bạn sẽ phải chờ %1 để tiếp tục. Bạn có thể nâng cấp lên hạng Pro để không bị giới hạn.</translation>
     </message>
 </context>
 <context>

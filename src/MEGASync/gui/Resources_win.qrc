@@ -210,5 +210,11 @@
         <file>images/streaming_link.png</file>
         <file>images/streaming_off_icon.png</file>
         <file>images/streaming_on_icon.png</file>
+        <file>images/litecrest.png</file>
+        <file>images/proicrest.png</file>
+        <file>images/proiicrest.png</file>
+        <file>images/proiiicrest.png</file>
+        <file>images/bwupgrade.png</file>
+        <file>images/storage.png</file>
     </qresource>
 </RCC>

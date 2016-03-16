@@ -73,6 +73,10 @@ public:
 
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
+    long long temporalBandwidth();
+    void setTemporalBandwidth(long long value);
+    long long temporalBandwidthInterval();
+    void setTemporalBandwidthInterval(long long value);
     long long usedBandwidth();
     void setUsedBandwidth(long long value);
     int accountType();
@@ -315,6 +319,8 @@ protected:
     static const QString rubbishFoldersKey;
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
+    static const QString temporalBandwidthKey;
+    static const QString temporalBandwidthIntervalKey;
     static const QString usedBandwidthKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;

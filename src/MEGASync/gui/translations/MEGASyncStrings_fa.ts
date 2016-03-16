@@ -1054,16 +1054,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">خطای موقت، در حال سعی مجدد.</translation>
     </message>
     <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming from MEGA</translation>
-    </message>
-    <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished">Stream from MEGA</translation>
@@ -1472,6 +1462,21 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
         <translation type="unfinished">Execution</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">ماه</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">فضای ذخیره سازی</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">پهنای باند</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">خطا در دریافت اطلاعات لینک</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">از حد پهنای باند رایگان  فراتر رفته اید</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">دانلود شما نتوانست ادامه پیدا کند چون که محدودیت انتقال اطلاعات رایگان مربوط به ای پی ادرس شما را زیر پا می گذاشت. این محدودیت دینامیک است و بستگی به میزان پهنای باند استفاده نشده ای دارد که ما در اختیار داریم.</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">شما در 6 ساعت گذشته از %1 انتقال اطلاعات استفاده کرده اید که شما را از محدودیت فعلی رد کرد.برای کنار زدن این محدودیت, شما می توانید به &lt;span class=&quot;red&quot;&gt;Pro&lt;/span&gt; ارتقا دهید, که به شما پهنای باند اختصاصی خودتان را به همراه فضای ذخیره سازی اضافه خواهد داد.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">لطفا به Pro ارتقا بدهید تا بلافاصله ادامه دهید یا %1 صبر کنید تا به صورت رایگان ادامه بدهید.</translation>
     </message>
 </context>
 <context>

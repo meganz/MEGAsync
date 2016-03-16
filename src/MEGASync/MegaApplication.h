@@ -25,6 +25,7 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
+#include "gui/UpgradeDialog.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
@@ -109,6 +110,7 @@ public slots:
     void onMessageClicked();
     void start();
     void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
+    void openBwOverquotaDialog();
     void changeProxy();
     void importLinks();
     void showChangeLog();
@@ -146,6 +148,7 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
+    void overquotaDialogFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
@@ -235,6 +238,9 @@ protected:
     long long lastStartedUpload;
     int exportOps;
     int syncState;
+    mega::MegaPricing *pricing;
+    long long bwOverquotaTimestamp;
+    UpgradeDialog *bwOverquotaDialog;
     mega::QTMegaListener *delegateListener;
     mega::QTMegaListener *delegateGuestListener;
     QMap<int, QString> uploadLocalPaths;

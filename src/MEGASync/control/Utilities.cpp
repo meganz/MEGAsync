@@ -384,6 +384,47 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
+QString Utilities::getTimeString(long long secs)
+{
+    int seconds = (int) secs % 60;
+    int minutes = (int) ((secs / 60) % 60);
+    int hours   = (int) (secs / (60 * 60)) % 24;
+    int days = (int)(secs / (60 * 60 * 24));
+
+    int items = 0;
+    QString time;
+
+    if (days)
+    {
+        items++;
+        time.append(QString::fromUtf8("%1 d ").arg(days));
+    }
+
+    if (items || hours)
+    {
+        items++;
+        time.append(QString::fromUtf8("%1 h ").arg(hours));
+    }
+
+    if (items == 2)
+    {
+        return time;
+    }
+
+    if (items || minutes)
+    {
+        items++;
+        time.append(QString::fromUtf8("%1 m ").arg(minutes));
+    }
+
+    if (items == 2)
+    {
+        return time;
+    }
+
+    time.append(QString::fromUtf8("%1 s").arg(seconds));
+    return time;
+}
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
@@ -392,22 +433,22 @@ QString Utilities::getSizeString(unsigned long long bytes)
     unsigned long long GB = 1024 * MB;
     unsigned long long TB = 1024 * GB;
 
-    if (bytes > TB)
+    if (bytes >= TB)
     {
         return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" TB");
     }
 
-    if (bytes > GB)
+    if (bytes >= GB)
     {
         return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" GB");
     }
 
-    if (bytes > MB)
+    if (bytes >= MB)
     {
         return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" MB");
     }
 
-    if (bytes > KB)
+    if (bytes >= KB)
     {
         return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" KB");
     }

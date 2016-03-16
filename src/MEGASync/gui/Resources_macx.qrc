@@ -416,5 +416,17 @@
         <file>images/streaming_off_icon@2x.png</file>
         <file>images/streaming_on_icon.png</file>
         <file>images/streaming_on_icon@2x.png</file>
+        <file>images/litecrest.png</file>
+        <file>images/litecrest@2x.png</file>
+        <file>images/proicrest.png</file>
+        <file>images/proicrest@2x.png</file>
+        <file>images/proiicrest.png</file>
+        <file>images/proiicrest@2x.png</file>
+        <file>images/proiiicrest.png</file>
+        <file>images/proiiicrest@2x.png</file>
+        <file>images/bwupgrade.png</file>
+        <file>images/bwupgrade@2x.png</file>
+        <file>images/storage.png</file>
+        <file>images/storage@2x.png</file>
     </qresource>
 </RCC>
