@@ -26,6 +26,7 @@ PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
     overlay->resize(ui->wContainer->minimumSize());
     ui->lBandWidth->setText(ui->lBandWidth->text().toUpper());
     ui->lStorage->setText(ui->lStorage->text().toUpper());
+    ui->lPeriod->setText(QString::fromUtf8("/%1").arg(ui->lPeriod->text()));
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 
     updatePlanInfo();
