@@ -791,7 +791,7 @@ void MegaApplication::updateTrayIcon()
                     + QString::fromAscii("\n")
                     + tr("Scanning");
         }
-        else if (waiting)
+        else if (waiting || (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000))
         {
             tooltip = QCoreApplication::applicationName()
                     + QString::fromAscii(" ")
