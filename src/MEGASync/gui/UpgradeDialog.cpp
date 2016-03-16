@@ -50,12 +50,14 @@ void UpgradeDialog::refreshAccountDetails()
     Preferences *preferences = Preferences::instance();
     if (preferences->temporalBandwidth())
     {
-        ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours which took you over our current limit."
-                                        " To circumvent this limit, you can [A]upgrade to Pro[/A], "
-                                        "which will give you your own bandwidth package and also ample extra storage space.")
+        ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours, "
+                                            "which took you over our current limit. To circumvent this limit, "
+                                            "you can [A]upgrade to Pro[/A], which will give you your own bandwidth "
+                                            "package and also ample extra storage space. ")
                                         .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
                                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro\"><span style=\"color:#d90007; text-decoration:none;\">"))
-                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
+                                        .replace(QString::fromUtf8("6"), QString::number(preferences->temporalBandwidthInterval())));
     }
     else
     {
@@ -128,7 +130,7 @@ void UpgradeDialog::unitTimeElapsed()
     long long remainingTime = finishTime - QDateTime::currentMSecsSinceEpoch() / 1000;
     if (remainingTime > 0)
     {
-        ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free.").arg(Utilities::getTimeString(remainingTime)));
+        ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ").arg(Utilities::getTimeString(remainingTime)));
     }
     else
     {

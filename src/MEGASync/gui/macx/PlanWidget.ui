@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true">#wContainer
@@ -222,7 +222,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                <normaloff>:/images/proicrest.png</normaloff>:/images/proicrest.png</iconset>
              </property>
              <property name="iconSize">
@@ -269,7 +269,7 @@ QPushButton
          <string notr="true">margin-top: -10px;</string>
         </property>
         <property name="text">
-         <string>PRO LITE</string>
+         <string notr="true">PRO LITE</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -324,7 +324,7 @@ QPushButton
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>4.99 EUR</string>
+            <string notr="true">4.99 EUR</string>
            </property>
            <property name="textFormat">
             <enum>Qt::RichText</enum>
@@ -349,7 +349,7 @@ QPushButton
             </size>
            </property>
            <property name="text">
-            <string>/month</string>
+            <string>month</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -415,7 +415,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                <normaloff>:/images/storage.png</normaloff>:/images/storage.png</iconset>
              </property>
              <property name="iconSize">
@@ -459,14 +459,14 @@ QPushButton
               <item>
                <widget class="QLabel" name="lStorageInfo">
                 <property name="text">
-                 <string>200 GB</string>
+                 <string notr="true">200 GB</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="lStorage">
                 <property name="text">
-                 <string>STORAGE</string>
+                 <string>Storage</string>
                 </property>
                </widget>
               </item>
@@ -501,7 +501,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                <normaloff>:/images/bwupgrade.png</normaloff>:/images/bwupgrade.png</iconset>
              </property>
              <property name="iconSize">
@@ -545,14 +545,14 @@ QPushButton
               <item>
                <widget class="QLabel" name="lBandWidthInfo">
                 <property name="text">
-                 <string>1 TB</string>
+                 <string notr="true">1 TB</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="lBandWidth">
                 <property name="text">
-                 <string>BANDWIDTH</string>
+                 <string>Bandwidth</string>
                 </property>
                </widget>
               </item>
@@ -570,7 +570,7 @@ QPushButton
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -24,6 +24,8 @@ PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
                                "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); background: transparent; border: none;} "
                                "QPushButton#bOverlay:pressed {border-radius: 3px; border: 3px solid; border-color: rgba(255, 51, 58, 0.8);}"));
     overlay->resize(ui->wContainer->minimumSize());
+    ui->lBandWidth->setText(ui->lBandWidth->text().toUpper());
+    ui->lStorage->setText(ui->lStorage->text().toUpper());
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 
     updatePlanInfo();
