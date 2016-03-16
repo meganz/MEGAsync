@@ -26,7 +26,11 @@
    <string>Free bandwidth quota exceeded</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lDescRecommendation, #lDescInfo
+   <string notr="true">#UpgradeDialog
+{
+	background-color: #FBFBFB;
+}
+#lDescRecommendation, #lDescInfo
 {
   font-family: SourceSansPro-Regular;
   font-size: 13px;

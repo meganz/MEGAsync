@@ -33,13 +33,6 @@
   border: 1px solid;
   border-color: rgba(0, 0, 0, 0.1);
 }
-#wContainer:hover
-{
-  border-radius: 3px;
-  border: 1px solid;
-  border-color: rgba(0, 0, 0);
-}
-
 #wPrice
 {
   background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -183,7 +176,7 @@ QPushButton
             </size>
            </property>
            <property name="text">
-            <string>popular!</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -192,6 +185,9 @@ QPushButton
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="topMargin">
+            <number>8</number>
+           </property>
            <item>
             <spacer name="horizontalSpacer">
              <property name="orientation">
@@ -226,7 +222,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Resources_linux.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/proicrest.png</normaloff>:/images/proicrest.png</iconset>
              </property>
              <property name="iconSize">
@@ -257,6 +253,21 @@ QPushButton
       </item>
       <item>
        <widget class="QLabel" name="lProPlan">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>41</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>41</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">margin-top: -10px;</string>
+        </property>
         <property name="text">
          <string>PRO LITE</string>
         </property>
@@ -293,14 +304,14 @@ QPushButton
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>22</number>
          </property>
          <item>
           <widget class="QLabel" name="lPrice">
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>60</height>
+             <height>50</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -381,7 +392,7 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <property name="spacing">
-            <number>25</number>
+            <number>17</number>
            </property>
            <property name="leftMargin">
             <number>15</number>
@@ -404,7 +415,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Resources_linux.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/storage.png</normaloff>:/images/storage.png</iconset>
              </property>
              <property name="iconSize">
@@ -467,7 +478,7 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
-            <number>25</number>
+            <number>17</number>
            </property>
            <property name="leftMargin">
             <number>15</number>
@@ -490,7 +501,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="Resources_linux.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/bwupgrade.png</normaloff>:/images/bwupgrade.png</iconset>
              </property>
              <property name="iconSize">
@@ -559,7 +570,7 @@ QPushButton
   </layout>
  </widget>
  <resources>
-  <include location="Resources_linux.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

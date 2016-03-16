@@ -33,13 +33,6 @@
   border: 1px solid;
   border-color: rgba(0, 0, 0, 0.1);
 }
-#wContainer:hover
-{
-  border-radius: 3px;
-  border: 1px solid;
-  border-color: rgba(0, 0, 0);
-}
-
 #wPrice
 {
   background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -183,7 +176,7 @@ QPushButton
             </size>
            </property>
            <property name="text">
-            <string>popular!</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -399,7 +392,7 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <property name="spacing">
-            <number>25</number>
+            <number>17</number>
            </property>
            <property name="leftMargin">
             <number>15</number>
@@ -485,7 +478,7 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
-            <number>25</number>
+            <number>17</number>
            </property>
            <property name="leftMargin">
             <number>15</number>
