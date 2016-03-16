@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>181</width>
-    <height>372</height>
+    <width>189</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>181</width>
-    <height>372</height>
+    <width>189</width>
+    <height>380</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>181</width>
-    <height>372</height>
+    <width>189</width>
+    <height>380</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,9 +29,10 @@
    <string notr="true">#wContainer
 {
   border-radius: 3px;
-  background-color: #ffffff;
   border: 1px solid;
   border-color: rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+
 }
 #wPrice
 {
@@ -50,41 +51,41 @@ QPushButton
 
 #lTip
 {
-  font-family: SourceSansPro-Regular;
-  font-size: 14px;
+  font-family: HelveticaNeue;
+  font-size: 13px;
   color: #fe2229;	
 }
 
 #lProPlan
 {
-  font-family: SourceSansPro-Regular;
-  font-size: 20px;
+  font-family: HelveticaNeue;
+  font-size: 18px;
   color: #666666;
 }
 
 #lPeriod
 {
-  font-family: SourceSansPro-Regular;
-  font-size: 20px;
+  font-family: HelveticaNeue;
+  font-size: 18px;
   color: #ff333a;
 }
 
 #lPrice
 {
-  font-family: SourceSansPro-Regular;
+  font-family: HelveticaNeue;
   color: #333333;
 }
 
 #lStorageInfo, #lBandWidthInfo
 {
-  font-family: SourceSansPro-Regular;
-  font-size: 16px;
+  font-family: HelveticaNeue;
+  font-size: 14px;
   color: #333333;
 }
 #lStorage, #lBandWidth
 {
-  font-family: SourceSansPro-Regular;
-  font-size: 13px;
+  font-family: HelveticaNeue;
+  font-size: 12px;
   letter-spacing: 0px;
   color: #999999; 
 }
@@ -186,7 +187,7 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <property name="topMargin">
-            <number>8</number>
+            <number>5</number>
            </property>
            <item>
             <spacer name="horizontalSpacer">
@@ -222,7 +223,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/proicrest.png</normaloff>:/images/proicrest.png</iconset>
              </property>
              <property name="iconSize">
@@ -298,7 +299,7 @@ QPushButton
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -415,7 +416,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/storage.png</normaloff>:/images/storage.png</iconset>
              </property>
              <property name="iconSize">
@@ -501,7 +502,7 @@ QPushButton
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_macx.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/bwupgrade.png</normaloff>:/images/bwupgrade.png</iconset>
              </property>
              <property name="iconSize">
@@ -570,7 +571,7 @@ QPushButton
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
