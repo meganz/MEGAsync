@@ -639,6 +639,8 @@ void MegaApplication::initialize()
     {
         pauseTransfers(true);
     }
+
+    megaApi->getPricing();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -4024,10 +4026,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_LOGIN:
     {
         connectivityTimer->stop();
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            megaApi->getPricing();
-        }
 
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
@@ -4792,6 +4790,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue())
     {
         int t = e->getValue();
+        megaApi->getPricing();
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
         openBwOverquotaDialog();
         return;
