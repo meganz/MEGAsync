@@ -32,8 +32,8 @@
   border: 1px solid;
   border-color: rgb(220,220, 220);
   background-color: #ffffff;
-
 }
+
 #wPrice
 {
  background-color: rgb(248,248,248);
@@ -88,7 +88,6 @@ QPushButton
 {
   font-family: HelveticaNeue;
   font-size: 12px;
-  letter-spacing: 0px;
   color: #999999; 
 }
 
@@ -217,6 +216,9 @@ QPushButton
                <width>64</width>
                <height>64</height>
               </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="layoutDirection">
               <enum>Qt::LeftToRight</enum>
@@ -414,6 +416,9 @@ QPushButton
                <height>32</height>
               </size>
              </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -499,6 +504,9 @@ QPushButton
                <width>32</width>
                <height>32</height>
               </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="text">
               <string/>

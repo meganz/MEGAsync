@@ -11,6 +11,7 @@ UpgradeDialog::UpgradeDialog(MegaPricing *pricing, QWidget *parent) :
     ui(new Ui::UpgradeDialog)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     if (pricing)
     {
@@ -37,7 +38,7 @@ UpgradeDialog::UpgradeDialog(MegaPricing *pricing, QWidget *parent) :
 
     updatePlans();
 
-    timer = new QTimer();
+    timer = new QTimer(this);
     timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(unitTimeElapsed()));
 }

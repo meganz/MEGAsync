@@ -86,7 +86,6 @@ QPushButton
 {
   font-family: HelveticaNeue;
   font-size: 12px;
-  letter-spacing: 0px;
   color: #999999; 
 }
 

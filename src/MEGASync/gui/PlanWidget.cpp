@@ -76,7 +76,7 @@ void PlanWidget::updatePlanInfo()
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;
         case PRO_I:
-            ui->lTip->setText(QString::fromUtf8("popular!"));
+            ui->lTip->setText(tr("popular!"));
             ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proicrest.png")));
             ui->bcrest->setIconSize(QSize(58, 58));
             ui->lProPlan->setText(QString::fromUtf8("PRO I"));
@@ -95,6 +95,10 @@ void PlanWidget::updatePlanInfo()
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         default:
+            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
+            ui->bcrest->setIconSize(QSize(58, 58));
+            ui->lProPlan->setText(QString::fromUtf8("PRO"));
+            ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;
     }
     ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"HelveticaNeue\"; font-size:44px;'>%1</span><span style='font-family:\"HelveticaNeue\"; font-size: 33px;'>.%2 %3</span>")
