@@ -11,7 +11,7 @@ UpgradeDialog::UpgradeDialog(MegaPricing *pricing, QWidget *parent) :
     ui(new Ui::UpgradeDialog)
 {
     ui->setupUi(this);
-    this->pricing = pricing;
+    this->pricing = pricing->copy();
     finishTime = 0;
 
     ui->lDescRecommendation->setTextFormat(Qt::RichText);
@@ -41,7 +41,11 @@ void UpgradeDialog::setTimestamp(long long time)
 
 void UpgradeDialog::setPricing(MegaPricing *pricing)
 {
-    this->pricing = pricing;
+    if (this->pricing)
+    {
+        delete this->pricing;
+    }
+    this->pricing = pricing->copy();
     updatePlans();
 }
 
@@ -68,6 +72,7 @@ void UpgradeDialog::refreshAccountDetails()
 UpgradeDialog::~UpgradeDialog()
 {
     delete ui;
+    delete pricing;
 }
 
 void UpgradeDialog::updatePlans()
