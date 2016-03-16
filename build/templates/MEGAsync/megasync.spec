@@ -53,8 +53,22 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
+
+%define flag_cryptopp %{nil}
+
+%if 0%{?centos_version}
+%define flag_cryptopp -q
+%endif
+
+%if 0%{?rhel_version}
+%define flag_cryptopp -q
+%endif
+
+
+
+
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-./configure
+./configure %{flag_cryptopp}
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp

@@ -150,13 +150,14 @@ void HTTPServer::readClient()
 
         request->data = tokens[1];
         processRequest(socket, *request);
-        discardClient();
+
+        requests.remove(socket);
+        delete request;
     }
 }
 void HTTPServer::discardClient()
 {
     QAbstractSocket* socket = (QSslSocket*)sender();
-    socket->disconnectFromHost();
     socket->deleteLater();
 
     HTTPRequest *request = requests.value(socket);
@@ -171,6 +172,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
 {
     socket->write(QString::fromUtf8("HTTP/1.0 %1\r\n"
                   "\r\n").arg(response).toUtf8());
+    socket->flush();
     socket->disconnectFromHost();
     socket->deleteLater();
 
@@ -424,15 +426,12 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
 void HTTPServer::error(QAbstractSocket::SocketError)
 {
-    discardClient();
 }
 
 void HTTPServer::sslErrors(const QList<QSslError> &)
 {
-    discardClient();
 }
 
 void HTTPServer::peerVerifyError(const QSslError &)
 {
-    discardClient();
 }
