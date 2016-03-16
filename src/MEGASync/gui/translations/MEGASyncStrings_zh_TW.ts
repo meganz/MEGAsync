@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">記住我的決定，不要再詢問我</translation>
     </message>
     <message>
         <source>No</source>
@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">您將啟用一個選項，該選項將使得您的信息可被攔截。您的資料將因端對端加密而不會被駭客取用，但駭客有可能有機會移除您的MEGA檔案或資料夾，抑或刪除，抑或阻礙您的存取。</translation>
     </message>
 </context>
 <context>
@@ -1054,16 +1054,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">暫時性的錯誤，正在重試中。</translation>
     </message>
     <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">串流</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">MEGA串流</translation>
-    </message>
-    <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished">MEGA串流</translation>
@@ -1091,7 +1081,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don&#039;t care</translation>
+        <translation type="unfinished">忽略</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1423,7 +1413,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">新資料夾與檔案的權限</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1433,17 +1423,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation type="unfinished">Numeric value:</translation>
+        <translation type="unfinished">數值：</translation>
     </message>
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">群組權限：</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">公開權限：</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1453,7 +1443,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">文件和文件夾有一個所有者，屬於一組用戶。使用該對話框可以授予由MEGAsync創建屬於同一個組，並在計算機中的用戶的用戶休息新文件和文件夾的不同訪問權限。如果你不需要改變他們，請留下他們出於安全原因的默認權限。檔案與資料夾有其所有者，或屬於某群組使用者。經由這個對話框您可授權，同群組使用者或同台電腦使用者，擁不同存取權限至MEGAsync新建檔案或資料夾。如您無須變更，因安全因素請採用預設權限。</translation>
     </message>
 </context>
 <context>
@@ -1461,17 +1451,32 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Read</translation>
+        <translation type="unfinished">讀取</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Write</translation>
+        <translation type="unfinished">修改</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">執行</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">月</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">儲存空間</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">頻寬</translation>
     </message>
 </context>
 <context>
@@ -2145,12 +2150,12 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don&#039;t use HTTP</translation>
+        <translation type="unfinished">不使用HTTP</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">僅於您的傳輸未啟動時，才啟用此選項。正常情況下，HTTP已可為所有傳輸加密，且成果令人滿意。</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">取得連結資訊發生錯誤</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">免費頻寬配額已用完</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">您的下載未被繼續因為這將超過您現在IP位址的免費傳輸使用量。此限制為動態的，取決於我們現有的未使用頻寬量。</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">您於過去六小時使用了%1數據傳輸，已超過了您的現有限制量。若要超越這個限制，我們建議您可[A]升級到Pro[/A]，將讓您有獨自的頻寬套裝方案並可享有更多充足的儲存空間。</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">請立即升級到專業版繼續，或等待%1后繼續</translation>
     </message>
 </context>
 <context>

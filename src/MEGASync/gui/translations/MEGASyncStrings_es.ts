@@ -1054,16 +1054,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Error temporal, reintentando.</translation>
     </message>
     <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Streaming desde MEGA</translation>
-    </message>
-    <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished">Streaming desde MEGA</translation>
@@ -1472,6 +1462,21 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
         <translation type="unfinished">Ejecución</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">mes</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">Almacenamiento</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">Ancho de banda</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">Error obteniendo la información del enlace</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Ancho de banda gratuito excedido</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">Tu descarga no se ha podido procesar porque te llevaría por encima de la actual transferencia permitida para tu IP. Este límite es dinámico y depende de la cantidad de ancho de banda no utilizado que tengamos disponible.</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">Has utilizado %1 de transferencia en las últimas 6 horas, lo que te ha llevado por encima de nuestro límite actual. Para eliminar esta limitación, puedes [A]mejorar a Pro[/A], lo que te dará tu propio paquete de transferencia y además amplio almacenaje extra. </translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Por favor mejora a Pro para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
     </message>
 </context>
 <context>

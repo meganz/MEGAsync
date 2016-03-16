@@ -1054,16 +1054,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">일시적 오류, 재시도중</translation>
     </message>
     <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">스트리밍</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">MEGA에서 스트리밍</translation>
-    </message>
-    <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished">MEGA에서 스트림</translation>
@@ -1472,6 +1462,21 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
         <translation type="unfinished">실행</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">월</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">저장소</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">대역폭</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">링크 정보 얻기 오류</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">무료 대역폭 할당량 초과</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">IP 주소에 해당된 무료 전송 허용량을 초과하기 때문에 다운로드를 진행할 수 없습니다. 이 제한은 역동적이고 우리가 가진 미사용 대역폭량에 따라 다릅니다.</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">%1의 데이터를 지난 6시간 동안 사용하였고, 이는 우리의 제한을 초과할 수 있습니다. 제한을 피하려면, 당신만의 대역폭 패키지와 추가 저장 공간을 얻을 수 있는 [A]프로로 업그레이드[/A]할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">즉시 계속하려면 Pro로 업그레이드 하거나 무료로 계속하려면 %1 동안 기다리세요.</translation>
     </message>
 </context>
 <context>

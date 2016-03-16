@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">İletişiminizi engellemeye izin verebilecek bir ayarı açmak üzeresiniz. Veriniz uçtan uca(end-to-end) şifreleme ile korunduğundan dolayı veriniz saldırganlara erişilemez durumda olacaktır, fakat kör bir vaziyette MEGA&#039;daki dosyalarınızı silebilir, taşıyabilir veya erişiminizi engelleyebilirler.</translation>
     </message>
 </context>
 <context>
@@ -500,7 +500,7 @@ Are you sure?</source>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>Dosya transferi duraklatıldı</translation>
+        <translation>Dosya aktarmaları duraklatıldı</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
@@ -510,7 +510,7 @@ Are you sure?</source>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Tüm transferler tamamlandı</translation>
+        <translation>Tüm aktarmalar tamamlandı</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -664,7 +664,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">MEGAsync test ettiğiniz için teşekkür ederiz.&lt;br&gt;Bu beta sürümünün süresi doldu ve artık geçerli değil.&lt;br&gt;Lütfen güncellemeler için Twitter\&#039;da &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; hesabını takip edin.</translation>
+        <translation type="obsolete">MEGAsync test ettiğiniz için teşekkür ederiz.&lt;br&gt;Bu beta sürümünün süresi doldu ve artık geçerli değil.&lt;br&gt;Lütfen güncellemeler için Twitter&#039;da &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; hesabını takip edin.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -787,7 +787,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Geçici aktarım hatası:</translation>
+        <translation>Geçici aktarma hatası:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -1008,7 +1008,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="unfinished">Aktarım başarısız oldu:</translation>
+        <translation type="unfinished">Aktarma başarısız oldu:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -1052,16 +1052,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Geçici hata, tekrar deneniyor.</translation>
-    </message>
-    <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Akış</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Akış MEGA&#039;dan sağlanıyor</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
@@ -1134,7 +1124,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many concurrent connections or transfers</source>
         <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
-        <translation>Çok fazla eşzamanlı bağlantı veya transfer</translation>
+        <translation>Çok fazla eşzamanlı bağlantı veya aktarma</translation>
     </message>
     <message>
         <source>Out of range</source>
@@ -1453,7 +1443,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Dosya ve klasörler tek kişi veya kişi gruba aittir. Bu diyalog kutusunu kullanarak MEGAsync tarafından oluşturulan dosyalara farklı erişim izinleri atayabilirsiniz. Değiştirmenize gerek yoksa, güvenlik nedenlerini olduğu gibi bırakın.</translation>
     </message>
 </context>
 <context>
@@ -1472,6 +1462,21 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
         <translation type="unfinished">Yürütme</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">ay</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">Saklama alanı</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">Bant genişliği</translation>
     </message>
 </context>
 <context>
@@ -1866,7 +1871,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>Transferler</translation>
+        <translation>Aktarmalar</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2150,7 +2155,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Bu seçeneği sadece aktarımlarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarımlar zaten şifreli olduğu için HTTP tatmin edicidir.</translation>
+        <translation type="unfinished">Bu seçeneği sadece aktarmalarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarımlar zaten şifreli olduğu için HTTP tatmin edicidir.</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">Bağlantı bilgisi alınırken hata oldu</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">Ücretsiz bant genişliği kotası aşıldı</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">IP adresiniz için tanımlanmış ücretsiz aktarma sınırını geçtiğiniz için indirme yapılamaz. Bu sınır dinamiktir ve elimizdeki kullanılmayan bant genişliği miktarına bağlıdır.</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">Son 6 ayda %1 veri aktarımı yaptınız ve bu mevcut sınırın üzerinde. Bu sınırı aşmak için [A]Pro&#039;ya yükselt[/A]ebilir ve böylelikle hem daha çok depolama alanına sahip olabilir hem de daha fazla bant genişliğine sahip olursunuz.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">Hemen devam etmek için lütfen Pro&#039;ya yükseltin veya ücretsizdevam etmek için %1 bekleyin.</translation>
     </message>
 </context>
 <context>

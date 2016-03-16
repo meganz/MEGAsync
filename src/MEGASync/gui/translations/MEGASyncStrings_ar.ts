@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">أنت على وشك أن تمكن الخيار الذي يمكن من اعتراض اتصالاتك. بياناتك لاتزال محمية عن المهاجمين نظرا للتشفير من النهاية إلى النهاية، ولكنهم قادرون على نقل ملفاتك ومجلداتك في MEGA أو حذفها أو يمنعونك من الوصول إلى حسابك دون إشعارك بالأمر.</translation>
     </message>
 </context>
 <context>
@@ -1023,17 +1023,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">وضع التصحيح تم تفعيله. تم إنشاء سجل على سطح المكتب (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation type="unfinished">Error: Invalid destination folder. The download has been cancelled.</translation>
+        <translation type="unfinished">خطأ: وجهة المجلد غير موجود. التحميل تم إلغاؤه </translation>
     </message>
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">لا يمكن التحقق من مفتاح SSL لدينا. من المحتمل أن تتأثر بهجوم رجل في الوسط أو ربما ستواجه اعتراض اتصالاتك عن طريق برنامج مكافحة الفيروسات  وتسبب لك هذه المشكلة. يرجى تعطيل برنامج مكافحة الفيروسات مؤقتا وحاول مرة أخرى</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1052,16 +1052,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">خطأ مؤقت، جاري إعادة المحاولة.</translation>
-    </message>
-    <message>
-        <source>Streaming</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">قيد التشغيل</translation>
-    </message>
-    <message>
-        <source>Streaming from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">يتم الفتح من MEGA</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
@@ -1472,6 +1462,21 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
         <translation type="unfinished">تنفيذ</translation>
+    </message>
+</context>
+<context>
+    <name>PlanWidget</name>
+    <message>
+        <source>month</source>
+        <translation type="unfinished">شهر</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translation type="unfinished">التخزين</translation>
+    </message>
+    <message>
+        <source>Bandwidth</source>
+        <translation type="unfinished">نقل البيانات</translation>
     </message>
 </context>
 <context>
@@ -2111,7 +2116,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">سيتم حذف النسخ الاحتياطية من الإصدارات السابقة من الملفات التي تم مزامنتها في جهازك الشخصي بشكل دائم. الرجاء مراجعة مجلدات النسخ الاحتياطي لمعرفة ما اذا كنت بحاجة لانقاذ شيء ما قبل الاستمرار:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -2126,7 +2131,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">سيتم حذف النسخ الاحتياطية من الإصدارات السابقة من الملفات التي تم مزامنتها في MEGA بشكل دائم. الرجاء مراجعة مجلد [A] في سلة المحذوفات في حسابك MEGA لمراجعة ماتحتاج لانقاذه قبل الاستمرار.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2150,7 +2155,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">فعل هذا الخيار فقط عندما لم تبدأ بعمليات النقل. في الظروف العادية فإن استخدام HTTP مقبول كون جميع عمليات النقل مشفرة.</translation>
     </message>
 </context>
 <context>
@@ -2700,6 +2705,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">خطأ في الحصول على معلومات الرابط</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeDialog</name>
+    <message>
+        <source>Free bandwidth quota exceeded</source>
+        <translation type="unfinished">لقد تجاوزت حصة نقل البيانات المجانية</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translation type="unfinished">لا يمكن الاستمرار في التحميل بسبب تجاوز الحد المسموح لعنوان ال ip الخاص بك. هذا الحد متغير علي حسب مقدار كمية نقل البيانات الغير مستخدمة المتاحة.</translation>
+    </message>
+    <message>
+        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <translation type="unfinished">You have utilized %1 of data transfer in the last 6 hours which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translation type="unfinished">الرجاء الترقية إلى العضوية المتميزة للاستمرار حالا، أو الانتظار%1 للاستمرار مجانا.</translation>
     </message>
 </context>
 <context>
