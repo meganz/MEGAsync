@@ -59,7 +59,6 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
         return;
     }
 
-    event->ignore();
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
     msg->setWindowTitle(tr("Stream from MEGA"));
@@ -75,7 +74,11 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     if (button == QMessageBox::Yes)
     {
-        done(QDialog::Accepted);
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
     }
 }
 
