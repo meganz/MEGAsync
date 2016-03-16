@@ -30,18 +30,20 @@
 {
   border-radius: 3px;
   border: 1px solid;
-  border-color: rgba(0, 0, 0, 0.1);
+  border-color: rgb(220,220, 220);
   background-color: #ffffff;
 
 }
 #wPrice
 {
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 rgba(249,249,249,0.3), stop: 1 rgba(238,238,238,0.3));
+ background-color: rgb(248,248,248);
  border-top: 1px solid;
- border-top-color: rgba(0, 0, 0, 0.1);
+ border-top-color: rgb(220,220, 220);
  border-bottom: 1px solid;
- border-bottom-color: rgba(0, 0, 0, 0.1);
+ border-bottom-color: rgb(220, 220, 220);
+ border-color: rgb(220,220, 220);
+ margin-left: 1px;
+ margin-right: 1px;
 }
 
 QPushButton
