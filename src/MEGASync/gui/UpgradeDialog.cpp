@@ -128,12 +128,9 @@ QString UpgradeDialog::convertCurrency(const char *currency)
 void UpgradeDialog::unitTimeElapsed()
 {
     long long remainingTime = finishTime - QDateTime::currentMSecsSinceEpoch() / 1000;
-    if (remainingTime > 0)
+    if (remainingTime < 0)
     {
-        ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ").arg(Utilities::getTimeString(remainingTime)));
+        remainingTime = 0;
     }
-    else
-    {
-        //Timer reaches 0
-    }
+    ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ").arg(Utilities::getTimeString(remainingTime)));
 }

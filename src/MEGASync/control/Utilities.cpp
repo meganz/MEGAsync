@@ -422,11 +422,7 @@ QString Utilities::getTimeString(long long secs)
         return time;
     }
 
-    if (items || seconds)
-    {
-        time.append(QString::fromUtf8("%1 s").arg(seconds));
-    }
-
+    time.append(QString::fromUtf8("%1 s").arg(seconds));
     return time;
 }
 
