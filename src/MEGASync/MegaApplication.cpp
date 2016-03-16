@@ -4014,6 +4014,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 delete pricing;
             }
             pricing = request->getPricing();
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->setPricing(pricing);
+            }
         }
         break;
     }
