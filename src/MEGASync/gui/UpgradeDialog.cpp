@@ -22,6 +22,10 @@ UpgradeDialog::UpgradeDialog(MegaPricing *pricing, QWidget *parent) :
     plansLayout = new QHBoxLayout();
     plansLayout->setContentsMargins(0,0,0,0);
     plansLayout->setSpacing(0);
+
+    delete ui->wPlans->layout();
+    ui->wPlans->setLayout(plansLayout);
+
     updatePlans();
 
     timer = new QTimer();
@@ -77,7 +81,7 @@ UpgradeDialog::~UpgradeDialog()
 
 void UpgradeDialog::updatePlans()
 {
-    clearPlans(plansLayout);
+    clearPlans();
 
     int products = pricing->getNumProducts();
     for (int it = 0; it < products; it++)
@@ -93,23 +97,16 @@ void UpgradeDialog::updatePlans()
             };
             plansLayout->addWidget(new PlanWidget(data));
         }
-    }
-
-    ui->wPlans->setLayout(plansLayout);   
+    } 
 }
 
-void UpgradeDialog::clearPlans(QLayout *layout)
+void UpgradeDialog::clearPlans()
 {
     while (QLayoutItem* item = plansLayout->takeAt(0))
     {
         if (QWidget* widget = item->widget())
         {
             delete widget;
-        }
-
-        if (QLayout* childLayout = item->layout())
-        {
-            clearPlans(childLayout);
         }
         delete item;
     }

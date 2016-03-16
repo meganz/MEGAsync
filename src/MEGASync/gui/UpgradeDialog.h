@@ -30,7 +30,7 @@ private:
 
     void updatePlans();
     QString convertCurrency(const char *currency);
-    void clearPlans(QLayout *layout);
+    void clearPlans();
 
 private slots:
     void unitTimeElapsed();

@@ -3,6 +3,11 @@
 #include "Utilities.h"
 #include <QDesktopServices>
 #include <QUrl>
+#include <QtCore>
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
 
 #define TOBYTES 1024 * 1024 * 1024
 
@@ -30,29 +35,26 @@ PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 
     updatePlanInfo();
-
 }
 
 void PlanWidget::onOverlayClicked()
 {
-    QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro")));
-
     switch (details.level)
     {
         case PRO_LITE:
-            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_lite")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_lite")));
             break;
         case PRO_I:
-            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_1")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_1")));
             break;
         case PRO_II:
-            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_2")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_2")));
             break;
         case PRO_III:
-            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro_3")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_3")));
             break;
         default:
-            QDesktopServices::openUrl(QUrl(QString::fromUtf8("mega://#pro")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro")));
             break;
     }
 }
@@ -64,7 +66,6 @@ PlanWidget::~PlanWidget()
 
 void PlanWidget::updatePlanInfo()
 {
-
     switch (details.level)
     {
         case PRO_LITE:
