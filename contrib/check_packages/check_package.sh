@@ -40,6 +40,7 @@ display_help() {
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VM running after completion"
     echo " -p pass : password for VM (both user mega & root)"
+    echo " -x pathXMLdir : path for the xml files describing the VMs"
     echo ""
 }
 
@@ -47,8 +48,9 @@ display_help() {
 remove_megasync=0
 quit_machine=1
 require_change=0
+pathXMLdir=/mnt/DATA/datos/assets/check_packages
 
-while getopts ":ikcp:" opt; do
+while getopts ":ikcp:x:" opt; do
   case $opt in
     i)
 		remove_megasync=1
@@ -63,6 +65,9 @@ while getopts ":ikcp:" opt; do
     k)
 		quit_machine=0
       ;;
+    x)
+		pathXMLdir="$OPTARG"
+      ;;      
     \?)
       echo "Invalid option: -$OPTARG" >&2
       ;;
@@ -108,7 +113,7 @@ logSth(){
 
 
 echo " running machine $VMNAME ..."
-sudo virsh create /mnt/DATA/datos/assets/check_packages/$VMNAME.xml 
+sudo virsh create $pathXMLdir/$VMNAME.xml 
 
 #sudo virsh domiflist $VMNAME 
 IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
