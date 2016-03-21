@@ -2,7 +2,7 @@
 
 ##
  # @file contrib/check_packages/check_package.sh
- # @brief
+ # @brief checks the correctness of a package using a virtual machine
  #
  # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
  #
@@ -28,12 +28,12 @@ display_help() {
     echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] VMNAME URL_REPO"
     echo ""
     echo "This script will check the correctness of a package using a virtual machine."
-    echo " It sill receive the machine name and the repository that will be used to download" #TODO: complete
+    echo " It sill receive the machine name and the repository that will be used to download" 
     echo " megasync packages."
     echo ""
-    echo "If all repos have a newly generated password, we can use -c to only validate a VM"
+    echo "If the repo has a newly generated package, we can use -c to only validate a VM"
     echo " in case the version of megasync package has changed. This will fail if the VM already"
-    echo " contained the latests megasync package" #TODO: check usage e imprimir usage"
+    echo " contained the latests megasync package" 
     echo " In case we dont know the state of the VM, we can safely run the test using -c and -i"
     echo ""
     echo "This script generates 2 files: "

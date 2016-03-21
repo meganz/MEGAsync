@@ -2,7 +2,7 @@
 
 ##
  # @file contrib/check_packages/check_all_packages.sh
- # @brief 
+ # @brief checks the correctness of all packages using virtual machines
  #
  # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
  #
@@ -20,6 +20,36 @@
  # You should have received a copy of the license along with this
  # program.
 ##
+
+display_help() {
+    local app=$(basename "$0")
+    echo ""
+    echo "Usage:"
+    echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] BASEREPOURL"
+    echo ""
+    echo "This script will check the correctness of all packages using virtual machines."
+    echo "It will choose the specific repo corresponding to all the configured VM, using"
+    echo " BASEREPOURL passed as argument. e.g: $app https://mega.nz/linux/MEGAsync/"
+    echo ""
+    echo "If all repos have a newly generated package, we can use -c to only validate a VM"
+    echo " in case the version of megasync package has changed. This will fail if the VM already"
+    echo " contained the latests megasync package"
+    echo " In case we dont know the state of the VM, we can safely run the test using -c and -i"
+    echo ""
+    echo "This script generates 3 files per VM: "
+    echo " - Either ${VMNAME}_OK (in case of success) or ${VMNAME}_FAIL (in case of failure)"
+    echo " - result_${VMNAME}.log: this file sumarizes the problems encountered while testing."
+    echo " - output_check_package_${VMNAME}.log: stdout of check_package.sh"
+    echo ""
+    echo "Options:"
+    echo " -c : check megasync packages have changed (updated or newly installed)"
+    echo " -i : install anew (removes previous megasync package)"
+    echo " -k : keep VMs running after completion"
+    echo " -p pass : password for VMs (both user mega & root)"
+    echo " -x pathXMLdir : path for the xml files describing the VMs"
+    echo ""
+}
+
 
 remove_megasync=0
 quit_machine=1
@@ -45,8 +75,14 @@ while getopts ":ikcp:x:" opt; do
 		flag_quit_machine="-$opt"
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
-      ;;
+		echo "Invalid option: -$OPTARG" >&2
+		display_help $0
+		exit
+	;;
+	*)
+		display_help $0
+		exit
+	;;
   esac
 done
 
@@ -103,8 +139,6 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using
 #~ xUbuntu_13.04/ #NO VM
 #~ xUbuntu_14.10/ #NO VM
 # ALL i386 (but Debian9)
-
-
 
 
 

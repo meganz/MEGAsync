@@ -36,8 +36,6 @@ if [ -z "$NEWOSCFOLDER_PATH" ]; then
 	echo "using default NEWOSCFOLDER_PATH: $NEWOSCFOLDER_PATH"
 fi
 
-
-
 export EDITOR=nano
 
 echo "creating folder with OBS projects..."
@@ -58,7 +56,6 @@ for package in MEGAShellExtNautilus MEGAsync; do
 	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*tar.gz $NEWOSCFOLDER_PATH/RPM/$package/
 	for i in $PROJECT_PATH/build/MEGAsync/$package/{*.dsc,*.tar.gz,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules} ; do ln -sf $i $NEWOSCFOLDER_PATH/DEB/$package/; done
 done
-
 
 echo "modifying files included/excluded in projects (to respond to e.g. tar.gz version changes)"
 osc addremove $NEWOSCFOLDER_PATH/DEB/*

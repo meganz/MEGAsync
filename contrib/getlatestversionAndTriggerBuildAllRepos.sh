@@ -47,7 +47,6 @@ popd
 
 # trigger build commiting new changes into OBS projects
 if [ -z "$NEWOSCFOLDER_PATH" ]; then
-#	NEWOSCFOLDER_PATH=/mnt/DATA/datos/assets/osc
 	NEWOSCFOLDER_PATH=/mnt/DATA/datos/building/osc_projects/$THEDATE
 	echo "using default NEWOSCFOLDER_PATH: $NEWOSCFOLDER_PATH"
 fi
