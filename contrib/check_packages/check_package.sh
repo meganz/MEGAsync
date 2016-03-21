@@ -1,10 +1,4 @@
-#!/bin/bash -x
-#TODO: check usage e imprimir usage
-#USAGE $0 [-i] CENTOS_7 http://192.168.122.1:8000/RPM/CentOS_7
-# -i to remove before install (install, not only update)
-# -c to check for package changed (updated or newly installed)
-# most secure test: -ic 
-
+#!/bin/bash
 
 ##
  # @file contrib/check_packages/check_package.sh
@@ -31,19 +25,29 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-c] [-i] [-k] -p pass"
+    echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] VMNAME URL_REPO"
     echo ""
-    echo "." #TODO: complete
+    echo "This script will check the correctness of a package using a virtual machine."
+    echo " It sill receive the machine name and the repository that will be used to download" #TODO: complete
+    echo " megasync packages."
+    echo ""
+    echo "If all repos have a newly generated password, we can use -c to only validate a VM"
+    echo " in case the version of megasync package has changed. This will fail if the VM already"
+    echo " contained the latests megasync package" #TODO: check usage e imprimir usage"
+    echo " In case we dont know the state of the VM, we can safely run the test using -c and -i"
+    echo ""
+    echo "This script generates 2 files: "
+    echo " - Either ${VMNAME}_OK (in case of success) or ${VMNAME}_FAIL (in case of failure)"
+    echo " - result_${VMNAME}.log: this file sumarizes the problems encountered while testing."
     echo ""
     echo "Options:"
-    echo " -c : check megasync package has changed"
+    echo " -c : check megasync package has changed (updated or newly installed)"
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VM running after completion"
     echo " -p pass : password for VM (both user mega & root)"
     echo " -x pathXMLdir : path for the xml files describing the VMs"
     echo ""
 }
-
 
 remove_megasync=0
 quit_machine=1
@@ -69,9 +73,7 @@ while getopts ":ikcp:x:" opt; do
 		pathXMLdir="$OPTARG"
       ;;      
     \?)
-      echo "Invalid option: -$OPTARG" >&2
-      ;;
-	\?)
+		echo "Invalid option: -$OPTARG" >&2
 		display_help $0
 		exit
 	;;
@@ -83,6 +85,12 @@ while getopts ":ikcp:x:" opt; do
 done
 
 shift $(($OPTIND-1))
+
+if [ "$#" -ne 2 ]; then
+    echo "Illegal number of parameters"
+    display_help $0
+    exit
+fi
 
 VMNAME=$1
 REPO=$2
