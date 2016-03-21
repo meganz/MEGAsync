@@ -8,7 +8,7 @@ in different virtual machines
 triggerBuild.sh
 ---------------
 
-Triggers OSB compilation for configured repositories 
+Triggers OBS compilation for configured repositories 
 
 getlatestversionAndTriggerBuildAllRepos.sh
 ------------------------------------------

@@ -3,7 +3,7 @@
 ##
  # @file contrib/getlatestversionAndTriggerBuildAllRepos.sh
  # @brief Gets the project cloning git project and creates tarball, then
- #     Triggers OSB compilation for configured repositories          
+ #     Triggers OBS compilation for configured repositories          
  #     It stores the project files at                                
  #         /mnt/DATA/datos/building/local_project/desktop_$THEDATE   
  #     and the stuff for repos building at                           
@@ -45,7 +45,7 @@ pushd build
 popd
 popd
 
-# trigger build commiting new changes into OSB projects
+# trigger build commiting new changes into OBS projects
 if [ -z "$NEWOSCFOLDER_PATH" ]; then
 #	NEWOSCFOLDER_PATH=/mnt/DATA/datos/assets/osc
 	NEWOSCFOLDER_PATH=/mnt/DATA/datos/building/osc_projects/$THEDATE

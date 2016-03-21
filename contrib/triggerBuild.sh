@@ -2,7 +2,7 @@
 
 ##
  # @file contrib/triggerBuild.sh
- # @brief Triggers OSB compilation for configured repositories 
+ # @brief Triggers OBS compilation for configured repositories 
  #     suppossing project with tarball built at $PROJECT_PATH/    
  #     suposing oscrc configured with apiurl correctly:           
  #      nano ~/.oscrc                                             
@@ -40,11 +40,11 @@ fi
 
 export EDITOR=nano
 
-echo "creating folder with OSB projects..."
+echo "creating folder with OBS projects..."
 mkdir $NEWOSCFOLDER_PATH
 cd $NEWOSCFOLDER_PATH
 
-echo "checking out existing OSB projects..."
+echo "checking out existing OBS projects..."
 osc co RPM
 osc co DEB
 
