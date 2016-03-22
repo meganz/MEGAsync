@@ -94,6 +94,14 @@ void msgHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
+
+#ifdef Q_OS_MACX
+    if (!qputenv("QT_HARFBUZZ","old"))
+    {
+       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_HARFBUZZ vble");
+    }
+#endif
+
 #ifdef Q_OS_LINUX
     QApplication::setDesktopSettingsAware(false);
 #endif
