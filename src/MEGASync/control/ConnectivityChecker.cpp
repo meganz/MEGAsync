@@ -1,4 +1,7 @@
 #include "ConnectivityChecker.h"
+#include "megaapi.h"
+
+using namespace mega;
 
 ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
     QObject(parent)
@@ -54,13 +57,22 @@ void ConnectivityChecker::onTestFinished(QNetworkReply *reply)
     QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
     if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
     {
+        QString e = QString::fromUtf8("Error testing proxy: %1:%2 %3-%4 (%5 - %6)").arg(proxy.hostName()).arg(proxy.port())
+                .arg(proxy.user()).arg(proxy.password().size()).arg(statusCode.toInt()).arg(reply->errorString());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+
         emit testError();
         emit testFinished();
         return;
     }
 
     QString data = QString::fromUtf8(reply->readAll());
-    if (!testString.isEmpty() && !data.contains(testString)) {
+    if (!testString.isEmpty() && !data.contains(testString))
+    {
+        QString e = QString::fromUtf8("Invalid response testing proxy: %1:%2 %3-%4 %5").arg(proxy.hostName()).arg(proxy.port())
+                .arg(proxy.user()).arg(proxy.password().size()).arg(data);
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+
         emit testError();
         emit testFinished();
         return;
@@ -76,6 +88,9 @@ void ConnectivityChecker::onTestTimeout()
     {
         reply->abort();
     }
+
+    QString e = QString::fromUtf8("Timeout testing proxy: %1:%2 %3-%4").arg(proxy.hostName()).arg(proxy.port()).arg(proxy.user()).arg(proxy.password().size());
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
 }
 
 void ConnectivityChecker::onProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *auth)
