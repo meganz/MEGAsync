@@ -84,7 +84,7 @@ using namespace std;
                 ucontext_t* uc = (ucontext_t*) secret;
                 pnt = (void*) uc->uc_mcontext.regs->nip ;
             #elif defined(__sparc__)
-            struct sigcontext* sc = (struct sigcontext*) secret;
+                struct sigcontext* sc = (struct sigcontext*) secret;
                 #if __WORDSIZE == 64
                     pnt = (void*) scp->sigc_regs.tpc ;
                 #else
@@ -93,8 +93,11 @@ using namespace std;
             #elif defined(__i386__)
                 ucontext_t* uc = (ucontext_t*) secret;
                 pnt = (void*) uc->uc_mcontext.gregs[REG_EIP];
+            #elif defined(__arm__)
+                ucontext_t* uc = (ucontext_t*) secret;
+                pnt = (void*) uc->uc_mcontext.arm_pc
             #else
-                #error NOT_SUPPORTED
+                pnt = NULL;
             #endif
         }
 
