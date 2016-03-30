@@ -227,8 +227,14 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	$sshpasscommand ssh root@$IP_GUEST "cat > /etc/apt/sources.list.d/megasync.list" <<-EOF
 	deb $REPO/ ./
 	EOF
-	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y update
+	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y update 2> tmp$VMNAME
 	resultMODREPO=$?
+	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
+	if cat tmp$VMNAME | grep $REPO; then
+	 resultMODREPO=$((1000 + 0$resultMODREPO)); cat tmp$VMNAME; 
+	#~ else
+	 #~ resultMODREPO=0 #we discard any other failure
+	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
 	cat /etc/apt/sources.list.d/megasync.list
 
