@@ -98,11 +98,13 @@ BASEURLDEB9=$1
 BASEURLDEB=$BASEURL
 BASEURLRPM=$BASEURL
 URLDEB9=$BASEURL/Debian_9.0
+URLUB1604=$BASEURL/xUbuntu_16.04
 if [ -z $BASEURL ]; then
  BASEURL=http://192.168.122.1:8000
  BASEURLDEB=$BASEURL/DEB
  BASEURLRPM=$BASEURL/RPM
  URLDEB9=http://192.168.122.1:8001
+ URLUB1604=http://192.168.122.1:8002
 fi
 
 PAIRSVMNAMEREPOURL=""
@@ -125,6 +127,8 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_7.8.0;$BASEURLDEB/Debian_7.0"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_8;$BASEURLDEB/Debian_8.0"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_CLEAN_testing;$URLDEB9" #NOTICE: using other repo
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_16.04_i386;$URLUB1604" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_16.04BETA;$URLUB1604" #NOTICE: using other repo
 
 #existing,but failing VMs
 ##Opensuse 13.1 -> no network interface!!
@@ -141,14 +145,20 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using
 # ALL i386 (but Debian9)
 
 
-
+count=0
 for i in $PAIRSVMNAMEREPOURL; do
 
 	VMNAME=`echo $i | cut -d";" -f1`;
 	REPO=`echo $i | cut -d";" -f2`;
 	
+	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	
 	rm ${VMNAME}_{OK,FAIL} 2> /dev/null
-	echo /mnt/DATA/datos/assets/check_packages/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 
-	( /mnt/DATA/datos/assets/check_packages/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
-
+	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 
+	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
+	
+	sleep 1
+	
+	count=$(( $count + 1 ))
+	if [[ $(( $count % 10 )) == 0 ]]; then sleep 70; fi
 done
