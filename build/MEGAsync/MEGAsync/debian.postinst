@@ -4,7 +4,9 @@ distro=$(lsb_release -ds)
 ver=$(lsb_release -rs)
 
 # Ubuntu
-if [[ $ver = "15.10" ]]; then
+if [[ $ver = "16.04" ]]; then
+    str="xUbuntu_16.04"
+elif [[ $ver = "15.10" ]]; then
     str="xUbuntu_15.10"
 elif [[ $ver = "15.04" ]]; then
     str="xUbuntu_15.04"
@@ -23,7 +25,6 @@ elif [[ $ver == 6.* ]]; then
     str="Debian_6.0"
 elif [[ $ver == 7.* ]]; then
     str="Debian_7.0"
-# fallback Debian
 elif [[ $ver == 8.* ]]; then
     str="Debian_8.0"
 elif [[ $ver == 9.* ]]; then
