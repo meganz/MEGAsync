@@ -362,22 +362,21 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     else
                     {
                         QString key = Utilities::extractJSONString(file, QString::fromUtf8("k"));
-                        if (key.isEmpty())
+                        if (key.size() == 43)
                         {
-                            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without key in webclient request");
-                            qDeleteAll(downloadQueue);
-                            downloadQueue.clear();
-                            break;
+                            long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
+                            long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
+
+                            MegaNode *node = megaApi->createPublicFileNode(h, key.toUtf8().constData(),
+                                                             name.toUtf8().constData(), size, mtime,
+                                                             p, privateAuth.toUtf8().constData(),
+                                                             publicAuth.toUtf8().constData());
+                            downloadQueue.append(node);
                         }
-
-                        long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
-                        long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
-
-                        MegaNode *node = megaApi->createPublicFileNode(h, key.toUtf8().constData(),
-                                                         name.toUtf8().constData(), size, mtime,
-                                                         p, privateAuth.toUtf8().constData(),
-                                                         publicAuth.toUtf8().constData());
-                        downloadQueue.append(node);
+                        else
+                        {
+                            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without key (or an invalid key) in webclient request");
+                        }
                     }
                 }
 
