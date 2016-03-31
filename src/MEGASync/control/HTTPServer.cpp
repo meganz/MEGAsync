@@ -187,7 +187,7 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
 void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
-    QRegExp openLinkRequest(QString::fromUtf8("\\{\"a\":\"l\",\"h\":\"(.*)\",\"k\":\"(.*)\"\\}"));
+    QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
     QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
     QPointer<QAbstractSocket> safeSocket = socket;
@@ -208,33 +208,31 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             delete myHandle;
         }
     }
-    else if (openLinkRequest.exactMatch(request.data))
+    else if (request.data.startsWith(openLinkRequestStart))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "OpenLink command received from the webclient");
-        QStringList parameters = openLinkRequest.capturedTexts();
-        if (parameters.size() == 3)
+        QString handle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+        QString key = Utilities::extractJSONString(request.data, QString::fromUtf8("k"));
+        QString auth = Utilities::extractJSONString(request.data, QString::fromUtf8("esid"));
+
+        if (handle.size() == 8 && key.size() == 43)
         {
-            QString handle = parameters[1];
-            QString key = parameters[2];
-            if (handle.size() == 8 && key.size() == 43)
+            QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
+            emit onLinkReceived(link, auth);
+            response = QString::fromUtf8("0");
+
+            Preferences *preferences = Preferences::instance();
+            QString defaultPath = preferences->downloadFolder();
+
+            if (preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
             {
-                QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
-                emit onLinkReceived(link);
-                response = QString::fromUtf8("0");
+                ((MegaApplication *)qApp)->showInfoMessage(tr("Your download has started"));
+            }
 
-                Preferences *preferences = Preferences::instance();
-                QString defaultPath = preferences->downloadFolder();
-
-                if (preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
-                {
-                    ((MegaApplication *)qApp)->showInfoMessage(tr("Your download has started"));
-                }
-
-                if (!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
-                {
-                    megaApi->sendEvent(99503, "MEGAsync first webclient download");
-                    isFirstWebDownloadDone = true;
-                }
+            if (!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
+            {
+                megaApi->sendEvent(99503, "MEGAsync first webclient download");
+                isFirstWebDownloadDone = true;
             }
         }
     }
@@ -274,31 +272,23 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         int start = request.data.indexOf(QString::fromUtf8("\"f\":[")) + 5;
         if (start > 0)
         {
-            QString auth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("esid"));
-            if (auth.length() != 58)
-            {
-                auth.clear();
-            }
+            QString privateAuth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("esid"));
+            QString publicAuth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("en"));
 
-            if (auth.isEmpty())
+            if (privateAuth.isEmpty() && publicAuth.isEmpty())
             {
-                auth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("en"));
-                if (auth.length() != 8)
+                QString auth  = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("auth"));
+                if (auth.length() == 8)
                 {
-                    auth.clear();
+                    publicAuth = auth;
+                }
+                else
+                {
+                    privateAuth = auth;
                 }
             }
 
-            if (auth.isEmpty())
-            {
-                auth  = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("auth"));
-                if (auth.length() != 8 && auth.length() != 58)
-                {
-                    auth.clear();
-                }
-            }
-
-            if (!auth.isEmpty())
+            if (privateAuth.size() || publicAuth.size())
             {
                 QQueue<mega::MegaNode *> downloadQueue;
                 int end;
@@ -364,7 +354,9 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
                     if (type != MegaNode::TYPE_FILE)
                     {
-                        MegaNode *node = megaApi->createPublicFolderNode(h, name.toUtf8().constData(), p, auth.toUtf8().constData());
+                        MegaNode *node = megaApi->createPublicFolderNode(h, name.toUtf8().constData(), p,
+                                                                         privateAuth.toUtf8().constData(),
+                                                                         publicAuth.toUtf8().constData());
                         downloadQueue.append(node);
                     }
                     else
@@ -383,7 +375,8 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
                         MegaNode *node = megaApi->createPublicFileNode(h, key.toUtf8().constData(),
                                                          name.toUtf8().constData(), size, mtime,
-                                                         p, auth.toUtf8().constData());
+                                                         p, privateAuth.toUtf8().constData(),
+                                                         publicAuth.toUtf8().constData());
                         downloadQueue.append(node);
                     }
                 }

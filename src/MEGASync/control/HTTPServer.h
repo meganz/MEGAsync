@@ -35,7 +35,7 @@ class HTTPServer: public QTcpServer
         void resume();
 
     signals:
-        void onLinkReceived(QString link);
+        void onLinkReceived(QString link, QString auth);
         void onSyncRequested(long long handle);
         void onExternalDownloadRequested(QQueue<mega::MegaNode*> files);
         void onExternalDownloadRequestFinished();

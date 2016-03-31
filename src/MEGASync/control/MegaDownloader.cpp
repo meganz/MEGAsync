@@ -35,7 +35,7 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
     while (!downloadQueue->isEmpty())
     {
         MegaNode *node = downloadQueue->dequeue();
-        if (node->getAuth()->size() && pathMap.contains(node->getParentHandle()))
+        if (node->isForeing() && pathMap.contains(node->getParentHandle()))
         {
             currentPath = pathMap[node->getParentHandle()];
         }
@@ -107,7 +107,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             dir.mkpath(QString::fromAscii("."));
         }
 
-        if (!parent->getAuth()->size())
+        if (!parent->isForeing())
         {
             MegaNodeList *nList = megaApi->getChildren(parent);
             for (int i = 0; i < nList->size(); i++)
