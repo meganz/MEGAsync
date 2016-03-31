@@ -235,6 +235,10 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                 isFirstWebDownloadDone = true;
             }
         }
+        else if (key.size() && key.size() != 43)
+        {
+            response = QString::fromUtf8("-14");
+        }
     }
     else if (syncRequest.exactMatch(request.data))
     {
