@@ -3,16 +3,18 @@
 #include "Utilities.h"
 #include "Preferences.h"
 #include <QDateTime>
+#include <QUrl>
 
 using namespace mega;
 
-UpgradeDialog::UpgradeDialog(MegaPricing *pricing, QWidget *parent) :
+UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UpgradeDialog)
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    this->megaApi = megaApi;
     if (pricing)
     {
         this->pricing = pricing->copy();
@@ -74,12 +76,13 @@ void UpgradeDialog::refreshAccountDetails()
     Preferences *preferences = Preferences::instance();
     if (preferences->temporalBandwidth())
     {
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
         ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours, "
                                             "which took you over our current limit. To circumvent this limit, "
                                             "you can [A]upgrade to Pro[/A], which will give you your own bandwidth "
                                             "package and also ample extra storage space. ")
                                         .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro\"><span style=\"color:#d90007; text-decoration:none;\">"))
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro/uao=%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(userAgent))
                                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
                                         .replace(QString::fromUtf8("6"), QString::number(preferences->temporalBandwidthInterval())));
     }
@@ -104,6 +107,7 @@ void UpgradeDialog::updatePlans()
 
     clearPlans();
 
+    QString userAgent = QString::fromUtf8(megaApi->getUserAgent());
     int products = pricing->getNumProducts();
     for (int it = 0; it < products; it++)
     {
@@ -116,7 +120,7 @@ void UpgradeDialog::updatePlans()
                 pricing->getGBTransfer(it),
                 pricing->getProLevel(it)
             };
-            plansLayout->addWidget(new PlanWidget(data));
+            plansLayout->addWidget(new PlanWidget(data, userAgent));
         }
     } 
 }

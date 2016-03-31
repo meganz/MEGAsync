@@ -30,7 +30,7 @@ public:
            PRO_LITE = 4
     } ProLevel;
 
-    explicit PlanWidget(PlanInfo data, QWidget *parent = 0);
+    explicit PlanWidget(PlanInfo data, QString userAgent, QWidget *parent = 0);
     void setPlanInfo(PlanInfo data);
     ~PlanWidget();
 
@@ -38,6 +38,7 @@ private:
     Ui::PlanWidget *ui;
     QPushButton *overlay;
     PlanInfo details;
+    QString userAgent;
 
     void updatePlanInfo();
 

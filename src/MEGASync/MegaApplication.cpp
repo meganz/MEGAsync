@@ -3535,7 +3535,7 @@ void MegaApplication::openBwOverquotaDialog()
 {
     if (!bwOverquotaDialog)
     {
-       bwOverquotaDialog = new UpgradeDialog(pricing);
+       bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
        connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
     }
 
