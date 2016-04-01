@@ -35,7 +35,7 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
     while (!downloadQueue->isEmpty())
     {
         MegaNode *node = downloadQueue->dequeue();
-        if (node->isForeing() && pathMap.contains(node->getParentHandle()))
+        if (node->isForeign() && pathMap.contains(node->getParentHandle()))
         {
             currentPath = pathMap[node->getParentHandle()];
         }
@@ -85,7 +85,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             delete [] fpRemote;
         }
 
-        if (parent->isPublic() && megaApiGuest)
+        if ((parent->isPublic() || parent->isForeign()) && megaApiGuest)
         {
             megaApiGuest->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
         }
@@ -107,7 +107,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             dir.mkpath(QString::fromAscii("."));
         }
 
-        if (!parent->isForeing())
+        if (!parent->isForeign())
         {
             MegaNodeList *nList = megaApi->getChildren(parent);
             for (int i = 0; i < nList->size(); i++)

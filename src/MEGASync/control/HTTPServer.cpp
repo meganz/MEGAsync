@@ -358,7 +358,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
                     if (type != MegaNode::TYPE_FILE)
                     {
-                        MegaNode *node = megaApi->createPublicFolderNode(h, name.toUtf8().constData(), p,
+                        MegaNode *node = megaApi->createForeignFolderNode(h, name.toUtf8().constData(), p,
                                                                          privateAuth.toUtf8().constData(),
                                                                          publicAuth.toUtf8().constData());
                         downloadQueue.append(node);
@@ -371,7 +371,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                             long long size = Utilities::extractJSONNumber(file, QString::fromUtf8("s"));
                             long long mtime = Utilities::extractJSONNumber(file, QString::fromUtf8("ts"));
 
-                            MegaNode *node = megaApi->createPublicFileNode(h, key.toUtf8().constData(),
+                            MegaNode *node = megaApi->createForeignFileNode(h, key.toUtf8().constData(),
                                                              name.toUtf8().constData(), size, mtime,
                                                              p, privateAuth.toUtf8().constData(),
                                                              publicAuth.toUtf8().constData());
