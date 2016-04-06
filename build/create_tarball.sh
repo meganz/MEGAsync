@@ -52,15 +52,12 @@ echo "MEGAsync version: $MEGASYNC_VERSION"
 
 # delete previously generated files
 rm -fr MEGAsync/MEGAsync/megasync_*.dsc
-rm -fr MEGAsync/MEGAsync.debug/megasync-debug_*.dsc
+
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
 
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync-debug.spec > MEGAsync/MEGAsync.debug/megasync-debug.spec
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync.debug/megasync-debug.dsc > MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.dsc
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync.debug/PKGBUILD
 
 # read the last generated ChangeLog version
 version_file="version"
@@ -119,22 +116,6 @@ mv $MEGASYNC_NAME.tar.gz MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz
 
 
 # create archive for debug
-MEGASYNC_NAMED=megasync-debug-$MEGASYNC_VERSION
-mkdir $MEGASYNC_NAMED
-ln -s ../MEGAsync/MEGAsync.debug/megasync-debug.spec $MEGASYNC_NAMED/
-ln -s ../MEGAsync/MEGAsync.debug/debian.postinst $MEGASYNC_NAMED/
-ln -s ../MEGAsync/MEGAsync.debug/debian.postrm $MEGASYNC_NAMED/
-ln -s ../../src/configure $MEGASYNC_NAMED/configure
-ln -s ../../src/MEGA.pro $MEGASYNC_NAMED/MEGA.pro
-ln -s ../../src/MEGASync $MEGASYNC_NAMED/MEGASync
-ln -s $archives $MEGASYNC_NAMED/archives
-tar czfh $MEGASYNC_NAMED.tar.gz $MEGASYNC_NAMED
-rm -rf $MEGASYNC_NAMED
-
-# delete any previous archive
-rm -fr MEGAsync/MEGAsync.debug/megasync-debug_*.tar.gz
-# transform arch name, to satisfy Debian requirements
-mv $MEGASYNC_NAMED.tar.gz MEGAsync/MEGAsync.debug/megasync-debug_$MEGASYNC_VERSION.tar.gz
 
 
 #
