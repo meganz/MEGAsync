@@ -11,7 +11,9 @@ class LinkProcessor: public QObject, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    LinkProcessor(mega::MegaApi *megaApi, mega::MegaApi *megaApiGuest, QStringList linkList);
+    // If you want to manage public transfers in a different MegaApi object,
+    // provide megaApiGuest
+    LinkProcessor(QStringList linkList, mega::MegaApi *megaApi, mega::MegaApi *megaApiGuest = NULL);
     virtual ~LinkProcessor();
 
     QString getLink(int id);
