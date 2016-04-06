@@ -142,7 +142,6 @@ protected:
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiGuest;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
 };
