@@ -1,3 +1,12 @@
+megasync (2.8.0) stable; urgency=low
+
+  * Check if public links have been already downloaded
+  * Better management of communications with the webclient
+  * Management of bandwidth quotas
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 06 Apr 2016 17:32:34 +0200
+
 megasync (2.7.2) stable; urgency=high
 
   * Fixed the compilation. The previous version failed with some CPUs

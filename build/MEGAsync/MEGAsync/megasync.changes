@@ -1,3 +1,11 @@
+mié abr 6 17:32:34 CEST 2016 - linux@mega.co.nz
+
+- Check if public links have been already downloaded
+- Better management of communications with the webclient
+- Management of bandwidth quotas
+- Bug fixes
+
+-------------------------------------------------------------------
 mar mar 1 13:10:21 CET 2016 - linux@mega.co.nz
 
 - Fixed the compilation. The previous version failed with some CPUs
