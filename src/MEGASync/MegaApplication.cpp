@@ -4781,12 +4781,15 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished || transfer->isStreamingTransfer())
+    if (appfinished)
     {
         return;
     }
 
-    onTransferUpdate(api, transfer);
+    if (!transfer->isStreamingTransfer())
+    {
+        onTransferUpdate(api, transfer);
+    }
 
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
